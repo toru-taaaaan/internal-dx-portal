@@ -10,8 +10,19 @@ const portalDir = './portal';
 app.use(express.static(path.join(__dirname, portalDir)));
 app.use('/assets', express.static(path.join(__dirname, portalDir, 'assets')));
 
-// ルーティング: HTML ファイルを提供
+// ルーティング: クエリパラメータとパスベース両対応
 app.get('/', (req, res) => {
+  const page = req.query.page;
+  if (page) {
+    // ?page=xxx 形式に対応
+    const filePath = path.join(__dirname, portalDir, `${page}.html`);
+    if (fs.existsSync(filePath)) {
+      return res.sendFile(filePath);
+    } else {
+      return res.status(404).send('Page not found');
+    }
+  }
+  // デフォルト: landing
   res.sendFile(path.join(__dirname, portalDir, 'landing.html'));
 });
 
