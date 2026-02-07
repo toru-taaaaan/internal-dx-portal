@@ -5,17 +5,67 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Command Center | Internal DX Portal</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/portal_nexus.css">
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .directory-section {
+      margin-bottom: 40px;
+    }
+
+    .directory-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .directory-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .directory-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .directory-item:hover {
+      border-color: #3b82f6;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    }
+
+    .item-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .item-meta {
+      font-size: 10px;
+      font-weight: 900;
+      color: #94a3b8;
+      letter-spacing: 0.1em;
+      font-family: monospace;
+    }
+  </style>
 </head>
 
-<body>
+<body class="bg-[#fcfcfc]">
 
   <div class="layout-wrapper">
-    <!-- Unified Sidebar -->
+    <!-- Sidebar Navigation -->
     <aside class="sidebar">
       <header class="sidebar-header">
         <h1>統合指揮センター HUB</h1>
@@ -63,6 +113,7 @@
       </footer>
     </aside>
 
+    <!-- Main Workspace -->
     <main class="main-scroll">
       <div class="p-12">
         <header class="mb-8 mt-4">
@@ -73,163 +124,119 @@
         </header>
 
         <div class="space-y-12">
-
           <!-- Phase 1 Section -->
-          <section class="directory-section">
-            <div class="flex items-center gap-3 mb-4 pl-2 border-l-4 border-l-cyan-400">
-              <h2 class="text-sm font-black text-slate-500 uppercase tracking-widest">Phase 1: Current Assessment</h2>
+          <div class="directory-section">
+            <div class="directory-header">
+              <span class="w-1.5 h-1.5 rounded-full bg-cyan-500" style="width: 6px; height: 6px; border-radius: 50%;"></span>
+              <h2 class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Phase 1: Current Assessment</h2>
             </div>
-            
-            <a href="/project_15_14.html" class="p-card card-cyan">
-              <div class="p-card-badge">
-                <span class="p-card-tag">PHASE 1</span>
-                <div class="p-card-id">PROJ-15.14</div>
-              </div>
-              <div class="p-card-main">
-                <div class="p-card-title">Infra Assessment</div>
-                <div class="p-card-desc">現状のインフラ環境（サーバー、ネットワーク）の可視化と評価調査。</div>
-              </div>
-              <div class="p-card-arrow">
-                <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
-              </div>
-            </a>
-          </section>
+            <div class="directory-list">
+              <a href="/project_15_14.html" class="directory-item">
+                <span class="item-label">Infra Assessment (Project 15.14)</span>
+                <span class="item-meta">ASSESSMENT</span>
+              </a>
+            </div>
+          </div>
 
           <!-- Phase 2 Section -->
-          <section class="directory-section">
-            <div class="flex items-center gap-3 mb-6 pl-2 border-l-4 border-l-blue-500">
-              <h2 class="text-sm font-black text-slate-500 uppercase tracking-widest">Phase 2: Infrastructure Refresh</h2>
+          <div class="directory-section">
+            <div class="directory-header">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-500" style="width: 6px; height: 6px; border-radius: 50%;"></span>
+              <h2 class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Phase 2: Infrastructure Refresh</h2>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <a href="/project_15_01.html" class="block p-6 bg-white border-2 border-blue-200 rounded-lg hover:shadow-lg hover:border-blue-400 transition-all duration-200 hover:-translate-y-1">
-                <div class="flex items-start justify-between mb-3">
-                  <div>
-                    <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full mb-2">PHASE 2</span>
-                    <div class="text-xs font-mono text-slate-500 mb-2">PROJ-15.01</div>
-                  </div>
-                  <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-blue-500">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-                <h3 class="text-lg font-bold text-slate-700 mb-2">AD Cloud Lift</h3>
-                <p class="text-sm text-slate-600">Active Directoryクラウド移行とBCP対策。</p>
+            <div class="directory-list">
+              <a href="/project_15_01.html" class="directory-item">
+                <span class="item-label">AD Cloud Lift (Project 15.01)</span>
+                <span class="item-meta">IDENTITY</span>
               </a>
-
-              <a href="/project_15_02.html" class="block p-6 bg-white border-2 border-blue-200 rounded-lg hover:shadow-lg hover:border-blue-400 transition-all duration-200 hover:-translate-y-1">
-                <div class="flex items-start justify-between mb-3">
-                  <div>
-                    <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full mb-2">PHASE 2</span>
-                    <div class="text-xs font-mono text-slate-500 mb-2">PROJ-15.02</div>
-                  </div>
-                  <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-blue-500">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-                <h3 class="text-lg font-bold text-slate-700 mb-2">Secom Cloud</h3>
-                <p class="text-sm text-slate-600">入退室管理システムのクラウド移行。</p>
+              <a href="/project_15_02.html" class="directory-item">
+                <span class="item-label">Secom Cloud (Project 15.02)</span>
+                <span class="item-meta">SECURITY</span>
               </a>
-
-              <a href="/project_15_combined.html" class="block p-6 bg-white border-2 border-purple-200 rounded-lg hover:shadow-lg hover:border-purple-400 transition-all duration-200 hover:-translate-y-1">
-                <div class="flex items-start justify-between mb-3">
-                  <div>
-                    <span class="inline-block px-3 py-1 bg-purple-100 text-purple-700 text-xs font-bold rounded-full mb-2">BUNDLE</span>
-                    <div class="text-xs font-mono text-slate-500 mb-2">ANALYSIS</div>
-                  </div>
-                  <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-purple-500">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-                <h3 class="text-lg font-bold text-slate-700 mb-2">AD + SECOM 統合比較</h3>
-                <p class="text-sm text-slate-600">3社同時依頼時のTCO・シナリオ比較分析。</p>
+              <a href="/project_15_combined.html" class="directory-item">
+                <span class="item-label">AD + SECOM 統合比較 (Bundle Analysis)</span>
+                <span class="item-meta">BUNDLE</span>
               </a>
-
-              <a href="/project_ad_scenarios.html" class="block p-6 bg-white border-2 border-blue-200 rounded-lg hover:shadow-lg hover:border-blue-400 transition-all duration-200 hover:-translate-y-1">
-                <div class="flex items-start justify-between mb-3">
-                  <div>
-                    <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full mb-2">STRATEGY</span>
-                    <div class="text-xs font-mono text-slate-500 mb-2">AD-SCENARIO</div>
-                  </div>
-                  <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-blue-500">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-                <h3 class="text-lg font-bold text-slate-700 mb-2">AD移行シナリオ比較</h3>
-                <p class="text-sm text-slate-600">AD vs ハイブリッド vs Entra ID の将来像比較。</p>
+              <a href="/project_ad_scenarios.html" class="directory-item">
+                <span class="item-label">AD移行シナリオ比較 (Strategy)</span>
+                <span class="item-meta">AD-SCENARIO</span>
               </a>
-
-              <a href="/project_ad_matrix.html" class="block p-6 bg-white border-2 border-blue-200 rounded-lg hover:shadow-lg hover:border-blue-400 transition-all duration-200 hover:-translate-y-1">
-                <div class="flex items-start justify-between mb-3">
-                  <div>
-                    <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full mb-2">MATRIX</span>
-                    <div class="text-xs font-mono text-slate-500 mb-2">AD-RESP-MAT</div>
-                  </div>
-                  <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-blue-500">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-                <h3 class="text-lg font-bold text-slate-700 mb-2">3社権限・責任分界点</h3>
-                <p class="text-sm text-slate-600">IIJ, USEN, LAJ の運用・権限範囲の比較表。</p>
+              <a href="/project_ad_matrix.html" class="directory-item">
+                <span class="item-label">3社権限・責任分界点 (Responsibility Matrix)</span>
+                <span class="item-meta">AD-RESP-MAT</span>
               </a>
-
-              <a href="/line_dashboard.html" class="block p-6 bg-white border-2 border-blue-200 rounded-lg hover:shadow-lg hover:border-blue-400 transition-all duration-200 hover:-translate-y-1">
-                <div class="flex items-start justify-between mb-3">
-                  <div>
-                    <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full mb-2">VISUAL</span>
-                    <div class="text-xs font-mono text-slate-500 mb-2">NETWORK</div>
-                  </div>
-                  <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-blue-500">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-                <h3 class="text-lg font-bold text-slate-700 mb-2">SD-WAN Map</h3>
-                <p class="text-sm text-slate-600">SD-WAN vs Vario Secure 拠点間接続比較マップ。</p>
+              <a href="/line_dashboard.html" class="directory-item">
+                <span class="item-label">SD-WAN Map (Network Visual)</span>
+                <span class="item-meta">NETWORK</span>
               </a>
             </div>
-          </section>
+          </div>
 
           <!-- Phase 3 Section -->
-          <section class="directory-section">
-            <div class="flex items-center gap-3 mb-4 pl-2 border-l-4 border-l-purple-500">
-              <h2 class="text-sm font-black text-slate-500 uppercase tracking-widest">Phase 3: AI Transformation</h2>
+          <div class="directory-section">
+            <div class="directory-header">
+              <span class="w-1.5 h-1.5 rounded-full bg-purple-500" style="width: 6px; height: 6px; border-radius: 50%;"></span>
+              <h2 class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Phase 3: AI Transformation</h2>
             </div>
-            
-            <a href="/project_15_12.html" class="p-card card-purple p-card-lg">
-              <div class="p-card-badge">
-                <span class="p-card-tag">PHASE 3</span>
-                <div class="p-card-id">PROJ-15.12</div>
-              </div>
-              <div class="p-card-main">
-                <div class="p-card-title">AI Champion Initiative</div>
-                <div class="p-card-desc">AI推進リーダー育成とコミュニティ運営、および全社啓蒙活動。</div>
-              </div>
-              <div class="p-card-arrow">
-                <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              </div>
-            </a>
-          </section>
-          
-          <!-- Phase 4 Section -->
-          <section class="directory-section">
-            <div class="flex items-center gap-3 mb-4 pl-2 border-l-4 border-l-amber-500">
-              <h2 class="text-sm font-black text-slate-500 uppercase tracking-widest">Phase 4: BuddyNet Project</h2>
+            <div class="directory-list">
+              <a href="/project_15_12.html" class="directory-item">
+                <span class="item-label">AI Champion Initiative (Project 15.12)</span>
+                <span class="item-meta">AI_INIT</span>
+              </a>
+              <a href="/project_15_12_proposal.html" class="directory-item">
+                <span class="item-label">AI Champion Proposal</span>
+                <span class="item-meta">AI_PROPOSAL</span>
+              </a>
+              <a href="/project_15_12_ishii.html" class="directory-item">
+                <span class="item-label">AI Initiative - Ishii Version</span>
+                <span class="item-meta">AI_VARIANT</span>
+              </a>
+              <a href="/project_15_12_antigravity.html" class="directory-item">
+                <span class="item-label">AI Initiative - Antigravity Version</span>
+                <span class="item-meta">AI_VARIANT</span>
+              </a>
             </div>
-            
-            <a href="/project_bn_report.html" class="p-card card-orange p-card-lg">
-              <div class="p-card-badge">
-                <span class="p-card-tag">PHASE 4</span>
-                <div class="p-card-id">PROJ-BN.01</div>
-              </div>
-              <div class="p-card-main">
-                <div class="p-card-title">Financial Automation</div>
-                <div class="p-card-desc">PL予実・着地予測レポートの自動化および算出プロセスのDX。</div>
-              </div>
-              <div class="p-card-arrow">
-                <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              </div>
-            </a>
-          </section>
+          </div>
 
+          <!-- Phase 4 Section -->
+          <div class="directory-section">
+            <div class="directory-header">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-500" style="width: 6px; height: 6px; border-radius: 50%;"></span>
+              <h2 class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Phase 4: BuddyNet Project</h2>
+            </div>
+            <div class="directory-list">
+              <a href="/project_bn_report.html" class="directory-item">
+                <span class="item-label">Financial Automation (BuddyNet)</span>
+                <span class="item-meta">FINANCE_DX</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Other Projects Section -->
+          <div class="directory-section">
+            <div class="directory-header">
+              <span class="w-1.5 h-1.5 rounded-full bg-rose-500" style="width: 6px; height: 6px; border-radius: 50%;"></span>
+              <h2 class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Additional Resources</h2>
+            </div>
+            <div class="directory-list">
+              <a href="/project_15_01_entraid_proposal.html" class="directory-item">
+                <span class="item-label">Entra ID Proposal (Alternative Design)</span>
+                <span class="item-meta">ALT_PROPOSAL</span>
+              </a>
+              <a href="/project_sd_wan.html" class="directory-item">
+                <span class="item-label">SD-WAN Strategy</span>
+                <span class="item-meta">SD-WAN</span>
+              </a>
+              <a href="/bcp_risk_matrix.html" class="directory-item">
+                <span class="item-label">BCP Risk Matrix</span>
+                <span class="item-meta">RISK_MGT</span>
+              </a>
+              <a href="/SITEMAP.html" class="directory-item">
+                <span class="item-label">Portal Sitemap</span>
+                <span class="item-meta">SITEMAP</span>
+              </a>
+            </div>
+          </div>
         </div>
 
         <footer
