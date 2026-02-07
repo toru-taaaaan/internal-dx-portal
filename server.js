@@ -43,10 +43,12 @@ app.get('/', (req, res) => {
 
 app.get('/:page', (req, res) => {
   const page = req.params.page;
-  const filePath = path.join(__dirname, portalDir, `${page}.html`);
+  // .html が既に含まれている場合はそのまま、含まれていなければ追加
+  const fileName = page.endsWith('.html') ? page : `${page}.html`;
+  const filePath = path.join(__dirname, portalDir, fileName);
 
   // セキュリティチェック: パストラバーサル対策
-  if (!filePath.startsWith(path.join(__dirname, portalDir))) {
+  if (!filePath.startsWith(path.resolve(path.join(__dirname, portalDir)))) {
     return res.status(403).send('Forbidden');
   }
 
