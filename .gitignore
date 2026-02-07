@@ -7,3 +7,7 @@ npm-debug.log
 *.swp
 dist/
 build/
+.npm-cache/
+credentials.json
+fetch-gas-files.js
+token.json
