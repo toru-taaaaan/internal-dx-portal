@@ -25,25 +25,27 @@
     .directory-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .directory-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 20px;
+      padding: 16px 20px;
       background: white;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
       text-decoration: none;
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     }
 
     .directory-item:hover {
       border-color: #3b82f6;
       transform: translateY(-2px);
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.12);
+      background: #f8fafc;
     }
 
     .item-label {
