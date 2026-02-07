@@ -34,18 +34,33 @@
       justify-content: space-between;
       padding: 16px 20px;
       background: white;
-      border: 2px solid #cbd5e1;
+      border: 3px solid #94a3b8;
       border-radius: 8px;
       text-decoration: none;
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
 
     .directory-item:hover {
       border-color: #3b82f6;
       transform: translateY(-2px);
-      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
       background: #f8fafc;
+    }
+
+    .item-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      background: #1e293b;
+      color: white;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 900;
+      margin-right: 12px;
+      flex-shrink: 0;
     }
 
     .item-label {
@@ -134,7 +149,7 @@
             </div>
             <div class="directory-list">
               <a href="/project_15_14.html" class="directory-item">
-                <span class="item-label">Infra Assessment (Project 15.14)</span>
+                <span class="item-number">1</span><span class="item-label">Infra Assessment (Project 15.14)</span>
                 <span class="item-meta">ASSESSMENT</span>
               </a>
             </div>
@@ -148,27 +163,27 @@
             </div>
             <div class="directory-list">
               <a href="/project_15_01.html" class="directory-item">
-                <span class="item-label">AD Cloud Lift (Project 15.01)</span>
+                <span class="item-number">2</span><span class="item-label">AD Cloud Lift (Project 15.01)</span>
                 <span class="item-meta">IDENTITY</span>
               </a>
               <a href="/project_15_02.html" class="directory-item">
-                <span class="item-label">Secom Cloud (Project 15.02)</span>
+                <span class="item-number">3</span><span class="item-label">Secom Cloud (Project 15.02)</span>
                 <span class="item-meta">SECURITY</span>
               </a>
               <a href="/project_15_combined.html" class="directory-item">
-                <span class="item-label">AD + SECOM 統合比較 (Bundle Analysis)</span>
+                <span class="item-number">4</span><span class="item-label">AD + SECOM 統合比較 (Bundle Analysis)</span>
                 <span class="item-meta">BUNDLE</span>
               </a>
               <a href="/project_ad_scenarios.html" class="directory-item">
-                <span class="item-label">AD移行シナリオ比較 (Strategy)</span>
+                <span class="item-number">5</span><span class="item-label">AD移行シナリオ比較 (Strategy)</span>
                 <span class="item-meta">AD-SCENARIO</span>
               </a>
               <a href="/project_ad_matrix.html" class="directory-item">
-                <span class="item-label">3社権限・責任分界点 (Responsibility Matrix)</span>
+                <span class="item-number">6</span><span class="item-label">3社権限・責任分界点 (Responsibility Matrix)</span>
                 <span class="item-meta">AD-RESP-MAT</span>
               </a>
               <a href="/line_dashboard.html" class="directory-item">
-                <span class="item-label">SD-WAN Map (Network Visual)</span>
+                <span class="item-number">7</span><span class="item-label">SD-WAN Map (Network Visual)</span>
                 <span class="item-meta">NETWORK</span>
               </a>
             </div>
@@ -182,19 +197,19 @@
             </div>
             <div class="directory-list">
               <a href="/project_15_12.html" class="directory-item">
-                <span class="item-label">AI Champion Initiative (Project 15.12)</span>
+                <span class="item-number">8</span><span class="item-label">AI Champion Initiative (Project 15.12)</span>
                 <span class="item-meta">AI_INIT</span>
               </a>
               <a href="/project_15_12_proposal.html" class="directory-item">
-                <span class="item-label">AI Champion Proposal</span>
+                <span class="item-number">9</span><span class="item-label">AI Champion Proposal</span>
                 <span class="item-meta">AI_PROPOSAL</span>
               </a>
               <a href="/project_15_12_ishii.html" class="directory-item">
-                <span class="item-label">AI Initiative - Ishii Version</span>
+                <span class="item-number">10</span><span class="item-label">AI Initiative - Ishii Version</span>
                 <span class="item-meta">AI_VARIANT</span>
               </a>
               <a href="/project_15_12_antigravity.html" class="directory-item">
-                <span class="item-label">AI Initiative - Antigravity Version</span>
+                <span class="item-number">11</span><span class="item-label">AI Initiative - Antigravity Version</span>
                 <span class="item-meta">AI_VARIANT</span>
               </a>
             </div>
@@ -208,7 +223,7 @@
             </div>
             <div class="directory-list">
               <a href="/project_bn_report.html" class="directory-item">
-                <span class="item-label">Financial Automation (BuddyNet)</span>
+                <span class="item-number">12</span><span class="item-label">Financial Automation (BuddyNet)</span>
                 <span class="item-meta">FINANCE_DX</span>
               </a>
             </div>
@@ -222,19 +237,19 @@
             </div>
             <div class="directory-list">
               <a href="/project_15_01_entraid_proposal.html" class="directory-item">
-                <span class="item-label">Entra ID Proposal (Alternative Design)</span>
+                <span class="item-number">13</span><span class="item-label">Entra ID Proposal (Alternative Design)</span>
                 <span class="item-meta">ALT_PROPOSAL</span>
               </a>
               <a href="/project_sd_wan.html" class="directory-item">
-                <span class="item-label">SD-WAN Strategy</span>
+                <span class="item-number">14</span><span class="item-label">SD-WAN Strategy</span>
                 <span class="item-meta">SD-WAN</span>
               </a>
               <a href="/bcp_risk_matrix.html" class="directory-item">
-                <span class="item-label">BCP Risk Matrix</span>
+                <span class="item-number">15</span><span class="item-label">BCP Risk Matrix</span>
                 <span class="item-meta">RISK_MGT</span>
               </a>
               <a href="/SITEMAP.html" class="directory-item">
-                <span class="item-label">Portal Sitemap</span>
+                <span class="item-number">16</span><span class="item-label">Portal Sitemap</span>
                 <span class="item-meta">SITEMAP</span>
               </a>
             </div>
