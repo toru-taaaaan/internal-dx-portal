@@ -1,0 +1,7 @@
+# 📂 Index: _BACKUP
+
+Path: `01_Workspace\11_プロジェクト\社内DXポータル\_BACKUP`
+
+## 📁 Subfolders
+- [[Internal_DX_Portal_Dev_Archived/00_INDEX|Internal_DX_Portal_Dev_Archived/]]
+

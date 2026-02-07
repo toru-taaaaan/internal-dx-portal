@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AD移行シナリオ比較：AD vs ハイブリッド vs Entra ID</title>
+    <link rel="stylesheet" href="assets/portal_nexus.css">
+    <link rel="stylesheet" href="assets/toru_custom_design.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid #e2e8f0;
+        }
+        .scenario-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #e2e8f0;
+        }
+        .mermaid {
+            background: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 max-w-5xl mx-auto">
+
+    <!-- Action Bar -->
+    <div class="action-bar mb-6 rounded-lg">
+        <a href="?page=index" class="back-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M15 18l-6-6 6-6"></path>
+            </svg>
+            プロジェクト一覧へ戻る
+        </a>
+        <div class="flex items-center gap-3">
+            <span class="tag tag-blue">PHASE 2</span>
+            <span class="tag tag-slate-800">STRATEGY</span>
+        </div>
+    </div>
+
+    <header class="text-center mb-10">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Active Directory 将来像シナリオ比較</h1>
+        <p class="text-gray-600">「現状維持(クラウド化)」か「ハイブリッド」か「完全クラウドネイティブ」か</p>
+    </header>
+
+    <!-- 比較サマリー表 -->
+    <div class="card overflow-x-auto">
+        <table class="min-w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-gray-50 border-b border-gray-200">
+                    <th class="p-4 font-bold text-gray-600">比較項目</th>
+                    <th class="p-4 font-bold text-indigo-700 bg-indigo-50 border-l-4 border-indigo-500">
+                        ① ADクラウド化のみ<br>
+                        <span class="text-xs font-normal text-gray-500">(Lift & Shift)</span>
+                    </th>
+                    <th class="p-4 font-bold text-teal-700 bg-teal-50 border-l-4 border-teal-500">
+                        ② ハイブリッド構成<br>
+                        <span class="text-xs font-normal text-gray-500">(AD + Entra ID)</span>
+                    </th>
+                    <th class="p-4 font-bold text-pink-700 bg-pink-50 border-l-4 border-pink-500">
+                        ③ Entra ID 完全移行<br>
+                        <span class="text-xs font-normal text-gray-500">(Cloud Native)</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                <tr>
+                    <td class="p-4 font-bold bg-gray-50">概要</td>
+                    <td class="p-4">既存ADをそのままIaaSへ移行。Entra IDはOffice365認証用のみ。</td>
+                    <td class="p-4">ADを残しつつ、デバイス管理や認証を徐々にEntra IDへ寄せる。</td>
+                    <td class="p-4">ADサーバーを廃止。すべてEntra IDのみで管理する。</td>
+                </tr>
+                <tr>
+                    <td class="p-4 font-bold bg-gray-50">移行難易度</td>
+                    <td class="p-4 text-green-600 font-bold">★ 低 (簡単)</td>
+                    <td class="p-4 text-yellow-600 font-bold">★★ 中 (段階的)</td>
+                    <td class="p-4 text-red-600 font-bold">★★★ 高 (激変)</td>
+                </tr>
+                <tr>
+                    <td class="p-4 font-bold bg-gray-50">既存アプリ<br>ファイルサーバー</td>
+                    <td class="p-4">そのまま利用可能<br>(Kerberos認証維持)</td>
+                    <td class="p-4">そのまま利用可能<br>(Kerberos認証維持)</td>
+                    <td class="p-4 text-red-600">利用不可の可能性大<br>(改修or廃棄が必要)</td>
+                </tr>
+                <tr>
+                    <td class="p-4 font-bold bg-gray-50">デバイス管理</td>
+                    <td class="p-4">GPO (従来通り)</td>
+                    <td class="p-4">GPO + Intune<br>(ハイブリッド参加)</td>
+                    <td class="p-4">Intuneのみ<br>(クラウド管理)</td>
+                </tr>
+                <tr>
+                    <td class="p-4 font-bold bg-gray-50">向いている組織</td>
+                    <td class="p-4">レガシーシステムが多い<br>変化を好まない</td>
+                    <td class="p-4">**現実解**<br>既存資産を活かしつつモダン化したい</td>
+                    <td class="p-4">スタートアップ<br>SaaS利用が中心</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 基礎解説セクション -->
+    <div class="card bg-slate-50 border-l-8 border-slate-400">
+        <h2 class="text-2xl font-bold mb-6 text-slate-800">【基礎知識】Active Directory と Entra ID の役割の違い</h2>
+        
+        <!-- 役割の比較 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-indigo-50 p-5 rounded-lg border border-indigo-100">
+                <h3 class="text-lg font-bold mb-3 text-indigo-800 flex items-center">
+                    <span class="bg-indigo-600 text-white w-6 h-6 rounded-full inline-flex items-center justify-center mr-2 text-xs">A</span>
+                    Active Directory (AD) の役割
+                </h3>
+                <p class="text-sm font-bold text-indigo-900 mb-2">「社内ネットワークという境界（箱）」を守る</p>
+                <ul class="text-sm space-y-2 text-slate-700">
+                    <li><span class="text-indigo-600 font-bold">●</span> PCのログイン管理（ドメイン参加）</li>
+                    <li><span class="text-indigo-600 font-bold">●</span> ファイルサーバー等の社内リソース利用許可</li>
+                    <li><span class="text-indigo-600 font-bold">●</span> <strong>PC設定の強制（グループポリシー）</strong></li>
+                    <li class="text-xs text-slate-500 pl-4">※USB使用禁止、パスワードの桁数強制、デスクトップ壁紙の固定など</li>
+                </ul>
+            </div>
+            <div class="bg-teal-50 p-5 rounded-lg border border-teal-100">
+                <h3 class="text-lg font-bold mb-3 text-teal-800 flex items-center">
+                    <span class="bg-teal-600 text-white w-6 h-6 rounded-full inline-flex items-center justify-center mr-2 text-xs">E</span>
+                    Microsoft Entra ID の役割
+                </h3>
+                <p class="text-sm font-bold text-teal-900 mb-2">「インターネット上のユーザー（ID）」を守る</p>
+                <ul class="text-sm space-y-2 text-slate-700">
+                    <li><span class="text-teal-600 font-bold">●</span> クラウドサービス（SaaS）へのログイン管理</li>
+                    <li><span class="text-teal-600 font-bold">●</span> <strong>多要素認証（MFA）</strong>によるなりすまし防止</li>
+                    <li><span class="text-teal-600 font-bold">●</span> <strong>条件付きアクセス</strong>（特定の場所・端末からのみ許可）</li>
+                    <li class="text-xs text-slate-500 pl-4">※スマホや私物PCからのアクセス制限、海外からのログイン遮断など</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div>
+                <h3 class="text-lg font-bold mb-3 text-slate-800">決定的な違い：クラウド化すれば同じ管理ができるのか？</h3>
+                <div class="text-base leading-relaxed space-y-4">
+                    <p>
+                        結論から言うと、<strong>「Entra IDだけ」では、従来のADのようなきめ細やかなPC管理（グループポリシー等）はできません。</strong>
+                    </p>
+                    <div class="bg-white p-4 rounded border border-slate-200">
+                        <p class="text-sm font-bold text-red-700 mb-2">● Entra ID単体で「できなくなること」</p>
+                        <ul class="text-sm space-y-1 text-slate-600">
+                            <li>・ファイルサーバーへの自動ログイン（Kerberos認証）</li>
+                            <li>・PC内部設定の詳細な一括制御（GPO）</li>
+                            <li>・インターネットがない環境でのPCログイン</li>
+                        </ul>
+                    </div>
+                    <p class="text-sm">
+                        これらをクラウド上で補うには、Entra IDに加えて <strong>「Microsoft Intune」</strong> という別のサービスが必要になります。
+                        今回のプロジェクトで「ADをクラウドにリフトする」のは、<strong>現在のきめ細やかな管理機能をそのまま使い続けるため</strong>の最も確実な手段です。
+                    </p>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-bold mb-3 text-slate-700">共存・連携のイメージ図</h3>
+                <div class="mermaid bg-white p-4 rounded border shadow-inner">
+                    graph TD
+                        subgraph Cloud [クラウド（今回の移行先）]
+                            AD[Active Directory<br/>Windows Server]
+                        end
+                        
+                        subgraph MS365 [Microsoft 365]
+                            Entra[Microsoft Entra ID]
+                            Intune[Intune]
+                        end
+
+                        PC[社内PC] -->|ドメイン参加| AD
+                        PC -->|SSO/MFA| Entra
+                        
+                        AD <-->|ID同期| Entra
+                        Intune -.->|クラウド管理| PC
+
+                        style AD fill:#e0e7ff,stroke:#4338ca,stroke-width:2px
+                        style Entra fill:#ccfbf1,stroke:#0f766e,stroke-width:2px
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- シナリオ別詳細図解 -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- シナリオ1 -->
+        <div class="card border-t-4 border-indigo-500">
+            <span class="scenario-badge bg-indigo-100 text-indigo-800">シナリオ ①</span>
+            <h2 class="text-xl font-bold mb-4">ADクラウド化のみ</h2>
+            <div class="mermaid">
+                graph TD
+                subgraph Cloud [クラウド環境]
+                    AD[Active Directory<br/>Server]
+                end
+                PC[社内PC] -->|ドメイン参加| AD
+                AD -.->|同期| Entra[Entra ID]
+            </div>
+            <ul class="list-disc list-outside pl-5 text-sm text-gray-600 mt-4 space-y-2">
+                <li>サーバーの場所が変わるだけ。</li>
+                <li>運用フローは今まで通り。</li>
+                <li><strong>将来性</strong>: いずれEntra IDへの移行圧力が高まる。</li>
+            </ul>
+        </div>
+
+        <!-- シナリオ2 -->
+        <div class="card border-t-4 border-teal-500">
+            <span class="scenario-badge bg-teal-100 text-teal-800">シナリオ ②</span>
+            <h2 class="text-xl font-bold mb-4">ハイブリッド構成</h2>
+            <div class="mermaid">
+                flowchart TD
+                subgraph Cloud [IaaS]
+                    AD[Active Directory]
+                end
+                subgraph MS [Microsoft 365]
+                    Entra[Entra ID]
+                    Intune[Intune]
+                end
+                PC[社内PC] -->|ハイブリッド参加| AD
+                PC -->|登録| Entra
+                AD <-->|Entra Connect| Entra
+                Intune -.->|ポリシー管理| PC
+                style AD fill:#e0e7ff,stroke:#4338ca
+                style Entra fill:#ccfbf1,stroke:#0f766e
+            </div>
+            <ul class="list-disc list-outside pl-5 text-sm text-gray-600 mt-4 space-y-2">
+                <li>**推奨**: 最も現実的なモダン化ルート。</li>
+                <li>GPOとIntuneの使い分けが必要。</li>
+                <li>ADが「マスター」として残る安心感。</li>
+            </ul>
+        </div>
+
+        <!-- シナリオ3 -->
+        <div class="card border-t-4 border-pink-500">
+            <span class="scenario-badge bg-pink-100 text-pink-800">シナリオ ③</span>
+            <h2 class="text-xl font-bold mb-4">Entra ID 完全移行</h2>
+            <div class="mermaid">
+                flowchart TD
+                subgraph MS [Microsoft 365]
+                    Entra[Entra ID]
+                    Intune[Intune]
+                end
+                PC[社内PC] -->|Entra Join| Entra
+                Intune -->|完全管理| PC
+                style Entra fill:#fce7f3,stroke:#be185d
+                
+                Legacy[ファイルサーバー<br>レガシーアプリ] -.->|× 認証不可| PC
+            </div>
+            <ul class="list-disc list-outside pl-5 text-sm text-gray-600 mt-4 space-y-2">
+                <li>サーバー管理から解放される理想郷。</li>
+                <li>**障壁**: 既存のファイルサーバーや古いアプリが認証できなくなる。</li>
+                <li>アプリのSaaS化が完了していないと厳しい。</li>
+            </ul>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project 15.02: SECOM Cloud Migration</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans JP', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          },
+          colors: {
+            'glass-border': 'rgba(255, 255, 255, 0.1)',
+            'glass-surface': 'rgba(30, 41, 59, 0.7)',
+            'neon-red': '#ff003c',
+            'neon-pink': '#ff006e',
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0f172a;
+      background-image: 
+        radial-gradient(at 0% 100%, rgba(244, 63, 94, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.15) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(56, 189, 248, 0.1) 0px, transparent 50%);
+      background-attachment: fixed;
+      color: #e2e8f0;
+    }
+    .glass-panel {
+      background: rgba(30, 41, 59, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+  </style>
+</head>
+<body class="min-h-screen p-4 md:p-8 antialiased">
+  <div class="max-w-7xl mx-auto space-y-6">
+    
+    <!-- Navigation -->
+    <nav class="flex items-center justify-between mb-8">
+      <div class="flex items-center gap-3">
+        <? var url = ScriptApp.getService().getUrl(); ?>
+        <a href="<?=url?>" class="group flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
+          <svg class="w-5 h-5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+          </svg>
+          Back to Portal
+        </a>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="px-3 py-1 rounded-full text-xs font-mono bg-rose-500/20 text-rose-400 border border-rose-500/30 animate-pulse">
+          LIVE DATA
+        </span>
+        <div class="text-xs text-slate-500 font-mono">Last Updated: 2026-01-14</div>
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="glass-panel rounded-2xl p-8 relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-64 h-64 bg-rose-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+      <div class="relative z-10">
+        <h1 class="text-4xl md:text-5xl font-bold font-display bg-clip-text text-transparent bg-gradient-to-r from-rose-400 to-amber-300 mb-4">
+          SECOM Cloud Migration
+        </h1>
+        <p class="text-xl text-slate-300 max-w-2xl">
+          セコム入退出管理サーバー (HPE MicroServer Gen10リプレース) クラウド化比較
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+           <span class="px-3 py-1 rounded-lg bg-slate-800/50 border border-slate-700 text-xs text-slate-300">
+             Critical Requirement: 閉域網/VPN運用 (Intranet Only)
+           </span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+
+      <!-- Left Column: Detailed Analysis -->
+      <div class="xl:col-span-2 space-y-6">
+        
+        <!-- Cost Comparison Table -->
+        <section class="glass-panel rounded-2xl p-6">
+          <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+            <span class="w-2 h-6 bg-rose-400 rounded-full"></span>
+            3社費用比較 (単独実施)
+          </h2>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-slate-700 text-slate-400 text-sm">
+                  <th class="py-3 px-4">項目</th>
+                  <th class="py-3 px-4">IIJ (Omnibus)</th>
+                  <th class="py-3 px-4">USEN (AWS)</th>
+                  <th class="py-3 px-4 text-rose-400">Link At Japan (Azure)</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-300">
+                 <tr class="border-b border-slate-800 hover:bg-slate-800/30 transition-colors">
+                  <td class="py-3 px-4 font-medium">初期費用</td>
+                  <td class="py-3 px-4 text-slate-500">¥3,152,850<br><span class="text-xs">※NW刷新込</span></td>
+                  <td class="py-3 px-4">¥418,000</td>
+                  <td class="py-3 px-4 text-rose-400 font-bold">¥388,000</td>
+                </tr>
+                 <tr class="border-b border-slate-800 hover:bg-slate-800/30 transition-colors">
+                  <td class="py-3 px-4 font-medium">月額費用</td>
+                  <td class="py-3 px-4 text-slate-500">¥753,307</td>
+                  <td class="py-3 px-4">¥106,000</td>
+                  <td class="py-3 px-4 text-rose-400 font-bold">¥67,726</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="mt-4 p-4 rounded-lg bg-slate-800/50 border border-slate-700">
+            <h4 class="text-sm font-bold text-slate-300 mb-2">💡 コスト分析</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              IIJは「セコム単独」でもOmnibus全社導入が必須となるため、コストが跳ね上がります。
+              単独実施の場合でも、Link At Japan (Azure) が初期・月額ともに最安です。
+            </p>
+          </div>
+        </section>
+
+        <!-- Technical Specs -->
+        <section class="glass-panel rounded-2xl p-6">
+           <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+            <span class="w-2 h-6 bg-amber-400 rounded-full"></span>
+            技術仕様・ダウンタイム
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+             <!-- LAJ Card -->
+             <div class="p-4 rounded-xl bg-gradient-to-br from-rose-900/20 to-slate-900/50 border border-rose-500/20">
+               <div class="text-rose-400 font-bold mb-2">Link At Japan</div>
+               <div class="space-y-3">
+                 <div class="text-xs text-slate-400">
+                   <div class="uppercase tracking-wider text-[10px] mb-1">Network</div>
+                   <span class="text-slate-200">制限なし (既存ルーター可)</span>
+                 </div>
+                 <div class="text-xs text-slate-400">
+                   <div class="uppercase tracking-wider text-[10px] mb-1">Downtime</div>
+                   <span class="text-green-400 font-bold">1〜2時間 (確定)</span>
+                 </div>
+               </div>
+             </div>
+
+             <!-- USEN Card -->
+             <div class="p-4 rounded-xl bg-slate-800/40 border border-slate-700/50">
+               <div class="text-purple-400 font-bold mb-2">USEN</div>
+               <div class="space-y-3">
+                 <div class="text-xs text-slate-400">
+                   <div class="uppercase tracking-wider text-[10px] mb-1">Network</div>
+                   <span class="text-slate-200">制限なし (既存ルーター可)</span>
+                 </div>
+                 <div class="text-xs text-slate-400">
+                   <div class="uppercase tracking-wider text-[10px] mb-1">Downtime</div>
+                   <span class="text-slate-200">1〜2時間 (推定)</span>
+                 </div>
+               </div>
+             </div>
+
+             <!-- IIJ Card -->
+             <div class="p-4 rounded-xl bg-slate-800/40 border border-slate-700/50 opacity-60">
+               <div class="text-slate-400 font-bold mb-2">IIJ</div>
+               <div class="space-y-3">
+                 <div class="text-xs text-slate-400">
+                   <div class="uppercase tracking-wider text-[10px] mb-1">Network</div>
+                   <span class="text-red-400">Lock-in (Omnibus必須)</span>
+                 </div>
+                 <div class="text-xs text-slate-400">
+                   <div class="uppercase tracking-wider text-[10px] mb-1">Downtime</div>
+                   <span class="text-slate-200">約1日 (要調整)</span>
+                 </div>
+               </div>
+             </div>
+          </div>
+          
+          <div class="mt-4 text-xs text-center text-slate-400">
+            ※ ダウンタイム中も入退室カードリーダーはオフラインモードで稼働するため、業務影響はありません。
+          </div>
+        </section>
+      </div>
+
+      <!-- Right Column: Recommendation -->
+      <div class="space-y-6">
+        <section class="glass-panel rounded-2xl p-6 text-center border-t-4 border-rose-500">
+           <div class="inline-block p-3 rounded-full bg-rose-500/10 text-rose-500 mb-4">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+          <h2 class="text-2xl font-bold text-white mb-2">Recommended: LAJ</h2>
+          <p class="text-sm text-slate-300 leading-relaxed mb-6">
+            コスト最安、およびADとの統合（Azure VNet）による管理一元化が可能。ダウンタイムも最小。
+          </p>
+          <div class="grid grid-cols-2 gap-2 text-xs text-slate-400 mb-6">
+            <div class="bg-slate-800/50 p-2 rounded">初期: ¥388k</div>
+            <div class="bg-slate-800/50 p-2 rounded">月額: ¥67k</div>
+          </div>
+          <button class="w-full py-3 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold transition-all shadow-lg hover:shadow-rose-500/25">
+            View Final Report
+          </button>
+        </section>
+
+        <!-- Status -->
+        <section class="glass-panel rounded-2xl p-6">
+          <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Project Status</h3>
+          <div class="space-y-4">
+            <div class="flex items-center justify-between group">
+              <span class="text-sm text-slate-300 group-hover:text-white transition-colors">VSR接続確認</span>
+              <span class="px-2 py-0.5 rounded bg-green-500/20 text-green-400 text-xs">Done</span>
+            </div>
+             <div class="flex items-center justify-between group">
+              <span class="text-sm text-slate-300 group-hover:text-white transition-colors">ダウンタイム確約</span>
+              <span class="px-2 py-0.5 rounded bg-green-500/20 text-green-400 text-xs">Done</span>
+            </div>
+             <div class="flex items-center justify-between group">
+              <span class="text-sm text-slate-300 group-hover:text-white transition-colors">移行日調整</span>
+              <span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 text-xs animate-pulse">Pending</span>
+            </div>
+          </div>
+        </section>
+      </div>
+
+    </div>
+
+    <footer class="text-center text-slate-600 text-xs py-10">
+      <p>Internal DX Portal • Project 15.02 • Restored from 2026-01-14 Dataset</p>
+    </footer>
+    
+  </div>
+</body>
+</html>

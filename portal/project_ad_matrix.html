@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADクラウド化 3社権限・責任分界点比較表</title>
+    <link rel="stylesheet" href="assets/toru_custom_design.css">
+    <style>
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        h1 { text-align: center; color: #2c3e50; margin-bottom: 30px; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #2c3e50; margin-top: 40px; font-size: 1.4em; }
+
+        /* Metaphor Cards */
+        .metaphor-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .card {
+            flex: 1;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background: #fafafa;
+        }
+        .card.iij { border-left: 8px solid #2ecc71; }
+        .card.usen { border-left: 8px solid #f39c12; }
+        .card.link { border-left: 8px solid #3498db; background: #f0f7ff; }
+        .card h3 { margin: 0 0 10px 0; font-size: 1.1em; }
+        .card p { margin: 0; font-size: 0.9em; }
+
+        /* SVG Styles */
+        .svg-wrapper {
+            width: 100%;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 10px;
+            overflow-x: auto;
+        }
+
+        /* Table Styles */
+        .comp-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .comp-table th, .comp-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            font-size: 0.95em;
+        }
+        .comp-table th { background: #f8f9fa; text-align: center; }
+        .highlight { background: #fff9c4; font-weight: bold; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+<div class="container max-w-5xl mx-auto">
+    <!-- Action Bar -->
+    <div class="action-bar mb-6 rounded-lg" style="margin-bottom: 24px; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; background: white; border: 1px solid #e2e8f0;">
+        <a href="?page=index" class="back-btn" style="display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: #1e293b; color: white; border-radius: 6px; font-size: 13px; font-weight: 700; text-decoration: none;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M15 18l-6-6 6-6"></path>
+            </svg>
+            プロジェクト一覧へ戻る
+        </a>
+        <div class="flex items-center gap-3" style="display: flex; align-items: center; gap: 12px;">
+            <span class="tag tag-blue" style="padding: 4px 10px; background: #dbeafe; color: #1e40af; border-radius: 4px; font-size: 11px; font-weight: 900;">PHASE 2</span>
+            <span class="tag tag-slate-800" style="padding: 4px 10px; background: #1e293b; color: white; border-radius: 4px; font-size: 11px; font-weight: 900;">MATRIX</span>
+        </div>
+    </div>
+
+    <h1>ADクラウド化 3社権限・責任分界点比較表</h1>
+
+    <!-- 1. ひとことで言うと -->
+    <div class="metaphor-container">
+        <div class="card iij">
+            <h3>IIJ：お任せ「ホテル」</h3>
+            <p>管理負担が極めて少なく、障害対応を含め全レイヤーをプロが責任を持って管理。</p>
+        </div>
+        <div class="card usen">
+            <h3>USEN：自力「マンション」</h3>
+            <p>建物（AWS基盤）の管理はUSEN。<strong>部屋（OS・AD）の管理・トラブル対応は自社責任。</strong></p>
+        </div>
+        <div class="card link">
+            <h3>LinkAtJapan：伴走「コンシェルジュ」</h3>
+            <p><strong>監視・パッチ適用等のOS/インフラ運用実務をプロが代行。</strong>（必要な権限は保持）</p>
+        </div>
+    </div>
+
+    <!-- 2. 図解（構成と役割） -->
+    <h2>図解：誰がどこまで面倒を見てくれるか</h2>
+    <div class="svg-wrapper">
+        <svg viewBox="0 0 960 650" xmlns="http://www.w3.org/2000/svg">
+            
+            <!-- レイヤーラベル（左端） -->
+            <rect x="0" y="80" width="80" height="120" fill="#fcfcfc" stroke="#eee"/>
+            <text x="40" y="145" text-anchor="middle" font-size="12" fill="#777" font-weight="bold">ADアプリ<tspan x="40" dy="15">（ユーザー管理）</tspan></text>
+            
+            <rect x="0" y="210" width="80" height="150" fill="#f8f9fa" stroke="#eee"/>
+            <text x="40" y="275" text-anchor="middle" font-size="12" fill="#777" font-weight="bold">サーバー・OS<tspan x="40" dy="15">（パッチ・監視）</tspan></text>
+            
+            <rect x="0" y="370" width="80" height="100" fill="#eee" stroke="#eee"/>
+            <text x="40" y="425" text-anchor="middle" font-size="12" fill="#777" font-weight="bold">インフラ基盤<tspan x="40" dy="15">（クラウド本体）</tspan></text>
+
+            <!-- 凡例 -->
+            <g transform="translate(100, 20)">
+                <circle cx="10" cy="10" r="8" fill="#e74c3c"/>
+                <text x="25" y="15" font-size="12">情シス（自社）</text>
+                <circle cx="130" cy="10" r="8" fill="#3498db"/>
+                <text x="145" y="15" font-size="12">ベンダー（プロ）</text>
+                <rect x="250" y="3" width="15" height="12" fill="#333"/>
+                <text x="270" y="15" font-size="12">管理権限（鍵）</text>
+            </g>
+
+            <!-- 1. IIJ (PaaS) -->
+            <g transform="translate(100, 80)">
+                <text x="135" y="-10" text-anchor="middle" font-weight="bold" fill="#2ecc71">IIJ (PaaS)</text>
+                <rect x="0" y="0" width="270" height="400" fill="none" stroke="#2ecc71" stroke-width="1"/>
+                
+                <!-- AD Layer -->
+                <rect x="10" y="10" width="250" height="100" fill="#fff" stroke="#ddd"/>
+                <circle cx="80" cy="60" r="10" fill="#e74c3c"/> <!-- User in App -->
+                <text x="95" y="65" font-size="11">操作のみ</text>
+
+                <!-- Barrier -->
+                <line x1="10" y1="120" x2="260" y2="120" stroke="#c0392b" stroke-width="4" stroke-dasharray="10,5"/>
+                <text x="135" y="145" text-anchor="middle" font-size="11" fill="#c0392b" font-weight="bold">ここから下は見えません</text>
+
+                <!-- OS Layer (Vendor Only) -->
+                <rect x="10" y="160" width="250" height="100" fill="#eee" stroke="#ccc"/>
+                <circle cx="135" cy="210" r="12" fill="#3498db"/>
+                <text x="135" y="240" text-anchor="middle" font-size="11" fill="#3498db">IIJが全自動運用</text>
+
+                <!-- Infra Layer -->
+                <rect x="10" y="300" width="250" height="80" fill="#eee" stroke="#ccc"/>
+                <text x="135" y="345" text-anchor="middle" font-size="11" fill="#999">IIJ独自基盤</text>
+                
+                <!-- Annotation -->
+                <foreignObject x="0" y="420" width="270" height="120">
+                    <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px; color:#555; background:#f9f9f9; padding:10px; border-radius:4px; border:1px solid #eee;">
+                        <strong>【完全お任せ型】</strong><br/>
+                        AD操作は専用画面のみ。<br/>
+                        OSやインフラには一切触れず、すべてIIJに管理を委任するスタイル。
+                    </div>
+                </foreignObject>
+            </g>
+
+            <!-- 2. USEN (AWS) -->
+            <g transform="translate(390, 80)">
+                <text x="135" y="-10" text-anchor="middle" font-weight="bold" fill="#f39c12">USEN (AWS)</text>
+                <rect x="0" y="0" width="270" height="400" fill="none" stroke="#f39c12" stroke-width="1"/>
+
+                <!-- AD Layer -->
+                <rect x="10" y="10" width="250" height="100" fill="#fff" stroke="#ddd"/>
+                <circle cx="135" cy="60" r="10" fill="#e74c3c"/>
+
+                <!-- OS Layer (User Alone) -->
+                <rect x="10" y="130" width="250" height="150" rx="10" fill="#fff" stroke="#f39c12" stroke-width="2"/>
+                <circle cx="135" cy="180" r="15" fill="#e74c3c"/>
+                <rect x="130" y="155" width="10" height="8" fill="#333"/> <!-- Key -->
+                <!-- RDP Icon -->
+                <path d="M125 195 L145 195 L145 205 L125 205 Z M135 195 L135 185 M140 190 L130 190" fill="#e74c3c" stroke="#e74c3c" stroke-width="1"/>
+                <text x="135" y="215" text-anchor="middle" font-size="11" fill="#e74c3c" font-weight="bold">RDPで直接操作</text>
+                <text x="135" y="235" text-anchor="middle" font-size="10" fill="#777">（OS内部は自社管理）</text>
+
+                <!-- Barrier -->
+                <line x1="10" y1="290" x2="260" y2="290" stroke="#c0392b" stroke-width="4" stroke-dasharray="10,5"/>
+                <text x="135" y="285" text-anchor="middle" font-size="10" fill="#c0392b" font-weight="bold">ここから下は操作不可</text>
+
+                <!-- Infra Layer -->
+                <rect x="10" y="300" width="250" height="80" fill="#eee" stroke="#ccc"/>
+                <circle cx="135" cy="340" r="10" fill="#3498db" opacity="0.4"/>
+                <text x="135" y="365" text-anchor="middle" font-size="10" fill="#999">AWS基盤はUSEN管理</text>
+
+                <!-- Annotation -->
+                <foreignObject x="0" y="420" width="270" height="120">
+                    <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px; color:#555; background:#fffbf0; padding:10px; border-radius:4px; border:1px solid #ffeebb;">
+                        <strong>【分離型】</strong><br/>
+                        RDPでOSに入り操作可能。<br/>
+                        OS設定の自由度は高いが、<strong>設定変更やトラブル対応の責任も自社（自己責任）</strong>となる。
+                    </div>
+                </foreignObject>
+            </g>
+
+            <!-- 3. LinkAtJapan (Azure) -->
+            <g transform="translate(680, 80)">
+                <text x="135" y="-10" text-anchor="middle" font-weight="bold" fill="#3498db">LinkAtJapan (Azure)</text>
+                <rect x="0" y="0" width="270" height="400" fill="#f0f7ff" stroke="#3498db" stroke-width="2"/>
+
+                <!-- Management Box (Expanded to ALL 3 layers - The "Concierge" scope) -->
+                <rect x="5" y="5" width="260" height="385" rx="10" fill="#fff" stroke="#3498db" stroke-width="2" stroke-dasharray="5,2"/>
+
+                <!-- AD Layer -->
+                <rect x="15" y="15" width="240" height="90" fill="#fcfcfc" stroke="#eee"/>
+                <circle cx="135" cy="50" r="12" fill="#e74c3c"/>
+                <rect x="130" y="25" width="10" height="8" fill="#333"/> <!-- Key -->
+                <text x="135" y="80" text-anchor="middle" font-size="10" fill="#e74c3c">情シスが主導</text>
+
+                <!-- Connecting Line / Shared Area -->
+                <line x1="20" y1="115" x2="250" y2="115" stroke="#3498db" stroke-width="1" stroke-dasharray="2,2"/>
+
+                <!-- OS Layer (Co-managed) -->
+                <circle cx="110" cy="180" r="15" fill="#e74c3c"/>
+                <circle cx="160" cy="180" r="15" fill="#3498db"/>
+                <rect x="105" y="155" width="10" height="8" fill="#333"/> <!-- Key for User -->
+                <rect x="155" y="155" width="10" height="8" fill="#333"/> <!-- Key for Pro -->
+                
+                <text x="135" y="215" text-anchor="middle" font-size="11" fill="#3498db" font-weight="bold">プロが実務を代行</text>
+                <text x="135" y="235" text-anchor="middle" font-size="10" fill="#3498db">（パッチ・監視・英語メール）</text>
+                
+                <!-- Speech Bubble -->
+                <path d="M 180 170 L 210 145 L 265 145 L 265 180 L 210 180 Z" fill="#e3f2fd" stroke="#3498db"/>
+                <text x="237" y="160" text-anchor="middle" font-size="10" fill="#3498db" font-weight="bold">
+                    <tspan x="237" dy="0">お任せ</tspan>
+                    <tspan x="237" dy="12">下さい！</tspan>
+                </text>
+
+                <!-- Infra Layer (Managed on behalf of user) -->
+                <rect x="15" y="300" width="240" height="80" fill="#eee" stroke="#3498db" stroke-width="1" stroke-dasharray="2,2"/>
+                <circle cx="110" cy="340" r="10" fill="#3498db" opacity="0.4"/> <!-- Azure Background -->
+                <circle cx="160" cy="340" r="10" fill="#3498db"/> <!-- Link Support -->
+                <text x="135" y="365" text-anchor="middle" font-size="10" fill="#3498db" font-weight="bold">Azure基盤＋日本語サポート</text>
+                <text x="135" y="378" text-anchor="middle" font-size="9" fill="#777">※共同管理も可能</text>
+
+                <!-- Annotation -->
+                <foreignObject x="0" y="420" width="270" height="120">
+                    <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px; color:#555; background:#f0f7ff; padding:10px; border-radius:4px; border:1px solid #d0e7ff;">
+                        <strong>【伴走型】</strong><br/>
+                        RDPでAD/OSを操作可能。<br/>
+                        Azure基盤・OS共に自社でフル権限を持つ。<strong>ベンダーも同じ特権IDを持ち、常に横で支えてくれる。</strong>
+                    </div>
+                </foreignObject>
+            </g>
+        </svg>
+    </div>
+
+    <!-- 3. 詳細比較（実務の視点） -->
+    <h2>実務上のメリット・デメリット</h2>
+    <table class="comp-table">
+        <thead>
+            <tr>
+                <th>比較項目</th>
+                <th>IIJ (PaaS)</th>
+                <th>USEN (AWS)</th>
+                <th>LinkAtJapan (Azure)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>管理負担<br>(パッチ・監視)</th>
+                <td><span style="color:#27ae60">◎ ゼロ</span><br>IIJ側で自動的に実施</td>
+                <td><span style="color:#f39c12">△ 一部自社</span><br>（時間外パッチは有償）</td>
+                <td><span style="color:#27ae60">◎ ほぼゼロ</span><br>手順に基づき実務を代行</td>
+            </tr>
+            <tr>
+                <th>緊急時の対応</th>
+                <td><span style="color:#777">× 操作不可</span><br>IIJの対応を待つのみ</td>
+                <td><span style="color:#f39c12">△ 連携対応</span><br>インフラはUSEN。<br>OS内は自社主体（支援あり）。</td>
+                <td><span style="color:#27ae60">◎ 並走対応</span><br>プロと共同作業可</td>
+            </tr>
+            <tr>
+                <th>管理コンソール<br>(クラウド基盤)</th>
+                <td><span style="color:#777">提供なし</span><br>(専用ポータルのみ)</td>
+                <td><span style="color:#c0392b">利用不可</span><br>(USEN管理)</td>
+                <td><span style="color:#3498db">◎ 共同管理</span><br>(Azure Portal)</td>
+            </tr>
+            <tr>
+                <th>ADへのアクセス<br>・設定方法</th>
+                <td>専用の管理ツール<br>(一部制限あり)</td>
+                <td>RDPで直接操作<br><span style="color:#c0392b">(AWS権限なし)</span></td>
+                <td>Azure Bastion経由での<br>リモートデスクトップ (RDP)接続<br>(運用代行も可)</td>
+            </tr>
+            <tr>
+                <th>英語アラート対応</th>
+                <td>不要</td>
+                <td><span style="color:#f39c12">△ ベンダーから通知のみ</span><br>（調整可能）</td>
+                <td><span style="color:#27ae60">○ プロが翻訳</span><br>必要なものだけ通知</td>
+            </tr>
+            <tr>
+                <th>脱属人化・<br>持続可能性</th>
+                <td><span style="color:#27ae60">◎ 最高</span><br>全てベンダー任せで完結</td>
+                <td><span style="color:#f39c12">△ 分離型</span><br>インフラはUSEN。<br>AD/OSの運用責任は自社。</td>
+                <td><span style="color:#27ae60">○ 高い</span><br>OS・インフラ運用をプロが担保</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

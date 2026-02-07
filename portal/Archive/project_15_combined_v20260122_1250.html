@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📦</text></svg>">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>AD+SECOM Combined Cloud Comparison (最終報告版 v20260122_1250)</title>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --accent: #10b981;
+            --bg-body: #f1f5f9;
+            --surface: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius-lg: 16px;
+        }
+
+        body {
+            font-family: 'Outfit', 'Inter', "Noto Sans JP", sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .version-header {
+            background: #1e293b;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 99px;
+            margin-bottom: 30px;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header {
+            background: white;
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 40px;
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0;
+            color: #0f172a;
+            line-height: 1.2;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 35px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0 0 25px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title::before {
+            content: "";
+            width: 6px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            table-layout: fixed;
+        }
+
+        th, td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+            word-wrap: break-word;
+        }
+
+        th {
+            background: #f8fafc;
+            color: #475569;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .border-col {
+            border-left: 1px solid var(--border);
+        }
+
+        .total-row {
+            background: #1e293b !important;
+            color: white !important;
+            font-weight: 800;
+        }
+
+        .btn-portal {
+            display: inline-block;
+            padding: 12px 24px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        .info-box {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .scope-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .scope-item {
+            font-size: 0.8rem;
+            color: #475569;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .scope-item strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #1e293b;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="version-header">
+            <div style="font-weight: 800;">PROD-VER-42.5 (最終統合報告 v20260122_1250)</div>
+            <div>全項目の整合性検証および責任範囲を含む完全統合レポート | 更新: 2026-01-22 12:50</div>
+        </div>
+
+        <header class="header">
+            <div>
+                <div style="background: #1e293b; color: white; display: inline-block; padding: 4px 12px; border-radius: 6px; font-weight: 700; font-size: 0.8rem; margin-bottom: 15px;">TECHNICAL DATA REPORT</div>
+                <h1>ADサーバー + セコム入退室管理<br>費用・責任・構成 統合比較</h1>
+            </div>
+            <div style="text-align: right;">
+                <? var url = ScriptApp.getService().getUrl(); ?>
+                <a href="<?=url?>?page=home" class="btn-portal">← ポータルに戻る</a>
+            </div>
+        </header>
+
+        <!-- 1. TCO Section (Restored) -->
+        <section class="section-card">
+            <div class="section-title">📊 5年間トータルコスト (TCO) 一括比較</div>
+            <div id="chart-container" style="position: relative; height: 350px;">
+                <div id="combined-chart" style="width: 100%; height: 100%;"></div>
+            </div>
+        </section>
+
+        <!-- 2. Detailed Cost Matrix (Restored) -->
+        <section class="section-card">
+            <div class="section-title">💰 費用内訳 マトリクス (税抜 / SECOM費用込)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">費目</th>
+                        <th style="width: 25%;" class="border-col">IIJ (IIJ GIO)</th>
+                        <th style="width: 25%;" class="border-col">USEN (AWS)</th>
+                        <th style="width: 25%;" class="border-col">LAJ (Azure)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>ADサーバー構築</strong></td>
+                        <td class="border-col">¥1,422,750</td>
+                        <td class="border-col">¥860,000</td>
+                        <td class="border-col">¥1,555,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>セコムサーバー構築</strong></td>
+                        <td class="border-col">¥673,000</td>
+                        <td class="border-col">¥318,000</td>
+                        <td class="border-col">¥138,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AD月額運用</strong></td>
+                        <td class="border-col">¥174,750</td>
+                        <td class="border-col">¥124,300</td>
+                        <td class="border-col">¥102,051</td>
+                    </tr>
+                    <tr>
+                        <td><strong>セコム月額運用</strong></td>
+                        <td class="border-col">¥84,540</td>
+                        <td class="border-col">¥114,900</td>
+                        <td class="border-col">¥66,376</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td style="text-align: right; font-size: 1.1rem;">5年総額 (TCO)</td>
+                        <td style="font-size: 1.1rem;" class="border-col">¥17,851,150</td>
+                        <td style="font-size: 1.1rem;" class="border-col">¥15,728,000</td>
+                        <td style="font-size: 1.1rem;" class="border-col">¥11,996,620</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- 3. Vendor Operational Scope (Merged) -->
+        <section class="section-card">
+            <div class="section-title">📝 ベンダー側の移行実作業（責任範囲）の整理</div>
+            <div class="scope-grid">
+                <div class="scope-item">
+                    <strong>IIJ (フルマネージド)</strong>
+                    <ul style="padding-left: 15px;">
+                        <li>基盤先行構築・Bridge同期</li>
+                        <li>Managed DNSによる一律切替</li>
+                        <li>ディレクトリ正常性監視</li>
+                    </ul>
+                </div>
+                <div class="scope-item">
+                    <strong>USEN (AWS / 並行稼働)</strong>
+                    <ul style="padding-left: 15px;">
+                        <li>AWS EC2/VPN(VSR)構築</li>
+                        <li>新旧AD間の複製同期監視</li>
+                        <li><strong>設定手順(logic)の提供</strong></li>
+                    </ul>
+                </div>
+                <div class="scope-item">
+                    <strong>LAJ (Azure / 計画停止)</strong>
+                    <ul style="padding-left: 15px;">
+                        <li> Azure VM基盤構築/VPN設定</li>
+                        <li>休日データ移行・切替作業</li>
+                        <li>移行後のNW/サーバー疎通確認</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Execution Strategy -->
+        <section class="section-card" style="border-left: 6px solid #1e293b;">
+            <div class="section-title">📊 実行に向けた推奨ステップ</div>
+            <div style="font-size: 0.9rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 12px;">
+                        <strong style="color: #3b82f6;">① 社内POC検証</strong><br>
+                        既存LANScopeで特定PCのDNS設定変更コマンドが反映されるか先に内製検証する。
+                    </div>
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 12px;">
+                        <strong style="color: #3b82f6;">② 内閣1社への詳細要請</strong><br>
+                        内定後に「正しい設定値のロジック」提出を求め、技術の裏付けを取る。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer style="text-align: center; margin-top: 50px; color: var(--text-muted); font-size: 0.8rem; padding-bottom: 20px;">
+            Technical Data Report Visualization • © 2026 Information System Department
+        </footer>
+    </div>
+
+    <script>
+        const data = [
+            { label: "IIJ GIO", total: 17851150, color: "#94a3b8" },
+            { label: "USEN (AWS)", total: 15728000, color: "#94a3b8" },
+            { label: "Link-At-Japan", total: 11996620, color: "#94a3b8" }
+        ];
+
+        function drawChart() {
+            const container = d3.select("#combined-chart");
+            container.selectAll("*").remove();
+            const bbox = container.node().getBoundingClientRect();
+            const width = bbox.width;
+            const height = bbox.height;
+            const margin = { top: 10, right: 150, bottom: 40, left: 120 };
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+
+            const svg = container.append("svg").attr("width", width).attr("height", height);
+            const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+            const yScale = d3.scaleBand().domain(data.map(d => d.label)).range([0, innerHeight]).padding(0.4);
+            const xScale = d3.scaleLinear().domain([0, d3.max(data, d => d.total)]).range([0, innerWidth]);
+
+            g.append("g").call(d3.axisLeft(yScale).tickSize(0)).selectAll("text").style("font-size", "14px").style("font-weight", "700");
+            g.append("g").attr("transform", `translate(0,${innerHeight})`).call(d3.axisBottom(xScale).ticks(5).tickFormat(d => `¥${(d/1000000).toFixed(1)}M`));
+
+            const rows = g.selectAll(".row").data(data).enter().append("g").attr("class", "row");
+            rows.append("rect").attr("y", d => yScale(d.label)).attr("x", 0).attr("height", yScale.bandwidth()).attr("width", 0).attr("fill", d => d.color).attr("rx", 6).transition().duration(1000).attr("width", d => xScale(d.total));
+            rows.append("text").attr("y", d => yScale(d.label) + yScale.bandwidth()/2 + 6).attr("x", d => xScale(d.total) + 10).text(d => `¥${d.total.toLocaleString()}`).style("font-weight", "800").style("fill", "#1e293b");
+        }
+        window.onload = drawChart;
+    </script>
+</body>
+
+</html>

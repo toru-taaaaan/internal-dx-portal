@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://lh3.googleusercontent.com/d/1X0D8B4V9a_v9-5c7Z7X-2_8f5b4d7s6e" type="image/png">
+    <!-- Placeholder or use Emoji -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 40px;
+            color: var(--text-color);
+        }
+
+        .header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin: 0;
+        }
+
+        .header p {
+            color: #6b7280;
+            margin-top: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #e5e7eb;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+
+        .card h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+            color: #111827;
+        }
+
+        .card p {
+            color: #6b7280;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background-color: #eff6ff;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #dbeafe;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .tag-app {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        /* Green */
+        .tag-script {
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+
+        /* Gray */
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <? var url = ScriptApp.getService().getUrl(); ?>
+        <h1>Internal DX Portal</h1>
+        <p>Akiba Holdings - AI Citizen Developer Dashboard</p>
+    </div>
+
+
+    <div class="header"
+        style="margin-top: 60px; margin-bottom: 30px; text-align: left; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">
+        <h2 style="font-size: 1.8rem; font-weight: 700; color: #111827; margin: 0;">Active Projects</h2>
+    </div>
+
+    <div class="grid">
+        <!-- 15.01_ADクラウド化 -->
+        <div class="card">
+            <div class="card-icon">☁️</div>
+            <span class="tag tag-script">Project</span>
+            <h2>15.01 ADクラウド化</h2>
+            <p>Active Directoryのクラウド移行プロジェクト</p>
+            <a href="<?= url ?>?page=project_15.01_ADクラウド化" class="btn">View Project →</a>
+        </div>
+
+        <!-- 15.02_セコム入退室クラウド化 -->
+        <div class="card">
+            <div class="card-icon">🔒</div>
+            <span class="tag tag-script">Project</span>
+            <h2>15.02 セコム入退室クラウド化</h2>
+            <p>入退室管理システムのクラウド化</p>
+            <a href="<?= url ?>?page=project_15.02_セコム入退室クラウド化" class="btn">View Project →</a>
+        </div>
+
+        <!-- 15.03_ネットワークインフラ刷新 -->
+        <div class="card">
+            <div class="card-icon">🌐</div>
+            <span class="tag tag-script">Project</span>
+            <h2>15.03 ネットワークインフラ刷新</h2>
+            <p>社内ネットワーク環境の再構築と最適化</p>
+            <a href="<?= url ?>?page=project_15.03_ネットワークインフラ刷新" class="btn">View Project →</a>
+        </div>
+
+        <!-- 15.04_社内DX改革 -->
+        <div class="card">
+            <div class="card-icon">⚡</div>
+            <span class="tag tag-script">Project</span>
+            <h2>15.04 社内DX改革</h2>
+            <p>全社的なデジタルトランスフォーメーションの推進</p>
+            <a href="<?= url ?>?page=project_15.04_社内DX改革" class="btn">View Project →</a>
+        </div>
+
+        <!-- 15.05_GoogleDrive啓蒙活動 -->
+        <div class="card">
+            <div class="card-icon">📂</div>
+            <span class="tag tag-script">Project</span>
+            <h2>15.05 GoogleDrive啓蒙活動</h2>
+            <p>Google Driveの利活用促進とルールの整備</p>
+            <a href="<?= url ?>?page=project_15.05_GoogleDrive啓蒙活動" class="btn">View Project →</a>
+        </div>
+
+        <!-- 15.06_グループアドレス整理 -->
+        <div class="card">
+            <div class="card-icon">📧</div>
+            <span class="tag tag-script">Project</span>
+            <h2>15.06 グループアドレス整理</h2>
+            <p>メーリングリストおよびグループアドレスの棚卸し</p>
+            <a href="<?= url ?>?page=project_15.06_グループアドレス整理" class="btn">View Project →</a>
+        </div>
+
+        <!-- 15.07_経理自動化 -->
+        <div class="card">
+            <div class="card-icon">💰</div>
+            <span class="tag tag-script">Project</span>
+            <h2>15.07 経理自動化</h2>
+            <p>経理プロセスの自動化と効率化</p>
+            <a href="<?= url ?>?page=project_15.07_経理自動化" class="btn">View Project →</a>
+        </div>
+
+        <!-- 15.08_GeminiEnterprise導入 -->
+        <div class="card">
+            <div class="card-icon">🤖</div>
+            <span class="tag tag-script">Project</span>
+            <h2>15.08 GeminiEnterprise導入</h2>
+            <p>法人向けGeminiの導入と活用支援</p>
+            <a href="<?= url ?>?page=project_15.08_GeminiEnterprise導入" class="btn">View Project →</a>
+        </div>
+
+        <!-- 15.09_WorkspaceFlows活用 -->
+        <div class="card">
+            <div class="card-icon">🔄</div>
+            <span class="tag tag-script">Project</span>
+            <h2>15.09 WorkspaceFlows活用</h2>
+            <p>Google Workspace連携ワークフローの構築</p>
+            <a href="<?= url ?>?page=project_15.09_WorkspaceFlows活用" class="btn">View Project →</a>
+        </div>
+
+        <!-- 15.10_情報システム部内DX -->
+        <div class="card">
+            <div class="card-icon">💻</div>
+            <span class="tag tag-script">Project</span>
+            <h2>15.10 情報システム部内DX</h2>
+            <p>情シス業務自体のDXと高度化</p>
+            <a href="<?= url ?>?page=project_15.10_情報システム部内DX" class="btn">View Project →</a>
+        </div>
+
+        <!-- 15.11_困りごとアンケート2025 -->
+        <div class="card">
+            <div class="card-icon">📊</div>
+            <span class="tag tag-script">Project</span>
+            <h2>15.11 困りごとアンケート2025</h2>
+            <p>アンケート結果の分析と施策立案</p>
+            <a href="<?= url ?>?page=project_15.11_困りごとアンケート2025" class="btn">View Project →</a>
+        </div>
+
+        <!-- 15.12_AIチャンピオン推進 -->
+        <div class="card">
+            <div class="card-icon">🏆</div>
+            <span class="tag tag-script">Project</span>
+            <h2>15.12 AIチャンピオン推進</h2>
+            <p>社内AI推進リーダーの育成とコミュニティ</p>
+            <a href="<?= url ?>?page=project_15.12_AIチャンピオン推進" class="btn">View Project →</a>
+        </div>
+
+        <!-- 15.13_Chat_Knowledge -->
+        <div class="card">
+            <div class="card-icon">💬</div>
+            <span class="tag tag-script">Project</span>
+            <h2>15.13 Chat Knowledge</h2>
+            <p>チャットデータのナレッジ化プロジェクト</p>
+            <a href="<?= url ?>?page=project_15.13_Chat_Knowledge" class="btn">View Project →</a>
+        </div>
+    </div>
+
+    <div class="header"
+        style="margin-top: 60px; margin-bottom: 30px; text-align: left; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">
+        <h2 style="font-size: 1.8rem; font-weight: 700; color: #6b7280; margin: 0;">Inactive Projects</h2>
+    </div>
+
+    <div class="grid" style="opacity: 0.8;">
+        <!-- 11.04_AI導入・活用 -->
+        <div class="card" style="background-color: #f9fafb;">
+            <div class="card-icon" style="filter: grayscale(100%);">🧠</div>
+            <span class="tag" style="background-color: #e5e7eb; color: #374151;">Archived</span>
+            <h2 style="color: #4b5563;">11.04 AI導入・活用</h2>
+            <p>初期のAI導入検討および活用実証実験フェーズ</p>
+            <a href="<?= url ?>?page=project_11.04_AI導入・活用" class="btn"
+                style="background-color: #f3f4f6; color: #4b5563;">View
+                Archive →</a>
+        </div>
+
+        <!-- SD-WAN_Comparison -->
+        <div class="card" style="background-color: #f9fafb;">
+            <div class="card-icon" style="filter: grayscale(100%);">🌐</div>
+            <span class="tag" style="background-color: #e5e7eb; color: #374151;">Archived</span>
+            <h2 style="color: #4b5563;">SD-WAN Comparison</h2>
+            <p>SD-WAN製品選定と比較検討の記録</p>
+            <a href="<?= url ?>?page=project_SD-WAN_Comparison" class="btn"
+                style="background-color: #f3f4f6; color: #4b5563;">View Archive →</a>
+        </div>
+    </div>
+</body>
+
+</html>

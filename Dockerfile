@@ -12,7 +12,7 @@ RUN npm install --production
 
 # アプリケーションコードをコピー
 COPY server.js .
-COPY ../社内DXポータル ./social-dx-portal
+COPY portal ./portal
 
 # ポート 8080 を expose
 EXPOSE 8080

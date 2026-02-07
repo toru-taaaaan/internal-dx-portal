@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Command Center | Internal DX Portal</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="assets/portal_nexus.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+
+  <div class="layout-wrapper">
+    <!-- Unified Sidebar -->
+    <aside class="sidebar">
+      <header class="sidebar-header">
+        <h1>統合指揮センター HUB</h1>
+        <p>MASTER COMMAND CENTER V2.2</p>
+      </header>
+      <nav>
+        <div class="nav-label-small">トップ・ナビゲーション</div>
+        <a href="?page=landing" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+          ポータルホーム
+        </a>
+        <a href="?page=index" class="nav-link active">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          プロジェクト
+        </a>
+        <a href="?page=executive_hub" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+          全体課題管理表
+        </a>
+        <a href="?page=evaluation_sheet" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+          人事考課原本 (最新版)
+        </a>
+        <a href="?page=daily_log" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          活動全史 (ログ)
+        </a>
+      </nav>
+      <footer class="sidebar-footer">
+        <p>User: 丹治 統<br>Last Sync: 1/24 21:00</p>
+      </footer>
+    </aside>
+
+    <main class="main-scroll">
+      <div class="p-12">
+        <header class="mb-8 mt-4">
+          <h1 class="text-2xl font-black text-slate-700 flex items-center gap-2">
+            <span class="w-2 h-6 bg-slate-700 rounded-sm"></span>
+            プロジェクト: 基盤強靭化
+          </h1>
+        </header>
+
+        <div class="space-y-12">
+
+          <!-- Phase 1 Section -->
+          <section class="directory-section">
+            <div class="flex items-center gap-3 mb-4 pl-2 border-l-4 border-l-cyan-400">
+              <h2 class="text-sm font-black text-slate-500 uppercase tracking-widest">Phase 1: Current Assessment</h2>
+            </div>
+            
+            <a href="?page=project_15_14" class="p-card card-cyan">
+              <div class="p-card-badge">
+                <span class="p-card-tag">PHASE 1</span>
+                <div class="p-card-id">PROJ-15.14</div>
+              </div>
+              <div class="p-card-main">
+                <div class="p-card-title">Infra Assessment</div>
+                <div class="p-card-desc">現状のインフラ環境（サーバー、ネットワーク）の可視化と評価調査。</div>
+              </div>
+              <div class="p-card-arrow">
+                <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
+              </div>
+            </a>
+          </section>
+
+          <!-- Phase 2 Section -->
+          <section class="directory-section">
+            <div class="flex items-center gap-3 mb-4 pl-2 border-l-4 border-l-blue-500">
+              <h2 class="text-sm font-black text-slate-500 uppercase tracking-widest">Phase 2: Infrastructure Refresh</h2>
+            </div>
+            
+            <a href="?page=project_15_01" class="p-card card-blue">
+              <div class="p-card-badge">
+                <span class="p-card-tag">PHASE 2</span>
+                <div class="p-card-id">PROJ-15.01</div>
+              </div>
+              <div class="p-card-main">
+                <div class="p-card-title">AD Cloud Lift</div>
+                <div class="p-card-desc">Active Directoryクラウド移行とBCP対策。</div>
+              </div>
+              <div class="p-card-arrow">
+                <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
+              </div>
+            </a>
+
+            <a href="?page=project_15_02" class="p-card card-blue">
+              <div class="p-card-badge">
+                <span class="p-card-tag">PHASE 2</span>
+                <div class="p-card-id">PROJ-15.02</div>
+              </div>
+              <div class="p-card-main">
+                <div class="p-card-title">Secom Cloud</div>
+                <div class="p-card-desc">入退室管理システムのクラウド移行。</div>
+              </div>
+              <div class="p-card-arrow">
+                <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
+              </div>
+            </a>
+
+            <a href="?page=project_15_combined" class="p-card card-purple">
+              <div class="p-card-badge">
+                <span class="p-card-tag">BUNDLE</span>
+                <div class="p-card-id">ANALYSIS</div>
+              </div>
+              <div class="p-card-main">
+                <div class="p-card-title">AD + SECOM 統合比較</div>
+                <div class="p-card-desc">3社同時依頼時のTCO・シナリオ比較分析。</div>
+              </div>
+              <div class="p-card-arrow">
+                <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
+              </div>
+            </a>
+
+            <a href="?page=project_ad_scenarios" class="p-card card-blue">
+              <div class="p-card-badge">
+                <span class="p-card-tag">STRATEGY</span>
+                <div class="p-card-id">AD-SCENARIO</div>
+              </div>
+              <div class="p-card-main">
+                <div class="p-card-title">AD移行シナリオ比較</div>
+                <div class="p-card-desc">AD vs ハイブリッド vs Entra ID の将来像比較。</div>
+              </div>
+              <div class="p-card-arrow">
+                <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
+              </div>
+            </a>
+
+            <a href="?page=project_ad_matrix" class="p-card card-blue">
+              <div class="p-card-badge">
+                <span class="p-card-tag">MATRIX</span>
+                <div class="p-card-id">AD-RESP-MAT</div>
+              </div>
+              <div class="p-card-main">
+                <div class="p-card-title">3社権限・責任分界点</div>
+                <div class="p-card-desc">IIJ, USEN, LAJ の運用・権限範囲の比較表。</div>
+              </div>
+              <div class="p-card-arrow">
+                <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
+              </div>
+            </a>
+
+            <a href="?page=line_dashboard" class="p-card card-blue">
+              <div class="p-card-badge">
+                <span class="p-card-tag">VISUAL</span>
+                <div class="p-card-id">NETWORK</div>
+              </div>
+              <div class="p-card-main">
+                <div class="p-card-title">SD-WAN Map</div>
+                <div class="p-card-desc">SD-WAN vs Vario Secure 拠点間接続比較マップ。</div>
+              </div>
+              <div class="p-card-arrow">
+                <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
+              </div>
+            </a>
+          </section>
+
+          <!-- Phase 3 Section -->
+          <section class="directory-section">
+            <div class="flex items-center gap-3 mb-4 pl-2 border-l-4 border-l-purple-500">
+              <h2 class="text-sm font-black text-slate-500 uppercase tracking-widest">Phase 3: AI Transformation</h2>
+            </div>
+            
+            <a href="?page=project_15_12" class="p-card card-purple p-card-lg">
+              <div class="p-card-badge">
+                <span class="p-card-tag">PHASE 3</span>
+                <div class="p-card-id">PROJ-15.12</div>
+              </div>
+              <div class="p-card-main">
+                <div class="p-card-title">AI Champion Initiative</div>
+                <div class="p-card-desc">AI推進リーダー育成とコミュニティ運営、および全社啓蒙活動。</div>
+              </div>
+              <div class="p-card-arrow">
+                <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              </div>
+            </a>
+          </section>
+          
+          <!-- Phase 4 Section -->
+          <section class="directory-section">
+            <div class="flex items-center gap-3 mb-4 pl-2 border-l-4 border-l-amber-500">
+              <h2 class="text-sm font-black text-slate-500 uppercase tracking-widest">Phase 4: BuddyNet Project</h2>
+            </div>
+            
+            <a href="?page=project_bn_report" class="p-card card-orange p-card-lg">
+              <div class="p-card-badge">
+                <span class="p-card-tag">PHASE 4</span>
+                <div class="p-card-id">PROJ-BN.01</div>
+              </div>
+              <div class="p-card-main">
+                <div class="p-card-title">Financial Automation</div>
+                <div class="p-card-desc">PL予実・着地予測レポートの自動化および算出プロセスのDX。</div>
+              </div>
+              <div class="p-card-arrow">
+                <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              </div>
+            </a>
+          </section>
+
+        </div>
+
+        <footer
+          class="mt-24 pt-8 border-t border-slate-200 text-center text-slate-400 text-[10px] font-bold uppercase tracking-[0.4em]">
+          &copy; 2026 Akiba Holdings System Division
+        </footer>
+      </div>
+    </main>
+  </div>
+
+</body>
+
+</html>

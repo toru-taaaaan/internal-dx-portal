@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>プロジェクト 15.01: ADサーバークラウド化 (最終統合レポート v20260122_1630)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#e0f2fe',
+        primaryTextColor: '#0369a1',
+        primaryBorderColor: '#0ea5e9',
+        lineColor: '#64748b',
+        secondaryColor: '#f8fafc',
+        tertiaryColor: '#ffffff'
+      }
+    });
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Noto Sans JP', 'Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          },
+          colors: {
+            'brand-navy': '#1e3a8a',
+            'brand-accent': '#0ea5e9',
+            'brand-danger': '#ef4444',
+            'brand-success': '#22c55e',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #f8fafc; color: #334155; }
+    .modern-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 1.25rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02); transition: all 0.3s ease; }
+    .mermaid-container { background: #ffffff; padding: 32px; border-radius: 1rem; border: 1px solid #e2e8f0; box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.02); }
+    .step-badge { padding: 0.125rem 0.5rem; border-radius: 0.25rem; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; display: inline-block; }
+    th { font-weight: 600; color: #64748b; background-color: #f1f5f9; border-bottom: 1px solid #e2e8f0; }
+    td { border-bottom: 1px solid #f1f5f9; }
+    .diagram-label { font-size: 0.75rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: -0.05em; margin-bottom: 0.5rem; display: block; }
+  </style>
+</head>
+<body class="min-h-screen font-sans antialiased text-slate-700">
+
+  <!-- Header Section -->
+  <header class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <? var url = ScriptApp.getService().getUrl(); ?>
+        <a href="<?=url?>?page=home" class="flex items-center gap-2 text-slate-500 hover:text-brand-navy transition-colors text-sm font-medium">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          ポータルへ戻る
+        </a>
+        <div class="h-4 w-px bg-slate-300"></div>
+        <span class="text-sm font-bold text-slate-700">プロジェクト 15.01: ADサーバークラウド化 最終統合報告</span>
+      </div>
+      <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">
+        交渉・精査状況 (v20260122_1630)
+      </span>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto p-4 md:p-8 space-y-16 text-slate-700">
+
+    <!-- Title & Executive Summary -->
+    <section class="text-center space-y-6 pt-8">
+      <h1 class="text-4xl md:text-6xl font-black text-slate-900 tracking-tight leading-tight">
+        ADサーバークラウド移行計画レポート
+      </h1>
+      <p class="text-xl text-slate-500 max-w-3xl mx-auto leading-relaxed">
+        現在、3社への技術的な最終照会を進めています。<br>
+        各社のコスト、技術的メリット、そして「安全性」を分かりやすく可視化しました。
+      </p>
+    </section>
+
+    <!-- Executive Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="modern-card p-6 border-t-4 border-t-slate-400">
+        <h3 class="text-xl font-bold text-slate-800 mb-4">01. IIJ Global</h3>
+        <p class="text-xs text-slate-500 mb-4">管理不要のフルお任せ案</p>
+        <ul class="space-y-3 text-sm text-slate-600 mb-6 font-medium">
+          <li class="flex items-start"><span class="text-green-600 mr-2 font-bold">✓</span> 基盤側で自動的に切り替え</li>
+          <li class="flex items-start"><span class="text-green-600 mr-2 font-bold">✓</span> ルーター交換で移行完了</li>
+        </ul>
+        <div class="pt-4 border-t border-slate-100 text-2xl font-bold text-slate-800">¥11,907,750</div>
+      </div>
+      <div class="modern-card p-6 border-t-4 border-t-slate-400">
+        <h3 class="text-xl font-bold text-slate-800 mb-4">02. USEN (AWS)</h3>
+        <p class="text-xs text-slate-500 mb-4">並行稼働による安全重視案</p>
+        <ul class="space-y-3 text-sm text-slate-600 mb-6 font-medium">
+          <li class="flex items-start"><span class="text-green-600 mr-2 font-bold">✓</span> 1ヶ月間の新旧同時運用</li>
+          <li class="flex items-start"><span class="text-green-600 mr-2 font-bold">✓</span> PC単位での順次切り替え</li>
+        </ul>
+        <div class="pt-4 border-t border-slate-100 text-2xl font-bold text-slate-800">¥8,318,000</div>
+      </div>
+      <div class="modern-card p-6 border-t-4 border-t-brand-accent bg-blue-50/10">
+        <h3 class="text-xl font-bold text-slate-800 mb-4 font-display">03. Link At Japan</h3>
+         <p class="text-xs text-slate-600 font-bold mb-4">低コスト・東日本単一構成（確定）</p>
+        <ul class="space-y-3 text-sm text-slate-600 mb-6 font-medium">
+           <li class="flex items-start"><span class="text-blue-600 mr-2 font-bold">✓</span> <strong>篠部長判断により「東日本のみ」構成を採用</strong></li>
+           <li class="flex items-start"><span class="text-blue-600 mr-2 font-bold">→</span> <strong>並行稼働方式の詳細を最終確認中</strong></li>
+        </ul>
+         <div class="pt-4 border-t border-slate-100 text-2xl font-bold text-slate-800">¥7,678,060 <span class="text-xs text-slate-400 font-normal italic">(東日本単一・確定)</span></div>
+      </div>
+    </div>
+
+    <!-- 1. Detailed Cost Comparison -->
+    <section class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+        <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+          <span class="text-xl">💰</span> 費用の詳細比較 (税抜)
+        </h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left whitespace-nowrap">
+          <thead>
+            <tr>
+              <th class="p-4 w-1/4 text-slate-800">費目の内訳</th>
+              <th class="p-4 w-1/4">IIJ (クラウド)</th>
+              <th class="p-4 w-1/4">USEN (AWS)</th>
+              <th class="p-4 w-1/4 border-l">Link At Japan (Azure)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-slate-600">
+            <tr class="bg-slate-50/50"><td colspan="4" class="px-4 py-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">初期導入費用</td></tr>
+            <tr><td class="p-4 pl-6 font-medium">システム構築・機器代</td><td class="p-4">¥1,008,000</td><td class="p-4">¥200,000</td><td class="p-4 border-l">¥0 <span class="text-[10px] text-slate-400 italic">(再点検中)</span></td></tr>
+            <tr><td class="p-4 pl-6 font-medium">設計・移行サポート</td><td class="p-4">¥325,000</td><td class="p-4">¥540,000</td><td class="p-4 border-l">¥1,305,000 <span class="text-[10px] text-slate-400 italic">(再点検中)</span></td></tr>
+            <tr><td class="p-4 pl-6 font-medium">ネットワーク設定</td><td class="p-4">¥89,750</td><td class="p-4">¥120,000</td><td class="p-4 border-l">¥250,000 <span class="text-[10px] text-slate-400 italic">(再点検中)</span></td></tr>
+            <tr class="bg-slate-50 font-bold text-slate-900"><td class="p-4 text-right">初期費用 合計</td><td class="p-4">¥1,422,750</td><td class="p-4">¥860,000</td><td class="p-4 border-l font-medium text-slate-700">¥1,555,000 <span class="text-[10px] text-slate-400 font-normal italic">(交渉中)</span></td></tr>
+            <tr class="bg-slate-50/50"><td colspan="4" class="px-4 py-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">月額ランニング費用</td></tr>
+            <tr><td class="p-4 pl-6 font-medium">サーバー・サービス利用料</td><td class="p-4">¥126,000</td><td class="p-4">¥106,200</td><td class="p-4 border-l">¥52,051 <span class="text-[10px] text-slate-400 italic">(変動可能性あり)</span></td></tr>
+            <tr><td class="p-4 pl-6 font-medium">ネットワーク・保守代</td><td class="p-4">¥48,750</td><td class="p-4">¥18,100</td><td class="p-4 border-l">¥50,000 <span class="text-[10px] text-slate-400 italic">(変動可能性あり)</span></td></tr>
+            <tr class="bg-slate-50 font-bold text-slate-900"><td class="p-4 text-right">月額費用 合計</td><td class="p-4">¥174,750</td><td class="p-4">¥124,300</td><td class="p-4 border-l font-medium text-slate-700">¥102,051 <span class="text-[10px] text-slate-400 font-normal italic">(交渉中)</span></td></tr>
+            <tr class="bg-slate-800 text-white"><td class="p-4 pl-6 text-lg font-bold">5年総額 (合計コスト)</td><td class="p-4 font-display text-lg">¥11,907,750</td><td class="p-4 font-display text-lg">¥8,318,000</td><td class="p-4 font-display text-lg border-l">¥7,678,060 <span class="text-xs text-slate-300 font-normal italic">(再提示待ち)</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 2. Technical Comparison (Simplified) -->
+    <section class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+        <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+          <span class="text-xl">🛠</span> 技術・使い勝手の比較
+        </h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left">
+          <thead>
+            <tr>
+              <th class="p-4 w-1/4">比較項目</th>
+              <th class="p-4 w-1/4">IIJ (フルマネージド)</th>
+              <th class="p-4 w-1/4">USEN (AWS)</th>
+              <th class="p-4 w-1/4 border-l">Link At Japan (Azure)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-slate-600">
+            <tr><td class="p-4 pl-6 font-medium">サーバーの種類</td><td class="p-4">IIJ独自の管理基盤</td><td class="p-4">AWS（業界最大手）</td><td class="p-4 border-l">Azure（マイクロソフト公式）</td></tr>
+            <tr><td class="p-4 pl-6 font-medium">社内側の自由度</td><td class="p-4">制限あり（お任せ）</td><td class="p-4 text-green-600 font-bold">自由度が高い</td><td class="p-4 border-l text-green-600 font-bold">自由度が高い</td></tr>
+             <tr><td class="p-4 pl-6 font-medium">構成ポリシー</td><td class="p-4">機能おまかせ</td><td class="p-4">東日本単一（シンプル）</td><td class="p-4 border-l text-blue-600 font-bold">東日本単一（篠部長判断・確定）</td></tr>
+             <tr><td class="p-4 pl-6 font-medium">切替トリガー</td><td class="p-4 text-green-600 font-bold">拠点のルーターを交換</td><td class="p-4 text-green-600 font-bold">各PCの設定を更新</td><td class="p-4 border-l text-amber-600 font-bold">並行運用方式を最終確認中</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3. High-Fidelity Diagrams (Localized) -->
+    <section class="space-y-12">
+      <div class="border-b-2 border-slate-100 pb-4">
+        <h2 class="text-3xl font-black text-slate-900 tracking-tight">移行の仕組みと構成の違い</h2>
+        <p class="text-sm text-slate-500 mt-2">USENとLAJ、同じ「並行稼働」でも何が違うのかを整理しました。</p>
+      </div>
+      
+      <!-- Case 02: USEN -->
+      <div class="space-y-6">
+        <h3 class="text-xl font-bold text-brand-accent flex items-center gap-3">
+          <span class="bg-brand-accent text-white px-3 py-1 rounded-lg text-sm">Case 02</span>
+          USEN (AWS): 「PCの設定更新」による安全移行
+        </h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div class="mermaid-container">
+            <div class="diagram-label">構成：旧AD(本社) + 新AD(AWS)の2拠点同期</div>
+            <pre class="mermaid">
+            graph LR
+              subgraph "AWSクラウド (東日本)"
+                A[新ADサーバー]
+              end
+              subgraph "本社"
+                C[旧ADサーバー]
+              end
+              subgraph "拠点"
+                P1[切替済みPC] -- "DNS設定を新IPへ" --> A
+                P2[未切替PC] -- "旧設定のまま" --> C
+                D[LANScope] -- "設定更新指示" --> P1
+              end
+              A --- C
+              style A fill:#e0f2fe,stroke:#0ea5e9
+              style C fill:#f8fafc,stroke:#94a3b8
+              style P1 fill:#dcfce7,stroke:#22c55e
+            </pre>
+          </div>
+          <div class="space-y-4 text-sm leading-relaxed">
+            <p class="font-bold text-slate-800 underline decoration-blue-200 decoration-4">USENの特徴：2地点でのシンプルな同期</p>
+            <p>サーバーは「本社（旧）」と「AWS（新）」の2箇所だけ。管理ツールを使って各PCの呼び出し先を1台ずつ変えていくため、作業の進捗管理がPC単位で行えるのがメリットです。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case 03: LAJ -->
+      <div class="space-y-6 bg-blue-50/20 p-8 rounded-3xl border border-blue-200/50">
+        <h3 class="text-xl font-bold text-blue-800 flex items-center gap-3">
+          <span class="bg-blue-800 text-white px-3 py-1 rounded-lg text-sm">Case 03</span>
+           Link At Japan (Azure): 東日本単一構成での並行稼働方式を調整中
+        </h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div class="space-y-4">
+            <div class="diagram-label">構成：当初の東西冗長案（取りやめ）</div>
+            <div class="mermaid-container opacity-50 bg-slate-100">
+              <pre class="mermaid">
+              graph TD
+                A[Azure東]
+                B[Azure西]
+                C[旧AD]
+                A --- B & C
+                B --- C
+              </pre>
+            </div>
+            <p class="text-[10px] text-slate-500">※3地点同期になり、VPN代も2倍かかるため却下</p>
+          </div>
+          <div class="space-y-4">
+            <div class="diagram-label text-brand-success font-bold">現在調整中の構成（東日本単一＋並行稼働）</div>
+            <div class="mermaid-container border-green-200 bg-green-50/10">
+              <pre class="mermaid">
+              graph TD
+                A[Azure東 (新AD)]
+                B[本社 (旧AD)]
+                A --- B
+                C[拠点ルーター]
+                C -- "1. まずは両方に道を通す" --> A & B
+                D[管理者] -- "2. 複合機等を1台ずつ切替" --> C
+              </pre>
+            </div>
+            <p class="text-[10px] text-brand-success font-bold">※篠部長の「東日本のみ」判断に合わせ、コストを抑えた構成へ</p>
+          </div>
+        </div>
+        <div class="modern-card p-6 border-none bg-white">
+          <p class="text-sm font-bold text-slate-800 mb-2">構成が違う理由の核心：</p>
+           <p class="text-xs text-slate-600 leading-relaxed">
+             LAJは元々「東西冗長（2拠点）」を提案していましたが、篠部長の判断で**「東日本のみ」に絞り込み済み**です。現在の見積¥7,678,060は、すでにこの「東日本単一構成」を反映した金額となっています。<br>
+             現在は、この東日本単一構成において、USENと同様の「段階的な並行稼働方式」が技術的に可能かどうかを最終確認している段階です。LAJとUSENの図が異なるのは、LAJが並行稼働の詳細プランを作成中のためです。
+           </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Detailed Logic / Terminology (Unified) -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="modern-card p-8 space-y-4">
+        <h3 class="font-bold text-slate-800 flex items-center gap-2"><span class="text-xl">⚙️</span> 選定に向けたポイント</h3>
+        <ul class="space-y-4 text-sm text-slate-600">
+           <li><strong>構成の統一:</strong> 全社「東日本単一構成」で比較しており、純粋なコスト差とサービス内容の違いが明確です。</li>
+          <li><strong>移行の確実性:</strong> 「PC単位」のUSENか、「ネットワーク（ルーター設定）単位」のLAJか、どちらが現場の手間が少ないかが焦点。</li>
+        </ul>
+      </div>
+      <div class="modern-card p-8 space-y-4">
+        <h3 class="font-bold text-slate-800 flex items-center gap-2"><span class="text-xl">💡</span> 篠部長の判断リマインド</h3>
+        <div class="space-y-4 text-xs text-slate-600 leading-relaxed italic">
+          「関東が全滅するような震災なら、西日本が動いていても仕事（出社）ができない。なら、コストを倍払って東西冗長にする意味はない。東日本のみで突き詰めろ。」(2025/12/03 ミーティングより)
+        </div>
+      </div>
+    </section>
+
+    <!-- Final Summary & Status -->
+    <section class="bg-brand-navy p-10 rounded-3xl shadow-2xl text-white space-y-8">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="space-y-2">
+          <h2 class="text-3xl font-black tracking-tight flex items-center gap-3">
+            <span class="text-4xl">🏁</span> 現在のステータス
+          </h2>
+           <p class="text-blue-100/70 text-sm font-medium">全社「東日本単一構成」に統一し、並行稼働方式の最終確認フェーズです。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Meta -->
+    <div class="text-right text-xs text-slate-400 mt-8 space-y-1">
+      <div>ADサーバークラウド化 詳細統合報告書 v20260122_1630</div>
+      <div>© 2026 Akiba Holdings Group Information System Dept.</div>
+    </div>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Command Center | Internal DX Portal</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="assets/portal_nexus.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+
+  <div class="layout-wrapper">
+    <!-- Unified Sidebar -->
+    <aside class="sidebar">
+      <header class="sidebar-header">
+        <h1>統合指揮センター HUB</h1>
+        <p>MASTER COMMAND CENTER V2.2</p>
+      </header>
+      <nav>
+        <div class="nav-label-small">トップ・ナビゲーション</div>
+        <a href="landing.html" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+          ポータルホーム
+        </a>
+        <a href="index.html" class="nav-link active">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          プロジェクト
+        </a>
+        <a href="executive_hub.html" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+          全体課題管理表
+        </a>
+        <a href="evaluation_sheet.html" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+          人事考課原本 (最新版)
+        </a>
+        <a href="daily_log.html" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          活動全史 (ログ)
+        </a>
+      </nav>
+      <footer class="sidebar-footer">
+        <p>User: 丹治 統<br>Last Sync: 1/24 21:00</p>
+      </footer>
+    </aside>
+
+    <main class="main-scroll">
+      <div class="p-12">
+        <header class="mb-8 mt-4">
+          <h1 class="text-2xl font-black text-slate-700 flex items-center gap-2">
+            <span class="w-2 h-6 bg-slate-700 rounded-sm"></span>
+            プロジェクト: 基盤強靭化
+          </h1>
+        </header>
+
+        <div class="space-y-12">
+
+          <!-- Phase 1 Section -->
+          <section>
+            <div class="flex items-center gap-3 mb-4 pl-2 border-l-4 border-l-cyan-400">
+              <h2 class="text-sm font-black text-slate-500 uppercase tracking-widest">Phase 1: Current Assessment</h2>
+            </div>
+            <div class="flex flex-col gap-3">
+              <!-- PROJ-15.14 -->
+              <a href="project_15_14.html"
+                class="group flex items-center p-5 bg-white border border-slate-200 rounded-xl hover:border-cyan-400 hover:shadow-md hover:shadow-cyan-100 transition-all duration-200">
+                <div class="w-32 flex-shrink-0">
+                  <span
+                    class="inline-block px-2 py-1 bg-cyan-50 text-cyan-700 rounded text-[10px] font-black tracking-wider">PHASE
+                    1</span>
+                  <div class="font-mono text-xs font-bold text-slate-400 mt-1">PROJ-15.14</div>
+                </div>
+                <div class="flex-grow px-4 border-l border-slate-100 mx-4">
+                  <div class="font-bold text-slate-800 text-lg group-hover:text-cyan-600 transition-colors">Infra
+                    Assessment</div>
+                  <div class="text-slate-500 text-xs leading-relaxed mt-1">現状のインフラ環境（サーバー、ネットワーク）の可視化と評価調査。</div>
+                </div>
+                <div class="w-10 flex-shrink-0 text-slate-300 group-hover:text-cyan-500">
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </a>
+            </div>
+          </section>
+
+          <!-- Phase 2 Section -->
+          <section>
+            <div class="flex items-center gap-3 mb-4 pl-2 border-l-4 border-l-blue-500">
+              <h2 class="text-sm font-black text-slate-500 uppercase tracking-widest">Phase 2: Infrastructure Refresh
+              </h2>
+            </div>
+            <div class="flex flex-col gap-3">
+              <!-- PROJ-15.01 -->
+              <a href="project_15_01.html"
+                class="group flex items-center p-5 bg-white border border-slate-200 rounded-xl hover:border-blue-500 hover:shadow-md hover:shadow-blue-100 transition-all duration-200">
+                <div class="w-32 flex-shrink-0">
+                  <span
+                    class="inline-block px-2 py-1 bg-blue-50 text-blue-700 rounded text-[10px] font-black tracking-wider">PHASE
+                    2</span>
+                  <div class="font-mono text-xs font-bold text-slate-400 mt-1">PROJ-15.01</div>
+                </div>
+                <div class="flex-grow px-4 border-l border-slate-100 mx-4">
+                  <div class="font-bold text-slate-800 text-lg group-hover:text-blue-600 transition-colors">AD Cloud
+                    Lift</div>
+                  <div class="text-slate-500 text-xs leading-relaxed mt-1">Active Directoryクラウド移行とBCP対策。</div>
+                </div>
+                <div class="w-10 flex-shrink-0 text-slate-300 group-hover:text-blue-500">
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </a>
+
+              <!-- PROJ-15.02 -->
+              <a href="project_15_02.html"
+                class="group flex items-center p-5 bg-white border border-slate-200 rounded-xl hover:border-blue-500 hover:shadow-md hover:shadow-blue-100 transition-all duration-200">
+                <div class="w-32 flex-shrink-0">
+                  <span
+                    class="inline-block px-2 py-1 bg-blue-50 text-blue-700 rounded text-[10px] font-black tracking-wider">PHASE
+                    2</span>
+                  <div class="font-mono text-xs font-bold text-slate-400 mt-1">PROJ-15.02</div>
+                </div>
+                <div class="flex-grow px-4 border-l border-slate-100 mx-4">
+                  <div class="font-bold text-slate-800 text-lg group-hover:text-blue-600 transition-colors">Secom Cloud
+                  </div>
+                  <div class="text-slate-500 text-xs leading-relaxed mt-1">入退室管理システムのクラウド移行。</div>
+                </div>
+                <div class="w-10 flex-shrink-0 text-slate-300 group-hover:text-blue-500">
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </a>
+
+              <!-- BUNDLE -->
+              <a href="project_15_combined.html"
+                class="group flex items-center p-5 bg-purple-50/50 border border-purple-200 rounded-xl hover:border-purple-500 hover:shadow-md hover:shadow-purple-100 transition-all duration-200">
+                <div class="w-32 flex-shrink-0">
+                  <span
+                    class="inline-block px-2 py-1 bg-purple-100 text-purple-700 rounded text-[10px] font-black tracking-wider">BUNDLE</span>
+                  <div class="font-mono text-xs font-bold text-purple-400 mt-1">ANALYSIS</div>
+                </div>
+                <div class="flex-grow px-4 border-l border-purple-100 mx-4">
+                  <div class="font-bold text-slate-900 text-lg group-hover:text-purple-700 transition-colors">AD + SECOM
+                    統合比較</div>
+                  <div class="text-slate-600 text-xs leading-relaxed mt-1 font-medium">3社同時依頼時のTCO・シナリオ比較分析。</div>
+                </div>
+                <div class="w-10 flex-shrink-0 text-purple-300 group-hover:text-purple-500">
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </a>
+
+              <!-- VISUAL -->
+              <a href="line_dashboard.html"
+                class="group flex items-center p-5 bg-white border border-slate-200 rounded-xl hover:border-blue-500 hover:shadow-md hover:shadow-blue-100 transition-all duration-200">
+                <div class="w-32 flex-shrink-0">
+                  <span
+                    class="inline-block px-2 py-1 bg-blue-50 text-blue-700 rounded text-[10px] font-black tracking-wider">VISUAL</span>
+                  <div class="font-mono text-xs font-bold text-slate-400 mt-1">NETWORK</div>
+                </div>
+                <div class="flex-grow px-4 border-l border-slate-100 mx-4">
+                  <div class="font-bold text-slate-800 text-lg group-hover:text-blue-600 transition-colors">SD-WAN Map
+                  </div>
+                  <div class="text-slate-500 text-xs leading-relaxed mt-1">SD-WAN vs Vario Secure 拠点間接続比較マップ。</div>
+                </div>
+                <div class="w-10 flex-shrink-0 text-slate-300 group-hover:text-blue-500">
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </a>
+            </div>
+          </section>
+
+          <!-- Phase 3 Section -->
+          <section>
+            <div class="flex items-center gap-3 mb-4 pl-2 border-l-4 border-l-purple-500">
+              <h2 class="text-sm font-black text-slate-500 uppercase tracking-widest">Phase 3: AI Transformation</h2>
+            </div>
+            <div class="flex flex-col gap-3">
+              <!-- PROJ-15.12 -->
+              <a href="project_15_12.html"
+                class="group flex items-center p-6 bg-gradient-to-r from-white to-purple-50/50 border border-slate-200 rounded-xl hover:border-purple-500 hover:shadow-md hover:shadow-purple-100 transition-all duration-200">
+                <div class="w-32 flex-shrink-0">
+                  <span
+                    class="inline-block px-2 py-1 bg-purple-600 text-white rounded text-[10px] font-black tracking-wider shadow-sm">PHASE
+                    3</span>
+                  <div class="font-mono text-xs font-bold text-purple-400 mt-1">PROJ-15.12</div>
+                </div>
+                <div class="flex-grow px-4 border-l border-slate-100 mx-4">
+                  <div class="font-bold text-slate-800 text-2xl group-hover:text-purple-700 transition-colors">AI
+                    Champion Initiative</div>
+                  <div class="text-slate-500 text-sm leading-relaxed mt-2">AI推進リーダー育成とコミュニティ運営、および全社啓蒙活動。</div>
+                </div>
+                <div class="w-10 flex-shrink-0 text-purple-300 group-hover:text-purple-600">
+                  <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+              </a>
+            </div>
+          </section>
+
+        </div>
+
+        <footer
+          class="mt-24 pt-8 border-t border-slate-200 text-center text-slate-400 text-[10px] font-bold uppercase tracking-[0.4em]">
+          &copy; 2026 Akiba Holdings System Division
+        </footer>
+      </div>
+    </main>
+  </div>
+
+</body>
+
+</html>

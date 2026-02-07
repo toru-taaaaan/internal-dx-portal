@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <link rel="icon" href="https://icons.iconarchive.com/icons/microsoft/fluentui-emoji-3d/96/Brain-3d-icon.png">
+    <title>Project 15.14 - Infra Assessment</title>
+    <style>
+        :root {
+            /* Cyberpunk Palette */
+            --bg-dark: #0b0c10;
+            --text-main: #c5c6c7;
+            --text-highlight: #66fcf1;
+            --accent-cyan: #45a29e;
+            --accent-purple: #bd00ff;
+            --glass-bg: rgba(31, 40, 51, 0.6);
+            --glass-border: 1px solid rgba(102, 252, 241, 0.1);
+            --card-radius: 12px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(69, 162, 158, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(189, 0, 255, 0.1) 0%, transparent 20%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(102, 252, 241, 0.2);
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(102, 252, 241, 0.5);
+        }
+
+        .back-link {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            border: 1px solid var(--accent-cyan);
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: rgba(102, 252, 241, 0.1);
+            box-shadow: 0 0 10px var(--accent-cyan);
+        }
+
+        /* Content Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: var(--glass-border);
+            border-radius: var(--card-radius);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--text-highlight);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            color: #fff;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            background-color: rgba(69, 162, 158, 0.1);
+            color: var(--accent-cyan);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            background: rgba(102, 252, 241, 0.1);
+            color: var(--text-highlight);
+        }
+
+        .alert-badge {
+            background: rgba(255, 99, 132, 0.2);
+            color: #ff6384;
+        }
+
+        /* Mermaid Diagram Container */
+        .mermaid {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <span style="color: var(--accent-cyan); font-family: 'Orbitron';">PROJECT 15.14</span>
+                <h1>Current Infra Assessment</h1>
+                <p style="margin: 5px 0 0; color: #aaa;">現状インフラ環境の可視化と評価 (As-Is)</p>
+            </div>
+            <? var url = ScriptApp.getService().getUrl(); ?>
+            <a href="<?= url ?>" class="back-link">
+                &lt; COMMAND CENTER
+            </a>
+        </div>
+
+        <div class="card">
+            <h2>System Architecture (As-Is)</h2>
+            <p>2025年12月現在のシステム全体構成（ハイブリッド構成）</p>
+            <div class="mermaid">
+                graph TD
+                %% 縦方向の流れを強調
+                direction TB
+
+                subgraph CLOUD ["1. 回線・外部クラウド"]
+                direction TB
+                FLETS["NTT フレッツ光"]
+                GWS["Google Workspace"]
+                LANSCOPE["LANSCOPE"]
+                SAAS["業務SaaS (ジョブカン/e-works)"]
+                FLETS --- GWS --- LANSCOPE --- SAAS
+                end
+
+                CLOUD --> VSR["2. USEN GATE 02 VSR600"]
+
+                subgraph SERVERS ["3. 本社 6F サーバー室"]
+                direction TB
+                subgraph AUTH ["認証基盤"]
+                AD1["Active Directory DC1"]
+                AD2["Active Directory DC2"]
+                end
+                subgraph APPS ["業務システム"]
+                SECOM["入退室 SECOM TRII"]
+                OBIC_L["販売管理 OBIC7"]
+                MRBS["会議室予約 MRBS"]
+                end
+                AUTH --- APPS
+                end
+
+                VSR --> AUTH
+                VSR --> APPS
+
+                subgraph ENDPOINT ["4. クライアント・拠点"]
+                direction TB
+                BRANCH["各拠点 VPN接続<br />(大阪/橋本/福岡/和歌山/<br />築地/京橋/名古屋)"]
+                PC["Windows端末 約300台"]
+                BRANCH --- PC
+                end
+
+                VSR -.VPN.-> BRANCH
+                AUTH & APPS & VSR --> PC
+
+                %% Coloring (Cyberpunk friendly)
+                style AD1 fill:#2c3e50,stroke:#66fcf1,stroke-width:2px,color:#fff
+                style AD2 fill:#2c3e50,stroke:#66fcf1,stroke-width:2px,color:#fff
+                style SECOM fill:#2c3e50,stroke:#bd00ff,stroke-width:2px,color:#fff
+                style VSR fill:#2c3e50,stroke:#3b82f6,stroke-width:2px,color:#fff
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Server Assets (On-Premise)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Host Name</th>
+                        <th>Role</th>
+                        <th>OS / Detail</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>16</td>
+                        <td>ADSVR</td>
+                        <td>Active Directory DC1</td>
+                        <td>Windows Server 2019</td>
+                        <td><span class="status-badge">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>17</td>
+                        <td>ADSVR (2)</td>
+                        <td>Active Directory DC2</td>
+                        <td>Windows Server 2019 (Redundant)</td>
+                        <td><span class="status-badge">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>SECOM TRII</td>
+                        <td>入退室管理</td>
+                        <td>保守期限: 2026/03</td>
+                        <td><span class="status-badge alert-badge">Expires 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td>FileServer</td>
+                        <td>ファイルサーバー</td>
+                        <td>現用機</td>
+                        <td><span class="status-badge">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>20</td>
+                        <td>TENAPSVR</td>
+                        <td>店舗APサーバー</td>
+                        <td>[要確認]</td>
+                        <td><span class="status-badge">Unknown</span></td>
+                    </tr>
+                    <tr>
+                        <td>21</td>
+                        <td>TENDBSVR</td>
+                        <td>店舗DBサーバー</td>
+                        <td>[要確認]</td>
+                        <td><span class="status-badge">Unknown</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Network Infrastructure</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Device</th>
+                        <th>Model</th>
+                        <th>Location</th>
+                        <th>Note</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>VPN Router (Main)</td>
+                        <td>Vario Secure VSR601j</td>
+                        <td>東京本社</td>
+                        <td>Gateway, VPN Hub</td>
+                    </tr>
+                    <tr>
+                        <td>VPN Router (Branch)</td>
+                        <td>VSR401j x 5台</td>
+                        <td>各拠点</td>
+                        <td>大阪, R&D, 福岡, 和歌山, 築地</td>
+                    </tr>
+                    <tr>
+                        <td>Core Switch</td>
+                        <td>D-LINK DGS-1210-28</td>
+                        <td>本社 6F</td>
+                        <td>基幹HUB (192.168.1.8)</td>
+                    </tr>
+                    <tr>
+                        <td>Guest Router</td>
+                        <td>YAMAHA RTX1210</td>
+                        <td>本社</td>
+                        <td>ゲストWi-Fi, IP電話用</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Gathered Resources</h2>
+            <p>関連プロジェクトから以下の重要資料を本プロジェクトフォルダ (<code>15.14_現状インフラ評価</code>) に集約しました。</p>
+            <ul style="list-style-type: none; padding: 0;">
+                <li style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <span style="margin-right: 10px;">📄</span>
+                    <strong>20251209_AKIBAホールディングス_提案構成図.pdf</strong>
+                    <span
+                        style="display: block; font-size: 0.8em; color: #888; margin-left: 28px;">詳細なネットワーク提案図面（PDF）</span>
+                </li>
+                <li style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <span style="margin-right: 10px;">📄</span>
+                    <strong>2025_サーバークラウド移行比較_IIJ_USEN.md</strong>
+                    <span style="display: block; font-size: 0.8em; color: #888; margin-left: 28px;">Active Directory
+                        移行ベンダー比較検討資料</span>
+                </li>
+                <li style="padding: 10px;">
+                    <span style="margin-right: 10px;">📄</span>
+                    <strong>【提出用】セコム入退出管理..._3社比較表_20260114.md</strong>
+                    <span style="display: block; font-size: 0.8em; color: #888; margin-left: 28px;">入退室管理クラウド移行
+                        3社比較表（最新版）</span>
+                </li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; font-size: 0.8em; color: #666; margin-top: 20px;">
+            Data Source: 2025-12-22_システム全体構成図.md
+        </div>
+
+    </div>
+
+    <!-- Mermaid JS -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#0b0c10',
+                edgeLabelBackground: '#1f2833',
+                tertiaryColor: '#1f2833'
+            }
+        });
+    </script>
+</body>
+
+</html>

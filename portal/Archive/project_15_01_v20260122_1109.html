@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>プロジェクト 15.01: ADサーバークラウド化 (最終報告版 v20260122)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Noto Sans JP', 'Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          },
+          colors: {
+            'brand-navy': '#1e3a8a',
+            'brand-accent': '#0ea5e9',
+          },
+          boxShadow: {
+            'card': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+            'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #f8fafc;
+      color: #334155;
+    }
+    .modern-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 1rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+      transition: all 0.3s ease;
+    }
+    .modern-card:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+      transform: translateY(-2px);
+    }
+    .header-gradient {
+      background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%);
+      border-bottom: 1px solid #dbeafe;
+    }
+    .check-icon { color: #16a34a; margin-right: 0.25rem; font-weight: bold; }
+    
+    th {
+      font-weight: 600;
+      color: #64748b;
+      background-color: #f1f5f9;
+    }
+    td {
+      border-bottom: 1px solid #f1f5f9;
+    }
+  </style>
+</head>
+<body class="min-h-screen font-sans antialiased text-slate-700">
+
+  <!-- Header Section -->
+  <header class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <? var url = ScriptApp.getService().getUrl(); ?>
+        <a href="<?=url?>" class="flex items-center gap-2 text-slate-500 hover:text-brand-navy transition-colors text-sm font-medium">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          ポータルへ戻る
+        </a>
+        <div class="h-4 w-px bg-slate-300"></div>
+        <span class="text-sm font-bold text-slate-700">プロジェクト 15.01: ADサーバークラウド化</span>
+      </div>
+      <div>
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">
+          <span class="w-2 h-2 rounded-full bg-blue-500 mr-2"></span>
+          ステータス: 最終要件検証完了 (v20260122)
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto p-4 md:p-8 space-y-12">
+
+    <!-- Title & Summary -->
+    <section class="text-center space-y-4 pt-4">
+      <h1 class="text-3xl md:text-5xl font-black text-slate-900 tracking-tight">
+        ADサーバークラウド移行計画
+      </h1>
+      <p class="text-lg text-slate-500 max-w-2xl mx-auto">
+        BCP対策とインフラ最適化。2026/01/22の最終回答を反映。<br>
+        インフラおよび運用各層における「業務停止なし」の要件検証を完了。
+      </p>
+    </section>
+
+    <!-- Executive Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- IIJ -->
+      <div class="modern-card p-6 border-t-4 border-t-blue-500">
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <h3 class="text-xl font-bold text-slate-800">IIJ Global</h3>
+          </div>
+        </div>
+        <ul class="space-y-3 text-sm text-slate-600 mb-6">
+          <li class="flex items-start"><span class="check-icon">✓</span> 運用管理のアウトソース</li>
+          <li class="flex items-start"><span class="check-icon">✓</span> ネットワーク・サーバー統合提供</li>
+          <li class="flex items-start"><span class="check-icon">✓</span> <strong>移行停止：なし</strong></li>
+        </ul>
+        <div class="pt-4 border-t border-slate-100 font-bold text-slate-800">TCO: ¥11,907,750</div>
+      </div>
+      
+      <!-- USEN -->
+      <div class="modern-card p-6 border-t-4 border-t-orange-500 ring-2 ring-orange-500/20">
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <h3 class="text-xl font-bold text-slate-800">USEN (AWS)</h3>
+          </div>
+        </div>
+        <ul class="space-y-3 text-sm text-slate-600 mb-6">
+          <li class="flex items-start"><span class="check-icon">✓</span> 現行ネットワーク資源の有効活用</li>
+          <li class="flex items-start"><span class="check-icon">✓</span> <strong>移行停止：なし (検証済み)</strong></li>
+          <li class="flex items-start"><span class="check-icon">✓</span> 運用・復旧保守体制提供</li>
+        </ul>
+        <div class="pt-4 border-t border-slate-100 font-bold text-slate-800">TCO: ¥8,318,000</div>
+      </div>
+      
+      <!-- Link At Japan -->
+      <div class="modern-card p-6 border-t-4 border-t-green-500 relative shadow-lg ring-1 ring-green-500/10 bg-gradient-to-b from-white to-green-50/30">
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <h3 class="text-xl font-bold text-slate-900">Link At Japan</h3>
+          </div>
+        </div>
+        <ul class="space-y-3 text-sm text-slate-700 mb-6 font-medium">
+          <li class="flex items-start"><span class="check-icon">✓</span> 導入・運用コストの最適化</li>
+          <li class="flex items-start"><span class="check-icon">✓</span> 国内東西2拠点によるBCP構成</li>
+          <li class="flex items-start"><span class="check-icon">✓</span> <strong>移行停止：なし (休日対応)</strong></li>
+        </ul>
+        <div class="pt-4 border-t border-green-100">
+          <div class="text-3xl font-bold text-green-600 font-display">TCO: ¥7,678,060</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final Conclusion Section -->
+    <section class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+        <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+          <span class="text-xl">📊</span> 移行プロセスおよび継続性評価
+        </h2>
+      </div>
+      <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="space-y-4">
+          <h3 class="font-bold text-slate-800 border-l-4 border-blue-500 pl-3">インフラおよびアプリケーション層</h3>
+          <p class="text-sm text-slate-600">
+            USEN/AWS案における基盤要因の停止要件を確認した結果、業務への影響は「なし」と判断されました。移行手法として検証済みのAD昇格プロセスを採用することにより、現行環境との整合性を維持します。
+          </p>
+        </div>
+        <div class="space-y-4">
+          <h3 class="font-bold text-slate-800 border-l-4 border-green-500 pl-3">運用および端末管理層</h3>
+          <p class="text-sm text-slate-600">
+            クライアント端末のネットワーク設定（DNS参照先）変更については、標準的な管理手法に基づき中央制御による一括処理を行う計画です。移行後の運用継続についても各社回答により裏付けを得ております。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Meta -->
+    <div class="text-right text-xs text-slate-400 mt-8">
+      最新報告: 2026/01/22 (v20260122) <br>
+      作成: システム部 丹治
+    </div>
+
+  </div>
+</body>
+</html>

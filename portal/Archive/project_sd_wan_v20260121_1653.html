@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKIBA Holdings Network Topology Comparison</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --accent: #10b981;
+            --danger: #ef4444;
+            --bg-body: #f1f5f9;
+            --surface: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+        }
+
+        body {
+            font-family: 'Outfit', 'Inter', "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .version-header {
+            background: #1e293b;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 99px;
+            margin-bottom: 30px;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        h1 {
+            font-size: 2.1rem;
+            font-weight: 800;
+            margin: 0 0 20px 0;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+        }
+
+        .controls {
+            margin-bottom: 30px;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 99px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            gap: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .toggle-btn {
+            border: none;
+            background: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-muted);
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .toggle-btn.active {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+        }
+
+        #chart {
+            background-color: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            width: 100%;
+            max-width: 900px;
+            height: 600px;
+            position: relative;
+            border: 1px solid var(--border);
+        }
+
+        .legend {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            margin-right: 8px;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: #1e293b;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 100;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .badge-lbo {
+            background-color: #f0fdf4;
+            color: #166534;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            border: 1px solid #bbf7d0;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 35px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0 0 25px 0;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title::before {
+            content: "";
+            width: 6px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: #f8fafc;
+            color: #475569;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+
+        .info-box {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .btn-portal {
+            display: inline-block;
+            padding: 10px 20px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        .btn-portal:hover {
+            box-shadow: var(--shadow-md);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="version-header">
+            <div style="font-weight: 800;">SD-WAN Network Comparison v1.0</div>
+            <div>現状 vs 将来構成の可視化 | 更新: 2026-01-21 16:48</div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <button onclick="window.top.location.href='<?= url ?>'"
+                class="btn-portal">
+                ← ポータルトップへ戻る
+            </button>
+        </div>
+
+        <h1>Network Configuration Comparison</h1>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+            <!-- Current Network -->
+            <div>
+                <h2 style="text-align: center; color: var(--text-main); font-size: 1.3rem; font-weight: 700; margin-bottom: 15px;">
+                    🔴 Current: USEN/Vario (VPN)
+                </h2>
+                <div id="chart-current" style="background-color: white; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); width: 100%; height: 600px; position: relative; border: 1px solid var(--border);"></div>
+            </div>
+            
+            <!-- Future Network -->
+            <div>
+                <h2 style="text-align: center; color: var(--text-main); font-size: 1.3rem; font-weight: 700; margin-bottom: 15px;">
+                    🟢 Future: SD-WAN (Direct)
+                </h2>
+                <div id="chart-future" style="background-color: white; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); width: 100%; height: 600px; position: relative; border: 1px solid var(--border);"></div>
+            </div>
+        </div>
+
+        <!-- Shared Legend -->
+        <div class="legend" style="position: relative; bottom: auto; right: auto; margin: 0 auto 30px; max-width: 600px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="legend-item">
+                    <div class="legend-color" style="background:#4285F4"></div>Internet/SaaS
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background:#EA4335"></div>HQ / Bottleneck
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background:#34A853"></div>Safe / Direct
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background:#FBBC05"></div>Branch Office
+                </div>
+            </div>
+        </div>
+
+        <div id="tooltip" class="tooltip"></div>
+
+        <script>
+            // Data setup
+            const baseNodes = [
+                { id: "internet", label: "インターネット & クラウドサービス", type: "cloud", x: 450, y: 100 },
+                { id: "tokyo", label: "Tsukiji (Hub)", type: "hub", x: 450, y: 360 },
+                { id: "osaka", label: "Osaka", type: "branch", x: 200, y: 500 },
+                { id: "rnd", label: "R&D Center", type: "branch", x: 325, y: 500 },
+                { id: "fukuoka", label: "Fukuoka", type: "branch", x: 575, y: 500 },
+                { id: "wakayama", label: "Wakayama", type: "branch", x: 700, y: 500 },
+                { id: "hashimoto", label: "Hashimoto", type: "branch", x: 800, y: 450 },
+                { id: "kyobashi", label: "Kyobashi", type: "branch", x: 700, y: 400 },
+                { id: "nagoya", label: "Nagoya", type: "branch", x: 380, y: 550 }
+            ];
+
+            const cloudUtmNode = { id: "cloud_utm", label: "IIJ Cloud UTM", type: "utm", x: 450, y: 220 };
+            const saasNode = { id: "saas", label: "Google Workspace (LBO)", type: "saas", x: 700, y: 120 };
+
+            const colors = {
+                cloud: "#4285F4",
+                hub: "#EA4335",
+                hub_safe: "#34A853",
+                branch: "#FBBC05",
+                fw: "#d93025",
+                utm: "#188038",
+                saas: "#9334E6",
+                risk: "#f9ab00"
+            };
+
+            const width = 900;
+            const height = 600;
+
+            // Create chart function
+            function createChart(containerId, mode) {
+                const container = d3.select(`#${containerId}`);
+                container.selectAll("*").remove();
+
+                const svg = container.append("svg")
+                    .attr("width", "100%")
+                    .attr("height", "100%")
+                    .attr("viewBox", `0 0 ${width} ${height}`);
+
+                const gLinks = svg.append("g").attr("class", "links");
+                const gTraffic = svg.append("g").attr("class", "traffic");
+                const gSecurity = svg.append("g").attr("class", "security");
+                const gNodes = svg.append("g").attr("class", "nodes");
+
+                // Determine nodes for this mode
+                const nodes = mode === 'future' ? [...baseNodes, cloudUtmNode, saasNode] : [...baseNodes];
+
+                // Render nodes
+                const nodeGroups = gNodes.selectAll("g")
+                    .data(nodes, d => d.id)
+                    .enter()
+                    .append("g")
+                    .attr("transform", d => `translate(${d.x},${d.y})`);
+
+                nodeGroups.append("circle")
+                    .attr("r", d => d.type === 'cloud' ? 40 : (d.type === 'utm' ? 35 : (d.type === 'hub' ? 30 : 15)))
+                    .attr("fill", d => {
+                        if (d.type === 'hub') return mode === 'current' ? colors.hub : colors.hub_safe;
+                        if (d.type === 'utm') return colors.utm;
+                        return colors[d.type];
+                    })
+                    .style("filter", "drop-shadow(0px 3px 3px rgba(0,0,0,0.2))");
+
+                nodeGroups.append("text")
+                    .attr("dy", d => d.type === 'cloud' || d.type === 'saas' ? 5 : (d.type === 'utm' ? 5 : 5))
+                    .attr("text-anchor", "middle")
+                    .attr("fill", "white")
+                    .attr("font-weight", "bold")
+                    .attr("font-size", d => d.type === 'cloud' || d.type === 'saas' ? "14px" : (d.type === 'utm' ? "16px" : "12px"))
+                    .style("pointer-events", "none")
+                    .text(d => {
+                        if (d.type === 'cloud') return "☁️";
+                        if (d.type === 'saas') return "📹";
+                        if (d.type === 'utm') return "🛡️";
+                        return "🏢";
+                    });
+
+                nodeGroups.append("text")
+                    .attr("dy", d => d.type === 'cloud' ? -45 : (d.type === 'saas' ? 30 : (d.type === 'utm' ? -45 : (d.type === 'hub' ? -40 : 25))))
+                    .attr("text-anchor", "middle")
+                    .attr("fill", "#333")
+                    .attr("font-weight", "bold")
+                    .attr("font-size", "12px")
+                    .text(d => d.label);
+
+                // Draw links
+                let links = [];
+                if (mode === 'current') {
+                    links.push({ source: "tokyo", target: "internet", type: "bottleneck" });
+                    links.push({ source: "osaka", target: "internet", type: "breakout" });
+                    links.push({ source: "osaka", target: "tokyo", type: "vpn" });
+                    baseNodes.filter(n => n.type === 'branch' && n.id !== 'osaka').forEach(n => {
+                        links.push({ source: n.id, target: "tokyo", type: "vpn" });
+                    });
+                } else {
+                    links.push({ source: "cloud_utm", target: "internet", type: "utm_to_internet" });
+                    links.push({ source: "tokyo", target: "cloud_utm", type: "breakout" });
+                    baseNodes.filter(n => n.type === 'branch').forEach(n => {
+                        links.push({ source: n.id, target: "cloud_utm", type: "breakout" });
+                        links.push({ source: n.id, target: "saas", type: "lbo_active" });
+                        links.push({ source: n.id, target: "tokyo", type: "vpn_light" });
+                    });
+                }
+
+                gLinks.selectAll("line")
+                    .data(links)
+                    .enter()
+                    .append("line")
+                    .attr("x1", d => nodes.find(n => n.id === d.source).x)
+                    .attr("y1", d => nodes.find(n => n.id === d.source).y)
+                    .attr("x2", d => nodes.find(n => n.id === d.target).x)
+                    .attr("y2", d => nodes.find(n => n.id === d.target).y)
+                    .attr("stroke", d => {
+                        if (d.type === 'bottleneck') return "#EA4335";
+                        if (d.type === 'breakout') return "#34A853";
+                        if (d.type === 'lbo_active') return "#9334E6";
+                        if (d.type === 'breakout_legacy') return "#FBBC05";
+                        if (d.type === 'vpn_light') return "#ccc";
+                        return "#999";
+                    })
+                    .attr("stroke-width", d => d.type === 'bottleneck' ? 4 : (d.type === 'breakout' ? 3 : (d.type === 'lbo_active' ? 3 : 1)))
+                    .attr("stroke-dasharray", d => d.type === 'vpn_light' ? "4 4" : (d.type === 'lbo_active' ? "2 2" : "none"));
+
+                // Draw security annotations
+                if (mode === 'current') {
+                    gSecurity.append("rect")
+                        .attr("x", 420).attr("y", 210)
+                        .attr("width", 60).attr("height", 20)
+                        .attr("fill", colors.fw)
+                        .attr("rx", 5)
+                        .style("filter", "drop-shadow(0px 2px 2px rgba(0,0,0,0.3))");
+
+                    gSecurity.append("text")
+                        .attr("x", 450).attr("y", 224)
+                        .attr("text-anchor", "middle")
+                        .attr("fill", "white")
+                        .attr("font-size", "10px")
+                        .attr("font-weight", "bold")
+                        .text("Legacy FW");
+
+                    gSecurity.append("text")
+                        .attr("x", 200).attr("y", 480)
+                        .attr("text-anchor", "middle")
+                        .attr("font-size", "10px")
+                        .attr("fill", "#188038")
+                        .attr("font-weight", "bold")
+                        .text("🛡️ Secure (Vario)");
+                } else {
+                    baseNodes.filter(n => n.type === 'branch').forEach(n => {
+                        gSecurity.append("text")
+                            .attr("x", n.x + 10).attr("y", n.y - 10)
+                            .attr("font-size", "10px")
+                            .text("🛡️");
+                    });
+                }
+
+                // Tooltip
+                const tooltip = d3.select("#tooltip");
+                nodeGroups.on("mouseover", (event, d) => {
+                    tooltip.style("opacity", 1)
+                        .html(`<strong>${d.label}</strong><br>Type: ${d.type}`);
+                }).on("mousemove", (event) => {
+                    tooltip.style("left", (event.pageX + 10) + "px")
+                        .style("top", (event.pageY + 10) + "px");
+                }).on("mouseout", () => {
+                    tooltip.style("opacity", 0);
+                });
+            }
+
+            // Initialize both charts
+            createChart('chart-current', 'current');
+            createChart('chart-future', 'future');
+        </script>
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background:#4285F4"></div>Internet/SaaS
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background:#EA4335"></div>HQ / Bottleneck
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background:#34A853"></div>Safe / Direct
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background:#FBBC05"></div>Branch Office
+            </div>
+        </div>
+
+        <!-- Description Box -->
+        <div id="description-box" style="
+        margin: 20px auto;
+        padding: 15px;
+        border-radius: 8px;
+        background-color: #f1f8e9;
+        border: 1px solid #c5e1a5;
+        max-width: 860px;
+        text-align: left;
+        display: none; 
+        font-size: 14px;
+        line-height: 1.5;
+        color: #33691e;
+    "></div>
+
+        <!-- Detailed Comparison Tables from HTML-B with HTML-A's correct information -->
+        <section class="section-card">
+            <div class="section-title">🛡️ セキュリティ機能 完全比較表</div>
+            <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 30px;">
+                ⚠️ <strong>注意</strong>: IIJ Managed Firewallの具体的な機能セットは要確認(ドラフト版)
+            </p>
+
+            <table
+                style="width: 100%; border-collapse: collapse; margin-bottom: 40px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <thead>
+                    <tr style="background-color: #1e88e5; color: white;">
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">セキュリティ機能</th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">説明</th>
+                        <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">現状<br>(USEN/Vario Secure)
+                        </th>
+                        <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">IIJ Omnibus<br>(Cloud
+                            UTM)
+                        </th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">導入メリット</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color: #f9f9f9;">
+                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">ファイアウォール</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">不正な通信をブロック</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">✅
+                            あり<br><small>(基本的なパケットフィルタリング)</small></td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e8f5e9;">
+                            ✅
+                            あり<br><small>(高度なステートフルインスペクション)</small></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">より精密な制御が可能</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">
+                            IPS/IDS<br><small>(不正侵入検知/防御)</small></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">攻撃パターンを検知してブロック</td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #fff3e0;">
+                            ❓
+                            不明<br><small>(要確認)</small></td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e8f5e9;">
+                            ✅
+                            あり<br><small>(最新の攻撃パターンに自動対応)</small></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">SQLインジェクション、ゼロデイ攻撃等を防御</td>
+                    </tr>
+                    <tr style="background-color: #f9f9f9;">
+                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">
+                            アンチウイルス<br><small>(ゲートウェイレベル)</small></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">ウイルス・マルウェアを検出・除去</td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #ffebee;">
+                            ❌
+                            なし<br><small>(端末側のみで対応)</small></td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e8f5e9;">
+                            ✅
+                            あり<br><small>(ネットワークレベルでスキャン)</small></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">端末に到達する前にブロック</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Webフィルタリング</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">危険なWebサイトへのアクセスをブロック</td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #ffebee;">
+                            ❌
+                            なし</td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e8f5e9;">
+                            ✅
+                            あり<br><small>(フィッシング・マルウェア配布サイト等)</small></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">従業員の誤アクセスを防止</td>
+                    </tr>
+                    <tr style="background-color: #f9f9f9;">
+                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">SSL/TLS検査</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">暗号化通信の中身もチェック</td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #ffebee;">
+                            ❌
+                            なし<br><small>⚠️ 暗号化された脅威を検知できない</small></td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e8f5e9;">
+                            ✅
+                            あり<br><small>(HTTPS通信も検査可能)</small></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>現代の攻撃の大半はHTTPSを使用するため必須</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">アプリケーション制御</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">特定のアプリケーション利用を制限</td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #ffebee;">
+                            ❌
+                            なし</td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e8f5e9;">
+                            ✅
+                            あり<br><small>(P2Pソフト、業務外アプリ等を制限)</small></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">帯域の無駄遣いを防止</td>
+                    </tr>
+                    <tr style="background-color: #f9f9f9;">
+                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">DDoS対策</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">大量アクセス攻撃からの保護</td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #ffebee;">
+                            ❌
+                            なし</td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e8f5e9;">
+                            ✅
+                            あり<br><small>(クラウドレベルで吸収)</small></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">サービス停止リスクを軽減</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="color: #333; margin-top: 40px; margin-bottom: 15px;">拠点別セキュリティ状況</h3>
+            <table
+                style="width: 100%; border-collapse: collapse; margin-bottom: 40px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <thead>
+                    <tr style="background-color: #43a047; color: white;">
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">拠点</th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">現状のセキュリティ</th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">問題点</th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">IIJ Omnibus導入後</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color: #f9f9f9;">
+                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">東京本社（築地）</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">✅ 基本的なFW</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">高度な脅威に対応できない</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; background-color: #e8f5e9;">✅ 全機能適用</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">大阪支店</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; background-color: #e8f5e9;">✅
+                            Vario Secure VSR600<br><small>(本社と同等のセキュリティレベル)</small></td>
+                        <td style="padding: 10px; border: 1px solid #ddd; background-color: #fff3e0;">⚠️
+                            <strong>別管理</strong><br>本社とは別のシステムで管理
+                        </td>
+                        <td style="padding: 10px; border: 1px solid #ddd; background-color: #e8f5e9;">✅
+                            全機能適用<br><strong>管理統合</strong></td>
+                    </tr>
+                    <tr style="background-color: #f9f9f9;">
+                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">その他支店</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">✅ 築地Hub経由</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">築地経由で遅延発生</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; background-color: #e8f5e9;">✅
+                            全機能適用<br><strong>高速化も実現</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="color: #333; margin-top: 40px; margin-bottom: 15px;">コスト vs セキュリティ 総合比較</h3>
+            <table style="width: 100%; border-collapse: collapse; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <thead>
+                    <tr style="background-color: #e65100; color: white;">
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">項目</th>
+                        <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">現状 (USEN/Vario Secure)
+                        </th>
+                        <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">IIJ Omnibus (Cloud UTM)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color: #f9f9f9;">
+                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">月額コスト</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">約11.8万円</td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #fff3e0;">
+                            約72万円 <strong>(約6倍)</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">セキュリティレベル</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">
+                            ⭐⭐☆☆☆<br><small>基本的なFWのみ</small></td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e8f5e9;">
+                            ⭐⭐⭐⭐⭐<br><small>8つの機能で多層防御</small></td>
+                    </tr>
+                    <tr style="background-color: #f9f9f9;">
+                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">全拠点均一性</td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #fff3e0;">
+                            ⚠️
+                            均一<br><small>（ただし大阪は別管理）</small></td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e8f5e9;">
+                            ✅
+                            完全均一</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">運用負荷</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">ゼロ <small>(Vario
+                                Secureがフルマネージド)</small>
+                        </td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e8f5e9;">
+                            ゼロ
+                            <small>(IIJが自動管理)</small>
+                        </td>
+                    </tr>
+                    <tr style="background-color: #f9f9f9;">
+                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">可視化</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">✅
+                            あり<br><small>（管理コンソール提供）</small></td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e8f5e9;">
+                            ✅
+                            全拠点の通信ログを一元管理</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div
+                style="margin-top: 30px; padding: 20px; background-color: #fff3e0; border-left: 4px solid #ff9800; border-radius: 4px;">
+                <h4 style="margin-top: 0; color: #e65100;">結論</h4>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li><strong>コストは約6倍</strong>だが、セキュリティレベルは<strong>5倍以上</strong></li>
+                    <li><strong>運用負荷は現状もゼロ</strong>（両方ともフルマネージド）</li>
+                    <li><strong>大阪の別管理を統合できる</strong>（管理の一元化）</li>
+                    <li><strong>将来的なリスク回避</strong>（ランサムウェア、情報漏洩等）</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Detailed Full Comparison Report from original HTML-A -->
+        <section class="section-card">
+
+            <div class="section-title">📊 公平な比較と意思決定ガイド</div>
+            <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 30px;">
+                「現状」と「理想」のギャップを埋めるための詳細比較。価格差の背後にある「運用コスト」と「機能差」を整理します。
+            </p>
+
+            <!-- 1. Fair Comparison Matrix -->
+            <h3 style="color: #3f51b5;">1. 機能とコストの公平比較 (Apple to Apple)</h3>
+            <p style="font-size: 0.9em; color: #666;">※Varioもオプションを追加して同等の機能を持たせた場合で比較</p>
+
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px; font-size: 14px;">
+                <thead>
+                    <tr style="background-color: #f5f5f5; color: #333;">
+                        <th style="padding: 12px; border: 1px solid #ddd; width: 20%;">比較項目</th>
+                        <th style="padding: 12px; border: 1px solid #ddd; width: 40%;">USEN / Vario Secure (Full Spec想定)
+                        </th>
+                        <th style="padding: 12px; border: 1px solid #ddd; width: 40%;">SD-WAN (IIJ Omnibus)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">LBO (ローカルブレイクアウト)</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">
+                            <strong>⭕ 可能 (IPベース)</strong><br>
+                            特定IPを指定して分岐。<br>GoogleのIPが変わるたびに設定変更が必要(運用負荷大)。
+                        </td>
+                        <td style="padding: 10px; border: 1px solid #ddd; background-color: #e8f5e9;">
+                            <strong>◎ アプリ自動識別 (動的)</strong><br>
+                            「Google Meet」等のアプリ名で指定。<br>IP変更に自動追従。メンテナンスフリー。
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">セキュリティ機能</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">
+                            <strong>⚠️ オプション契約が必要</strong><br>
+                            IPS/IDS、Webフィルタは追加費用で利用可能。<br>現状は未契約のためリスクあり。
+                        </td>
+                        <td style="padding: 10px; border: 1px solid #ddd; background-color: #e8f5e9;">
+                            <strong>✅ 標準搭載 (All-in-One)</strong><br>
+                            次世代FW、IPS/IDS、Webフィルタ等が標準装備。<br>追加コスト無しで高セキュリティ。
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">運用管理 (Google IP対応)</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">
+                            <strong>💦 人手による管理 (Reactive)</strong><br>
+                            Googleの仕様変更はユーザー側で検知・申請が必要。<br>「フルマネージド」でも設定変更依頼はユーザー責任。
+                        </td>
+                        <td style="padding: 10px; border: 1px solid #ddd; background-color: #e8f5e9;">
+                            <strong>✨ システム自動化 (Proactive)</strong><br>
+                            クラウド側で辞書を自動更新。<br>情シスの作業は不要。
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; color: #d32f2f;">コスト (概算)
+                        </td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">
+                            <strong>💰 月額 11.8万円 + α (隠れコスト)</strong><br>
+                            <span style="font-size:0.9em; color:#d32f2f;">+ セキュリティオプション費用<br>+ 都度の設定変更SE費<br>+ 社内対応工数
+                                (人件費)</span>
+                        </td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">
+                            <strong>💸 月額 約72万円 (Subsc)</strong><br>
+                            全ての機能と自動化を含むサブスクリプション。<br>高額だが「運用の平和」を買うモデル。
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- 2. Hidden Costs Breakdown -->
+            <h3 style="color: #3f51b5; margin-top:40px;">2. 「プラスアルファ」の隠れコストとは？</h3>
+            <div style="background-color: #fff3e0; padding: 15px; border-left: 5px solid #ff9800; margin-bottom: 30px;">
+                <p style="margin: 0; color: #e65100; font-weight: bold;">見かけの月額費用 (11.8万円) だけ比較するのは危険です。</p>
+                <ul style="margin-top: 10px; color: #555;">
+                    <li><strong>セキュリティオプション費:</strong> SD-WANと同等にするために必須 (IDS/IPS, Webフィルタ)。</li>
+                    <li><strong>SE対応費:</strong> Varioは設定変更のたびに数万円の作業費がかかる場合があります。</li>
+                    <li><strong>内部人件費:</strong> 「GoogleのIPが変わった！」と調査し、申請書を書く時間を時給換算すると？</li>
+                </ul>
+            </div>
+
+            <!-- 3. Verification Checklist -->
+            <h3 style="color: #3f51b5; margin-top:40px;">3. USEN様への確認事項 (Verification Checklist)</h3>
+            <div style="background-color: #e3f2fd; padding: 20px; border-radius: 5px;">
+                <p style="margin: 0 0 10px 0; font-weight: bold; color: #0d47a1;">以下の点を確認することで、真の比較が可能になります。</p>
+                <ul style="list-style-type: none; padding: 0;">
+                    <li style="margin-bottom: 15px;">
+                        <input type="checkbox" id="check1" disabled>
+                        <label for="check1" style="font-weight: bold;">Q1. Google Workspaceの自動追従範囲</label><br>
+                        <span
+                            style="font-size: 0.9em; color: #555; margin-left: 20px;">「フルマネージド」とのことですが、GoogleのIP変更時、<strong>こちらの依頼なしで自動的に</strong>ルート情報を更新してくれますか？</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="check2" disabled>
+                        <label for="check2" style="font-weight: bold;">Q2. フルオプション時の総額</label><br>
+                        <span style="font-size: 0.9em; color: #555; margin-left: 20px;">SD-WANと同等のセキュリティ (IPS/IDS,
+                            Webフィルタ)
+                            を全て付けた場合、月額はいくらになりますか？</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 4. Final Verdict: Why SD-WAN? -->
+            <h3 style="color: #3f51b5; margin-top:40px;">4. 最終結論：それでもSD-WANを選ぶ理由 (Why SD-WAN?)</h3>
+            <p>仮に「Varioフルオプション運用」で価格差が縮まったとしても、なおSD-WANが優位である理由は以下の3点です。</p>
+
+            <div style="display: flex; gap: 20px; margin-top: 20px;">
+                <!-- Reason 1 -->
+                <div
+                    style="flex: 1; padding: 15px; border: 1px solid #c8e6c9; background: #f1f8e9; border-radius: 5px;">
+                    <h4 style="margin-top: 0; color: #2e7d32;">1. "動的"なSaaSへの自動追従</h4>
+                    <p style="font-size: 13px; color: #555;">
+                        Googleは頻繁にIPを変えます。Varioでは人手による追従が必要で、<strong>「設定変更が間に合わずMeetが繋がらない」</strong>事故リスクがあります。SD-WANは全自動です。
+                    </p>
+                </div>
+                <!-- Reason 2 -->
+                <div
+                    style="flex: 1; padding: 15px; border: 1px solid #c8e6c9; background: #f1f8e9; border-radius: 5px;">
+                    <h4 style="margin-top: 0; color: #2e7d32;">2. 品質補正 (FEC機能)</h4>
+                    <p style="font-size: 13px; color: #555;">
+                        インターネット回線が不安定（パケットロス2%等）でも、SD-WANは<strong>「パケット修復」</strong>を行い、ビデオ会議を途切れさせません。これはVario（ルーター）には不可能です。
+                    </p>
+                </div>
+                <!-- Reason 3 -->
+                <div
+                    style="flex: 1; padding: 15px; border: 1px solid #c8e6c9; background: #f1f8e9; border-radius: 5px;">
+                    <h4 style="margin-top: 0; color: #2e7d32;">3. "見えない"をなくす</h4>
+                    <p style="font-size: 13px; color: #555;">
+                        「誰がYouTubeを見て帯域を圧迫しているか？」が即座に分かります。Varioではログ解析が必要ですが、SD-WANはダッシュボードで一目瞭然です。</p>
+                </div>
+            </div>
+        </section>
+
+        <footer style="text-align: center; margin-top: 50px; color: var(--text-muted); font-size: 0.8rem; padding-bottom: 20px;">
+            Professional Network Visualization Powered by D3.js • © 2026 Information System Department
+        </footer>
+    </div>
+
+</body>
+
+</html>

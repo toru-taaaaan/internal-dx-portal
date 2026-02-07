@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>プロジェクト 15.01: ADサーバークラウド化 (最終統合報告 v20260122_1330)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Noto Sans JP', 'Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          },
+          colors: {
+            'brand-navy': '#1e3a8a',
+            'brand-accent': '#0ea5e9',
+          },
+          boxShadow: {
+            'card': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+            'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #f8fafc;
+      color: #334155;
+    }
+    .modern-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 1rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+      transition: all 0.3s ease;
+    }
+    .check-icon { color: #16a34a; margin-right: 0.25rem; font-weight: bold; }
+    .triangle-icon { color: #ca8a04; margin-right: 0.25rem; font-weight: bold; }
+    
+    th {
+      font-weight: 600;
+      color: #64748b;
+      background-color: #f1f5f9;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    td {
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .border-col {
+      border-left: 1px solid #e2e8f0;
+    }
+    .mermaid-container {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 0.75rem;
+      border: 1px solid #e2e8f0;
+    }
+  </style>
+</head>
+<body class="min-h-screen font-sans antialiased text-slate-700">
+
+  <!-- Header Section -->
+  <header class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <? var url = ScriptApp.getService().getUrl(); ?>
+        <a href="<?=url?>?page=home" class="flex items-center gap-2 text-slate-500 hover:text-brand-navy transition-colors text-sm font-medium">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          ポータルへ戻る
+        </a>
+        <div class="h-4 w-px bg-slate-300"></div>
+        <span class="text-sm font-bold text-slate-700">プロジェクト 15.01: ADサーバークラウド化</span>
+      </div>
+      <div>
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200">
+          ステータス: 並行稼働検討版 (v20260122_1330)
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto p-4 md:p-8 space-y-12">
+
+    <!-- Title & Summary -->
+    <section class="text-center space-y-4 pt-4">
+      <h1 class="text-3xl md:text-5xl font-black text-slate-900 tracking-tight">
+        ADサーバークラウド移行計画 報告書
+      </h1>
+      <p class="text-lg text-slate-500 max-w-2xl mx-auto">
+        全ベンダーにおいて「二重稼働（並行運用）」を原則とした、安全重視の移行フロー図。
+      </p>
+    </section>
+
+    <!-- Executive Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="modern-card p-6 border-t-4 border-t-slate-400">
+        <h3 class="text-xl font-bold text-slate-800 mb-4 font-display">01. IIJ Global</h3>
+        <p class="text-xs text-slate-500 mb-4">PaaS / Managed切替制御</p>
+        <ul class="space-y-3 text-sm text-slate-600 mb-6 font-medium">
+          <li class="flex items-start"><span class="check-icon">✓</span> 基盤側での自動切替</li>
+          <li class="flex items-start"><span class="check-icon">✓</span> PC側設定変更なし</li>
+        </ul>
+        <div class="pt-4 border-t border-slate-100 text-2xl font-bold text-slate-800">¥11,907,750</div>
+      </div>
+      <div class="modern-card p-6 border-t-4 border-t-slate-400">
+        <h3 class="text-xl font-bold text-slate-800 mb-4 font-display">02. USEN (AWS)</h3>
+        <p class="text-xs text-slate-500 mb-4">IaaS / 並行稼働・LANScope</p>
+        <ul class="space-y-3 text-sm text-slate-600 mb-6 font-medium">
+          <li class="flex items-start"><span class="check-icon">✓</span> 1ヶ月間の二重稼働</li>
+          <li class="flex items-start"><span class="triangle-icon text-orange-500">⚠</span> DNS配布工数(ツール)</li>
+        </ul>
+        <div class="pt-4 border-t border-slate-100 text-2xl font-bold text-slate-800">¥8,318,000</div>
+      </div>
+      <div class="modern-card p-6 border-t-4 border-t-slate-400">
+        <h3 class="text-xl font-bold text-slate-800 mb-4 font-display">03. Link At Japan</h3>
+        <p class="text-xs text-slate-500 mb-4">IaaS / 東西冗長・並行稼働</p>
+        <ul class="space-y-3 text-sm text-slate-600 mb-6 font-medium">
+          <li class="flex items-start"><span class="check-icon">✓</span> 東西拠点間の高可用性</li>
+          <li class="flex items-start"><span class="check-icon">✓</span> <strong>並行稼働への修正案</strong></li>
+        </ul>
+        <div class="pt-4 border-t border-slate-100 text-2xl font-bold text-slate-800">¥7,678,060</div>
+      </div>
+    </div>
+
+    <!-- 1. Detailed Cost Table -->
+    <section class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+        <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+          <span class="text-xl">💰</span> 費用詳細比較表 (税抜)
+        </h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left">
+          <thead>
+            <tr>
+              <th class="p-4 w-1/4 text-slate-800">費目</th>
+              <th class="p-4 w-1/4 text-slate-800 border-col">IIJ (PaaS)</th>
+              <th class="p-4 w-1/4 text-slate-800 border-col">USEN (AWS)</th>
+              <th class="p-4 w-1/4 text-slate-800 border-col">Link At Japan</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-slate-600">
+            <tr><td class="p-4 pl-6 font-medium">初期費用 合計</td><td class="p-4 border-col">¥1,422,750</td><td class="p-4 border-col">¥860,000</td><td class="p-4 border-col">¥1,555,000</td></tr>
+            <tr><td class="p-4 pl-6 font-medium">月額費用 合計</td><td class="p-4 border-col">¥174,750</td><td class="p-4 border-col">¥124,300</td><td class="p-4 border-col">¥102,051</td></tr>
+            <tr class="bg-slate-800 text-white"><td class="p-4 pl-6 text-lg font-bold">5年総額 (TCO)</td><td class="p-4 border-col font-display text-lg">¥11,907,750</td><td class="p-4 border-col font-display text-lg">¥8,318,000</td><td class="p-4 border-col font-display text-lg">¥7,678,060</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 2. Technical & Support Comparison Table -->
+    <section class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+        <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+          <span class="text-xl">🛠</span> 技術・サポート詳細比較
+        </h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left whitespace-nowrap">
+          <thead>
+            <tr>
+              <th class="p-4 w-1/4 text-slate-800 border-r border-slate-100">項目</th>
+              <th class="p-4 w-1/4 text-slate-800 border-r border-slate-100">IIJ (PaaS)</th>
+              <th class="p-4 w-1/4 text-slate-800 border-r border-slate-100">USEN (AWS)</th>
+              <th class="p-4 w-1/4 text-slate-800">Link At Japan</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-slate-600">
+            <tr>
+              <td class="p-4 pl-6 font-medium border-r border-slate-100">移行手法</td>
+              <td class="p-4 border-r border-slate-100 text-green-600 font-bold">停止なし (自動)</td>
+              <td class="p-4 border-r border-slate-100 text-green-600 font-bold">停止なし (並行稼働)</td>
+              <td class="p-4 text-brand-navy font-bold">停止なし案へ修正可<br>(並行稼働推奨)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3. Visual Plans Gallery (Updated for LAJ Parallel) -->
+    <section class="space-y-12">
+      <div class="border-b-2 border-slate-100 pb-4">
+        <h2 class="text-3xl font-black text-slate-900 tracking-tight">それぞれの移行計画（想定・要件照会中）</h2>
+        <p class="text-sm text-slate-500 mt-2">全社において、業務への影響を最小限とする「既存システムと新システムの並行稼働」を前提としたフロー図です。</p>
+      </div>
+
+      <!-- IIJ (Managed DNS) -->
+      <div class="space-y-4">
+        <h3 class="text-xl font-bold text-brand-navy flex items-center gap-3">
+          <span class="bg-brand-navy text-white px-3 py-1 rounded-lg text-sm">Case 01</span>
+          IIJ Global (PaaS / Managed切替案)
+        </h3>
+        <div class="mermaid-container shadow-sm border-t-4 border-slate-600">
+          <pre class="mermaid">
+          graph LR
+            A[IIJ GIO/同期基盤] --> B{Managed DNS制御}
+            B --> C[旧住所へのアクセスを一括転送]
+            C --> D[利用者側のアクションなしで移行完了]
+            
+            style B fill:#f8fafc,stroke:#1e293b,stroke-width:2px
+          </pre>
+        </div>
+      </div>
+
+      <!-- USEN (Parallel) -->
+      <div class="space-y-4">
+        <h3 class="text-xl font-bold text-brand-navy flex items-center gap-3">
+          <span class="bg-brand-navy text-white px-3 py-1 rounded-lg text-sm">Case 02</span>
+          USEN (AWS / 並行稼働案)
+        </h3>
+        <div class="mermaid-container shadow-sm border-t-4 border-brand-accent">
+          <pre class="mermaid">
+          graph TD
+            A[AWSインフラ構築/AD同期] --> B{二重稼働開始}
+            subgraph "安全なオーバーラップ期間 (約1ヶ月)"
+              B --> C["[旧] オンプレAD (予備)"]
+              B --> D["[新] クラウドAD (本番)"]
+              C --> E[拠点PCの接続先を順次変更]
+              D --> E
+            end
+            E --> F[全PCの正常稼働確認]
+            F --> G[旧サーバーの撤去]
+
+            style B fill:#f0f9ff,stroke:#0ea5e9,stroke-width:2px
+            style C fill:#fef3c7,stroke:#f59e0b,stroke-dasharray: 5 5
+            style D fill:#f0f9ff,stroke:#0ea5e9,stroke-width:2px
+          </pre>
+        </div>
+      </div>
+
+      <!-- LAJ (Parallel Revision) -->
+      <div class="space-y-4 border-2 border-brand-accent/20 p-6 rounded-2xl bg-brand-accent/5">
+        <h3 class="text-xl font-bold text-brand-navy flex items-center gap-3">
+          <span class="bg-brand-navy text-white px-3 py-1 rounded-lg text-sm">Case 03</span>
+          Link At Japan (Azure / 並行稼働への修正要求案)
+        </h3>
+        <p class="text-xs text-brand-navy font-bold">※休日一斉停止リスクを回避するため、USEN同様の並行稼働が可能かを確認するプラン。</p>
+        <div class="mermaid-container shadow-sm border-t-4 border-orange-400">
+          <pre class="mermaid">
+          graph TD
+            A[Azure東西冗長基盤構築] --> B{二重稼働への切替}
+            subgraph "無停止での切り替え期間"
+              B --> C["[旧] オンプレAD"]
+              B --> D["[新] Azure AD"]
+              C --> E[順次データ同期と認証の切替]
+              D --> E
+            end
+            E --> F[月曜朝のトラブルを未然に防止]
+            
+            style B fill:#fff7ed,stroke:#fb923c,stroke-width:2px
+            style C fill:#fef3c7,stroke:#f59e0b,stroke-dasharray: 5 5
+            style D fill:#fff7ed,stroke:#fb923c,stroke-width:2px
+          </pre>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Footer Meta -->
+    <div class="text-right text-xs text-slate-400 mt-8">最終更新: 2026/01/22 (v20260122_1330)</div>
+
+  </div>
+</body>
+</html>

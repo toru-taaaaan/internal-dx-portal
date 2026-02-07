@@ -6,7 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // 静的ファイルの提供（HTML, CSS, JS など）
-const portalDir = '../社内DXポータル';
+const portalDir = './portal';
 app.use(express.static(path.join(__dirname, portalDir)));
 app.use('/assets', express.static(path.join(__dirname, portalDir, 'assets')));
 

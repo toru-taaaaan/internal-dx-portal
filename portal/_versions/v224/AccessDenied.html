@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Denied</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #334155;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            border: 1px solid #e2e8f0;
+        }
+
+        .icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 24px;
+            color: #ef4444;
+            /* Red for alert */
+        }
+
+        p {
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: #64748b;
+        }
+
+        .user-email {
+            background: #f1f5f9;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-weight: 600;
+            color: #0f172a;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <div class="icon">🚫</div>
+        <h1>Access Restricted</h1>
+        <p>
+            このページは「情報システム部」のメンバーのみに公開されています。<br>
+            <span style="font-size: 0.9em;">(This page is restricted to authorized department members only.)</span>
+        </p>
+        <div class="user-email">
+            <?= email ?>
+        </div>
+        <p style="font-size: 0.85em;">
+            アクセス権限が必要な場合は、システム管理者にご連絡ください。
+        </p>
+    </div>
+</body>
+
+</html>
+

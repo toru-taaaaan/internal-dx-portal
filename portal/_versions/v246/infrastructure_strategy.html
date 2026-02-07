@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>インフラ強靭化・基盤刷新 戦略レポート | 1/23会議反映版</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <!-- Standard Portal Styles -->
+    <link rel="stylesheet" href="assets/portal_nexus.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Report Specific Styles */
+        :root {
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --brand-indigo: #4f46e5;
+            --brand-rose: #f43f5e;
+        }
+
+        /* Override body bg to match report theme if needed, or keep standard */
+        /* body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        } */
+        /* Standard portal uses #fcfcfc, but this report had a specific gradient. 
+           Let's apply the gradient to the main content area instead of body to play nice with sidebar */
+
+        .report-container {
+            font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+            color: #1e293b;
+            padding: 3rem;
+            min-height: 100%;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .section-glass {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+        }
+
+        .table-custom {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+        }
+
+        .table-custom th {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .table-custom tr {
+            background: white;
+            transition: transform 0.2s;
+        }
+
+        .table-custom tr:hover {
+            transform: scale(1.01);
+        }
+
+        .table-custom td {
+            padding: 1.25rem 1rem;
+            border-top: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .table-custom td:first-child {
+            border-left: 1px solid #f1f5f9;
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+        }
+
+        .table-custom td:last-child {
+            border-right: 1px solid #f1f5f9;
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+        .on-prem-row {
+            background: #f8fafc !important;
+            color: #64748b;
+            opacity: 0.8;
+        }
+
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            background: #e2e8f0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .chart-mock {
+            height: 150px;
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .bar {
+            width: 15px;
+            background: #94a3b8;
+            transition: height 1s;
+        }
+
+        .bar.low {
+            background: #ef4444;
+        }
+
+        .bar.high {
+            background: #10b981;
+        }
+
+        .matrix-icon {
+            width: 14px;
+            height: 14px;
+            display: inline-block;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="layout-wrapper">
+        <!-- Unified Sidebar -->
+        <aside class="sidebar">
+            <header class="sidebar-header">
+                <h1>統合指揮センター HUB</h1>
+                <p>MASTER COMMAND CENTER V2.2</p>
+            </header>
+            <nav>
+                <div class="nav-label-small">トップ・ナビゲーション</div>
+                <a href="landing.html" class="nav-link">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    ポータルホーム
+                </a>
+                <a href="index.html" class="nav-link active">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    プロジェクト
+                </a>
+                <a href="executive_hub.html" class="nav-link">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    全体課題管理表
+                </a>
+                <a href="evaluation_sheet.html" class="nav-link">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                    人事考課原本 (最新版)
+                </a>
+                <a href="daily_log.html" class="nav-link">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    活動全史 (ログ)
+                </a>
+            </nav>
+            <footer class="sidebar-footer">
+                <p>User: 丹治 統<br>Last Sync: 1/24 21:00</p>
+            </footer>
+        </aside>
+
+        <main class="main-scroll">
+            <div class="report-container">
+                <div class="max-w-6xl mx-auto space-y-12">
+
+                    <!-- Navigation / Header -->
+                    <header class="flex justify-between items-end border-b border-slate-300 pb-8">
+                        <div>
+                            <span
+                                class="text-xs font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full uppercase letter-spacing-widest">Master
+                                Strategy Plan</span>
+                            <h1 class="text-5xl font-black text-slate-900 mt-4 tracking-tight">Infrastructure Resilience
+                                Report
+                            </h1>
+                            <p class="text-slate-500 font-medium text-lg mt-2">1/23 会議指摘事項を反映した精密アクションプラン</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-[10px] font-bold text-slate-400">STATUS</p>
+                            <p class="text-sm font-black text-rose-500">REQUIREMENT FINALIZED</p>
+                        </div>
+                    </header>
+
+                    <!-- 1. COST COMPARISON (AD + SECOM Combined) -->
+                    <section class="section-glass p-8">
+                        <div class="flex justify-between items-center mb-8">
+                            <h2 class="text-2xl font-black text-slate-800">1. 多角的費用比較 (AD & SECOM 統合)</h2>
+                            <div class="text-xs font-bold text-slate-400 italic">単位: 千円 (税抜)</div>
+                        </div>
+
+                        <table class="table-custom">
+                            <thead>
+                                <tr>
+                                    <th>ベンダー / 構成</th>
+                                    <th>初期費用<br><span class="text-[9px]">(セコム含)</span></th>
+                                    <th>月額ランニング</th>
+                                    <th>1年間 総額</th>
+                                    <th>5年間 総額</th>
+                                    <th>評価・備考</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="font-bold">IIJ (フルマネージド)</td>
+                                    <td class="text-indigo-600 font-bold">2,170</td>
+                                    <td class="font-bold">205</td>
+                                    <td>4,630</td>
+                                    <td class="text-rose-600 font-black">14,470</td>
+                                    <td class="text-[10px] text-slate-500">
+                                        最高値だが運用負荷は最小。24/365監視・復旧を含む唯一のプラン。
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">USEN (AWS活用)</td>
+                                    <td class="font-bold">1,290</td>
+                                    <td class="font-bold">155</td>
+                                    <td>3,150</td>
+                                    <td class="font-bold">10,590</td>
+                                    <td class="text-[10px] text-slate-500">
+                                        中価格帯。自由度と拡張性のバランスが良い。自社運用工数が発生。
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Link At Japan (Azure)</td>
+                                    <td class="font-bold">1,935</td>
+                                    <td class="font-bold">120</td>
+                                    <td>3,375</td>
+                                    <td class="font-bold">9,135</td>
+                                    <td class="text-[10px] text-slate-500">
+                                        ランニング最安。現在は「並行稼働プラン」での再見積待ち。
+                                    </td>
+                                </tr>
+                                <tr class="on-prem-row italic">
+                                    <td>オンプレ継続 (参考)</td>
+                                    <td>2,325</td>
+                                    <td>8</td>
+                                    <td>2,421</td>
+                                    <td class="font-bold">2,805</td>
+                                    <td class="text-[10px] text-slate-400">
+                                        物価上昇後試算。最安だが、24/365監視・BCP耐性は欠如。
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- 2. RESPONSIBILITY MATRIX -->
+                    <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="section-glass p-8">
+                            <h2 class="text-xl font-black text-slate-800 mb-6">2. 運用責任分界点 (RACI)</h2>
+                            <div class="space-y-4">
+                                <div class="bg-white p-4 rounded-xl border border-slate-200">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-xs font-bold text-slate-400">HARDWARE / HYPERVISOR</span>
+                                        <span
+                                            class="text-[10px] font-black bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded">VENDOR</span>
+                                    </div>
+                                    <p class="text-sm font-bold">IIJ/AWS/Azure 基盤保守</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-xl border border-indigo-200 ring-2 ring-indigo-50">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-xs font-bold text-indigo-400">OS / SECURITY PATCH</span>
+                                        <span
+                                            class="text-[10px] font-black bg-indigo-600 text-white px-2 py-0.5 rounded">IIJ
+                                            ONLY</span>
+                                    </div>
+                                    <p class="text-sm font-bold italic">※IIJ以外は「情シス」または「別途保守」の責任範囲</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-xl border border-slate-200">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-xs font-bold text-slate-400">ACTIVE DIRECTORY APP</span>
+                                        <span
+                                            class="text-[10px] font-black bg-rose-100 text-rose-700 px-2 py-0.5 rounded">SHARED</span>
+                                    </div>
+                                    <p class="text-sm font-bold">ユーザー追加・権限管理等 (自社作業)</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. SECURITY FEATURE COMPARISON -->
+                        <div class="section-glass p-8">
+                            <h2 class="text-xl font-black text-slate-800 mb-6">3. セキュリティ機能 (UTM/SASE)</h2>
+                            <div class="space-y-4 text-sm font-medium">
+                                <div class="flex justify-between border-b border-slate-100 pb-2">
+                                    <span>次世代Firewall / IPS</span>
+                                    <div class="flex gap-4">
+                                        <span class="text-indigo-600 font-bold">IIJ: ○</span>
+                                        <span class="text-rose-600 font-bold">Cato: ◎</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between border-b border-slate-100 pb-2">
+                                    <span>アンチウイルス / サンドBOX</span>
+                                    <div class="flex gap-4">
+                                        <span class="text-indigo-600 font-bold">IIJ: ○</span>
+                                        <span class="text-rose-600 font-bold">Cato: ◎</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between border-b border-slate-100 pb-2">
+                                    <span>SSL / TLS 検査</span>
+                                    <div class="flex gap-4">
+                                        <span class="text-indigo-500 font-bold">IIJ: △</span>
+                                        <span class="text-rose-600 font-bold">Cato: ○</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between border-b border-slate-100 pb-2 text-slate-400 italic">
+                                    <span>URLフィルタリング</span>
+                                    <div class="flex gap-4 font-bold">
+                                        <span>IIJ: ○</span>
+                                        <span>Cato: ○</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4 p-4 bg-amber-50 rounded-xl">
+                                    <p class="text-[11px] font-bold text-amber-700 leading-tight">
+                                        ⚠️ Cato SASEはバディネットとのグループ統合により、ライセンス単価の大幅削減が見込める（塩田室長提案）。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 4. NETWORK PERFORMANCE (LINE SPEED) -->
+                    <section class="section-glass p-10 bg-slate-900 text-white overflow-hidden relative">
+                        <div class="relative z-10">
+                            <h2 class="text-3xl font-black mb-2">4. 回線速度の「現実」と改善シナリオ</h2>
+                            <p class="text-slate-400 mb-10">多摩拠点における壊滅的な低速状況の視覚化</p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                                <div>
+                                    <div class="flex items-center justify-between mb-4">
+                                        <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Latency
+                                            /
+                                            Throughput (Avg)</span>
+                                        <span class="text-rose-500 font-black text-xl">10 Mbps 以下</span>
+                                    </div>
+                                    <div class="chart-mock items-end px-4">
+                                        <!-- High bars for Tokyo -->
+                                        <div class="bar high h-full"></div>
+                                        <div class="bar high h-[90%]"></div>
+                                        <div class="bar high h-[95%]"></div>
+                                        <div class="bar high h-full"></div>
+                                        <!-- Drop for Tama -->
+                                        <div class="bar low h-[15%]"></div>
+                                        <div class="bar low h-[10%]"></div>
+                                        <div class="bar low h-[12%]"></div>
+                                        <div class="bar low h-[8%]"></div>
+                                        <div class="bar low h-[5%]"></div>
+                                        <div class="bar low h-[10%]"></div>
+                                        <div class="bar low h-[7%]"></div>
+                                    </div>
+                                    <div class="flex justify-between mt-4">
+                                        <span class="text-[10px] font-bold text-slate-500">TOKYO HQ (200Mbps+)</span>
+                                        <span class="text-[10px] font-bold text-rose-400">TAMA CENTER (Critical)</span>
+                                    </div>
+                                </div>
+                                <div class="space-y-6">
+                                    <h3 class="text-lg font-bold">最優先リカバリー・アクション</h3>
+                                    <ul class="space-y-4">
+                                        <li class="flex gap-4">
+                                            <div
+                                                class="w-10 h-10 rounded-full bg-rose-600/20 flex items-center justify-center font-bold text-rose-500 italic">
+                                                01</div>
+                                            <div>
+                                                <p class="font-bold">占有型回線 (FLET'Sビジネス/楽天) への切替</p>
+                                                <p class="text-xs text-slate-400">足回り自体の「混雑」を排除。推定速度 100Mbpsへの回復を目指す。
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-4">
+                                            <div
+                                                class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-slate-400 italic">
+                                                02</div>
+                                            <div>
+                                                <p class="font-bold">VSR 400 → 600 ハードウェア交換</p>
+                                                <p class="text-xs text-slate-400">LBO機能の物理要件を満たし、ルーター性能起因の遅延を解消。</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Decorative circle -->
+                        <div class="absolute -right-24 -bottom-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl">
+                        </div>
+                    </section>
+
+                    <footer class="text-center py-12">
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 underline">
+                            Confidential
+                            Document
+                        </p>
+                        <p class="text-xs text-slate-400 leading-loose">
+                            AKIBA Holdings Ltd. / Internal DX Transformation Taskforce<br>
+                            Reporting Tool: Antigravity Strategic Reporter v1.0
+                        </p>
+                    </footer>
+
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

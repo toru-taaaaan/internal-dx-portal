@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    <title>Project 15.02 SECOM Cloud Migration</title>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --accent: #10b981;
+            --danger: #ef4444;
+            --bg-body: #f8fafc;
+            --surface: #ffffff;
+            --surface-glass: rgba(255, 255, 255, 0.9);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+        }
+
+        body {
+            font-family: 'Outfit', 'Inter', "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-content h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        .header-content p {
+            margin: 5px 0 0;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .meta-info {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+
+        .badge-project {
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0 0 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #f8fafc;
+            padding-bottom: 10px;
+        }
+
+        .highlight-box {
+            background: #eff6ff;
+            border-left: 4px solid var(--primary);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+
+        .alert-danger {
+            background: #fff1f2;
+            border-left: 4px solid #f43f5e;
+            color: #991b1b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: #f8fafc;
+            font-weight: 700;
+            color: #475569;
+        }
+
+        .col-highlight {
+            background: #f0fdf4 !important;
+            border-left: 2px solid var(--accent);
+        }
+
+        .col-flat {
+            background: #ffffff !important;
+            font-weight: 500;
+        }
+
+        .status-ok {
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        .btn-portal {
+            display: inline-block;
+            padding: 8px 16px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-portal:hover {
+            box-shadow: var(--shadow-md);
+            color: var(--primary);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .price-table-linkat {
+            margin-top: 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .plan-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .tag-assist { background: #dcfce7; color: #166534; }
+        .tag-plus { background: #dbeafe; color: #1e40af; }
+
+        .contract-label {
+            font-weight: 700;
+            color: #1e293b;
+            background: #f8fafc;
+        }
+
+        .tco-total {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+        }
+
+        .check-green { color: #10b981; font-weight: bold; }
+        .cross-red { color: #ef4444; font-weight: bold; }
+        .noted-orange { color: #f59e0b; font-weight: 600; font-size: 0.85rem; }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Version Header -->
+        <div style="background: #334155; color: white; padding: 10px 20px; border-radius: 8px; margin-bottom: 20px; font-family: 'Inter', sans-serif; font-size: 0.9rem; display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-weight: 700;">PROD-VER-11 (サービスレベル統一版)</div>
+            <div>保存日時: 2026-01-21 14:40</div>
+        </div>
+
+        <header class="header">
+            <div class="header-content">
+                <span class="badge-project">Project 15.02</span>
+                <h1>セコム入退室管理サーバー クラウド化 ベンダー3社比較表</h1>
+                <p>提出先: 篠部長、塩田部長</p>
+                <div class="meta-info">作成日: 2025-12-19 | 更新日: 2026-01-21</div>
+            </div>
+            <a href="?" class="btn-portal">← ポータルに戻る</a>
+        </header>
+
+        <section class="section-card">
+            <div class="section-title">📋 1. エグゼクティブサマリー</div>
+            <div class="highlight-box">
+                <strong>💡 比較基準の厳格化 (公平なコスト比較)</strong><br>
+                当初、USENは「OSメンテナンス自社作業」前提の安価なプランでしたが、公平を期すため、全社を**「OSパッチ適用等の運用代行までベンダーが責任を持つ」フルマネージド体制**に条件を揃えて再試算しました。<br>
+                ※USENの月額費用に運用代行費（推定 ¥15,000/月）を加算して比較しています。
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>項目</th>
+                        <th>IIJ</th>
+                        <th>USEN (運用あり)</th>
+                        <th class="col-highlight">リンクアット・ジャパン</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>クラウド基盤</td><td>IIJ GIO P2 Gen.2</td><td>AWS</td><td class="col-highlight">Microsoft Azure</td></tr>
+                    <tr><td>初期費用 (税抜)</td><td>¥762,750</td><td>¥438,000</td><td class="col-flat">¥388,000</td></tr>
+                    <tr><td>月額費用 (税抜)</td><td>¥133,290</td><td>¥133,000<br><span style="font-size: 0.75rem; color: #64748b;">(運用代行込の推定値)</span></td><td class="col-flat">¥116,376〜132,028</td></tr>
+                    <tr><td>運用レベル</td><td>フルマネージド</td><td>フルマネージド</td><td class="col-highlight">フルマネージド</td></tr>
+                    <tr><td>主導権</td><td>ベンダー主導</td><td>自社管理＋運用代行</td><td class="col-highlight">自社管理＋運用代行</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section-card">
+            <div class="section-title">📊 2. 費用詳細比較 (フルマネージド算出)</div>
+            <div style="font-weight: 600; margin-bottom: 10px;">2-1. 初期費用内訳 (税抜)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>項目</th>
+                        <th>IIJ</th>
+                        <th>USEN</th>
+                        <th class="col-highlight">リンクアット・ジャパン</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #f8fafc; color: #64748b;">
+                        <td style="border-left: 4px solid #cbd5e1;">セコムアプリ設定費<br><span style="font-size: 0.75rem; color: #ef4444; font-weight: 600;">⚠️ セコム社へ直接支払い</span></td>
+                        <td>¥198,000</td>
+                        <td>¥198,000</td>
+                        <td class="col-flat">¥198,000</td>
+                    </tr>
+                    <tr><td>サーバー構築費用</td><td>¥475,000</td><td>¥220,000</td><td class="col-flat">¥190,000</td></tr>
+                    <tr><td>ネットワーク設定費</td><td>¥89,750</td><td>¥20,000</td><td class="col-flat">¥0</td></tr>
+                    <tr><td>合計</td><td>¥762,750</td><td>¥438,000</td><td class="col-flat">¥388,000</td></tr>
+                </tbody>
+            </table>
+
+            <div style="font-weight: 600; margin: 30px 0 10px;">2-2. 月額費用内訳 (税抜) - **サービスレベル統一済**</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>項目</th>
+                        <th>IIJ</th>
+                        <th>USEN (運用込)</th>
+                        <th class="col-highlight">リンクアット・ジャパン</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>サーバー利用料</td><td>¥84,540</td><td>¥106,000</td><td class="col-flat">¥17,726〜33,378</td></tr>
+                    <tr><td>ネットワーク利用料</td><td>¥48,750</td><td>¥12,000</td><td class="col-flat">¥30,650</td></tr>
+                    <tr><td>運用代行・パッチ適用</td><td>サービス内包</td><td><span style="color: #f59e0b;">¥15,000 (推定)</span></td><td class="col-flat">¥68,000 (アシストプラス)</td></tr>
+                    <tr style="background: #f1f5f9;"><td>合計</td><td>¥133,290</td><td>¥133,000</td><td class="col-flat" style="font-weight: 700; color: var(--accent);">¥116,376〜132,028</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section-card">
+            <div class="section-title">🛠 3. 運用・サポートサービス詳細比較 (誰が作業するか)</div>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">運用代行を含めた場合の「実作業の担当者」を明確にしています。</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">比較項目</th>
+                        <th style="width: 25%;">IIJ (PaaS型)</th>
+                        <th style="width: 25%;">USEN (代行あり)</th>
+                        <th class="col-highlight" style="width: 25%;">LAJ (アシストプラス)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="font-bold">OSパッチ適用代行<br><span style="font-size:0.75rem; color:var(--text-muted);">(Windows Update等)</span></td>
+                        <td class="check-green">○ ベンダーが実施<br><span style="font-size: 0.8rem;">月次の自動適用。</span></td>
+                        <td class="check-green">○ ベンダーが実施<br><span style="font-size: 0.8rem;">(要別途契約)</span></td>
+                        <td class="col-flat check-green">○ ベンダーが実施<br><span style="font-size: 0.8rem;">適用計画〜完了報告まで。</span></td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold">管理者権限 (Admin)</td>
+                        <td class="cross-red">× ベンダーのみ保持<br><span style="font-size: 0.8rem;">お客様で設定不可。</span></td>
+                        <td class="check-green">○ 両者で保持可能<br><span style="font-size: 0.8rem;">自社で詳細設定可能。</span></td>
+                        <td class="col-flat check-green">○ 両者で保持可能<br><span style="font-size: 0.8rem;">自社で詳細設定可能。</span></td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold">障害一次対応<br><span style="font-size:0.75rem; color:var(--text-muted);">(再起動/監視通知)</span></td>
+                        <td class="check-green">○ ベンダーが実施</td>
+                        <td class="check-green">○ ベンダーが実施</td>
+                        <td class="col-flat check-green">○ ベンダーが実施</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold">月次報告・定例会</td>
+                        <td class="cross-red">× なし (Web確認のみ)</td>
+                        <td class="cross-red">× なし</td>
+                        <td class="col-flat check-green">○ ベンダーが実施<br><span style="font-size: 0.8rem;">運用状況を月次で報告。</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section-card">
+            <div class="section-title">📅 4. 5年間トータルコスト (TCO) 比較</div>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">※全て「運用代行あり」の条件で計算。リンクアット・ジャパンは「3年契約/アシストプラス」を使用。</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>項目</th>
+                        <th>IIJ</th>
+                        <th>USEN (運用込)</th>
+                        <th class="col-highlight">リンクアット・ジャパン</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>初期費用</td><td>¥762,750</td><td>¥438,000</td><td class="col-flat">¥388,000</td></tr>
+                    <tr><td>月額費用 (合計)</td><td>¥133,290</td><td>¥133,000</td><td class="col-flat">¥116,376</td></tr>
+                    <tr style="background: #f1f5f9;">
+                        <td style="font-weight: 700;">5年間トータル(税抜)</td>
+                        <td class="tco-total">¥8,760,150</td>
+                        <td class="tco-total">¥8,418,000</td>
+                        <td class="tco-total" style="color: var(--accent);">¥7,370,560</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="margin-top: 15px; background: #fffbeb; padding: 15px; border-radius: 12px; border-left: 4px solid #fbbf24; font-size: 0.95rem;">
+                <strong>💡 結論:</strong><br>
+                サービスレベル（誰が手を動かすか）を揃えた結果、各社の差がより鮮明になりました。<br>
+                IIJとUSENはほぼ同価格帯ですが、**リンクアット・ジャパンは他社比で5年間で約100〜140万円安い**状態を維持しており、最も推奨される選択肢であることに変わりはありません。
+            </div>
+        </section>
+
+        <section class="section-card">
+            <div class="section-title">📝 補足: ダウンタイムの業務影響</div>
+            <div class="highlight-box">
+                セコム社より「セコム入退室機能はオフライン動作が可能であり、サーバー停止中も施錠・解錠は通常通り行える」との回答を得ています。これに基づき、サーバー停止による入退室不能のリスクはないと判断しています。
+            </div>
+        </section>
+
+        <footer class="footer">
+            Generated by Antigravity Assistant • Service Level Aligned Version • 2026-01-21
+        </footer>
+    </div>
+</body>
+
+</html>

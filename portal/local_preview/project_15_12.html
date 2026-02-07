@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    
+    <meta charset="UTF-8">
+    <title>Project 15.12: AI Champion Portal</title>
+    <link rel="icon" href="https://icons.iconarchive.com/icons/microsoft/fluentui-emoji-3d/96/Brain-3d-icon.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0c10;
+            --sidebar-bg: #111217;
+            --card-bg: rgba(31, 40, 51, 0.4);
+            --text-main: #c5c6c7;
+            --text-highlight: #66fcf1;
+            --accent-cyan: #45a29e;
+            --accent-purple: #bd00ff;
+            --neon-glow: 0 0 10px rgba(102, 252, 241, 0.5);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+            --sidebar-width: 250px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* Sidebar */
+        nav.sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            border-right: var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 1rem;
+            z-index: 10;
+        }
+
+        .brand {
+            font-family: 'Orbitron';
+            color: var(--text-highlight);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+        }
+
+        .nav-item {
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            color: #888;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .nav-item:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(90deg, rgba(69, 162, 158, 0.2), transparent);
+            color: var(--text-highlight);
+            border-left: 3px solid var(--text-highlight);
+        }
+
+        /* Main Content */
+        main.content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 3rem;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(69, 162, 158, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(189, 0, 255, 0.05) 0%, transparent 40%);
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Orbitron', 'Inter', sans-serif;
+            /* Orbitron for English numbers/letters mostly */
+            color: #fff;
+        }
+
+        h1 {
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(102, 252, 241, 0.2);
+        }
+
+        .subtitle {
+            color: var(--accent-cyan);
+            margin-bottom: 3rem;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        /* Panels */
+        .panel {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .panel.active {
+            display: block;
+        }
+
+        /* Cards */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .card.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: var(--text-highlight);
+        }
+
+        /* Timeline Styles */
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            padding-bottom: 2rem;
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background: var(--bg-color);
+            border: 2px solid var(--accent-purple);
+            border-radius: 50%;
+        }
+
+        .timeline-date {
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Document Styles */
+        .doc-link {
+            display: block;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid transparent;
+            margin-bottom: 0.5rem;
+            text-decoration: none;
+            color: var(--text-main);
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .doc-link:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(69, 162, 158, 0.1);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.7rem;
+            background: rgba(189, 0, 255, 0.2);
+            color: #fff;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+
+        /* Tools Grid (Compact) */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+        }
+
+        .tool-icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="sidebar">
+        <div class="brand" onclick="window.top.location.href='<?= url ?>'" style="cursor: pointer;" title="ポータルトップへ戻る">
+            <span>🚀 PROJECT 15.12</span>
+        </div>
+
+        <a href="<?= url ?>" class="nav-item" target="_top"
+            style="text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 1rem;">
+            <span>🔙</span> ポータルトップへ
+        </a>
+
+        <div class="nav-item active" onclick="showPanel('overview', this)">
+            <span>🏠</span> プロジェクト概要
+        </div>
+        <div class="nav-item" onclick="showPanel('schedule', this)">
+            <span>📅</span> スケジュール
+        </div>
+        <div class="nav-item" onclick="showPanel('docs', this)">
+            <span>📂</span> 資料・ドキュメント
+        </div>
+        <div class="nav-item" onclick="showPanel('tools', this)">
+            <span>🛠️</span> 5つの武器
+        </div>
+
+        <div
+            style="margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem; opacity: 0.5;">
+            User: Tanji<br>
+            Role: Commander
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content">
+
+        <!-- OVERVIEW TAB -->
+        <div id="overview" class="panel active">
+            <h1>プロジェクト概要</h1>
+            <div class="subtitle">AI Champion Initiative Status</div>
+
+            <div class="dashboard-grid">
+                <!-- Mission -->
+                <div class="card full-width">
+                    <h3>🚩 ミッション: "The Trojan Horse & The Bridge"</h3>
+                    <p>
+                        情報システム部だけに閉じていた「デジタル変革」の力を、現場（AIチャンピオン）の手に渡す。<br>
+                        まずは経理・経営企画のキーマンをターゲットに、"AquaVoice" で突破口を開き、"Antigravity" で定着させる戦略。
+                    </p>
+                    <div style="margin-top: 1rem; display: flex; gap: 1rem;">
+                        <div class="tag">Target: 中野 (経営企画)</div>
+                        <div class="tag">Target: 石井 (経理)</div>
+                    </div>
+                </div>
+
+                <!-- Cockpit Structure -->
+                <div class="card">
+                    <h3>🕹️ コックピット体制 (Level 0-2)</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.5rem;"><strong>Level 0
+                                (Obsidian)</strong><br><small>コマンダーコンソール。思考と設計の場。</small></li>
+                        <li style="margin-bottom: 0.5rem;"><strong>Level 1 (Google
+                                Sheets)</strong><br><small>全体ダッシュボード。スケジュール管理。</small></li>
+                        <li style="margin-bottom: 0.5rem;"><strong>Level 2
+                                (Portal/Docs)</strong><br><small>ナレッジベース。成果共有。</small></li>
+                    </ul>
+                </div>
+
+                <!-- Philosophy -->
+                <div class="card">
+                    <h3>💡 理念・哲学</h3>
+                    <p>「エンジニアだけが持っていた魔法の杖を、すべてのビジネスパーソンの手元に民主化する」</p>
+                    <p>AIチャンピオンとは、技術者ではなく<strong>「自分自身の困りごとをAIと解決できる人」</strong>のこと。</p>
+                </div>
+
+                <!-- Team & Growth Strategy -->
+                <div class="card full-width">
+                    <h3>👥 チーム構成と拡大ロードマップ</h3>
+
+                    <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 250px;">
+                            <h4 style="color: var(--accent-cyan); margin-bottom: 0.5rem;">Phase 0: 初期メンバー (Founding
+                                Members)</h4>
+                            <p style="font-size: 0.9rem; color: #aaa;">まずは少数精鋭で「確実な成功事例」を作ります。</p>
+                            <ul style="list-style: none; padding: 0;">
+                                <li
+                                    style="margin-bottom: 0.5rem; border-left: 3px solid var(--accent-purple); padding-left: 10px;">
+                                    <strong>PM / Technical Lead</strong><br>
+                                    丹治 (情報システム部)
+                                </li>
+                                <li style="margin-bottom: 0.5rem; border-left: 3px solid #ffd700; padding-left: 10px;">
+                                    <strong>Champion (経営企画)</strong><br>
+                                    中野 様 <small>※実務トライアル中</small>
+                                </li>
+                                <li style="margin-bottom: 0.5rem; border-left: 3px solid #ffd700; padding-left: 10px;">
+                                    <strong>Champion (経理)</strong><br>
+                                    石井 様 <small>※実務トライアル中</small>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div style="flex: 1; min-width: 250px;">
+                            <h4 style="color: var(--accent-cyan); margin-bottom: 0.5rem;">Membership: The Registry
+                                (名簿管理)</h4>
+                            <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 1rem;">
+                                厳密な試験はありません。「やりたい」と手を挙げた人は、役職問わず<strong>「AIチャンピオン名簿」</strong>に登録されます。<br>
+                                名簿に載ることで、ツール利用権とギルドへのアクセス権が付与されます。
+                            </p>
+
+
+
+                            <div class="timeline-item" style="padding-bottom: 1rem;">
+                                <strong style="color: #fff;">Role: PM & Champions</strong><br>
+                                <span style="font-size: 0.8rem; color: var(--accent-cyan);">攻略のヒントを出すギルドマスター</span>
+                                <p style="font-size: 0.85rem; margin-top: 0.3rem;">
+                                    丹治・中野・石井の役割は、正解を教えることではありません。<br>
+                                    「この武器（AI）が効きそうだ」「あの呪文（プロンプト）を試しては？」<br>
+                                    というヒントを出し、自力での解決を後押しします。
+                                </p>
+                            </div>
+
+                            <div class="timeline-item" style="padding-bottom: 0;">
+                                <strong style="color: #fff;">Culture: Open Arms (来る者拒まず)</strong><br>
+                                <p style="font-size: 0.85rem; margin-top: 0.3rem;">
+                                    「途中から入ると気まずい」空気を作りません。<br>
+                                    名簿に名前が増えること自体を、チーム全員で喜び合う文化を作ります。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCHEDULE TAB -->
+        <div id="schedule" class="panel">
+            <h1>スケジュール (評価シート準拠)</h1>
+            <div class="subtitle">Tactical Rollout Plan (Jan - Mar 2026)</div>
+
+            <div class="card full-width">
+                <div class="timeline-item">
+                    <div class="timeline-date">2026.01 (予定)</div>
+                    <h3>育成 & 困りごと解決 (Training & Solution)</h3>
+                    <p>AIチャンピオンが部門の「困りごと」を持ち寄り、一緒に解決策を作る。</p>
+                    <ul>
+                        <li><strong>活動内容</strong>: AI (Google Workspace Studio, Opal, GAS) を用いた解決策の共同作成。</li>
+                        <li><strong>成果物</strong>: AI活用ガイド(簡易版)、FAQ、自動化ツール。</li>
+                        <li><strong>狙い</strong>: 情シスに頼らず部門内で困りごとを解決できる力を養う。</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2026.02 (予定)</div>
+                    <h3>部門内展開 (Department Rollout)</h3>
+                    <p>AIチャンピオンが自部門で成功事例を紹介し、自律的な問題解決を促進する。</p>
+                    <ul>
+                        <li><strong>活動内容</strong>: 情シスへの相談なしで部門内で完結できる事例を増やす。</li>
+                        <li><strong>役割分担</strong>: 情シスは複雑な自動化のみ代行・見守り役にシフト。</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2026.03 (予定)</div>
+                    <h3>成果可視化 & 次期判断 (Visualization & Next Steps)</h3>
+                    <p>組織全体の問題解決力を評価し、4月以降の全社展開を判断する。</p>
+                    <ul>
+                        <li><strong>活動内容</strong>: 解決数・削減時間のまとめ。社内ポータルへの成功事例掲載。</li>
+                        <li><strong>評価軸</strong>: 情シス依存度の低下確認、他部門への展開可能性。</li>
+                        <li><strong>ゴール</strong>: 情シスの役割を「実装者」から「支援者」へ完全シフト。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- DOCUMENTS TAB -->
+        <div id="docs" class="panel">
+            <h1>各種ドキュメント</h1>
+            <div class="subtitle">Official Materials & Drafts</div>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3>📄 提案資料・企画書</h3>
+                    <a href="<?= url ?>?page=project_15_12_ishii" class="doc-link" target="_top">
+                        <strong>石井様向け：AIチャンピオン参加ご相談資料</strong><br>
+                        <small>制度の概要、メリット、業務負荷についてのFAQが含まれています。</small>
+                    </a>
+                    <a href="<?= url ?>?page=project_15_12_proposal" class="doc-link" target="_top">
+                        <strong>AquaVoice法人導入提案書（Draft）</strong><br>
+                        <small>Team Planのコスト試算とセキュリティ仕様。</small>
+                    </a>
+                    <a href="<?= url ?>?page=project_15_12_antigravity" class="doc-link" target="_top">
+                        <strong>Antigravity導入案内</strong><br>
+                        <small>既存Google Workspace顧客向けの導入メリットとプロセス。</small>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <h3>📘 ハンドブック・マニュアル</h3>
+                    <a href="#" class="doc-link">
+                        <strong>AI Champion Handbook (Lite版)</strong><br>
+                        <small>最初の2名向けの簡易ガイド。「3つのステップ」解説。</small>
+                    </a>
+                    <a href="#" class="doc-link">
+                        <strong>5つの武器 活用ガイド</strong><br>
+                        <small>各ツールの役割と連携パターンの詳細。</small>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <h3>💡 外部学習・参考リソース</h3>
+                    <a href="https://www.cloudskillsboost.google/" class="doc-link" target="_blank">
+                        <strong>Google Cloud Skills Boost</strong><br>
+                        <small>公式AIトレーニングプラットフォーム。日本語音声・字幕対応。</small>
+                    </a>
+                    <a href="https://downloads.ctfassets.net/7mrdlclm9xss/m7XsAz2M3bT8WoDrfmYn3/8ee77c25f48de5dab3b792b428df5495/AI_100tips_slide.pdf" class="doc-link" target="_blank">
+                        <strong>DeNA AI活用100本ノック</strong><br>
+                        <small>100個の実践事例をまとめたスライド資料。課題解決のヒントに。</small>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Preview Area (Placeholder) -->
+            <div class="card full-width" style="margin-top: 1.5rem;">
+                <h3>📜 プレビュー: AI Champion Handbook (抜粋)</h3>
+                <div
+                    style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                    <h4 style="margin-top: 0; color: var(--accent-cyan); font-size: 1.1rem; margin-bottom: 1rem;">🛡️
+                        大切なルール（AI憲法 Lite）</h4>
+                    <ol style="padding-left: 1.5rem; margin-bottom: 0; color: var(--text-main);">
+                        <li style="margin-bottom: 0.8rem;">
+                            <strong style="color: #fff;">機密情報は守る</strong><br>
+                            <span style="font-size: 0.9rem; opacity: 0.8;">個人情報や極秘情報は、許可された環境以外では入力しない。</span>
+                        </li>
+                        <li style="margin-bottom: 0.8rem;">
+                            <strong style="color: #fff;">最後は人が決める</strong><br>
+                            <span style="font-size: 0.9rem; opacity: 0.8;">AIの提案はあくまで「案」。採用するかどうかは、あなたが決める。</span>
+                        </li>
+                        <li>
+                            <strong style="color: #fff;">責任を持つ</strong><br>
+                            <span style="font-size: 0.9rem; opacity: 0.8;">AIが作ったものの責任は、それを使う（指示した）人間にあります。</span>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- TOOLS TAB -->
+        <div id="tools" class="panel">
+            <h1>公認ツールキット (5つの武器)</h1>
+            <div class="subtitle">Authorized Toolkit</div>
+
+            <div class="tools-grid">
+                <!-- AquaVoice -->
+                <div class="card" style="text-align: center;">
+                    <span class="tool-icon">🎙️</span>
+                    <strong>AquaVoice</strong><br>
+                    <small>The Mouth (思考ダンプ)</small>
+                </div>
+                <!-- Antigravity -->
+                <div class="card" style="text-align: center;">
+                    <span class="tool-icon">🤖</span>
+                    <strong>Antigravity</strong><br>
+                    <small>The Agent (実行部隊)</small>
+                </div>
+                <!-- Opal -->
+                <div class="card" style="text-align: center;">
+                    <span class="tool-icon">🧠</span>
+                    <strong>Opal</strong><br>
+                    <small>The Brain (論理思考)</small>
+                </div>
+                <!-- GWS -->
+                <div class="card" style="text-align: center;">
+                    <span class="tool-icon">🔗</span>
+                    <strong>GWS</strong><br>
+                    <small>The Glue (接着剤)</small>
+                </div>
+                <!-- GAS -->
+                <div class="card" style="text-align: center;">
+                    <span class="tool-icon">⚡</span>
+                    <strong>GAS</strong><br>
+                    <small>The Hands (精密作業)</small>
+                </div>
+            </div>
+
+            <div class="card full-width" style="margin-top: 1.5rem;">
+                <h3>🔄 ワークフロー活用例</h3>
+                <p><strong>会議議事録からのタスク自動化:</strong></p>
+                <ol>
+                    <li><strong>AquaVoice</strong>: 会議内容を喋ってテキスト化。</li>
+                    <li><strong>Opal</strong>: テキストから「決定事項」と「ToDo」を抽出。</li>
+                    <li><strong>Antigravity</strong>: ToDoを元にGASコードを生成。</li>
+                    <li><strong>GAS</strong>: カレンダー登録 & メール送信を実行。</li>
+                </ol>
+            </div>
+
+            <div class="card full-width" style="margin-top: 1.5rem; border-left: 4px solid var(--accent-cyan);">
+                <h3>🚀 スキルアップ・外部パワーアップ</h3>
+                <p>5つの武器を使いこなすための外部リソースです。</p>
+                <div style="display: flex; gap: 1rem;">
+                    <div style="flex: 1; min-width: 200px; background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 8px;">
+                        <strong style="color: var(--text-highlight);">Google Skills</strong><br>
+                        <small>最新のAIツール活用術を公式から学ぶ。</small>
+                    </div>
+                    <div style="flex: 1; min-width: 200px; background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 8px;">
+                        <strong style="color: var(--text-highlight);">DeNA 100本ノック</strong><br>
+                        <small>現場で役立つ100の武器（事例）を手に入れる。</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        function showPanel(panelId, navElement) {
+            // Hide all panels
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            // Show target panel
+            document.getElementById(panelId).classList.add('active');
+
+            // Update nav state
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            if (navElement) {
+                navElement.classList.add('active');
+            } else {
+                // Determine nav element from panelId if direct element not provided
+                // This handles the initial load case
+                const items = document.querySelectorAll('.nav-item');
+                if (panelId === 'overview') items[0].classList.add('active');
+                if (panelId === 'schedule') items[1].classList.add('active');
+                if (panelId === 'docs') items[2].classList.add('active');
+                if (panelId === 'tools') items[3].classList.add('active');
+            }
+        }
+
+        // Auto-switch tab based on URL parameter
+        window.onload = function () {
+            google.script.url.getLocation(function (location) {
+                if (location.parameter && location.parameter.tab) {
+                    const tabId = location.parameter.tab;
+                    const panel = document.getElementById(tabId);
+                    if (panel) {
+                        showPanel(tabId, null);
+                    }
+                }
+            });
+        };
+    </script>
+</body>
+
+</html>

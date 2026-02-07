@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>プロジェクト 15.01: ADサーバークラウド化 (最終統合報告 v20260122_1255)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Noto Sans JP', 'Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          },
+          colors: {
+            'brand-navy': '#1e3a8a',
+            'brand-accent': '#0ea5e9',
+          },
+          boxShadow: {
+            'card': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+            'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #f8fafc;
+      color: #334155;
+    }
+    .modern-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 1rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+      transition: all 0.3s ease;
+    }
+    .check-icon { color: #16a34a; margin-right: 0.25rem; font-weight: bold; }
+    .triangle-icon { color: #ca8a04; margin-right: 0.25rem; font-weight: bold; }
+    
+    th {
+      font-weight: 600;
+      color: #64748b;
+      background-color: #f1f5f9;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    td {
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .border-col {
+      border-left: 1px solid #e2e8f0;
+    }
+    .mermaid-container {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 0.75rem;
+      border: 1px solid #e2e8f0;
+    }
+  </style>
+</head>
+<body class="min-h-screen font-sans antialiased text-slate-700">
+
+  <!-- Header Section -->
+  <header class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <? var url = ScriptApp.getService().getUrl(); ?>
+        <a href="<?=url?>?page=home" class="flex items-center gap-2 text-slate-500 hover:text-brand-navy transition-colors text-sm font-medium">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          ポータルへ戻る
+        </a>
+        <div class="h-4 w-px bg-slate-300"></div>
+        <span class="text-sm font-bold text-slate-700">プロジェクト 15.01: ADサーバークラウド化</span>
+      </div>
+      <div>
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200">
+          ステータス: 移行フロー可視化版 (v20260122_1255)
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto p-4 md:p-8 space-y-12">
+
+    <!-- Title Section -->
+    <section class="text-center space-y-4 pt-4">
+      <h1 class="text-3xl md:text-5xl font-black text-slate-900 tracking-tight">
+        ADサーバークラウド移行計画 報告書
+      </h1>
+      <p class="text-lg text-slate-500 max-w-2xl mx-auto">
+        ベンダー別の想定移行計画（ビジュアル版・技術検証中）。
+      </p>
+    </section>
+
+    <!-- Visual Plans Gallery -->
+    <div class="grid grid-cols-1 gap-12">
+      
+      <!-- 1. USEN Plan -->
+      <section class="space-y-6">
+        <h2 class="text-2xl font-bold text-brand-navy flex items-center gap-3">
+          <span class="bg-brand-navy text-white px-3 py-1 rounded-lg text-sm">Case 01</span>
+          USEN (AWS / 並行稼働案) の移行フロー
+        </h2>
+        <div class="mermaid-container shadow-sm border-t-4 border-brand-accent">
+          <pre class="mermaid">
+          graph TD
+            subgraph "Phase 1: 構築 (ベンダー)"
+              A[AWS VPC/EC2構築] --> B[拠点間VPN開通]
+              B --> C[新AD構築/同期設定]
+            end
+            subgraph "Phase 2: 検証 (社内+ベンダー)"
+              C --> D[レプリケーション同期監視]
+              D --> E[認証テスト検証]
+            end
+            subgraph "Phase 3: 切替 (社内主導)"
+              E --> F[LANScopeによるDNS一括配布]
+              F --> G[新旧AD並行稼働/拠点別切替]
+            end
+            subgraph "Phase 4: 撤去 (共同)"
+              G --> H[オンプレAD降格/シャットダウン]
+            end
+
+            style G fill:#f0f9ff,stroke:#0ea5e9,stroke-width:2px
+            style F fill:#f0f9ff,stroke:#0ea5e9,stroke-width:2px
+          </pre>
+        </div>
+      </section>
+
+      <!-- 2. IIJ Plan -->
+      <section class="space-y-6">
+        <h2 class="text-2xl font-bold text-brand-navy flex items-center gap-3">
+          <span class="bg-brand-navy text-white px-3 py-1 rounded-lg text-sm">Case 02</span>
+          IIJ Global (PaaS / Managed切替案) の移行フロー
+        </h2>
+        <div class="mermaid-container shadow-sm border-t-4 border-slate-600">
+          <pre class="mermaid">
+          graph LR
+            subgraph "ベンダー作業 (IIJ側制御)"
+              A[PaaS基盤プロビジョニング] --> B[IIJ Bridge接続確立]
+              B --> C[ADデータベース同期]
+              C --> D{Managed DNS切替}
+            end
+            subgraph "社内影響"
+              D --> E[パソコン側の設定変更なし]
+            end
+
+            style D fill:#f8fafc,stroke:#1e293b,stroke-width:2px
+            style E font-weight:bold,color:#16a34a
+          </pre>
+        </div>
+      </section>
+
+      <!-- 3. LAJ Plan -->
+      <section class="space-y-6">
+        <h2 class="text-2xl font-bold text-brand-navy flex items-center gap-3">
+          <span class="bg-brand-navy text-white px-3 py-1 rounded-lg text-sm">Case 03</span>
+          Link At Japan (Azure / 休日一斉移行) の移行フロー
+        </h2>
+        <div class="mermaid-container shadow-sm border-t-4 border-orange-400">
+          <pre class="mermaid">
+          graph TD
+            A[Azure VM 構築] --> B[拠点間VPN設定]
+            subgraph "休日切替作業 (一挙実施)"
+              B -- 計画停止 --> C[ADデータ最終同期]
+              C --> D[NWルーティング Azure向替]
+            end
+            D --> E{週明け全社ログイン検証}
+            E -->|OK| F[完了]
+            E -->|NG| G[ロールバック発動]
+
+            style C fill:#fff7ed,stroke:#fb923c,stroke-width:2px
+            style D fill:#fff7ed,stroke:#fb923c,stroke-width:2px
+          </pre>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Summary Box -->
+    <section class="bg-slate-900 p-8 rounded-xl shadow-xl text-white">
+      <div class="flex items-center gap-3 mb-6">
+        <svg class="w-6 h-6 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <h3 class="text-xl font-bold">図解の補足：ITの「住所録」引越しイメージ</h3>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-slate-300 leading-relaxed">
+        <p>
+          上の図は、新しい「クラウド上のサーバー」へ、今あるデータや設定をどう移すかを描いています。<br><br>
+          <strong>USEN案</strong>は、新旧の看板をしばらく一緒に出しておく「引越しながら営業」。<br>
+          <strong>IIJ案</strong>は、看板の住所（書き換え）を業者が裏でやってくれる「自動転送」。<br>
+          <strong>LAJ案</strong>は、休日にお店を閉めて一晩で荷物をすべて運び出す「一斉移転」のイメージです。
+        </p>
+        <div class="bg-white/5 p-4 rounded-lg border border-white/10">
+          <strong class="text-brand-accent block mb-2">検証ポイント</strong>
+          各フローにおいて「社内作業」が発生するタイミングを青線（あるいは点線）で区別しています。これにより、ベンダー費用と社内工数の合計を正しく判断する材料とします。
+        </div>
+      </div>
+    </section>
+
+    <div class="text-right text-xs text-slate-400">最終更新: 2026/01/22 (v1255)</div>
+  </div>
+</body>
+</html>

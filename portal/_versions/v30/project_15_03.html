@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+            --success-color: #059669;
+            --warning-color: #d97706;
+            --danger-color: #dc2626;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 40px;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #111827;
+            margin: 0;
+        }
+
+        .back-link {
+            color: #6b7280;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--primary-color);
+        }
+
+        .section {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            margin-bottom: 24px;
+        }
+
+        .section h2 {
+            font-size: 1.5rem;
+            border-bottom: 2px solid #f3f4f6;
+            padding-bottom: 15px;
+            margin-top: 0;
+            margin-bottom: 25px;
+            color: #111827;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #fff;
+        }
+
+        th,
+        td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        th {
+            background-color: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        tr:hover {
+            background-color: #f9fafb;
+        }
+
+        .highlight {
+            background-color: #ecfdf5;
+            font-weight: 600;
+            color: #065f46;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <span class="badge badge-success" style="margin-bottom: 10px;">Project 15.03</span>
+                <h1>AD・セコム同時実施</h1>
+            </div>
+            <? var url = ScriptApp.getService().getUrl(); ?>
+            <a href="<?= url ?>" class="back-link">← Back to Portal</a>
+        </div>
+
+        <div class="section">
+            <h2>📊 エグゼクティブサマリー (同時実施の価値)</h2>
+            <p>統合により、ネットワーク費用を共有し、運用を一元化することが可能です。</p>
+            <ul>
+                <li><strong>コスト重視:</strong> リンクアット・ジャパン (統合による圧倒的なコストパフォーマンス)</li>
+                <li><strong>刷新モデル:</strong> IIJ (全社NW刷新、高機能・高コスト)</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>📋 統合費用詳細 (AD + セコム)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>項目</th>
+                        <th>IIJ (Omnibus)</th>
+                        <th>USEN</th>
+                        <th class="highlight">リンクアット・ジャパン</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>初期費用</td>
+                        <td>¥4,609,850</td>
+                        <td>¥1,278,000</td>
+                        <td class="highlight">¥1,943,000</td>
+                    </tr>
+                    <tr>
+                        <td>月額費用</td>
+                        <td>¥858,688</td>
+                        <td>¥230,300</td>
+                        <td class="highlight">¥165,142</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Azure RI適用 (3年)</strong></td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td class="highlight"><strong>¥65,142/月</strong> (62% OFF)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>📝 総合評価</h2>
+            <ul>
+                <li><strong>コストパフォーマンス・即時性</strong>において、<strong>Link At Japan</strong> の統合案が最も効果的です。</li>
+                <li>3年RI適用時の月額¥65,000台は他社を圧倒しています。</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

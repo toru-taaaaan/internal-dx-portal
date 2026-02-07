@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <title>AquaVoice 導入提案 - Project 15.12</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --card-bg: #f8f9fa;
+            --text-main: #212529;
+            --text-highlight: #0066cc;
+            --accent-cyan: #0066cc;
+            --glass-border: 1px solid #dee2e6;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            padding: 3rem;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #212529;
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            border-bottom: 3px solid var(--text-highlight);
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            border-left: 4px solid var(--accent-cyan);
+            padding-left: 1rem;
+            margin-top: 2.5rem;
+            color: var(--text-highlight);
+            font-weight: 600;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: var(--glass-border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            color: #0052a3;
+        }
+
+        strong {
+            color: #212529;
+            font-weight: 600;
+        }
+
+        ul {
+            list-style-type: square;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            color: #212529;
+        }
+
+        th,
+        td {
+            border: 1px solid #dee2e6;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        th {
+            background: #e7f3ff;
+            color: var(--text-highlight);
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="<?= url ?>?page=project_15_12&tab=docs" class="back-link" target="_top">← プロジェクトトップ (資料一覧) に戻る</a>
+
+    <h1>AI音声入力ツール「AquaVoice」法人プラン導入提案書 (Draft)</h1>
+
+    <div class="card">
+        <p><strong>提案の目的</strong><br>
+            全社的な業務効率化、特に「文書作成」「議事録作成」「メール対応」の時間を大幅に削減するため、AI音声入力ツール「AquaVoice」の法人プラン（Team Plan）の導入を提案します。</p>
+    </div>
+
+    <h2>現状の課題</h2>
+    <ul>
+        <li><strong>入力業務の負荷</strong>: 議事録、日報、報告書、メール返信など、キーボード入力に多くの時間を費やしている。</li>
+        <li><strong>セキュリティの懸念</strong>: 個人アカウントでのツール利用は、機密情報の管理やガバナンスの観点でリスクがある。</li>
+        <li><strong>属人化</strong>: AI活用のスキルや辞書設定が個人に依存している。</li>
+    </ul>
+
+    <h2>AquaVoice (Team Plan) 導入のメリット</h2>
+    <h3>① 圧倒的な業務効率化（ROI）</h3>
+    <ul>
+        <li><strong>入力速度</strong>: 喋るスピードで入力できるため、キーボード入力の約3〜5倍の速度で文書化が可能。</li>
+        <li><strong>想定効果</strong>: 1人あたり1日30分の入力時間削減 = 月間約10時間の創出。</li>
+    </ul>
+    <h3>② 上場企業基準のセキュリティ</h3>
+    <ul>
+        <li><strong>ゼロ・データ・リテンション</strong>: サーバー上に音声データおよびテキストデータを保存しません。</li>
+        <li><strong>学習利用禁止</strong>: ユーザーのデータをAIモデルの学習に使用しません。</li>
+        <li><strong>プライバシーモード強制</strong>: 組織管理者権限で全メンバーに学習不可設定を強制可能。</li>
+    </ul>
+
+    <h2>費用対効果（概算）</h2>
+    <table>
+        <tr>
+            <th>プラン</th>
+            <th>費用（月額/ユーザー）</th>
+            <th>特徴</th>
+        </tr>
+        <tr>
+            <td><strong>Team Plan</strong></td>
+            <td><strong>約 $12 (約1,800円)</strong></td>
+            <td><strong>法人契約推奨</strong>。セキュリティ機能、請求書払い可。</td>
+        </tr>
+        <tr>
+            <td>Pro Plan</td>
+            <td>約 $8 (約1,200円)</td>
+            <td>個人・フリーランス向け。</td>
+        </tr>
+    </table>
+
+    <p><strong>投資対効果</strong>: 月額1,800円は、月に「1時間」の業務削減で回収可能。月間10時間削減なら費用対効果は10倍以上。</p>
+
+    <h2>導入ステップ（案）</h2>
+    <ol>
+        <li><strong>Phase 1: トライアル導入 (1ヶ月)</strong><br>対象: 冨山取締役、中野室長、石井さん</li>
+        <li><strong>Phase 2: 活用ルールの策定</strong><br>ガイドライン、辞書の整備</li>
+        <li><strong>Phase 3: 全社展開</strong></li>
+    </ol>
+
+    <p style="margin-top: 3rem; text-align: center; font-size: 0.9rem; opacity: 0.7;">Project 15.12 - Internal DX Portal
+    </p>
+</body>
+
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    <title>Project 15.02 SECOM Cloud Migration</title>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --accent: #10b981;
+            --danger: #ef4444;
+            --bg-body: #f8fafc;
+            --surface: #ffffff;
+            --surface-glass: rgba(255, 255, 255, 0.9);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+        }
+
+        body {
+            font-family: 'Outfit', 'Inter', "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-content h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        .header-content p {
+            margin: 5px 0 0;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .meta-info {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+
+        .badge-project {
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0 0 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #f8fafc;
+            padding-bottom: 10px;
+        }
+
+        .highlight-box {
+            background: #eff6ff;
+            border-left: 4px solid var(--primary);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+
+        .alert-danger {
+            background: #fff1f2;
+            border-left: 4px solid #f43f5e;
+            color: #991b1b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: #f8fafc;
+            font-weight: 700;
+            color: #475569;
+        }
+
+        .col-flat {
+            background: #ffffff !important;
+            font-weight: 500;
+        }
+
+        .status-ok {
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        .btn-portal {
+            display: inline-block;
+            padding: 8px 16px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-portal:hover {
+            box-shadow: var(--shadow-md);
+            color: var(--primary);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Improved Table Support */
+        .price-table-linkat {
+            margin-top: 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nest-header {
+            background: #f1f5f9 !important;
+            color: #334155 !important;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .plan-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .tag-assist { background: #dcfce7; color: #166534; }
+        .tag-plus { background: #dbeafe; color: #1e40af; }
+
+        .contract-label {
+            font-weight: 700;
+            color: #1e293b;
+            background: #f8fafc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Version Header -->
+        <div style="background: #334155; color: white; padding: 10px 20px; border-radius: 8px; margin-bottom: 20px; font-family: 'Inter', sans-serif; font-size: 0.9rem; display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-weight: 700;">PROD-VER-07</div>
+            <div>保存日時: 2026-01-21 14:00</div>
+        </div>
+
+        <header class="header">
+            <div class="header-content">
+                <span class="badge-project">Project 15.02</span>
+                <h1>セコム入退室管理サーバー クラウド化 ベンダー3社比較表</h1>
+                <p>提出先: 篠部長、塩田部長</p>
+                <div class="meta-info">作成日: 2025-12-19 | 更新日: 2026-01-21</div>
+            </div>
+            <a href="?" class="btn-portal">← ポータルに戻る</a>
+        </header>
+
+        <section class="section-card">
+            <div class="section-title">📋 1. エグゼクティブサマリー</div>
+            <div style="font-weight: 600; margin-bottom: 10px;">現時点の比較状況</div>
+            <ul>
+                <li><strong>IIJ:</strong> 費用確定 ✅（2025-12-26 メール回答受領済）</li>
+                <li><strong>USEN:</strong> 費用確定 ✅（2025-12-19 メール詳細受領済）</li>
+                <li><strong>リンクアット・ジャパン:</strong> 費用確定 ✅（2025-12-25 提案書Ver.3受領済）</li>
+            </ul>
+
+            <div class="alert-danger">
+                <strong>🛑 クラウド化の必須前提 (経緯)</strong><br>
+                当初、安価なインターネット経由でのクラウド移行を検討しましたが、セコム社より「セキュリティおよび通信品質の観点から、インターネット経由での運用は不可（イントラネット運用が前提）」との正式回答がありました（2025/11/26 メール）。<br>
+                そのため、本プロジェクトは「セキュアなネットワーク環境（閉域網やVPN等）での接続」を前提とした構成で進めています。これが各社提案（VPN/閉域網）の根拠となります。
+            </div>
+
+            <div class="highlight-box">
+                <strong>💡 検討のポイント (単独立ち上げの想定)</strong><br>
+                ADクラウド化とどちらが先行するか未定のため、「単独でクラウド化した場合でも成立するか」という観点でフラットに比較します。<br>
+                ※下記費用のほか、単独実施の場合は別途「ネットワーク接続費（VPN/閉域網）」が必要となる点に留意が必要です。
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>項目</th>
+                        <th>IIJ</th>
+                        <th>USEN</th>
+                        <th class="col-highlight">リンクアット・ジャパン</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>クラウド基盤</td><td>IIJ GIO P2 Gen.2</td><td>AWS (マネージドクラウド)</td><td class="col-highlight">Microsoft Azure</td></tr>
+                    <tr><td>初期費用 (税抜)</td><td>¥762,750</td><td>¥438,000</td><td class="col-flat">¥388,000</td></tr>
+                    <tr><td>月額費用 (税抜)</td><td>¥133,290</td><td>¥118,000</td><td class="col-flat">¥98,376〜132,028</td></tr>
+                    <tr><td>対象</td><td>仮想サーバー追加</td><td>インスタンス追加</td><td class="col-highlight">VM追加 (Azure)</td></tr>
+                    <tr><td>構成</td><td>独立したリソースとして構築 (IIJ GIO内)</td><td>ADと同一VPCへ追加</td><td class="col-flat">ADと同一VNetへ追加</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section-card">
+            <div class="section-title">📊 2. 費用詳細比較</div>
+            <div style="font-weight: 600; margin-bottom: 10px;">2-1. 初期費用内訳 (税抜)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>項目</th>
+                        <th>IIJ</th>
+                        <th>USEN</th>
+                        <th class="col-highlight">リンクアット・ジャパン</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #f8fafc; color: #64748b;">
+                        <td style="border-left: 4px solid #cbd5e1;">セコムアプリ設定費<br><span style="font-size: 0.75rem; color: #ef4444; font-weight: 600;">⚠️ セコム社へ直接お支払い</span></td>
+                        <td>¥198,000</td>
+                        <td>¥198,000</td>
+                        <td class="col-flat">¥198,000</td>
+                    </tr>
+                    <tr><td>サーバー構築費用</td><td>¥475,000</td><td>¥220,000</td><td class="col-flat">¥190,000</td></tr>
+                    <tr><td>ネットワーク設定費</td><td>¥89,750</td><td>¥20,000</td><td class="col-flat">¥0</td></tr>
+                    <tr><td>合計</td><td>¥762,750</td><td>¥438,000</td><td class="col-flat">¥388,000</td></tr>
+                </tbody>
+            </table>
+
+            <div style="font-weight: 600; margin: 30px 0 10px;">2-2. 月額費用内訳 (税抜)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>項目</th>
+                        <th>IIJ</th>
+                        <th>USEN</th>
+                        <th class="col-highlight">リンクアット・ジャパン</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>サーバー利用料</td><td>¥84,540</td><td>¥106,000</td><td class="col-flat">¥17,726〜33,378</td></tr>
+                    <tr><td>ネットワーク利用料</td><td>¥48,750</td><td>¥12,000</td><td class="col-flat">¥30,650</td></tr>
+                    <tr><td>運用費</td><td>サービス内包</td><td>サービス内包</td><td class="col-flat">¥50,000〜68,000</td></tr>
+                    <tr><td>合計</td><td>¥133,290</td><td>¥118,000</td><td class="col-flat">¥98,376〜132,028</td></tr>
+                </tbody>
+            </table>
+
+            <div style="font-weight: 600; margin: 30px 0 15px; display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 1.1rem;">📌</span> Link-At-Japan 月額詳細プラン表
+            </div>
+
+            <div class="price-table-linkat">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%;">契約形態</th>
+                            <th style="width: 25%;">運用プラン</th>
+                            <th>サーバー料</th>
+                            <th>運用費</th>
+                            <th style="background: #f8fafc; font-weight: 800;">月額合計</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 3-Year Contract Group -->
+                        <tr>
+                            <td rowspan="2" class="contract-label">3年契約<br><span style="font-size: 0.7rem; font-weight: 400; color: var(--text-muted);">(コミットメント)</span></td>
+                            <td><span class="plan-tag tag-assist">アシスト</span></td>
+                            <td>¥17,726</td>
+                            <td>¥50,000</td>
+                            <td style="font-weight: 700; background: #fffcf0;">¥67,726</td>
+                        </tr>
+                        <tr>
+                            <td><span class="plan-tag tag-plus">アシストプラス</span></td>
+                            <td>¥17,726</td>
+                            <td>¥68,000</td>
+                            <td style="font-weight: 700; background: #fffcf0;">¥85,726</td>
+                        </tr>
+                        <!-- No Contract Group -->
+                        <tr style="border-top: 2px solid var(--border);">
+                            <td rowspan="2" class="contract-label">期間なし<br><span style="font-size: 0.7rem; font-weight: 400; color: var(--text-muted);">(従量課金)</span></td>
+                            <td><span class="plan-tag tag-assist">アシスト</span></td>
+                            <td>¥33,378</td>
+                            <td>¥50,000</td>
+                            <td style="font-weight: 700; background: #fffcf0;">¥83,378</td>
+                        </tr>
+                        <tr>
+                            <td><span class="plan-tag tag-plus">アシストプラス</span></td>
+                            <td>¥33,378</td>
+                            <td>¥68,000</td>
+                            <td style="font-weight: 700; background: #fffcf0;">¥101,378</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="margin-top: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div style="background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid var(--border);">
+                    <div style="font-weight: 700; color: #166534; font-size: 0.9rem; margin-bottom: 5px;">✅ アシスト内容</div>
+                    <ul style="margin: 0; padding-left: 20px; font-size: 0.85rem; color: #475569;">
+                        <li>QAサポート (平日 10:00-18:00)</li>
+                        <li>24/365 監視・障害通知</li>
+                        <li>障害一次対応・二次対応</li>
+                    </ul>
+                </div>
+                <div style="background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid var(--border);">
+                    <div style="font-weight: 700; color: #1e40af; font-size: 0.9rem; margin-bottom: 5px;">💎 アシストプラス内容</div>
+                    <ul style="margin: 0; padding-left: 20px; font-size: 0.85rem; color: #475569;">
+                        <li><strong>上記「アシスト」の全内容</strong></li>
+                        <li>OSパッチ適用代行</li>
+                        <li>運用支援 (作業代行、定例会、月報)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card">
+            <div class="section-title">⚙️ 3. 技術仕様・構成</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>項目</th>
+                        <th>IIJ</th>
+                        <th>USEN</th>
+                        <th class="col-highlight">リンクアット・ジャパン</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>CPU</td><td>4 vCPU</td><td>4 vCPU</td><td class="col-highlight">4 vCPU (B4s v2)</td></tr>
+                    <tr><td>メモリ</td><td>8 GB</td><td>8 GB</td><td class="col-highlight">16 GB</td></tr>
+                    <tr><td>ストレージ</td><td>160 GB (想定)</td><td>160 GB</td><td class="col-highlight">SSD 256GB (Premium SSD)</td></tr>
+                    <tr><td>OS</td><td>Windows Server</td><td>Windows Server</td><td class="col-highlight">Windows Server 2022</td></tr>
+                    <tr><td>NW接続要件</td><td style="color:red">IIJ Omnibus 必須 (ロックイン)</td><td>制限なし</td><td class="col-highlight">制限なし</td></tr>
+                    <tr><td>切替停止時間</td><td>1〜2時間程度（推定）</td><td>1〜2時間程度（推定）</td><td class="col-highlight">1〜2 hour (回答済)</td></tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <strong>ダウンタイムに関する補足</strong><br>
+                Link-At-Japan: 正式回答済み（2025/12/26）「1〜2時間程度」<br>
+                IIJ: 確認不要（オフライン動作により業務影響なし）<br>
+                USEN: インフラ層の推定値。セコムTR2Webの移行時間についてはセコム社に確認中<br>
+                <strong>入退室機能:</strong> サーバー停止中もオフライン動作により通常通り利用可能（セコム社確認済み）
+            </div>
+
+            <div style="font-weight: 600; margin-top: 20px;">⚠️ ネットワーク戦略上の制約 (ベンダーロックイン)</div>
+            <ul>
+                <li><strong>IIJを選択した場合:</strong> SD-WAN基盤も「IIJ Omnibus」に一本化（ロックイン）されます。将来的に他社SD-WANへの乗り換えが困難になります。</li>
+                <li><strong>他2社を選択した場合:</strong> ネットワーク機器や回線に依存しないため、将来的に柔軟に接続可能です。</li>
+            </ul>
+        </section>
+
+        <section class="section-card">
+            <div class="section-title">✨ 5. ADクラウド化との同時実施によるメリット</div>
+            <p>本案件は単独でも実施可能ですが、「ADクラウド化プロジェクト」と同時に進行させることで、大幅なコスト圧縮が可能です。</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>項目</th>
+                        <th>単独実施の場合</th>
+                        <th class="col-highlight">ADと同居の場合 (メリット)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>ネットワーク接続費</td><td>全額負担 (VPN/閉域網)</td><td class="status-ok">実質 ¥0 (AD基盤と共用)</td></tr>
+                    <tr><td>運用監視費</td><td>個別契約が必要</td><td class="status-ok">一元管理が可能</td></tr>
+                </tbody>
+            </table>
+            <div style="background:#fef3c7; padding:15px; border-radius:12px; margin-top:15px; font-size:0.95rem;">
+                <strong>推奨シナリオ:</strong><br>
+                AD認証基盤のクラウド化が決まった場合、その基盤上に本サーバーを「追加の1台」として載せるのが最も投資対効果が高くなります。
+            </div>
+        </section>
+
+        <footer class="footer">
+            Generated by Antigravity Assistant • Verified Content: 2026-01-21
+        </footer>
+    </div>
+</body>
+
+</html>

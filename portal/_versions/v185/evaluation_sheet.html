@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>戦略羅針盤 | 人事考課原本 (最新完全版) | Internal DX Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/portal_nexus.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .raw-text-block {
+            background: #fff;
+            border: 1px solid #d1d5db;
+            padding: 1.5rem;
+            border-radius: 8px;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .goal-tag {
+            background: #000;
+            color: #fff;
+            padding: 4px 12px;
+            font-size: 0.9rem;
+            font-weight: 900;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            margin-left: 12px;
+        }
+
+        .status-active {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+
+        .status-pending {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+        }
+
+        .status-changed {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #d97706;
+        }
+
+        .priority-section {
+            margin-bottom: 64px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        /* Execution Plan Table */
+        .execution-plan-box {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 16px;
+            border-radius: 6px;
+            margin-top: 16px;
+            font-size: 13px;
+            white-space: pre-wrap;
+        }
+
+        /* Monthly Progress Table */
+        .progress-log {
+            margin-top: 24px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            overflow: hidden;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .progress-log th {
+            background: #f1f5f9;
+            font-size: 11px;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .progress-log td {
+            padding: 12px;
+            font-size: 13px;
+            border-bottom: 1px solid #f1f5f9;
+            background: #ffffff;
+            line-height: 1.6;
+            vertical-align: top;
+            /* Align text to top for coherence */
+            white-space: normal;
+        }
+
+        .progress-log tr:last-child td {
+            border-bottom: none;
+        }
+
+        h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #64748b;
+            margin-top: 24px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-left: 4px solid #94a3b8;
+            padding-left: 10px;
+        }
+
+        .shino-comment {
+            margin-top: 24px;
+            padding: 16px;
+            background: #fffbeb;
+            border: 1px solid #fcd34d;
+            border-left: 4px solid #f59e0b;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #78350f;
+            line-height: 1.8;
+            white-space: pre-wrap;
+        }
+
+        .shino-comment strong {
+            display: block;
+            color: #92400e;
+            font-size: 12px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+
+<body class="bg-[#fcfcfc]">
+
+    <div class="layout-wrapper">
+        <aside class="sidebar">
+            <header class="sidebar-header">
+                <h1>統合指揮センター HUB</h1>
+                <p>MASTER COMMAND CENTER V2.2</p>
+            </header>
+            <nav>
+                <div class="nav-label-small">トップ・ナビゲーション</div>
+                <a href="landing.html" class="nav-link">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    ポータルホーム
+                </a>
+                <a href="index.html" class="nav-link">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    プロジェクト
+                </a>
+                <a href="executive_hub.html" class="nav-link">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    全体課題管理表
+                </a>
+                <a href="evaluation_sheet.html" class="nav-link active">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                    人事考課原本 (最新版)
+                </a>
+                <a href="daily_log.html" class="nav-link">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    活動全史 (ログ)
+                </a>
+            </nav>
+            <footer class="sidebar-footer">
+                <p>User: 丹治 統<br>Last Sync: 1/24 21:00</p>
+            </footer>
+        </aside>
+
+        <main class="main-scroll">
+
+
+            <div class="p-12">
+                <header class="mb-12">
+                    <h2 class="text-[10px] font-bold text-amber-500 uppercase tracking-[0.4em] mb-2">Personnel
+                        Evaluation</h2>
+                    <h1 class="text-5xl font-black text-slate-900 tracking-tighter">人事考課原本・最新版</h1>
+                    <p class="text-slate-400 text-sm mt-4">2025-2026年度 全目標（Goal 1 - 5）最新ログ反映済み</p>
+                </header>
+
+                <!-- GOAL 1 -->
+                <section class="priority-section">
+                    <span class="goal-tag">GOAL 01</span>
+                    <span class="status-badge status-active">実行中</span>
+                    <h2 class="text-3xl font-black text-slate-800 mb-6">インフラ刷新・マネージド移行</h2>
+                    <div class="raw-text-block">
+                        <p class="mb-4">
+                            グループ全体のWi‑Fi・ファイルサーバー・VPN・レンタルサーバーなど主要なインフラを、SLA保証・24時間365日の監視付きマネージドITサービスへ段階移行。障害発生リスクを低減し、万一の故障時にも迅速な復旧体制を構築。担当者の退職・異動に左右されない"継続運用できる強固な基盤"を整え、企業の永続的な信頼性を確保します。
+                        </p>
+
+                        <table class="progress-log">
+                            <thead>
+                                <tr>
+                                    <th style="width: 60px; white-space: nowrap;">時期</th>
+                                    <th style="width: 40%;">計画 (Plan)</th>
+                                    <th style="width: 50px; text-align: center; white-space: nowrap;">達成</th>
+                                    <th>実績 (Result)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>7月</th>
+                                    <td>① 全体インフラの構成・契約・運用状況を棚卸しし、属人性や障害発生リスクを可視化。課題の整理と優先順位付けを行う。</td>
+                                    <td class="text-center font-bold text-slate-400">-</td>
+                                    <td>陽光ビルのマネージドWi-Fi設置状況の確認が完了しました。他の拠点については、ネットワークの見直しを同時に進めます。マネージドWi-Fiの選定候補として、網屋（ハイパーソニックス）とUSENを検討しており、サービス内容について情報システム部メンバーと共有します。
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>8月</th>
+                                    <td>② マネージドサービス候補の比較検討を行い、要件・コスト・体制を整理。第1領域の移行設計・社内稟議を実施。</td>
+                                    <td class="text-center font-bold text-slate-800">①</td>
+                                    <td>引き続きマネージドWi-Fiの検討を進めていたが、社内にてストップが掛かりそうな状況であるため次のサービスに移行する。サーバーの対応について９月度はとりかかる。代わりとなる課題の洗い出しを行う（カレンダー、受付、会議室管理）
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>9月</th>
+                                    <td>③ 第1領域の本番移行を実施。運用体制を新サービスへ切替え、復旧手順や保守連絡系統を整備・共有。</td>
+                                    <td class="text-center font-bold text-slate-800">④</td>
+                                    <td>Active
+                                        Directoryのクラウド化に関しては３社との打ち合わせを行い、調査を進めております。Googleドライブ利用促進はメール一通のみの配信となったので、頻度を上げていきます。
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>10月</th>
+                                    <td class="bg-slate-50 text-slate-400 italic text-xs text-center align-middle">-
+                                    </td>
+                                    <td class="text-center font-bold text-slate-800">④</td>
+                                    <td>Active
+                                        Directoryに関しては2社からのヒアリングシートを記入し先方からのお見積り待ちの状態となっている。<br>会議室、受付に関してはBuddyNetへのヒアリングの準備を進めている<br>akiba、ADTECは完了。<br>Googleドライブに関してはメール2通配信。Analyticsにより効果測定はできるようになったが、今後の進め方を検討。<br>セコム入退室管理に関しては進行中
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>11月</th>
+                                    <td class="bg-slate-50 text-slate-400 italic text-xs text-center align-middle">-
+                                    </td>
+                                    <td class="text-center font-bold text-slate-800">④</td>
+                                    <td>・Active
+                                        Directoryに関しては3社（IIJ、USEN、リンクアット・ジャパン）の比較検討を実施。IIJとリンクアット・ジャパンから提案書を受領し、費用・機能・運用範囲を比較中。<br>・セコム入退室管理に関しては11/18にセコム担当者と打ち合わせを実施。閉域網接続（VPN）での実現が可能であることを確認し、推奨スペックを受領。各ベンダー（USEN、IIJ等）へ見積依頼を実施済み。<br>・Googleドライブ利用促進に関してはメール送付予定。データ消失・誤削除時の対応ルール（復元方法や運用規定）についてもコンテンツ化し周知する。<br>・ネットワーク：IIJ
+                                        Omnibus導入によりインターネット接続品質向上の可能性があるため、並行して検討を進める。<br>※適切な予算確保を前提としたシステム導入の可能性について示唆をいただいたため、AD・セコムに関しては確実に起案まで持っていく。
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>12月</th>
+                                    <td>④ (実績): AD・セコム3社比較完了、確認資料送付(1/10回答期限)</td>
+                                    <td class="text-center font-bold text-slate-800">④</td>
+                                    <td>ADクラウド化に関しては、3社(IIJ、USEN、リンクアット・ジャパン)の比較検討を完了し、統合費用・技術仕様・移行スケジュールを整理した提案資料をまとめ上げました。セコム入退室管理に関しては、移行対象11拠点の技術仕様・移行手順の確認資料をPDF化し、セコム担当者へ送付しました(1/10回答期限)。1月は、来年度予算取得に向けて、AD+セコム統合プラン作成、ファイルサーバーとGoogleドライブの比較調査、SD-WAN(IIJ
+                                        Omnibus等)サービスの調査、現状インフラ環境整理シートの作成を進めます。</td>
+                                </tr>
+                                <tr>
+                                    <th>1月</th>
+                                    <td>⑤ (予定): AD+セコム統合プラン、ファイルサーバー・SD-WAN調査、現状インフラ環境整理シート作成</td>
+                                    <td class="text-center font-bold text-slate-400">-</td>
+                                    <td class="bg-slate-50 text-slate-400 italic text-xs text-center align-middle">-
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>2月</th>
+                                    <td>⑥ (予定): 現状インフラ環境整理シート完成、コスト試算精緻化、リスク分析・移行スケジュール案作成</td>
+                                    <td class="text-center font-bold text-slate-400">-</td>
+                                    <td class="bg-slate-50 text-slate-400 italic text-xs text-center align-middle">-
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>3月</th>
+                                    <td>⑦ (予定): 来年度予算申請用の提案資料作成・完成、上司レビュー・最終化</td>
+                                    <td class="text-center font-bold text-slate-400">-</td>
+                                    <td class="bg-slate-50 text-slate-400 italic text-xs text-center align-middle">-
+                                    </td>
+                                </tr>
+                        </table>
+                        </tbody>
+                        </table>
+
+                        <div class="mt-4 p-4 text-xs text-slate-500 bg-slate-50 border border-slate-100 rounded">
+                            <h4 class="font-bold mb-2">その他対応項目</h4>
+                            <ul class="list-disc list-inside">
+                                <li>Active Directoryのクラウド化</li>
+                                <li>会議室管理</li>
+                                <li>セコム入退出管理クラウド化</li>
+                                <li>Googleドライブ利用促進</li>
+                            </ul>
+                        </div>
+
+                        <div class="shino-comment">
+                            <strong>【篠コメント】</strong>
+                            ADクラウド化に関しては、移行計画案（スケジュール、概算費用、リスクと対策含む）を策定し、具体的な提案としてまとめ上げてください。
+                            受付、会議室管理システムに関しては、そもそも不便さを感じているのかのヒアリングを従業員に対して行ってください。
+                            Googleドライブ利用促進は、より効果的な働きかけ（簡単な勉強会を開く、便利な活用事例を具体的に紹介するなど）を計画し、実行に移すと良いかとおもいます。
+                        </div>
+                    </div>
+                </section>
+
+                <!-- GOAL 2 DELETED (Pending) -->
+
+                <!-- GOAL 3 DELETED (Pending) -->
+
+                <!-- GOAL 4 -->
+                <section class="priority-section">
+                    <span class="goal-tag">GOAL 04</span>
+                    <span class="status-badge status-active">実行中</span>
+                    <h2 class="text-3xl font-black text-slate-800 mb-6">AI Champion 育成 (ツール活用)</h2>
+                    <div class="raw-text-block">
+                        <p class="mb-4">ノーコード／ローコードツール、ワークフロー自動化ツール、AIアプリ構築プラットフォームの社内導入提案と技術習得を並行して進める。
+                            提案資料を整備し、正式な導入提案を行うことを目指す。
+                            導入可否に関わらず、自らの技術スキルを高め、次期以降の自動化推進に備える。</p>
+
+                        <table class="progress-log">
+                            <thead>
+                                <tr>
+                                    <th style="width: 40px; white-space: nowrap;">時期</th>
+                                    <th style="width: 45%;">計画 (Plan)</th>
+                                    <th style="width: 40px; text-align: center;">達成</th>
+                                    <th>実績 (Result)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>10月</th>
+                                    <td>①<br>・候補ツールの特徴を比較整理<br>・他社導入事例や活用イメージを調査<br>・各ツールの公式ドキュメント・動画チュートリアルで基本操作を学習<br>・簡単なサンプルフロー／アプリを作成
+                                    </td>
+                                    <td class="text-center font-bold text-slate-800">①</td>
+                                    <td>n8nに関しては一日一本、課題を決めワークフローを制作することで習熟度を増している<br>困りごとのヒアリングakiba、ADTECに取ったことで具体的な要望も見えてきているので環境が整ったら取り掛かりたい。同様にBuddyNetにもヒアリングを行いたい。Dify、Zapier、Make、Opal、Agent
+                                        Builderなども調査を行いそれぞれの特徴などを調べている。11月度には導入支援企業とのMTG、社内用提案資料の作成を行う。</td>
+                                </tr>
+                                <tr>
+                                    <th>11月</th>
+                                    <td>②<br>・導入目的・期待効果・リスクを整理<br>・社内導入に向けた課題と想定運用方法を検討<br>・自動化／AI活用の具体例を実際に構築して理解を深める<br>・使ってみての課題や注意点をまとめる
+                                    </td>
+                                    <td class="text-center font-bold text-slate-800">②</td>
+                                    <td>n8n導入提案資料を作成・提出したが、導入には至らなかった。今後はGoogle Workspace
+                                        Flowsでの対応に注力する。既に基本操作を把握し個人用フローも作成済みのため、12月中にはプロトタイプの作成からレビューまで完了させる予定。なお、予算確保の観点からn8nについても再度塩田部長へ情報共有を行い、導入の可能性も探る。
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>12月</th>
+                                    <td>③ 候補ツールの評価と社内ニーズ調査<br>Google Enterprise製品(Gemini Enterprise、Chrome Enterprise
+                                        Premium)の技術採用面談を実施<br>困りごとアンケート結果の可視化に着手し、現場課題のグラフ化を進行<br>業務自動化のニーズを洗い出し、AI活用可能性を整理
+                                    </td>
+                                    <td class="text-center font-bold text-slate-800">③</td>
+                                    <td>n8nに関しては一旦保留とし、Google Workspace
+                                        Studio(旧Flows)、Opal、GASの3つのツールに焦点を絞り、技術検証を進めた。Google Enterprise製品(Gemini
+                                        Enterprise、Chrome Enterprise
+                                        Premium)の技術採用面談を実施し、来期のAI予算策定や業務自動化に活かすための知見を獲得した。1月以降は、AI
+                                        Champion育成方式に方針転換し、興味がある社員2-3名を選定、各自が部門の「困りごと」を持ち寄り、一緒にAIで解決策を作りながら自動化手法を習得する計画とした。実際の業務課題を解決しながら学ぶことで、実践的なスキル習得と組織全体への自然な展開を目指す。
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>1月</th>
+                                    <td>④ AI Champion育成セッション(困りごと解決型)<br>AI Championが部門の「困りごと」を持ち寄る<br>一緒にAI(Google
+                                        Workspace
+                                        Studio、Opal、GAS)で解決策を作る<br>実際の業務課題を解決しながら、AIの使い方を習得<br>AI活用ガイド(簡易版)、FAQ、実際に作った自動化ツールを成果物とする
+                                    </td>
+                                    <td class="text-center font-bold text-slate-400">-</td>
+                                    <td class="bg-slate-50 text-slate-400 italic text-xs text-center align-middle">-
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>2月</th>
+                                    <td>⑤ AI Championによる部門内展開<br>AI
+                                        Championが自分の部門で「こんな困りごとを解決できたよ」と成功事例を紹介<br>興味がある人の困りごとを聞き、一緒に解決<br>複雑な自動化は情シスが代行し、進捗を見守る<br>部門別の活用事例、実際に作られた自動化ツールを蓄積
+                                    </td>
+                                    <td class="text-center font-bold text-slate-400">-</td>
+                                    <td class="bg-slate-50 text-slate-400 italic text-xs text-center align-middle">-
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>3月</th>
+                                    <td>⑥ 成果の可視化と次期展開の判断<br>AI
+                                        Championが解決した困りごとの数、削減できた作業時間、社員の反応をまとめる<br>社内ポータルに成功事例(困りごと→解決策)を掲載し、「AI
+                                        Championに相談してください」と案内<br>AI
+                                        Champion育成マニュアル、困りごと解決事例集、ベストプラクティス集を整備<br>4月以降の展開判断(成功なら他部門にも展開、継続ならサポート継続)
+                                    </td>
+                                    <td class="text-center font-bold text-slate-400">-</td>
+                                    <td class="bg-slate-50 text-slate-400 italic text-xs text-center align-middle">-
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- GOAL 5 -->
+                <section class="priority-section">
+                    <span class="goal-tag">GOAL 05</span>
+                    <span class="status-badge status-active">実行中</span>
+                    <h2 class="text-3xl font-black text-slate-800 mb-6">AI 自律解決組織の構築 (業務改善)</h2>
+                    <div class="raw-text-block">
+                        <p class="mb-4">各部門のAI Championを育成し、
+                            部門が自律的に問題を発見・解決できる
+                            組織を構築する。
+                            AI Champion(Google Workspace Studio、Opal、GAS)を
+                            活用し、情シスに頼らず部門内で
+                            困りごとを解決できる力を養う。
+                            組織全体の問題解決力を高め、
+                            情シスの役割を「実装者」から「支援者」へ
+                            シフトする。</p>
+
+                        <table class="progress-log">
+                            <thead>
+                                <tr>
+                                    <th style="width: 40px; white-space: nowrap;">時期</th>
+                                    <th style="width: 45%;">計画 (Plan)</th>
+                                    <th style="width: 40px; text-align: center;">達成</th>
+                                    <th>実績 (Result)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>10月</th>
+                                    <td>①<br>・課題収集の目的と対象範囲を整理<br>・「困りごと入力フォーム」や「相談窓口」の仕組みを設計<br>・課題収集フロー設計書<br>・フォーム雛形
+                                    </td>
+                                    <td class="text-center font-bold text-slate-800">①</td>
+                                    <td>akiba、ADTECにヒアリングのメールを送ったことで困りごとに関する要望を拾い上げる手段が見えた。定期的にメールを送ることで困りごとを明示化し解決案を策定、社内に提案する姿勢を続けたい。現時点ではAIワークフローシステムを導入することで多くの課題を解決できる目処が立っている。
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>11月</th>
+                                    <td>②<br>・実際に課題解決した実例を共有<br>・提出された課題を分類（業務領域／影響度／難易度）<br>・課題一覧（10件以上）</td>
+                                    <td class="text-center font-bold text-slate-800">②</td>
+                                    <td>10月実施のアンケート（回答総数30件）の考察を完了。<br>会社方針により、ツール導入ではなく構造的な根本原因をヒアリングし、本当に問題になっている部分を探る方向に転換。特に「ジョブカン」の運用課題を最優先事項とし、各部署への深掘りヒアリングを実施して業務プロセスの根本的な改善を目指す。<br>並行して、情報システム部内の業務効率化も推進。GAS（Google
+                                        Apps Script）を活用し、Google管理コンソールと連携した情報自動取得の仕組みを構築。調整不要な部内業務から効率化を進めている。</td>
+                                </tr>
+                                <tr>
+                                    <th>12月</th>
+                                    <td class="bg-slate-50 text-slate-400 italic text-xs text-center align-middle">-
+                                    </td>
+                                    <td class="text-center font-bold text-slate-800">②</td>
+                                    <td>困りごとアンケート結果の可視化に着手し、現場課題のグラフ化を進めた。従来の「アンケートを取って自分で解決」方式から、「AI
+                                        Championを育成し、各部門が自律的に問題を発見・解決できる組織を構築する」方式への転換を検討した。1月以降は、AI
+                                        Champion(2-3名)を選定し、Google Workspace
+                                        Studio、Opal、GASを活用して、情シスに頼らず部門内で困りごとを解決できる力を養う。組織全体の問題解決力を高め、情シスの役割を「実装者」から「支援者」へシフトすることを目指す。
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>1月</th>
+                                    <td>③ AI Championの問題発見力・解決力を育成<br>・AI
+                                        Championが部門の困りごとを自分で発見する<br>・一緒にAIで解決策を考え、自分で実装できるようにする<br>・情シスに頼らず、自分で解決できる力を養う
+                                    </td>
+                                    <td class="text-center font-bold text-slate-400">-</td>
+                                    <td class="bg-slate-50 text-slate-400 italic text-xs text-center align-middle">-
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>2月</th>
+                                    <td>④ 部門内での自律的な問題解決を促進<br>・AI
+                                        Championが部門内で自発的に問題を発見・解決<br>・情シスへの相談なしで、部門内で完結できる事例を増やす<br>・他の社員も「自分でできるかも」と思える雰囲気を作る
+                                    </td>
+                                    <td class="text-center font-bold text-slate-400">-</td>
+                                    <td class="bg-slate-50 text-slate-400 italic text-xs text-center align-middle">-
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>3月</th>
+                                    <td>⑤
+                                        組織全体の問題解決力を評価<br>・各部門が自律的に問題解決できているか評価<br>・情シスへの依存度が下がっているか確認<br>・組織全体の問題解決力が向上しているか測定<br><br>⑥
+                                        次期展開の方針を決定<br>・他部門へのAI
+                                        Champion展開を検討<br>・組織全体の自律性をさらに高める施策を提案<br>・情シスの役割を「実装者」から「支援者」へシフト</td>
+                                    <td class="text-center font-bold text-slate-400">-</td>
+                                    <td class="bg-slate-50 text-slate-400 italic text-xs text-center align-middle">-
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <footer class="mt-20 pt-8 border-t border-slate-100 text-center">
+                    <p class="text-[10px] font-black text-slate-300 uppercase tracking-[0.2em]">Strategy Compass v9.4 |
+                        Latest Ledger Verified</p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+</body>
+
+</html>

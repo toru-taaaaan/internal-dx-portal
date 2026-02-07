@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT基盤刷新 課題管理表 | Internal DX Portal</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Roboto+Mono:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/portal_nexus.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#e0f2fe',
+                primaryTextColor: '#1e3a8a',
+                primaryBorderColor: '#3b82f6',
+                lineColor: '#64748b',
+                secondaryColor: '#f8fafc',
+                tertiaryColor: '#ffffff',
+                activeTaskColor: '#1e3a8a',
+                activeTaskTextColor: '#ffffff',
+                doneTaskColor: '#065f46',
+                doneTaskTextColor: '#ffffff',
+                critTaskColor: '#9f1239',
+                critTaskTextColor: '#ffffff',
+                taskColor: '#94a3b8',
+                taskTextColor: '#ffffff',
+                ganttBarHeight: 35,
+                ganttLabelSize: 12,
+                ganttSectionFontSize: 14,
+                ganttBarPadding: 5
+            }
+        });
+    </script>
+    <style>
+        /* Mermaid Gantt Style Overrides - Force Dark Colors */
+        .mermaid .active {
+            fill: #1e3a8a !important;
+            stroke: #1e3a8a !important;
+            opacity: 1 !important;
+        }
+        .mermaid .activeText {
+            fill: #ffffff !important;
+            font-weight: 800 !important;
+            text-shadow: 0 0 2px rgba(0,0,0,0.5) !important;
+        }
+        .mermaid .done {
+            fill: #065f46 !important;
+            stroke: #065f46 !important;
+            opacity: 1 !important;
+        }
+        .mermaid .doneText {
+            fill: #ffffff !important;
+        }
+        .mermaid .crit {
+            fill: #9f1239 !important;
+            stroke: #9f1239 !important;
+            opacity: 1 !important;
+        }
+        .mermaid .critText {
+            fill: #ffffff !important;
+        }
+        .mermaid .task {
+            fill: #94a3b8 !important;
+            stroke: #94a3b8 !important;
+        }
+        .mermaid .taskText {
+            fill: #ffffff !important;
+        }
+        .mermaid .today {
+            stroke: #ef4444 !important;
+            stroke-width: 3px !important;
+        }
+        .mermaid .section {
+            fill: #f1f5f9 !important;
+        }
+        .mermaid .sectionTitle {
+            fill: #334155 !important;
+            font-weight: 900 !important;
+        }
+        .spreadsheet-container {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+        }
+
+        .spreadsheet-container th {
+            position: sticky;
+            top: 0;
+            background: #f3f4f6;
+            z-index: 10;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 700;
+            color: #374151;
+        }
+
+        .spreadsheet-container td {
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            vertical-align: middle;
+            color: #111827;
+        }
+
+        .id-cell {
+            font-family: 'Roboto Mono', monospace;
+            font-weight: 700;
+            color: #6b7280;
+            font-size: 11px;
+        }
+
+        .row-main-clickable {
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .row-main-clickable:hover {
+            background: #f0f7ff;
+        }
+
+        .detail-row {
+            display: none;
+            background: #fafafa;
+        }
+
+        .detail-row.open {
+            display: table-row;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .status-urgent {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+
+        .status-done {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+
+        .status-todo {
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #94a3b8;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #f59e0b;
+        }
+
+        .prio-high {
+            color: #dc2626;
+            font-weight: 900;
+        }
+
+        .prio-mid {
+            color: #d97706;
+        }
+
+        .prio-low {
+            color: #059669;
+        }
+
+        .pro-link {
+            font-size: 11px;
+            font-weight: 700;
+            color: #2563eb;
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function toggleDetail(id) {
+            const el = document.getElementById('detail-' + id);
+            if (el) el.classList.toggle('open');
+        }
+    </script>
+</head>
+
+<body class="bg-[#fcfcfc]">
+
+    <div class="layout-wrapper">
+        <aside class="sidebar">
+            <header class="sidebar-header">
+                <h1>統合指揮センター HUB</h1>
+                <p>MASTER COMMAND CENTER V2.2</p>
+            </header>
+            <nav>
+                <div class="nav-label-small">トップ・ナビゲーション</div>
+                <a href="landing.html" class="nav-link">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    ポータルホーム
+                </a>
+                <a href="index.html" class="nav-link">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    プロジェクト
+                </a>
+                <a href="executive_hub.html" class="nav-link active">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    全体課題管理表
+                </a>
+                <a href="evaluation_sheet.html" class="nav-link">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                    人事考課原本 (最新版)
+                </a>
+                <a href="daily_log.html" class="nav-link">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    活動全史 (ログ)
+                </a>
+            </nav>
+            <footer class="sidebar-footer">
+                <p>User: 丹治 統<br>Last Sync: 1/24 21:00</p>
+            </footer>
+        </aside>
+
+        <main class="main-scroll">
+
+            <div class="p-10">
+                <!-- ROADMAP SECTION (Gantt Chart) -->
+                <div class="mb-12">
+                    <h2 class="text-xl font-black text-slate-800 mb-6 flex items-center gap-3">
+                        <span class="w-8 h-8 bg-blue-600 text-white rounded flex items-center justify-center text-sm">📅</span>
+                        プロジェクト・ロードマップ
+                    </h2>
+                    <div class="bg-white border border-slate-200 rounded-xl shadow-sm p-8 overflow-hidden">
+                        <div class="mermaid-container bg-white">
+                            <div class="mermaid" id="gantt-chart">
+                                gantt
+                                    title IT基盤刷新・DX推進 ロードマップ
+                                    dateFormat  YYYY-MM-DD
+                                    section 📅 フェーズ別スケジュール
+                                    Phase 2: 資料提出準備: 提出書類の最終整備・確認 :active, 2026-02-06, 2026-02-12
+                                    Phase 2: 資料提出準備: 全書類提出デッドライン :crit, 2026-02-13, 2026-02-13
+                                    Phase 1: 次ステップ: 基盤構築・移行に向けた計画具体化 :, 2026-02-14, 2026-03-31
+                                    section 💡 DX推進・組織育成 (AI Champion)
+                                    AI Champion育成 :active, 2026-01-15, 2026-03-31
+                                    チャレンジ案件 :, 2026-02-14, 2026-03-31
+                                    チャレンジ案件 :, 2026-02-14, 2026-03-31
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 mb-10">
+                    <div class="bg-white border-l-4 border-l-blue-600 p-6 rounded shadow-sm flex-1">
+                        <p class="text-[10px] font-bold text-slate-500 uppercase">未完了課題</p>
+                        <p class="text-3xl font-black text-slate-900">20</p>
+                    </div>
+                    <div class="bg-white border-l-4 border-l-rose-600 p-6 rounded shadow-sm flex-1">
+                        <p class="text-[10px] font-bold text-rose-600 uppercase">最優先 / 緊急</p>
+                        <p class="text-3xl font-black text-rose-600">1</p>
+                    </div>
+                    <div class="bg-white border-l-4 border-l-emerald-600 p-6 rounded shadow-sm flex-1">
+                        <p class="text-[10px] font-bold text-emerald-600 uppercase">完了済</p>
+                        <p class="text-3xl font-black text-emerald-600">4</p>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden text-[12px]">
+                    <table class="spreadsheet-container">
+                        <thead>
+                            <tr>
+                                <th width="60">ID</th>
+                                <th width="100">カテゴリ</th>
+                                <th>課題・ミッション項目 (Laboratory Ledger Sync)</th>
+                                <th width="110">ステータス</th>
+                                <th width="70">優先度</th>
+                                <th width="70">期限</th>
+                                <th width="110">成果物 (File)</th>
+                            </tr>
+                        </thead>
+                                                                                                                                                                                                                                                                        <tbody>
+                            <!-- INCOMPLETE TASKS (20 items) -->
+
+                            <tr class="row-main-clickable" onclick="toggleDetail('EX-01')">
+                                <td class="id-cell">EX-01</td>
+                                <td>全体</td>
+                                <td class="font-bold">【重要】全提出書類の最終整備と提出</td>
+                                <td><span class="status-badge status-pending">着手中</span></td>
+                                <td class="prio-high">最優先</td>
+                                <td>2/13</td>
+                                <td>-</td>
+                            </tr>
+                            <tr id="detail-EX-01" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>2/13の提出期限に向けた全資料（稟議書、比較表、構成図等）の最終調整。</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable bg-rose-50/20" onclick="toggleDetail('NW-01')">
+                                <td class="id-cell">NW-01</td>
+                                <td>回線刷新</td>
+                                <td class="font-bold">【最優先】多摩拠点：現行USEN速度アップ案・見積依頼 (丹治)</td>
+                                <td><span class="status-badge status-urgent">最優先</span></td>
+                                <td class="prio-high">最優先</td>
+                                <td>ASAP</td>
+                                <td>-</td>
+                            </tr>
+                            <tr id="detail-NW-01" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>10Mbps以下を頻発する多摩回線の刷新。現行USENに対し現状詳細の確認と改善案を依頼。</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable" onclick="toggleDetail('AD-02')">
+                                <td class="id-cell">AD-02</td>
+                                <td>ADクラウド</td>
+                                <td class="font-bold">LAJへの「並行稼働1ヶ月」再見積依頼</td>
+                                <td><span class="status-badge status-done">完了</span></td>
+                                <td class="prio-mid">高</td>
+                                <td>1/25</td>
+                                <td><a href="project_15_01.html" class="pro-link">回答受領</a></td>
+                            </tr>
+                            <tr id="detail-AD-02" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>現行予算内での並行運用（1ヶ月）が可能との回答を受領済み。</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable" onclick="toggleDetail('AD-06')">
+                                <td class="id-cell">AD-06</td>
+                                <td>ADクラウド</td>
+                                <td class="font-bold">LAJ並行運用案を比較資料に反映</td>
+                                <td><span class="status-badge status-done">完了</span></td>
+                                <td class="prio-mid">高</td>
+                                <td>ASAP</td>
+                                <td><a href="project_15_01.html" class="pro-link">比較レポート</a></td>
+                            </tr>
+                            <tr id="detail-AD-06" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>LAJの1ヶ月並行運用（追加費用なし）を3社比較表およびコスト試算に反映しました。</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable" onclick="toggleDetail('AD-07')">
+                                <td class="id-cell">AD-07</td>
+                                <td>ADクラウド</td>
+                                <td class="font-bold">「同時依頼」3社比較レポートの更新</td>
+                                <td><span class="status-badge status-done">完了</span></td>
+                                <td class="prio-mid">高</td>
+                                <td>ASAP</td>
+                                <td><a href="project_15_combined.html" class="pro-link">比較レポート</a></td>
+                            </tr>
+                            <tr id="detail-AD-07" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>「ADサーバー + セコム入退室管理」統合レポートに、LAJの並行運用OK（1ヶ月）を反映。安全な移行シナリオを追記しました。</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable" onclick="toggleDetail('AD-08')">
+                                <td class="id-cell">AD-08</td>
+                                <td>ADクラウド</td>
+                                <td class="font-bold">「同時依頼」レポートに初年度総額を追加</td>
+                                <td><span class="status-badge status-done">完了</span></td>
+                                <td class="prio-mid">中</td>
+                                <td>ASAP</td>
+                                <td><a href="project_15_combined.html" class="pro-link">比較レポート</a></td>
+                            </tr>
+                            <tr id="detail-AD-08" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>「ADサーバー + セコム入退室管理」統合レポートに、初期費用と12ヶ月分の月額を合算した「初年度総額」の項目を追加しました。</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable" onclick="toggleDetail('AD-01')">
+                                <td class="id-cell">AD-01</td>
+                                <td>ADクラウド</td>
+                                <td class="font-bold">マネージド責任範囲の明確化 (IIJ vs USEN vs LAJ)</td>
+                                <td><span class="status-badge status-done">完了</span></td>
+                                <td class="prio-mid">中</td>
+                                <td>-</td>
+                                <td><a href="project_ad_matrix.html" class="pro-link">責任分界点</a></td>
+                            </tr>
+                            <tr id="detail-AD-01" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>-</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable" onclick="toggleDetail('AD-03')">
+                                <td class="id-cell">AD-03</td>
+                                <td>ADクラウド</td>
+                                <td class="font-bold">IIJの「特権制限」による実務影響調査</td>
+                                <td><span class="status-badge status-todo">未着手</span></td>
+                                <td class="prio-mid">中</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr id="detail-AD-03" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>-</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable" onclick="toggleDetail('AD-04')">
+                                <td class="id-cell">AD-04</td>
+                                <td>ADクラウド</td>
+                                <td class="font-bold">固定IP機器の棚卸しと影響調査</td>
+                                <td><span class="status-badge status-todo">未着手</span></td>
+                                <td class="prio-low">低</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr id="detail-AD-04" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>-</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable" onclick="toggleDetail('AD-05')">
+                                <td class="id-cell">AD-05</td>
+                                <td>ADクラウド</td>
+                                <td class="font-bold">3社比較情報の再整理と最新化</td>
+                                <td><span class="status-badge status-pending">着手中</span></td>
+                                <td class="prio-mid">高</td>
+                                <td>ASAP</td>
+                                <td>-</td>
+                            </tr>
+                            <tr id="detail-AD-05" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>増大した回答内容（IIJ権限制限、移行シナリオ等）を集約し、比較資料を再構成する。</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable" onclick="toggleDetail('AD-09')">
+                                <td class="id-cell">AD-09</td>
+                                <td>ADクラウド</td>
+                                <td class="font-bold">ADとEntra IDの違いを徹底解説（直感化）</td>
+                                <td><span class="status-badge status-pending">着手中</span></td>
+                                <td class="prio-mid">高</td>
+                                <td>ASAP</td>
+                                <td><a href="project_ad_scenarios.html" class="pro-link">シナリオ比較</a></td>
+                            </tr>
+                            <tr id="detail-AD-09" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>「結局、今のADをなくしたら何が困るのか？」を、技術用語を排除した「家（境界）」と「鍵（ID）」のメタファー等で整理し直す。</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable" onclick="toggleDetail('SC-01')">
+                                <td class="id-cell">SC-01</td>
+                                <td>SECOM</td>
+                                <td class="font-bold">セコム側作業費（約20万）を含む統合費用の算出</td>
+                                <td><span class="status-badge status-pending">回答待ち</span></td>
+                                <td class="prio-mid">中</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr id="detail-SC-01" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>-</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable" onclick="toggleDetail('SC-02')">
+                                <td class="id-cell">SC-02</td>
+                                <td>SECOM</td>
+                                <td class="font-bold">技術支援（伴走）の具体化</td>
+                                <td><span class="status-badge status-todo">未着手</span></td>
+                                <td class="prio-mid">中</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr id="detail-SC-02" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>-</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable" onclick="toggleDetail('SC-03')">
+                                <td class="id-cell">SC-03</td>
+                                <td>SECOM</td>
+                                <td class="font-bold">移行当日のリスクアセスメント</td>
+                                <td><span class="status-badge status-todo">未着手</span></td>
+                                <td class="prio-mid">中</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr id="detail-SC-03" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>-</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable" onclick="toggleDetail('SC-04')">
+                                <td class="id-cell">SC-04</td>
+                                <td>SECOM</td>
+                                <td class="font-bold">提出資料の役職修正（塩田室長→部長）</td>
+                                <td><span class="status-badge status-done">完了</span></td>
+                                <td class="prio-mid">中</td>
+                                <td>ASAP</td>
+                                <td><a href="project_15_02.html" class="pro-link">対応済み</a></td>
+                            </tr>
+                            <tr id="detail-SC-04" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>篠部長・塩田部長への提出資料（SECOM関連等）において、塩田氏の役職を「室長」から「部長」に更新しました。</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable" onclick="toggleDetail('NW-02')">
+                                <td class="id-cell">NW-02</td>
+                                <td>SASE/SD</td>
+                                <td class="font-bold">VSR制限の事実確認 (10台制限の真相)</td>
+                                <td><span class="status-badge status-pending">調査中</span></td>
+                                <td class="prio-mid">高</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr id="detail-NW-02" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>-</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable" onclick="toggleDetail('NW-03')">
+                                <td class="id-cell">NW-03</td>
+                                <td>SASE/SD</td>
+                                <td class="font-bold">LBOハードウェア要件の確定</td>
+                                <td><span class="status-badge status-todo">未着手</span></td>
+                                <td class="prio-mid">中</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr id="detail-NW-03" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>-</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable" onclick="toggleDetail('NW-04')">
+                                <td class="id-cell">NW-04</td>
+                                <td>回線刷新</td>
+                                <td class="font-bold">楽天（占有型回線案）の状況精査 (家田)</td>
+                                <td><span class="status-badge status-pending">保留中</span></td>
+                                <td class="prio-mid">中</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr id="detail-NW-04" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>-</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable" onclick="toggleDetail('NW-05')">
+                                <td class="id-cell">NW-05</td>
+                                <td>回線刷新</td>
+                                <td class="font-bold">VSR400ログ分析に基づくルーター換装要否判断 (塩田)</td>
+                                <td><span class="status-badge status-todo">未着手</span></td>
+                                <td class="prio-mid">高</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr id="detail-NW-05" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>-</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable" onclick="toggleDetail('KZ-01')">
+                                <td class="id-cell">KZ-01</td>
+                                <td>ナレッジ</td>
+                                <td class="font-bold">情シス内ポータル構築勉強会の企画</td>
+                                <td><span class="status-badge status-todo">未着手</span></td>
+                                <td class="prio-low">低</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr id="detail-KZ-01" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>-</p>
+                                </td>
+                            </tr>
+
+                            <!-- COMPLETED TASKS (4 items) -->
+
+                            <tr class="row-main-clickable opacity-50 bg-emerald-50/20" onclick="toggleDetail('CP-01')">
+                                <td class="id-cell">CP-01</td>
+                                <td>費用</td>
+                                <td class="font-bold">オンプレミス継続（サーバー新設）の比較用積算</td>
+                                <td><span class="status-badge status-done">完了</span></td>
+                                <td class="prio-low">低</td>
+                                <td>1/23</td>
+                                <td><a href="infrastructure_strategy.html" class="pro-link">戦略レポート</a></td>
+                            </tr>
+                            <tr id="detail-CP-01" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>-</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable opacity-50 bg-emerald-50/20" onclick="toggleDetail('CP-02')">
+                                <td class="id-cell">CP-02</td>
+                                <td>BCP</td>
+                                <td class="font-bold">BCPリスクマトリクスの作成</td>
+                                <td><span class="status-badge status-done">完了</span></td>
+                                <td class="prio-low">低</td>
+                                <td>1/23</td>
+                                <td><a href="bcp_risk_matrix.html" class="pro-link">リスク評価</a></td>
+                            </tr>
+                            <tr id="detail-CP-02" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>-</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable opacity-50 bg-emerald-50/20" onclick="toggleDetail('CP-03')">
+                                <td class="id-cell">CP-03</td>
+                                <td>SASE</td>
+                                <td class="font-bold">「Cato SASE」徹底比較 (SCSK 宇佐美様)</td>
+                                <td><span class="status-badge status-done">完了</span></td>
+                                <td class="prio-low">低</td>
+                                <td>1/23</td>
+                                <td><a href="infrastructure_strategy.html" class="pro-link">戦略レポート</a></td>
+                            </tr>
+                            <tr id="detail-CP-03" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>-</p>
+                                </td>
+                            </tr>
+                            <tr class="row-main-clickable opacity-50 bg-emerald-50/20" onclick="toggleDetail('CP-04')">
+                                <td class="id-cell">CP-04</td>
+                                <td>回線</td>
+                                <td class="font-bold">通信速度改善専用の比較シート作成</td>
+                                <td><span class="status-badge status-done">完了</span></td>
+                                <td class="prio-low">低</td>
+                                <td>1/23</td>
+                                <td><a href="line_dashboard.html" class="pro-link">回線ボード</a></td>
+                            </tr>
+                            <tr id="detail-CP-04" class="detail-row">
+                                <td colspan="7" class="p-4 bg-slate-50">
+                                    <p>-</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+
+</html>

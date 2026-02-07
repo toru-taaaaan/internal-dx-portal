@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📦</text></svg>">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>AD+SECOM Combined Cloud Comparison (最終報告版 v20260122_1205)</title>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --accent: #10b981;
+            --danger: #ef4444;
+            --bg-body: #f1f5f9;
+            --surface: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius-lg: 16px;
+        }
+
+        body {
+            font-family: 'Outfit', 'Inter', "Noto Sans JP", sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .version-header {
+            background: #1e293b;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 99px;
+            margin-bottom: 30px;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header {
+            background: white;
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 40px;
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0;
+            color: #0f172a;
+            line-height: 1.2;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 35px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0 0 25px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title::before {
+            content: "";
+            width: 6px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            table-layout: fixed;
+        }
+
+        th, td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+            word-wrap: break-word;
+        }
+
+        th {
+            background: #f8fafc;
+            color: #475569;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .border-col {
+            border-left: 1px solid var(--border);
+        }
+
+        .total-row {
+            background: #1e293b !important;
+            color: white !important;
+            font-weight: 800;
+        }
+
+        .confirmed-badge {
+            background: #64748b;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-left: 5px;
+        }
+
+        .btn-portal {
+            display: inline-block;
+            padding: 12px 24px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        .info-box {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: #1e293b;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            pointer-events: none;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
+            opacity: 0;
+            z-index: 100;
+        }
+
+        .discount-badge {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="version-header">
+            <div style="font-weight: 800;">PROD-VER-39 (要件検証結果：定量的比較報告 v1205)</div>
+            <div>全項目の整合性検証および客観的データに基づく報告フォーマット | 更新: 2026-01-22 12:05</div>
+        </div>
+
+        <header class="header">
+            <div>
+                <div style="background: #1e293b; color: white; display: inline-block; padding: 4px 12px; border-radius: 6px; font-weight: 700; font-size: 0.8rem; margin-bottom: 15px;">TECHNICAL DATA REPORT</div>
+                <h1>ADサーバー + セコム入退室管理<br>構成・費用 比較報告レポート</h1>
+            </div>
+            <div style="text-align: right;">
+                <? var url = ScriptApp.getService().getUrl(); ?>
+                <a href="<?=url?>?page=home" class="btn-portal">← ポータルに戻る</a>
+            </div>
+        </header>
+
+        <!-- 1. TCO Section -->
+        <section class="section-card">
+            <div class="section-title">📊 5年間トータルコスト (TCO) 一括比較</div>
+            <div id="chart-container" style="position: relative; height: 350px;">
+                <div id="combined-chart" style="width: 100%; height: 100%;"></div>
+                <div id="tooltip" class="tooltip"></div>
+            </div>
+            <div class="chart-legend">
+                <div class="legend-item"><div class="legend-color" style="background: rgba(0,0,0,0.25);"></div><span>初期費用</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: #64748b;"></div><span>5年間の月額累計</span></div>
+            </div>
+        </section>
+
+        <!-- 2. Cost Matrix Section -->
+        <section class="section-card">
+            <div class="section-title">💰 費用内訳 マトリクス (税抜 / 重複排除・SECOM費用込)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">費目</th>
+                        <th style="width: 25%;" class="border-col">IIJ (IIJ GIO)</th>
+                        <th style="width: 25%;" class="border-col">USEN (AWS)</th>
+                        <th style="width: 25%;" class="border-col">LAJ (Azure)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 700; font-size: 0.75rem; color: #64748b;">初期費用 (Initial)</td></tr>
+                    <tr>
+                        <td><strong>ADサーバー構築</strong></td>
+                        <td class="border-col">¥1,422,750</td>
+                        <td class="border-col">¥860,000</td>
+                        <td class="border-col">¥1,555,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>セコムサーバー構築</strong><br><span class="discount-badge">セットプラン適用</span></td>
+                        <td class="border-col">¥673,000</td>
+                        <td class="border-col">¥318,000</td>
+                        <td class="border-col">¥138,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SECOM社直接費用</strong></td>
+                        <td class="border-col">¥198,000</td>
+                        <td class="border-col">¥198,000</td>
+                        <td class="border-col">¥198,000</td>
+                    </tr>
+                    <tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 700; font-size: 0.75rem; color: #64748b;">月額費用 (Monthly)</td></tr>
+                    <tr>
+                        <td><strong>AD運用・基盤料</strong></td>
+                        <td class="border-col">¥174,750</td>
+                        <td class="border-col">¥124,300</td>
+                        <td class="border-col">¥102,051</td>
+                    </tr>
+                    <tr>
+                        <td><strong>セコム運用・基盤料</strong></td>
+                        <td class="border-col">¥84,540</td>
+                        <td class="border-col">¥114,900</td>
+                        <td class="border-col">¥66,376</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td style="text-align: right; font-size: 1.1rem;">5年総額 (TCO)</td>
+                        <td style="font-size: 1.1rem;" class="border-col">¥17,851,150</td>
+                        <td style="font-size: 1.1rem;" class="border-col">¥15,728,000</td>
+                        <td style="font-size: 1.1rem;" class="border-col">¥11,996,620</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- 3. Risk Comparison Section -->
+        <section class="section-card">
+            <div class="section-title">🏢 各社の移行要件・稼働停止への影響比較</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 20%;">ベンダー</th>
+                        <th style="width: 30%;" class="border-col">AD移行時の影響</th>
+                        <th style="width: 30%;" class="border-col">セコム移行時の影響</th>
+                        <th style="width: 20%;" class="border-col">確認状況</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>USEN (AWS)</strong></td>
+                        <td class="border-col font-medium">停止なし (並行稼働)<br><span style="font-size: 0.7rem; color: #3b82f6; font-weight: bold;">※管理ツール配信等によるDNS切替</span></td>
+                        <td class="border-col">インフラ起因の停止なし<br><span style="font-size: 0.7rem; color: #64748b;">検証済み手順の適用</span></td>
+                        <td class="border-col"><span class="confirmed-badge">1/22 回答確認済</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>IIJ (GIO)</strong></td>
+                        <td class="border-col">停止なし<br><span style="font-size: 0.7rem; color: #64748b;">基盤側でDNS制御完結</span></td>
+                        <td class="border-col">約1日 (入退室業務可)<br><span style="font-size: 0.7rem; color: #64748b;">ソフト切替を想定</span></td>
+                        <td class="border-col">仕様確認済み</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Link-At-Japan</strong></td>
+                        <td class="border-col">約8時間 (計画停止)<br><span style="font-size: 0.7rem; color: #64748b;">※並行稼働〜切替運用</span></td>
+                        <td class="border-col">1〜2時間<br><span style="font-size: 0.7rem; color: #64748b;">OSインスタンス切替</span></td>
+                        <td class="border-col">回答に基づく評価</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="info-box" style="margin-top: 15px; font-size: 0.85rem; border-left: 4px solid #1e293b;">
+                <strong>🏁 今後の選定ステップ (詳細計画の要請):</strong><br>
+                内諾ベンダー確定後、<strong>「詳細移行ステップ・ロールバック計画」</strong>の提示を要請し、並行稼働期間中の冗長性および、LANScope等の管理ツールを用いた切替スクリプトの技術的妥当性を最終確認することを推奨します。
+            </div>
+        </section>
+
+        <!-- 4. Infrastructure Section -->
+        <section class="section-card">
+            <div class="section-title">🏗️ インフラ基盤の構成（プラットフォーム別）</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+                <div class="info-box" style="margin:0; border-top: 4px solid #94a3b8; background: white;">
+                    <div style="font-weight: 800; color: #1e293b; margin-bottom: 12px;">IIJ (垂直統合型)</div>
+                    <div style="font-size: 0.8rem; line-height: 1.6;">
+                        <strong>AD:</strong> PaaS環境 (ディレクトリ専用)<br>
+                        <strong>セコム:</strong> IaaS環境 (GIO P2)<br>
+                        <strong>特徴:</strong> IIJ内部ネットワークによる統合管理。
+                    </div>
+                </div>
+                <div class="info-box" style="margin:0; border-top: 4px solid #94a3b8; background: white;">
+                    <div style="font-weight: 800; color: #1e293b; margin-bottom: 12px;">USEN (AWS集約型)</div>
+                    <div style="font-size: 0.8rem; line-height: 1.6;">
+                        <strong>AD:</strong> AWS EC2 (Windows)<br>
+                        <strong>セコム:</strong> AWS EC2 (Windows)<br>
+                        <strong>特徴:</strong> 同一VPC内での資源集約。
+                    </div>
+                </div>
+                <div class="info-box" style="margin:0; border-top: 4px solid #94a3b8; background: white;">
+                    <div style="font-weight: 800; color: #1e293b; margin-bottom: 12px;">LAJ (Azure集約型)</div>
+                    <div style="font-size: 0.8rem; line-height: 1.6;">
+                        <strong>AD:</strong> Azure VM (Windows)<br>
+                        <strong>セコム:</strong> Azure VM (Windows)<br>
+                        <strong>特徴:</strong> 同一仮想ネットワーク内への集約。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Final Comparison Section -->
+        <section class="section-card">
+            <div class="section-title">🏁 プロジェクト移行要件の比較サマリー</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 20%;">比較項目</th>
+                        <th style="width: 26%;" class="border-col">IIJ GIO</th>
+                        <th style="width: 27%;" class="border-col">USEN (AWS)</th>
+                        <th style="width: 27%;" class="border-col">Link-At-Japan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>導入方式</strong></td>
+                        <td class="border-col">フルマネージド</td>
+                        <td class="border-col">IaaS (自社管理)</td>
+                        <td class="border-col">IaaS (自社管理)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>稼働停止</strong></td>
+                        <td class="border-col font-medium">なし</td>
+                        <td class="border-col font-medium">なし (管理ツール等での切替)</td>
+                        <td class="border-col">あり (AD: 約8h)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>特記事項</strong></td>
+                        <td style="font-size: 0.85rem;" class="border-col">運用負荷は低いが費用が高価格。</td>
+                        <td style="font-size: 0.85rem;" class="border-col">既存VSR維持。並行稼働運用が可能。</td>
+                        <td style="font-size: 0.85rem;" class="border-col">東西拠点冗長によるBCP重視。</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <footer style="text-align: center; margin-top: 50px; color: var(--text-muted); font-size: 0.8rem; padding-bottom: 20px;">
+            Technical Data Report Visualization • © 2026 Information System Department
+        </footer>
+    </div>
+
+    <script>
+        const data = [
+            { label: "IIJ GIO", initial: 2293750, monthly: 259290 * 60, total: 17851150, color: "#94a3b8" },
+            { label: "USEN (AWS)", initial: 1376000, monthly: 239200 * 60, total: 15728000, color: "#94a3b8" },
+            { label: "Link-At-Japan", initial: 1891000, monthly: 168427 * 60, total: 11996620, color: "#94a3b8" }
+        ];
+
+        function drawChart() {
+            const container = d3.select("#combined-chart");
+            container.selectAll("*").remove();
+            const bbox = container.node().getBoundingClientRect();
+            const width = bbox.width;
+            const height = bbox.height;
+            const margin = { top: 10, right: 150, bottom: 40, left: 120 };
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+
+            const svg = container.append("svg").attr("width", width).attr("height", height);
+            const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+            const yScale = d3.scaleBand().domain(data.map(d => d.label)).range([0, innerHeight]).padding(0.4);
+            const xScale = d3.scaleLinear().domain([0, d3.max(data, d => d.total)]).range([0, innerWidth]);
+
+            g.append("g").call(d3.axisLeft(yScale).tickSize(0)).selectAll("text").style("font-size", "14px").style("font-weight", "700");
+            g.append("g").attr("transform", `translate(0,${innerHeight})`).call(d3.axisBottom(xScale).ticks(5).tickFormat(d => `¥${(d/1000000).toFixed(1)}M`));
+
+            const tooltip = d3.select("#tooltip");
+            const rows = g.selectAll(".row").data(data).enter().append("g").attr("class", "row");
+
+            rows.append("rect")
+                .attr("y", d => yScale(d.label))
+                .attr("x", 0)
+                .attr("height", yScale.bandwidth())
+                .attr("width", 0)
+                .attr("fill", d => d.color)
+                .attr("rx", 6)
+                .transition().duration(1000).attr("width", d => xScale(d.total));
+
+            rows.append("rect")
+                .attr("y", d => yScale(d.label))
+                .attr("x", 0)
+                .attr("height", yScale.bandwidth())
+                .attr("width", 0)
+                .attr("fill", "rgba(0,0,0,0.15)")
+                .attr("rx", 6)
+                .transition().duration(1000).delay(200).attr("width", d => xScale(d.initial));
+
+            rows.on("mouseover", function(event, d) {
+                tooltip.style("opacity", 1).html(`
+                    <div style="font-weight:700; margin-bottom:5px;">${d.label}</div>
+                    <div>初期費用: ¥${d.initial.toLocaleString()}</div>
+                    <div style="font-weight:800; margin-top:5px;">5年総額: ¥${d.total.toLocaleString()}</div>
+                `);
+            }).on("mousemove", function(event) {
+                tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 20) + "px");
+            }).on("mouseout", () => tooltip.style("opacity", 0));
+
+            rows.append("text")
+                .attr("y", d => yScale(d.label) + yScale.bandwidth()/2 + 6)
+                .attr("x", d => xScale(d.total) + 10)
+                .text(d => `¥${d.total.toLocaleString()}`)
+                .style("font-size", "14px").style("font-weight", "800")
+                .style("fill", "#1e293b").style("opacity", 0)
+                .transition().duration(1000).delay(500).style("opacity", 1);
+        }
+        window.onload = drawChart;
+        window.onresize = drawChart;
+    </script>
+</body>
+
+</html>

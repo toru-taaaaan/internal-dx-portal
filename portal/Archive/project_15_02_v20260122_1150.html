@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>Project 15.02 SECOM Cloud Migration (Comparison Report v20260122_1140)</title>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --accent: #94a3b8;
+            --danger: #ef4444;
+            --bg-body: #f8fafc;
+            --surface: #ffffff;
+            --surface-glass: rgba(255, 255, 255, 0.9);
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+        }
+
+        body {
+            font-family: 'Outfit', 'Inter', "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .version-header {
+            background: #1e293b;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 99px;
+            margin-bottom: 30px;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+        }
+
+        .header-content h1 {
+            font-size: 2.1rem;
+            font-weight: 800;
+            margin: 0;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 35px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0 0 25px 0;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title::before {
+            content: "";
+            width: 6px;
+            height: 24px;
+            background: #64748b;
+            border-radius: 3px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: #f8fafc;
+            color: #475569;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+
+        .border-col {
+            border-left: 1px solid var(--border);
+        }
+
+        .price-val {
+            font-size: 1.1rem;
+            font-weight: 800;
+        }
+
+        .desc-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            display: block;
+        }
+
+        .info-box {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        /* D3 Chart Container */
+        #tco-chart {
+            width: 100%;
+            height: 380px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: #1e293b;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            pointer-events: none;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 100;
+            min-width: 150px;
+        }
+
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .btn-portal {
+            display: inline-block;
+            padding: 10px 20px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        .btn-portal:hover {
+            box-shadow: var(--shadow-md);
+            color: var(--text-main);
+            border-color: #64748b;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="version-header">
+            <div style="font-weight: 800;">PROD-VER-32 (2026-01-22 最終報告版)</div>
+            <div>ベンダー各社の回答に基づくインフラ要件比較報告 | 更新: 2026-01-22 11:40</div>
+        </div>
+
+        <header class="header">
+            <div>
+                <div style="background: #1e293b; color: white; display: inline-block; padding: 3px 12px; border-radius: 6px; font-weight: 700; font-size: 0.8rem; margin-bottom: 15px;">Technical Comparison Report</div>
+                <h1>セコム入退室管理サーバー クラウド化<br>ベンダー3社 構成・費用 比較報告書</h1>
+            </div>
+            <div style="text-align: right;">
+                <p style="margin:0; font-weight: 700; color: #334155;">提出先: 篠部長、塩田部長</p>
+                <p style="margin:5px 0; color: var(--text-muted);">アキバホールディングス 情報システム部</p>
+                <div style="margin-top: 15px;">
+                    <? var url = ScriptApp.getService().getUrl(); ?>
+                    <a href="<?=url?>?page=home" class="btn-portal">← ポータルに戻る</a>
+                </div>
+            </div>
+        </header>
+
+        <section class="section-card">
+            <div class="section-title">📉 1. 5年間トータルコスト (TCO) の可視化</div>
+            <div id="chart-container" style="position: relative;">
+                <div id="tco-chart"></div>
+                <div class="tooltip" id="tooltip"></div>
+            </div>
+            <div class="chart-legend">
+                <div class="legend-item"><div class="legend-color" style="background: rgba(0,0,0,0.15);"></div><span>初期導入費用</span></div>
+                <div class="legend-item"><div class="legend-color" style="background: #64748b;"></div><span>5年後の月額累計</span></div>
+            </div>
+            
+            <div class="info-box" style="margin-top: 30px; border-left: 4px solid #1e293b text-main;">
+                <strong>💡 移行要件の確認結果:</strong><br>
+                USEN/AWS案において、インフラ移行に起因する稼働停止は発生しないことが手順確認により得られています。
+                各社の要件に基づき、インフラ層での移行影響を整理し比較しています。
+            </div>
+        </section>
+
+        <section class="section-card">
+            <div class="section-title">🛠 2. サービス・サポート詳細比較マトリクス</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">サービス項目</th>
+                        <th style="width: 25%;" class="border-col">IIJ (垂直統合型)</th>
+                        <th style="width: 25%;" class="border-col">USEN (AWS＋運用)</th>
+                        <th style="width: 25%;" class="border-col">LAJ (Azure＋運用)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>稼働停止要件</strong></td>
+                        <td class="border-col"><span>停止なし</span><br><span class="desc-text">平日移行可</span></td>
+                        <td class="border-col"><span>インフラ起因の停止なし</span><br><span class="desc-text">手順確認済み</span></td>
+                        <td class="border-col"><span>約8時間</span><br><span class="desc-text">休日対応を想定</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>障害復旧対応</strong></td>
+                        <td class="border-col"><span>24/365 監視復旧</span><br><span class="desc-text">SLA 99.99% 準拠</span></td>
+                        <td class="border-col"><span>インフラ復旧代行</span><br><span class="desc-text">AWS障害時の復旧支援(ベストエフォート)</span></td>
+                        <td class="border-col"><span>24/365 監視</span><br><span class="desc-text">OS内部調査まで対応</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>OS等更新代行</strong></td>
+                        <td class="border-col"><span>ベンダー完全実施</span></td>
+                        <td class="border-col"><span>運用委託により対応</span></td>
+                        <td class="border-col"><span>計画〜報告まで対応</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>定例報告レポート</strong></td>
+                        <td class="border-col"><span>有償オプション</span></td>
+                        <td class="border-col"><span>なし</span></td>
+                        <td class="border-col"><span>標準提供</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section-card" style="background: #f8fafc;">
+            <div class="section-title">⚠️ 運用上の責任分界 (AWS環境例)</div>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">
+                USEN/AWS案における保守・運用管理範囲：
+            </p>
+            <div class="info-box" style="background: white;">
+                <ul style="font-size: 0.85rem; padding-left: 20px; margin: 0;">
+                    <li><strong>インフラ保守:</strong> AWS基盤およびEC2インスタンスの障害時はUSENが復旧を支援します。</li>
+                    <li><strong>対応基準:</strong> ベストエフォート（可能な限り迅速な対応）となります。</li>
+                    <li><strong>アプリケーション層:</strong> セコムソフトウェア自体の不具合等は、別途システム提供元（セコム社）への依頼を要します。</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer class="footer" style="text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 50px;">
+            Technical Data Comparison Report • © 2026 Information System Department
+        </footer>
+    </div>
+
+    <script>
+        const data = [
+            { vendor: "IIJ GIO", initial: 762750, monthly: 133290 * 60, total: 8760150, color: "#94a3b8" },
+            { vendor: "USEN (AWS)", initial: 438000, monthly: 133000 * 60, total: 8418000, color: "#94a3b8" },
+            { vendor: "Link-At-Japan", initial: 388000, monthly: 116376 * 60, total: 7370560, color: "#94a3b8" }
+        ];
+
+        function drawChart() {
+            const container = d3.select("#tco-chart");
+            container.selectAll("*").remove();
+
+            const bbox = container.node().getBoundingClientRect();
+            const width = bbox.width;
+            const height = bbox.height;
+            const margin = { top: 20, right: 140, bottom: 40, left: 110 };
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+
+            const svg = container.append("svg")
+                .attr("width", width)
+                .attr("height", height);
+
+            const g = svg.append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            const yScale = d3.scaleBand()
+                .domain(data.map(d => d.vendor))
+                .range([0, innerHeight])
+                .padding(0.35);
+
+            const xScale = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d.total)])
+                .range([0, innerWidth]);
+
+            g.append("g")
+                .call(d3.axisLeft(yScale).tickSize(0))
+                .selectAll("text")
+                .style("font-size", "14px")
+                .style("font-weight", "600");
+
+            g.append("g")
+                .attr("transform", `translate(0,${innerHeight})`)
+                .call(d3.axisBottom(xScale).ticks(5).tickFormat(d => `¥${(d/1000000).toFixed(1)}M`));
+
+            const tooltip = d3.select("#tooltip");
+
+            const rows = g.selectAll(".row")
+                .data(data)
+                .enter()
+                .append("g")
+                .attr("class", "row");
+
+            rows.append("rect")
+                .attr("y", d => yScale(d.vendor))
+                .attr("x", 0)
+                .attr("height", yScale.bandwidth())
+                .attr("width", 0)
+                .attr("fill", "#64748b")
+                .attr("rx", 6)
+                .transition()
+                .duration(1000)
+                .attr("width", d => xScale(d.total));
+
+            rows.append("rect")
+                .attr("y", d => yScale(d.vendor))
+                .attr("x", 0)
+                .attr("height", yScale.bandwidth())
+                .attr("width", 0)
+                .attr("fill", "rgba(0,0,0,0.15)")
+                .attr("rx", 6)
+                .transition()
+                .duration(1000)
+                .delay(200)
+                .attr("width", d => xScale(d.initial));
+
+            rows.on("mouseover", function(event, d) {
+                tooltip.style("opacity", 1)
+                    .html(`
+                        <div style="font-weight:700; border-bottom:1px solid #475569; margin-bottom:8px; padding-bottom:4px;">${d.vendor}</div>
+                        <div>初期導入: ¥${d.initial.toLocaleString()}</div>
+                        <div style="font-weight:800; margin-top:4px;">5年総額: ¥${d.total.toLocaleString()}</div>
+                    `);
+            })
+            .on("mousemove", function(event) {
+                tooltip.style("left", (event.pageX + 15) + "px")
+                       .style("top", (event.pageY - 20) + "px");
+            })
+            .on("mouseout", () => tooltip.style("opacity", 0));
+
+            rows.append("text")
+                .attr("y", d => yScale(d.vendor) + yScale.bandwidth()/2 + 6)
+                .attr("x", d => xScale(d.total) + 12)
+                .text(d => `¥${d.total.toLocaleString()}`)
+                .style("font-size", "14px")
+                .style("font-weight", "800")
+                .style("fill", "#1e293b")
+                .style("opacity", 0)
+                .transition()
+                .duration(1000)
+                .delay(800)
+                .style("opacity", 1);
+        }
+
+        window.onload = drawChart;
+        window.onresize = drawChart;
+    </script>
+</body>
+
+</html>
