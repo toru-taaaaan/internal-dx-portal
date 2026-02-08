@@ -18,15 +18,17 @@
                 primaryBorderColor: '#0ea5e9',
                 lineColor: '#64748b',
                 secondaryColor: '#f8fafc',
-                tertiaryColor: '#ffffff'
+                tertiaryColor: '#ffffff',
+                clusterBkg: '#f1f5f9',
+                clusterBorder: '#cbd5e1'
             }
         });
     </script>
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="assets/unified_design_system.css">
-    <link rel="stylesheet" href="assets/portal_nexus.css">
+    <link rel="stylesheet" href="/assets/unified_design_system.css">
+    <link rel="stylesheet" href="/assets/portal_nexus.css">
     <style>
         body {
             background-color: #f8fafc;
@@ -90,6 +92,64 @@
         table td.border-l {
             border-left: 1px solid #cbd5e1;
         }
+        /* Premium Bento Design System */
+        .bento-card {
+            background: #ffffff;
+            border-radius: 3rem;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 
+                0 4px 6px -1px rgba(0, 0, 0, 0.02),
+                0 10px 15px -3px rgba(0, 0, 0, 0.03),
+                0 25px 50px -12px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            position: relative;
+        }
+
+        .bento-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 20px 25px -5px rgba(0, 0, 0, 0.05),
+                0 10px 10px -5px rgba(0, 0, 0, 0.02);
+        }
+
+        .premium-accent-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+        }
+
+        .glass-badge {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .bento-case-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 10rem;
+            font-weight: 900;
+            position: absolute;
+            top: -2rem;
+            right: -1rem;
+            line-height: 1;
+            background: linear-gradient(180deg, var(--accent-start), transparent);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0.08;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Semantic Accent Tokens */
+        .case-iij { --accent-start: #3b82f6; --accent-end: #0ea5e9; }
+        .case-usen { --accent-start: #10b981; --accent-end: #059669; }
+        .case-laj { --accent-start: #f59e0b; --accent-end: #d97706; }
     </style>
 </head>
 
@@ -111,12 +171,9 @@
                 <span class="text-base font-bold text-slate-700">プロジェクト 15.01: ADサーバークラウド化 最終統合報告</span>
             </div>
             <div class="flex items-center gap-3">
-                <a href="/evaluation_sheet.html" class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100 transition-colors">
-                    <span class="mr-2">📊</span> 人事考課
-                </a>
                 <span
-                    class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-50 text-green-700 border border-green-200">
-                    最終照会：回答受領 (v20260205_FINAL)
+                    class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700 border border-blue-200">
+                    🔄 最終更新：連番バッジ削除、デザイン統一 (v20260208_0930)
                 </span>
             </div>
         </div>
@@ -129,10 +186,6 @@
             <h1 class="text-4xl md:text-6xl font-black text-slate-900 tracking-tight leading-tight">
                 ADサーバークラウド移行計画レポート
             </h1>
-            <p class="text-xl text-slate-500 max-w-3xl mx-auto leading-relaxed">
-                本日、3社への「実務的な責任境界」を問う最終照会メールの送付を完了しました。<br>
-                現在は各社からの回答待ちフェーズです。回答受領後、最終的なパートナー選定を行います。
-            </p>
         </section>
 
         <!-- Executive Selection Table -->
@@ -150,104 +203,45 @@
                             <th class="p-4 border-b border-blue-200 border-t-4 border-t-slate-400 bg-white w-1/5">01. IIJ Global</th>
                             <th class="p-4 border-b border-green-200 border-t-4 border-t-green-400 bg-green-50/10 w-1/5">02. USEN (AWS)</th>
                             <th class="p-4 border-b border-amber-200 border-t-4 border-t-amber-400 bg-amber-50/10 w-1/5">03. Link At Japan</th>
-                            <th class="p-4 border-b border-slate-200 border-t-4 border-t-slate-800 bg-slate-100 w-1/5">00. On-premise</th>
+                            <th class="p-4 border-b border-slate-200 border-t-4 border-t-slate-400 bg-slate-100 w-1/5">00. On-premise (Current)</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">
                         <tr>
-                            <td class="p-4 font-bold text-slate-700 bg-slate-50/30">契約先・支払い先</td>
-                            <td class="p-4">IIJグローバルソリューションズ</td>
-                            <td class="p-4">株式会社USEN (AWS)</td>
-                            <td class="p-4">株式会社リンクアットジャパン</td>
-                            <td class="p-4 text-slate-500 underline decoration-dotted">オリゾンシステムズ <br><span class="text-xs">(ハードウェア保守契約元)</span></td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 font-bold text-slate-700 bg-slate-50/30">コンセプト</td>
-                            <td class="p-4">管理不要のフルお任せ案</td>
-                            <td class="p-4 font-bold text-green-700">安全重視（並行稼働）</td>
-                            <td class="p-4">低コスト・東日本単一構成</td>
-                            <td class="p-4 text-slate-500">現状維持・サーバー更新</td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 font-bold text-slate-700 bg-slate-50/30">保守・運用範囲</td>
-                            <td class="p-4">
-                                <span class="px-2 py-0.5 rounded-full text-sm bg-blue-100 text-blue-700 font-bold mb-2 inline-block">フルマネージド</span>
-                                <p class="text-sm leading-relaxed">OSパッチ、HW監視、バックアップまでIIJが完全担保。</p>
-                            </td>
-                            <td class="p-4">
-                                <span class="px-2 py-0.5 rounded-full text-sm bg-slate-100 text-slate-600 font-bold mb-2 inline-block">自社/ベンダー管理</span>
-                                <p class="text-sm leading-relaxed">インフラのみ提供。OS以上の管理は自社または別途保守契約が必要。</p>
-                            </td>
-                            <td class="p-4">
-                                <span class="px-2 py-0.5 rounded-full text-sm bg-slate-100 text-slate-600 font-bold mb-2 inline-block">自社/ベンダー管理</span>
-                                <p class="text-sm leading-relaxed">インフラのみ提供。自社での高度なクラウドスキルが求められる。</p>
-                            </td>
-                            <td class="p-4 text-slate-500">
-                                <span class="px-2 py-0.5 rounded-full text-sm bg-red-50 text-red-600 font-bold mb-2 inline-block">完全自社責任</span>
-                                <p class="text-base leading-relaxed">HW保守のみ。障害復旧やアップデート作業はすべて情シス負担。</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 font-bold text-slate-700 bg-slate-50/30">障害・BCPリスク</td>
-                            <td class="p-4 text-base">
-                                <span class="text-green-600 font-bold mr-1">◎</span> 堅牢な国内DC。<br>リモートワーク継続性も高い。
-                            </td>
-                            <td class="p-4 text-base">
-                                <span class="text-green-600 font-bold mr-1">◎</span> AWSの可用性を享受。<br>マルチAZ構成等でさらに強化可能。
-                            </td>
-                            <td class="p-4 text-base">
-                                <span class="text-amber-500 font-bold mr-1">△</span> 東日本単一DCのため、広域災害時に脆弱な可能性。
-                            </td>
-                            <td class="p-4 text-base text-red-500">
-                                <span class="font-bold mr-1">×</span> <strong>5年おきに全入れ替え前提</strong><br>
-                                ビル停電・故障時に全国全業務が停止。復旧等に相応の日数。
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 font-bold text-slate-700 bg-slate-50/30">障害復旧 (RTO/RPO)</td>
-                            <td class="p-4 text-sm">
-                                <span class="badge bg-blue-100 text-blue-700 mb-1">精査中</span><br>
-                                障害発生時の復旧手順および復旧目標時間の詳細を最終確認中。
-                            </td>
-                            <td class="p-4 text-sm">
-                                <span class="badge bg-green-100 text-green-700 mb-1">精査中</span><br>
-                                バックアップからの戻し作業、およびUSEN側の一次対応範囲を再確認。
-                            </td>
-                            <td class="p-4 text-sm">
-                                <span class="badge bg-amber-100 text-amber-700 mb-1">精査中</span><br>
-                                「アシストプラス」による復旧代行の具体的な所要時間と手順を確認中。
-                            </td>
-                            <td class="p-4 text-sm text-slate-500 italic">
-                                物理故障時は部品手配・現地作業に依存。数日〜1週間を要するリスク。
-                            </td>
-                        </tr>
-                        <tr>
                             <td class="p-4 font-bold text-slate-700 bg-slate-50/30">主要ポイント</td>
                             <td class="p-4">
                                 <ul class="space-y-1">
-                                    <li class="flex items-start"><span class="text-green-600 mr-2">✓</span>基盤で自動切替</li>
-                                    <li class="flex items-start"><span class="text-green-600 mr-2">✓</span>ルーター交換のみ</li>
+                                    <li class="flex items-start"><span class="text-green-600 mr-2">✓</span>一括切替方式 (ルーター交換)</li>
+                                    <li class="flex items-start"><span class="text-green-600 mr-2">✓</span>端末側の設定変更は不要</li>
                                 </ul>
                             </td>
                             <td class="p-4">
                                 <ul class="space-y-1 font-bold text-slate-800">
-                                    <li class="flex items-start"><span class="text-green-600 mr-2">✓</span>1ヶ月の新旧同時運用</li>
-                                    <li class="flex items-start"><span class="text-green-600 mr-2">✓</span>PC単位の順次切替</li>
+                                    <li class="flex items-start"><span class="text-green-600 mr-2">✓</span>順次切替方式 (約1ヶ月並行)</li>
+                                    <li class="flex items-start"><span class="text-green-600 mr-2">✓</span>端末ごとにDNS設定を更新</li>
                                 </ul>
                             </td>
                             <td class="p-4">
-                                <ul class="space-y-1">
-                                    <li class="flex items-start"><span class="text-blue-600 mr-2">✓</span>「東日本のみ」採用</li>
-                                    <li class="flex items-start font-bold text-slate-800"><span class="text-green-600 mr-2">✓</span>1ヶ月の並行運用(追加費用なし)</li>
+                                <ul class="space-y-1 font-bold text-slate-800">
+                                    <li class="flex items-start"><span class="text-green-600 mr-2">✓</span>順次切替方式 (約1ヶ月並行)</li>
+                                    <li class="flex items-start"><span class="text-green-600 mr-2">✓</span>端末ごとにDNS設定を更新</li>
                                 </ul>
                             </td>
                             <td class="p-4">
                                 <ul class="space-y-1 text-slate-500">
                                     <li class="flex items-start"><span class="text-slate-400 mr-2">✓</span>リプレース (2027年)</li>
                                     <li class="flex items-start text-red-500 font-bold"><span class="mr-2">⚠</span>5年ごとに全入れ替え必須</li>
-                                    <li class="flex items-start"><span class="text-red-500 mr-2">⚠</span>運用重圧最大（属人化）</li>
+                                    <li class="flex items-start"><span class="text-red-500 mr-2">⚠</span>運用重圧最大(属人化)</li>
+                                    <li class="flex items-start text-red-500 font-bold"><span class="mr-2">⚠</span>月次本社6階訪問</li>
                                 </ul>
                             </td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-bold text-slate-700 bg-slate-50/30">初期費用 合計</td>
+                            <td class="p-4 text-base font-medium">¥1,422,750</td>
+                            <td class="p-4 text-base font-medium">¥860,000</td>
+                            <td class="p-4 text-base font-medium">¥1,555,000</td>
+                            <td class="p-4 text-base font-medium text-slate-500">実績 ¥1,620,000<br><span class="text-xs font-normal">¥2,430,000 (×1.5倍予測)</span></td>
                         </tr>
                         <tr>
                             <td class="p-4 font-bold text-slate-700 bg-slate-50/30">月額ランニング</td>
@@ -266,16 +260,140 @@
                         <tr>
                             <td class="p-4 font-bold text-slate-700 bg-slate-50/30">5年総額 (TCO)</td>
                             <td class="p-4 text-lg font-bold">¥11,907,750</td>
-                            <td class="p-4 text-lg font-bold text-green-700 bg-green-50/30">¥8,318,000</td>
+                            <td class="p-4 text-lg font-bold">¥8,318,000</td>
                             <td class="p-4 text-lg font-bold">¥7,678,060</td>
                             <td class="p-4 text-lg font-bold text-slate-600 bg-slate-100/50">¥2,820,000<br><span class="text-sm text-slate-500 font-bold italic">※直近の物価/構築費高騰により<br>「前回の1.5倍(＋50%増)」の予測</span></td>
+                        <tr>
+                            <td class="p-4 font-bold text-slate-700 bg-slate-50/30">障害復旧 (RTO/RPO)</td>
+                            <td class="p-4 text-sm text-green-700 font-bold">瞬断〜分単位 [11]</td>
+                            <td class="p-4 text-sm text-slate-600">数時間〜1日 [9]</td>
+                            <td class="p-4 text-sm text-slate-600">数時間〜1日 [10]</td>
+                            <td class="p-4 text-sm text-slate-500 italic">数日〜1週間 / RPO: 24h+</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </section>
 
-        <!-- 1. Detailed Cost Comparison -->
+        <!-- [NEW] 2. BCP & Data Protection Comparison -->
+        <section class="mb-12" id="bcp-matrix">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center text-xl">🛡️</div>
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">BCP・データ保護マテリアル (技術詳細比較)</h2>
+                    <p class="text-sm text-slate-500">万が一の故障やミスに対し、「どこまで守られるか」を11項目で徹底比較。</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-50 border-b border-slate-200">
+                            <th class="p-4 font-bold text-slate-700 w-1/5">比較項目 (評価基準)</th>
+                            <th class="p-4 font-bold text-slate-700 w-1/5 border-l">IIJ (PaaS)</th>
+                            <th class="p-4 font-bold text-slate-700 w-1/5 border-l">USEN (AWS)</th>
+                            <th class="p-4 font-bold text-slate-700 w-1/5 border-l">LAJ (Azure)</th>
+                            <th class="p-4 font-bold text-slate-500 w-1/5 border-l">オンプレミス</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <tr>
+                            <td class="p-4 font-bold text-slate-600 bg-slate-50/30">基盤形態</td>
+                            <td class="p-4 text-sm">PaaS (フルマネージド)</td>
+                            <td class="p-4 text-sm">IaaS</td>
+                            <td class="p-4 text-sm">IaaS</td>
+                            <td class="p-4 text-sm text-slate-500">物理サーバー</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-bold text-slate-600 bg-slate-50/30">サーバー稼働場所</td>
+                            <td class="p-4 text-sm">東日本リージョン</td>
+                            <td class="p-4 text-sm">東京リージョン</td>
+                            <td class="p-4 text-sm">東日本リージョン</td>
+                            <td class="p-4 text-sm text-slate-500">築地本社6階</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-bold text-slate-600 bg-slate-50/30">サーバー冗長化</td>
+                            <td class="p-4 text-sm">2台同期 (Act/Act)<a href="#ref-1" class="text-blue-600 hover:text-blue-800 text-xs ml-1">[1]</a></td>
+                            <td class="p-4 text-sm">2台 (同期/切替)<a href="#ref-2" class="text-blue-600 hover:text-blue-800 text-xs ml-1">[2]</a></td>
+                            <td class="p-4 text-sm">2台 (同期/切替)<a href="#ref-3" class="text-blue-600 hover:text-blue-800 text-xs ml-1">[3]</a></td>
+                            <td class="p-4 text-sm text-slate-600 font-bold">2台冗長 (PDC+BDC)<a href="#ref-4" class="text-blue-600 hover:text-blue-800 text-xs ml-1">[4]</a></td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-bold text-slate-600 bg-slate-50/30">バックアップ保存場所</td>
+                            <td class="p-4 text-sm text-slate-600">リージョン内 (国内)</td>
+                            <td class="p-4 text-sm text-slate-600">リージョン内 (S3)<sup class="text-blue-600 ml-0.5"><a href="#ref-2">[2]</a></sup></td>
+                            <td class="p-4 text-sm text-slate-600">リージョン内 (Azure)<sup class="text-blue-600 ml-0.5"><a href="#ref-3">[3]</a></sup></td>
+                            <td class="p-4 text-sm text-slate-500">オンサイト (手動/レガシー)</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-bold text-slate-600 bg-slate-50/30">保存世代</td>
+                            <td class="p-4 text-sm text-slate-600">制限なし (任意設定)<sup class="text-blue-600 ml-0.5"><a href="#ref-8">[8]</a></sup></td>
+                            <td class="p-4 text-sm text-slate-600">7世代 (1日1回)<sup class="text-blue-600 ml-0.5"><a href="#ref-9">[9]</a></sup></td>
+                            <td class="p-4 text-sm text-slate-600">30世代相当 (標準)<sup class="text-blue-600 ml-0.5"><a href="#ref-10">[10]</a></sup></td>
+                            <td class="p-4 text-sm text-slate-500">1週間程度</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-bold text-slate-600 bg-slate-50/30">通常故障時の挙動</td>
+                            <td class="p-4 text-sm">自動切替 (瞬断)</td>
+                            <td class="p-4 text-sm">自動切替 (瞬断)</td>
+                            <td class="p-4 text-sm">自動切替 (瞬断)</td>
+                            <td class="p-4 text-sm text-slate-500">部品交換後リカバリ</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-bold text-slate-600 bg-slate-50/30">論理故障での戻し</td>
+                            <td class="p-4 text-sm">ADゴミ箱/個別復旧<sup class="text-blue-600 ml-0.5"><a href="#ref-8">[8]</a></sup></td>
+                            <td class="p-4 text-sm">イメージ全体の戻し</td>
+                            <td class="p-4 text-sm">イメージ全体の戻し</td>
+                            <td class="p-4 text-sm text-slate-500">手動リストア<sup class="text-blue-600 ml-0.5"><a href="#ref-5">[5]</a></sup></td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-bold text-slate-600 bg-slate-50/30">ベンダー支援範囲</td>
+                            <td class="p-4 text-sm text-green-700 font-bold">ADサービスまでフル管理 (PaaS)</td>
+                            <td class="p-4 text-sm text-slate-600">インフラ・OS監視 (通知メイン)<sup class="text-blue-600 ml-0.5"><a href="#ref-6">[6]</a></sup></td>
+                            <td class="p-4 text-sm text-blue-700 font-bold">インフラ＋SE技術支援 (Azureお任せ)</td>
+                            <td class="p-4 text-sm text-slate-500 italic">ハードウェア故障修理のみ</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-bold text-slate-600 bg-slate-50/30">社内側の自由度</td>
+                            <td class="p-4 text-sm text-slate-600">制限あり<br><span class="text-xs text-slate-500">(管理者権限をIIJが保持)</span></td>
+                            <td class="p-4 text-sm text-slate-600">制限あり<br><span class="text-xs text-slate-500">(サーバー/AWS管理権限なし)</span></td>
+                            <td class="p-4 text-sm text-green-700 font-bold">自由度が高い<br><span class="text-xs font-normal text-slate-500">(当社が全権限を保持)</span></td>
+                            <td class="p-4 text-sm text-blue-700 font-bold">最高<br><span class="text-xs font-normal text-slate-500">(完全自由)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-bold text-slate-600 bg-slate-50/30">移行ダウンタイム</td>
+                            <td class="p-4 text-sm text-green-700 font-bold">0時間 (Act/Act)<sup class="text-blue-600 ml-0.5"><a href="#ref-11">[11]</a></sup></td>
+                            <td class="p-4 text-sm text-green-700 font-bold">0時間 (並行稼働)<sup class="text-blue-600 ml-0.5"><a href="#ref-6">[6]</a></sup></td>
+                            <td class="p-4 text-sm text-green-700 font-bold">0時間 (並行稼働)<sup class="text-blue-600 ml-0.5"><a href="#ref-7">[7]</a></sup></td>
+                            <td class="p-4 text-sm text-slate-500 italic">適用外</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-bold text-slate-600 bg-slate-50/30">目標復旧時間 (RTO)</td>
+                            <td class="p-4 text-sm font-bold text-green-700">瞬断〜分単位<sup class="text-blue-600 ml-0.5"><a href="#ref-11">[11]</a></sup></td>
+                            <td class="p-4 text-sm text-slate-600">数時間〜1日<sup class="text-blue-600 ml-0.5"><a href="#ref-9">[9]</a></sup></td>
+                            <td class="p-4 text-sm text-slate-600">数時間〜1日<sup class="text-blue-600 ml-0.5"><a href="#ref-10">[10]</a></sup></td>
+                            <td class="p-4 text-sm text-slate-500 italic">数日〜1週間 (部品手配)</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-bold text-slate-600 bg-slate-50/30">目標復旧時点 (RPO)</td>
+                            <td class="p-4 text-sm font-bold text-green-700">ほぼ0 (リアルタイム)<sup class="text-blue-600 ml-0.5"><a href="#ref-11">[11]</a></sup></td>
+                            <td class="p-4 text-sm text-slate-600">最大24時間 (1日1回)<sup class="text-blue-600 ml-0.5"><a href="#ref-9">[9]</a></sup></td>
+                            <td class="p-4 text-sm text-slate-600">最大24時間 (1日1回)<sup class="text-blue-600 ml-0.5"><a href="#ref-10">[10]</a></sup></td>
+                            <td class="p-4 text-sm text-slate-500 italic">24時間以上 (レガシー)</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-bold text-slate-600 bg-slate-50/30">BCPの質 (思想)</td>
+                            <td class="p-4 text-sm text-blue-700 italic">「止めない」型</td>
+                            <td class="p-4 text-sm text-green-700 italic">「戻せる」型</td>
+                            <td class="p-4 text-sm text-amber-700 italic font-bold">「東西で戻せる」型</td>
+                            <td class="p-4 text-sm text-slate-500 italic">「作り直し」型</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 3. Detailed Cost Comparison -->
         <section class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
             <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
                 <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
@@ -303,32 +421,29 @@
                             <td class="p-4 pl-6 font-medium">システム構築・機器代</td>
                             <td class="p-4 border-l">¥1,008,000</td>
                             <td class="p-4 border-l">¥200,000</td>
-                            <td class="p-4 border-l">¥0 <span class="text-sm text-slate-400 italic">(再点検中)</span>
-                            </td>
+                            <td class="p-4 border-l">¥325,000</td>
                             <td class="p-4 border-l bg-slate-50">¥1,270,000 <span class="text-sm text-slate-400 block mt-1">(2020年実績)</span></td>
                         </tr>
                         <tr>
                             <td class="p-4 pl-6 font-medium">設計・移行サポート</td>
                             <td class="p-4 border-l">¥325,000</td>
                             <td class="p-4 border-l">¥540,000</td>
-                            <td class="p-4 border-l">¥1,305,000 <span
-                                    class="text-sm text-slate-400 italic">(再点検中)</span></td>
+                            <td class="p-4 border-l">¥980,000</td>
                             <td class="p-4 border-l bg-slate-50">¥350,000 <span class="text-sm text-slate-400 block mt-1">(2020年実績)</span></td>
                         </tr>
                         <tr>
                             <td class="p-4 pl-6 font-medium">ネットワーク設定</td>
                             <td class="p-4 border-l">¥89,750</td>
                             <td class="p-4 border-l">¥120,000</td>
-                            <td class="p-4 border-l">¥250,000 <span
-                                    class="text-sm text-slate-400 italic">(再点検中)</span></td>
+                            <td class="p-4 border-l">¥250,000</td>
                             <td class="p-4 border-l bg-slate-50">¥0</td>
                         </tr>
                         <tr class="bg-slate-50 font-bold text-slate-900">
                             <td class="p-4 text-right">初期費用 合計</td>
                             <td class="p-4 border-l">¥1,422,750</td>
                             <td class="p-4 border-l">¥860,000</td>
-                            <td class="p-4 border-l font-medium text-slate-700">¥1,555,000</td>
-                            <td class="p-4 border-l bg-slate-100 ring-2 ring-slate-400 ring-inset">
+                            <td class="p-4 border-l text-slate-700">¥1,555,000</td>
+                            <td class="p-4 border-l bg-slate-100">
                                 <span class="text-sm font-normal text-slate-500">実績 ¥1,620,000</span><br>
                                 ¥2,430,000 <span class="text-xs text-amber-600 font-bold">(×1.5倍予測)</span>
                             </td>
@@ -370,14 +485,14 @@
                             <td class="p-4 border-l text-slate-700">¥2,779,612</td>
                             <td class="p-4 border-l bg-blue-100/30">¥2,508,000</td>
                         </tr>
-                        <tr class="bg-slate-800 text-white">
+                        <tr class="bg-indigo-50/50 font-bold text-indigo-900 border-t-2 border-indigo-100">
                             <td class="p-4 pl-6 text-lg font-bold">5年総額 (合計コスト)</td>
                             <td class="p-4 font-display text-lg border-l">¥11,907,750</td>
                             <td class="p-4 font-display text-lg border-l">¥8,318,000</td>
-                            <td class="p-4 font-display text-lg border-l">¥7,678,060</td>
-                            <td class="p-4 font-display text-lg border-l bg-slate-700">
-                                <span class="text-sm font-normal text-slate-300">原本実績 ¥1,880,000</span><br>
-                                ¥2,820,000 <span class="text-xs text-amber-400 font-bold">(×1.5倍予測)</span>
+                            <td class="p-4 font-display text-lg border-l text-slate-700">¥7,678,060</td>
+                            <td class="p-4 font-display text-lg border-l bg-indigo-100/30">
+                                <span class="text-sm font-normal text-slate-500">原本実績 ¥1,880,000</span><br>
+                                ¥2,820,000 <span class="text-xs text-amber-600 font-bold">(×1.5倍予測)</span>
                             </td>
                         </tr>
                     </tbody>
@@ -463,548 +578,259 @@
             </p>
         </section>
 
-        <!-- 2. Technical Comparison (Simplified) -->
-        <section class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-            <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
-                <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
-                    <span class="text-xl">🛠</span> 技術・使い勝手の比較
-                </h2>
-            </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm lg:text-base text-left">
-                    <thead>
-                        <tr>
-                            <th class="p-4 w-1/5">比較項目</th>
-                            <th class="p-4 w-1/5 border-l">IIJ (フルマネージド)</th>
-                            <th class="p-4 w-1/5 border-l">USEN (AWS)</th>
-                            <th class="p-4 w-1/5 border-l">Link At Japan</th>
-                            <th class="p-4 w-1/5 border-l bg-slate-50">オンプレミス (現状)</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100 text-slate-600">
-                        <tr>
-                            <td class="p-4 pl-6 font-medium">サーバーの種類</td>
-                            <td class="p-4 border-l">IIJ独自の管理基盤</td>
-                            <td class="p-4 border-l">AWS（業界最大手）</td>
-                            <td class="p-4 border-l">Azure（東日本単一）</td>
-                            <td class="p-4 border-l bg-slate-50">物理サーバー架設</td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 pl-6 font-medium">社内側の自由度</td>
-                            <td class="p-4 border-l text-base">制限あり<br><span class="text-sm text-slate-500">（管理者権限をIIJが保持）</span></td>
-                            <td class="p-4 border-l text-green-600 font-bold text-base">自由度が高い<br><span class="text-sm font-medium">（当社が全権限を保持）</span></td>
-                            <td class="p-4 border-l text-green-600 font-bold text-base">自由度が高い<br><span class="text-sm font-medium">（当社が全権限を保持）</span></td>
-                            <td class="p-4 border-l bg-slate-50 text-green-600 font-bold text-base">最高<br><span class="text-sm font-medium">（完全自由）</span></td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 pl-6 font-medium">切替トリガー（移行完了の瞬間）</td>
-                            <td class="p-4 border-l text-green-600 font-bold">拠点のルーターを交換</td>
-                            <td class="p-4 border-l text-green-600 font-bold">各PCの設定を更新</td>
-                            <td class="p-4 border-l text-amber-600 font-bold">並行運用方式を最終確認中</td>
-                            <td class="p-4 border-l bg-slate-50"><strong>なし</strong>（現状維持）</td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 pl-6 font-medium">パソコン側の個別作業</td>
-                            <td class="p-4 border-l text-base font-bold text-green-700">不要</td>
-                            <td class="p-4 border-l text-base">管理ツールで自動更新</td>
-                            <td class="p-4 border-l text-base">配布、または手動対応</td>
-                            <td class="p-4 border-l bg-slate-50 text-base text-green-700 font-bold">不要</td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 pl-6 font-medium">運用保守の範囲<br><span class="text-xs text-slate-400">（Windows Update等）</span></td>
-                            <td class="p-4 border-l text-base text-blue-700 font-bold">すべてお任せ<br><span class="text-xs text-blue-500">※詳細は下部参照</span></td>
-                            <td class="p-4 border-l text-base text-amber-700 font-bold">当社側で実施<br><span class="text-xs text-slate-400">（場所貸し）</span></td>
-                            <td class="p-4 border-l text-base text-amber-700 font-bold">当社側で実施<br><span class="text-xs text-slate-400">（場所貸し）</span></td>
-                            <td class="p-4 border-l bg-slate-50 text-base text-amber-700 font-bold">すべて当社責任</td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 pl-6 font-medium">BCP・停電リスク</td>
-                            <td class="p-4 border-l text-base text-green-700 font-bold">極めて高い<br><span class="text-xs text-green-600">※詳細は下部参照</span></td>
-                            <td class="p-4 border-l text-base text-green-700 font-bold">極めて高い<br><span class="text-xs text-green-600">※詳細は下部参照</span></td>
-                            <td class="p-4 border-l text-base text-green-700 font-bold">極めて高い<br><span class="text-xs text-green-600">※詳細は下部参照</span></td>
-                            <td class="p-4 border-l bg-slate-50 text-base text-red-700 font-bold">低い（全停止）</td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 pl-6 font-medium">ネットワーク制約</td>
-                            <td class="p-4 border-l text-base text-amber-700 font-bold">ルーター交換必須<br><span class="text-sm font-medium">（IIJ回線への統合）</span></td>
-                            <td class="p-4 border-l text-base text-green-700 font-bold">制約なし<br><span class="text-sm font-medium">（現状回線を維持可）</span></td>
-                            <td class="p-4 border-l text-base text-green-700 font-bold">制約なし<br><span class="text-sm font-medium">（現状回線を維持可）</span></td>
-                            <td class="p-4 border-l bg-slate-50 text-base">特になし</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
 
-        <!-- 2.5 Strategic Deep Dive Sections -->
-            <!-- Detailed Focus: Operational Responsibility -->
-            <section class="modern-card p-10 border-2 border-blue-200 bg-blue-50/20 rounded-[2.5rem] shadow-lg">
-                <div class="flex flex-col md:flex-row gap-10 items-start">
-                    <div class="w-full md:w-1/3 space-y-4">
-                        <span class="bg-blue-600 text-white px-4 py-1 rounded-full text-xs font-black tracking-widest uppercase">Deep Dive 01</span>
-                        <h2 class="text-3xl font-black text-slate-900 leading-tight">
-                            運用保守の責任分界点<br>
-                            <span class="text-blue-600">「誰がどこまで守るか」</span>
+                <!-- Detailed Focus: Governance & Corporate Sustainability (CUMULATIVE & EXHAUSTIVE) -->
+            <section class="p-12 border border-slate-200 bg-white rounded-[2.5rem] shadow-sm relative overflow-hidden">
+                <div class="max-w-4xl mx-auto space-y-16 relative z-10">
+                    <!-- Section Header -->
+                    <div class="text-center space-y-4">
+                        <span class="inline-block bg-slate-900 text-white px-4 py-1 rounded-full text-xs font-black tracking-widest uppercase">Deep Dive 01</span>
+                        <h2 class="text-5xl font-black text-slate-900 leading-tight">
+                            企業の永続性を揺るがす<br>
+                            <span class="text-indigo-600">「20の隠れたリスク」と世界基準の要塞</span>
                         </h2>
-                        <p class="text-lg text-slate-600 leading-relaxed font-medium">
-                            単なる場所（クラウド）の提供か、中身（OS・AD）の管理まで含むか。情シスの工数負荷に最も直結するポイントです。
+                        <p class="text-xl text-slate-600 leading-relaxed font-medium">
+                            「安価な事務所運用」の選択が、将来の事業継続にどのような脆弱性をもたらすか、全ての視点を統合して詳述します。
                         </p>
                     </div>
-                    <div class="w-full md:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-6 text-slate-700">
-                        <!-- IIJ: Fully Managed -->
-                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-blue-100 flex flex-col justify-between">
-                            <div>
-                                <div class="flex items-center gap-2 mb-4">
-                                    <span class="p-2 bg-blue-100 rounded-xl">🛡️</span>
-                                    <h4 class="font-black text-blue-900 text-xl">IIJ案：フルマネージド</h4>
-                                </div>
-                                <ul class="space-y-3 text-base font-bold">
-                                    <li class="flex items-start gap-2">
-                                        <span class="text-green-500 font-bold">●</span>
-                                        <span>Windows Update・セキュリティパッチを<strong>IIJが実施</strong></span>
-                                    </li>
-                                    <li class="flex items-start gap-2">
-                                        <span class="text-green-500 font-bold">●</span>
-                                        <span>24時間365日の死活監視・障害対応込み</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="mt-6 pt-6 border-t border-slate-100">
-                                <p class="text-blue-700 font-black text-base flex items-center gap-2">
-                                    <span>👉</span> 情シスのAD管理工数を「ゼロ」に
-                                </p>
-                            </div>
-                        </div>
-                        <!-- USEN/LAJ: Infrastructure only -->
-                        <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200 flex flex-col justify-between">
-                            <div>
-                                <div class="flex items-center gap-2 mb-4">
-                                    <span class="p-2 bg-slate-200 rounded-xl">🏗️</span>
-                                    <h4 class="font-black text-slate-800 text-xl">USEN/LAJ：場所貸し</h4>
-                                </div>
-                                <ul class="space-y-3 text-base text-slate-600 font-medium">
-                                    <li class="flex items-start gap-2">
-                                        <span class="text-amber-500 font-bold">●</span>
-                                        <span>サーバー（ハコ）を貸すだけで、OSの中身は<strong>当社責任</strong></span>
-                                    </li>
-                                    <li class="flex items-start gap-2">
-                                        <span class="text-amber-500 font-bold">●</span>
-                                        <span>管理不足による脆弱性は「自己責任」となる</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="mt-6 pt-6 border-t border-slate-200">
-                                <p class="text-slate-500 font-bold text-sm">
-                                    ※従来通りの運用工数が残ります。
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Responsibility Matrix Table -->
-                <div class="mt-12 bg-white rounded-3xl overflow-hidden border border-blue-100 shadow-sm">
-                    <div class="bg-blue-600 px-6 py-4">
-                        <h4 class="text-white font-black text-lg flex items-center gap-2">
-                            <span>📋</span> 運用保守の責任分界点マトリクス（詳細）
+                    <!-- Module 1: Comprehensive Risk Inventory (All 20 Items) - Redesigned for Readability -->
+                    <div class="space-y-12">
+                        <h4 class="text-3xl font-black text-slate-900 border-b-4 border-slate-900 pb-2 inline-block">
+                            📋 事業継続における20の致命的チェックリスト
                         </h4>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-base text-left">
-                            <thead class="bg-slate-50 border-b border-slate-200">
-                                <tr>
-                                    <th class="p-4 font-black text-slate-900 w-1/4">管理・作業レイヤー</th>
-                                    <th class="p-4 font-black text-blue-700 w-1/4 border-l">IIJ (フルマネージド)</th>
-                                    <th class="p-4 font-black text-slate-700 w-1/4 border-l">USEN/LAJ (場所のみ)</th>
-                                    <th class="p-4 font-black text-slate-900 w-1/4 border-l bg-slate-100">【確認・問い合わせ事項】</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-slate-100">
-                                <tr>
-                                    <td class="p-4 pl-6 font-bold bg-slate-50/30">インフラ（HW・仮想基盤）</td>
-                                    <td class="p-4 border-l text-green-700 font-bold">ベンダー責任</td>
-                                    <td class="p-4 border-l text-green-700 font-bold">ベンダー責任</td>
-                                    <td class="p-4 border-l bg-blue-50/30 text-xs text-slate-500 italic">ここは共通。クラウドの基本。</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-4 pl-6 font-bold bg-slate-50/30">OS（Windows / Update適用）</td>
-                                    <td class="p-4 border-l text-blue-700 font-black">ベンダー責任（要確認）</td>
-                                    <td class="p-4 border-l text-amber-700 font-black italic">当社（情シス）責任</td>
-                                    <td class="p-4 border-l bg-blue-50/30 text-sm font-bold text-slate-800">IIJへ：Update作業の具体的な頻度と、再起動のタイミング調整が可能か？</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-4 pl-6 font-bold bg-slate-50/30">AD基本設定（ユーザー追加等）</td>
-                                    <td class="p-4 border-l text-amber-700 font-black italic">当社（情シス）責任</td>
-                                    <td class="p-4 border-l text-amber-700 font-black italic">当社（情シス）責任</td>
-                                    <td class="p-4 border-l bg-blue-50/30 text-sm font-bold text-slate-800">共通：ユーザー追加後の「属性変更」などの細かな設定をベンダーへどこまで丸投げ可能か？</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-4 pl-6 font-bold bg-slate-50/30">24時間死活監視・復旧対応</td>
-                                    <td class="p-4 border-l text-blue-700 font-black">標準提供（24/365）</td>
-                                    <td class="p-4 border-l text-slate-500">なし（または別料金）</td>
-                                    <td class="p-4 border-l bg-blue-50/30 text-sm font-bold text-slate-800">USEN/LAJへ：ADの「サービス停止」を検知して通知・復旧するオプションはあるか？</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-4 pl-6 font-bold bg-slate-50/30">バックアップ・世代管理</td>
-                                    <td class="p-4 border-l text-blue-700 font-black">標準提供（日次等）</td>
-                                    <td class="p-4 border-l text-slate-500">基本的になし（要構築）</td>
-                                    <td class="p-4 border-l bg-blue-50/30 text-sm font-bold text-slate-800">全社へ：人為的なミス（ユーザー削除など）の際に、何分前まで戻せるか？</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-4 pl-6 font-bold bg-slate-50/30">セキュリティ監視（不正侵入等）</td>
-                                    <td class="p-4 border-l text-blue-700 font-black">上位オプションあり</td>
-                                    <td class="p-4 border-l text-slate-500">なし</td>
-                                    <td class="p-4 border-l bg-blue-50/30 text-sm font-bold text-slate-800">IIJへ：AD管理コンソールへの攻撃をどこまで防御・検知・報告してくれるか？</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- NEW SECTION: Management Experience (DX) -->
-                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="space-y-6">
-                        <h4 class="text-2xl font-black text-slate-900 flex items-center gap-2">
-                            <span>💻</span> 管理する側の「体験 (DX)」の違い
-                        </h4>
-                        <p class="text-base text-slate-600 leading-relaxed font-medium">
-                            導入後、情シスのデスクで「何を開き、何を操作するのか」。その実態は正反対です。
-                        </p>
-                        <div class="bg-blue-50 p-6 rounded-3xl border border-blue-100">
-                            <h5 class="font-black text-blue-900 mb-2">IIJ案：サーバーレス感覚の運用</h5>
-                            <p class="text-sm text-blue-800 leading-relaxed">
-                                インフラを意識する必要はありません。AD専用の管理ツール（RSAT等）を開き、ユーザーを作るだけ。サーバー自体のOS管理画面（RDP等）は原則IIJが守るため、情シスから「サーバーの死活監視」という苦労が消えます。
-                            </p>
-                        </div>
-                        <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200">
-                            <h5 class="font-black text-slate-900 mb-2">USEN/LAJ案：従来のサーバー運用を継承</h5>
-                            <p class="text-sm text-slate-700 leading-relaxed">
-                                従来のオンプレミス運用と同じです。AWS/Azureの管理コンソールからサーバーを起動し、リモートデスクトップでログイン。OSのパッチ適用からバックアップエラーの対処まで、すべて「ルート権限」を持つ貴方の仕事になります。
-                            </p>
-                        </div>
-
-                        <!-- User Experience Case Study -->
-                        <div class="bg-amber-50 p-8 rounded-[2rem] border-2 border-amber-200 shadow-inner mt-8">
-                            <h5 class="font-black text-amber-900 flex items-center gap-2 mb-4">
-                                <span class="bg-amber-500 text-white w-6 h-6 flex items-center justify-center rounded-full text-xs">!</span>
-                                過去のAWS管理経験との比較
-                            </h5>
-                            <div class="space-y-4">
-                                <div class="flex gap-4 items-start opacity-60">
-                                    <span class="bg-slate-300 text-[10px] text-white px-2 py-0.5 rounded-full mt-1">Level 1</span>
-                                    <p class="text-sm text-slate-600"><b>AWS直接契約（自前管理）:</b> 料金も、管理画面（ルート権限）の操作もすべて自分。24時間の恐怖と隣合わせの状態。<b>（←最もストレスが大きかった時期）</b></p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                            <!-- Category: Network -->
+                            <div class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 space-y-6">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-black">1</span>
+                                    <h5 class="text-xl font-black text-slate-900">ネットワーク・通信の制約</h5>
                                 </div>
-                                <div class="flex gap-4 items-start">
-                                    <span class="bg-blue-400 text-[10px] text-white px-2 py-0.5 rounded-full mt-1">Level 2</span>
-                                    <p class="text-sm text-slate-800 font-bold"><b>AWS＋保守会社委託:</b> 料金と管理を保守会社に預け、実務を任せる。ルート権限は一応あるが、触らなくて良い状態。<b>（←USEN/LAJの「マネージドオプション付」のイメージ）</b></p>
-                                </div>
-                                <div class="flex gap-4 items-start border-t border-amber-200 pt-4">
-                                    <span class="bg-indigo-600 text-[10px] text-white px-2 py-0.5 rounded-full mt-1">Level 3</span>
-                                    <p class="text-sm text-indigo-900 font-black">
-                                        <span class="text-lg">NEW!</span> <b>IIJ案（サービス利用型）:</b><br>
-                                        委託どころか「サーバー」という概念自体が表から消滅。ルート権限の管理（OSログイン）すらIIJが引き受けるため、情シスは「ADの中身」にだけ集中すれば良い。<b>（←さらに一歩進んだ究極の解放）</b>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
-                        <table class="w-full text-base text-left">
-                            <thead class="bg-slate-900 text-white">
-                                <tr>
-                                    <th class="p-4 font-black">項目</th>
-                                    <th class="p-4 font-black bg-blue-700">IIJ</th>
-                                    <th class="p-4 font-black bg-slate-700">USEN/LAJ</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-slate-100 font-medium">
-                                <tr>
-                                    <td class="p-4 bg-slate-50 font-bold">実体形式</td>
-                                    <td class="p-4 text-blue-700">ディレクトリサービス型</td>
-                                    <td class="p-4">IaaS (仮想サーバー) 型</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-4 bg-slate-50 font-bold text-sm leading-tight">サーバー<br>管理画面</td>
-                                    <td class="p-4 text-blue-700 font-black">不要（IIJが管理）</td>
-                                    <td class="p-4">コンソールを貸与</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-4 bg-slate-50 font-bold text-sm leading-tight">OSルート<br>権限</td>
-                                    <td class="p-4 text-amber-700 font-bold italic">原則IIJ側が保持</td>
-                                    <td class="p-4 text-blue-700 font-black">当社側で保持(自由)</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-4 bg-slate-50 font-bold">ログイン</td>
-                                    <td class="p-4 text-slate-700 text-sm">AD管理ツール経由のみ</td>
-                                    <td class="p-4 text-sm font-bold">RDPでOSログイン可</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-4 bg-slate-50 font-bold">引渡し状態</td>
-                                    <td class="p-4 text-blue-700">「使える状態」で納品</td>
-                                    <td class="p-4 text-slate-700 text-sm">OSのみの状態で納品</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <!-- Deep Dive on Patching (Level 2 vs 3) - VERTICAL STACK -->
-                        <div class="p-6 bg-slate-50 border-t border-slate-200">
-                            <h5 class="font-black text-slate-900 text-base mb-4 flex items-center gap-2">
-                                <span>🔄</span> パッチ当て（Win Update）の実情
-                            </h5>
-                            <div class="space-y-6">
-                                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                                    <span class="text-xs font-black text-slate-400 block mb-2">Level 2 (USEN/LAJ等)</span>
-                                    <div class="space-y-3">
-                                        <p class="text-sm text-blue-600 font-bold bg-blue-50 px-3 py-1 rounded inline-block">📩 ベンダーからのメール：</p>
-                                        <p class="text-sm text-slate-600 italic leading-relaxed">
-                                            「今月のパッチ適用候補日です。作業中15分停止します。<br>
-                                            ① 15日(火) 24:00〜<br>
-                                            ② 17日(木) 24:00〜<br>
-                                            ご希望を返信ください。」
-                                        </p>
-                                        <div class="border-t border-slate-100 pt-2">
-                                            <p class="text-sm font-black text-amber-700">→ 情シス：カレンダーを確認し、選んで【返信】する手間が発生。</p>
+                                <ul class="space-y-6 text-slate-700">
+                                    <li class="space-y-2">
+                                        <div class="font-bold flex items-center gap-2">● ビル他室工事による光ファイバー誤切断</div>
+                                        <p class="text-sm text-slate-500 leading-relaxed pl-5 border-l-2 border-slate-200">ビルの共有管路を使用しているため、他社の工事ミスに道連れにされるリスク。</p>
+                                    </li>
+                                    <li class="space-y-2">
+                                        <div class="font-bold flex items-center gap-2">● DDoS等によるネットワーク攻撃への防御限界</div>
+                                        <div class="text-sm text-slate-500 leading-relaxed pl-5 border-l-2 border-slate-200 space-y-3">
+                                            <p>大量のデータを送りつけられ、回線がパンク（占有）して業務が停止するリスク。</p>
+                                            <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100/50 mt-2">
+                                                <p class="text-xs font-black text-indigo-900 uppercase tracking-tighter mb-2">【技術格差の核心】</p>
+                                                <ul class="space-y-2 text-[13px]">
+                                                    <li class="flex items-start gap-2">
+                                                        <span class="text-red-600 font-bold">現状（オンプレミス）:</span>
+                                                        <span>回線の太さ（土管）に上限があるため、攻撃が届いた時点でサイトが立ち往生します。防御壁（WAF）を置いても、その手前の回線が埋まれば防ぎようがない「構造的限界」があります。</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-2">
+                                                        <span class="text-emerald-600 font-bold">次世代（クラウド）:</span>
+                                                        <span>世界中に配置された「防波堤（エッジ拠点）」で攻撃を分散・吸収。自社サーバーに届くずっと手前で有害な通信のみを無害化する、圧倒的なスケールの防御が標準化されています。</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </li>
+                                    <li class="space-y-4">
+                                        <div class="font-bold flex items-center gap-2">● 共有回線による帯域圧迫・通信遅延</div>
+                                        <div class="text-sm text-slate-500 leading-relaxed pl-5 border-l-2 border-slate-200 space-y-3">
+                                            <p>他社のネット利用量に引きずられ、自社の重要な業務システムが重くなる現象。</p>
+                                            <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100/50 mt-2">
+                                                <p class="text-xs font-black text-indigo-900 uppercase tracking-tighter mb-2">【ネットワーク安定性の本質】</p>
+                                                <ul class="space-y-3 text-[13px]">
+                                                    <li class="flex items-start gap-2">
+                                                        <span class="text-red-600 font-bold">共有型（現状）:</span>
+                                                        <span>1本の光ファイバーを他社と共有。近隣企業の通信量増大が「防波堤のない港」のように牙を剥き、自社の通信が押し流されます。</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-2">
+                                                        <span class="text-emerald-600 font-bold">専有型（IIJ案等）:</span>
+                                                        <span>局舎からオフィスまで1対1の「専用バイパス」。他社の影響を物理的に遮断し、クラウド化の恩恵を100%引き出す安定した「土台」を確立します。</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="space-y-2">
+                                        <div class="font-bold flex items-center gap-2">● IPアドレス流出による踏み台化・信用毀損</div>
+                                        <p class="text-sm text-slate-500 leading-relaxed pl-5 border-l-2 border-slate-200">自社の機器がハッカーに乗っ取られ、他社への攻撃の「中継基地」に悪用されること。</p>
+                                    </li>
+                                    <li class="space-y-2">
+                                        <div class="font-bold flex items-center gap-2">● 障害時のプロバイダとの個別折衝コスト</div>
+                                        <p class="text-sm text-slate-500 leading-relaxed pl-5 border-l-2 border-slate-200">障害発生時、原因の切り分けから復旧交渉まで、自社で全て対応しなければならない負担。</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Category: Physical -->
+                            <div class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 space-y-6">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center font-black">2</span>
+                                    <h5 class="text-xl font-black text-slate-900">物理的・環境的脅威</h5>
                                 </div>
-                                <div class="bg-blue-600 p-6 rounded-2xl shadow-lg text-white">
-                                    <span class="text-xs font-black text-blue-200 block mb-2">Level 3 (IIJ案)</span>
-                                    <div class="space-y-3">
-                                        <p class="text-sm text-white/60 font-bold">✨ 自動メンテナンス：</p>
-                                        <p class="text-base font-bold leading-relaxed">
-                                            「お伺い」自体が届きません。<br>
-                                            深夜のメンテナンス枠でIIJが自動実行。<br>
-                                            <span class="bg-white/20 px-1">情シスは朝、報告書を見るだけ。</span>
-                                        </p>
-                                        <p class="text-xs opacity-70 border-t border-white/20 pt-2">
-                                            ※ 影響のあるパッチはIIJが事前に検証・除外。
-                                        </p>
-                                    </div>
+                                <ul class="space-y-6 text-slate-700">
+                                    <li class="space-y-2">
+                                        <div class="font-bold flex items-center gap-2">● 害獣によるケーブル断線・発火</div>
+                                        <p class="text-sm text-slate-500 leading-relaxed pl-5 border-l-2 border-slate-200">OAエリアの天井裏など、防鼠対策が不十分な空間特有の物理的トラブル。</p>
+                                    </li>
+                                    <li class="space-y-2">
+                                        <div class="font-bold flex items-center gap-2">● 上階テナントからの不測の漏水</div>
+                                        <p class="text-sm text-slate-500 leading-relaxed pl-5 border-l-2 border-slate-200">ビルの構造上避けられない、上階トラブルによるサーバー水没・全損のリスク。</p>
+                                    </li>
+                                    <li class="space-y-2">
+                                        <div class="font-bold flex items-center gap-2">● 家庭用エアコン故障による熱暴走</div>
+                                        <p class="text-sm text-slate-500 leading-relaxed pl-5 border-l-2 border-slate-200">24時間稼働を想定しない空調が止まり、サーバーが高熱で焼き付く故障。</p>
+                                    </li>
+                                    <li class="space-y-2">
+                                        <div class="font-bold flex items-center gap-2">● 清掃員・部外者による誤った電源切断</div>
+                                        <p class="text-sm text-slate-500 leading-relaxed pl-5 border-l-2 border-slate-200">入退室が厳密に隔離されていない場所で、不意の接触によりシステムが停止するリスク。</p>
+                                    </li>
+                                    <li class="space-y-2">
+                                        <div class="font-bold flex items-center gap-2">● 地震時の転倒・衝突による物理破損</div>
+                                        <p class="text-sm text-slate-500 leading-relaxed pl-5 border-l-2 border-slate-200">免震構造を持たない一般ビルにおいて、揺れによるハードウェアの致命的損傷。</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Category: Operational -->
+                            <div class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 space-y-6">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-10 h-10 bg-slate-800 text-white rounded-full flex items-center justify-center font-black">3</span>
+                                    <h5 class="text-xl font-black text-slate-900">運用の継続性と構造的課題</h5>
+                                </div>
+                                <ul class="space-y-6 text-slate-700">
+                                    <li class="space-y-2">
+                                        <div class="font-bold flex items-center gap-2">● 週1回の目視監視による異常検知の遅延</div>
+                                        <p class="text-sm text-slate-500 leading-relaxed pl-5 border-l-2 border-slate-200">夜間や休日の停止に気づけず、月曜朝まで事業がストップしてしまう空白時間。</p>
+                                    </li>
+                                    <li class="space-y-2">
+                                        <div class="font-bold flex items-center gap-2">● 属人的な管理のリスク</div>
+                                        <p class="text-sm text-slate-500 leading-relaxed pl-5 border-l-2 border-slate-200">特定の担当者しか復旧手順を知らず、その人がいないと手出しできない脆弱な体制。</p>
+                                    </li>
+                                    <li class="space-y-2">
+                                        <div class="font-bold flex items-center gap-2">● 部品調達（リードタイム）の長期化</div>
+                                        <p class="text-sm text-slate-500 leading-relaxed pl-5 border-l-2 border-slate-200">古い機器の部品が手に入らず、復旧まで数週間〜数ヶ月待たされる事業停止リスク。</p>
+                                    </li>
+                                    <li class="space-y-2">
+                                        <div class="font-bold flex items-center gap-2">● 災害発生時の事務所全損</div>
+                                        <p class="text-sm text-slate-500 leading-relaxed pl-5 border-l-2 border-slate-200">バックアップが同一拠点にある場合、被災時に重要データが完全に消失すること。</p>
+                                    </li>
+                                    <li class="space-y-2">
+                                        <div class="font-bold flex items-center gap-2">● ビル法定停電時の手動停止・再起動の負担</div>
+                                        <p class="text-sm text-slate-500 leading-relaxed pl-5 border-l-2 border-slate-200">年1回の点検等に伴う、夜間・休日出勤での煩雑な手作業とヒューマンエラーのリスク。</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Category: Governance -->
+                            <div class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 space-y-6">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-10 h-10 bg-emerald-600 text-white rounded-full flex items-center justify-center font-black">4</span>
+                                    <h5 class="text-xl font-black text-slate-900">法的・社会的責任（ガバナンス）</h5>
+                                </div>
+                                <ul class="space-y-6 text-slate-700">
+                                    <li class="space-y-2">
+                                        <div class="font-bold flex items-center gap-2">● セキュリティ基準（ISO/SOC等）への不適合</div>
+                                        <p class="text-sm text-slate-500 leading-relaxed pl-5 border-l-2 border-slate-200">機密保持に関する国際的な安全基準を満たせず、大手企業との取引が制限される可能性。</p>
+                                    </li>
+                                    <li class="space-y-2">
+                                        <div class="font-bold flex items-center gap-2">● 監査に必要なアクセスログ・監視記録の不足</div>
+                                        <p class="text-sm text-slate-500 leading-relaxed pl-5 border-l-2 border-slate-200">「いつ誰が触ったか」の証拠が残っておらず、トラブル後に原因追及・説明ができない。</p>
+                                    </li>
+                                    <li class="space-y-2">
+                                        <div class="font-bold flex items-center gap-2">● 取引先からの環境要件を満たせないことによる失注</div>
+                                        <p class="text-sm text-slate-500 leading-relaxed pl-5 border-l-2 border-slate-200">預託データの管理体制が「事務所設置」であることが、信用信頼の毀損に直結するリスク。</p>
+                                    </li>
+                                    <li class="space-y-2">
+                                        <div class="font-bold flex items-center gap-2">● 物理鍵管理における内部不正への脆弱性</div>
+                                        <p class="text-sm text-slate-500 leading-relaxed pl-5 border-l-2 border-slate-200">鍵の持ち出しが実質自由で、悪意ある操作や持ち出しを物理的に記録・防止できない点。</p>
+                                    </li>
+                                    <li class="space-y-2">
+                                        <div class="font-bold flex items-center gap-2">● 障害発生時の株主・顧客への説明責任</div>
+                                        <p class="text-sm text-slate-500 leading-relaxed pl-5 border-l-2 border-slate-200">十分なインフラ投資を怠った「善管注意義務違反」とみなされる経営上のリスク。</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Module 2: Infrastructure & Security Standards Gap (Office vs. Data Center) -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <!-- Office Side -->
+                        <div class="space-y-8">
+                            <h4 class="text-2xl font-black text-slate-900 border-l-4 border-red-500 pl-4">事務所の一角（現状の制約）</h4>
+                            <div class="space-y-6">
+                                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm transition-all hover:border-red-100">
+                                    <p class="text-lg text-slate-700 font-bold">所在地情報の公開とアクセスの限界</p>
+                                    <p class="text-sm text-slate-500 mt-2">オフィスの看板・所在は周知されており、物理的な防諜には限界があります。汎用の入館証のみでは、高度なデバイス規制（撮影・持込制限）を徹底することが構造上困難な環境です。</p>
+                                </div>
+                                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm transition-all hover:border-red-100">
+                                    <p class="text-lg text-slate-700 font-bold">非専用空間における環境維持の難しさ</p>
+                                    <p class="text-sm text-slate-500 mt-2">オフィス用空調や水スプリンクラー等、人間が快適に過ごすための設備に依存しています。これは精密機器が数十年安定稼働するための「理想環境」とは異なり、長期的な故障率に影響する構造的課題です。</p>
+                                </div>
+                                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm transition-all hover:border-red-100">
+                                    <p class="text-lg text-slate-700 font-bold">インフラ冗長性の局所的な欠如</p>
+                                    <p class="text-sm text-slate-500 mt-2">単独の受電系統や通信管路に依存しており、周辺工事やビル設備故障の影響を直接的に受けやすい脆弱性があります。これは現在の「努力」に関わらず、場所そのものが持つインフラの制約です。</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fortress Side -->
+                        <div class="space-y-8">
+                            <h4 class="text-2xl font-black text-slate-900 border-l-4 border-indigo-600 pl-4">世界基準の要塞（データセンター）</h4>
+                            <div class="space-y-6">
+                                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm transition-all hover:border-indigo-100">
+                                    <p class="text-lg text-slate-700 font-bold">徹底した秘匿と多層のアクセス制御</p>
+                                    <p class="text-sm text-slate-500 mt-2">所在非公開、看板なしの秘匿運営。虹彩・掌紋認証に加え、デバイス持込を物理的に遮断。情報の物理的持ち出しや、外部干渉を構造から排除する戦略です。</p>
+                                </div>
+                                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm transition-all hover:border-indigo-100">
+                                    <p class="text-lg text-slate-700 font-bold">サーバーの寿命を最大化する専門設計</p>
+                                    <p class="text-sm text-slate-500 mt-2">二重床による冷気循環、不活性ガス消火など、機器の安定性を第一義とした設備。火災時等の緊急対応おいても、IT資産を毀損させない徹底した保護が標準化されています。</p>
+                                </div>
+                                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm transition-all hover:border-indigo-100">
+                                    <p class="text-lg text-slate-700 font-bold">構造化された永続性（N+2超の冗長）</p>
+                                    <p class="text-sm text-slate-500 mt-2">異系統変電所、ガスタービン、多経路ネットワーク。外部環境のいかなる変動・事故にも「左右されない」強固な事業基盤を、設備そのものが担保しています。</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
 
-            <!-- Workload Analysis Section (Professional Simple Table) -->
-            <section class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden my-16">
-                <div class="px-8 py-6 border-b border-slate-100 bg-slate-50/50">
-                    <h2 class="text-3xl font-bold text-slate-800 flex items-center gap-3">
-                        <span>📊</span> 月間「作業時間」の比較
-                    </h2>
-                </div>
-                
-                <div class="overflow-x-auto">
-                    <table class="w-full text-xl text-left border-collapse">
-                        <thead>
-                            <tr class="bg-slate-50 text-slate-600">
-                                <th class="p-6 border-b border-slate-200 w-1/4">比較項目</th>
-                                <th class="p-6 border-b-2 border-b-blue-500 bg-blue-50/30 text-blue-900 w-1/4">IIJ (クラウド)</th>
-                                <th class="p-6 border-b border-slate-200 w-1/4">他社マネージド</th>
-                                <th class="p-6 border-b border-slate-200 w-1/4">オンプレミス</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-100">
-                            <tr class="hover:bg-slate-50/50 transition-colors">
-                                <td class="p-6 font-bold text-slate-700 bg-slate-50/20">OS保守・パッチ適用</td>
-                                <td class="p-6 font-black text-blue-700 bg-blue-50/10">0 分</td>
-                                <td class="p-6">30 分〜</td>
-                                <td class="p-6 text-red-500">継続発生</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50/50 transition-colors">
-                                <td class="p-6 font-bold text-slate-700 bg-slate-50/20">バックアップ確認</td>
-                                <td class="p-6 font-black text-blue-700 bg-blue-50/10">0 分</td>
-                                <td class="p-6">15 分〜</td>
-                                <td class="p-6 text-red-500">継続発生</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50/50 transition-colors">
-                                <td class="p-6 font-bold text-slate-700 bg-slate-50/20">障害対応・原因切分</td>
-                                <td class="p-6 font-black text-blue-700 bg-blue-50/10">0 分</td>
-                                <td class="p-6">60 分〜</td>
-                                <td class="p-6 text-red-500">現地対応</td>
-                            </tr>
-                            <tr class="bg-slate-50/50">
-                                <td class="p-6 font-black text-slate-900">月間合計作業時間</td>
-                                <td class="p-6 text-4xl font-black text-blue-800 bg-blue-100/50 border-t-2 border-blue-200">
-                                    0 分
-                                </td>
-                                <td class="p-6 text-2xl font-bold text-slate-700">約 2 時間〜</td>
-                                <td class="p-4 text-2xl font-bold text-red-600">測定不能</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-             <!-- Use Case / Mail Generator Section (VERTICAL FLOW) -->
-            <section class="max-w-5xl mx-auto my-16">
-                <div class="bg-white rounded-[2rem] border-2 border-slate-100 p-8 md:p-10 shadow-xl">
-                     <div class="flex flex-col gap-10">
-                        <!-- Top: Controls -->
-                        <div class="w-full">
-                            <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200">
-                                <h4 class="font-black text-slate-800 text-xl mb-4 flex items-center gap-2">
-                                    <span>✉️</span> メールの自動作成
-                                </h4>
-                                <p class="text-sm text-slate-500 mb-8 leading-relaxed">
-                                    各社への確認用メールドラフトを生成します。担当窓口への連絡にご利用ください。
-                                </p>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <button onclick="switchTemplate('iij')" id="btn-iij" class="vendor-tab w-full text-center px-6 py-4 rounded-xl font-bold text-base bg-blue-600 text-white shadow-md transition-all">
-                                        IIJ 梅原様
-                                    </button>
-                                    <button onclick="switchTemplate('usen')" id="btn-usen" class="vendor-tab w-full text-center px-6 py-4 rounded-xl font-bold text-base bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all">
-                                        USEN 内田様
-                                    </button>
-                                    <button onclick="switchTemplate('laj')" id="btn-laj" class="vendor-tab w-full text-center px-6 py-4 rounded-xl font-bold text-base bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all">
-                                        LAJ 澤口様
-                                    </button>
-                                </div>
-                            </div>
+                    <!-- Module 3: Strategic Resilience Pillar -->
+                    <div class="p-10 rounded-[2.5rem] bg-indigo-50 border border-indigo-100 space-y-8">
+                        <div class="text-center space-y-3">
+                            <h4 class="text-2xl font-black text-indigo-900">
+                                組織としての持続可能性：属人的「努力」から、制度的「永続」へ
+                            </h4>
+                            <p class="text-lg text-slate-600 font-medium leading-relaxed">
+                                特定の「個人」に依存した危うい均衡を、世界基準の「仕組み」へ昇華させます。
+                            </p>
                         </div>
-
-                        <!-- Bottom: Preview -->
-                        <div class="w-full">
-                            <div class="bg-slate-800 rounded-t-2xl p-3 flex items-center gap-2">
-                                <div class="w-3 h-3 rounded-full bg-red-400"></div>
-                                <div class="w-3 h-3 rounded-full bg-amber-400"></div>
-                                <div class="w-3 h-3 rounded-full bg-green-400"></div>
-                                <span class="text-xs text-slate-400 ml-2 font-mono">Mail Draft Preview</span>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="space-y-4">
+                                <p class="text-xs font-black text-slate-400 uppercase tracking-widest pl-4">旧来の運用（現状）</p>
+                                <ul class="space-y-3 text-sm text-slate-700 font-medium">
+                                    <li class="flex items-center gap-2 text-red-600">❌ 担当者の注意深さと事務所空調に依存した危うい事業継続</li>
+                                    <li class="flex items-center gap-2 text-red-600">❌ 公開された所在と自由な入退室が招く物理的セキュリティリスク</li>
+                                </ul>
                             </div>
-                            <div class="bg-white border-x border-b border-slate-200 rounded-b-2xl p-8 font-mono text-sm leading-relaxed text-slate-700 shadow-inner">
-                                <div id="mail-preview-content">
-                                    <div class="mb-6 border-b border-slate-100 pb-4">
-                                        <p class="text-xs text-slate-400 mb-1">To:</p>
-                                        <p class="font-bold text-slate-900 select-all" id="mail-preview-recipient">umeharay@iij.ad.jp</p>
-                                        <p class="text-xs text-slate-400 mt-3 mb-1">Subject:</p>
-                                        <p class="font-bold text-slate-900 select-all" id="mail-preview-subject">【重要確認】ADクラウド移行後の「運用保守範囲」に関する詳細な確認のお願い</p>
-                                    </div>
-                                    <div id="mail-preview-body-container" class="whitespace-pre-wrap">
-                                        <div id="mail-preview-salutation" class="mb-4"></div>
-                                        <div id="mail-preview-body"></div>
-                                        <div id="mail-preview-footer" class="mt-4"></div>
-                                    </div>
-                                </div>
+                            <div class="space-y-4">
+                                <p class="text-xs font-black text-indigo-400 uppercase tracking-widest pl-4">次世代のガバナンス</p>
+                                <ul class="space-y-3 text-sm text-slate-700 font-medium">
+                                    <li class="flex items-center gap-2 text-emerald-600">✅ 組織的な監視：パートナーによる24h365日のプロフェッショナル監視</li>
+                                    <li class="flex items-center gap-2 text-emerald-600">✅ 物理的防壁：生体認証と厳格なデバイス規制による資産・情報の絶対保護</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
 
-                <!-- Detailed Focus: BCP & Power Outage -->
-            <section class="modern-card p-10 border-2 border-amber-200 bg-amber-50/20 rounded-[2.5rem] shadow-lg">
-                <div class="flex flex-col md:flex-row-reverse gap-10 items-start">
-                    <div class="w-full md:w-1/3 space-y-4">
-                        <span class="bg-amber-600 text-white px-4 py-1 rounded-full text-xs font-black tracking-widest uppercase">Deep Dive 02</span>
-                        <h2 class="text-3xl font-black text-slate-900 leading-tight">
-                            BCP・停電リスクの解消<br>
-                            <span class="text-amber-600">「止まらない認証基盤」</span>
-                        </h2>
-                        <p class="text-lg text-slate-600 leading-relaxed font-medium">
-                            物理的な「ビル」に縛られるリスクを排除。クラウド化により、どこにいてもログインできる環境を保証します。
-                        </p>
-                    </div>
-                    <div class="w-full md:w-2/3 space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Cloud Benefit -->
-                            <div class="bg-white p-8 rounded-[2rem] shadow-sm border-2 border-green-200 relative overflow-hidden">
-                                <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl">☁️</div>
-                                <h4 class="text-green-900 font-black text-xl mb-4 text-center">クラウド化後（各社共通）</h4>
-                                <div class="space-y-4 font-black text-base text-slate-800">
-                                    <p class="flex items-center gap-3 text-green-700">
-                                        <span class="text-2xl font-normal">✅</span>
-                                        本社のビル停電中もADは停止しない
-                                    </p>
-                                    <p class="flex items-center gap-3 text-green-700">
-                                        <span class="text-2xl font-normal">✅</span>
-                                        在宅・他拠点の社員も通常通りログイン可
-                                    </p>
-                                    <p class="flex items-center gap-3 text-green-700">
-                                        <span class="text-2xl font-normal">✅</span>
-                                        物理サーバーの老朽化・故障の心配なし
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- On-premise Risk -->
-                            <div class="bg-red-50 p-8 rounded-[2rem] shadow-sm border border-red-100 opacity-80">
-                                <h4 class="text-red-900 font-bold text-xl mb-4 text-center">オンプレミス（現状）</h4>
-                                <div class="space-y-4 text-base font-bold text-red-800">
-                                    <p class="flex items-center gap-3">
-                                        <span class="text-2xl font-normal">⚠️</span>
-                                        法定停電時、リモートワークも認証不可に
-                                    </p>
-                                    <p class="flex items-center gap-3">
-                                        <span class="text-2xl font-normal">⚠️</span>
-                                        空調停止によるサーバー熱暴走リスク
-                                    </p>
-                                    <p class="flex items-center gap-3">
-                                        <span class="text-2xl font-normal">⚠️</span>
-                                        災害発生時のデータ消失リスク（本社一括）
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Final Decision Risk Matrix: 4-Way Comparison -->
-                <div class="mt-12 bg-white rounded-3xl overflow-hidden border border-amber-100 shadow-sm">
-                    <div class="bg-amber-600 px-6 py-4 text-center">
-                        <h4 class="text-white font-black text-xl flex items-center justify-center gap-2">
-                            <span>⚖️</span> 意思決定のための最終リスク・マトリクス
+                    <!-- Summary: Transition from Situational to Institutional Stability -->
+                    <div class="p-10 rounded-3xl bg-slate-50 border border-slate-200 text-center space-y-4">
+                        <h4 class="text-2xl font-black text-slate-900 leading-tight">
+                            まとめ：『属人的な環境』から『制度的な安定』への移行に向けて
                         </h4>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-base text-left">
-                            <thead class="bg-slate-50 border-b border-slate-200">
-                                <tr>
-                                    <th class="p-4 font-black text-slate-900 w-1/5">比較リスク指標</th>
-                                    <th class="p-4 font-black text-blue-700 w-1/5 border-l">② IIJ案<br><span class="text-xs">(フルマネ)</span></th>
-                                    <th class="p-4 font-black text-slate-700 w-1/5 border-l">③④ USEN/LAJ案<br><span class="text-xs">(場所貸し)</span></th>
-                                    <th class="p-4 font-black text-red-700 w-1/5 border-l bg-red-50/50">① オンプレミス<br><span class="text-xs">(現状維持)</span></th>
-                                    <th class="p-4 font-black text-slate-900 w-1/5 border-l bg-slate-100 italic">解説</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-slate-100 font-medium">
-                                <tr>
-                                    <td class="p-4 pl-6 font-bold bg-slate-50/30">BCP（停電・災害）</td>
-                                    <td class="p-4 border-l text-green-700">【安全】拠点分散</td>
-                                    <td class="p-4 border-l text-green-700">【安全】拠点分散</td>
-                                    <td class="p-4 border-l text-red-700 font-black bg-red-50/30">【危険】本社一極集中</td>
-                                    <td class="p-4 border-l bg-blue-50/30 text-xs">クラウドはビル管理に依存せず。</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-4 pl-6 font-bold bg-slate-50/30">HW故障リスク</td>
-                                    <td class="p-4 border-l text-green-700">【極小】自動復旧</td>
-                                    <td class="p-4 border-l text-green-700">【極小】自動復旧</td>
-                                    <td class="p-4 border-l text-red-700 font-black bg-red-50/30">【高】部品交換待ち</td>
-                                    <td class="p-4 border-l bg-blue-50/30 text-xs">HWの故障修理という概念が消失。</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-4 pl-6 font-bold bg-slate-50/30">運用管理（管理漏れ）</td>
-                                    <td class="p-4 border-l text-blue-700 font-black">【安全】プロが実施</td>
-                                    <td class="p-4 border-l text-red-600 font-black underline italic">【危険】自社で放置可</td>
-                                    <td class="p-4 border-l text-red-700 font-black bg-red-50/30">【危険】自社で放置可</td>
-                                    <td class="p-4 border-l bg-blue-50/30 text-xs text-blue-800 font-black">情シスが忙しく、Updateを忘れてもIIJなら安全です。</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-4 pl-6 font-bold bg-slate-50/30">セキュリティ脅威</td>
-                                    <td class="p-4 border-l text-blue-700 font-black">【強】24h監視</td>
-                                    <td class="p-4 border-l text-amber-700">【中】自社監視</td>
-                                    <td class="p-4 border-l text-red-700 bg-red-50/30">【弱】自社監視</td>
-                                    <td class="p-4 border-l bg-blue-50/30 text-xs">クラウド各社は物理防護も万全。</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-4 pl-6 font-bold bg-slate-50/30">IT部門の心理的負荷</td>
-                                    <td class="p-4 border-l text-blue-700 font-black">【解放】丸投げ可</td>
-                                    <td class="p-4 border-l text-slate-700">【継続】従来通り</td>
-                                    <td class="p-4 border-l text-slate-800 bg-red-50/30 text-sm">【最大】常に故障に怯える</td>
-                                    <td class="p-4 border-l bg-blue-50/30 text-xs">「明日壊れたらどうしよう」からの解放。</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <p class="text-lg text-slate-600 font-medium leading-relaxed italic">
+                            現在の事務所サーバーは、担当者の注意深さと事務所環境という「状況的・属人的な要素」に支えられています。<br>
+                            世界基準の設備要塞や組織的な運営体制を「標準」として組み込むことは、<br>
+                            いかなる不測の事態においても事業を継続させるための、インフラの制度化に向けた一つの選択肢です。
+                        </p>
                     </div>
                 </div>
             </section>
@@ -1017,243 +843,259 @@
             </div>
 
             <!-- Case 01: IIJ -->
-            <div class="space-y-6">
-                <h3 class="text-xl font-bold text-brand-navy flex items-center gap-3">
-                    <span class="bg-brand-navy text-white px-3 py-1 rounded-lg text-sm">Case 01</span>
-                    IIJ Global: 「ルーター交換」で拠点ごと順次移行
-                </h3>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                    <div class="mermaid-container">
-                        <div class="diagram-label">拠点のルーターを替えた瞬間につながる</div>
-                        <pre class="mermaid">
-            graph TD
-              subgraph "IIJ クラウド基盤"
-                A[新AD：稼働開始] --- B((同期))
-              end
-              subgraph "本社"
-                E[旧AD：移行中も稼働] --- B
-              end
-              subgraph "拠点 A (切替完了)"
-                R1[IIJ新ルーター] --> A
-                P1[社員PC] --> R1
-              end
-              subgraph "拠点 B (旧環境のまま)"
-                R2[既存ルーター] --> E
-                P2[社員PC] --> R2
-              end
-              classDef active fill:#e0f2fe,stroke:#0ea5e9,stroke-width:3px;
-              classDef legacy fill:#f8fafc,stroke:#94a3b8,stroke-width:2px;
-              class A,R1 active
-              class E,R2 legacy
-            </pre>
-                    </div>
-                    <div class="space-y-6 text-base lg:text-lg leading-relaxed">
-                        <p class="font-extrabold text-slate-900 underline decoration-blue-300 decoration-8 underline-offset-4 text-xl">
-                            特徴：ルーターが「切り替えスイッチ」になる</p>
-                        <p class="text-slate-800 font-medium">拠点に届いたIIJルーターを設置（交換）した瞬間、その拠点の全てのパソコンが自動的にクラウドADを見に行くようになります。全拠点の交換が終わるまで旧ADを生かしておけるため、拠点ごとにバラバラの日に作業が可能です。
-                        </p>
-
-                        <div class="bg-blue-50 p-5 rounded-2xl border-2 border-blue-100 shadow-sm">
-                            <p class="font-black text-blue-900 text-base mb-3 flex items-center gap-2">
-                                <span class="text-xl">💡</span> 「同期」の仕組み
+            <div class="bento-card case-iij group">
+                <div class="premium-accent-bar"></div>
+                <div class="bento-case-number">01</div>
+                
+                <div class="p-8 md:p-12 relative z-10">
+                    <div class="flex flex-col md:flex-row gap-12 items-start">
+                        <div class="w-full md:w-5/12 space-y-6">
+                            <div class="inline-flex items-center gap-2 glass-badge px-4 py-1.5 rounded-full text-xs font-black tracking-widest uppercase text-blue-600 border border-blue-100/50">
+                                <span class="relative flex h-2 w-2">
+                                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                                  <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                                </span>
+                                Case 01: IIJ Global
+                            </div>
+                            <h3 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-[1.1]">
+                                「ルーター交換」で<br/>拠点ごと順次移行
+                            </h3>
+                            <p class="text-slate-500 text-lg font-medium leading-relaxed">
+                                拠点のルーターを替えるだけで「瞬時」にクラウド環境へ切り替え。既存回線を活かす最もスマートな方式です。
                             </p>
-                            <p class="text-base text-blue-800 leading-relaxed font-medium">
-                                移行期間中、新しいクラウドADと古いオンプレミスADは、Active Directoryの標準機能である<span class="tech-term font-bold text-blue-900 underline decoration-blue-300"
-                                    title="レプリケーション：複数のサーバー間でデータを自動的にコピー・同期する仕組み">「レプリケーション」</span>によって常に情報を同期しています。これにより、<span
-                                    class="tech-term font-bold text-blue-900 underline decoration-blue-300"
-                                    title="GPO (Group Policy Object)：会社のパソコンに対して「このソフトは使っちゃダメ」「パスワードは10文字以上にして」といったルールを一括で設定できる仕組み">GPO（グループポリシー）</span>などの設定変更が、どちらのADで行っても自動的に両方に反映されます。
-                            </p>
+                            
+                            <div class="space-y-4 pt-4">
+                                <p class="font-black text-slate-900 flex items-center gap-2 text-xl border-l-4 border-blue-500 pl-4 py-1">
+                                    特徴：ルーターが「物理スイッチ」
+                                </p>
+                                <p class="text-slate-600 text-base font-medium leading-relaxed pl-5">
+                                    設置した瞬間、その拠点の全PCが自動的にクラウドへ。全店完了まで旧環境を併用可能です。
+                                </p>
+                            </div>
                         </div>
 
-                        <p
-                            class="text-base text-amber-700 font-black bg-amber-50 p-4 rounded-xl border-2 border-amber-200 shadow-sm flex items-start gap-2">
-                            <span class="text-xl">※</span>
-                            <span>注意：固定IPの複合機などは、ルーター交換に合わせて個別に設定変更が必要です。</span>
-                        </p>
+                        <div class="w-full md:w-7/12">
+                            <div class="mermaid-container !p-0 !bg-transparent !border-none !shadow-none">
+                                <div class="diagram-label !text-slate-400 font-black mb-4 flex items-center gap-2">
+                                    <span class="w-8 h-px bg-slate-200"></span>
+                                    NETWORK TOPOLOGY
+                                </div>
+                                <pre class="mermaid">
+                                    flowchart TD
+                                      subgraph PCs1 ["拠点 A (切替完了) / 拠点 B (旧拠点)"]
+                                        direction LR
+                                        P1[最新PC]
+                                        P2[移行前の社員]
+                                      end
+
+                                      subgraph Servers1 ["AD並行稼働エリア (VPN同期)"]
+                                        direction LR
+                                        A[IIJ新AD] <-->|同期| E[本社 旧AD]
+                                      end
+
+                                      P1 -- "IIJ新ルーター" --> A
+                                      P2 -- "既存ルーター" --> E
+
+                                      linkStyle 2 stroke:#3b82f6,stroke-width:2px,stroke-dasharray: 5 5
+
+                                      style A fill:#eff6ff,stroke:#2563eb,stroke-width:2px
+                                      style E fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px
+                                      style P1 fill:#ecfdf5,stroke:#059669,stroke-width:2px
+                                      style P2 fill:#ffffff,stroke:#64748b,stroke-width:1px
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-blue-50/50 p-6 rounded-[2rem] border border-blue-100/50 backdrop-blur-sm">
+                            <p class="font-black text-blue-900 text-base mb-3 flex items-center gap-2">
+                                <span class="text-xl">🔄</span> 同期の仕組み
+                            </p>
+                            <p class="text-sm text-blue-800 leading-relaxed font-semibold opacity-80">
+                                標準機能の「レプリケーション」により情報を常に同期。パスワード設定などの<span class="tech-term" title="GPO（グループポリシー）：全社員のPC設定を一括で管理・制御する『会社のルール』の仕組み">「PCの管理ルール（GPO）」</span>も、どちらで行っても自動的に両方へ反映されます。
+                            </p>
+                        </div>
+                        <div class="bg-amber-50/50 p-6 rounded-[2rem] border border-amber-100/50">
+                            <p class="font-black text-amber-900 text-base mb-1 flex items-center gap-2">
+                                <span class="text-xl">⚠️</span> 注意点
+                            </p>
+                            <p class="text-sm text-amber-800 font-semibold opacity-80">
+                                固定IPの複合機などは、交換時に個別設定が必要。
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Case 02: USEN -->
-            <div class="space-y-6 bg-green-50/30 p-8 rounded-3xl border border-green-200/50">
-                <h3 class="text-xl font-bold text-brand-accent flex items-center gap-3">
-                    <span class="bg-brand-accent text-white px-3 py-1 rounded-lg text-sm">Case 02</span>
-                    USEN (AWS): 「PCの設定更新」で1台ずつ順次移行
-                </h3>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                    <div class="mermaid-container">
-                        <div class="diagram-label">管理ツールから1台ずつ指示を出す</div>
-                        <pre class="mermaid">
-            graph LR
-              subgraph "AWSクラウド"
-                A[新ADサーバー]
-              end
-              subgraph "本社"
-                C[旧ADサーバー]
-              end
-              subgraph "拠点"
-                P1[切替済みPC] -- "新しい設定" --> A
-                P2[未切替PC] -- "今までの設定" --> C
-                D[LANScope] -- "設定更新指示" --> P1
-              end
-              style A fill:#e0f2fe,stroke:#0ea5e9
-              style C fill:#f8fafc,stroke:#94a3b8
-              style P1 fill:#dcfce7,stroke:#22c55e
-            </pre>
-                    </div>
-                    <div class="space-y-6 text-base lg:text-lg leading-relaxed">
-                        <p class="font-extrabold text-slate-900 underline decoration-green-300 decoration-8 underline-offset-4 text-xl">
-                            特徴：パソコン1台単位で「安全に移住」させる</p>
-                        <p class="text-slate-800 font-medium">ルーターは替えず、管理ツール（LANScope）を使って、パソコン1台ずつに「今日から新しいADを使ってね」という命令を送ります。全てのパソコンの設定が書き換わるまで新旧両方のADを動かしておく、非常に慎重なステップです。
-                        </p>
-
-                        <div class="bg-green-50 p-5 rounded-2xl border-2 border-green-200 shadow-sm">
-                            <p class="font-black text-green-900 text-base mb-3 flex items-center gap-2">
-                                <span class="text-xl">✅</span> USEN確認済み作業フロー
-                            </p>
-                            <ol class="space-y-3 text-base text-green-900 leading-relaxed list-decimal list-inside font-medium">
-                                <li><strong>AWS基盤構築および新AD構築</strong>、現行資産との同期開始</li>
-                                <li><strong>新旧ADを並行稼働</strong>させ、安全な切り替え期間（約1ヶ月）を確保</li>
-                                <li><strong>LANScopeを用いて各PCの接続先を順次変更</strong>し、認証確認</li>
-                                <li><strong>全PCの完了確認後、旧オンプレADを停止・撤去</strong></li>
-                            </ol>
+            <div class="bento-card case-usen group">
+                <div class="premium-accent-bar"></div>
+                <div class="bento-case-number">02</div>
+                
+                <div class="p-8 md:p-12 relative z-10">
+                    <div class="flex flex-col md:flex-row gap-12 items-start">
+                        <div class="w-full md:w-5/12 space-y-6">
+                            <div class="inline-flex items-center gap-2 glass-badge px-4 py-1.5 rounded-full text-xs font-black tracking-widest uppercase text-emerald-600 border border-emerald-100/50">
+                                <span class="relative flex h-2 w-2">
+                                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                  <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                                </span>
+                                Case 02: USEN (AWS)
+                            </div>
+                            <h3 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-[1.1]">
+                                「並行稼働方式」での<br/>安全な順次移行を確認
+                            </h3>
+                            
+                            <div class="bg-emerald-50/80 backdrop-blur-md p-6 rounded-[2rem] border border-emerald-200/50 shadow-inner">
+                                <p class="text-lg font-black text-emerald-900 mb-3 flex items-center gap-2">
+                                    <span class="text-2xl">✅</span> 確認済みの状況
+                                </p>
+                                <p class="text-sm text-emerald-800 leading-relaxed font-bold">
+                                    新旧ADを一定期間並行稼働させ、1台ずつ安全に切り替えていく方式です。万一トラブルが発生しても、対象PCのみ設定を戻すだけでよいため、業務停止リスクを最小化できます。
+                                </p>
+                            </div>
                         </div>
 
-                        <div class="bg-blue-50 p-5 rounded-2xl border-2 border-blue-100 shadow-sm">
-                            <p class="font-black text-blue-900 text-base mb-3 flex items-center gap-2">
-                                <span class="text-xl">📋</span> 作業分担（USEN回答）
+                        <div class="w-full md:w-7/12">
+                            <div class="mermaid-container !p-0 !bg-transparent !border-none !shadow-none">
+                                <div class="diagram-label !text-slate-400 font-black mb-4 flex items-center gap-2">
+                                    <span class="w-8 h-px bg-slate-200"></span>
+                                    TRANSITION LOGIC
+                                </div>
+                                <pre class="mermaid">
+                                    flowchart TD
+                                      subgraph PCs ["全PC群"]
+                                        direction LR
+                                        P1[切替済みPC]
+                                        P2[未切替PC]
+                                      end
+                                      
+                                      subgraph Servers ["AD並行稼働エリア (VPN同期)"]
+                                        direction LR
+                                        A[USEN AWS AD] <-->|同期| C[本社 旧AD]
+                                      end
+                                      
+                                      P1 -- "新設定" --> A
+                                      P2 -- "旧設定" --> C
+                                      
+                                      linkStyle 2 stroke:#3b82f6,stroke-width:2px,stroke-dasharray: 5 5
+                                      
+                                      style A fill:#eff6ff,stroke:#2563eb,stroke-width:2px
+                                      style C fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px
+                                      style P1 fill:#ecfdf5,stroke:#059669,stroke-width:2px
+                                      style P2 fill:#ffffff,stroke:#64748b,stroke-width:1px
+                                </pre>
+                            </div>
+                            <div class="bg-blue-50/50 p-6 rounded-[2rem] border border-blue-100/50">
+                                <p class="text-xs text-blue-800 font-bold leading-relaxed px-4">
+                                    「新旧ADを並列稼働させながら、各PCの向き先を順次変更する」構成です。一斉切替のリスクを回避し、拠点ごとに柔軟なスケジュールで移行が可能です。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-emerald-50/50 p-8 rounded-[2rem] border border-emerald-100/50">
+                            <p class="font-black text-emerald-900 text-base mb-4 flex items-center gap-2 font-display">
+                                <span class="bg-white p-1.5 rounded-xl shadow-sm">✅</span> 確認済み作業フロー
                             </p>
-                            <ul class="space-y-2 text-base text-blue-800 leading-relaxed font-medium">
-                                <li class="flex items-center gap-2">
-                                    <span class="w-2 h-2 bg-blue-400 rounded-full"></span>
-                                    <span><strong>当社対応:</strong> DNS切り替え作業（各PCの接続先変更）</span>
+                            <ol class="space-y-3 text-sm text-emerald-900/80 leading-relaxed list-decimal list-inside font-bold">
+                                <li>AWS基盤・新AD構築、同期開始</li>
+                                <li><strong>並行稼働</strong>（約1ヶ月）による安全期間確保</li>
+                                <li>LANScopeでのPC接続先順次変更</li>
+                                <li>完了確認後、旧環境を撤去</li>
+                            </ol>
+                        </div>
+                        <div class="bg-blue-50/50 p-8 rounded-[2rem] border border-blue-100/50">
+                            <p class="font-black text-blue-900 text-base mb-4 flex items-center gap-2">
+                                <span class="bg-white p-1.5 rounded-xl shadow-sm">📋</span> 作業分担
+                            </p>
+                            <ul class="space-y-4 text-sm text-blue-800/80 font-bold">
+                                <li class="flex items-start gap-2">
+                                    <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5"></span>
+                                    <span><strong>当社対応:</strong> 各PCの接続先変更（DNS）</span>
                                 </li>
-                                <li class="flex items-center gap-2">
-                                    <span class="w-2 h-2 bg-blue-400 rounded-full"></span>
-                                    <span><strong>USEN対応:</strong> 旧ADドメイン降格作業（費用に含まれる）</span>
+                                <li class="flex items-start gap-2 border-t border-blue-100/50 pt-3">
+                                    <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5"></span>
+                                    <span><strong>USEN対応:</strong> 旧ADドメイン降格作業</span>
                                 </li>
                             </ul>
                         </div>
-
-                        <p
-                            class="text-base text-amber-700 font-black bg-amber-50 p-4 rounded-xl border-2 border-amber-200 shadow-sm flex items-start gap-2">
-                            <span class="text-xl">※</span>
-                            <span>注意：管理ツールが届かない端末は、手作業で1つずつ設定を更新します。</span>
-                        </p>
                     </div>
                 </div>
             </div>
 
             <!-- Case 03: LAJ -->
-            <div class="space-y-6 bg-amber-50/50 p-8 rounded-3xl border border-amber-200/50">
-                <h3 class="text-xl font-bold text-amber-600 flex items-center gap-3">
-                    <span class="bg-amber-600 text-white px-3 py-1 rounded-lg text-sm">Case 03</span>
-                    Link At Japan (Azure): 東日本単一構成での並行稼働方式を調整中
-                </h3>
-
-                <div class="modern-card p-6 border-none bg-white mb-6 shadow-md rounded-2xl">
-                    <p class="text-lg font-black text-slate-900 mb-4 flex items-center gap-2">
-                        <span class="text-2xl text-amber-500">📌</span> 現在の状況
-                    </p>
-                    <p class="text-base lg:text-lg text-slate-700 leading-relaxed font-medium">
-                        当初提案の「東西冗長（2拠点）」から<strong>「東日本のみ」の単一構成に変更済み</strong>です。現在LAJから提案されている移行方式は「一斉切替」ですが、リスクを考慮し、USENと同様の「段階的な並行稼働方式」への変更が可能かどうかを最終確認しています。
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <!-- 現在の提案 -->
-                    <div class="space-y-4">
-                        <div class="diagram-label text-red-600">現在のLAJ提案（一斉切替方式）</div>
-                        <div class="mermaid-container border-red-100 bg-red-50/10">
-                            <pre class="mermaid">
-            graph TD
-              A[Azure東日本<br/>新ADサーバー]
-              B[本社<br/>旧ADサーバー]
-              C{月曜朝<br/>一斉切替}
-              D[全拠点のPC]
-              E[複合機・プリンター等]
-              
-              B -.-x C
-              A --> C
-              C --> D
-              C -- "接続不可の可能性" --> E
-              E --> F[業務影響のリスク]
-              
-              style F fill:#fee2e2,stroke:#ef4444,stroke-width:2px
-              style C fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
-              style A fill:#e0f2fe,stroke:#0ea5e9
-              style B fill:#f8fafc,stroke:#94a3b8
-            </pre>
+            <div class="bento-card case-laj group">
+                <div class="premium-accent-bar"></div>
+                <div class="bento-case-number">03</div>
+                
+                <div class="p-8 md:p-12 relative z-10">
+                    <div class="flex flex-col md:flex-row gap-12 items-start">
+                        <div class="w-full md:w-5/12 space-y-6">
+                            <div class="inline-flex items-center gap-2 glass-badge px-4 py-1.5 rounded-full text-xs font-black tracking-widest uppercase text-emerald-600 border border-emerald-100/50">
+                                <span class="relative flex h-2 w-2">
+                                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                  <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                                </span>
+                                Case 03: Link At Japan
+                            </div>
+                            <h3 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-[1.1]">
+                                「並行稼働方式」での<br/>安全な順次移行を確認
+                            </h3>
+                            
+                            <div class="bg-emerald-50/80 backdrop-blur-md p-6 rounded-[2rem] border border-emerald-200/50 shadow-inner">
+                                <p class="text-lg font-black text-emerald-900 mb-3 flex items-center gap-2">
+                                    <span class="text-2xl">✅</span> 確認済みの状況
+                                </p>
+                                <p class="text-sm text-emerald-800 leading-relaxed font-bold">
+                                    直近の打ち合わせにより、USEN同様の「段階的・並行稼働方式」での移行が技術的に可能であることを裏取り・確定しました。一斉切替のリスクを排除した安全なプランとなります。
+                                </p>
+                            </div>
                         </div>
-                        <div class="bg-red-50 p-3 rounded border border-red-200">
-                            <p class="font-bold text-red-800 text-xs mb-2">⚠️ 懸念点</p>
-                            <ul class="space-y-1 text-xs text-red-700 leading-relaxed list-disc list-inside">
-                                <li>旧ADを停止した瞬間、全拠点が一斉に新ADに切り替わる</li>
-                                <li>固定IP機器（複合機・プリンター等）が接続できなくなる可能性</li>
-                                <li>問題発生時に旧環境に戻すのが困難</li>
-                            </ul>
-                        </div>
-                    </div>
 
-                    <!-- 希望する方式 -->
-                    <div class="space-y-4">
-                        <div class="diagram-label text-green-600">希望する方式（並行稼働）</div>
-                        <div class="mermaid-container border-green-100 bg-green-50/10">
-                            <pre class="mermaid">
-            graph LR
-              subgraph "Azure東日本"
-                A[新ADサーバー]
-              end
-              subgraph "本社"
-                C[旧ADサーバー]
-              end
-              subgraph "拠点"
-                P1[切替済みPC] -- "新しい設定" --> A
-                P2[未切替PC] -- "今までの設定" --> C
-                D[設定配布] -- "順次切替" --> P1
-              end
-              style A fill:#e0f2fe,stroke:#0ea5e9
-              style C fill:#f8fafc,stroke:#94a3b8
-              style P1 fill:#dcfce7,stroke:#22c55e
-            </pre>
-                        </div>
-                        <div class="bg-green-50 p-5 rounded-2xl border-2 border-green-200 shadow-sm">
-                            <p class="font-black text-green-900 text-base mb-3 flex items-center gap-2">
-                                <span class="text-xl">✅</span> メリット
-                            </p>
-                            <ul class="space-y-2 text-base text-green-800 leading-relaxed list-disc list-inside font-medium">
-                                <li>新旧ADを並行稼働させ、安全な切り替え期間を確保</li>
-                                <li>PC単位での順次切り替え（USENと同様の方式）</li>
-                                <li>問題発生時も旧環境が稼働中なので影響を最小化</li>
-                            </ul>
+                        <div class="w-full md:w-7/12 grid grid-cols-1 gap-6">
+                            <div class="mermaid-container !p-0 !bg-transparent !border-none !shadow-none">
+                                <div class="diagram-label !text-slate-400 font-black mb-4 flex items-center gap-2">
+                                    <span class="w-8 h-px bg-slate-200"></span>
+                                    CONFIRMED TRANSITION LOGIC
+                                </div>
+                                <pre class="mermaid">
+                                    flowchart TD
+                                      subgraph PCs3 ["全PC群"]
+                                        direction LR
+                                        P3[切替済みPC]
+                                        P4[未切替PC]
+                                      end
+                                      
+                                      subgraph Servers3 ["AD並行稼働エリア (VPN同期)"]
+                                        direction LR
+                                        A2[LAJ Azure AD] <-->|同期| B2[本社 旧AD]
+                                      end
+
+                                      P3 -- "新設定" --> A2
+                                      P4 -- "旧設定" --> B2
+
+                                      linkStyle 2 stroke:#3b82f6,stroke-width:2px,stroke-dasharray: 5 5
+
+                                      style A2 fill:#eff6ff,stroke:#2563eb,stroke-width:2px
+                                      style B2 fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px
+                                      style P3 fill:#ecfdf5,stroke:#059669,stroke-width:2px
+                                      style P4 fill:#ffffff,stroke:#64748b,stroke-width:1px
+                                </pre>
+                            </div>
+                            <div class="bg-blue-50/50 p-6 rounded-[2rem] border border-blue-100/50">
+                                <p class="text-xs text-blue-800 font-bold leading-relaxed px-4">
+                                    「新旧ADをレプリケーションで同期させ、各PCのDNS設定を順次書き換える」方式です。万一の際もPCの設定を戻すだけで旧環境へ接続可能なフェイルセーフな構成です。
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="bg-amber-50 p-6 rounded-2xl border-2 border-amber-200 shadow-sm">
-                    <p class="font-black text-amber-900 text-lg mb-4 flex items-center gap-2">
-                        <span class="text-2xl">🔄</span> LAJへの確認事項
-                    </p>
-                    <ul class="space-y-3 text-base text-amber-900 leading-relaxed list-disc list-inside font-bold underline decoration-amber-200 underline-offset-4">
-                        <li>東日本単一構成において、並行稼働方式が技術的に可能か</li>
-                        <li>並行稼働期間中の追加費用の有無</li>
-                        <li>各拠点のプリンターや複合機などの固定IP端末への対応方法</li>
-                        <li>切り替え手順、作業分担、期間の詳細</li>
-                    </ul>
-                </div>
 
-                <div class="modern-card p-6 border-none bg-white shadow-md rounded-2xl">
-                    <p class="text-lg font-black text-slate-900 mb-4 flex items-center gap-2">
-                        <span class="text-2xl text-blue-500">💡</span> なぜ「東日本のみ」になったのか？
-                    </p>
-                    <p class="text-base lg:text-lg text-slate-700 leading-relaxed font-medium">
-                        当初LAJは「東西冗長（2拠点）」を提案していましたが、コストと実用性のバランスを考慮し、<strong>「東日本のみ」の単一構成に変更</strong>されました。現在の見積¥7,678,060は、この東日本単一構成を反映した金額です。
-                    </p>
-                </div>
-
-                <p class="text-base text-amber-700 font-extrabold bg-amber-50 p-4 rounded-xl border-2 border-amber-200 shadow-sm italic text-center">
-                    ※現在、並行稼働方式の詳細（切り替え手順、作業分担、期間）をLAJと最終調整中です。
-                </p>
             </div>
         </section>
 
@@ -1262,106 +1104,123 @@
             <h3 class="text-2xl font-black text-slate-900 flex items-center gap-3 border-b-2 border-slate-200 pb-4">
                 <span class="text-3xl text-blue-600">📖</span> 用語解説
             </h3>
-            <div
-                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-x-12 gap-y-6 text-sm lg:text-base text-slate-700 leading-relaxed">
-                <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">東西冗長:</strong> 関東だけでなく、関西（西日本）にも予備のサーバーを置くことで、大きな災害時でも止まらない仕組み。</div>
-                <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">アクティブディレクトリ(AD):</strong> 社員の皆さんのIDやログインパスワードを管理している、会社で最も大切なシステムの一つ。</div>
-                <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">GPO (グループポリシー):</strong> 会社のパソコンに対して一括でルールを設定できる仕組み。Active Directoryの重要な機能です。</div>
-                <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">レプリケーション:</strong> 複数のサーバー間でデータを自動的に同期する仕組み。新旧サーバーの状態を保つために使われます。</div>
-                <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">DNS (Domain Name System):</strong> パソコンの接続先を教えてくれる仕組み。これを変更して新サーバーへ切り替えます。</div>
-                <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">ドメイン降格:</strong> ADの役割を終了させ、通常のサーバーに戻す作業。旧サーバーの安全な撤去に必要です。</div>
-                <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">LANScope:</strong> 配布パソコンの設定を一括で変更できる、リモート管理用のツール。</div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6 text-sm text-slate-700 leading-relaxed">
+                <!-- Identity & Governance -->
+                <div class="space-y-4">
+                    <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">アクティブディレクトリ(AD):</strong> 社員の皆さんのIDやパスワードを管理している、会社で最も大切なシステムの一つ。</div>
+                    <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">Entra ID:</strong> 旧名称 Azure AD。クラウド環境に特化したID管理の仕組み。M365との相性が抜群。</div>
+                    <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">GPO (グループポリシー):</strong> 会社のPCに対して一括でルール（壁紙やセキュリティ等）を設定できる便利な仕組み。</div>
+                    <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">Microsoft Intune:</strong> PCをインターネット越しに管理するクラウドツール。場所を選ばずセキュリティ統制が可能。</div>
+                    <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">LANScope:</strong> 配布パソコンの設定変更や操作ログを記録できる、純国産のリモート管理ツール。</div>
+                    <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">ドメイン降格:</strong> ADの役割を終了させ、通常のサーバーに戻す作業。旧サーバーの安全な撤収に必須です。</div>
+                </div>
+                <!-- Network & Security -->
+                <div class="space-y-4 md:border-l border-slate-200 md:pl-8">
+                    <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">DNS:</strong> インターネット上の「案内板」。PCの接続先を教えてくれる仕組み。切替の要となる技術です。</div>
+                    <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">VPN:</strong> 拠点間を専用の暗号化通路で安全につなぐ技術。クラウドと本社を繋ぐ命綱です。</div>
+                    <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">Cato / SASE:</strong> ネットワークとセキュリティをクラウドで一括提供する最新概念。境界のない防御。</div>
+                    <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">フィッシング耐性認証:</strong> パスワード盗難に強い特殊な本人確認。FIDO2などの最新技術を指します。</div>
+                    <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">責任分界点:</strong> 「どこまでがベンダー担当で、どこからが自社担当か」という責任の境界線。</div>
+                </div>
+                <!-- Infrastructure & Resilience -->
+                <div class="space-y-4 lg:border-l border-slate-200 lg:pl-8">
+                    <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">PaaS / IaaS:</strong> クラウドの貸し出し形態。PaaSは「手ぶら」、IaaSは「カスタマイズ自在」なイメージ。</div>
+                    <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">東西冗長:</strong> 関東と関西の両方に予備を置くことで、広域災害時でもシステムを止めない仕組み。</div>
+                    <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">レプリケーション:</strong> 複数のサーバー間でデータを自動同期し、常に「同じ状態」に保ちます。</div>
+                    <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">SLA:</strong> ベンダーが約束する「サービスの稼働率（品質保証）」。信頼のバロメーターです。</div>
+                    <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">RTO / RPO:</strong> 故障時に「何時間で戻すか」と「どの時点のデータまで戻せるか」の目標数値。</div>
+                    <div><strong class="text-slate-900 block mb-1 font-bold bg-slate-200/50 px-2 rounded w-fit">オンプレミス:</strong> 自社内にサーバーを設置する従来方式。対義語はクラウド。</div>
+                </div>
             </div>
         </section>
 
         <!-- Final Summary & Status Dashboard -->
-        <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-xl space-y-8">
-            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-100 pb-6">
-                <div class="space-y-2">
-                    <div
-                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-500 text-xs font-black uppercase tracking-widest mb-2">
-                        Project Completion Status
-                    </div>
-                    <h2 class="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
-                        <span class="text-4xl">🏁</span> まとめ：現在の確認状況
-                    </h2>
-                    <p class="text-slate-600 text-base font-bold">ベンダー各社と細かな「詰め」の調整を行っています。</p>
-                </div>
-                <div class="flex items-center gap-3">
-                    <span
-                        class="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-black tracking-widest uppercase">Draft</span>
-                    <span class="text-slate-400 text-xs font-bold">最終照会：回答待ち (v20260201_2105)</span>
-                </div>
+
+
+        <!-- Ongoing Research & Future Roadmap (EXPANDED) -->
+        <section class="modern-card p-10 space-y-10 bg-blue-50/50 border-2 border-blue-200 rounded-[2.5rem] shadow-md relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
+                <span class="text-9xl">🚀</span>
+            </div>
+            
+            <div class="relative z-10">
+                <h3 class="text-3xl font-black text-slate-900 flex items-center gap-4 mb-2">
+                    <span class="bg-blue-600 text-white p-2 rounded-xl text-2xl shadow-lg shadow-blue-200">🚀</span> 
+                    次世代インフラへのロードマップ（継続調査事項）
+                </h3>
+                <p class="text-slate-600 font-medium ml-14">ADクラウド化を「起点」とした、より安全で便利なIT環境への進化ステップ</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- IIJ -->
-                <div
-                    class="group p-6 rounded-2xl border border-slate-100 bg-slate-50/30 hover:bg-white hover:shadow-md transition-all duration-300">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-sm font-black text-slate-400 uppercase tracking-wider">IIJ Global</span>
-                        <span class="px-2 py-1 rounded-md bg-blue-100 text-blue-700 text-xs font-bold">精査中</span>
-                    </div>
-                    <p class="text-base text-slate-700 leading-relaxed font-bold">
-                        現在の拠点ルーターとの相性、より詳細な切替手順の妥当性を確認しています。
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+                <!-- 1. Network -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-300 transition-colors">
+                    <p class="text-lg font-bold text-slate-800 border-l-4 border-blue-500 pl-3 mb-3">1. ネットワーク足回りの増強</p>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        「クラウド化しても回線が遅ければ業務効率が上がらない」との指摘に基づき、現在のフレッツ光から、<strong>専有型回線や速度保証型への切り替え</strong>を調査。特に玉・橋本拠点のボトルネック解消を優先します。
                     </p>
                 </div>
 
-                <!-- USEN -->
-                <div
-                    class="group p-6 rounded-2xl border border-green-100 bg-green-50/30 hover:bg-white hover:shadow-md transition-all duration-300">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-sm font-black text-slate-400 uppercase tracking-wider">USEN (AWS)</span>
-                        <span class="px-2 py-1 rounded-md bg-green-100 text-green-700 text-xs font-bold">確認済み ✅</span>
-                    </div>
-                    <p class="text-base text-slate-700 leading-relaxed font-bold">
-                        並行稼働フローを確定。DNS切り替え手順とLANScopeでの一括配布可否を最終確認中です。
+                <!-- 2. Security (Cato) -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-300 transition-colors">
+                    <p class="text-lg font-bold text-slate-800 border-l-4 border-blue-500 pl-3 mb-3">2. 次世代セキュリティ「Cato」比較</p>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        BuddyNet側で導入検討中の<strong>Cato（SASE/SSE）</strong>についても、今回の中計と連携可能か、将来的に統合すべきかについて、SCSK社を交えて追加調査を実施します。
                     </p>
                 </div>
 
-                <!-- LAJ -->
-                <div
-                    class="group p-6 rounded-2xl border border-amber-100 bg-amber-50/30 hover:bg-white hover:shadow-md transition-all duration-300">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-sm font-black text-slate-400 uppercase tracking-wider">Link At Japan</span>
-                        <span
-                            class="px-2 py-1 rounded-md bg-amber-100 text-amber-700 text-xs font-bold">最終調整中</span>
-                    </div>
-                    <p class="text-base text-slate-700 leading-relaxed font-bold">
-                        東日本単一構成での並行稼働方式（切り替え手順、作業分担、期間）を調整中です。
+                <!-- 3. Governance (Entra ID) -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-300 transition-colors">
+                    <p class="text-lg font-bold text-slate-800 border-l-4 border-emerald-500 pl-3 mb-3">3. Entra ID統合とパスワードレス</p>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        ADと Microsoft 365 の連携を強め、Windows Hello for Business 等による<strong>「パスワードを入れない」安全・便利な運用</strong>を検討。認証の利便性と強度を同時に高めます。
                     </p>
                 </div>
-            </div>
-        </section>
 
-        <!-- Ongoing Research & Future Roadmap -->
-        <section class="modern-card p-10 space-y-8 bg-blue-50/50 border-2 border-blue-200 rounded-3xl shadow-md">
-            <h3 class="text-2xl font-black text-slate-900 flex items-center gap-3">
-                <span class="text-3xl text-blue-600">🚀</span> 今後の検討・継続調査事項
-            </h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="space-y-4">
-                    <p class="text-lg font-bold text-slate-800 border-l-4 border-blue-500 pl-3">1. ネットワーク足回りの増強</p>
-                    <p class="text-base text-slate-700 leading-relaxed">
-                        「クラウド化しても回線が遅ければ業務効率が上がらない」との指摘に基づき、現在のフレッツ光から、<strong>専有型回線や速度保証型への切り替え</strong>を調査します。特に玉・橋本拠点のボトルネック解消を優先します。
+                <!-- 4. Device Management (Intune) -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-300 transition-colors">
+                    <p class="text-lg font-bold text-slate-800 border-l-4 border-emerald-500 pl-3 mb-3">4. Microsoft Intuneへの段階的移行</p>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        従来の物理ドメイン参加（GPO）から、場所を選ばない<strong>クラウド管理（Intune）</strong>へシフト。テレワーク環境下でも社内と同じセキュリティ統制を実現します。
                     </p>
                 </div>
-                <div class="space-y-4">
-                    <p class="text-lg font-bold text-slate-800 border-l-4 border-blue-500 pl-3">2. 次世代セキュリティ「Cato」の比較</p>
-                    <p class="text-base text-slate-700 leading-relaxed">
-                        BuddyNet側で導入検討中の<strong>Cato（Cloud-delivered security）</strong>についても、今回の中計と連携可能か、将来的に統合すべきかについて、SCSK社を交えて追加調査を実施します。
+
+                <!-- 5. Files (Cloud Integration) -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-300 transition-colors">
+                    <p class="text-lg font-bold text-slate-800 border-l-4 border-amber-500 pl-3 mb-3">5. ファイルサーバーのクラウド統合</p>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        ADクラウド化により「場所」の制約がなくなるため、<strong>ファイルサーバー（SharePoint/Azure Files等）の集約</strong>も検討可能に。物理サーバーの完全撤廃を目指します。
                     </p>
                 </div>
-                <div class="space-y-4">
-                    <p class="text-lg font-bold text-slate-800 border-l-4 border-blue-500 pl-3">3. セコム入退室管理との同時施工</p>
-                    <p class="text-base text-slate-700 leading-relaxed">
-                        ADクラウド化と同一ベンダーに依頼することで、<strong>初期費用や運用窓口の統合メリット</strong>が得られるか、セット割引の可能性を含めて最終精査を行います。
+
+                <!-- 6. Phishing Resistance -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-300 transition-colors">
+                    <p class="text-lg font-bold text-slate-800 border-l-4 border-red-500 pl-3 mb-3">6. フィッシング耐性認証の確立</p>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        ID管理をクラウド化する上で不可欠な、<strong>フィッシングで突破されない多要素認証（MFA）</strong>の全社適用を検討。情報の入り口となる「本人確認」の質を底上げします。
                     </p>
                 </div>
-                <div class="space-y-4">
-                    <p class="text-lg font-bold text-slate-800 border-l-4 border-blue-500 pl-3">4. 責任分界点（作業分担）の明確化</p>
-                    <p class="text-base text-slate-700 leading-relaxed">
-                        特にUSEN/LAJ案における「Windows Update」等の運用を社内で行うのか、外注するのか、その際の<strong>人的リソースとコストのバランス</strong>を確定させます。
+
+                <!-- 7. DR Automation -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-300 transition-colors">
+                    <p class="text-lg font-bold text-slate-800 border-l-4 border-red-500 pl-3 mb-3">7. クラウドDRの自動化と定例演習</p>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        広域災害時に「数分で別拠点で再開」できる<strong>自動DR（災害復旧）</strong>の導入と、年に一度の切り替え演習を計画。経営のレジリエンス（回復力）を制度として確立します。
+                    </p>
+                </div>
+
+                <!-- 8. Physical Security (SECOM) -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-300 transition-colors">
+                    <p class="text-lg font-bold text-slate-800 border-l-4 border-blue-500 pl-3 mb-3">8. セコム入退室管理との同時施工</p>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        拠点の物理セキュリティ向上とADクラウド化を同一ベンダーに依頼することで、<strong>初期費用や運用窓口の統合メリット</strong>が得られるか、セット割引を含めて最終精査します。
+                    </p>
+                </div>
+
+                <!-- 9. Operational Governance -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-300 transition-colors">
+                    <p class="text-lg font-bold text-slate-800 border-l-4 border-indigo-500 pl-3 mb-3">9. 責任分界点と外注バランスの最適化</p>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        「Windows Update」等の定常運用を社内で行うか、外注するか。<strong>人的リソースとコストのバランス</strong>を、事業成長スピードに合わせて柔軟に確定させます。
                     </p>
                 </div>
             </div>
@@ -1447,6 +1306,121 @@
             activeBtn.classList.add('bg-indigo-600', 'text-white', 'shadow-lg');
         }
     </script>
+
+    <!-- 📚 参照資料セクション -->
+    <section class="max-w-7xl mx-auto px-6 py-12 mb-12">
+        <div class="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl shadow-lg p-8 border border-slate-200">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="text-3xl mr-3">📚</span>
+                参照資料 (Reference Materials)
+            </h2>
+            <p class="text-slate-600 mb-6">このページで記載・参照したエビデンス(根拠資料)の一覧です。</p>
+            
+            <div class="space-y-6">
+                <!-- IIJ関連 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-700 mb-3 border-b border-slate-300 pb-2">IIJ関連資料</h3>
+                    <ol class="space-y-2 text-sm">
+                        <li id="ref-1" class="pl-4 border-l-4 border-blue-400 bg-white p-3 rounded">
+                            <span class="font-bold text-blue-600">[1]</span> 
+                            <span class="font-semibold">IIJ - 概算費用 (2025.11.14).pdf.txt</span><br>
+                            <span class="text-slate-600">引用箇所: 行90 - "Active Directoryは東日本リージョンで冗長構成となります"</span><br>
+                            <span class="text-xs text-slate-500">ファイルパス: 01_IIJ/_archive/IIJ - 概算費用 (2025.11.14).pdf.txt</span>
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- USEN関連 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-700 mb-3 border-b border-slate-300 pb-2">USEN関連資料</h3>
+                    <ol class="space-y-2 text-sm" start="2">
+                        <li id="ref-2" class="pl-4 border-l-4 border-green-400 bg-white p-3 rounded">
+                            <span class="font-bold text-green-600">[2]</span> 
+                            <span class="font-semibold">USEN西川様_メール_20251204.md</span><br>
+                            <span class="text-slate-600">引用箇所: 行28 - "どのリージョンに配置されるか→東京リージョンになります"</span><br>
+                            <span class="text-xs text-slate-500">ファイルパス: 02_USEN/04_メール履歴/USEN西川様_メール_20251204.md</span>
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- Link At Japan関連 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-700 mb-3 border-b border-slate-300 pb-2">Link At Japan関連資料</h3>
+                    <ol class="space-y-2 text-sm" start="3">
+                        <li id="ref-3" class="pl-4 border-l-4 border-purple-400 bg-white p-3 rounded">
+                            <span class="font-bold text-purple-600">[3]</span> 
+                            <span class="font-semibold">リンクアットジャパン - ADサーバのAzureリフト化提案書 Ver.2.pdf.txt</span><br>
+                            <span class="text-slate-600">引用箇所: 15ページ - "東日本リージョン単一構成"</span><br>
+                            <span class="text-xs text-slate-500">ファイルパス: 03_LinkAtJapan/リンクアットジャパン - ADサーバのAzureリフト化提案書 Ver.2.pdf.txt</span>
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- オンプレミス関連 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-700 mb-3 border-b border-slate-300 pb-2">プロジェクト基本資料</h3>
+                    <ol class="space-y-2 text-sm" start="4">
+                        <li id="ref-4" class="pl-4 border-l-4 border-orange-400 bg-white p-3 rounded">
+                            <span class="font-bold text-orange-600">[4]</span> 
+                            <span class="font-semibold">オンプレミスサーバー一覧_2026-01-26.md</span><br>
+                            <span class="text-slate-600">引用箇所: 行16-17 - "PDCSVR (DC1) + BDCSVR (DC2) の2台冗長構成"</span><br>
+                            <span class="text-xs text-slate-500">ファイルパス: オンプレミスサーバー一覧_2026-01-26.md</span>
+                        </li>
+                        <li id="ref-5" class="pl-4 border-l-4 border-orange-400 bg-white p-3 rounded">
+                            <span class="font-bold text-orange-600">[5]</span> 
+                            <span class="font-semibold">00_エビデンス管理シート.md</span><br>
+                            <span class="text-slate-600">引用箇所: 行32-34 - "現状のRTO/RPO / 移行ダウンタイム証跡"</span><br>
+                            <span class="text-xs text-slate-500">ファイルパス: 00_エビデンス管理シート.md</span>
+                        </li>
+                        <li id="ref-6" class="pl-4 border-l-4 border-slate-400 bg-white p-3 rounded">
+                            <span class="font-bold text-slate-600">[6]</span> 
+                            <span class="font-semibold">2026-01-22_USEN内田様回答_AD・セコムダウンタイム確認.md</span><br>
+                            <span class="text-slate-600">引用箇所: 行15 - "移行ダウンタイムなし（並行稼働）"</span><br>
+                            <span class="text-xs text-slate-500">ファイルパス: 02_USEN/04_メール履歴/...</span>
+                        </li>
+                        <li id="ref-7" class="pl-4 border-l-4 border-slate-400 bg-white p-3 rounded">
+                            <span class="font-bold text-slate-600">[7]</span> 
+                            <span class="font-semibold">2025-12-16_リンクアットジャパン確認メール.md</span><br>
+                            <span class="text-slate-600">引用箇所: 行23 - "移行ダウンタイムは約8時間程度"</span><br>
+                            <span class="text-xs text-slate-500">ファイルパス: 03_LinkAtJapan/2025-12-16_...</span>
+                        </li>
+                        <li id="ref-8" class="pl-4 border-l-4 border-blue-400 bg-white p-3 rounded">
+                            <span class="font-bold text-blue-600">[8]</span> 
+                            <span class="font-semibold">2025-12-12_IIJ議事録_MTG.md</span><br>
+                            <span class="text-slate-600">引用箇所: 行172 - "バックアップ世代数制限なし", 行488 - "ADゴミ箱復旧"</span><br>
+                            <span class="text-xs text-slate-500">ファイルパス: 01_IIJ/05_会議議事録/2025-12-12_...</span>
+                        </li>
+                        <li id="ref-9" class="pl-4 border-l-4 border-emerald-400 bg-white p-3 rounded">
+                            <span class="font-bold text-emerald-600">[9]</span> 
+                            <span class="font-semibold">2025-12-04_USEN_AD提案.md</span><br>
+                            <span class="text-slate-600">引用箇所: 行63 - "バックアップ7世代保管"</span><br>
+                            <span class="text-xs text-slate-500">ファイルパス: 02_USEN/01_提案資料/2025-12-04_...</span>
+                        </li>
+                        <li id="ref-10" class="pl-4 border-l-4 border-emerald-400 bg-white p-3 rounded">
+                            <span class="font-bold text-emerald-600">[10]</span> 
+                            <span class="font-semibold">02_提案詳細_LinkAtJapan.md</span><br>
+                            <span class="text-slate-600">引用箇所: 行59 - "Azure Backup仕様"</span><br>
+                            <span class="text-xs text-slate-500">ファイルパス: 03_LinkAtJapan/02_提案詳細_LinkAtJapan.md</span>
+                        </li>
+                        <li id="ref-11" class="pl-4 border-l-4 border-blue-400 bg-white p-3 rounded">
+                            <span class="font-bold text-blue-600">[11]</span> 
+                            <span class="font-semibold">2025-12-15_IIJ提案_ADクラウド化詳細.md</span><br>
+                            <span class="text-slate-600">引用箇所: 行52 - "運用負荷大幅軽減/Act-Act構成"</span><br>
+                            <span class="text-xs text-slate-500">ファイルパス: 01_IIJ/01_提案資料/2025-12-15_...</span>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="mt-6 p-4 bg-blue-50 border-l-4 border-blue-400 rounded">
+                <p class="text-sm text-slate-700">
+                    <span class="font-bold">💡 エビデンス管理:</span> 
+                    すべてのエビデンスは <code class="bg-white px-2 py-1 rounded text-xs">00_エビデンス管理シート.md</code> で一元管理されています。
+                </p>
+            </div>
+        </div>
+    </section>
+
 </body>
 
 </html>
