@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <title>Project 15.12: AI Champion Portal</title>
+    <link rel="icon" href="https://icons.iconarchive.com/icons/microsoft/fluentui-emoji-3d/96/Brain-3d-icon.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@500;700&family=Noto+Sans+JP:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <!-- Standard Portal Styles -->
+    <link rel="stylesheet" href="assets/portal_nexus.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* 
+         * PROJECT 15.12 SPECIFIC OVERRIDES 
+         * Scoped to .project-dark-theme to allow coexistence with standard Layout Wrapper 
+         */
+
+        :root {
+            /* Branding Colors */
+            --p1512-bg: #0b0c10;
+            --p1512-card-bg: rgba(31, 40, 51, 0.4);
+            --p1512-text-main: #c5c6c7;
+            --p1512-text-highlight: #66fcf1;
+            --p1512-accent-cyan: #45a29e;
+            --p1512-accent-purple: #bd00ff;
+            --p1512-glass-border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Inner container for Dark Mode content */
+        .project-dark-theme {
+            background-color: var(--p1512-bg);
+            color: var(--p1512-text-main);
+            font-family: 'Inter', sans-serif;
+            min-height: 100%;
+            padding: 3rem;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(69, 162, 158, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(189, 0, 255, 0.05) 0%, transparent 40%);
+        }
+
+        /* Typography */
+        .project-dark-theme h1,
+        .project-dark-theme h2,
+        .project-dark-theme h3 {
+            font-family: 'Orbitron', 'Inter', sans-serif;
+            color: #fff;
+        }
+
+        .project-dark-theme h1 {
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(102, 252, 241, 0.2);
+        }
+
+        .subtitle {
+            color: var(--p1512-accent-cyan);
+            margin-bottom: 3rem;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        /* Panels */
+        .panel {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .panel.active {
+            display: block;
+        }
+
+        /* Cards */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--p1512-card-bg);
+            border: var(--p1512-glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .card.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: var(--p1512-text-highlight);
+        }
+
+        /* Timeline Styles */
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            padding-bottom: 2rem;
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background: var(--p1512-bg);
+            border: 2px solid var(--p1512-accent-purple);
+            border-radius: 50%;
+        }
+
+        .timeline-date {
+            font-size: 0.8rem;
+            color: var(--p1512-accent-cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Document Styles */
+        .doc-link {
+            display: block;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid transparent;
+            margin-bottom: 0.5rem;
+            text-decoration: none;
+            color: var(--p1512-text-main);
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .doc-link:hover {
+            border-color: var(--p1512-accent-cyan);
+            background: rgba(69, 162, 158, 0.1);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.7rem;
+            background: rgba(189, 0, 255, 0.2);
+            color: #fff;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+
+        /* Tools Grid (Compact) */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+        }
+
+        .tool-icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Project Tab Navigation */
+        .project-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1px;
+        }
+
+        .tab-item {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            color: var(--p1512-text-main);
+            font-weight: 600;
+            font-family: 'Inter';
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            border-bottom: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-item:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-item.active {
+            background: rgba(69, 162, 158, 0.1);
+            color: var(--p1512-text-highlight);
+            border: 1px solid rgba(69, 162, 158, 0.3);
+            border-bottom: 1px solid var(--p1512-bg);
+            /* Blend with background */
+            margin-bottom: -1px;
+            box-shadow: 0 -2px 10px rgba(69, 162, 158, 0.1);
+        }
+
+        .tab-icon {
+            opacity: 0.7;
+        }
+
+        .tab-item.active .tab-icon {
+            opacity: 1;
+        }
+
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="layout-wrapper">
+        <!-- Unified Sidebar -->
+        <aside class="sidebar">
+            <header class="sidebar-header">
+                <h1>統合指揮センター HUB</h1>
+                <p>MASTER COMMAND CENTER V2.2</p>
+            </header>
+            <nav>
+                <div class="nav-label-small">トップ・ナビゲーション</div>
+                <a href="/landing.html" class="nav-link">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    ポータルホーム
+                </a>
+                <!-- Set active in sidebar since this is a Project Page -->
+                <a href="/index.html" class="nav-link active">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    プロジェクト
+                </a>
+                <a href="/executive_hub.html" class="nav-link">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    全体課題管理表
+                </a>
+                <a href="/evaluation_sheet.html" class="nav-link">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                    人事考課原本 (最新版)
+                </a>
+                <a href="/daily_log.html" class="nav-link">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    活動全史 (ログ)
+                </a>
+            </nav>
+            <footer class="sidebar-footer">
+                <p>User: 丹治 統<br>Last Sync: 1/24 21:00</p>
+            </footer>
+        </aside>
+
+        <main class="main-scroll" style="background-color: #0b0c10;">
+            <!-- Ensure bg matches dark theme to avoid flash -->
+            <div class="project-dark-theme">
+
+                <!-- Project Header / Brand -->
+                <div class="flex items-center justify-between mb-8 pb-4 border-b border-[rgba(255,255,255,0.1)]">
+                    <div class="font-['Orbitron'] text-xl font-bold flex items-center gap-2 text-[#66fcf1]">
+                        <span>🚀 PROJECT 15.12</span>
+                    </div>
+                    <div class="text-xs text-slate-500 font-mono">
+                        User: Commander Tanji
+                    </div>
+                </div>
+
+                <!-- New Tab Navigation -->
+                <div class="project-tabs">
+                    <div class="tab-item active" onclick="showPanel('overview', this)">
+                        <span class="tab-icon">🏠</span> 概要
+                    </div>
+                    <div class="tab-item" onclick="showPanel('schedule', this)">
+                        <span class="tab-icon">📅</span> スケジュール
+                    </div>
+                    <div class="tab-item" onclick="showPanel('docs', this)">
+                        <span class="tab-icon">📂</span> 資料
+                    </div>
+                    <div class="tab-item" onclick="showPanel('tools', this)">
+                        <span class="tab-icon">🛠️</span> 5つの武器
+                    </div>
+                </div>
+
+                <!-- OVERVIEW TAB -->
+                <div id="overview" class="panel active">
+                    <h1>プロジェクト概要</h1>
+                    <div class="subtitle">AI Champion Initiative Status</div>
+
+                    <div class="dashboard-grid">
+                        <!-- Mission -->
+                        <div class="card full-width">
+                            <h3>🚩 ミッション: "The Trojan Horse & The Bridge"</h3>
+                            <p>
+                                情報システム部だけに閉じていた「デジタル変革」の力を、現場（AIチャンピオン）の手に渡す。<br>
+                                まずは経理・経営企画のキーマンをターゲットに、"AquaVoice" で突破口を開き、"Antigravity" で定着させる戦略。
+                            </p>
+                            <div style="margin-top: 1rem; display: flex; gap: 1rem;">
+                                <div class="tag">Target: 中野 (経営企画)</div>
+                                <div class="tag">Target: 石井 (経理)</div>
+                            </div>
+                        </div>
+
+                        <!-- Cockpit Structure -->
+                        <div class="card">
+                            <h3>🕹️ コックピット体制 (Level 0-2)</h3>
+                            <ul style="list-style: none; padding: 0;">
+                                <li style="margin-bottom: 0.5rem;"><strong>Level 0
+                                        (Obsidian)</strong><br><small>コマンダーコンソール。思考と設計の場。</small></li>
+                                <li style="margin-bottom: 0.5rem;"><strong>Level 1 (Google
+                                        Sheets)</strong><br><small>全体ダッシュボード。スケジュール管理。</small></li>
+                                <li style="margin-bottom: 0.5rem;"><strong>Level 2
+                                        (Portal/Docs)</strong><br><small>ナレッジベース。成果共有。</small></li>
+                            </ul>
+                        </div>
+
+                        <!-- Philosophy -->
+                        <div class="card">
+                            <h3>💡 理念・哲学</h3>
+                            <p>「エンジニアだけが持っていた魔法の杖を、すべてのビジネスパーソンの手元に民主化する」</p>
+                            <p>AIチャンピオンとは、技術者ではなく<strong>「自分自身の困りごとをAIと解決できる人」</strong>のこと。</p>
+                        </div>
+
+                        <!-- Team & Growth Strategy -->
+                        <div class="card full-width">
+                            <h3>👥 チーム構成と拡大ロードマップ</h3>
+
+                            <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 250px;">
+                                    <h4 style="color: var(--p1512-accent-cyan); margin-bottom: 0.5rem;">Phase 0: 初期メンバー
+                                        (Founding
+                                        Members)</h4>
+                                    <p style="font-size: 0.9rem; color: #aaa;">まずは少数精鋭で「確実な成功事例」を作ります。</p>
+                                    <ul style="list-style: none; padding: 0;">
+                                        <li
+                                            style="margin-bottom: 0.5rem; border-left: 3px solid var(--p1512-accent-purple); padding-left: 10px;">
+                                            <strong>PM / Technical Lead</strong><br>
+                                            丹治 (情報システム部)
+                                        </li>
+                                        <li
+                                            style="margin-bottom: 0.5rem; border-left: 3px solid #ffd700; padding-left: 10px;">
+                                            <strong>Champion (経営企画)</strong><br>
+                                            中野 様 <small>※実務トライアル中</small>
+                                        </li>
+                                        <li
+                                            style="margin-bottom: 0.5rem; border-left: 3px solid #ffd700; padding-left: 10px;">
+                                            <strong>Champion (経理)</strong><br>
+                                            石井 様 <small>※実務トライアル中</small>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div style="flex: 1; min-width: 250px;">
+                                    <h4 style="color: var(--p1512-accent-cyan); margin-bottom: 0.5rem;">Membership: The
+                                        Registry
+                                        (名簿管理)</h4>
+                                    <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 1rem;">
+                                        厳密な試験はありません。「やりたい」と手を挙げた人は、役職問わず<strong>「AIチャンピオン名簿」</strong>に登録されます。<br>
+                                        名簿に載ることで、ツール利用権とギルドへのアクセス権が付与されます。
+                                    </p>
+
+                                    <div class="timeline-item" style="padding-bottom: 1rem;">
+                                        <strong style="color: #fff;">Role: PM & Champions</strong><br>
+                                        <span
+                                            style="font-size: 0.8rem; color: var(--p1512-accent-cyan);">攻略のヒントを出すギルドマスター</span>
+                                        <p style="font-size: 0.85rem; margin-top: 0.3rem;">
+                                            丹治・中野・石井の役割は、正解を教えることではありません。<br>
+                                            「この武器（AI）が効きそうだ」「あの呪文（プロンプト）を試しては？」<br>
+                                            というヒントを出し、自力での解決を後押しします。
+                                        </p>
+                                    </div>
+
+                                    <div class="timeline-item" style="padding-bottom: 0;">
+                                        <strong style="color: #fff;">Culture: Open Arms (来る者拒まず)</strong><br>
+                                        <p style="font-size: 0.85rem; margin-top: 0.3rem;">
+                                            「途中から入ると気まずい」空気を作りません。<br>
+                                            名簿に名前が増えること自体を、チーム全員で喜び合う文化を作ります。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SCHEDULE TAB -->
+                <div id="schedule" class="panel">
+                    <h1>スケジュール (評価シート準拠)</h1>
+                    <div class="subtitle">Tactical Rollout Plan (Jan - Mar 2026)</div>
+
+                    <div class="card full-width">
+                        <div class="timeline-item">
+                            <div class="timeline-date">2026.01 (予定)</div>
+                            <h3>育成 & 困りごと解決 (Training & Solution)</h3>
+                            <p>AIチャンピオンが部門の「困りごと」を持ち寄り、一緒に解決策を作る。</p>
+                            <ul>
+                                <li><strong>活動内容</strong>: AI (Google Workspace Studio, Opal, GAS) を用いた解決策の共同作成。</li>
+                                <li><strong>成果物</strong>: AI活用ガイド(簡易版)、FAQ、自動化ツール。</li>
+                                <li><strong>狙い</strong>: 情シスに頼らず部門内で困りごとを解決できる力を養う。</li>
+                            </ul>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-date">2026.02 (予定)</div>
+                            <h3>部門内展開 (Department Rollout)</h3>
+                            <p>AIチャンピオンが自部門で成功事例を紹介し、自律的な問題解決を促進する。</p>
+                            <ul>
+                                <li><strong>活動内容</strong>: 情シスへの相談なしで部門内で完結できる事例を増やす。</li>
+                                <li><strong>役割分担</strong>: 情シスは複雑な自動化のみ代行・見守り役にシフト。</li>
+                            </ul>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-date">2026.03 (予定)</div>
+                            <h3>成果可視化 & 次期判断 (Visualization & Next Steps)</h3>
+                            <p>組織全体の問題解決力を評価し、4月以降の全社展開を判断する。</p>
+                            <ul>
+                                <li><strong>活動内容</strong>: 解決数・削減時間のまとめ。社内ポータルへの成功事例掲載。</li>
+                                <li><strong>評価軸</strong>: 情シス依存度の低下確認、他部門への展開可能性。</li>
+                                <li><strong>ゴール</strong>: 情シスの役割を「実装者」から「支援者」へ完全シフト。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DOCUMENTS TAB -->
+                <div id="docs" class="panel">
+                    <h1>各種ドキュメント</h1>
+                    <div class="subtitle">Official Materials & Drafts</div>
+
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <h3>📄 提案資料・企画書</h3>
+                            <a href="<?= url ?>/project_15_12_ishii.html" class="doc-link" target="_top">
+                                <strong>石井様向け：AIチャンピオン参加ご相談資料</strong><br>
+                                <small>制度の概要、メリット、業務負荷についてのFAQが含まれています。</small>
+                            </a>
+                            <a href="<?= url ?>/project_15_12_proposal.html" class="doc-link" target="_top">
+                                <strong>AquaVoice法人導入提案書（Draft）</strong><br>
+                                <small>Team Planのコスト試算とセキュリティ仕様。</small>
+                            </a>
+                            <a href="<?= url ?>/project_15_12_antigravity.html" class="doc-link" target="_top">
+                                <strong>Antigravity導入案内</strong><br>
+                                <small>既存Google Workspace顧客向けの導入メリットとプロセス。</small>
+                            </a>
+                        </div>
+
+                        <div class="card">
+                            <h3>📘 ハンドブック・マニュアル</h3>
+                            <a href="#" class="doc-link">
+                                <strong>AI Champion Handbook (Lite版)</strong><br>
+                                <small>最初の2名向けの簡易ガイド。「3つのステップ」解説。</small>
+                            </a>
+                            <a href="#" class="doc-link">
+                                <strong>5つの武器 活用ガイド</strong><br>
+                                <small>各ツールの役割と連携パターンの詳細。</small>
+                            </a>
+                        </div>
+
+                        <div class="card">
+                            <h3>💡 外部学習・参考リソース</h3>
+                            <a href="https://www.cloudskillsboost.google/" class="doc-link" target="_blank">
+                                <strong>Google Cloud Skills Boost</strong><br>
+                                <small>公式AIトレーニングプラットフォーム。日本語音声・字幕対応。</small>
+                            </a>
+                            <a href="https://downloads.ctfassets.net/7mrdlclm9xss/m7XsAz2M3bT8WoDrfmYn3/8ee77c25f48de5dab3b792b428df5495/AI_100tips_slide.pdf"
+                                class="doc-link" target="_blank">
+                                <strong>DeNA AI活用100本ノック</strong><br>
+                                <small>100個の実践事例をまとめたスライド資料。課題解決のヒントに。</small>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Preview Area (Placeholder) -->
+                    <div class="card full-width" style="margin-top: 1.5rem;">
+                        <h3>📜 プレビュー: AI Champion Handbook (抜粋)</h3>
+                        <div
+                            style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                            <h4
+                                style="margin-top: 0; color: var(--p1512-accent-cyan); font-size: 1.1rem; margin-bottom: 1rem;">
+                                🛡️
+                                大切なルール（AI憲法 Lite）</h4>
+                            <ol style="padding-left: 1.5rem; margin-bottom: 0; color: var(--p1512-text-main);">
+                                <li style="margin-bottom: 0.8rem;">
+                                    <strong style="color: #fff;">機密情報は守る</strong><br>
+                                    <span style="font-size: 0.9rem; opacity: 0.8;">個人情報や極秘情報は、許可された環境以外では入力しない。</span>
+                                </li>
+                                <li style="margin-bottom: 0.8rem;">
+                                    <strong style="color: #fff;">最後は人が決める</strong><br>
+                                    <span
+                                        style="font-size: 0.9rem; opacity: 0.8;">AIの提案はあくまで「案」。採用するかどうかは、あなたが決める。</span>
+                                </li>
+                                <li>
+                                    <strong style="color: #fff;">責任を持つ</strong><br>
+                                    <span
+                                        style="font-size: 0.9rem; opacity: 0.8;">AIが作ったものの責任は、それを使う（指示した）人間にあります。</span>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TOOLS TAB -->
+                <div id="tools" class="panel">
+                    <h1>公認ツールキット (5つの武器)</h1>
+                    <div class="subtitle">Authorized Toolkit</div>
+
+                    <div class="tools-grid">
+                        <!-- AquaVoice -->
+                        <div class="card" style="text-align: center;">
+                            <span class="tool-icon">🎙️</span>
+                            <strong>AquaVoice</strong><br>
+                            <small>The Mouth (思考ダンプ)</small>
+                        </div>
+                        <!-- Antigravity -->
+                        <div class="card" style="text-align: center;">
+                            <span class="tool-icon">🤖</span>
+                            <strong>Antigravity</strong><br>
+                            <small>The Agent (実行部隊)</small>
+                        </div>
+                        <!-- Opal -->
+                        <div class="card" style="text-align: center;">
+                            <span class="tool-icon">🧠</span>
+                            <strong>Opal</strong><br>
+                            <small>The Brain (論理思考)</small>
+                        </div>
+                        <!-- GWS -->
+                        <div class="card" style="text-align: center;">
+                            <span class="tool-icon">🔗</span>
+                            <strong>GWS</strong><br>
+                            <small>The Glue (接着剤)</small>
+                        </div>
+                        <!-- GAS -->
+                        <div class="card" style="text-align: center;">
+                            <span class="tool-icon">⚡</span>
+                            <strong>GAS</strong><br>
+                            <small>The Hands (精密作業)</small>
+                        </div>
+                    </div>
+
+                    <div class="card full-width" style="margin-top: 1.5rem;">
+                        <h3>🔄 ワークフロー活用例</h3>
+                        <p><strong>会議議事録からのタスク自動化:</strong></p>
+                        <ol>
+                            <li><strong>AquaVoice</strong>: 会議内容を喋ってテキスト化。</li>
+                            <li><strong>Opal</strong>: テキストから「決定事項」と「ToDo」を抽出。</li>
+                            <li><strong>Antigravity</strong>: ToDoを元にGASコードを生成。</li>
+                            <li><strong>GAS</strong>: カレンダー登録 & メール送信を実行。</li>
+                        </ol>
+                    </div>
+
+                    <div class="card full-width"
+                        style="margin-top: 1.5rem; border-left: 4px solid var(--p1512-accent-cyan);">
+                        <h3>🚀 スキルアップ・外部パワーアップ</h3>
+                        <p>5つの武器を使いこなすための外部リソースです。</p>
+                        <div style="display: flex; gap: 1rem;">
+                            <div
+                                style="flex: 1; min-width: 200px; background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 8px;">
+                                <strong style="color: var(--p1512-text-highlight);">Google Skills</strong><br>
+                                <small>最新のAIツール活用術を公式から学ぶ。</small>
+                            </div>
+                            <div
+                                style="flex: 1; min-width: 200px; background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 8px;">
+                                <strong style="color: var(--p1512-text-highlight);">DeNA 100本ノック</strong><br>
+                                <small>現場で役立つ100の武器（事例）を手に入れる。</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- End project-dark-theme -->
+        </main>
+    </div>
+
+    <script>
+        function showPanel(panelId, tabElement) {
+            // Hide all panels
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            // Show target panel
+            document.getElementById(panelId).classList.add('active');
+
+            // Update tab state
+            document.querySelectorAll('.tab-item').forEach(n => n.classList.remove('active'));
+            if (tabElement) {
+                tabElement.classList.add('active');
+            } else {
+                // Determine tab element from panelId if direct element not provided
+                // This handles the initial load case and URL params
+                const items = document.querySelectorAll('.tab-item');
+                if (panelId === 'overview') items[0].classList.add('active');
+                if (panelId === 'schedule') items[1].classList.add('active');
+                if (panelId === 'docs') items[2].classList.add('active');
+                if (panelId === 'tools') items[3].classList.add('active');
+            }
+        }
+
+        // Auto-switch tab based on URL parameter
+        window.onload = function () {
+            // Check for search params like ?tab=docs
+            const urlParams = new URLSearchParams(window.location.search);
+            const tabId = urlParams.get('tab');
+            if (tabId) {
+                const panel = document.getElementById(tabId);
+                if (panel) {
+                    showPanel(tabId, null);
+                }
+            } else {
+                // Also support Google Apps Script legacy param style if needed, 
+                // but typically plain URL is ?tab=
+                // Fallback: If google is defined (running in GAS iframe)
+                if (typeof google !== 'undefined' && google.script && google.script.url) {
+                    google.script.url.getLocation(function (location) {
+                        if (location.parameter && location.parameter.tab) {
+                            const gasTabId = location.parameter.tab;
+                            const panel = document.getElementById(gasTabId);
+                            if (panel) {
+                                showPanel(gasTabId, null);
+                            }
+                        }
+                    });
+                }
+            }
+        };
+    </script>
+</body>
+
+</html>

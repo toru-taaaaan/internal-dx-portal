@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <title>相談資料 - Project 15.12</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --card-bg: #f8f9fa;
+            --text-main: #212529;
+            --text-highlight: #0066cc;
+            --accent-cyan: #0066cc;
+            --glass-border: 1px solid #dee2e6;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            padding: 3rem;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #212529;
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            border-bottom: 3px solid var(--text-highlight);
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            border-left: 4px solid var(--accent-cyan);
+            padding-left: 1rem;
+            margin-top: 2.5rem;
+            color: var(--text-highlight);
+            font-weight: 600;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: var(--glass-border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            color: #0052a3;
+        }
+
+        strong {
+            color: #212529;
+            font-weight: 600;
+        }
+
+        ul {
+            list-style-type: square;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="<?= url ?>/project_15_12.html&tab=docs" class="back-link" target="_top">← プロジェクトトップ (資料一覧) に戻る</a>
+
+    <h1>AIチャンピオン（業務改善推進リーダー）への参加ご相談</h1>
+
+    <div class="card">
+        <p><strong>To: 経理部 石井様</strong><br>
+            <strong>From: 情報システム部 丹治</strong>
+        </p>
+        <p>おつかれさまです。<br>
+            現在、情報システム部では、各部門の業務効率化を加速させるための新しい取り組みとして<strong>「AIチャンピオン（仮称）」</strong>制度を立ち上げることになり、石井さんにぜひその第一期メンバーとして参加していただきたいと考えています。
+        </p>
+    </div>
+
+    <h2>💡 AIチャンピオンとは？</h2>
+    <p><strong>「部門内でデジタル推進をリードする人材」</strong>のことです。<br>
+        英語圏では「AI Champion」と呼ばれ、AIや自動化ツールを使って、自分たちの部署の『ちょっとした困りごと』を自分たちで解決できる人を指します。</p>
+
+    <div class="info-box">
+        <strong>なぜ今、AIチャンピオンなのか？</strong><br>
+        世界的なトレンドとして、IT部門に全てを任せるのではなく、各部門にデジタルに強いリーダー（AIチャンピオン）を配置し、現場主導で業務改善を進める企業が増えています。
+    </div>
+
+
+    <h3 style="margin-top: 2.5rem; color: #0066cc;">🎯 情シスの役割の変化</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+        <!-- 従来の体制 -->
+        <div style="background: #fff3f3; border: 2px solid #ff6b6b; border-radius: 12px; padding: 1.5rem;">
+            <h4 style="color: #ff6b6b; margin-top: 0; text-align: center;">❌ 従来の体制</h4>
+
+            <div
+                style="background: #ffebee; padding: 1rem; border-radius: 8px; margin: 1rem 0; border-left: 4px solid #ff6b6b;">
+                <strong style="color: #ff6b6b;">情シスの負担</strong><br>
+                <small>✓ 業務フローの理解<br>
+                    ✓ 各部署との往復<br>
+                    ✓ 要件定義〜実装まで</small>
+            </div>
+
+            <div style="text-align: center; margin: 1.5rem 0;">
+                <div
+                    style="display: inline-block; background: #e3f2fd; padding: 0.75rem 1.5rem; border-radius: 8px; margin: 0.5rem;">
+                    経理部<br><small>依頼</small>
+                </div>
+                <div style="font-size: 1.5rem; color: #ff6b6b; margin: 0.5rem 0;">⇅</div>
+                <div
+                    style="display: inline-block; background: #ffebee; padding: 1rem 2rem; border-radius: 8px; border: 2px solid #ff6b6b; font-weight: bold;">
+                    情報システム部<br><small>業務フロー理解<br>+<br>実装</small>
+                </div>
+            </div>
+
+            <p style="text-align: center; color: #666; font-size: 0.85rem; margin-top: 1rem;">
+                <strong>問題点：</strong><br>
+                情シスが各部署の業務を<br>深く理解する必要がある
+            </p>
+        </div>
+
+        <!-- AIチャンピオン体制 -->
+        <div style="background: #f0f9ff; border: 2px solid #0066cc; border-radius: 12px; padding: 1.5rem;">
+            <h4 style="color: #0066cc; margin-top: 0; text-align: center;">✅ AIチャンピオン体制</h4>
+
+            <div
+                style="background: #e3f2fd; padding: 1rem; border-radius: 8px; margin: 1rem 0; border-left: 4px solid #0066cc;">
+                <strong style="color: #0066cc;">情シスの新しい役割</strong><br>
+                <small>✓ 新技術の導入<br>
+                    ✓ テクニックの伝達<br>
+                    ✓ サポート</small>
+            </div>
+
+            <div style="text-align: center; margin: 1.5rem 0;">
+                <div
+                    style="display: inline-block; background: #e3f2fd; padding: 0.75rem 1.5rem; border-radius: 8px; border: 1px solid #0066cc; margin-bottom: 0.5rem;">
+                    情報システム部<br><small>テクニック伝達</small>
+                </div>
+                <div style="font-size: 1.2rem; color: #0066cc; margin: 0.5rem 0;">↓</div>
+
+                <div style="display: flex; justify-content: space-around; margin-top: 1rem;">
+                    <div
+                        style="background: #c8e6c9; padding: 0.75rem 1rem; border-radius: 8px; border: 2px solid #4caf50; position: relative; text-align: center;">
+                        <div
+                            style="position: absolute; top: -10px; right: -10px; background: #ffd700; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;">
+                            ⭐</div>
+                        経理部<br><small>業務フロー<br>エキスパート</small>
+                    </div>
+                    <div
+                        style="background: #c8e6c9; padding: 0.75rem 1rem; border-radius: 8px; border: 2px solid #4caf50; position: relative; text-align: center;">
+                        <div
+                            style="position: absolute; top: -10px; right: -10px; background: #ffd700; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;">
+                            ⭐</div>
+                        営業部<br><small>業務フロー<br>エキスパート</small>
+                    </div>
+                </div>
+                <div style="font-size: 1.2rem; color: #4caf50; margin: 0.5rem 0;">⟷</div>
+                <small style="color: #666;">チャンピオン同士で相談</small>
+            </div>
+
+            <p style="text-align: center; color: #666; font-size: 0.85rem; margin-top: 1rem;">
+                <strong>メリット：</strong><br>
+                業務エキスパートが<br>自分で実装できる
+            </p>
+        </div>
+    </div>
+
+    <h3>🏢 先進企業の導入事例</h3>
+    <p><strong>国内企業：</strong></p>
+    <ul>
+        <li><strong>本田技研工業（Honda）</strong>: 「Gen-AIエキスパート制度」を導入し、現場のAI人材を育成。</li>
+        <li><strong>中外製薬</strong>: 各部門に「DXリーダー」を配置し、創薬プロセスの革新を推進。</li>
+        <li><strong>三菱UFJ銀行</strong>: 「デジタルチャンピオン」制度で行員のDXスキル向上を実現。</li>
+    </ul>
+    <p><strong>海外企業：</strong></p>
+    <ul>
+        <li><strong>Microsoft</strong>: 社内に「AI Champions」プログラムを展開し、全社員のAI活用を促進。</li>
+        <li><strong>Google</strong>: 「Citizen Developer」育成プログラムで、非エンジニアによる業務自動化を推進。</li>
+        <li><strong>Amazon</strong>: AWS内で「Machine Learning Champions」を育成し、顧客支援とイノベーションを加速。</li>
+        <li><strong>Siemens</strong>: 製造現場に「Digital Champions」を配置し、スマートファクトリー化を実現。</li>
+    </ul>
+
+    <h3>📋 各社の展開方法（具体例）</h3>
+    <div class="info-box">
+        <p><strong>1. 部門横断型の選抜制度</strong></p>
+        <ul>
+            <li><strong>Microsoft</strong>: 各部門から意欲的な社員を公募し、3ヶ月間の集中トレーニングプログラムを実施。修了後は部門に戻り、現場のAI活用をリード。</li>
+            <li><strong>Honda</strong>: 製造、営業、開発など各部門から「Gen-AIエキスパート」を選出し、月1回の全社ミーティングで知見を共有。</li>
+        </ul>
+
+        <p><strong>2. 段階的な展開（スモールスタート）</strong></p>
+        <ul>
+            <li><strong>中外製薬</strong>: まず研究開発部門で2名のDXリーダーを試験導入 → 成果を確認後、営業・製造部門へ拡大。</li>
+            <li><strong>三菱UFJ銀行</strong>: パイロット店舗で「デジタルチャンピオン」を配置し、業務効率化の成果を測定 → 全国展開。</li>
+        </ul>
+
+        <p><strong>3. コミュニティ形成とナレッジ共有</strong></p>
+        <ul>
+            <li><strong>Google</strong>: 社内Slackチャンネルで「Citizen Developer Community」を運営。質問・事例共有を活発化。</li>
+            <li><strong>Amazon</strong>: 「ML Champions」専用のWikiとフォーラムを構築し、ベストプラクティスを蓄積。</li>
+        </ul>
+
+        <p><strong>4. 情シス部門のサポート体制</strong></p>
+        <ul>
+            <li><strong>Siemens</strong>: IT部門が「Digital Champions」向けに週1回のオフィスアワーを設定。技術的な質問に即座に対応。</li>
+            <li><strong>Honda</strong>: 情報システム部が「AIエキスパート支援チーム」を組織し、各部門のチャンピオンをバックアップ。</li>
+        </ul>
+    </div>
+
+    <h2>🛠️ 使うツール：AIエディタとGoogleツール</h2>
+    <h3>1. AIネイティブ・コードエディタ「Antigravity」</h3>
+    <ul>
+        <li><strong>Vibe Coding（バイブ・コーディング）</strong>: 「やりたいこと（意図）」を日本語で伝えるだけで、AIがプログラムを書いてくれます。文法を覚える必要はありません。</li>
+    </ul>
+    <h3>2. Google Workspace活用ツール</h3>
+    <ul>
+        <li><strong>Google Workspace Studio</strong>: プログラミング不要で業務アプリやワークフローを作成。</li>
+        <li><strong>GAS</strong>: スプレッドシートやGmailを自動化する魔法のスクリプト。</li>
+    </ul>
+
+    <h2>🌟 なぜ石井さんにお願いしたいのか</h2>
+    <p>日頃の業務の中で、業務改善に対する意識が高く、新しいツールへの適応力も高い石井さんに、ぜひ経理部の「デジタルリーダー（AIチャンピオン）」になっていただきたいと考えたためです。</p>
+
+    <h2>🚀 参加のメリット</h2>
+    <ol>
+        <li><strong>ご自身のスキルアップ</strong>: 今後どのような業務でも必須となる「AI活用」「業務自動化」のスキルを、業務時間内に段階的に習得できます。</li>
+        <li><strong>経理業務の効率化</strong>: 「これ、もっと簡単にできないかな？」という日常のストレスを、自分の手ですぐに解消できるようになります。</li>
+        <li><strong>社内で完結する学び合いのコミュニティ</strong>:
+            各部門のAIチャンピオンが集まり、お互いの知見を共有し、高め合えるコミュニティが生まれます。外部のセミナーやコミュニティに頼るのではなく、社内で自律的に成長できる環境を作ります。</li>
+        <li><strong>組織全体の競争力向上</strong>: AIチャンピオンが各部門に配置されることで、他社に負けない、変化に強い組織を作ることができます。</li>
+    </ol>
+
+    <h2>📅 具体的な活動イメージ（業務負荷について）</h2>
+    <p>通常の業務に支障が出ない範囲で設計しています。</p>
+    <ul>
+        <li><strong>期間</strong>: 2026年1月下旬 〜 （継続）</li>
+        <li><strong>頻度</strong>: <strong>基本チャットで完結</strong>（必要に応じて短時間のWebMTG）</li>
+    </ul>
+
+    <div class="card">
+        <h3>📝 上長（経理責任者様）へのご説明用FAQ</h3>
+        <p><strong>Q. 業務時間はどれくらい取られるの？</strong><br>
+            A. <strong>初回のセットアップ学習（約2時間）のみ</strong>、お時間をいただきます。<br>
+            それ以降は、新しい業務ツールを覚えるのではなく、「普段の業務」の中にAI支援を取り入れるだけですので、業務時間を圧迫することはありません。むしろ、業務時間が短縮されることを目的としています。</p>
+
+        <p><strong>Q. 経理部に何のメリットがあるの？</strong><br>
+            A. 経理特有の細かい手作業やデータ加工作業を、将来的に情報システム部に依頼することなく、部内で自動化・短縮できるようになることを目指しています。</p>
+
+        <p><strong>Q. 会社としての承認は？</strong><br>
+            A. 本プロジェクト（トライアル）については、情報システム部の部長（塩田・篠）承認を取得済みです。<br>
+            石井様から直属の上長へご報告・ご了承いただければ、すぐに開始できる状態です。</p>
+    </div>
+
+    <h2>🌏 私たちの目指す姿</h2>
+    <p>この取り組みのゴールは、単にツールを導入することではありません。<br>
+        <strong>「強いチーム」を自社内に内包し、部門を超えて相談できるネットワークを築くこと</strong>です。
+    </p>
+
+    <p style="margin-top: 3rem; text-align: center; font-size: 0.9rem; opacity: 0.7;">Project 15.12 - Internal DX Portal
+    </p>
+</body>
+
+</html>
