@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Schedule | Internal DX Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/portal_nexus.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .schedule-table thead {
+      background: #1e293b;
+      color: white;
+    }
+
+    .schedule-table th {
+      padding: 16px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .schedule-table td {
+      padding: 16px;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 14px;
+    }
+
+    .schedule-table tbody tr:hover {
+      background: #f8fafc;
+    }
+
+    .task-name {
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .deadline {
+      font-weight: 700;
+      color: #dc2626;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-completed {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status-in-progress {
+      background: #bfdbfe;
+      color: #1e40af;
+    }
+
+    .status-pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .status-urgent {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .days-left {
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .days-critical {
+      color: #dc2626;
+    }
+
+    .days-warning {
+      color: #ea580c;
+    }
+
+    .days-normal {
+      color: #059669;
+    }
+
+    .section-header {
+      background: #f1f5f9;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: 900;
+      color: #0f172a;
+      margin-top: 24px;
+      margin-bottom: 16px;
+      border-left: 4px solid #3b82f6;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: #3b82f6;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.2s;
+      margin-bottom: 24px;
+    }
+
+    .back-button:hover {
+      background: #2563eb;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+
+<body class="bg-[#fcfcfc]">
+
+  <div class="layout-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <header class="sidebar-header">
+        <h1>統合指揮センター HUB</h1>
+        <p>MASTER COMMAND CENTER V2.2</p>
+      </header>
+      <nav>
+        <div class="nav-label-small">トップ・ナビゲーション</div>
+        <a href="landing.html" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+          ポータルホーム
+        </a>
+        <a href="index.html" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          プロジェクト
+        </a>
+        <a href="schedule.html" class="nav-link active">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M8 7V3m8 4V3m-9 8h10m-10 6h10m-10 6h10M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z" />
+          </svg>
+          スケジュール
+        </a>
+        <a href="executive_hub.html" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+          全体課題管理表
+        </a>
+      </nav>
+      <footer class="sidebar-footer">
+        <p>User: 丹治 統<br>Last Sync: 2/9 13:00</p>
+      </footer>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="main-scroll">
+      <div class="p-12">
+        <a href="landing.html" class="back-button">
+          ← ポータルホームに戻る
+        </a>
+
+        <header class="mb-8">
+          <h1 class="text-3xl font-black text-slate-700 flex items-center gap-3">
+            <span class="w-2 h-8 bg-slate-700 rounded-sm"></span>
+            プロジェクト スケジュール管理
+          </h1>
+          <p class="text-slate-500 mt-2">進行中のタスク・期限一覧</p>
+        </header>
+
+        <!-- Urgent Tasks Section -->
+        <div class="section-header">🔴 緊急対応（3日以内）</div>
+        <table class="schedule-table mb-8">
+          <thead>
+            <tr>
+              <th style="width: 35%">タスク</th>
+              <th style="width: 20%">期限</th>
+              <th style="width: 15%">残日数</th>
+              <th style="width: 15%">ステータス</th>
+              <th style="width: 15%">担当</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="task-name">スケジュール管理表の完成</td>
+              <td class="deadline">2/9（本日）</td>
+              <td class="days-left days-critical">0日</td>
+              <td><span class="status-badge status-in-progress">進行中</span></td>
+              <td>丹治統</td>
+            </tr>
+            <tr>
+              <td class="task-name">Antigravity チーム編集ガイド配布</td>
+              <td class="deadline">2/10</td>
+              <td class="days-left days-critical">1日</td>
+              <td><span class="status-badge status-pending">未開始</span></td>
+              <td>丹治統</td>
+            </tr>
+            <tr>
+              <td class="task-name">ポータルアクセステスト（3ユーザー）</td>
+              <td class="deadline">2/10</td>
+              <td class="days-left days-critical">1日</td>
+              <td><span class="status-badge status-pending">未開始</span></td>
+              <td>塩田部長/篠部長</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Short-term Tasks Section -->
+        <div class="section-header">🟡 今週中（1～7日）</div>
+        <table class="schedule-table mb-8">
+          <thead>
+            <tr>
+              <th style="width: 35%">タスク</th>
+              <th style="width: 20%">期限</th>
+              <th style="width: 15%">残日数</th>
+              <th style="width: 15%">ステータス</th>
+              <th style="width: 15%">担当</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="task-name">予算申請資料の最終確認</td>
+              <td class="deadline">2/14</td>
+              <td class="days-left days-warning">5日</td>
+              <td><span class="status-badge status-in-progress">進行中</span></td>
+              <td>塩田部長</td>
+            </tr>
+            <tr>
+              <td class="task-name">Cloud Run → Workers 移行の完全テスト</td>
+              <td class="deadline">2/12</td>
+              <td class="days-left days-warning">3日</td>
+              <td><span class="status-badge status-in-progress">進行中</span></td>
+              <td>丹治統</td>
+            </tr>
+            <tr>
+              <td class="task-name">セキュリティ監査（Basic認証）</td>
+              <td class="deadline">2/14</td>
+              <td class="days-left days-warning">5日</td>
+              <td><span class="status-badge status-pending">未開始</span></td>
+              <td>情報システム部</td>
+            </tr>
+            <tr>
+              <td class="task-name">ユーザーマニュアル作成</td>
+              <td class="deadline">2/16</td>
+              <td class="days-left days-normal">7日</td>
+              <td><span class="status-badge status-pending">未開始</span></td>
+              <td>丹治統</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Medium-term Tasks Section -->
+        <div class="section-header">🔵 2月中（8～29日）</div>
+        <table class="schedule-table mb-8">
+          <thead>
+            <tr>
+              <th style="width: 35%">タスク</th>
+              <th style="width: 20%">期限</th>
+              <th style="width: 15%">残日数</th>
+              <th style="width: 15%">ステータス</th>
+              <th style="width: 15%">担当</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="task-name">LinkAtJapan 並行稼働期間の終了対応</td>
+              <td class="deadline">2/28</td>
+              <td class="days-left days-normal">19日</td>
+              <td><span class="status-badge status-pending">未開始</span></td>
+              <td>塩田部長/丹治統</td>
+            </tr>
+            <tr>
+              <td class="task-name">AD Cloud Lift（Project 15.01）レビュー</td>
+              <td class="deadline">2/21</td>
+              <td class="days-left days-warning">12日</td>
+              <td><span class="status-badge status-pending">未開始</span></td>
+              <td>Antigravity</td>
+            </tr>
+            <tr>
+              <td class="task-name">Secom Cloud（Project 15.02）レビュー</td>
+              <td class="deadline">2/23</td>
+              <td class="days-left days-normal">14日</td>
+              <td><span class="status-badge status-pending">未開始</span></td>
+              <td>Antigravity</td>
+            </tr>
+            <tr>
+              <td class="task-name">本番環境のバックアップ設定</td>
+              <td class="deadline">2/25</td>
+              <td class="days-left days-normal">16日</td>
+              <td><span class="status-badge status-pending">未開始</span></td>
+              <td>情報システム部</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Legend -->
+        <div style="margin-top: 40px; padding: 20px; background: #f8fafc; border-radius: 8px; border-left: 4px solid #6b7280;">
+          <h3 style="font-weight: 700; margin-bottom: 12px; color: #1e293b;">📌 ステータス凡例</h3>
+          <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="status-badge status-completed">完了</span>
+              <span style="font-size: 12px; color: #64748b;">完成済みのタスク</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="status-badge status-in-progress">進行中</span>
+              <span style="font-size: 12px; color: #64748b;">現在進行中のタスク</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="status-badge status-pending">未開始</span>
+              <span style="font-size: 12px; color: #64748b;">まだ開始していないタスク</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="status-badge status-urgent">緊急</span>
+              <span style="font-size: 12px; color: #64748b;">今すぐ対応が必要</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Update Info -->
+        <div style="margin-top: 40px; padding: 16px; background: #eff6ff; border-radius: 8px; border-left: 4px solid #3b82f6;">
+          <p style="font-size: 12px; color: #1e40af; margin: 0;">
+            <strong>最終更新:</strong> 2026年2月9日 13:00<br>
+            <strong>次回更新:</strong> 2026年2月10日（毎日更新予定）
+          </p>
+        </div>
+
+        <footer class="mt-24 pt-8 border-t border-slate-200 text-center text-slate-400 text-[10px] font-bold uppercase tracking-[0.4em]">
+          &copy; 2026 Akiba Holdings System Division
+        </footer>
+      </div>
+    </main>
+  </div>
+
+</body>
+
+</html>
