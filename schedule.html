@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Schedule | Internal DX Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/portal_nexus.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .schedule-table thead {
+      background: #1e293b;
+      color: white;
+    }
+
+    .schedule-table th {
+      padding: 16px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .schedule-table td {
+      padding: 16px;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 14px;
+    }
+
+    .schedule-table tbody tr:hover {
+      background: #f8fafc;
+    }
+
+    .task-name {
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .deadline {
+      font-weight: 700;
+      color: #dc2626;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-completed {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status-in-progress {
+      background: #bfdbfe;
+      color: #1e40af;
+    }
+
+    .status-pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .status-urgent {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .days-left {
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .days-critical {
+      color: #dc2626;
+    }
+
+    .days-warning {
+      color: #ea580c;
+    }
+
+    .days-normal {
+      color: #059669;
+    }
+
+    .section-header {
+      background: #f1f5f9;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: 900;
+      color: #0f172a;
+      margin-top: 24px;
+      margin-bottom: 16px;
+      border-left: 4px solid #3b82f6;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: #3b82f6;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.2s;
+      margin-bottom: 24px;
+    }
+
+    .back-button:hover {
+      background: #2563eb;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+
+<body class="bg-[#fcfcfc]">
+
+  <div class="layout-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <header class="sidebar-header">
+        <h1>統合指揮センター HUB</h1>
+        <p>MASTER COMMAND CENTER V2.2</p>
+      </header>
+      <nav>
+        <div class="nav-label-small">トップ・ナビゲーション</div>
+        <a href="landing.html" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+          ポータルホーム
+        </a>
+        <a href="index.html" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          プロジェクト
+        </a>
+        <a href="schedule.html" class="nav-link active">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M8 7V3m8 4V3m-9 8h10m-10 6h10m-10 6h10M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z" />
+          </svg>
+          スケジュール
+        </a>
+        <a href="executive_hub.html" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+          全体課題管理表
+        </a>
+      </nav>
+      <footer class="sidebar-footer">
+        <p>User: 丹治 統<br>Last Sync: 2/9 13:00</p>
+      </footer>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="main-scroll">
+      <div class="p-12">
+        <a href="landing.html" class="back-button">
+          ← ポータルホームに戻る
+        </a>
+
+        <header class="mb-8">
+          <h1 class="text-3xl font-black text-slate-700 flex items-center gap-3">
+            <span class="w-2 h-8 bg-slate-700 rounded-sm"></span>
+            プロジェクト スケジュール管理
+          </h1>
+          <p class="text-slate-500 mt-2">進行中のタスク・期限一覧</p>
+        </header>
+
+        <!-- Phase 2 Executive Summary -->
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; margin-bottom: 40px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+          <h2 style="font-size: 18px; font-weight: 900; color: #1e293b; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+            <svg style="width: 24px; height: 24px; color: #3b82f6;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Phase 2: Infrastructure Refresh 戦略目標
+          </h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+            <div style="border-left: 3px solid #3b82f6; padding-left: 16px;">
+              <h3 style="font-size: 14px; font-weight: 700; color: #3b82f6; margin-bottom: 8px;">1. 基盤の近代化 (Modernization)</h3>
+              <p style="font-size: 13px; color: #475569; line-height: 1.6;">
+                オンプレミス AD および Secom サーバを Azure IaaS へ完全移行。ハードウェア保守期限 (EoL) のリスクを排除し、クラウドの柔軟性を確保。
+              </p>
+            </div>
+            <div style="border-left: 3px solid #10b981; padding-left: 16px;">
+              <h3 style="font-size: 14px; font-weight: 700; color: #10b981; margin-bottom: 8px;">2. 統合と最適化 (Optimization)</h3>
+              <p style="font-size: 13px; color: #475569; line-height: 1.6;">
+                VNet 統合による通信パスの最短化。AD + Secom のリソース統合により、ライセンスコストおよびバックアップ運用コストを約 15% 削減見込み。
+              </p>
+            </div>
+            <div style="border-left: 3px solid #f59e0b; padding-left: 16px;">
+              <h3 style="font-size: 14px; font-weight: 700; color: #f59e0b; margin-bottom: 8px;">3. 継続性と責任 (Continuity)</h3>
+              <p style="font-size: 13px; color: #475569; line-height: 1.6;">
+                Azure Backup (GRS) による東西冗長化を完備。3社間の責任分界点 (RACI) を明確化し、障害発生時の復旧体制を標準化。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 🚨 URGENT TASKS (3日以内) -->
+        <div style="margin-top: 40px; padding: 24px; background: #fef2f2; border-radius: 12px; border-left: 4px solid #dc2626;">
+          <h2 style="font-size: 18px; font-weight: 900; color: #7f1d1d; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+            <svg style="width: 24px; height: 24px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4v.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            🚨 緊急対応 (3日以内)
+          </h2>
+
+          <!-- USEN Email Task - COMPLETED -->
+          <div style="background: white; padding: 20px; border-radius: 8px; border: 2px solid #dcfce7; margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0;">
+                USENさんに回線の見直しについてのメール送信
+              </h3>
+              <span class="status-badge status-completed" style="font-size: 13px; padding: 6px 12px;">✅ 完了</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 12px;">
+              <div>
+                <p style="font-size: 12px; color: #64748b; margin: 0 0 4px 0;">進捗率</p>
+                <p style="font-size: 18px; font-weight: 900; color: #16a34a; margin: 0;">100%</p>
+              </div>
+              <div>
+                <p style="font-size: 12px; color: #64748b; margin: 0 0 4px 0;">完了日時</p>
+                <p style="font-size: 14px; font-weight: 700; color: #1e293b; margin: 0;">2/9 14:30</p>
+              </div>
+              <div>
+                <p style="font-size: 12px; color: #64748b; margin: 0 0 4px 0;">担当</p>
+                <p style="font-size: 14px; font-weight: 700; color: #1e293b; margin: 0;">丹治 統</p>
+              </div>
+            </div>
+            <div style="background: #f0fdf4; padding: 12px; border-radius: 6px; border-left: 3px solid #16a34a;">
+              <p style="font-size: 13px; color: #15803d; margin: 0; font-weight: 600;">
+                ✅ メール送信完了：USEN様に対して回線の見直し（SD-WAN刷新）についての進捗報告と次回ミーティング日程調整を実施しました。
+              </p>
+            </div>
+          </div>
+
+          <!-- Pariose Security Additional Options Task - IN PROGRESS -->
+          <div style="background: white; padding: 20px; border-radius: 8px; border: 2px solid #bfdbfe; margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0;">
+                パリオセキア追加オプション費用資料作成
+              </h3>
+              <span class="status-badge status-in-progress" style="font-size: 13px; padding: 6px 12px;">進行中</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 12px;">
+              <div>
+                <p style="font-size: 12px; color: #64748b; margin: 0 0 4px 0;">進捗率</p>
+                <p style="font-size: 18px; font-weight: 900; color: #2563eb; margin: 0;">0%</p>
+              </div>
+              <div>
+                <p style="font-size: 12px; color: #64748b; margin: 0 0 4px 0;">期限</p>
+                <p style="font-size: 14px; font-weight: 700; color: #dc2626; margin: 0;">2/10</p>
+              </div>
+              <div>
+                <p style="font-size: 12px; color: #64748b; margin: 0 0 4px 0;">担当</p>
+                <p style="font-size: 14px; font-weight: 700; color: #1e293b; margin: 0;">丹治 統</p>
+              </div>
+            </div>
+            <div style="background: #eff6ff; padding: 12px; border-radius: 6px; border-left: 3px solid #2563eb;">
+              <p style="font-size: 13px; color: #1e40af; margin: 0; font-weight: 600;">
+                📋 USEN様からの返信を受けて、パリオセキアの追加オプション（オプション機能・拡張サービス）に関する費用見積もりを整理し、導入効果と ROI をまとめた資料を作成します。
+              </p>
+            </div>
+          </div>
+
+          <!-- Scenario 4 & IIJ Omnibus Comparison Task - IN PROGRESS -->
+          <div style="background: white; padding: 20px; border-radius: 8px; border: 2px solid #bfdbfe; margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0;">
+                シナリオ④ 次世代刷新 (Cato SASE) とIIJオムニバス比較資料作成
+              </h3>
+              <span class="status-badge status-in-progress" style="font-size: 13px; padding: 6px 12px;">進行中</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 12px;">
+              <div>
+                <p style="font-size: 12px; color: #64748b; margin: 0 0 4px 0;">進捗率</p>
+                <p style="font-size: 18px; font-weight: 900; color: #2563eb; margin: 0;">0%</p>
+              </div>
+              <div>
+                <p style="font-size: 12px; color: #64748b; margin: 0 0 4px 0;">期限</p>
+                <p style="font-size: 14px; font-weight: 700; color: #dc2626; margin: 0;">2/12</p>
+              </div>
+              <div>
+                <p style="font-size: 12px; color: #64748b; margin: 0 0 4px 0;">担当</p>
+                <p style="font-size: 14px; font-weight: 700; color: #1e293b; margin: 0;">丹治 統</p>
+              </div>
+            </div>
+            <div style="background: #eff6ff; padding: 12px; border-radius: 6px; border-left: 3px solid #2563eb;">
+              <p style="font-size: 13px; color: #1e40af; margin: 0; font-weight: 600;">
+                📊 SCSK角田様からの情報を元に、Cato SASE による次世代ネットワーク刷新シナリオ④を定義し、IIJ オムニバス（統合 SD-WAN + Security）ソリューションとの徹底比較資料を作成します。費用・機能・リスク・導入期間を多軸で分析。
+              </p>
+            </div>
+          </div>
+
+          <!-- Verification Email to IIJ & Cato Task - PENDING -->
+          <div style="background: white; padding: 20px; border-radius: 8px; border: 2px solid #fef3c7; margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0;">
+                IIJ・Cato両社への確認メール送信（比較資料裏取り）
+              </h3>
+              <span class="status-badge status-pending" style="font-size: 13px; padding: 6px 12px;">未開始</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 12px;">
+              <div>
+                <p style="font-size: 12px; color: #64748b; margin: 0 0 4px 0;">進捗率</p>
+                <p style="font-size: 18px; font-weight: 900; color: #f59e0b; margin: 0;">0%</p>
+              </div>
+              <div>
+                <p style="font-size: 12px; color: #64748b; margin: 0 0 4px 0;">期限</p>
+                <p style="font-size: 14px; font-weight: 700; color: #dc2626; margin: 0;">2/13</p>
+              </div>
+              <div>
+                <p style="font-size: 12px; color: #64748b; margin: 0 0 4px 0;">担当</p>
+                <p style="font-size: 14px; font-weight: 700; color: #1e293b; margin: 0;">丹治 統</p>
+              </div>
+            </div>
+            <div style="background: #fef9e7; padding: 12px; border-radius: 6px; border-left: 3px solid #f59e0b;">
+              <p style="font-size: 13px; color: #92400e; margin: 0; font-weight: 600;">
+                ✉️ IIJ・Cato比較資料完成後、両社に確認メールを送信。各社の見積もり内容・機能仕様・導入予定期間について正確性を検証し、営業提案との整合性をチェック。フィードバックを資料に反映。
+              </p>
+            </div>
+          </div>
+
+          <!-- Environment Setup for Department Heads Task - PENDING -->
+          <div style="background: white; padding: 20px; border-radius: 8px; border: 2px solid #fef3c7; margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0;">
+                塩田部長・篠部長への環境共有設定
+              </h3>
+              <span class="status-badge status-pending" style="font-size: 13px; padding: 6px 12px;">未開始</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 12px;">
+              <div>
+                <p style="font-size: 12px; color: #64748b; margin: 0 0 4px 0;">進捗率</p>
+                <p style="font-size: 18px; font-weight: 900; color: #f59e0b; margin: 0;">0%</p>
+              </div>
+              <div>
+                <p style="font-size: 12px; color: #64748b; margin: 0 0 4px 0;">期限</p>
+                <p style="font-size: 14px; font-weight: 700; color: #dc2626; margin: 0;">2/11</p>
+              </div>
+              <div>
+                <p style="font-size: 12px; color: #64748b; margin: 0 0 4px 0;">担当</p>
+                <p style="font-size: 14px; font-weight: 700; color: #1e293b; margin: 0;">丹治 統</p>
+              </div>
+            </div>
+            <div style="background: #fef9e7; padding: 12px; border-radius: 6px; border-left: 3px solid #f59e0b;">
+              <p style="font-size: 13px; color: #92400e; margin: 0; font-weight: 600;">
+                🔐 塩田部長・篠部長に対してポータル環境へのアクセス権限を付与し、作成した各種資料・比較検討資料・スケジュール管理表へのアクセスを可能にする。認証情報の安全な共有と環境設定の確認。
+              </p>
+            </div>
+          </div>
+
+          <!-- IIJ & Cato Detailed Inquiry Email Task - PENDING -->
+          <div style="background: white; padding: 20px; border-radius: 8px; border: 2px solid #fef3c7; margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0;">
+                IIJ・Catoへの詳細質問メール送付（正確な比較実施）
+              </h3>
+              <span class="status-badge status-pending" style="font-size: 13px; padding: 6px 12px;">未開始</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 12px;">
+              <div>
+                <p style="font-size: 12px; color: #64748b; margin: 0 0 4px 0;">進捗率</p>
+                <p style="font-size: 18px; font-weight: 900; color: #f59e0b; margin: 0;">0%</p>
+              </div>
+              <div>
+                <p style="font-size: 12px; color: #64748b; margin: 0 0 4px 0;">期限</p>
+                <p style="font-size: 14px; font-weight: 700; color: #dc2626; margin: 0;">2/11</p>
+              </div>
+              <div>
+                <p style="font-size: 12px; color: #64748b; margin: 0 0 4px 0;">担当</p>
+                <p style="font-size: 14px; font-weight: 700; color: #1e293b; margin: 0;">丹治 統</p>
+              </div>
+            </div>
+            <div style="background: #fef9e7; padding: 12px; border-radius: 6px; border-left: 3px solid #f59e0b;">
+              <p style="font-size: 13px; color: #92400e; margin: 0; font-weight: 600;">
+                ❓ IIJ オムニバス・Cato SASE の両社に対して、正確な比較検討に必要な詳細質問を送付。機能仕様の詳細、オプション料金体系、導入スケジュール、SLA定義、サポート内容、カスタマイズ可能範囲など、多角的な質問項目を整理して送信。
+              </p>
+            </div>
+          </div>
+        </div>
+        <footer class="mt-24 pt-8 border-t border-slate-200 text-center text-slate-400 text-[10px] font-bold uppercase tracking-[0.4em]">
+          &copy; 2026 Akiba Holdings System Division
+        </footer>
+      </div>
+    </main>
+  </div>
+
+</body>
+
+</html>
