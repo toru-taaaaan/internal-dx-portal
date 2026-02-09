@@ -8,11 +8,11 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         :root {
-            --primary: #3b82f6;
-            --primary-dark: #1d4ed8;
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
             --accent: #10b981;
             --danger: #ef4444;
-            --bg-body: #f1f5f9;
+            --bg-body: #f8fafc;
             --surface: #ffffff;
             --text-main: #1e293b;
             --text-muted: #64748b;
@@ -25,7 +25,7 @@
         }
 
         body {
-            font-family: 'Outfit', 'Inter', "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            font-family: 'Inter', 'Roboto', "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
             background-color: var(--bg-body);
             color: var(--text-main);
             margin: 0;
@@ -482,11 +482,23 @@
         color: #33691e;
     "></div>
 
-        <!-- Detailed Comparison Tables from HTML-B with HTML-A's correct information -->
+        <!-- Detailed Comparison Tables -->
         <section class="section-card">
-            <div class="section-title">🛡️ セキュリティ機能 3シナリオ比較</div>
-            <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 15px;">
-                <strong>比較の目的</strong>: 現状維持・現状強化・刷新の3つのシナリオでコストとセキュリティレベルを比較
+            <div class="section-title">🛡️ Round 1: 現状 vs 強化 vs IIJ (3シナリオ比較)</div>
+            <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 25px;">
+                <strong>第1ラウンド</strong>: まずは「現状維持」「VSR強化」「IIJ刷新」の3案で比較。<br>
+                コストとセキュリティのバランスで、VSR案(現状強化)がいかに不利かを確認します。
+            </p>
+
+<!-- ... (skipping unchanged content) ... -->
+
+            <!-- 6. Comparison: IIJ vs Cato -->
+            <h3 style="color: #b71c1c; margin-top: 60px; margin-bottom: 20px; text-align: center; font-size: 1.6rem; border-bottom: 3px double #b71c1c; display: inline-block; padding: 0 20px 10px 20px;">
+                🥊 Round 2: IIJ Omnibus vs Cato Cloud (頂上決戦)
+            </h3>
+            <p style="text-align: center; margin-bottom: 30px; color: #555;">
+                第1ラウンドを勝ち抜いた「IIJ Omnibus」と、黒船「Cato Cloud」の一騎打ち。<br>
+                <strong>「帯域コスト」</strong>をとるか、<strong>「リモートワークの未来」</strong>をとるか。
             </p>
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px;">
                 <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #6c757d;">
@@ -499,7 +511,8 @@
                 <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; border-left: 4px solid #2196f3;">
                     <div style="font-weight: 700; color: #1976d2; margin-bottom: 5px;">シナリオ② 現状強化</div>
                     <div style="font-size: 0.85rem; color: #1976d2;">Vario n-series + SD-WANオプション</div>
-                    <div style="font-size: 0.9rem; margin-top: 8px;">月額: <strong>¥14.2万円 + 追加費用</strong></div>
+                    <div style="font-size: 0.9rem; margin-top: 8px;">月額: <strong>約137万円 (10倍増)</strong></div>
+                    <div style="font-size: 0.75rem; color: #dc3545; margin-top: 3px;">⚠️ 内訳: 現行14.2万 + OP 122.8万</div>
                     <div style="font-size: 0.85rem; color: #1976d2;">セキュリティ: ⭐⭐⭐⭐⭐（Vario-NSS適用）</div>
                 </div>
                 <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; border-left: 4px solid #4caf50;">
@@ -721,6 +734,66 @@
                 ・<strong>案B: フレッツ 光クロス (10Gbps)</strong>：ベストエフォート型だが、現行1Gbpsから理論上10倍へ。法人向けIPoEとの組み合わせでコストパフォーマンスを重視。
             </div>
 
+            <h3 style="color: #b71c1c; margin-top: 40px; margin-bottom: 15px;">🚨 Usen VSR 全拠点LBO化時の追加コスト試算</h3>
+            <p style="margin-bottom: 15px; color: #666; font-size: 0.9rem;">
+                現状のVSR構成で、IIJ Omnibusと同等のセキュリティ機能（UTM）とLBOを全8拠点に展開しようとした場合のコスト試算です。<br>
+                VSR800への機器アップグレードが必須となるため、以下の莫大な追加費用が発生します。
+            </p>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 40px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 2px solid #b71c1c;">
+                <thead>
+                    <tr style="background-color: #ffebee; color: #b71c1c;">
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ffcdd2;">機能オプション <span style="font-weight:normal; font-size:0.8em;">(VSR800必須)</span></th>
+                        <th style="padding: 12px; text-align: right; border: 1px solid #ffcdd2;">単価(月額) / 拠点</th>
+                        <th style="padding: 12px; text-align: right; border: 1px solid #ffcdd2; background-color: #ef9a9a; color: white;">全8拠点 合計(月額)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ffcdd2;">ファイアウォール</td>
+                        <td style="padding: 10px; border: 1px solid #ffcdd2; text-align: right;">¥48,000</td>
+                        <td style="padding: 10px; border: 1px solid #ffcdd2; text-align: right; font-weight: bold;">¥384,000</td>
+                    </tr>
+                    <tr style="background-color: #fffaf0;">
+                        <td style="padding: 10px; border: 1px solid #ffcdd2;">IDS/ADS (不正侵入検知)</td>
+                        <td style="padding: 10px; border: 1px solid #ffcdd2; text-align: right;">¥48,000</td>
+                        <td style="padding: 10px; border: 1px solid #ffcdd2; text-align: right; font-weight: bold;">¥384,000</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ffcdd2;">URLフィルタリング</td>
+                        <td style="padding: 10px; border: 1px solid #ffcdd2; text-align: right;">¥28,800</td>
+                        <td style="padding: 10px; border: 1px solid #ffcdd2; text-align: right; font-weight: bold;">¥230,400</td>
+                    </tr>
+                    <tr style="background-color: #fffaf0;">
+                        <td style="padding: 10px; border: 1px solid #ffcdd2;">ウイルスプロテクション</td>
+                        <td style="padding: 10px; border: 1px solid #ffcdd2; text-align: right;">¥28,800</td>
+                        <td style="padding: 10px; border: 1px solid #ffcdd2; text-align: right; font-weight: bold;">¥230,400</td>
+                    </tr>
+                    <tr style="background-color: #b71c1c; color: white; font-weight: bold; font-size: 1.1em; border-top: 3px solid #b71c1c;">
+                        <td style="padding: 15px; border: 1px solid #b71c1c;">🅰️ 月額費用 (ランニング)</td>
+                        <td style="padding: 15px; border: 1px solid #b71c1c; text-align: right;">¥153,600</td>
+                        <td style="padding: 15px; border: 1px solid #b71c1c; text-align: right;">¥1,228,800 / 月</td>
+                    </tr>
+                    <tr style="background-color: #ff8a80; color: white; font-weight: bold; border-top: 2px solid white;">
+                        <td style="padding: 15px; border: 1px solid #b71c1c;">🅱️ 初期費用 (イニシャル)</td>
+                        <td style="padding: 15px; border: 1px solid #b71c1c; text-align: right;">¥125,000</td>
+                        <td style="padding: 15px; border: 1px solid #b71c1c; text-align: right;">¥1,000,000 (初回のみ)</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div style="background-color: #ffebee; border: 1px solid #ef9a9a; padding: 15px; border-radius: 8px; margin-bottom: 40px; text-align: center;">
+                <strong style="color: #b71c1c; font-size: 1.1em;">💰 初年度の総支払額インパクト</strong><br>
+                <div style="font-size: 1.5em; font-weight: 800; color: #b71c1c; margin: 10px 0;">
+                    約 1,574 万円 (税抜)
+                </div>
+                <div style="font-size: 0.9em; color: #c62828;">
+                    内訳: 初期費用 100万円 + (月額 122.8万円 × 12ヶ月)
+                </div>
+                <div style="margin-top: 5px; font-size: 0.85em; color: #555;">
+                    ※ これだけの投資をしても「LBO構成」になるだけで、回線品質(専用線化)は改善されません。
+                </div>
+            </div>
+
             <h3 style="color: #333; margin-top: 40px; margin-bottom: 15px;">コスト vs セキュリティ 総合比較</h3>
             <table style="width: 100%; border-collapse: collapse; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                 <thead>
@@ -745,8 +818,7 @@
                             月額コスト (8拠点)</td>
                         <td style="padding: 12px; border: 1px solid #ddd; text-align: center; color: #555;">
                             約14.2万円<br><small>(20%値上げ後)</small></td>
-                        <td style="padding: 12px; border: 1px solid #ddd; text-align: center; color: #b71c1c;">14.2万円 +
-                            α<br><small style="color: #666;">(追加コスト発生)</small></td>
+                        <td style="padding: 12px; border: 1px solid #ddd; text-align: center; color: #b71c1c;"><strong>約137万円</strong><br><small style="color: #666;">(月額 122.8万円 UP)</small></td>
                         <td
                             style="padding: 12px; border: 1px solid #ddd; text-align: center; background-color: #f1f8e9; color: #2e7d32; font-weight: bold;">
                             約39万円<br><span
@@ -812,7 +884,746 @@
 
             <!-- 2. Hidden Costs Breakdown -->
 
-            <!-- 4. Terminology Explained (Glossary) -->
+            <!-- 5. Cato SASE Proposal -->
+            <h3 style="color: #7b1fa2; margin-top: 60px; margin-bottom: 15px; border-bottom: 2px solid #7b1fa2; padding-bottom: 5px;">
+                🔵 シナリオ④ 次世代刷新 (Cato SASE - SCSK提案)
+            </h3>
+            
+            <div style="background-color: #f3e5f5; padding: 20px; border-radius: 8px; border-left: 5px solid #7b1fa2; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px;">
+                    <div>
+                        <h4 style="margin: 0 0 10px 0; color: #4a148c; font-size: 1.1rem;">Cato Cloud (SASE) 概算見積フェーズ</h4>
+                        <p style="margin: 0; color: #6a1b9a; font-size: 0.9rem;">
+                            SCSK角田様より提案。世界最大級のSASEプラットフォーム「Cato Cloud」による、ネットワークとセキュリティの完全クラウド統合案です。
+                        </p>
+                    </div>
+                    <span style="background-color: #7b1fa2; color: white; padding: 5px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">見積準備中</span>
+                </div>
+
+                <div style="background-color: white; padding: 20px; border-radius: 6px; border: 1px solid #e1bee7; margin-bottom: 20px;">
+                    <div style="border-bottom: 1px solid #e1bee7; margin-bottom: 15px; padding-bottom: 5px; color: #4a148c; font-weight: bold; font-size: 1rem;">
+                        📊 Catoクラウド サービス定価表 (参考: SCSK提供資料)
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <!-- Left Column: Sockets -->
+                        <div>
+                            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                                <thead>
+                                    <tr style="background-color: #f3e5f5; color: #4a148c;">
+                                        <th style="padding: 8px; border: 1px solid #e1bee7; text-align: left;">物理デバイス (Socket)</th>
+                                        <th style="padding: 8px; border: 1px solid #e1bee7; text-align: right;">定価 (月額)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding: 8px; border: 1px solid #eee;">Socket X1500 (～500Mbps)</td>
+                                        <td style="padding: 8px; border: 1px solid #eee; text-align: right;">¥4,500</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px; border: 1px solid #eee;">Socket X1600 (～1Gbps)</td>
+                                        <td style="padding: 8px; border: 1px solid #eee; text-align: right;">¥7,400</td>
+                                    </tr>
+                                    <tr style="background-color: #fafafa;">
+                                        <td style="padding: 8px; border: 1px solid #eee;">Socket X1700 (～10Gbps)</td>
+                                        <td style="padding: 8px; border: 1px solid #eee; text-align: right;">¥39,800</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px; border: 1px solid #eee; color: #666;">vSocket (仮想)</td>
+                                        <td style="padding: 8px; border: 1px solid #eee; text-align: right;">¥0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 15px;">
+                                <thead>
+                                    <tr style="background-color: #f3e5f5; color: #4a148c;">
+                                        <th style="padding: 8px; border: 1px solid #e1bee7; text-align: left;">モバイルユーザー</th>
+                                        <th style="padding: 8px; border: 1px solid #e1bee7; text-align: right;">定価 (月額)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding: 8px; border: 1px solid #eee;">10 ～ 500 ユーザー</td>
+                                        <td style="padding: 8px; border: 1px solid #eee; text-align: right;">¥800 / 名</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px; border: 1px solid #eee;">501 ～ 1,000 ユーザー</td>
+                                        <td style="padding: 8px; border: 1px solid #eee; text-align: right;">¥780 / 名</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Right Column: Bandwidth -->
+                        <div>
+                            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                                <thead>
+                                    <tr style="background-color: #f3e5f5; color: #4a148c;">
+                                        <th style="padding: 8px; border: 1px solid #e1bee7; text-align: left;">PoP接続帯域 (Group2)</th>
+                                        <th style="padding: 8px; border: 1px solid #e1bee7; text-align: right;">定価 (月額)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding: 8px; border: 1px solid #eee;">25 Mbps</td>
+                                        <td style="padding: 8px; border: 1px solid #eee; text-align: right;">¥46,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px; border: 1px solid #eee;">50 Mbps</td>
+                                        <td style="padding: 8px; border: 1px solid #eee; text-align: right;">¥88,000</td>
+                                    </tr>
+                                    <tr style="background-color: #fafafa;">
+                                        <td style="padding: 8px; border: 1px solid #eee;">100 Mbps</td>
+                                        <td style="padding: 8px; border: 1px solid #eee; text-align: right;">¥138,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px; border: 1px solid #eee;">250 Mbps</td>
+                                        <td style="padding: 8px; border: 1px solid #eee; text-align: right;">¥198,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px; border: 1px solid #eee;">500 Mbps</td>
+                                        <td style="padding: 8px; border: 1px solid #eee; text-align: right;">¥256,000</td>
+                                    </tr>
+                                    <tr style="background-color: #fafafa;">
+                                        <td style="padding: 8px; border: 1px solid #eee;">1,000 Mbps (1Gbps)</td>
+                                        <td style="padding: 8px; border: 1px solid #eee; text-align: right;">¥462,000</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="font-size: 0.9rem; color: #333;">
+                    <p style="margin-bottom: 10px;">
+                        <strong>⚠️ 注意事項:</strong> 上記は「定価」ベースの単価表です。<br>
+                        セキュリティオプション（Threat Prevention, CASB, DLP等）の費用は別途加算されます。<br>
+                        正式な見積額は、構成（拠点数・帯域・オプション）確定後にSCSKより提示されます。
+                    </p>
+                    <a href="https://tech-harmony.scsk.jp/entry/2025/01/27/080000" target="_blank" style="color: #7b1fa2; text-decoration: underline; font-weight: bold;">
+                        📖 参考: Catoクラウドのサービス体系について (TechHarmony)
+                    </a>
+                </div>
+            </div>
+
+            <!-- 6. Comparison: IIJ vs Cato -->
+            <h3 style="color: #b71c1c; margin-top: 60px; margin-bottom: 20px; text-align: center; font-size: 1.6rem; border-bottom: 3px double #b71c1c; display: inline-block; padding: 0 20px 10px 20px;">
+                🥊 頂上決戦: IIJ Omnibus vs Cato Cloud
+            </h3>
+            <p style="text-align: center; margin-bottom: 30px; color: #555;">
+                国内拠点間通信を重視するか、フットワークの軽さを重視するか。<br>
+                <strong>「帯域コスト」</strong>と<strong>「リモートワーク」</strong>が最大の分岐点となります。
+            </p>
+
+            <table style="width: 100%; border-collapse: collapse; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 50px;">
+                <thead>
+                    <tr>
+                        <th style="padding: 15px; border: 1px solid #ddd; background-color: #455a64; color: white; width: 20%;">比較項目</th>
+                        <th style="padding: 15px; border: 1px solid #ddd; background-color: #2e7d32; color: white; width: 40%; font-size: 1.1rem;">
+                            シナリオ③ IIJ Omnibus<br>
+                            <span style="font-size: 0.8rem; font-weight: normal;">(国内最強のバックボーン)</span>
+                        </th>
+                        <th style="padding: 15px; border: 1px solid #ddd; background-color: #7b1fa2; color: white; width: 40%; font-size: 1.1rem;">
+                            シナリオ④ Cato Cloud<br>
+                            <span style="font-size: 0.8rem; font-weight: normal;">(世界No.1 SASE)</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Cost Row -->
+                    <tr>
+                        <td style="padding: 15px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">
+                            💸 帯域コスト (1Gbps)
+                        </td>
+                        <td style="padding: 15px; border: 1px solid #ddd; background-color: #e8f5e9;">
+                            <strong style="color: #2e7d32; font-size: 1.2rem;">◎ 圧倒的安価</strong>
+                            <p style="margin: 5px 0 0; font-size: 0.9rem;">
+                                日本国内のバックボーン網を利用するため、大容量通信でも定額・低価格。<br>
+                                動画・CADデータのやり取りに最適。
+                            </p>
+                        </td>
+                        <td style="padding: 15px; border: 1px solid #ddd; background-color: #ffebee;">
+                            <strong style="color: #b71c1c; font-size: 1.2rem;">⚠️ 非常に高額</strong>
+                            <p style="margin: 5px 0 0; font-size: 0.9rem;">
+                                1Gbpsあたり <strong>月額 約46万円</strong>。<br>
+                                帯域課金モデルのため、拠点間通信が増えるほどコストが跳ね上がる。
+                            </p>
+                        </td>
+                    </tr>
+                    <!-- Remote Work Row -->
+                    <tr>
+                        <td style="padding: 15px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">
+                            🏠 リモートワーク
+                        </td>
+                        <td style="padding: 15px; border: 1px solid #ddd;">
+                            <strong style="color: #555;">△ オプション対応</strong>
+                            <p style="margin: 5px 0 0; font-size: 0.9rem;">
+                                リモートアクセス機能はオプション。VPNクライアントの導入が必要。<br>
+                                従来のVPNと同等の使い勝手。
+                            </p>
+                        </td>
+                        <td style="padding: 15px; border: 1px solid #ddd; background-color: #f3e5f5;">
+                            <strong style="color: #7b1fa2; font-size: 1.2rem;">◎ 最高のエクスペリエンス</strong>
+                            <p style="margin: 5px 0 0; font-size: 0.9rem;">
+                                モバイル機能が標準統合。世界中のPoPから最短経路で接続。<br>
+                                「社内」と「社外」の境界を意識させないゼロトラスト体験。
+                            </p>
+                        </td>
+                    </tr>
+                     <!-- Global Row -->
+                     <tr>
+                        <td style="padding: 15px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">
+                            🌏 グローバル展開
+                        </td>
+                        <td style="padding: 15px; border: 1px solid #ddd;">
+                            <strong style="color: #555;">△ 国内特化</strong>
+                            <p style="margin: 5px 0 0; font-size: 0.9rem;">
+                                国内品質は最強だが、海外拠点との接続は別途国際回線の手配が必要になる場合が多い。
+                            </p>
+                        </td>
+                        <td style="padding: 15px; border: 1px solid #ddd; background-color: #f3e5f5;">
+                            <strong style="color: #7b1fa2; font-size: 1.2rem;">◎ 世界中どこでも</strong>
+                            <p style="margin: 5px 0 0; font-size: 0.9rem;">
+                                世界90+のPoPにより、海外支店もインターネットに繋ぐだけで即座に社内ネットワーク化が可能。
+                            </p>
+                        </td>
+                    </tr>
+                    <!-- Verdict Row -->
+                    <tr style="border-top: 3px solid #ccc;">
+                        <td style="padding: 15px; border: 1px solid #ddd; font-weight: bold; background-color: #eceff1;">
+                            🎯 結論 (向き不向き)
+                        </td>
+                        <td style="padding: 15px; border: 1px solid #ddd; background-color: #fffde7;">
+                            <strong style="color: #333;">国内拠点・大容量データ重視</strong>
+                            <ul style="margin: 5px 0 0 20px; padding: 0; font-size: 0.9rem;">
+                                <li>拠点間で大きなファイル転送がある</li>
+                                <li>コストパフォーマンス最優先</li>
+                                <li>国内拠点のみの構成</li>
+                            </ul>
+                        </td>
+                        <td style="padding: 15px; border: 1px solid #ddd; background-color: #fffde7;">
+                            <strong style="color: #333;">モバイル・グローバル重視</strong>
+                            <ul style="margin: 5px 0 0 20px; padding: 0; font-size: 0.9rem;">
+                                <li>社員の大半がリモートワーク</li>
+                                <li>これから海外拠点を増やす</li>
+                                <li>予算に余裕がある</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- 7. Technical Deep Dive -->
+            <h3 style="color: #455a64; margin-top: 60px; margin-bottom: 20px; border-left: 5px solid #455a64; padding-left: 15px; font-size: 1.4rem;">
+                🔍 仕組みの徹底比較 (Technical Deep Dive)
+            </h3>
+            <p style="margin-bottom: 30px; color: #555;">
+                なぜCatoは「次世代」と呼ばれるのか？ なぜIIJは「国内最強」なのか？<br>
+                表面的な機能リストでは見えない、<strong>「裏側の仕組み (アーキテクチャ)」</strong>の違いを解説します。
+            </p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 50px;">
+                <!-- Concept 1: Architecture -->
+                <div style="background-color: white; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
+                    <div style="background-color: #eceff1; padding: 10px 15px; font-weight: bold; color: #37474f; border-bottom: 1px solid #ddd;">
+                        ① 処理構造 (パケットの流れ)
+                    </div>
+                    <div style="padding: 20px;">
+                        <h4 style="margin-top: 0; color: #2e7d32;">Synergy (IIJ Omnibus)</h4>
+                        <p style="font-size: 0.9rem; color: #555;">
+                            <strong>NFV / Service Chaining 方式</strong><br>
+                            「FWの仮想マシン」「Webフィルタの仮想マシン」…と、機能ごとに別々の仮想アプライアンスを順番に通過させます。<br>
+                            <span style="color: #d32f2f;">⚠️ 機能を追加するほど、パケットの経由地が増えて遅延が発生しやすい構造です。</span>
+                        </p>
+                        <hr style="border: 0; border-top: 1px dashed #ccc; margin: 15px 0;">
+                        <h4 style="margin-top: 0; color: #7b1fa2;">Cato Cloud</h4>
+                        <p style="font-size: 0.9rem; color: #555;">
+                            <strong>Single Pass Cloud Engine 方式</strong><br>
+                            パケットを開いた瞬間に、FW・IPS・アンチウイルス等の全ての検査を「同時並列」で処理します。<br>
+                            <span style="color: #2e7d32;">✅ どんなにセキュリティ機能をONにしても、スループットが落ちない「現代的な設計」です。</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Concept 2: Backbone -->
+                <div style="background-color: white; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
+                    <div style="background-color: #eceff1; padding: 10px 15px; font-weight: bold; color: #37474f; border-bottom: 1px solid #ddd;">
+                        ② 道路 (バックボーン)
+                    </div>
+                    <div style="padding: 20px;">
+                        <h4 style="margin-top: 0; color: #2e7d32;">Synergy (IIJ Omnibus)</h4>
+                        <p style="font-size: 0.9rem; color: #555;">
+                            <strong>国内最強バックボーン ＋ インターネットVPN</strong><br>
+                            日本国内の品質は圧倒的ですが、海外拠点との通信は「公衆インターネット」を経由する場合が多く、現地の回線品質に左右されます。<br>
+                            <span style="color: #f57f17;">⚠️ 海外通信での遅延・パケットロスは保証できません。</span>
+                        </p>
+                        <hr style="border: 0; border-top: 1px dashed #ccc; margin: 15px 0;">
+                        <h4 style="margin-top: 0; color: #7b1fa2;">Cato Cloud</h4>
+                        <p style="font-size: 0.9rem; color: #555;">
+                            <strong>Global Private Backbone</strong><br>
+                            世界中に張り巡らされたCato専用の「プライベート高速道路」を通ります。公衆網の混雑を回避し、TCP最適化技術で長距離通信も高速化。<br>
+                            <span style="color: #2e7d32;">✅ 海外拠点があたかも「隣の部屋」にあるような通信品質を実現します。</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background-color: white; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; margin-bottom: 50px;">
+                <div style="background-color: #eceff1; padding: 10px 15px; font-weight: bold; color: #37474f; border-bottom: 1px solid #ddd;">
+                    ③ 運用管理 (誰が設定を変えるか)
+                </div>
+                <div style="padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div>
+                        <h4 style="margin-top: 0; color: #2e7d32;">Synergy (IIJ Omnibus)</h4>
+                        <p style="font-size: 0.9rem; color: #555;">
+                            <strong>フルマネージド (依頼ベース)</strong><br>
+                            設定変更は基本的にIIJ等のエンジニアに「依頼」して行います。<br>
+                            メリットは「お任せできる」ことですが、デメリットは「リードタイム(数日)」がかかることです。<br>
+                            <span style="background-color: #fffde7; padding: 2px 5px; border-radius: 4px;">チケット起票 → エンジニア作業 → 完了連絡</span>
+                        </p>
+                    </div>
+                    <div style="border-left: 1px solid #eee; padding-left: 30px;">
+                        <h4 style="margin-top: 0; color: #7b1fa2;">Cato Cloud</h4>
+                        <p style="font-size: 0.9rem; color: #555;">
+                            <strong>セルフサービス (即時反映)</strong><br>
+                            お客様自身(またはSCSK)が管理画面から設定変更すると、数秒で全世界のPoP・拠点にポリシーが適用されます。<br>
+                            <span style="background-color: #e1bee7; padding: 2px 5px; border-radius: 4px;">管理画面で設定 → Commit → 全世界即時適用</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7.5 Detailed Cost Breakdown Comparison -->
+            <h3 style="color: #1e293b; margin-top: 60px; margin-bottom: 20px; text-align: center; font-size: 1.6rem; border-bottom: 3px solid #1e293b; display: inline-block; padding: 0 20px 10px 20px;">
+                💰 詳細コスト比較表 (Detailed Cost Breakdown)
+            </h3>
+            <p style="text-align: center; margin-bottom: 30px; color: #555;">
+                IIJ Omnibus と Cato Cloud の月額費用を、拠点数・帯域・ユーザー数ごとに詳細比較。<br>
+                実際の構成での総額を明示します。
+            </p>
+
+            <table style="width: 100%; border-collapse: collapse; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 50px;">
+                <thead>
+                    <tr>
+                        <th style="padding: 15px; border: 1px solid #ddd; background-color: #1e293b; color: white; width: 30%;">費用項目</th>
+                        <th style="padding: 15px; border: 1px solid #ddd; background-color: #2e7d32; color: white; width: 35%;">
+                            IIJ Omnibus<br>
+                            <span style="font-size: 0.8rem; font-weight: normal;">(8拠点構成)</span>
+                        </th>
+                        <th style="padding: 15px; border: 1px solid #ddd; background-color: #7b1fa2; color: white; width: 35%;">
+                            Cato Cloud<br>
+                            <span style="font-size: 0.8rem; font-weight: normal;">(8拠点構成)</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 初期費用 -->
+                    <tr style="background-color: #eceff1;">
+                        <td colspan="3" style="padding: 10px; border: 1px solid #ddd; font-weight: bold; font-size: 1.1rem; color: #1e293b;">
+                            🔧 初期費用 (Initial Cost)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">機器調達・設置</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            <strong style="color: #f57f17;">⚠️ 要確認</strong><br>
+                            VSRルーター購入 or レンタル<br>
+                            <small style="color: #666;">※IIJへ正式見積もり依頼中</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #f3e5f5;">
+                            <strong style="color: #7b1fa2;">✅ 0円</strong><br>
+                            Socket送付のみ (Zero Touch)<br>
+                            <small style="color: #666;">設置後即稼働</small>
+                        </td>
+                    </tr>
+
+                    <!-- 月額費用 -->
+                    <tr style="background-color: #eceff1;">
+                        <td colspan="3" style="padding: 10px; border: 1px solid #ddd; font-weight: bold; font-size: 1.1rem; color: #1e293b;">
+                            💳 月額費用 (Monthly Cost)
+                        </td>
+                    </tr>
+                    <tr style="background-color: #fafafa;">
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">拠点基本費 (8拠点)</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            <strong>約39万円/月</strong><br>
+                            <small style="color: #666;">拠点ごとの基本料金 + 回線費 + SD-WAN機能費</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            <strong>帯域課金モデル</strong><br>
+                            <small style="color: #666;">拠点ごとに帯域を指定</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">帯域費 (例: 各拠点100Mbps)</td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #e8f5e9;">
+                            <strong style="color: #2e7d32;">✅ 上記に含まれる</strong><br>
+                            <small style="color: #666;">国内バックボーン利用のため定額</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            <strong style="color: #f57f17;">⚠️ 要確認</strong><br>
+                            <small style="color: #666;">※SCSKへ正式見積もり依頼中</small>
+                        </td>
+                    </tr>
+                    <tr style="background-color: #fafafa;">
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">セキュリティ機能費</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            <strong>オプション積み上げ式</strong><br>
+                            FW + IPS + AV + Webフィルタ<br>
+                            <small style="color: #666;">機能追加ごとに費用増</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #f3e5f5;">
+                            <strong style="color: #7b1fa2;">✅ 帯域費に含まれる</strong><br>
+                            全セキュリティ機能標準搭載<br>
+                            <small style="color: #666;">追加費用なし</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">モバイルユーザー (50名想定)</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            <strong>別途VPNオプション</strong><br>
+                            <small style="color: #666;">リモートアクセスは追加契約</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #f3e5f5;">
+                            <strong style="color: #f57f17;">⚠️ 要確認</strong><br>
+                            <small style="color: #666;">※SCSKへ正式見積もり依頼中</small>
+                        </td>
+                    </tr>
+
+                    <!-- 総額 -->
+                    <tr style="background-color: #eceff1;">
+                        <td colspan="3" style="padding: 10px; border: 1px solid #ddd; font-weight: bold; font-size: 1.1rem; color: #1e293b;">
+                            📊 月額総額 (Total Monthly Cost)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">
+                            8拠点 + モバイル50名<br>
+                            <small style="font-weight: normal; color: #666;">(各拠点100Mbps想定)</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #e8f5e9; text-align: center;">
+                            <strong style="font-size: 1.3rem; color: #2e7d32;">約39万円/月</strong><br>
+                            <small style="color: #666;">※VPNオプション費用は別途</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #fff3e0; text-align: center;">
+                            <strong style="font-size: 1.3rem; color: #f57f17;">⚠️ 要確認</strong><br>
+                            <small style="color: #666;">※SCSKへ正式見積もり依頼中</small>
+                        </td>
+                    </tr>
+                    <tr style="background-color: #fafafa;">
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">
+                            8拠点 + モバイル50名<br>
+                            <small style="font-weight: normal; color: #666;">(各拠点1Gbps想定)</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #e8f5e9; text-align: center;">
+                            <strong style="font-size: 1.3rem; color: #2e7d32;">✅ 同額</strong><br>
+                            <small style="color: #666;">国内バックボーンのため大容量でも安価</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #fff3e0; text-align: center;">
+                            <strong style="font-size: 1.3rem; color: #f57f17;">⚠️ 要確認</strong><br>
+                            <small style="color: #666;">※SCSKへ正式見積もり依頼中</small>
+                        </td>
+                    </tr>
+
+                    <!-- 備考 -->
+                    <tr style="background-color: #eceff1;">
+                        <td colspan="3" style="padding: 10px; border: 1px solid #ddd; font-weight: bold; font-size: 1.1rem; color: #1e293b;">
+                            📝 備考 (Notes)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">コスト構造の特徴</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            <strong style="color: #2e7d32;">✅ 大容量帯域に強い</strong><br>
+                            国内バックボーン利用のため、1Gbps級でも定額<br>
+                            <small style="color: #666;">拠点数が多い場合に有利</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            <strong style="color: #f57f17;">⚠️ 正式見積もり取得中</strong><br>
+                            帯域課金モデルのため、構成により変動<br>
+                            <small style="color: #666;">※SCSK経由で見積もり依頼済み</small>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- 8. Strict Spec Comparison Table -->
+            <h3 style="color: #1e293b; margin-top: 60px; margin-bottom: 20px; text-align: center; font-size: 1.6rem; border-bottom: 3px solid #1e293b; display: inline-block; padding: 0 20px 10px 20px;">
+                📊 厳密スペック比較表 (Strict Spec Comparison)
+            </h3>
+            <p style="text-align: center; margin-bottom: 30px; color: #555;">
+                曖昧な表現を排除し、「機能の有無」「方式の違い」「コストの内訳」を詳細にリスト化。<br>
+                パソコンのスペック表のように、項目ごとに厳密に比較します。
+            </p>
+
+            <table style="width: 100%; border-collapse: collapse; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 50px;">
+                <thead>
+                    <tr>
+                        <th style="padding: 15px; border: 1px solid #ddd; background-color: #1e293b; color: white; width: 25%;">比較項目</th>
+                        <th style="padding: 15px; border: 1px solid #ddd; background-color: #2e7d32; color: white; width: 37.5%;">
+                            IIJ Omnibus<br>
+                            <span style="font-size: 0.8rem; font-weight: normal;">(国産SD-WAN / フルマネージド)</span>
+                        </th>
+                        <th style="padding: 15px; border: 1px solid #ddd; background-color: #7b1fa2; color: white; width: 37.5%;">
+                            Cato Cloud<br>
+                            <span style="font-size: 0.8rem; font-weight: normal;">(グローバルSASE / セルフサービス)</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Cost Structure -->
+                    <tr style="background-color: #eceff1;">
+                        <td colspan="3" style="padding: 10px; border: 1px solid #ddd; font-weight: bold; font-size: 1.1rem; color: #1e293b;">
+                            💰 コスト構造 (Cost Structure)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">初期費用</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            機器購入 or レンタル費用が発生<br>
+                            <small style="color: #666;">VSRルーター、FW機器等の調達が必要</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #f3e5f5;">
+                            <strong style="color: #7b1fa2;">✅ 初期費用なし (Zero Touch)</strong><br>
+                            <small style="color: #666;">Socket送付のみ、設置後即稼働</small>
+                        </td>
+                    </tr>
+                    <tr style="background-color: #fafafa;">
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">月額内訳</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            拠点基本費 + FW機能費 + IPS費 + AV費 + ...<br>
+                            <small style="color: #666;">機能追加ごとに積み上げ式</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #f3e5f5;">
+                            <strong style="color: #7b1fa2;">✅ シンプル2要素</strong><br>
+                            帯域(拠点ごと) + モバイルユーザー数<br>
+                            <small style="color: #666;">全セキュリティ機能込み</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">帯域課金 (1Gbps)</td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #e8f5e9;">
+                            <strong style="color: #2e7d32;">✅ 定額・低価格</strong><br>
+                            国内バックボーン利用のため大容量でも安価
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            ⚠️ 月額 約46万円<br>
+                            <small style="color: #666;">帯域課金モデル (定価ベース)</small>
+                        </td>
+                    </tr>
+                    <tr style="background-color: #fafafa;">
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">モバイルユーザー</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            別途VPNオプション契約が必要<br>
+                            <small style="color: #666;">リモートアクセスは追加費用</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #f3e5f5;">
+                            <strong style="color: #7b1fa2;">✅ 標準機能</strong><br>
+                            ¥800/名 (10~500名)<br>
+                            <small style="color: #666;">帯域制限なし</small>
+                        </td>
+                    </tr>
+
+                    <!-- Architecture -->
+                    <tr style="background-color: #eceff1;">
+                        <td colspan="3" style="padding: 10px; border: 1px solid #ddd; font-weight: bold; font-size: 1.1rem; color: #1e293b;">
+                            🏗️ アーキテクチャ (Architecture)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">処理方式</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            <strong>NFV / Service Chaining</strong><br>
+                            仮想アプライアンスを直列処理<br>
+                            <small style="color: #d32f2f;">⚠️ 機能追加で遅延増加リスク</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #f3e5f5;">
+                            <strong style="color: #7b1fa2;">✅ Single Pass Engine</strong><br>
+                            全機能を並列処理<br>
+                            <small style="color: #2e7d32;">✅ 機能追加でも遅延なし</small>
+                        </td>
+                    </tr>
+                    <tr style="background-color: #fafafa;">
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">バックボーン</td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #e8f5e9;">
+                            <strong style="color: #2e7d32;">✅ 国内最強バックボーン</strong><br>
+                            日本国内の品質は圧倒的<br>
+                            <small style="color: #f57f17;">⚠️ 海外は公衆網依存</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #f3e5f5;">
+                            <strong style="color: #7b1fa2;">✅ Global Private Backbone</strong><br>
+                            世界90+のPoPを専用線で接続<br>
+                            <small style="color: #2e7d32;">✅ TCP最適化で長距離も高速</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">拠点接続デバイス</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            VSR (Virtual Service Router)<br>
+                            <small style="color: #666;">仮想ルーター / 物理機器選択可</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            Cato Socket (X1500/X1600/X1700)<br>
+                            <small style="color: #666;">物理 or 仮想 (vSocket)</small>
+                        </td>
+                    </tr>
+
+                    <!-- Performance -->
+                    <tr style="background-color: #eceff1;">
+                        <td colspan="3" style="padding: 10px; border: 1px solid #ddd; font-weight: bold; font-size: 1.1rem; color: #1e293b;">
+                            ⚡ 性能・品質 (Performance)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">国内拠点間通信</td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #e8f5e9;">
+                            <strong style="color: #2e7d32;">◎ 最高品質</strong><br>
+                            IIJ国内バックボーン利用<br>
+                            低遅延・高スループット
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            ○ 良好<br>
+                            <small style="color: #666;">東京・大阪PoPを経由</small>
+                        </td>
+                    </tr>
+                    <tr style="background-color: #fafafa;">
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">海外拠点接続</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            △ 公衆インターネット経由<br>
+                            <small style="color: #f57f17;">⚠️ 現地回線品質に依存</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #f3e5f5;">
+                            <strong style="color: #7b1fa2;">◎ グローバル最適化</strong><br>
+                            専用バックボーン + TCP最適化<br>
+                            <small style="color: #2e7d32;">✅ パケットロス・遅延を最小化</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">LBO (Local Breakout)</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            ✅ 動的LBO対応<br>
+                            クラウドDBで宛先追跡<br>
+                            <small style="color: #666;">M365, Google等を自動識別</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            ✅ 標準機能<br>
+                            全拠点で自動適用<br>
+                            <small style="color: #666;">ポリシーベースで柔軟制御</small>
+                        </td>
+                    </tr>
+
+                    <!-- Security -->
+                    <tr style="background-color: #eceff1;">
+                        <td colspan="3" style="padding: 10px; border: 1px solid #ddd; font-weight: bold; font-size: 1.1rem; color: #1e293b;">
+                            🛡️ セキュリティ機能 (Security Features)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">基本機能</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            FW + IPS + AV + Webフィルタ<br>
+                            <small style="color: #666;">クラウドUTM方式</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            FW + IPS + NGAM + URLフィルタ<br>
+                            <small style="color: #666;">全機能標準搭載</small>
+                        </td>
+                    </tr>
+                    <tr style="background-color: #fafafa;">
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">SSL/TLS検査</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            ✅ 対応<br>
+                            <small style="color: #666;">オプション or 標準 (要確認)</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #f3e5f5;">
+                            <strong style="color: #7b1fa2;">✅ 標準搭載</strong><br>
+                            ハードウェアオフロードで高速処理
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">高度なオプション</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            個別契約が必要<br>
+                            <small style="color: #666;">DLP, CASB等は別途検討</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #f3e5f5;">
+                            <strong style="color: #7b1fa2;">✅ 豊富なオプション</strong><br>
+                            CASB, DLP, RBI, Sandbox等<br>
+                            <small style="color: #666;">追加ライセンスで即時有効化</small>
+                        </td>
+                    </tr>
+                    <tr style="background-color: #fafafa;">
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">ゼロトラスト対応</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            △ 部分対応<br>
+                            <small style="color: #666;">VPN + 認証の組み合わせ</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #f3e5f5;">
+                            <strong style="color: #7b1fa2;">◎ ZTNA標準搭載</strong><br>
+                            社内外を問わず常時検証<br>
+                            <small style="color: #2e7d32;">✅ リモートワーク最適化</small>
+                        </td>
+                    </tr>
+
+                    <!-- Operation -->
+                    <tr style="background-color: #eceff1;">
+                        <td colspan="3" style="padding: 10px; border: 1px solid #ddd; font-weight: bold; font-size: 1.1rem; color: #1e293b;">
+                            ⚙️ 運用・管理 (Operation)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">管理方式</td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #e8f5e9;">
+                            <strong style="color: #2e7d32;">✅ フルマネージド</strong><br>
+                            IIJに依頼して設定変更<br>
+                            <small style="color: #666;">お任せできる安心感</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #f3e5f5;">
+                            <strong style="color: #7b1fa2;">✅ セルフサービス</strong><br>
+                            管理画面から即時変更<br>
+                            <small style="color: #666;">またはSCSKに委託可能</small>
+                        </td>
+                    </tr>
+                    <tr style="background-color: #fafafa;">
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">設定変更速度</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            ⚠️ 3営業日程度<br>
+                            <small style="color: #666;">チケット起票 → 作業 → 完了連絡</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #f3e5f5;">
+                            <strong style="color: #7b1fa2;">✅ 即時反映 (数秒)</strong><br>
+                            Commit後、全世界のPoPに自動配信
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">可視化・分析</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            ✅ 提供あり<br>
+                            <small style="color: #666;">レポート形式で定期提供</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #f3e5f5;">
+                            <strong style="color: #7b1fa2;">✅ リアルタイムダッシュボード</strong><br>
+                            トラフィック・脅威・ユーザー体験を可視化<br>
+                            <small style="color: #666;">DEM (Digital Experience Monitoring)</small>
+                        </td>
+                    </tr>
+                    <tr style="background-color: #fafafa;">
+                        <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">拠点追加の容易さ</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">
+                            △ 機器調達・設定が必要<br>
+                            <small style="color: #666;">リードタイム: 数週間</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #f3e5f5;">
+                            <strong style="color: #7b1fa2;">◎ Zero Touch Provisioning</strong><br>
+                            Socket送付 → 接続で即稼働<br>
+                            <small style="color: #2e7d32;">✅ リードタイム: 数日</small>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- 7. Terminology Explained (Glossary) -->
             <h3 style="color: #3f51b5; margin-top:50px; border-bottom: 2px solid #3f51b5; padding-bottom: 5px;">📍
                 知っておきたい用語解説</h3>
             <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 20px;">
