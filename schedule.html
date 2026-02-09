@@ -189,161 +189,36 @@
           <p class="text-slate-500 mt-2">進行中のタスク・期限一覧</p>
         </header>
 
-        <!-- Urgent Tasks Section -->
-        <div class="section-header">🔴 緊急対応（3日以内）</div>
-        <table class="schedule-table mb-8">
-          <thead>
-            <tr>
-              <th style="width: 35%">タスク</th>
-              <th style="width: 20%">期限</th>
-              <th style="width: 15%">残日数</th>
-              <th style="width: 15%">ステータス</th>
-              <th style="width: 15%">担当</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="task-name">スケジュール管理表の完成</td>
-              <td class="deadline">2/9（本日）</td>
-              <td class="days-left days-critical">0日</td>
-              <td><span class="status-badge status-in-progress">進行中</span></td>
-              <td>丹治統</td>
-            </tr>
-            <tr>
-              <td class="task-name">Antigravity チーム編集ガイド配布</td>
-              <td class="deadline">2/10</td>
-              <td class="days-left days-critical">1日</td>
-              <td><span class="status-badge status-pending">未開始</span></td>
-              <td>丹治統</td>
-            </tr>
-            <tr>
-              <td class="task-name">ポータルアクセステスト（3ユーザー）</td>
-              <td class="deadline">2/10</td>
-              <td class="days-left days-critical">1日</td>
-              <td><span class="status-badge status-pending">未開始</span></td>
-              <td>塩田部長/篠部長</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <!-- Short-term Tasks Section -->
-        <div class="section-header">🟡 今週中（1～7日）</div>
-        <table class="schedule-table mb-8">
-          <thead>
-            <tr>
-              <th style="width: 35%">タスク</th>
-              <th style="width: 20%">期限</th>
-              <th style="width: 15%">残日数</th>
-              <th style="width: 15%">ステータス</th>
-              <th style="width: 15%">担当</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="task-name">予算申請資料の最終確認</td>
-              <td class="deadline">2/14</td>
-              <td class="days-left days-warning">5日</td>
-              <td><span class="status-badge status-in-progress">進行中</span></td>
-              <td>塩田部長</td>
-            </tr>
-            <tr>
-              <td class="task-name">Cloud Run → Workers 移行の完全テスト</td>
-              <td class="deadline">2/12</td>
-              <td class="days-left days-warning">3日</td>
-              <td><span class="status-badge status-in-progress">進行中</span></td>
-              <td>丹治統</td>
-            </tr>
-            <tr>
-              <td class="task-name">セキュリティ監査（Basic認証）</td>
-              <td class="deadline">2/14</td>
-              <td class="days-left days-warning">5日</td>
-              <td><span class="status-badge status-pending">未開始</span></td>
-              <td>情報システム部</td>
-            </tr>
-            <tr>
-              <td class="task-name">ユーザーマニュアル作成</td>
-              <td class="deadline">2/16</td>
-              <td class="days-left days-normal">7日</td>
-              <td><span class="status-badge status-pending">未開始</span></td>
-              <td>丹治統</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <!-- Medium-term Tasks Section -->
-        <div class="section-header">🔵 2月中（8～29日）</div>
-        <table class="schedule-table mb-8">
-          <thead>
-            <tr>
-              <th style="width: 35%">タスク</th>
-              <th style="width: 20%">期限</th>
-              <th style="width: 15%">残日数</th>
-              <th style="width: 15%">ステータス</th>
-              <th style="width: 15%">担当</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="task-name">LinkAtJapan 並行稼働期間の終了対応</td>
-              <td class="deadline">2/28</td>
-              <td class="days-left days-normal">19日</td>
-              <td><span class="status-badge status-pending">未開始</span></td>
-              <td>塩田部長/丹治統</td>
-            </tr>
-            <tr>
-              <td class="task-name">AD Cloud Lift（Project 15.01）レビュー</td>
-              <td class="deadline">2/21</td>
-              <td class="days-left days-warning">12日</td>
-              <td><span class="status-badge status-pending">未開始</span></td>
-              <td>Antigravity</td>
-            </tr>
-            <tr>
-              <td class="task-name">Secom Cloud（Project 15.02）レビュー</td>
-              <td class="deadline">2/23</td>
-              <td class="days-left days-normal">14日</td>
-              <td><span class="status-badge status-pending">未開始</span></td>
-              <td>Antigravity</td>
-            </tr>
-            <tr>
-              <td class="task-name">本番環境のバックアップ設定</td>
-              <td class="deadline">2/25</td>
-              <td class="days-left days-normal">16日</td>
-              <td><span class="status-badge status-pending">未開始</span></td>
-              <td>情報システム部</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <!-- Legend -->
-        <div style="margin-top: 40px; padding: 20px; background: #f8fafc; border-radius: 8px; border-left: 4px solid #6b7280;">
-          <h3 style="font-weight: 700; margin-bottom: 12px; color: #1e293b;">📌 ステータス凡例</h3>
-          <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span class="status-badge status-completed">完了</span>
-              <span style="font-size: 12px; color: #64748b;">完成済みのタスク</span>
+        <!-- Phase 2 Executive Summary -->
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; margin-bottom: 40px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+          <h2 style="font-size: 18px; font-weight: 900; color: #1e293b; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+            <svg style="width: 24px; height: 24px; color: #3b82f6;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Phase 2: Infrastructure Refresh 戦略目標
+          </h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+            <div style="border-left: 3px solid #3b82f6; padding-left: 16px;">
+              <h3 style="font-size: 14px; font-weight: 700; color: #3b82f6; margin-bottom: 8px;">1. 基盤の近代化 (Modernization)</h3>
+              <p style="font-size: 13px; color: #475569; line-height: 1.6;">
+                オンプレミス AD および Secom サーバを Azure IaaS へ完全移行。ハードウェア保守期限 (EoL) のリスクを排除し、クラウドの柔軟性を確保。
+              </p>
             </div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span class="status-badge status-in-progress">進行中</span>
-              <span style="font-size: 12px; color: #64748b;">現在進行中のタスク</span>
+            <div style="border-left: 3px solid #10b981; padding-left: 16px;">
+              <h3 style="font-size: 14px; font-weight: 700; color: #10b981; margin-bottom: 8px;">2. 統合と最適化 (Optimization)</h3>
+              <p style="font-size: 13px; color: #475569; line-height: 1.6;">
+                VNet 統合による通信パスの最短化。AD + Secom のリソース統合により、ライセンスコストおよびバックアップ運用コストを約 15% 削減見込み。
+              </p>
             </div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span class="status-badge status-pending">未開始</span>
-              <span style="font-size: 12px; color: #64748b;">まだ開始していないタスク</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span class="status-badge status-urgent">緊急</span>
-              <span style="font-size: 12px; color: #64748b;">今すぐ対応が必要</span>
+            <div style="border-left: 3px solid #f59e0b; padding-left: 16px;">
+              <h3 style="font-size: 14px; font-weight: 700; color: #f59e0b; margin-bottom: 8px;">3. 継続性と責任 (Continuity)</h3>
+              <p style="font-size: 13px; color: #475569; line-height: 1.6;">
+                Azure Backup (GRS) による東西冗長化を完備。3社間の責任分界点 (RACI) を明確化し、障害発生時の復旧体制を標準化。
+              </p>
             </div>
           </div>
         </div>
 
-        <!-- Update Info -->
-        <div style="margin-top: 40px; padding: 16px; background: #eff6ff; border-radius: 8px; border-left: 4px solid #3b82f6;">
-          <p style="font-size: 12px; color: #1e40af; margin: 0;">
-            <strong>最終更新:</strong> 2026年2月9日 13:00<br>
-            <strong>次回更新:</strong> 2026年2月10日（毎日更新予定）
-          </p>
-        </div>
 
         <!-- Phase 2 Projects Details Section -->
         <div style="margin-top: 60px; padding: 24px; background: #f0f9ff; border-radius: 12px; border-left: 4px solid #0284c7;">
@@ -373,14 +248,14 @@
                 <p style="font-size: 14px; font-weight: 700; color: #1e293b; margin: 0;">Antigravity</p>
               </div>
             </div>
-            <div style="background: #f1f5f9; padding: 12px; border-radius: 6px; margin-bottom: 12px;">
-              <p style="font-size: 12px; font-weight: 700; color: #0f172a; margin: 0 0 8px 0;">📝 TODO リスト:</p>
-              <ul style="margin: 0; padding-left: 20px; font-size: 13px; color: #475569;">
-                <li>✅ クラウド移行戦略の策定</li>
-                <li>⏳ Active Directory の設定確認</li>
-                <li>⏳ テスト環境での動作検証</li>
-                <li>⏳ 本番環境への移行手順書作成</li>
-                <li>⏳ ユーザー受入テスト（UAT）実施</li>
+            <div style="background: #f1f5f9; padding: 16px; border-radius: 8px; margin-bottom: 12px;">
+              <p style="font-size: 14px; font-weight: 700; color: #0f172a; margin: 0 0 10px 0;">📝 TODO リスト (標準工程):</p>
+              <ul style="margin: 0; padding-left: 24px; font-size: 15px; color: #334155; line-height: 1.8;">
+                <li>✅ 3社比較検討および Link At Japan (LAJ) 推奨案決定</li>
+                <li>✅ LAJ 移行ダウンタイム「1〜2時間」の技術確約</li>
+                <li>⏳ Azure テナント管理者権限および所有権の最終確認</li>
+                <li>⏳ テスト環境での Active Directory レプリケーション検証</li>
+                <li>⏳ 本番データ移行 (2/21予定) および疎通テスト</li>
               </ul>
             </div>
           </div>
@@ -407,14 +282,14 @@
                 <p style="font-size: 14px; font-weight: 700; color: #1e293b; margin: 0;">Antigravity</p>
               </div>
             </div>
-            <div style="background: #f1f5f9; padding: 12px; border-radius: 6px; margin-bottom: 12px;">
-              <p style="font-size: 12px; font-weight: 700; color: #0f172a; margin: 0 0 8px 0;">📝 TODO リスト:</p>
-              <ul style="margin: 0; padding-left: 20px; font-size: 13px; color: #475569;">
-                <li>⏳ Secom との要件定義ミーティング</li>
-                <li>⏳ クラウド環境設計書作成</li>
-                <li>⏳ セキュリティ仕様の確認</li>
-                <li>⏳ 統合テスト計画書作成</li>
-                <li>⏳ 本番稼働計画書作成</li>
+            <div style="background: #f1f5f9; padding: 16px; border-radius: 8px; margin-bottom: 12px;">
+              <p style="font-size: 14px; font-weight: 700; color: #0f172a; margin: 0 0 10px 0;">📝 TODO リスト (標準工程):</p>
+              <ul style="margin: 0; padding-left: 24px; font-size: 15px; color: #334155; line-height: 1.8;">
+                <li>⏳ Secom 社とのネットワーク要件および IP セグメントの再定義</li>
+                <li>⏳ Azure VM への Secom 特定アプリケーションのインストール検証</li>
+                <li>⏳ セキュリティグループ (NSG) の設計とアクセス権限設定</li>
+                <li>⏳ 統合移行計画書の策定 (ダウンタイム最小化)</li>
+                <li>⏳ 切り替えリハーサルの実施</li>
               </ul>
             </div>
           </div>
@@ -441,13 +316,13 @@
                 <p style="font-size: 14px; font-weight: 700; color: #1e293b; margin: 0;">Antigravity</p>
               </div>
             </div>
-            <div style="background: #f1f5f9; padding: 12px; border-radius: 6px; margin-bottom: 12px;">
-              <p style="font-size: 12px; font-weight: 700; color: #0f172a; margin: 0 0 8px 0;">📝 TODO リスト:</p>
-              <ul style="margin: 0; padding-left: 20px; font-size: 13px; color: #475569;">
-                <li>✅ 両ソリューションの機能比較表作成</li>
-                <li>⏳ コスト分析の詳細化</li>
-                <li>⏳ リスク評価の実施</li>
-                <li>⏳ 推奨案のまとめ</li>
+            <div style="background: #f1f5f9; padding: 16px; border-radius: 8px; margin-bottom: 12px;">
+              <p style="font-size: 14px; font-weight: 700; color: #0f172a; margin: 0 0 10px 0;">📝 TODO リスト (標準工程):</p>
+              <ul style="margin: 0; padding-left: 24px; font-size: 15px; color: #334155; line-height: 1.8;">
+                <li>✅ 統合によるライセンスコスト削減効果の算出</li>
+                <li>⏳ 同一 VNet 統合によるパフォーマンス影響のシミュレーション</li>
+                <li>⏳ バックアップ体制の共通化 (Azure Backup 統合)</li>
+                <li>⏳ 経営層向け統合メリット報告資料の完成</li>
               </ul>
             </div>
           </div>
