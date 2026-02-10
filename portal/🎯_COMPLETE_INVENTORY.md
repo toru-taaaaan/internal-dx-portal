@@ -53,7 +53,7 @@
 | # | ファイル | URL | 説明 | CSS 状態 | 優先度 |
 |---|---------|-----|------|---------|--------|
 | 4 | `project_15_01.html` | `?page=project_15_01` | ADクラウド化（IIJ/USEN/LAJ） | ✅ unified | 🔴 必須 |
-| 5 | `project_ad_scenarios.html` | `?page=project_ad_scenarios` | AD移行シナリオ比較 | ⏳ 未適用 | 🟠 重要 |
+| 5 | `AD・EntraID刷新_移行シナリオ比較検討資料.html` | `?page=project_ad_scenarios` | AD移行シナリオ比較 | ⏳ 未適用 | 🟠 重要 |
 | 6 | `project_ad_matrix.html` | `?page=project_ad_matrix` | 3社権限・責任分界点 | ⏳ 未適用 | 🟠 重要 |
 
 #### Phase 2-B: セコムクラウド化
@@ -241,7 +241,7 @@ project_management.html (古い管理ツール)
 ├─ unified_design_system.css を5ファイルに適用
 │  ├─ project_15_02.html
 │  ├─ project_15_combined.html
-│  ├─ project_ad_scenarios.html
+│  ├─ AD・EntraID刷新_移行シナリオ比較検討資料.html
 │  ├─ project_ad_matrix.html
 │  └─ line_dashboard.html
 │

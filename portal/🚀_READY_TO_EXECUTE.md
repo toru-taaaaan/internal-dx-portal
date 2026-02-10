@@ -99,7 +99,7 @@ cat deploy_auto_v2.sh.log | tail -20
    ├─ project_15_01.html → ADクラウド化
    ├─ project_15_02.html → セコム
    ├─ project_15_combined.html → 統合比較
-   ├─ project_ad_scenarios.html → シナリオ
+   ├─ AD・EntraID刷新_移行シナリオ比較検討資料.html → シナリオ
    ├─ project_ad_matrix.html → 責任分界
    ├─ line_dashboard.html → SD-WAN
    ├─ project_15_12.html → AI推進
@@ -268,7 +268,7 @@ echo "✅ クリーンアップと本番デプロイ完了"
 ├─ project_15_03.html
 ├─ project_15_14.html
 ├─ project_15_combined.html
-├─ project_ad_scenarios.html
+├─ AD・EntraID刷新_移行シナリオ比較検討資料.html
 ├─ project_ad_matrix.html
 ├─ line_dashboard.html
 ├─ project_15_12.html

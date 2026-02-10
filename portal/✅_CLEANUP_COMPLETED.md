@@ -55,7 +55,7 @@
 - ✅ project_15_12.html
 - ✅ project_15_14.html
 - ✅ project_15_combined.html
-- ✅ project_ad_scenarios.html
+- ✅ AD・EntraID刷新_移行シナリオ比較検討資料.html
 - ✅ project_ad_matrix.html
 - ✅ project_bn_report.html
 - ✅ project_sd_wan.html

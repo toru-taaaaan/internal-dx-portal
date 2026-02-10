@@ -48,7 +48,7 @@
 | `project_15_01.html` | IIJ, USEN, LinkAtJapan | 編集中 |
 | `project_15_02.html` | Secom | 編集中 |
 | `project_15_combined.html` | AD + Secom 両方 | 編集中 |
-| `project_ad_scenarios.html` | IIJ / USEN / LinkAtJapan 比較 | 編集中 |
+| `AD・EntraID刷新_移行シナリオ比較検討資料.html` | IIJ / USEN / LinkAtJapan 比較 | 編集中 |
 | `project_ad_matrix.html` | 3社権限分界点 | 編集中 |
 | `line_dashboard.html` | SD-WAN (USEN) | 編集中 |
 

@@ -95,7 +95,7 @@ https://script.google.com/macros/d/134X5RPr9cSVbuVANw_FZ4amxAUueJGI4IlWF-muk_fXo
 | `?page=project_15_02` | `project_15_02.html` | セコム入退室クラウド化（3社比較） | 52 KB |
 | `?page=project_15_03` | `project_15_03.html` | ネットワークインフラ刷新 | 12 KB |
 | `?page=project_15_combined` | `project_15_combined.html` | AD+SECOM統合比較・TCO分析 | 24 KB |
-| `?page=project_ad_scenarios` | `project_ad_scenarios.html` | AD移行シナリオ比較（3パターン） | 16 KB |
+| `?page=project_ad_scenarios` | `AD・EntraID刷新_移行シナリオ比較検討資料.html` | AD移行シナリオ比較（3パターン） | 16 KB |
 | `?page=project_ad_matrix` | `project_ad_matrix.html` | 3社の権限・責任分界点比較表 | 20 KB |
 | `?page=line_dashboard` | `line_dashboard.html` | SD-WAN Map / 回線刷新ボード | 52 KB |
 

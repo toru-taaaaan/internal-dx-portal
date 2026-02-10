@@ -61,7 +61,7 @@
 2. CSS 統一化（5ファイル）
    ├─ project_15_02.html
    ├─ project_15_combined.html
-   ├─ project_ad_scenarios.html
+   ├─ AD・EntraID刷新_移行シナリオ比較検討資料.html
    ├─ project_ad_matrix.html
    └─ line_dashboard.html
 
@@ -150,7 +150,7 @@ ls -1 *.html | wc -l
 ```
 1. project_15_02.html
 2. project_15_combined.html
-3. project_ad_scenarios.html
+3. AD・EntraID刷新_移行シナリオ比較検討資料.html
 4. project_ad_matrix.html
 5. line_dashboard.html
 ```
@@ -276,7 +276,7 @@ ls -1 *.html | wc -l
 **対象ファイル** (5個):
 1. project_15_02.html
 2. project_15_combined.html
-3. project_ad_scenarios.html
+3. AD・EntraID刷新_移行シナリオ比較検討資料.html
 4. project_ad_matrix.html
 5. line_dashboard.html
 

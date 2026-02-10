@@ -17,7 +17,7 @@
 ✅ project_15_combined.html (AD+SECOM統合比較)
    └─ <link rel="stylesheet" href="assets/unified_design_system.css"> を追加
 
-✅ project_ad_scenarios.html (ADシナリオ比較)
+✅ AD・EntraID刷新_移行シナリオ比較検討資料.html (ADシナリオ比較)
    └─ <link rel="stylesheet" href="assets/unified_design_system.css"> を追加
 
 ✅ project_ad_matrix.html (3社責任分界)
@@ -45,7 +45,7 @@ https://script.google.com/a/akiba-holdings.co.jp/macros/s/AKfycbzubD24U27_X6_SRE
 ✅ project_15_01.html (元々統一済み)
 ✅ project_15_02.html (新規追加)
 ✅ project_15_combined.html (新規追加)
-✅ project_ad_scenarios.html (新規追加)
+✅ AD・EntraID刷新_移行シナリオ比較検討資料.html (新規追加)
 ✅ project_ad_matrix.html (新規追加)
 
 共通CSS:

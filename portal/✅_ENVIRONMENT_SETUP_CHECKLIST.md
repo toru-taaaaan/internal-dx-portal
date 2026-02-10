@@ -196,7 +196,7 @@ clasp status
     - 両社統合計画を更新
 
 2/9:
-  □ project_ad_scenarios.html
+  □ AD・EntraID刷新_移行シナリオ比較検討資料.html
     - Entra ID シナリオ情報を更新（USEN回答より）
 
   □ project_ad_matrix.html

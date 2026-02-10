@@ -34,7 +34,7 @@
    ├─ project_15_01.html   (ADクラウド化)
    ├─ project_15_02.html   (セコム入退室クラウド化)
    ├─ project_15_combined.html (AD+SECOM統合比較)
-   └─ project_ad_scenarios.html (AD移行シナリオ比較)
+   └─ AD・EntraID刷新_移行シナリオ比較検討資料.html (AD移行シナリオ比較)
    └─ project_ad_matrix.html (3社権限・責任分界点)
    └─ line_dashboard.html   (SD-WAN Map)
 │
@@ -109,7 +109,7 @@
 | `project_15_01.html` | `?page=project_15_01` | ADクラウド化（IIJ/USEN/LAJ比較） |
 | `project_15_02.html` | `?page=project_15_02` | セコム入退室クラウド化（3社比較） |
 | `project_15_combined.html` | `?page=project_15_combined` | AD+SECOM統合比較・TCO分析 |
-| `project_ad_scenarios.html` | `?page=project_ad_scenarios` | AD移行シナリオ比較（3パターン） |
+| `AD・EntraID刷新_移行シナリオ比較検討資料.html` | `?page=project_ad_scenarios` | AD移行シナリオ比較（3パターン） |
 | `project_ad_matrix.html` | `?page=project_ad_matrix` | 3社の権限・責任分界点比較表 |
 | `line_dashboard.html` | `?page=line_dashboard` | SD-WAN vs Vario Secure 比較マップ |
 
@@ -161,7 +161,7 @@ index.html
   ├─ ?page=project_15_01  → project_15_01.html
   ├─ ?page=project_15_02  → project_15_02.html
   ├─ ?page=project_15_combined → project_15_combined.html
-  ├─ ?page=project_ad_scenarios → project_ad_scenarios.html
+  ├─ ?page=project_ad_scenarios → AD・EntraID刷新_移行シナリオ比較検討資料.html
   ├─ ?page=project_ad_matrix → project_ad_matrix.html
   ├─ ?page=line_dashboard → line_dashboard.html
   ├─ ?page=project_15_12  → project_15_12.html
@@ -203,7 +203,7 @@ assets/
 | `project_15_01.html` | ✅ | ✅ | ✅ 適用完了 |
 | `project_15_02.html` | ✅ | ⏳ | 未適用 |
 | `project_15_combined.html` | ✅ | ⏳ | 未適用 |
-| `project_ad_scenarios.html` | ✅ | ⏳ | 未適用 |
+| `AD・EntraID刷新_移行シナリオ比較検討資料.html` | ✅ | ⏳ | 未適用 |
 | `project_ad_matrix.html` | ✅ | ⏳ | 未適用 |
 | `line_dashboard.html` | ✅ | ⏳ | 未適用 |
 | `project_15_12.html` | ✅ | ⏳ | 未適用 |
@@ -400,7 +400,7 @@ ls -l assets/*.css
 - [ ] 残り5ファイルに `unified_design_system.css` を適用
   - `project_15_02.html`
   - `project_15_combined.html`
-  - `project_ad_scenarios.html`
+  - `AD・EntraID刷新_移行シナリオ比較検討資料.html`
   - `project_ad_matrix.html`
   - `line_dashboard.html`
 

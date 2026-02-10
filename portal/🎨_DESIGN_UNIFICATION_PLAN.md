@@ -23,7 +23,7 @@
    ├─ project_15_03.html （CSS不明）
    ├─ project_15_12.html （portal_nexus のみ）
    ├─ project_15_combined.html （CSS不明）
-   ├─ project_ad_scenarios.html （portal_nexus のみ）
+   ├─ AD・EntraID刷新_移行シナリオ比較検討資料.html （portal_nexus のみ）
    ├─ project_ad_matrix.html （CSS不明）
    ├─ line_dashboard.html （CSS不明）
    └─ ... その他
@@ -80,7 +80,7 @@ assets/unified_design_system.css
 🔴 高優先度（統一が必須）:
 1. project_15_02.html (セコム) - 52 KB
 2. project_15_combined.html (統合比較) - 24 KB
-3. project_ad_scenarios.html (ADシナリオ) - 16 KB
+3. AD・EntraID刷新_移行シナリオ比較検討資料.html (ADシナリオ) - 16 KB
 4. project_ad_matrix.html (責任分界) - 20 KB
 5. line_dashboard.html (SD-WAN) - 52 KB
 
@@ -145,7 +145,7 @@ Action 1: project_15_02.html に CSS を追加
 Action 2-5: 同じ操作を以下に繰り返す
 ──────────────────────────────────
 project_15_combined.html
-project_ad_scenarios.html
+AD・EntraID刷新_移行シナリオ比較検討資料.html
 project_ad_matrix.html
 line_dashboard.html
 
@@ -178,7 +178,7 @@ Action 6: 本番環境で統一感を確認
 □ project_15_combined.html
   └─ 同上
 
-□ project_ad_scenarios.html
+□ AD・EntraID刷新_移行シナリオ比較検討資料.html
   └─ 同上
 
 □ project_ad_matrix.html
@@ -372,7 +372,7 @@ code project_15_02.html
 2. 対象ファイル 5個を確認
    - project_15_02.html ✓
    - project_15_combined.html ✓
-   - project_ad_scenarios.html ✓
+   - AD・EntraID刷新_移行シナリオ比較検討資料.html ✓
    - project_ad_matrix.html ✓
    - line_dashboard.html ✓
 3. 本番環境で現在の「微妙なバラバラ感」を確認

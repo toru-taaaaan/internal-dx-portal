@@ -93,7 +93,7 @@ cd C:\Users\toru.tanji\Obsidian\SecondBrain_Final\01_Workspace\11_プロジェ�
    └─ project_15_combined.html (統合比較)
 
 ⚡ 中優先度
-└─ project_ad_scenarios.html (シナリオ比較)
+└─ AD・EntraID刷新_移行シナリオ比較検討資料.html (シナリオ比較)
 └─ project_ad_matrix.html (責任分界)
 
 💡 低優先度
@@ -166,7 +166,7 @@ ls -la deploy_auto_v2.sh
 - [ ] project_15_01.html (AD Cloud Lift)
 - [ ] project_15_02.html (Secom Cloud)
 - [ ] project_15_combined.html (統合比較)
-- [ ] project_ad_scenarios.html (シナリオ)
+- [ ] AD・EntraID刷新_移行シナリオ比較検討資料.html (シナリオ)
 - [ ] project_ad_matrix.html (責任分界)
 - [ ] line_dashboard.html (SD-WAN Map)
 

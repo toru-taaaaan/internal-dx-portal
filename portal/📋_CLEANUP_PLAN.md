@@ -250,7 +250,7 @@ rm -f landing_new_concept.html
 │  │  ├─ project_15_01.html
 │  │  ├─ project_15_02.html
 │  │  ├─ project_15_combined.html
-│  │  ├─ project_ad_scenarios.html
+│  │  ├─ AD・EntraID刷新_移行シナリオ比較検討資料.html
 │  │  ├─ project_ad_matrix.html
 │  │  └─ line_dashboard.html
 │  │

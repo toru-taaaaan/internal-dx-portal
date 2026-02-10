@@ -203,7 +203,7 @@ CSS 適用進捗:
 Phase C: CSS 統一化（5ファイル × 5分 = 25分）
 ├─ project_15_02.html
 ├─ project_15_combined.html
-├─ project_ad_scenarios.html
+├─ AD・EntraID刷新_移行シナリオ比較検討資料.html
 ├─ project_ad_matrix.html
 └─ line_dashboard.html
 

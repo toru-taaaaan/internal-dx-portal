@@ -44,7 +44,7 @@
 | `?page=project_15_01` | `project_15_01.html` | 108 KB | 2026-02-07 | ✅ unified | ✅ |
 | `?page=project_15_02` | `project_15_02.html` | 52 KB | 2026-02-07 | ⏳ portal_nexus | 要統一 |
 | `?page=project_15_combined` | `project_15_combined.html` | 24 KB | 2026-02-07 | ⏳ portal_nexus | 要統一 |
-| `?page=project_ad_scenarios` | `project_ad_scenarios.html` | 16 KB | 2026-02-07 | ⏳ portal_nexus | 要統一 |
+| `?page=project_ad_scenarios` | `AD・EntraID刷新_移行シナリオ比較検討資料.html` | 16 KB | 2026-02-07 | ⏳ portal_nexus | 要統一 |
 | `?page=project_ad_matrix` | `project_ad_matrix.html` | 20 KB | 2026-02-07 | ⏳ portal_nexus | 要統一 |
 | `?page=line_dashboard` | `line_dashboard.html` | 52 KB | 2026-02-07 | ⏳ portal_nexus | 要統一 |
 
@@ -120,7 +120,7 @@ Step 7: 本番環境で確認
 ⏳ 統一が必要なファイル（5個）
 ├─ project_15_02.html
 ├─ project_15_combined.html
-├─ project_ad_scenarios.html
+├─ AD・EntraID刷新_移行シナリオ比較検討資料.html
 ├─ project_ad_matrix.html
 ├─ line_dashboard.html
 
@@ -186,7 +186,7 @@ grep -l "ADクラウド化" *.html
 4. project_15_12.html (36 KB) - AIチャンピオン推進
 5. project_15_14.html (16 KB) - インフラ評価
 6. project_15_combined.html (24 KB) - AD+SECOM統合
-7. project_ad_scenarios.html (16 KB) - ADシナリオ比較
+7. AD・EntraID刷新_移行シナリオ比較検討資料.html (16 KB) - ADシナリオ比較
 8. project_ad_matrix.html (20 KB) - 3社責任分界
 9. project_bn_report.html (36 KB) - 財務自動化
 10. project_sd_wan.html (52 KB) - SD-WAN Map
@@ -393,7 +393,7 @@ cat .clasp.json
 ⏳ 統一予定: 5ファイル
 ├─ project_15_02.html
 ├─ project_15_combined.html
-├─ project_ad_scenarios.html
+├─ AD・EntraID刷新_移行シナリオ比較検討資料.html
 ├─ project_ad_matrix.html
 └─ line_dashboard.html
 └─ 追加する CSS: <link rel="stylesheet" href="assets/unified_design_system.css">
