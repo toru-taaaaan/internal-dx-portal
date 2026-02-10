@@ -26,6 +26,11 @@
     .sub-task-list li::before { content: '•'; position: absolute; left: 0; color: #3b82f6; font-weight: bold; }
     .track-pulse { font-size: 64px; line-height: 1; font-weight: 900; }
     .track-meta { font-size: 14px; font-weight: 700; color: #64748b; }
+    .highlight-card { background: #ffffff; border: 2px solid #e2e8f0; border-radius: 16px; padding: 24px; position: relative; overflow: hidden; }
+    .highlight-card::before { content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #3b82f6; }
+    .highlight-title { font-size: 1.1rem; font-weight: 800; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .highlight-text { font-size: 0.95rem; color: #475569; line-height: 1.6; font-weight: 500; }
+    .decision-point { background: #fffbeb; border-left: 4px solid #f59e0b; padding: 16px; border-radius: 8px; margin-top: 24px; }
   </style>
 </head>
 <body class="bg-[#fcfcfc]">
@@ -80,7 +85,7 @@
       <div class="p-16 max-w-full lg:max-w-[1400px] mx-auto">
         
         <!-- Header -->
-        <header class="mb-20">
+        <header class="mb-12">
           <div class="flex items-center gap-4 mb-6">
             <span class="w-16 h-2 bg-slate-700 rounded-full"></span>
             <span class="text-sm font-black tracking-[0.5em] text-slate-500 uppercase">Strategic Command Dashboard</span>
@@ -91,6 +96,45 @@
             経営層向けの戦略的背景と、現場のエンジニアリング工程を接続する管制塔です。
           </p>
         </header>
+
+        <!-- Executive Highlights Section -->
+        <section class="mb-20">
+          <div class="section-header border-slate-800">
+            <span class="text-xs font-black text-slate-500 uppercase tracking-[0.2em] block mb-2">Executive Highlights</span>
+            <h2 class="text-3xl font-black text-slate-800">📋 経営層向け要約サマリ</h2>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="highlight-card">
+              <div class="highlight-title">🏛️ 認証基盤 (Identity)</div>
+              <div class="highlight-text">
+                老朽化した物理ADを撤廃し、Entra ID中心のクラウド認証へ。サーバー管理費用の削減とセキュリティガバナンス強化を実現。
+              </div>
+            </div>
+            <div class="highlight-card">
+              <div class="highlight-title">📈 ネットワーク (Network)</div>
+              <div class="highlight-text">
+                国産安定型のIIJか、将来拡張性のCatoか。2/13の見積判明後、投資対効果に基づき最終判断を行う最重要領域。
+              </div>
+            </div>
+            <div class="highlight-card">
+              <div class="highlight-title">🛡️ セキュリティ (Security)</div>
+              <div class="highlight-text">
+                物理入退室(SECOM)とIT認証を統合。入退社時の権限管理を自動化し、物理と論理の両面で安全性を向上。
+              </div>
+            </div>
+          </div>
+
+          <div class="decision-point">
+            <h4 class="text-sm font-black text-amber-800 uppercase mb-3 flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+              Next Strategy Check: 2/13 (Fri)
+            </h4>
+            <div class="text-sm font-bold text-amber-900 leading-relaxed">
+              最終見積に基づき「国内安定 (IIJ)」か「未来型 (Cato)」か、および「拠点回線の物理増強」の要否を決定します。
+            </div>
+          </div>
+        </section>
 
         <div class="space-y-24">
           <!-- Track 1: Identity -->
@@ -108,7 +152,7 @@
                   物理サーバーの老朽化リスクを排除。クラウドネイティブな認証体系への刷新による、ガバナンス強化と運用コスト削減の両立。
                 </p>
                 <div class="space-y-4">
-                  <a href="ADクラウド移行_3社比較・導入計画.html" class="doc-link-card">ADクラウド移行 3社比較・導入計画 →</a>
+                  <a href="ADクラウド移行_3社比較・導入計画.html" class="doc-link-card">ADサーバークラウド移行計画レポート →</a>
                   <a href="AD・EntraID刷新_移行シナリオ比較検討資料.html" class="doc-link-card">AD・EntraID刷新 移行シナリオ比較検討資料 →</a>
                 </div>
                 <div class="mt-12 pt-8 border-t border-blue-100 text-center">
@@ -144,13 +188,23 @@
                         <span class="status-badge status-in-progress">進行中 (30%)</span>
                         <div class="text-xs font-bold text-slate-400 mt-4 leading-relaxed">認証シークエンスの<br>技術仕様を裏取り中</div>
                       </td>
-                    </tr>
                     <tr>
                       <td>
                         <div class="text-lg font-black text-slate-700">✅ ADリネーム・不整合解消のアクション</div>
                         <ul class="sub-task-list">
                           <li>クラウド同期時に致命的となるレガシー属性・不整合のクレンジング完了</li>
                           <li>リネーム後の各社内システムへの影響調査と暫定対策の完了</li>
+                        </ul>
+                      </td>
+                      <td class="font-black italic text-rose-600 text-lg">2/10</td>
+                      <td><span class="status-badge status-completed">✅ 完了</span></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="text-lg font-black text-slate-700">✅ 用語のビジネス表現平準化（グローバル置換）</div>
+                        <ul class="sub-task-list">
+                          <li>不適切な表現「新星案」を「追加検討案」へ一律置換完了</li>
+                          <li>ドキュメント間での用語の不整合を解消し、プロフェッショナルな品質へ向上</li>
                         </ul>
                       </td>
                       <td class="text-slate-400 font-bold">2/10</td>
@@ -285,8 +339,8 @@
                   物理入退室とIT認証の統合。持出PCまで含めたエンドポイント・セキュリティを Azure 基盤上で一元管理。
                 </p>
                 <div class="space-y-4">
-                  <a href="SECOM入退室クラウド化_導入検討資料.html" class="doc-link-card border-l-orange-600">SECOM入退室クラウド化 導入検討資料 →</a>
-                  <a href="AD・SECOM同時依頼_コスト最適化分析.html" class="doc-link-card border-l-orange-600">同時依頼3社比較レポート →</a>
+                  <a href="SECOM入退室クラウド化_導入検討資料.html" class="doc-link-card border-l-orange-600">セコム入退室管理サーバー クラウド化 ベンダー3社 サービス詳細比較 →</a>
+                  <a href="AD・SECOM同時依頼_コスト最適化分析.html" class="doc-link-card border-l-orange-600">ADサーバー + セコム入退室管理 「同時依頼」3社比較レポート →</a>
                 </div>
                 <div class="mt-12 pt-8 border-t border-orange-100 text-center">
                     <div class="text-xs font-black text-orange-400 uppercase mb-3">Track Progress</div>
@@ -343,6 +397,17 @@
                           </ul>
                         </td>
                         <td class="text-slate-400 font-bold">2/9</td>
+                        <td><span class="status-badge status-completed">✅ 完了</span></td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="text-lg font-black text-slate-700">✅ 経営層向け意思決定サマリ（Executive Highlights）の統合</div>
+                          <ul class="sub-task-list">
+                            <li>各領域の要点を要約した「Executive Highlights」を統合ボードへ実装</li>
+                            <li>2/13の見積受領後の意思決定ポイントを明確化</li>
+                          </ul>
+                        </td>
+                        <td class="text-slate-400 font-bold">2/10</td>
                         <td><span class="status-badge status-completed">✅ 完了</span></td>
                       </tr>
                   </tbody>
