@@ -8,23 +8,24 @@
   <link rel="stylesheet" href="assets/portal_nexus.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { font-family: 'Noto Sans JP', sans-serif; background-color: #fcfcfc; color: #1e293b; }
-    .section-header { border-left: 6px solid #1e293b; padding-left: 16px; margin-bottom: 24px; }
-    .strategy-card { background: white; border: 2px solid #e2e8f0; border-radius: 20px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-    .doc-link-card { display: block; background: #f1f5f9; border-radius: 12px; padding: 12px; border-left: 4px solid #3b82f6; text-decoration: none; transition: all 0.2s; font-size: 13px; font-weight: 700; }
-    .doc-link-card:hover { transform: translateX(4px); background: #e2e8f0; }
-    .task-table { width: 100%; border-collapse: collapse; margin-top: 16px; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; }
-    .task-table th { padding: 12px 16px; background: #f8fafc; color: #64748b; font-size: 11px; text-transform: uppercase; text-align: left; border-bottom: 1px solid #e2e8f0; }
-    .task-table td { padding: 16px; border-bottom: 1px solid #f1f5f9; font-size: 13px; vertical-align: top; }
-    .status-badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 10px; font-weight: 900; white-space: nowrap; }
+    body { font-family: 'Noto Sans JP', sans-serif; background-color: #fcfcfc; color: #1e293b; font-size: 16px; }
+    .section-header { border-left: 8px solid #1e293b; padding-left: 24px; margin-bottom: 32px; }
+    .strategy-card { background: white; border: 2px solid #e2e8f0; border-radius: 24px; padding: 32px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+    .doc-link-card { display: block; background: #f1f5f9; border-radius: 12px; padding: 16px; border-left: 6px solid #3b82f6; text-decoration: none; transition: all 0.2s; font-size: 15px; font-weight: 700; }
+    .doc-link-card:hover { transform: translateX(8px); background: #e2e8f0; }
+    .task-table { width: 100%; border-collapse: collapse; margin-top: 24px; background: #ffffff; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0; }
+    .task-table th { padding: 18px 24px; background: #f8fafc; color: #64748b; font-size: 13px; text-transform: uppercase; text-align: left; border-bottom: 1px solid #e2e8f0; letter-spacing: 0.1em; }
+    .task-table td { padding: 24px; border-bottom: 1px solid #f1f5f9; font-size: 15px; vertical-align: top; line-height: 1.6; }
+    .status-badge { display: inline-block; padding: 4px 12px; border-radius: 14px; font-size: 12px; font-weight: 900; white-space: nowrap; }
     .status-in-progress { background: #dbeafe; color: #1e40af; }
     .status-completed { background: #dcfce7; color: #166534; }
     .status-pending { background: #fef3c7; color: #92400e; }
     .status-wait { background: #f1f5f9; color: #475569; border: 1px dashed #cbd5e1; }
-    .sub-task-list { margin-top: 8px; font-size: 11px; color: #64748b; line-height: 1.6; list-style: none; padding-left: 0; }
-    .sub-task-list li { position: relative; padding-left: 14px; margin-bottom: 4px; }
-    .sub-task-list li::before { content: '•'; position: absolute; left: 0; color: #cbd5e1; }
-    .highlight-blue { color: #2563eb; }
+    .sub-task-list { margin-top: 12px; font-size: 14px; color: #475569; line-height: 1.8; list-style: none; padding-left: 0; }
+    .sub-task-list li { position: relative; padding-left: 20px; margin-bottom: 8px; }
+    .sub-task-list li::before { content: '•'; position: absolute; left: 0; color: #3b82f6; font-weight: bold; }
+    .track-pulse { font-size: 64px; line-height: 1; font-weight: 900; }
+    .track-meta { font-size: 14px; font-weight: 700; color: #64748b; }
   </style>
 </head>
 <body class="bg-[#fcfcfc]">
@@ -70,101 +71,103 @@
         </a>
       </nav>
       <footer class="sidebar-footer">
-        <p>User: 丹治 統<br>Last Sync: 2/10 17:00</p>
+        <p>User: 丹治 統<br>Last Sync: 2/10 17:15</p>
       </footer>
     </aside>
 
     <!-- Main Workspace -->
     <main class="main-scroll">
-      <div class="p-12 max-w-6xl">
+      <div class="p-16 max-w-full lg:max-w-[1400px] mx-auto">
         
         <!-- Header -->
-        <header class="mb-12">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="w-12 h-1.5 bg-slate-700 rounded-full"></span>
-            <span class="text-xs font-black tracking-[0.4em] text-slate-500 uppercase">Interactive Command Center</span>
+        <header class="mb-20">
+          <div class="flex items-center gap-4 mb-6">
+            <span class="w-16 h-2 bg-slate-700 rounded-full"></span>
+            <span class="text-sm font-black tracking-[0.5em] text-slate-500 uppercase">Strategic Command Dashboard</span>
           </div>
-          <h1 class="text-4xl font-black tracking-tighter text-slate-800">Phase 2 刷新戦略・工程統合ボード</h1>
-          <p class="mt-4 text-slate-500 font-bold max-w-2xl text-sm italic">
-            「なぜやるか（戦略的背景）」と「具体的に何を進めているか（詳細プロジェクト工程）」の同期ビュー
+          <h1 class="text-5xl font-black tracking-tighter text-slate-800 leading-tight">Phase 2 刷新戦略・工程統合ボード</h1>
+          <p class="mt-6 text-slate-500 font-bold max-w-4xl text-lg leading-relaxed">
+            「なぜやるか」と「何をしているか」を同期。<br>
+            経営層向けの戦略的背景と、現場のエンジニアリング工程を接続する管制塔です。
           </p>
         </header>
 
-        <div class="space-y-16">
+        <div class="space-y-24">
           <!-- Track 1: Identity -->
           <section>
-            <div class="section-header">
-              <span class="text-[10px] font-black text-blue-500 uppercase tracking-widest block mb-1">Identity Track</span>
-              <h2 class="text-2xl font-black text-slate-800">🏛️ 認証基盤のクラウド化 (AD/Entra ID)</h2>
+            <div class="section-header border-blue-600">
+              <span class="text-xs font-black text-blue-500 uppercase tracking-[0.2em] block mb-2">Identity Track</span>
+              <h2 class="text-3xl font-black text-slate-800">🏛️ 認証基盤のクラウド化 (AD/Entra ID)</h2>
             </div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
               <!-- Strategy Summary -->
-              <div class="lg:col-span-1 strategy-card bg-slate-50 border-none">
-                <h4 class="text-[10px] font-black text-slate-400 uppercase mb-4 tracking-widest">Strategic Context</h4>
-                <p class="text-xs font-bold text-slate-600 leading-relaxed mb-6">
-                  本社物理サーバーの老朽化リスクをゼロへ。Entra ID(クラウドネイティブ)刷新か、IaaS移行かの最終判断フェーズ。
+              <div class="lg:col-span-1 strategy-card bg-blue-50/30 border-none">
+                <h4 class="text-xs font-black text-slate-400 uppercase mb-6 tracking-widest">Strategic Context</h4>
+                <p class="text-sm font-bold text-slate-600 leading-relaxed mb-8">
+                  物理サーバーの老朽化リスクを排除。クラウドネイティブな認証体系への刷新による、ガバナンス強化と運用コスト削減の両立。
                 </p>
-                <div class="space-y-3">
-                  <a href="ADクラウド移行_3社比較・導入計画.html" class="doc-link-card">AD比較・導入計画</a>
-                  <a href="AD・EntraID刷新_移行シナリオ比較検討資料.html" class="doc-link-card">刷新シナリオ比較</a>
+                <div class="space-y-4">
+                  <a href="ADクラウド移行_3社比較・導入計画.html" class="doc-link-card">AD比較・導入計画 →</a>
+                  <a href="AD・EntraID刷新_移行シナリオ比較検討資料.html" class="doc-link-card">刷新シナリオ比較 →</a>
                 </div>
-                <div class="mt-8 pt-8 border-t border-slate-200 text-center">
-                    <div class="text-[10px] font-black text-blue-400 uppercase mb-2">Track Progress</div>
-                    <div class="text-4xl font-black italic text-blue-600">85%</div>
+                <div class="mt-12 pt-8 border-t border-blue-100 text-center">
+                    <div class="text-xs font-black text-blue-400 uppercase mb-3">Track Progress</div>
+                    <div class="track-pulse text-blue-600 italic">85%</div>
+                    <div class="mt-2 track-meta">構成案確定済</div>
                 </div>
               </div>
 
               <!-- Detailed Tasks Table -->
-              <div class="lg:col-span-3 strategy-card border-blue-100">
-                <h4 class="text-xs font-black text-blue-500 uppercase mb-4">Current Project Engineering Details</h4>
+              <div class="lg:col-span-3 strategy-card">
+                <h4 class="text-sm font-black text-blue-600 uppercase mb-6 border-b border-slate-100 pb-4">Current Engineering Progress</h4>
                 <table class="task-table">
                   <thead>
                     <tr>
-                      <th width="55%">詳細タスク・アクション</th>
+                      <th width="60%">詳細タスク・検討項目</th>
                       <th width="15%">期限</th>
-                      <th width="30%">現在の詳細ステータス</th>
+                      <th width="25%">詳細ステータス</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td>
-                        <div class="font-black text-slate-700">Entra ID 戦略整理・ハイブリッド構成検討</div>
+                        <div class="text-lg font-black text-slate-800 underline decoration-blue-200 underline-offset-4">Entra ID 戦略整理・ハイブリッド構成検討</div>
                         <ul class="sub-task-list">
-                          <li>MFA・条件付きアクセス等のセキュリティ機能の要件定義</li>
+                          <li>MFA・条件付きアクセス等の高度なセキュリティ機能の実装ロードマップ定義</li>
                           <li>AD ↔ Entra ID 各共存シナリオ(ハイブリッド/完全クラウド)の多軸分析</li>
-                          <li>コスト・実装工数・運用付加をベースとした最適構成の選定</li>
+                          <li>ITガバナンス・運用工数・コストをベースとした最適構成の選定プロセス</li>
                         </ul>
                       </td>
-                      <td class="font-black italic text-rose-600">2/13</td>
+                      <td class="font-black italic text-rose-600 text-lg">2/13</td>
                       <td>
                         <span class="status-badge status-in-progress">進行中 (30%)</span>
-                        <div class="text-[10px] font-bold text-slate-400 mt-2 leading-relaxed">認証シークエンスの技術仕様を裏取り中</div>
+                        <div class="text-xs font-bold text-slate-400 mt-4 leading-relaxed">認証シークエンスの<br>技術仕様を裏取り中</div>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <div class="font-black text-slate-700">✅ ADリネーム・項目不整合の解消</div>
+                        <div class="text-lg font-black text-slate-700">✅ ADリネーム・不整合解消のアクション</div>
                         <ul class="sub-task-list">
-                          <li>クラウド同期時にエラーとなるレガシー属性の整理完了</li>
-                          <li>リネーム後の各連動システムへの影響調査と修正の完了</li>
+                          <li>クラウド同期時に致命的となるレガシー属性・不整合のクレンジング完了</li>
+                          <li>リネーム後の各社内システムへの影響調査と暫定対策の完了</li>
                         </ul>
                       </td>
-                      <td class="text-slate-400">2/10</td>
+                      <td class="text-slate-400 font-bold">2/10</td>
                       <td><span class="status-badge status-completed">✅ 完了</span></td>
                     </tr>
-                    <tr class="bg-slate-50/50">
+                    <tr class="bg-blue-50/10">
                         <td>
-                          <div class="font-black text-slate-500 italic">ベンダー3社(IIJ/USEN/LAJ) 見積受領・精査</div>
+                          <div class="text-lg font-black text-slate-500 italic">ベンダー3社(IIJ/USEN/LAJ) 見積精査</div>
                           <ul class="sub-task-list">
-                            <li>各社の権限・責任分界点(RACI)の整合性チェック</li>
-                            <li>初期構築費用 ＋ 5年TCOの横並び集計</li>
+                            <li>各社の権限・責任分界点(RACI)の整合性および構築範囲のダブルチェック</li>
+                            <li>初期導入費用 ＋ ライセンス維持費を含む5年TCOの比較集計</li>
                           </ul>
                         </td>
-                        <td class="text-slate-500 italic">2/13</td>
+                        <td class="text-slate-500 italic font-bold">2/13</td>
                         <td>
-                          <span class="status-badge status-wait">回答待ち (D-3)</span>
-                          <div class="text-[10px] font-bold text-slate-400 mt-2">LAJ社/USEN社へ最終確認中</div>
+                          <span class="status-badge status-wait">回答待ち</span>
+                          <div class="text-xs font-bold text-slate-400 mt-4">LAJ社/USEN社へ<br>最終条件を確認中</div>
                         </td>
                       </tr>
                   </tbody>
@@ -175,75 +178,76 @@
 
           <!-- Track 2: Network -->
           <section>
-            <div class="section-header border-emerald-500">
-              <span class="text-[10px] font-black text-emerald-500 uppercase tracking-widest block mb-1">Network Track</span>
-              <h2 class="text-2xl font-black text-slate-800">📈 通信構造の刷新 (SD-WAN & SASE)</h2>
+            <div class="section-header border-emerald-600">
+              <span class="text-xs font-black text-emerald-500 uppercase tracking-[0.2em] block mb-2">Network Track</span>
+              <h2 class="text-3xl font-black text-slate-800">📈 通信構造の刷新 (SD-WAN & SASE)</h2>
             </div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-              <div class="lg:col-span-1 strategy-card bg-slate-50 border-none">
-                <h4 class="text-[10px] font-black text-slate-400 uppercase mb-4 tracking-widest">Strategic Context</h4>
-                <p class="text-xs font-bold text-slate-600 leading-relaxed mb-6">
-                  拠点間の体感速度低下と、各拠点からクラウドへの最短ルート確保。IIJオムニバス(国内最強) vs Cato SASE(世界基準)の選択。
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+              <div class="lg:col-span-1 strategy-card bg-emerald-50/30 border-none">
+                <h4 class="text-xs font-black text-slate-400 uppercase mb-6 tracking-widest">Strategic Context</h4>
+                <p class="text-sm font-bold text-slate-600 leading-relaxed mb-8">
+                  「遅いインターネット」からの解放。各拠点からクラウドへの最短ルート(LBO)を確立し、業務生産性を最大化。
                 </p>
-                <div class="space-y-3">
-                  <a href="SD-WAN刷新_3社4シナリオ比較検討資料.html" class="doc-link-card border-l-emerald-500">3社4シナリオ比較</a>
-                  <a href="line_dashboard.html" class="doc-link-card border-l-emerald-500">通信構造 Map</a>
+                <div class="space-y-4">
+                  <a href="SD-WAN刷新_3社4シナリオ比較検討資料.html" class="doc-link-card border-l-emerald-600">3社4シナリオ比較 →</a>
+                  <a href="line_dashboard.html" class="doc-link-card border-l-emerald-600">通信構造 Map →</a>
                 </div>
-                <div class="mt-8 pt-8 border-t border-slate-200 text-center">
-                    <div class="text-[10px] font-black text-emerald-400 uppercase mb-2">Track Progress</div>
-                    <div class="text-4xl font-black italic text-emerald-600">60%</div>
+                <div class="mt-12 pt-8 border-t border-emerald-100 text-center">
+                    <div class="text-xs font-black text-emerald-400 uppercase mb-3">Track Progress</div>
+                    <div class="track-pulse text-emerald-600 italic">60%</div>
+                    <div class="mt-2 track-meta">Cato社見積待ち</div>
                 </div>
               </div>
 
-              <div class="lg:col-span-3 strategy-card border-emerald-100">
-                <h4 class="text-xs font-black text-emerald-500 uppercase mb-4">Current Project Engineering Details</h4>
+              <div class="lg:col-span-3 strategy-card">
+                <h4 class="text-sm font-black text-emerald-600 uppercase mb-6 border-b border-slate-100 pb-4">Current Engineering Progress</h4>
                 <table class="task-table">
                   <thead>
                     <tr>
-                      <th width="55%">詳細タスク・アクション</th>
+                      <th width="60%">詳細タスク・検討項目</th>
                       <th width="15%">期限</th>
-                      <th width="30%">現在の詳細ステータス</th>
+                      <th width="25%">詳細ステータス</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td>
-                        <div class="font-black text-slate-700">IIJ Omnibus vs Cato SASE 深掘り比較考察</div>
+                        <div class="text-lg font-black text-slate-800 underline decoration-emerald-200 underline-offset-4">IIJ Omnibus vs Cato SASE 深掘り比較考察</div>
                         <ul class="sub-task-list">
-                          <li>国内拠点統合・カスタマイズ性(IIJ)と、ゼロトラスト・グローバル性能(Cato)の比較</li>
-                          <li>IT戦略・運用体制・既存資産・5年TCOを軸にした多角的評価スコアリング</li>
+                          <li>国内統合性(IIJ)と、ゼロトラスト・グローバル性能(Cato)の比較検証</li>
+                          <li>将来のセキュリティ拡張性(SASE)を見据えた重み付け評価の実施</li>
                         </ul>
                       </td>
-                      <td class="font-black italic text-rose-600">2/12</td>
+                      <td class="font-black italic text-rose-600 text-lg">2/12</td>
                       <td>
                         <span class="status-badge status-in-progress">進行中 (50%)</span>
-                        <div class="text-[10px] font-bold text-slate-400 mt-2">比較マトリクスの重み付けを調整中</div>
+                        <div class="text-xs font-bold text-slate-400 mt-4 leading-relaxed">比較指標の<br>最終整合を実施中</div>
                       </td>
                     </tr>
-                    <tr class="bg-slate-50/50">
+                    <tr class="bg-emerald-50/10">
                         <td>
-                          <div class="font-black text-slate-500 italic">SCSK社：Cato Networks SASE 正式案受領</div>
+                          <div class="text-lg font-black text-slate-500 italic">SCSK社：Cato Networks SASE 正式案受領</div>
                           <ul class="sub-task-list">
-                            <li>9拠点(物理8+Azure1)の Socket構成・帯域1Gbps条件の見積回答</li>
-                            <li>Microsoft 365 ＆ Google Workspace LBO(ローカルブレイクアウト)最適化検証</li>
+                            <li>全拠点の vSocket / Socket 構成およびマネージド保守費用の精査</li>
+                            <li>M365 / Google Workspace 通信最適化の技術的妥当性の検証</li>
                           </ul>
                         </td>
-                        <td class="text-rose-600 font-extrabold italic">2/13</td>
+                        <td class="text-rose-600 font-extrabold italic text-lg">2/13</td>
                         <td>
-                          <span class="status-badge status-pending">回答待ち (Urgent)</span>
-                          <div class="text-[10px] font-bold text-slate-400 mt-2">角田様からの正式提案待ち</div>
+                          <span class="status-badge status-pending">回答待ち (緊急)</span>
+                          <div class="text-xs font-bold text-slate-400 mt-4">角田様からの<br>最終回答を催促中</div>
                         </td>
                       </tr>
                       <tr>
                         <td>
-                          <div class="font-black text-slate-500 italic">IIJ・Cato両社への詳細質問＆裏取り</div>
+                          <div class="text-lg font-black text-slate-500 italic">IIJ・Cato両社への技術的裏取り</div>
                           <ul class="sub-task-list">
-                            <li>オプション料金体系、SLA定義、サポート内容、カスタマイズ範囲の明確化</li>
-                            <li>営業提案内容と実際の機能仕様の整合性チェック</li>
+                            <li>通信品質保証(SLA)およびインシデント時の対応フローの比較</li>
+                            <li>各社の独自オプションと標準機能の境界線の明確化送付</li>
                           </ul>
                         </td>
-                        <td class="text-slate-400 italic">2/11</td>
+                        <td class="text-slate-400 font-bold">2/11</td>
                         <td><span class="status-badge status-wait">質問送付済</span></td>
                       </tr>
                   </tbody>
@@ -254,75 +258,76 @@
 
           <!-- Track 3: Security -->
           <section>
-            <div class="section-header border-orange-500">
-              <span class="text-[10px] font-black text-orange-500 uppercase tracking-widest block mb-1">Security Track</span>
-              <h2 class="text-2xl font-black text-slate-800">🛡️ 境界防御 & クラウド入退室 (SECOM)</h2>
+            <div class="section-header border-orange-600">
+              <span class="text-xs font-black text-orange-500 uppercase tracking-[0.2em] block mb-2">Security Track</span>
+              <h2 class="text-3xl font-black text-slate-800">🛡️ 境界防御 & クラウド入退室 (SECOM)</h2>
             </div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-              <div class="lg:col-span-1 strategy-card bg-slate-50 border-none">
-                <h4 class="text-[10px] font-black text-slate-400 uppercase mb-4 tracking-widest">Strategic Context</h4>
-                <p class="text-xs font-bold text-slate-600 leading-relaxed mb-6">
-                  持出PCの統制。SECOMサーバーもクラウド化し、認証・NWとセットで運用を強靭化。管理コストとリスクの同時低減。
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+              <div class="lg:col-span-1 strategy-card bg-orange-50/30 border-none">
+                <h4 class="text-xs font-black text-slate-400 uppercase mb-6 tracking-widest">Strategic Context</h4>
+                <p class="text-sm font-bold text-slate-600 leading-relaxed mb-8">
+                  物理入退室とIT認証の統合。持出PCまで含めたエンドポイント・セキュリティを Azure 基盤上で一元管理。
                 </p>
-                <div class="space-y-3">
-                  <a href="SECOM入退室クラウド化_導入検討資料.html" class="doc-link-card border-l-orange-500">SECOMクラウド化検討</a>
-                  <a href="AD・SECOM同時依頼_コスト最適化分析.html" class="doc-link-card border-l-orange-500">ADサーバー + セコム入退室管理 「同時依頼」3社比較レポート</a>
+                <div class="space-y-4">
+                  <a href="SECOM入退室クラウド化_導入検討資料.html" class="doc-link-card border-l-orange-600">SECOMクラウド化検討 →</a>
+                  <a href="AD・SECOM同時依頼_コスト最適化分析.html" class="doc-link-card border-l-orange-600">同時依頼3社比較レポート →</a>
                 </div>
-                <div class="mt-8 pt-8 border-t border-slate-200 text-center">
-                    <div class="text-[10px] font-black text-orange-400 uppercase mb-2">Track Progress</div>
-                    <div class="text-4xl font-black italic text-orange-600">75%</div>
+                <div class="mt-12 pt-8 border-t border-orange-100 text-center">
+                    <div class="text-xs font-black text-orange-400 uppercase mb-3">Track Progress</div>
+                    <div class="track-pulse text-orange-600 italic">75%</div>
+                    <div class="mt-2 track-meta">構成案最終精査中</div>
                 </div>
               </div>
 
-              <div class="lg:col-span-3 strategy-card border-orange-100">
-                <h4 class="text-xs font-black text-orange-500 uppercase mb-4">Current Project Engineering Details</h4>
+              <div class="lg:col-span-3 strategy-card">
+                <h4 class="text-sm font-black text-orange-600 uppercase mb-6 border-b border-slate-100 pb-4">Current Engineering Progress</h4>
                 <table class="task-table">
                   <thead>
                     <tr>
-                      <th width="55%">詳細タスク・アクション</th>
+                      <th width="60%">詳細タスク・検討項目</th>
                       <th width="15%">期限</th>
-                      <th width="30%">現在の詳細ステータス</th>
+                      <th width="25%">詳細ステータス</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td>
-                        <div class="font-black text-slate-700">パリオセキア(USEN) 追加オプション費用分析</div>
+                        <div class="text-lg font-black text-slate-800 underline decoration-orange-200 underline-offset-4">パリオセキア(USEN) 追加オプション ROI分析</div>
                         <ul class="sub-task-list">
-                          <li>機能拡張(オプションサービス)に関する見積整理とROIまとめ</li>
-                          <li>AD基盤への「相乗り」による、Azure VMリソース/保守コストの削減試算</li>
+                          <li>SECOM社連動オプションの導入メリットと、AD基盤相乗りによるインフラコスト削減効果</li>
+                          <li>クラウド化に伴う物理資産（保守サーバー）の撤去・廃棄コストの算出</li>
                         </ul>
                       </td>
-                      <td class="font-black italic text-rose-600">2/11</td>
+                      <td class="font-black italic text-rose-600 text-lg">2/11</td>
                       <td>
                         <span class="status-badge status-in-progress">進行中 (40%)</span>
-                        <div class="text-[10px] font-bold text-slate-400 mt-2">USEN社と構成仕様を最終確認中</div>
+                        <div class="text-xs font-bold text-slate-400 mt-4 leading-relaxed">USEN社と構成仕様を<br>技術調整中</div>
                       </td>
                     </tr>
-                    <tr class="bg-slate-50/50">
+                    <tr class="bg-orange-50/10">
                         <td>
-                          <div class="font-black text-slate-500 italic">ADサーバー + セコム入退室管理 「同時依頼」3社比較レポート</div>
+                          <div class="text-lg font-black text-slate-500 italic">ADサーバー + セコム入退室管理 「同時依頼」3社比較分析</div>
                           <ul class="sub-task-list">
-                            <li>統合管理（バックアップ・NW共通化）の構成案レポート完成</li>
-                            <li>セット依頼による更なるディスカウント交渉の材料整理</li>
+                            <li>AD ＋ SECOM 同時発注による、ライセンスおよび構築作業のボリュームディスカウント精査</li>
+                            <li>運用統合（バックアップ監視・ネットワーク接続）のエンジニアリング・レポート完成</li>
                           </ul>
                         </td>
-                        <td class="text-slate-500 italic">2/13</td>
+                        <td class="text-slate-500 italic font-bold">2/13</td>
                         <td>
                           <span class="status-badge status-wait">分析中</span>
-                          <div class="text-[10px] font-bold text-slate-400 mt-2">LAJ社と統合運用のスキームを詰め中</div>
+                          <div class="text-xs font-bold text-slate-400 mt-4">LAJ社と統合運用<br>スキームを詰め中</div>
                         </td>
                       </tr>
                       <tr>
                         <td>
-                          <div class="font-black text-slate-500 italic">✅ 塩田部長・篠部長 閲覧環境の設定</div>
+                          <div class="text-lg font-black text-slate-500">✅ 塩田部長・篠部長 閲覧環境の共有</div>
                           <ul class="sub-task-list">
-                            <li>ポータルへの shioda / shino ユーザーアカウント発行と権限付与</li>
-                            <li>認証情報のセキュアな共有(Google Chat)完了</li>
+                            <li>shioda / shino ユーザーの ID/PW 発行と権限設定の完了</li>
+                            <li>ポータル利用ガイドの共有完了</li>
                           </ul>
                         </td>
-                        <td class="text-slate-400 italic">2/9</td>
+                        <td class="text-slate-400 font-bold">2/9</td>
                         <td><span class="status-badge status-completed">✅ 完了</span></td>
                       </tr>
                   </tbody>
@@ -333,8 +338,8 @@
         </div>
 
         <!-- Footer -->
-        <footer class="mt-24 pt-8 border-t border-slate-200 text-center text-slate-400 text-[10px] font-bold uppercase tracking-[0.4em]">
-          &copy; 2026 Akiba Holdings System Division &bull; Powered by Antigravity
+        <footer class="mt-32 pt-12 border-t border-slate-200 text-center text-slate-400 text-xs font-bold uppercase tracking-[0.5em]">
+          &copy; 2026 Akiba Holdings System Division &bull; Strategic Control Center
         </footer>
       </div>
     </main>
