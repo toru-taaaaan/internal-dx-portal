@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Heartbeat Dashboard | SD-WAN Renewal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans JP', sans-serif; background-color: #0f172a; color: #f8fafc; }
+        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; }
+        .status-pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        .glow-green { box-shadow: 0 0 20px rgba(34, 197, 94, 0.4); }
+        .gradient-text { background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body class="p-8 min-h-screen flex flex-col items-center">
+
+    <!-- Header Section -->
+    <header class="w-full max-w-5xl mb-12 flex justify-between items-center">
+        <div>
+            <div class="flex items-center gap-2 mb-2">
+                <span class="w-8 h-1 bg-blue-500 rounded-full"></span>
+                <span class="text-xs font-black tracking-widest text-slate-400 uppercase">Executive Heartbeat</span>
+            </div>
+            <h1 class="text-3xl font-black italic">SD-WAN Renewal: Phase 2</h1>
+        </div>
+        <div class="text-right">
+            <p class="text-xs font-bold text-slate-500">LAST SYNC: 2026.02.10 16:45</p>
+            <p class="text-lg font-black text-blue-400">ON TRACK</p>
+        </div>
+    </header>
+
+    <main class="w-full max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Big Status Indicator -->
+        <section class="md:col-span-2 glass-card p-10 flex flex-col justify-center items-center glow-green border-green-500/30">
+            <div class="w-24 h-24 rounded-full bg-green-500 mb-6 flex items-center justify-center status-pulse">
+                <svg class="w-12 h-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                </svg>
+            </div>
+            <h2 class="text-5xl font-black mb-4 text-center">プロジェクトは順調です</h2>
+            <p class="text-slate-400 font-bold text-center max-w-md">
+                全 8 資料の日本語リネームが完了し、ポータル内の全リンクを同期しました。現在は 2/13(金) のベンダー見積受領に向けた「回答待ち」のフェーズです。
+            </p>
+        </section>
+
+        <!-- Countdown -->
+        <section class="glass-card p-10 flex flex-col justify-center items-center border-blue-500/20">
+            <span class="text-xs font-black text-blue-400 tracking-widest uppercase mb-4">Next Big Day</span>
+            <div class="text-7xl font-black mb-2 italic">D-3</div>
+            <div class="text-xl font-black text-slate-300">2月13日 (金)</div>
+            <p class="text-xs font-bold text-slate-500 mt-4 text-center">各社見積・比較資料 最終締切</p>
+        </section>
+
+        <!-- Progress Overview -->
+        <section class="glass-card p-8 md:col-span-3">
+            <h3 class="text-sm font-black text-slate-400 tracking-widest uppercase mb-8 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                進捗状況 (3大領域)
+            </h3>
+            <div class="space-y-10">
+                <!-- Identity -->
+                <div>
+                    <div class="flex justify-between items-end mb-4">
+                        <span class="font-black text-xl italic">Identity <span class="text-sm font-bold text-slate-500 not-italic ml-2">(認証基盤)</span></span>
+                        <span class="font-black text-blue-400">85%</span>
+                    </div>
+                    <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-blue-600 to-blue-400 rounded-full" style="width: 85%"></div>
+                    </div>
+                    <p class="text-[10px] font-bold text-slate-500 mt-2">ADリネーム・リレーションMap構築済み。後は受領した見積を反映するのみ。</p>
+                </div>
+                <!-- Network -->
+                <div>
+                    <div class="flex justify-between items-end mb-4">
+                        <span class="font-black text-xl italic">Network <span class="text-sm font-bold text-slate-500 not-italic ml-2">(回線・SD-WAN)</span></span>
+                        <span class="font-black text-purple-400">60%</span>
+                    </div>
+                    <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-purple-600 to-purple-400 rounded-full" style="width: 60%"></div>
+                    </div>
+                    <p class="text-[10px] font-bold text-slate-500 mt-2">Cato SASE シナリオ案の作成完了。SCSK社の正式回答待ち。</p>
+                </div>
+                <!-- Security -->
+                <div>
+                    <div class="flex justify-between items-end mb-4">
+                        <span class="font-black text-xl italic">Security <span class="text-sm font-bold text-slate-500 not-italic ml-2">(境界防御)</span></span>
+                        <span class="font-black text-emerald-400">75%</span>
+                    </div>
+                    <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full" style="width: 75%"></div>
+                    </div>
+                    <p class="text-[10px] font-bold text-slate-500 mt-2">SECOMクラウド化検討資料作成済み。統合コスト分析を実施中。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Three Bullet Summary -->
+        <section class="glass-card p-10 md:col-span-3 bg-gradient-to-br from-blue-900/20 to-transparent">
+            <h3 class="text-sm font-black text-slate-400 tracking-widest uppercase mb-8">本日のサマリ (塩田部長へ)</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="flex gap-4">
+                    <span class="text-4xl">👌</span>
+                    <div>
+                        <h4 class="font-black text-lg mb-2 italic">Everything Named</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed font-bold">全資料を直感的な日本語名に統一しました。経営層がどの資料を見れば良いか一目でわかる状態を構築しました。</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <span class="text-4xl">🚦</span>
+                    <div>
+                        <h4 class="font-black text-lg mb-2 italic">Ready for 2/13</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed font-bold">2/13(金)の最終見積に向けた比較の土台はすべて用意できています。現在はベンダーの回答を待つ段階へ移行しました。</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <span class="text-4xl">🎯</span>
+                    <div>
+                        <h4 class="font-black text-lg mb-2 italic">External Sync Complete</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed font-bold">ポータル内のリンク不整合を一掃しました。どこからアクセスしても必要な情報にストレスなく辿り着けるようになっています。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Back -->
+        <div class="md:col-span-3 text-center">
+            <a href="landing.html" class="px-8 py-3 bg-white/5 border border-white/10 rounded-full text-xs font-black text-slate-400 hover:bg-white/10 transition">
+                ← ポータルホームに戻る
+            </a>
+        </div>
+
+    </main>
+
+    <footer class="mt-20 text-slate-600 text-[10px] font-black tracking-[0.5em] uppercase">
+        Master Command Center AI "Antigravity"
+    </footer>
+
+</body>
+</html>
