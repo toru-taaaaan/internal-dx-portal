@@ -534,6 +534,58 @@
     "></div>
 
         <!-- Detailed Comparison Tables -->
+        <!-- Phase 3: Network Footprint Upgrade Alternative -->
+        <section class="section-card" id="network-footprint-upgrade" style="background: #fffcf2; border: 2px solid #fde68a;">
+            <div class="section-title" style="color: #92400e;">💡 第3段階: ネットワーク足回りの物理増強（新星案）</div>
+            
+            <div style="margin-bottom: 25px;">
+                <p style="font-size: 1rem; color: #78350f; font-weight: 700; background: #fef3c7; padding: 15px; border-radius: 8px; border-left: 5px solid #f59e0b;">
+                    <strong>背景:</strong> 「クラウド化しても回線が遅ければ業務効率が上がらない」との指摘に基づき、通信構造（SD-WAN/SASE）の変更ではなく、物理的な<b>回線種別のアップグレード</b>によるボトルネック解消を検討します。
+                </p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+                <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #fde68a; box-shadow: var(--shadow-sm);">
+                    <h4 style="margin-top: 0; color: #92400e; border-bottom: 2px solid #fde68a; padding-bottom: 8px;">足回り増強のアプローチ</h4>
+                    <ul style="list-style: none; padding: 0; font-size: 0.95rem; line-height: 1.8; color: #475569;">
+                        <li><strong style="color: #b45309;">専有型/速度保証型への切替:</strong> 玉・橋本拠点等のフレッツ光（共有型）から、専有型回線へ変更。</li>
+                        <li><strong style="color: #b45309;">LBO不要論の検証:</strong> 回線自体の帯域・品質が劇的に改善すれば、複雑なLBO設定なしでも業務に支障がない可能性。</li>
+                        <li><strong style="color: #b45309;">VarioSecureの継続利用:</strong> 回線のみの変更であれば、既存の使い慣れたVarioSecureをそのまま維持可能。</li>
+                    </ul>
+                </div>
+                
+                <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #fde68a; box-shadow: var(--shadow-sm);">
+                    <h4 style="margin-top: 0; color: #92400e; border-bottom: 2px solid #fde68a; padding-bottom: 8px;">重大なトレードオフ (検討事項)</h4>
+                    <table style="width: 100%; font-size: 0.9rem; border: none; margin-top: 10px;">
+                        <tr>
+                            <th style="background: #fffbeb; color: #92400e; border: none; padding: 8px; text-align: left;">懸念項目</th>
+                            <th style="background: #fffbeb; color: #92400e; border: none; padding: 8px; text-align: left;">分析</th>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 700; color: #b45309; padding: 12px 8px; border-bottom: 1px solid #fffbeb;">セキュリティ</td>
+                            <td style="padding: 12px 8px; border-bottom: 1px solid #fffbeb;">Cato/IIJ等の「クラウド型高度セキュリティ」への移行を見送ることになり、防御レベルは現状維持となる。</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 700; color: #b45309; padding: 12px 8px; border-bottom: 1px solid #fffbeb;">トータルコスト</td>
+                            <td style="padding: 12px 8px; border-bottom: 1px solid #fffbeb;">専有回線は月額コストが高額（数万円〜/拠点）。全拠点適用か、特定拠点のみかの精査が必要。</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div style="background: #ffffff; padding: 20px; border-radius: 12px; border: 1px solid #fde68a;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                    <span style="font-size: 1.2rem;">📡</span>
+                    <h4 style="margin: 0; color: #92400e;">現在の調査状況</h4>
+                </div>
+                <div style="font-size: 0.95rem; color: #4b5563;">
+                    • <b>USEN社への問合せ:</b> 専有型回線への切替可能性とコストについて照会済。<br>
+                    • <b>回答待ち (2/13目処):</b> 具体的な月額費用と、既存Varioとの共存仕様を確認中。<br>
+                    • 拠点ごとのボトルネック実測データと照らし合わせ、ROI（投資対効果）を評価予定。
+                </div>
+            </div>
+        </section>
+
         <section class="section-card">
             <div class="section-title">🛡️ 第1段階: 現状・強化案・刷新案の比較 (3シナリオ比較)</div>
             <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 25px;">
