@@ -3,318 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phase 2 Strategy Flow | Internal DX Portal</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>Phase 2 Strategy Board | Internal DX Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f172a;
-            color: #f8fafc;
-            overflow: hidden;
-            margin: 0;
-            height: 100vh;
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #fcfcfc;
+            color: #1e293b;
         }
-        .node {
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .board-container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        .node:hover circle {
-            stroke-width: 4px;
-            stroke: #fff;
-            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+        .step-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 24px;
+            position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
         }
-        .link {
-            stroke: #334155;
-            stroke-opacity: 0.3;
-            stroke-width: 2px;
-            fill: none;
-            marker-end: url(#arrowhead);
+        .step-arrow {
+            position: relative;
         }
-        .link-label {
-            font-size: 9px;
-            font-weight: 800;
-            fill: #475569;
-            text-anchor: middle;
-            pointer-events: none;
+        @media (min-width: 768px) {
+            .step-arrow::after {
+                content: '→';
+                position: absolute;
+                right: -1.75rem;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 1.5rem;
+                color: #cbd5e1;
+                font-weight: 900;
+                z-index: 10;
+            }
         }
-        .label {
-            font-size: 11px;
-            font-weight: 900;
-            pointer-events: none;
-            fill: #94a3b8;
-            letter-spacing: 0.02em;
+        .doc-link-card {
+            display: block;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+            text-decoration: none;
+            transition: all 0.2s;
+            border-left-width: 6px;
         }
-        .stage-label {
+        .doc-link-card:hover {
+            transform: translateX(4px);
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+        .section-tag {
             font-size: 10px;
             font-weight: 900;
-            fill: #1e293b;
-            text-anchor: middle;
-            letter-spacing: 0.4em;
+            letter-spacing: 0.1em;
+            color: #64748b;
             text-transform: uppercase;
+            margin-bottom: 8px;
+            display: block;
         }
-        .tooltip {
-            position: absolute;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(16px);
-            border: 1px solid #334155;
-            padding: 20px;
-            border-radius: 16px;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-            z-index: 100;
-            max-width: 320px;
-        }
-        .header {
-            position: absolute;
-            top: 40px;
-            left: 40px;
-            z-index: 10;
-        }
-        .bg-glow {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, #111827 0%, #030712 100%);
-            z-index: -1;
-        }
-        .stage-line {
-            stroke: #111827;
-            stroke-width: 2px;
-            stroke-dasharray: 8 8;
-        }
-        .stage-bg {
-            fill: none;
+        .step-header {
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #94a3b8;
+            text-align: center;
+            margin-bottom: 12px;
         }
     </style>
 </head>
-<body>
-    <div class="bg-glow"></div>
-    
-    <div class="header">
-        <h1 class="text-3xl font-black tracking-tighter text-white mb-2">PHASE 2 NARRATIVE FLOW</h1>
-        <p class="text-slate-500 text-[10px] font-black tracking-[0.3em] uppercase">Contextual Strategy Map: AS-IS → PAIN → TO-BE</p>
-        <div class="flex gap-4 mt-6">
-            <a href="index.html" class="px-5 py-2.5 bg-slate-800/50 backdrop-blur border border-slate-700 rounded-full text-[10px] font-black tracking-widest hover:bg-slate-700 transition">← BACK TO HUB</a>
+<body class="p-6 md:p-12">
+    <header class="max-w-6xl mx-auto mb-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+        <div>
+            <div class="flex items-center gap-3 mb-4">
+                <span class="w-12 h-1.5 bg-slate-700 rounded-full"></span>
+                <span class="text-xs font-black tracking-[0.4em] text-slate-500 uppercase">Contextual Architecture</span>
+            </div>
+            <h1 class="text-4xl font-black tracking-tighter text-slate-800">Phase 2 検討資料 相関ボード</h1>
+            <p class="mt-4 text-slate-500 font-bold max-w-2xl">
+                現状抱えているリスクから、何を解決すべきかを整理し、それぞれの検討結果（資料）へ繋げています。
+            </p>
         </div>
-    </div>
+        <a href="index.html" class="px-6 py-3 bg-white border-2 border-slate-200 rounded-xl text-xs font-black text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition shadow-sm">
+            ← 指揮センター HUB に戻る
+        </a>
+    </header>
 
-    <div id="map-container" class="w-full h-full"></div>
-    <div id="tooltip" class="tooltip"></div>
+    <main class="board-container space-y-20">
+        <!-- Stage Titles -->
+        <div class="hidden md:grid grid-cols-3 gap-12">
+            <div class="step-header">STEP 01: 現状の把握</div>
+            <div class="step-header">STEP 02: 解決すべき課題</div>
+            <div class="step-header">STEP 03: 検討・解決策</div>
+        </div>
 
-    <script>
-        const data = {
-            "nodes": [
-                { "id": "as_is_ad", "title": "現状: オンプレAD", "group": "asis", "stage": 0, "symbol": "🏛️", "desc": "本社屋上に設置された物理サーバー上での運用。震災や設備トラブルに脆弱。" },
-                { "id": "pain_ad", "title": "課題: 物理故障・老朽化", "group": "pain", "stage": 1, "symbol": "⚠️", "desc": "ハード故障による全社停止リスク(SPOF)。修理部材の枯渇も懸念。" },
-                { "id": "sol_ad_lift", "title": "AD Cloud Lift (15.01)", "group": "solution", "stage": 2, "url": "project_15_01.html", "symbol": "🔑", "desc": "クラウド(IaaS)移行による物理リスクの完全排除。認証系BCPの要。" },
-                { "id": "sol_ad_strat", "title": "AD移行戦略比較", "group": "solution", "stage": 2, "url": "project_ad_scenarios.html", "symbol": "🎯", "desc": "単純延命か、最新環境への刷新か。将来コストとリスクの比較資料。" },
-                
-                { "id": "as_is_nw", "title": "現状: VPN通信", "group": "asis", "stage": 0, "symbol": "📉", "desc": "Vario-VPNによる拠点接続。センター（本社）集中型のレガシー構成。" },
-                { "id": "pain_nw", "title": "課題: 通信ボトルネック", "group": "pain", "stage": 1, "symbol": "🐌", "desc": "リモート増・クラウド拡大に伴う帯域不足。特に大阪拠点のレスポンス悪化。" },
-                { "id": "sol_sdwan", "title": "SD-WAN刷新資料", "group": "solution", "stage": 2, "url": "SD-WAN刷新_3社4シナリオ比較検討資料.html", "symbol": "🚀", "desc": "3社4案の比較。回線刷新とSD-WANによる帯域確保・冗長化の検討。" },
-                { "id": "sol_nw_map", "title": "SD-WAN Visual", "group": "solution", "stage": 2, "url": "line_dashboard.html", "symbol": "🌐", "desc": "刷新後の通信経路を地図上で可視化したインタラクティブ資料。" },
+        <!-- Row 1: Identity -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-stretch">
+            <div class="step-card step-arrow">
+                <span class="section-tag">Identity / 認証基盤</span>
+                <h3 class="text-xl font-black text-slate-800 mb-4">🏛️ 本社オンプレAD</h3>
+                <p class="text-sm text-slate-500 leading-relaxed font-bold">
+                    本社屋上に設置された物理サーバーで全社のID管理を行っている。災害やハード故障が致命傷になる状態。
+                </p>
+            </div>
+            <div class="step-card step-arrow border-rose-100 bg-rose-50/30">
+                <h3 class="text-xl font-black text-rose-600 mb-4">⚠️ 老朽化・故障リスク</h3>
+                <p class="text-sm text-slate-600 leading-relaxed font-bold">
+                    ハードウェアの保守期限(EoL)が迫っており、単一障害点(SPOF)となっている。
+                    停止時の業務影響が甚大。
+                </p>
+            </div>
+            <div class="space-y-4">
+                <a href="project_15_01.html" class="doc-link-card border-l-blue-500">
+                    <span class="text-[10px] font-black text-blue-500 block mb-1">PROJECT 15.01</span>
+                    <h4 class="font-black text-slate-800">AD Cloud Lift 基本方針</h4>
+                    <p class="text-[11px] text-slate-500 mt-2 font-bold italic">物理リスクを排除し、クラウドへ移行する計画資料</p>
+                </a>
+                <a href="project_ad_scenarios.html" class="doc-link-card border-l-purple-500">
+                    <span class="text-[10px] font-black text-purple-500 block mb-1">STRATEGY</span>
+                    <h4 class="font-black text-slate-800">AD移行シナリオ比較</h4>
+                    <p class="text-[11px] text-slate-500 mt-2 font-bold italic">刷新か延命か、経営上の利得とリスクの比較資料</p>
+                </a>
+            </div>
+        </section>
 
-                { "id": "as_is_sec", "title": "現状: 従来型UTM", "group": "asis", "stage": 0, "symbol": "🧱", "desc": "社内ネットワークの境界のみを境界型FWで守る従来方式。" },
-                { "id": "pain_sec", "title": "課題: 持出PCの統制不足", "group": "pain", "stage": 1, "symbol": "🕵️", "desc": "社外での利用時にセキュリティが適用されず、エンドポイントのリスク増。" },
-                { "id": "sol_secom", "title": "Secom Cloud (15.02)", "group": "solution", "stage": 2, "url": "project_15_02.html", "symbol": "🛡️", "desc": "クラウド型SWGによる「場所を問わない」保護とセキュアなID構成。" },
-                
-                { "id": "sol_combined", "title": "統合分析資料", "group": "solution", "stage": 2, "url": "project_15_combined.html", "symbol": "⚖️", "desc": "ADとSecomの各案を組み合わせたTCO（トータルコスト）の最終比較資料。" }
-            ],
-            "links": [
-                { "source": "as_is_ad", "target": "pain_ad", "label": "老朽化・SPOF" },
-                { "source": "pain_ad", "target": "sol_ad_lift", "label": "BCP対策" },
-                { "source": "sol_ad_lift", "target": "sol_ad_strat", "label": "戦略決定" },
-                
-                { "source": "as_is_nw", "target": "pain_nw", "label": "トラフィック増" },
-                { "source": "pain_nw", "target": "sol_sdwan", "label": "SD-WAN化" },
-                { "source": "sol_sdwan", "target": "sol_nw_map", "label": "構成可視化" },
-                
-                { "source": "as_is_sec", "target": "pain_sec", "label": "境界消失" },
-                { "source": "pain_sec", "target": "sol_secom", "label": "場所を選ばぬ保護" },
-                
-                { "source": "sol_ad_lift", "target": "sol_combined", "label": "セット導入分析" },
-                { "source": "sol_secom", "target": "sol_combined", "label": "セット導入分析" },
-                { "source": "sol_sdwan", "target": "sol_ad_lift", "label": "土台の確保" }
-            ]
-        };
+        <!-- Row 2: Network -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-stretch border-t border-slate-100 pt-12">
+            <div class="step-card step-arrow">
+                <span class="section-tag">Network / 通信経路</span>
+                <h3 class="text-xl font-black text-slate-800 mb-4">📉 センター集中型VPN</h3>
+                <p class="text-sm text-slate-500 leading-relaxed font-bold">
+                    全ての拠点の通信が一旦、本社に集まってから外に出る古い構成。
+                </p>
+            </div>
+            <div class="step-card step-arrow border-rose-100 bg-rose-50/30">
+                <h3 class="text-xl font-black text-rose-600 mb-4">🐌 大阪拠点等の帯域不足</h3>
+                <p class="text-sm text-slate-600 leading-relaxed font-bold">
+                    クラウド利用増により本社の通信路がパンク状態。
+                    特定拠点での体感速度が低下し、業務に支障。
+                </p>
+            </div>
+            <div class="space-y-4">
+                <a href="SD-WAN刷新_3社4シナリオ比較検討資料.html" class="doc-link-card border-l-emerald-600">
+                    <span class="text-[10px] font-black text-emerald-600 block mb-1">STRATEGY</span>
+                    <h4 class="font-black text-slate-800">SD-WAN刷新 3社比較</h4>
+                    <p class="text-[11px] text-slate-500 mt-2 font-bold italic">回線刷新と分散化による、快適な拠点間通信の検討</p>
+                </a>
+                <a href="line_dashboard.html" class="doc-link-card border-l-cyan-600">
+                    <span class="text-[10px] font-black text-cyan-600 block mb-1">VISUAL</span>
+                    <h4 class="font-black text-slate-800">SD-WAN 通信構造 Map</h4>
+                    <p class="text-[11px] text-slate-500 mt-2 font-bold italic">新構成による通信品質改善を可視化したダッシュボード</p>
+                </a>
+            </div>
+        </section>
 
-        const width = window.innerWidth;
-        const height = window.innerHeight;
+        <!-- Row 3: Security -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-stretch border-t border-slate-100 pt-12">
+            <div class="step-card step-arrow">
+                <span class="section-tag">Security / 境界防御</span>
+                <h3 class="text-xl font-black text-slate-800 mb-4">🧱 物理UTMアプライアンス</h3>
+                <p class="text-sm text-slate-500 leading-relaxed font-bold">
+                    社内ネットワークという「境界」の内側だけを守る従来の方式。
+                </p>
+            </div>
+            <div class="step-card step-arrow border-rose-100 bg-rose-50/30">
+                <h3 class="text-xl font-black text-rose-600 mb-4">🕵️ 持出PCの統制低下</h3>
+                <p class="text-sm text-slate-600 leading-relaxed font-bold">
+                    社外（テレワーク等）でPCを使う際、社内のセキュリティが効かない無防備な状態。
+                </p>
+            </div>
+            <div class="space-y-4">
+                <a href="project_15_02.html" class="doc-link-card border-l-orange-600">
+                    <span class="text-[10px] font-black text-orange-600 block mb-1">PROJECT 15.02</span>
+                    <h4 class="font-black text-slate-800">Secom Cloud セキュリティ</h4>
+                    <p class="text-[11px] text-slate-500 mt-2 font-bold italic">場所を問わずに端末を保護するSSE構成の検討</p>
+                </a>
+                <a href="project_15_combined.html" class="doc-link-card border-l-amber-600">
+                    <span class="text-[10px] font-black text-amber-600 block mb-1">BUNDLE</span>
+                    <h4 class="font-black text-slate-800">AD + Secom 統合コスト分析</h4>
+                    <p class="text-[11px] text-slate-500 mt-2 font-bold italic">認証とセキュリティをセットで導入した際のトータル評価</p>
+                </a>
+            </div>
+        </section>
+    </main>
 
-        const svg = d3.select("#map-container")
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height);
-
-        // Marker for arrows
-        svg.append("defs").append("marker")
-            .attr("id", "arrowhead")
-            .attr("viewBox", "-0 -5 10 10")
-            .attr("refX", 38)
-            .attr("refY", 0)
-            .attr("orient", "auto")
-            .attr("markerWidth", 6)
-            .attr("markerHeight", 6)
-            .attr("xoverflow", "visible")
-            .append("svg:path")
-            .attr("d", "M 0,-5 L 10 ,0 L 0,5")
-            .attr("fill", "#334155")
-            .style("stroke", "none");
-
-        // Stages setup
-        const stageOffsets = [width * 0.2, width * 0.5, width * 0.8];
-        const stageNames = ["AS-IS (現状)", "PAIN (課題・リスク)", "TO-BE (検討資料・解決策)"];
-
-        stageOffsets.forEach((x, i) => {
-            svg.append("line")
-                .attr("class", "stage-line")
-                .attr("x1", x)
-                .attr("y1", 100)
-                .attr("x2", x)
-                .attr("y2", height - 100);
-            
-            svg.append("text")
-                .attr("class", "stage-label")
-                .attr("x", x)
-                .attr("y", 80)
-                .text(stageNames[i]);
-        });
-
-        const simulation = d3.forceSimulation(data.nodes)
-            .force("link", d3.forceLink(data.links).id(d => d.id).distance(200).strength(0.3))
-            .force("charge", d3.forceManyBody().strength(-800))
-            .force("x", d3.forceX(d => stageOffsets[d.stage]).strength(2))
-            .force("y", d3.forceY(height / 2).strength(0.1))
-            .force("collision", d3.forceCollide().radius(70));
-
-        const colors = {
-            asis: "#475569",
-            pain: "#ef4444",
-            solution: "#3b82f6"
-        };
-
-        const linkGroup = svg.append("g").selectAll(".link-group")
-            .data(data.links)
-            .join("g")
-            .attr("class", "link-group");
-
-        const link = linkGroup.append("line")
-            .attr("class", "link");
-
-        const linkLabel = linkGroup.append("text")
-            .attr("class", "link-label")
-            .text(d => d.label);
-
-        const node = svg.append("g")
-            .selectAll("g")
-            .data(data.nodes)
-            .join("g")
-            .attr("class", "node")
-            .call(d3.drag()
-                .on("start", dragstarted)
-                .on("drag", dragged)
-                .on("end", dragended))
-            .on("click", (e, d) => {
-                if (d.url) window.location.href = d.url;
-            })
-            .on("mouseover", showTooltip)
-            .on("mouseout", hideTooltip);
-
-        node.append("circle")
-            .attr("r", 32)
-            .attr("fill", d => colors[d.group])
-            .attr("fill-opacity", 0.08)
-            .attr("stroke", d => colors[d.group])
-            .attr("stroke-width", 2);
-
-        node.append("text")
-            .attr("text-anchor", "middle")
-            .attr("dy", ".35em")
-            .attr("font-size", "22px")
-            .text(d => d.symbol);
-
-        node.append("text")
-            .attr("class", "label")
-            .attr("text-anchor", "middle")
-            .attr("dy", "50px")
-            .text(d => d.title);
-
-        simulation.on("tick", () => {
-            link
-                .attr("x1", d => d.source.x)
-                .attr("y1", d => d.source.y)
-                .attr("x2", d => d.target.x)
-                .attr("y2", d => d.target.y);
-
-            linkLabel
-                .attr("x", d => (d.source.x + d.target.x) / 2)
-                .attr("y", d => (d.source.y + d.target.y) / 2 - 10);
-
-            node
-                .attr("transform", d => `translate(${d.x},${d.y})`);
-        });
-
-        function dragstarted(event) {
-            if (!event.active) simulation.alphaTarget(0.3).restart();
-            event.subject.fx = event.subject.x;
-            event.subject.fy = event.subject.y;
-        }
-
-        function dragged(event) {
-            event.subject.fx = event.x;
-            event.subject.fy = event.y;
-        }
-
-        function dragended(event) {
-            if (!event.active) simulation.alphaTarget(0);
-            event.subject.fx = null;
-            event.subject.fy = null;
-        }
-
-        const tooltip = d3.select("#tooltip");
-
-        function showTooltip(event, d) {
-            tooltip.transition().duration(200).style("opacity", 1);
-            tooltip.html(`
-                <div class="flex items-center gap-2 mb-3">
-                    <span class="px-2 py-0.5 rounded text-[8px] font-black text-white uppercase tracking-widest" style="background:${colors[d.group]}">${d.group}</span>
-                </div>
-                <div class="text-xl font-black text-white mb-2 leading-tight tracking-tight">${d.title}</div>
-                <div class="text-[11px] text-slate-400 mb-5 leading-relaxed font-bold">${d.desc}</div>
-                ${d.url ? `
-                <div class="flex items-center justify-between pt-4 border-t border-slate-700/50">
-                    <span class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Action</span>
-                    <span class="text-[9px] font-black text-blue-500 uppercase tracking-widest leading-none">Open Document →</span>
-                </div>` : ''}
-            `)
-            .style("left", (event.pageX + 25) + "px")
-            .style("top", (event.pageY - 25) + "px");
-            
-            link.filter(l => l.source.id === d.id || l.target.id === d.id)
-                .transition().duration(200)
-                .style("stroke", colors[d.group])
-                .style("stroke-opacity", 1)
-                .style("stroke-width", 3);
-        }
-
-        function hideTooltip() {
-            tooltip.transition().duration(200).style("opacity", 0);
-            link.transition().duration(200)
-                .style("stroke", "#334155")
-                .style("stroke-opacity", 0.3)
-                .style("stroke-width", 2);
-        }
-
-        window.addEventListener('resize', () => {
-            const w = window.innerWidth;
-            const h = window.innerHeight;
-            svg.attr("width", w).attr("height", h);
-            simulation.alpha(0.3).restart();
-        });
-    </script>
+    <footer class="max-w-6xl mx-auto mt-32 mb-16 pt-8 border-t border-slate-100 text-center">
+        <p class="text-[10px] font-black text-slate-300 uppercase tracking-[0.5em] italic">
+            Akiba Holdings Master Command Center &copy; 2026
+        </p>
+    </footer>
 </body>
 </html>
