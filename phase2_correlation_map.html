@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase 2 Correlation Map | Internal DX Portal</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow: hidden;
+            margin: 0;
+            height: 100vh;
+        }
+        .node {
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .node:hover {
+            filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.5));
+        }
+        .link {
+            stroke: #334155;
+            stroke-opacity: 0.6;
+            stroke-width: 2px;
+            transition: all 0.3s;
+        }
+        .link.highlight {
+            stroke: #3b82f6;
+            stroke-opacity: 1;
+            stroke-width: 4px;
+        }
+        .label {
+            font-size: 12px;
+            font-weight: 700;
+            pointer-events: none;
+            fill: #94a3b8;
+        }
+        .tooltip {
+            position: absolute;
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(8px);
+            border: 1px solid #334155;
+            padding: 16px;
+            border-radius: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            max-width: 300px;
+        }
+        .header {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            z-index: 10;
+        }
+        .controls {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            z-index: 10;
+        }
+        .bg-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-glow"></div>
+    
+    <div class="header">
+        <h1 class="text-3xl font-black tracking-tighter text-white mb-2">PHASE 2 CORRELATION MAP</h1>
+        <p class="text-slate-400 text-sm font-bold tracking-widest uppercase">Infrastructure Refresh Ecosystem</p>
+        <div class="flex gap-4 mt-6">
+            <a href="index.html" class="px-4 py-2 border border-slate-700 rounded-full text-xs font-bold hover:bg-slate-800 transition">← BACK TO HUB</a>
+        </div>
+    </div>
+
+    <div id="map-container" class="w-full h-full"></div>
+    <div id="tooltip" class="tooltip"></div>
+
+    <div class="controls flex gap-4">
+        <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+            <span class="text-[10px] font-bold text-slate-400">MANAGEMENT</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-cyan-500"></span>
+            <span class="text-[10px] font-bold text-slate-400">IDENTITY</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+            <span class="text-[10px] font-bold text-slate-400">SECURITY</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+            <span class="text-[10px] font-bold text-slate-400">NETWORK</span>
+        </div>
+    </div>
+
+    <script>
+        const data = {
+            "nodes": [
+                { "id": "p2_mgmt", "title": "Phase 2 Plan", "group": "management", "url": "project_management.html", "symbol": "📅", "desc": "Phase 2 全体の工程表とタスク管理" },
+                { "id": "p15_01", "title": "AD Cloud Lift", "group": "identity", "url": "project_15_01.html", "symbol": "🔑", "desc": "Active Directory のクラウド移行（基盤ID管理）" },
+                { "id": "p15_02", "title": "Secom Cloud", "group": "security", "url": "project_15_02.html", "symbol": "🛡️", "desc": "セキュリティゲートウェイの強靭化" },
+                { "id": "p15_combined", "title": "Integration Analysis", "group": "analysis", "url": "project_15_combined.html", "symbol": "⚖️", "desc": "ADとSECOMの統合コスト・構成分析" },
+                { "id": "p_ad_strategy", "title": "AD Scenarios", "group": "strategy", "url": "project_ad_scenarios.html", "symbol": "🎯", "desc": "移行シナリオ比較と戦略選定" },
+                { "id": "p_ad_matrix", "title": "Responsibility Matrix", "group": "management", "url": "project_ad_matrix.html", "symbol": "📋", "desc": "3社間の権限・責任分界点の定義" },
+                { "id": "sdwan_map", "title": "SD-WAN Visual", "group": "network", "url": "line_dashboard.html", "symbol": "🌐", "desc": "ネットワーク経路の視覚化ダッシュボード" },
+                { "id": "sdwan_strategy", "title": "SD-WAN Strategy", "group": "strategy", "url": "SD-WAN刷新_3社4シナリオ比較検討資料.html", "symbol": "🚀", "desc": "3社4シナリオによる回線刷新の検討" }
+            ],
+            "links": [
+                { "source": "p2_mgmt", "target": "p15_01" },
+                { "source": "p2_mgmt", "target": "p15_02" },
+                { "source": "p2_mgmt", "target": "sdwan_strategy" },
+                { "source": "p15_01", "target": "p_ad_strategy" },
+                { "source": "p15_01", "target": "p_ad_matrix" },
+                { "source": "p15_01", "target": "p15_combined" },
+                { "source": "p15_02", "target": "p15_combined" },
+                { "source": "sdwan_strategy", "target": "sdwan_map" },
+                { "source": "sdwan_strategy", "target": "p15_01", "desc": "Enables Secure Access to Cloud AD" },
+                { "source": "p15_02", "target": "sdwan_strategy", "desc": "Secures Network Perimeter" }
+            ]
+        };
+
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        const svg = d3.select("#map-container")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        const simulation = d3.forceSimulation(data.nodes)
+            .force("link", d3.forceLink(data.links).id(d => d.id).distance(250))
+            .force("charge", d3.forceManyBody().strength(-1500))
+            .force("center", d3.forceCenter(width / 2, height / 2 + 50));
+
+        const colors = {
+            management: "#3b82f6",
+            identity: "#06b6d4",
+            security: "#f43f5e",
+            network: "#10b981",
+            strategy: "#8b5cf6",
+            analysis: "#f59e0b"
+        };
+
+        const link = svg.append("g")
+            .selectAll("line")
+            .data(data.links)
+            .join("line")
+            .attr("class", "link");
+
+        const node = svg.append("g")
+            .selectAll("g")
+            .data(data.nodes)
+            .join("g")
+            .attr("class", "node")
+            .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended))
+            .on("click", (e, d) => window.location.href = d.url)
+            .on("mouseover", showTooltip)
+            .on("mouseout", hideTooltip);
+
+        node.append("circle")
+            .attr("r", 35)
+            .attr("fill", d => colors[d.group] || "#475569")
+            .attr("fill-opacity", 0.2)
+            .attr("stroke", d => colors[d.group] || "#475569")
+            .attr("stroke-width", 2);
+
+        node.append("text")
+            .attr("text-anchor", "middle")
+            .attr("dy", ".35em")
+            .attr("font-size", "24px")
+            .text(d => d.symbol);
+
+        node.append("text")
+            .attr("class", "label")
+            .attr("text-anchor", "middle")
+            .attr("dy", "50px")
+            .text(d => d.title.toUpperCase());
+
+        simulation.on("tick", () => {
+            link
+                .attr("x1", d => d.source.x)
+                .attr("y1", d => d.source.y)
+                .attr("x2", d => d.target.x)
+                .attr("y2", d => d.target.y);
+
+            node
+                .attr("transform", d => `translate(${d.x},${d.y})`);
+        });
+
+        function dragstarted(event) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            event.subject.fx = event.subject.x;
+            event.subject.fy = event.subject.y;
+        }
+
+        function dragged(event) {
+            event.subject.fx = event.x;
+            event.subject.fy = event.y;
+        }
+
+        function dragended(event) {
+            if (!event.active) simulation.alphaTarget(0);
+            event.subject.fx = null;
+            event.subject.fy = null;
+        }
+
+        const tooltip = d3.select("#tooltip");
+
+        function showTooltip(event, d) {
+            tooltip.transition().duration(200).style("opacity", 1);
+            tooltip.html(`
+                <div class="text-[10px] font-black text-slate-500 mb-1 uppercase tracking-widest">${d.group}</div>
+                <div class="text-lg font-bold text-white mb-2 leading-tight">${d.title}</div>
+                <div class="text-sm text-slate-400 mb-4 leading-relaxed">${d.desc}</div>
+                <div class="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Click to view document →</div>
+            `)
+            .style("left", (event.pageX + 20) + "px")
+            .style("top", (event.pageY - 20) + "px");
+            
+            // Highlight links
+            link.classed("highlight", l => l.source.id === d.id || l.target.id === d.id);
+        }
+
+        function hideTooltip() {
+            tooltip.transition().duration(200).style("opacity", 0);
+            link.classed("highlight", false);
+        }
+
+        window.addEventListener('resize', () => {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            svg.attr("width", w).attr("height", h);
+            simulation.force("center", d3.forceCenter(w / 2, h / 2 + 50)).restart();
+        });
+    </script>
+</body>
+</html>
