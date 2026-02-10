@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKIBA Holdings Network Topology Comparison</title>
+    <title>SD-WAN刷新 4シナリオ比較検討資料</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         :root {
@@ -234,7 +234,7 @@
 
     <div class="container">
         <div class="version-header">
-            <div style="font-weight: 800;">SD-WAN 3シナリオ比較 FINAL-VER-20260123</div>
+            <div style="font-weight: 800;">SD-WAN 4シナリオ比較検討資料 FINAL-VER-20260123</div>
             <div>現状維持 vs 現状強化 vs 刷新 vs SASE | 📊 ネットワーク戦略比較 | 更新: 2026-01-23 15:00</div>
         </div>
 
@@ -244,7 +244,7 @@
             </button>
         </div>
 
-        <h1>Network Configuration Comparison</h1>
+        <h1>SD-WAN刷新 4シナリオ比較検討資料</h1>
 
         <!-- Executive Summary -->
         <div style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 30px; margin-bottom: 40px;">
@@ -259,12 +259,12 @@
                         IIJ Omnibus
                     </div>
                     <div style="font-size: 1.3rem; font-weight: 800; color: #1e293b; margin-bottom: 15px;">
-                        ¥722,150/月
+                        ¥722,150/月<a href="#ref-1" style="text-decoration: none; font-size: 0.6em; vertical-align: super; color: var(--primary);">[1]</a>
                     </div>
                     <div style="font-size: 0.9rem; color: #64748b; line-height: 1.6;">
                         • 国内最大級のバックボーン<br>
                         • フルマネージド運用<br>
-                        • 1Gbps固定帯域
+                        • 1Gbps固定帯域<a href="#ref-1" style="text-decoration: none; font-size: 0.6em; vertical-align: super; color: var(--primary);">[1]</a>
                     </div>
                 </div>
                 
@@ -274,7 +274,7 @@
                         Cato Cloud
                     </div>
                     <div style="font-size: 1.3rem; font-weight: 800; color: #1e293b; margin-bottom: 15px;">
-                        ⚠️ 要見積
+                        ⏳ 見積回答待ち<a href="#ref-5" style="text-decoration: none; font-size: 0.6em; vertical-align: super; color: var(--primary);">[5]</a>
                     </div>
                     <div style="font-size: 0.9rem; color: #64748b; line-height: 1.6;">
                         • グローバルPoP網<br>
@@ -535,21 +535,21 @@
 
         <!-- Detailed Comparison Tables -->
         <section class="section-card">
-            <div class="section-title">🛡️ Round 1: 現状 vs 強化 vs IIJ (3シナリオ比較)</div>
+            <div class="section-title">🛡️ 第1段階: 現状・強化案・刷新案の比較 (3シナリオ比較)</div>
             <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 25px;">
-                <strong>第1ラウンド</strong>: まずは「現状維持」「VSR強化」「IIJ刷新」の3案で比較。<br>
-                コストとセキュリティのバランスで、VSR案(現状強化)がいかに不利かを確認します。
+                <strong>初期比較</strong>: まずは「現状維持」「VSR強化」「IIJ刷新」の3案で比較。<br>
+                コストとセキュリティのバランス観点から、現状強化案の課題を確認します。
             </p>
 
 <!-- ... (skipping unchanged content) ... -->
 
             <!-- 6. Comparison: IIJ vs Cato -->
             <h3 style="color: #b71c1c; margin-top: 60px; margin-bottom: 20px; text-align: center; font-size: 1.6rem; border-bottom: 3px double #b71c1c; display: inline-block; padding: 0 20px 10px 20px;">
-                🥊 Round 2: IIJ Omnibus vs Cato Cloud (頂上決戦)
+                🔍 第2段階: 刷新案（IIJ Omnibus vs Cato Cloud）の比較
             </h3>
             <p style="text-align: center; margin-bottom: 30px; color: #555;">
-                第1ラウンドを勝ち抜いた「IIJ Omnibus」と、黒船「Cato Cloud」の一騎打ち。<br>
-                <strong>「帯域コスト」</strong>をとるか、<strong>「リモートワークの未来」</strong>をとるか。
+                第1段階で有力候補となった「IIJ Omnibus」と、次世代SASE「Cato Cloud」の比較検討。<br>
+                <strong>「コスト効率」</strong>をとるか、<strong>「将来の拡張性と統合管理」</strong>をとるか。
             </p>
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px;">
                 <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #6c757d;">
@@ -582,42 +582,73 @@
                 </div>
             </div>
 
+            <!-- 背景色の評価基準（凡例） -->
+            <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 15px; margin-bottom: 20px; display: flex; justify-content: center; gap: 25px; font-size: 0.85rem; box-shadow: var(--shadow-sm);">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="width: 14px; height: 14px; background: #ffebee; border: 1px solid #ef9a9a; border-radius: 3px;"></span>
+                    <span style="font-weight: 600; color: #b71c1c;">❌ 未対応 / ⚠️ リスク</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="width: 14px; height: 14px; background: #e3f2fd; border: 1px solid #90caf9; border-radius: 3px;"></span>
+                    <span style="font-weight: 600; color: #1976d2;">✅ オプション対応 (追加費用)</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="width: 14px; height: 14px; background: #e8f5e9; border: 1px solid #a5d6a7; border-radius: 3px;"></span>
+                    <span style="font-weight: 600; color: #2e7d32;">✨ 標準装備 (統合管理)</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="width: 14px; height: 14px; background: #f3e5f5; border: 1px solid #ce93d8; border-radius: 3px;"></span>
+                    <span style="font-weight: 600; color: #7b1fa2;">🌐 SASE次世代統合</span>
+                </div>
+            </div>
+
             <table
                 style="width: 100%; border-collapse: collapse; margin-bottom: 40px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                 <thead>
                     <tr style="background-color: #1e88e5; color: white;">
-                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd; width: 15%;">セキュリティ機能</th>
-                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd; width: 25%;">説明</th>
-                        <th style="padding: 12px; text-align: center; border: 1px solid #ddd; width: 15%;">
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd; width: 13%;">セキュリティ機能</th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd; width: 19%;">説明</th>
+                        <th style="padding: 12px; text-align: center; border: 1px solid #ddd; width: 12%;">
                             <div style="font-size: 0.9em;">シナリオ①</div>
                             <strong>現状維持</strong><br>
                             <small>(USEN Vario)</small>
                         </th>
-                        <th style="padding: 12px; text-align: center; border: 1px solid #ddd; width: 15%;">
+                        <th style="padding: 12px; text-align: center; border: 1px solid #ddd; width: 12%;">
                             <div style="font-size: 0.9em;">シナリオ②</div>
                             <strong>現状強化</strong><br>
                             <small>(Vario+オプション)</small>
                         </th>
-                        <th style="padding: 12px; text-align: center; border: 1px solid #ddd; width: 15%;">
+                        <th style="padding: 12px; text-align: center; border: 1px solid #ddd; width: 12%;">
                             <div style="font-size: 0.9em;">シナリオ③</div>
                             <strong>刷新</strong><br>
                             <small>(IIJ Omnibus)</small>
                         </th>
-                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd; width: 15%;">導入メリット</th>
+                        <th style="padding: 12px; text-align: center; border: 1px solid #ddd; width: 12%;">
+                            <div style="font-size: 0.9em;">シナリオ④</div>
+                            <strong>SASE刷新</strong><br>
+                            <small>(Cato Cloud)</small>
+                        </th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd; width: 20%;">導入メリット</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr style="background-color: #f9f9f9;">
                         <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">ファイアウォール</td>
                         <td style="padding: 10px; border: 1px solid #ddd;">不正な通信をブロック</td>
-                        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">✅
+                        <td style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top;">✅
                             あり<br><small>(基本的なパケットフィルタリング)</small></td>
-                        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">✅
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #e3f2fd;">
+                            ✅
                             あり<br><small>(基本FW継続)</small></td>
                         <td
-                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e8f5e9;">
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #e8f5e9;">
                             ✅
                             あり<br><small>(高度なステートフルインスペクション)</small></td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #f3e5f5;">
+                            ✅
+                            あり<a href="#ref-5" style="text-decoration: none; font-size: 0.6em; vertical-align: super; color: var(--primary);">[5]</a><br><small>(次世代FW機能)</small></td>
                         <td style="padding: 10px; border: 1px solid #ddd;">より精密な制御が可能</td>
                     </tr>
                     <tr>
@@ -625,17 +656,21 @@
                             IPS/IDS<br><small>(不正侵入検知/防御)</small></td>
                         <td style="padding: 10px; border: 1px solid #ddd;">攻撃パターンを検知してブロック</td>
                         <td
-                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #ffebee;">
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #ffebee;">
                             ❌
                             なし</td>
                         <td
-                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e3f2fd;">
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #e3f2fd;">
                             ✅
                             あり<br><small>(Vario-NSSにより高度な防御)</small></td>
                         <td
-                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e8f5e9;">
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #e8f5e9;">
                             ✅
                             あり<br><small>(最新の攻撃パターンに自動対応)</small></td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #f3e5f5;">
+                            ✅
+                            あり<a href="#ref-5" style="text-decoration: none; font-size: 0.6em; vertical-align: super; color: var(--primary);">[5]</a><br><small>(IPS/IDS完全統合)</small></td>
                         <td style="padding: 10px; border: 1px solid #ddd;">SQLインジェクション、ゼロデイ攻撃等を防御</td>
                     </tr>
                     <tr style="background-color: #f9f9f9;">
@@ -643,86 +678,127 @@
                             アンチウイルス<br><small>(ゲートウェイレベル)</small></td>
                         <td style="padding: 10px; border: 1px solid #ddd;">ウイルス・マルウェアを検出・除去</td>
                         <td
-                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #ffebee;">
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #ffebee;">
                             ❌
                             なし<br><small>(端末側のみで対応)</small></td>
                         <td
-                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e3f2fd;">
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #e3f2fd;">
                             ✅
                             あり<br><small>(ウイルスプロテクション)</small></td>
                         <td
-                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e8f5e9;">
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #e8f5e9;">
                             ✅
                             あり<br><small>(ネットワークレベルでスキャン)</small></td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #f3e5f5;">
+                            ✅
+                            あり<a href="#ref-5" style="text-decoration: none; font-size: 0.6em; vertical-align: super; color: var(--primary);">[5]</a><br><small>(マルウェア防御)</small></td>
                         <td style="padding: 10px; border: 1px solid #ddd;">端末に到達する前にブロック</td>
                     </tr>
                     <tr>
                         <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Webフィルタリング</td>
                         <td style="padding: 10px; border: 1px solid #ddd;">危険なWebサイトへのアクセスをブロック</td>
                         <td
-                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #ffebee;">
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #ffebee;">
                             ❌
                             なし</td>
                         <td
-                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e3f2fd;">
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #e3f2fd;">
                             ✅
                             あり<br><small>(コンテンツフィルター)</small></td>
                         <td
-                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e8f5e9;">
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #e8f5e9;">
                             ✅
                             あり<br><small>(フィッシング・マルウェア配布サイト等)</small></td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #f3e5f5;">
+                            ✅
+                            あり<a href="#ref-5" style="text-decoration: none; font-size: 0.6em; vertical-align: super; color: var(--primary);">[5]</a><br><small>(全拠点共通ポリシー)</small></td>
                         <td style="padding: 10px; border: 1px solid #ddd;">従業員の誤アクセスを防止</td>
                     </tr>
                     <tr style="background-color: #f9f9f9;">
                         <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">SSL/TLS検査</td>
                         <td style="padding: 10px; border: 1px solid #ddd;">暗号化通信の中身もチェック</td>
                         <td
-                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #ffebee;">
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #ffebee;">
                             ❌
                             なし<br><small>⚠️ 暗号化された脅威を検知できない</small></td>
                         <td
-                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e3f2fd;">
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #e3f2fd;">
                             ✅
                             あり<br><small>(HTTPS検査対応)</small></td>
                         <td
-                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e8f5e9;">
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #e8f5e9;">
                             ✅
                             あり<br><small>(HTTPS通信も検査可能)</small></td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #f3e5f5;">
+                            ✅
+                            あり<a href="#ref-5" style="text-decoration: none; font-size: 0.6em; vertical-align: super; color: var(--primary);">[5]</a><br><small>(高速シングルパス)</small></td>
                         <td style="padding: 10px; border: 1px solid #ddd;"><strong>現代の攻撃の大半はHTTPSを使用するため必須</strong></td>
                     </tr>
                     <tr>
                         <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">アプリケーション制御</td>
                         <td style="padding: 10px; border: 1px solid #ddd;">特定のアプリケーション利用を制限</td>
                         <td
-                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #ffebee;">
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #ffebee;">
                             ❌
                             なし</td>
                         <td
-                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e3f2fd;">
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #e3f2fd;">
                             ✅
                             あり<br><small>(アプリ識別LBO)</small></td>
                         <td
-                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e8f5e9;">
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #e8f5e9;">
                             ✅
                             あり<br><small>(P2Pソフト、業務外アプリ等を制限)</small></td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #f3e5f5;">
+                            ✅
+                            あり<a href="#ref-5" style="text-decoration: none; font-size: 0.6em; vertical-align: super; color: var(--primary);">[5]</a><br><small>(数千種のアプリ識別)</small></td>
                         <td style="padding: 10px; border: 1px solid #ddd;">帯衛の無駄使いを防止</td>
                     </tr>
                     <tr style="background-color: #f9f9f9;">
                         <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">DDoS対策</td>
                         <td style="padding: 10px; border: 1px solid #ddd;">大量アクセス攻撃からの保護</td>
                         <td
-                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #ffebee;">
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #ffebee;">
                             ❌
                             なし</td>
                         <td
-                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e3f2fd;">
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #e3f2fd;">
                             ✅
                             あり<br><small>(DDoS保護)</small></td>
                         <td
-                            style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #e8f5e9;">
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #e8f5e9;">
                             ✅
-                            あり<br><small>(クラウドレベルで吸収)</small></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">サービス停止リスクを軽減</td>
+                            あり<br><small>(IIJ基盤側で防御)</small></td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #f3e5f5;">
+                            ✅
+                            あり<a href="#ref-5" style="text-decoration: none; font-size: 0.6em; vertical-align: super; color: var(--primary);">[5]</a><br><small>(PoPで分散処理)</small></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">サービス不能攻撃からネットワークを保護</td>
+                    </tr>
+                    <tr style="background-color: #f9f9f9;">
+                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">ログ一元管理</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">全拠点のログを一箇所で確認・分析</td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #ffebee;">
+                            ❌
+                            個別管理<br><small>(統合不可)</small></td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #e3f2fd;">
+                            ✅
+                            あり<br><small>(Varioポータル)</small></td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #e8f5e9;">
+                            ✅
+                            あり<br><small>(Omnibusパネル)</small></td>
+                        <td
+                            style="padding: 10px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #f3e5f5;">
+                            ✅
+                            あり<a href="#ref-5" style="text-decoration: none; font-size: 0.6em; vertical-align: super; color: var(--primary);">[5]</a><br><small>(リアルタイム視覚化)</small></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">インシデント時の早期原因究明が可能</td>
                     </tr>
                 </tbody>
             </table>
@@ -732,38 +808,41 @@
                 style="width: 100%; border-collapse: collapse; margin-bottom: 40px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                 <thead>
                     <tr style="background-color: #43a047; color: white;">
-                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">拠点</th>
-                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">現状のセキュリティ</th>
-                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">問題点</th>
-                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">IIJ Omnibus導入後</th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd; width: 15%;">拠点</th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd; width: 25%;">現状のセキュリティ</th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd; width: 20%;">問題点</th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd; width: 20%;">IIJ Omnibus導入後</th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd; width: 20%;">Cato Cloud導入後</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr style="background-color: #f9f9f9;">
-                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">東京本社（築地）</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">✅ 基本的なFW</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">高度な脅威に対応できない</td>
-                        <td style="padding: 10px; border: 1px solid #ddd; background-color: #e8f5e9;">✅ 全機能適用</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; vertical-align: top; font-weight: bold;">東京本社（築地）</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; vertical-align: top;">✅ 基本的なFW</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; vertical-align: top; background-color: #ffebee;">高度な脅威に対応できない</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; vertical-align: top; background-color: #e8f5e9;">✅ 全機能適用<br>クラウドUTMによる防御</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; vertical-align: top; background-color: #f3e5f5;">✅ 全機能適用<br>SASE基盤による防御</td>
                     </tr>
                     <tr>
-                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">大阪支店</td>
-                        <td style="padding: 10px; border: 1px solid #ddd; background-color: #e8f5e9;">✅
-                            Vario Secure VSR600<br><small>(本社と同等のセキュリティレベル)</small></td>
-                        <td style="padding: 10px; border: 1px solid #ddd; background-color: #fff3e0;">⚠️
-                            <strong>別管理（2重運用）</strong><br>
-                            設定変更の際、本社とは別に反映作業が必要。設定漏れやポリシー不一致のリスクがある。
+                        <td style="padding: 10px; border: 1px solid #ddd; vertical-align: top; font-weight: bold;">大阪支店</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; vertical-align: top;">✅ 基本的なFW</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; vertical-align: top; background-color: #ffebee;">
+                            UTMなし<br><small>高度な防御が欠如</small>
                         </td>
-                        <td style="padding: 10px; border: 1px solid #ddd; background-color: #e8f5e9;">✅
-                            全機能適用<br><strong>管理統合</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd; vertical-align: top; background-color: #e8f5e9;">✅ 運用統合<br>本社と同じポリシーを適用</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; vertical-align: top; background-color: #f3e5f5;">
+                            ✅ 管理統合<br>場所を問わず同一ポリシー</td>
                     </tr>
                     <tr style="background-color: #f9f9f9;">
-                        <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">その他支店</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">✅ 本社Hub経由</td>
-                        <td style="padding: 10px; border: 1px solid #ddd; background-color: #fff3e0;">⚠️
-                            <strong>Hub & Spokeの制約</strong><br>原則全通信が本社経由。回線逼迫と遅延が発生（LBOオプション未契約のため）
+                        <td style="padding: 10px; border: 1px solid #ddd; vertical-align: top; font-weight: bold;">その他支店</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; vertical-align: top;">✅ 基本的なFW</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; vertical-align: top; background-color: #ffebee;">
+                            UTMなし<br><small>各拠点個別の脆弱性</small>
                         </td>
-                        <td style="padding: 10px; border: 1px solid #ddd; background-color: #e8f5e9;">✅
-                            <strong>動的LBO</strong><br>アプリを自動識別し、最適な経路をクラウドで制御</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; vertical-align: top; background-color: #e8f5e9;">✅
+                            安全なLBO<br>クラウドUTMを経由して通信</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; vertical-align: top; background-color: #f3e5f5;">
+                            ✅ 安全なアクセス<br>クラウド全検査を経て通信</td>
                     </tr>
                 </tbody>
             </table>
@@ -849,17 +928,19 @@
             <table style="width: 100%; border-collapse: collapse; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                 <thead>
                     <tr style="background-color: #455a64; color: white;">
-                        <th style="padding: 15px; text-align: left; border: 1px solid #ddd; font-size: 0.9rem;">比較項目
-                        </th>
+                        <th style="padding: 15px; text-align: left; border: 1px solid #ddd; font-size: 0.9rem; width: 18%;">比較項目</th>
                         <th
-                            style="padding: 15px; text-align: center; border: 1px solid #ddd; font-size: 0.9rem; color: #333; background-color: #f5f5f5;">
+                            style="padding: 15px; text-align: center; border: 1px solid #ddd; font-size: 0.9rem; color: #333; background-color: #f5f5f5; width: 19%;">
                             ① 現状<br><span style="font-weight: normal; font-size: 0.8rem;">(Vario単体)</span></th>
                         <th
-                            style="padding: 15px; text-align: center; border: 1px solid #ddd; background-color: #b71c1c; font-size: 0.9rem; color: white;">
+                            style="padding: 15px; text-align: center; border: 1px solid #ddd; background-color: #b71c1c; font-size: 0.9rem; color: white; width: 21%;">
                             ② 現状強化<br><span style="font-weight: normal; font-size: 0.8rem;">(Vario+オプション)</span></th>
                         <th
-                            style="padding: 15px; text-align: center; border: 1px solid #ddd; background-color: #2e7d32; font-size: 0.9rem; color: white;">
+                            style="padding: 15px; text-align: center; border: 1px solid #ddd; background-color: #2e7d32; font-size: 0.9rem; color: white; width: 21%;">
                             ③ 刷新<br><span style="font-weight: normal; font-size: 0.8rem;">(IIJ Omnibus)</span></th>
+                        <th
+                            style="padding: 15px; text-align: center; border: 1px solid #ddd; background-color: #7b1fa2; font-size: 0.9rem; color: white; width: 21%;">
+                            ④ 刷新<br><span style="font-weight: normal; font-size: 0.8rem;">(Cato Cloud)</span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -867,42 +948,58 @@
                         <td
                             style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">
                             月額コスト (8拠点)</td>
-                        <td style="padding: 12px; border: 1px solid #ddd; text-align: center; color: #555;">
+                        <td style="padding: 12px; border: 1px solid #ddd; text-align: center; vertical-align: top; color: #555;">
                             約14.2万円<br><small>(20%値上げ後)</small></td>
-                        <td style="padding: 12px; border: 1px solid #ddd; text-align: center; color: #b71c1c;"><strong>約137万円</strong><br><small style="color: #666;">(月額 122.8万円 UP)</small></td>
+                        <td style="padding: 12px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #ffebee; color: #b71c1c;"><strong>約137万円</strong><br><small style="color: #b71c1c;">(月額 122.8万円 UP)</small></td>
                         <td
-                            style="padding: 12px; border: 1px solid #ddd; text-align: center; background-color: #f1f8e9; color: #2e7d32; font-weight: bold;">
+                            style="padding: 12px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #e8f5e9; color: #2e7d32; font-weight: bold;">
                             約39万円<br><span
                                 style="font-weight: normal; font-size: 0.8rem; color: #666;">(NW/SD-WAN費用)</span></td>
+                        <td
+                            style="padding: 12px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #f3e5f5; color: #7b1fa2; font-weight: bold;">
+                            ⏳ 見積回答待ち<a href="#ref-5" style="text-decoration: none; font-size: 0.6em; vertical-align: super; color: var(--primary);">[5]</a><br><span
+                                style="font-weight: normal; font-size: 0.8rem; color: #666;">(SASE/NW統合費用)</span></td>
                     </tr>
                     <tr style="background-color: #ffffff;">
                         <td
                             style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">
                             セキュリティレベル</td>
-                        <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">⭐⭐☆☆☆<br><small
-                                style="color: #666;">基本的なFWのみ</small></td>
-                        <td style="padding: 12px; border: 1px solid #ddd; text-align: center; color: #e65100;">
-                            ⭐⭐⭐⭐⭐<br><small style="color: #666;">UTM機能を追加想定</small></td>
                         <td
-                            style="padding: 12px; border: 1px solid #ddd; text-align: center; background-color: #f1f8e9;">
+                            style="padding: 12px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #ffebee;">
+                            ⭐⭐☆☆☆<br><small style="color: #b71c1c;">基本的なFWのみ</small></td>
+                        <td
+                            style="padding: 12px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #e3f2fd;">
+                            ⭐⭐⭐⭐⭐<br><small style="color: #1976d2;">UTM機能を追加</small></td>
+                        <td
+                            style="padding: 12px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #e8f5e9;">
                             ⭐⭐⭐⭐⭐<br><small style="color: #2e7d32; font-weight: bold;">8つの高度な多層防御</small></td>
+                        <td
+                            style="padding: 12px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #f3e5f5;">
+                            ⭐⭐⭐⭐⭐+<br><small style="color: #7b1fa2; font-weight: bold;">Zero Trust連携</small></td>
                     </tr>
                     <tr style="background-color: #ffffff;">
                         <td
                             style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">
                             管理・統制の効率</td>
                         <td
-                            style="padding: 12px; border: 1px solid #ddd; text-align: center; background-color: #fffde7;">
-                            ⚠️ 分断管理<br><small>大阪のみ別管理</small></td>
-                        <td
-                            style="padding: 12px; border: 1px solid #ddd; text-align: center; background-color: #ffebee; color: #b71c1c; font-weight: bold;">
-                            ❌ 管理負荷 8倍<br><span
-                                style="font-weight: normal; font-size: 0.8rem; color: #666;">LBO拡張で8拠点の<br>個別管理が発生</span>
+                            style="padding: 12px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #ffebee; color: #b71c1c;">
+                            △ 拠点ごとに設定<br><span
+                                style="font-weight: normal; font-size: 0.8rem;">一元管理不可</span>
                         </td>
                         <td
-                            style="padding: 12px; border: 1px solid #ddd; text-align: center; background-color: #f1f8e9; color: #2e7d32; font-weight: bold;">
+                            style="padding: 12px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #e3f2fd; color: #1976d2;">
+                            ○ ポータル管理<br><span
+                                style="font-weight: normal; font-size: 0.8rem;">Varioポータルより制御</span>
+                        </td>
+                        <td
+                            style="padding: 12px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #e8f5e9; color: #2e7d32; font-weight: bold;">
                             ✅ 一元管理<br><span
-                                style="font-weight: normal; font-size: 0.8rem; color: #666;">全拠点を1枚のパネルで<br>一括制御</span>
+                                style="font-weight: normal; font-size: 0.8rem;">全拠点を1枚のパネルで<br>一括制御</span>
+                        </td>
+                        <td
+                            style="padding: 12px; border: 1px solid #ddd; text-align: center; vertical-align: top; background-color: #f3e5f5; color: #7b1fa2; font-weight: bold;">
+                            ✅ クラウド統合管理<br><span
+                                style="font-weight: normal; font-size: 0.8rem;">拠点・ユーザを<br>同一基盤で保護</span>
                         </td>
                     </tr>
                     <tr style="background-color: #ffffff;">
@@ -916,9 +1013,14 @@
                             style="padding: 12px; border: 1px solid #ddd; text-align: center; background-color: #fffde7;">
                             ⚠️ 3営業日<br><small>拠点ごとに依頼が必要</small></td>
                         <td
-                            style="padding: 12px; border: 1px solid #ddd; text-align: center; background-color: #f1f8e9; color: #2e7d32; font-weight: bold;">
+                            style="padding: 12px; border: 1px solid #ddd; text-align: center; background-color: #e8f5e9; color: #2e7d32; font-weight: bold;">
                             ✅ 即時反映<br><span
                                 style="font-weight: normal; font-size: 0.8rem; color: #666;">セルフ設定で<br>全拠点へ即時適用</span>
+                        </td>
+                        <td
+                            style="padding: 12px; border: 1px solid #ddd; text-align: center; background-color: #f3e5f5; color: #7b1fa2; font-weight: bold;">
+                            ✅ 即時反映<br><span
+                                style="font-weight: normal; font-size: 0.8rem; color: #666;">全世界のPoPへ<br>数秒でポリシー適用</span>
                         </td>
                     </tr>
                     <tr style="background-color: #ffffff;">
@@ -1088,10 +1190,10 @@
                             💸 帯域コスト (1Gbps)
                         </td>
                         <td style="padding: 15px; border: 1px solid #ddd; background-color: #e8f5e9;">
-                            <strong style="color: #2e7d32; font-size: 1.2rem;">◎ 圧倒的安価</strong>
+                            <strong style="color: #2e7d32; font-size: 1.2rem;">◎ 圧倒的安価（国内）</strong><a href="#ref-1" style="text-decoration: none; font-size: 0.6em; vertical-align: super; color: var(--primary);">[1]</a>
                             <p style="margin: 5px 0 0; font-size: 0.9rem;">
-                                日本国内のバックボーン網を利用するため、大容量通信でも定額・低価格。<br>
-                                動画・CADデータのやり取りに最適。
+                                IIJ自社の国内データセンター網（独自基盤）を利用するため、大容量通信でも定額・低価格。<br>
+                                国内拠点間での大容量データ転送に最適。
                             </p>
                         </td>
                         <td style="padding: 15px; border: 1px solid #ddd; background-color: #ffebee;">
@@ -1148,9 +1250,9 @@
                         <td style="padding: 15px; border: 1px solid #ddd; background-color: #fffde7;">
                             <strong style="color: #333;">国内拠点・大容量データ重視</strong>
                             <ul style="margin: 5px 0 0 20px; padding: 0; font-size: 0.9rem;">
-                                <li>拠点間で大きなファイル転送がある</li>
-                                <li>コストパフォーマンス最優先</li>
-                                <li>国内拠点のみの構成</li>
+                                <li>国内拠点間で大容量ファイル転送がある</li>
+                                <li>国内通信のコストパフォーマンス最優先</li>
+                                <li>クラウド接続に余計なデバイスを置きたくない</li>
                             </ul>
                         </td>
                         <td style="padding: 15px; border: 1px solid #ddd; background-color: #fffde7;">
@@ -1181,11 +1283,11 @@
                         ① 処理構造 (パケットの流れ)
                     </div>
                     <div style="padding: 20px;">
-                        <h4 style="margin-top: 0; color: #2e7d32;">Synergy (IIJ Omnibus)</h4>
+                        <h4 style="margin-top: 0; color: #2e7d32;">IIJ Omnibus (独自NFV基盤)<a href="#ref-1" style="text-decoration: none; font-size: 0.6em; vertical-align: super; color: var(--primary);">[1]</a></h4>
                         <p style="font-size: 0.9rem; color: #555;">
-                            <strong>NFV / Service Chaining 方式</strong><br>
-                            「FWの仮想マシン」「Webフィルタの仮想マシン」…と、機能ごとに別々の仮想アプライアンスを順番に通過させます。<br>
-                            <span style="color: #d32f2f;">⚠️ 機能を追加するほど、パケットの経由地が増えて遅延が発生しやすい構造です。</span>
+                            <strong>自社DC網によるマルチテナントNFV</strong><br>
+                            IIJ自慢の国内DC群に分散配置された独自基盤上で、FW等の機能を仮想実行。<br>
+                            <span style="color: #f57f17;">⚠️ 直列処理(Service Chaining)のため、機能追加時の遅延には注意が必要。</span>
                         </p>
                         <hr style="border: 0; border-top: 1px dashed #ccc; margin: 15px 0;">
                         <h4 style="margin-top: 0; color: #7b1fa2;">Cato Cloud</h4>
@@ -1203,11 +1305,11 @@
                         ② 道路 (バックボーン)
                     </div>
                     <div style="padding: 20px;">
-                        <h4 style="margin-top: 0; color: #2e7d32;">Synergy (IIJ Omnibus)</h4>
+                        <h4 style="margin-top: 0; color: #2e7d32;">IIJ Omnibus (国内バックボーン)</h4>
                         <p style="font-size: 0.9rem; color: #555;">
-                            <strong>国内最強バックボーン ＋ インターネットVPN</strong><br>
-                            日本国内の品質は圧倒的ですが、海外拠点との通信は「公衆インターネット」を経由する場合が多く、現地の回線品質に左右されます。<br>
-                            <span style="color: #f57f17;">⚠️ 海外通信での遅延・パケットロスは保証できません。</span>
+                            <strong>ISP直結の強固な閉域網</strong><br>
+                            国内トップクラスのISPバックボーンに直結。外部クラウド(AWS/Azure等)ともゲートウェイレスで接続可能。<br>
+                            <span style="color: #2e7d32;">✅ クラウド側に仮想ルータを立てる手間とコストを削減できます。</span>
                         </p>
                         <hr style="border: 0; border-top: 1px dashed #ccc; margin: 15px 0;">
                         <h4 style="margin-top: 0; color: #7b1fa2;">Cato Cloud</h4>
@@ -1237,9 +1339,9 @@
                     <div style="border-left: 1px solid #eee; padding-left: 30px;">
                         <h4 style="margin-top: 0; color: #7b1fa2;">Cato Cloud</h4>
                         <p style="font-size: 0.9rem; color: #555;">
-                            <strong>セルフサービス (即時反映)</strong><br>
-                            お客様自身(またはSCSK)が管理画面から設定変更すると、数秒で全世界のPoP・拠点にポリシーが適用されます。<br>
-                            <span style="background-color: #e1bee7; padding: 2px 5px; border-radius: 4px;">管理画面で設定 → Commit → 全世界即時適用</span>
+                            <strong>セルフ ＆ マネージド (ハイブリッド)</strong><br>
+                            基本は即時反映可能。今回はAKIBA要件に合わせ**SCSKによる運用代行**を想定。<br>
+                            <span style="background-color: #e1bee7; padding: 2px 5px; border-radius: 4px;">プロに依頼しつつ、緊急時は自身で即時確認・設定も可能。</span>
                         </p>
                     </div>
                 </div>
@@ -1309,12 +1411,12 @@
                     <tr>
                         <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">帯域費 (例: 各拠点100Mbps)</td>
                         <td style="padding: 12px; border: 1px solid #ddd; background-color: #e8f5e9;">
-                            <strong style="color: #2e7d32;">✅ 上記に含まれる</strong><br>
+                            <strong style="color: #2e7d32;">✅ 上記に含まれる</strong><a href="#ref-1" style="text-decoration: none; font-size: 0.6em; vertical-align: super; color: var(--primary);">[1]</a><br>
                             <small style="color: #666;">国内バックボーン利用のため定額</small>
                         </td>
                         <td style="padding: 12px; border: 1px solid #ddd;">
-                            <strong style="color: #f57f17;">⚠️ 要確認</strong><br>
-                            <small style="color: #666;">※SCSKへ正式見積もり依頼中</small>
+                            <strong style="color: #f57f17;">⏳ 見積回答待ち</strong><a href="#ref-5" style="text-decoration: none; font-size: 0.6em; vertical-align: super; color: var(--primary);">[5]</a><br>
+                            <small style="color: #666;">※2/13提出期限にて依頼済み</small>
                         </td>
                     </tr>
                     <tr style="background-color: #fafafa;">
@@ -1337,8 +1439,8 @@
                             <small style="color: #666;">リモートアクセスは追加契約</small>
                         </td>
                         <td style="padding: 12px; border: 1px solid #ddd; background-color: #f3e5f5;">
-                            <strong style="color: #f57f17;">⚠️ 要確認</strong><br>
-                            <small style="color: #666;">※SCSKへ正式見積もり依頼中</small>
+                            <strong style="color: #f57f17;">⏳ 見積回答待ち</strong><br>
+                            <small style="color: #666;">※2/13提出期限にて依頼済み</small>
                         </td>
                     </tr>
 
@@ -1354,12 +1456,12 @@
                             <small style="font-weight: normal; color: #666;">(各拠点100Mbps想定)</small>
                         </td>
                         <td style="padding: 12px; border: 1px solid #ddd; background-color: #e8f5e9; text-align: center;">
-                            <strong style="font-size: 1.3rem; color: #2e7d32;">約39万円/月</strong><br>
+                            <strong style="font-size: 1.3rem; color: #2e7d32;">約39万円/月</strong><a href="#ref-1" style="text-decoration: none; font-size: 0.6em; vertical-align: super; color: var(--primary);">[1]</a><br>
                             <small style="color: #666;">※VPNオプション費用は別途</small>
                         </td>
                         <td style="padding: 12px; border: 1px solid #ddd; background-color: #fff3e0; text-align: center;">
-                            <strong style="font-size: 1.3rem; color: #f57f17;">⚠️ 要確認</strong><br>
-                            <small style="color: #666;">※SCSKへ正式見積もり依頼中</small>
+                            <strong style="font-size: 1.3rem; color: #f57f17;">⏳ 見積回答待ち</strong><br>
+                            <small style="color: #666;">※2/13提出期限にて依頼済み</small>
                         </td>
                     </tr>
                     <tr style="background-color: #fafafa;">
@@ -1368,12 +1470,12 @@
                             <small style="font-weight: normal; color: #666;">(各拠点1Gbps想定)</small>
                         </td>
                         <td style="padding: 12px; border: 1px solid #ddd; background-color: #e8f5e9; text-align: center;">
-                            <strong style="font-size: 1.3rem; color: #2e7d32;">✅ 同額</strong><br>
+                            <strong style="font-size: 1.3rem; color: #2e7d32;">✅ 同額</strong><a href="#ref-1" style="text-decoration: none; font-size: 0.6em; vertical-align: super; color: var(--primary);">[1]</a><br>
                             <small style="color: #666;">国内バックボーンのため大容量でも安価</small>
                         </td>
                         <td style="padding: 12px; border: 1px solid #ddd; background-color: #fff3e0; text-align: center;">
-                            <strong style="font-size: 1.3rem; color: #f57f17;">⚠️ 要確認</strong><br>
-                            <small style="color: #666;">※SCSKへ正式見積もり依頼中</small>
+                            <strong style="font-size: 1.3rem; color: #f57f17;">⏳ 見積回答待ち</strong><br>
+                            <small style="color: #666;">※2/13提出期限にて依頼済み</small>
                         </td>
                     </tr>
 
@@ -1391,9 +1493,9 @@
                             <small style="color: #666;">拠点数が多い場合に有利</small>
                         </td>
                         <td style="padding: 12px; border: 1px solid #ddd;">
-                            <strong style="color: #f57f17;">⚠️ 正式見積もり取得中</strong><br>
+                            <strong style="color: #f57f17;">⏳ 見積回答待ち</strong><br>
                             帯域課金モデルのため、構成により変動<br>
-                            <small style="color: #666;">※SCSK経由で見積もり依頼済み</small>
+                            <small style="color: #666;">※2/10構成特定・2/13期限にて依頼済み</small>
                         </td>
                     </tr>
                 </tbody>
@@ -1711,6 +1813,61 @@
                 </div>
             </div>
 
+        </section>
+
+        <!-- Reference Materials Section -->
+        <section class="section-card" style="border-top: 4px solid var(--primary);">
+            <div class="section-title">📂 参照資料 (Reference Materials)</div>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">
+                このページで記載・参照したエビデンス(根拠資料)の一覧です。（ハルシネーション防止のため全項目をエビデンス管理）
+            </p>
+            
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 25px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <!-- IIJ関連資料 -->
+                    <div>
+                        <h4 style="margin-top: 0; color: var(--primary); border-bottom: 1px solid var(--border); padding-bottom: 8px;">IIJ関連資料</h4>
+                        <ul style="list-style: none; padding: 0; font-size: 0.85rem; line-height: 1.6;">
+                            <li style="margin-bottom: 15px;" id="ref-1">
+                                <div style="font-weight: 700;">[1] IIJ Omnibus 提案資料 (2026-01-13)</div>
+                                <div style="color: #64748b;">引用箇所: 17-19ページ "概算費用①〜③" (初期費用/月額費用の内訳)</div>
+                                <div style="color: #94a3b8; font-family: monospace; font-size: 0.75rem;">パス: 01_Workspace/11_プロジェクト/15.03_Network_Refresh/2026-01-13_AKIBA_Network_Proposal.md</div>
+                            </li>
+                            <li style="margin-bottom: 15px;" id="ref-2">
+                                <div style="font-weight: 700;">[2] 2025-12-12_IIJ議事録_MTG.md</div>
+                                <div style="color: #64748b;">引用箇所: 行172 - "バックアップ世代数制限なし", 行488 - "ADゴミ箱復旧"</div>
+                                <div style="color: #94a3b8; font-family: monospace; font-size: 0.75rem;">パス: 01_IIJ/05_会議議事録/2025-12-12_...</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- プロジェクト基本資料 -->
+                    <div>
+                        <h4 style="margin-top: 0; color: var(--primary); border-bottom: 1px solid var(--border); padding-bottom: 8px;">プロジェクト基本資料</h4>
+                        <ul style="list-style: none; padding: 0; font-size: 0.85rem; line-height: 1.6;">
+                            <li style="margin-bottom: 15px;" id="ref-3">
+                                <div style="font-weight: 700;">[3] AD・セコムクラウド化移行計画書_2026-01-23.md</div>
+                                <div style="color: #64748b;">引用箇所: 31-33行目 "Cato SASE (ケイト)の見積・仕様確認"</div>
+                                <div style="color: #94a3b8; font-family: monospace; font-size: 0.75rem;">パス: 01_Workspace/11_プロジェクト/15.01_AD_Cloud_Migration/AD・セコムクラウド化移行計画書_2026-01-23.md</div>
+                            </li>
+                            <li style="margin-bottom: 15px;" id="ref-4">
+                                <div style="font-weight: 700;">[4] 00_エビデンス管理シート.md</div>
+                                <div style="color: #64748b;">引用箇所: 行32-34 - "現状のRTO/RPO / 移行ダウンタイム証跡"</div>
+                                <div style="color: #94a3b8; font-family: monospace; font-size: 0.75rem;">パス: 00_エビデンス管理シート.md</div>
+                            </li>
+                            <li style="margin-bottom: 15px;" id="ref-5">
+                                <div style="font-weight: 700;">[5] SCSK角田様 メール回答 (2026-02-10受領済)</div>
+                                <div style="color: #64748b;">引用箇所: 本文 "Cato Cloud比較用構成条件（9拠点、1Gbps、50名）"</div>
+                                <div style="color: #94a3b8; font-family: monospace; font-size: 0.75rem;">証跡: 2026-02-10 SCSK宛依頼メール</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px; padding: 12px; background: #fffbeb; border-radius: 8px; border: 1px solid #fef3c7; font-size: 0.85rem; color: #92400e;">
+                    💡 <strong>エビデンス管理:</strong> すべてのエビデンスは <code>00_エビデンス管理シート.md</code> で一元管理されています。
+                </div>
+            </div>
         </section>
 
         <footer
