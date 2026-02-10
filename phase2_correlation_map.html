@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phase 2 Correlation Map | Internal DX Portal</title>
+    <title>Phase 2 Strategy Flow | Internal DX Portal</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
@@ -23,47 +23,48 @@
         .node:hover circle {
             stroke-width: 4px;
             stroke: #fff;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
         }
         .link {
             stroke: #334155;
-            stroke-opacity: 0.4;
+            stroke-opacity: 0.3;
             stroke-width: 2px;
             fill: none;
+            marker-end: url(#arrowhead);
         }
         .link-label {
-            font-size: 10px;
-            font-weight: 700;
-            fill: #64748b;
+            font-size: 9px;
+            font-weight: 800;
+            fill: #475569;
             text-anchor: middle;
             pointer-events: none;
-            background: #0f172a;
         }
         .label {
             font-size: 11px;
-            font-weight: 800;
+            font-weight: 900;
             pointer-events: none;
             fill: #94a3b8;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.02em;
         }
-        .layer-label {
+        .stage-label {
             font-size: 10px;
             font-weight: 900;
-            fill: #334155;
-            text-anchor: end;
-            letter-spacing: 0.2em;
+            fill: #1e293b;
+            text-anchor: middle;
+            letter-spacing: 0.4em;
             text-transform: uppercase;
         }
         .tooltip {
             position: absolute;
-            background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(12px);
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(16px);
             border: 1px solid #334155;
             padding: 20px;
             border-radius: 16px;
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.3s;
-            box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
             z-index: 100;
             max-width: 320px;
         }
@@ -77,13 +78,16 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+            background: radial-gradient(circle at 50% 50%, #111827 0%, #030712 100%);
             z-index: -1;
         }
-        .layer-line {
-            stroke: #1e293b;
-            stroke-width: 1px;
-            stroke-dasharray: 4 4;
+        .stage-line {
+            stroke: #111827;
+            stroke-width: 2px;
+            stroke-dasharray: 8 8;
+        }
+        .stage-bg {
+            fill: none;
         }
     </style>
 </head>
@@ -91,10 +95,10 @@
     <div class="bg-glow"></div>
     
     <div class="header">
-        <h1 class="text-3xl font-black tracking-tighter text-white mb-2 italic">PHASE 2 RELATIONSHIP</h1>
-        <p class="text-slate-500 text-[10px] font-black tracking-[0.3em] uppercase">Architecture Correlation Logic</p>
+        <h1 class="text-3xl font-black tracking-tighter text-white mb-2">PHASE 2 NARRATIVE FLOW</h1>
+        <p class="text-slate-500 text-[10px] font-black tracking-[0.3em] uppercase">Contextual Strategy Map: AS-IS → PAIN → TO-BE</p>
         <div class="flex gap-4 mt-6">
-            <a href="index.html" class="px-5 py-2.5 bg-slate-800/50 backdrop-blur border border-slate-700 rounded-full text-[10px] font-black tracking-widest hover:bg-slate-700 transition">← COMMAND CENTER</a>
+            <a href="index.html" class="px-5 py-2.5 bg-slate-800/50 backdrop-blur border border-slate-700 rounded-full text-[10px] font-black tracking-widest hover:bg-slate-700 transition">← BACK TO HUB</a>
         </div>
     </div>
 
@@ -104,27 +108,37 @@
     <script>
         const data = {
             "nodes": [
-                { "id": "p2_mgmt", "title": "Phase 2 Plan", "group": "management", "layer": 2, "url": "project_management.html", "symbol": "📅", "desc": "Phase 2 全体の統合管理・工程・タスク" },
-                { "id": "p15_01", "title": "AD Cloud Lift", "group": "identity", "layer": 1, "url": "project_15_01.html", "symbol": "🔑", "desc": "ID管理基盤のクラウド移行。DXのコアとなる認証系" },
-                { "id": "p15_02", "title": "Secom Cloud", "group": "security", "layer": 1, "url": "project_15_02.html", "symbol": "🛡️", "desc": "セキュリティゲートウェイの強靭化。境界防御の要" },
-                { "id": "p15_combined", "title": "Integration Analysis", "group": "analysis", "layer": 2, "url": "project_15_combined.html", "symbol": "⚖️", "desc": "ADとSecomのコスト・技術シナジーの統合分析" },
-                { "id": "p_ad_strategy", "title": "AD Scenarios", "group": "strategy", "layer": 2, "url": "project_ad_scenarios.html", "symbol": "🎯", "desc": "移行シナリオ（LBO/刷新）の戦略的比較" },
-                { "id": "p_ad_matrix", "title": "Responsibility Matrix", "group": "management", "layer": 2, "url": "project_ad_matrix.html", "symbol": "📋", "desc": "運用境界と責任の明確化（3社間合意）" },
-                { "id": "sdwan_map", "title": "SD-WAN Visual", "group": "network", "layer": 0, "url": "line_dashboard.html", "symbol": "🌐", "desc": "拠点間通信経路の可視化ダッシュボード" },
-                { "id": "sdwan_strategy", "title": "SD-WAN Strategy", "group": "strategy", "layer": 0, "url": "SD-WAN刷新_3社4シナリオ比較検討資料.html", "symbol": "🚀", "desc": "回線刷新・SD-WANによる通信土台の強靭化" }
+                { "id": "as_is_ad", "title": "現状: オンプレAD", "group": "asis", "stage": 0, "symbol": "🏛️", "desc": "本社屋上に設置された物理サーバー上での運用。震災や設備トラブルに脆弱。" },
+                { "id": "pain_ad", "title": "課題: 物理故障・老朽化", "group": "pain", "stage": 1, "symbol": "⚠️", "desc": "ハード故障による全社停止リスク(SPOF)。修理部材の枯渇も懸念。" },
+                { "id": "sol_ad_lift", "title": "AD Cloud Lift (15.01)", "group": "solution", "stage": 2, "url": "project_15_01.html", "symbol": "🔑", "desc": "クラウド(IaaS)移行による物理リスクの完全排除。認証系BCPの要。" },
+                { "id": "sol_ad_strat", "title": "AD移行戦略比較", "group": "solution", "stage": 2, "url": "project_ad_scenarios.html", "symbol": "🎯", "desc": "単純延命か、最新環境への刷新か。将来コストとリスクの比較資料。" },
+                
+                { "id": "as_is_nw", "title": "現状: VPN通信", "group": "asis", "stage": 0, "symbol": "📉", "desc": "Vario-VPNによる拠点接続。センター（本社）集中型のレガシー構成。" },
+                { "id": "pain_nw", "title": "課題: 通信ボトルネック", "group": "pain", "stage": 1, "symbol": "🐌", "desc": "リモート増・クラウド拡大に伴う帯域不足。特に大阪拠点のレスポンス悪化。" },
+                { "id": "sol_sdwan", "title": "SD-WAN刷新資料", "group": "solution", "stage": 2, "url": "SD-WAN刷新_3社4シナリオ比較検討資料.html", "symbol": "🚀", "desc": "3社4案の比較。回線刷新とSD-WANによる帯域確保・冗長化の検討。" },
+                { "id": "sol_nw_map", "title": "SD-WAN Visual", "group": "solution", "stage": 2, "url": "line_dashboard.html", "symbol": "🌐", "desc": "刷新後の通信経路を地図上で可視化したインタラクティブ資料。" },
+
+                { "id": "as_is_sec", "title": "現状: 従来型UTM", "group": "asis", "stage": 0, "symbol": "🧱", "desc": "社内ネットワークの境界のみを境界型FWで守る従来方式。" },
+                { "id": "pain_sec", "title": "課題: 持出PCの統制不足", "group": "pain", "stage": 1, "symbol": "🕵️", "desc": "社外での利用時にセキュリティが適用されず、エンドポイントのリスク増。" },
+                { "id": "sol_secom", "title": "Secom Cloud (15.02)", "group": "solution", "stage": 2, "url": "project_15_02.html", "symbol": "🛡️", "desc": "クラウド型SWGによる「場所を問わない」保護とセキュアなID構成。" },
+                
+                { "id": "sol_combined", "title": "統合分析資料", "group": "solution", "stage": 2, "url": "project_15_combined.html", "symbol": "⚖️", "desc": "ADとSecomの各案を組み合わせたTCO（トータルコスト）の最終比較資料。" }
             ],
             "links": [
-                { "source": "sdwan_strategy", "target": "p15_01", "label": "安全な転送路の提供" },
-                { "source": "sdwan_strategy", "target": "sdwan_map", "label": "視覚的管理" },
-                { "source": "p15_01", "target": "p15_02", "label": "認証連携" },
-                { "source": "p15_02", "target": "sdwan_strategy", "label": "境界防御" },
-                { "source": "p15_01", "target": "p_ad_strategy", "label": "戦略的根拠" },
-                { "source": "p15_01", "target": "p_ad_matrix", "label": "権限定義" },
-                { "source": "p15_01", "target": "p15_combined", "label": "統合分析" },
-                { "source": "p15_02", "target": "p15_combined", "label": "統合分析" },
-                { "source": "p2_mgmt", "target": "p15_01", "label": "推進" },
-                { "source": "p2_mgmt", "target": "p15_02", "label": "推進" },
-                { "source": "p2_mgmt", "target": "sdwan_strategy", "label": "推進" }
+                { "source": "as_is_ad", "target": "pain_ad", "label": "老朽化・SPOF" },
+                { "source": "pain_ad", "target": "sol_ad_lift", "label": "BCP対策" },
+                { "source": "sol_ad_lift", "target": "sol_ad_strat", "label": "戦略決定" },
+                
+                { "source": "as_is_nw", "target": "pain_nw", "label": "トラフィック増" },
+                { "source": "pain_nw", "target": "sol_sdwan", "label": "SD-WAN化" },
+                { "source": "sol_sdwan", "target": "sol_nw_map", "label": "構成可視化" },
+                
+                { "source": "as_is_sec", "target": "pain_sec", "label": "境界消失" },
+                { "source": "pain_sec", "target": "sol_secom", "label": "場所を選ばぬ保護" },
+                
+                { "source": "sol_ad_lift", "target": "sol_combined", "label": "セット導入分析" },
+                { "source": "sol_secom", "target": "sol_combined", "label": "セット導入分析" },
+                { "source": "sol_sdwan", "target": "sol_ad_lift", "label": "土台の確保" }
             ]
         };
 
@@ -136,42 +150,53 @@
             .attr("width", width)
             .attr("height", height);
 
-        // Layers setup
-        const layerPositions = [height * 0.75, height * 0.5, height * 0.25];
-        const layerNames = ["Foundation (Network)", "Core (Identity/Security)", "Strategy & Management"];
+        // Marker for arrows
+        svg.append("defs").append("marker")
+            .attr("id", "arrowhead")
+            .attr("viewBox", "-0 -5 10 10")
+            .attr("refX", 38)
+            .attr("refY", 0)
+            .attr("orient", "auto")
+            .attr("markerWidth", 6)
+            .attr("markerHeight", 6)
+            .attr("xoverflow", "visible")
+            .append("svg:path")
+            .attr("d", "M 0,-5 L 10 ,0 L 0,5")
+            .attr("fill", "#334155")
+            .style("stroke", "none");
 
-        layerPositions.forEach((y, i) => {
+        // Stages setup
+        const stageOffsets = [width * 0.2, width * 0.5, width * 0.8];
+        const stageNames = ["AS-IS (現状)", "PAIN (課題・リスク)", "TO-BE (検討資料・解決策)"];
+
+        stageOffsets.forEach((x, i) => {
             svg.append("line")
-                .attr("class", "layer-line")
-                .attr("x1", 100)
-                .attr("y1", y)
-                .attr("x2", width - 100)
-                .attr("y2", y);
+                .attr("class", "stage-line")
+                .attr("x1", x)
+                .attr("y1", 100)
+                .attr("x2", x)
+                .attr("y2", height - 100);
             
             svg.append("text")
-                .attr("class", "layer-label")
-                .attr("x", width - 120)
-                .attr("y", y - 10)
-                .text(layerNames[i]);
+                .attr("class", "stage-label")
+                .attr("x", x)
+                .attr("y", 80)
+                .text(stageNames[i]);
         });
 
         const simulation = d3.forceSimulation(data.nodes)
-            .force("link", d3.forceLink(data.links).id(d => d.id).distance(220).strength(0.5))
-            .force("charge", d3.forceManyBody().strength(-1000))
-            .force("x", d3.forceX(width / 2).strength(0.1))
-            .force("y", d3.forceY(d => layerPositions[d.layer]).strength(2))
-            .force("collision", d3.forceCollide().radius(80));
+            .force("link", d3.forceLink(data.links).id(d => d.id).distance(200).strength(0.3))
+            .force("charge", d3.forceManyBody().strength(-800))
+            .force("x", d3.forceX(d => stageOffsets[d.stage]).strength(2))
+            .force("y", d3.forceY(height / 2).strength(0.1))
+            .force("collision", d3.forceCollide().radius(70));
 
         const colors = {
-            management: "#3b82f6",
-            identity: "#06b6d4",
-            security: "#f43f5e",
-            network: "#10b981",
-            strategy: "#8b5cf6",
-            analysis: "#f59e0b"
+            asis: "#475569",
+            pain: "#ef4444",
+            solution: "#3b82f6"
         };
 
-        // Link groups
         const linkGroup = svg.append("g").selectAll(".link-group")
             .data(data.links)
             .join("g")
@@ -193,16 +218,18 @@
                 .on("start", dragstarted)
                 .on("drag", dragged)
                 .on("end", dragended))
-            .on("click", (e, d) => window.location.href = d.url)
+            .on("click", (e, d) => {
+                if (d.url) window.location.href = d.url;
+            })
             .on("mouseover", showTooltip)
             .on("mouseout", hideTooltip);
 
         node.append("circle")
             .attr("r", 32)
-            .attr("fill", d => colors[d.group] || "#475569")
-            .attr("fill-opacity", 0.1)
-            .attr("stroke", d => colors[d.group] || "#475569")
-            .attr("stroke-width", 1.5);
+            .attr("fill", d => colors[d.group])
+            .attr("fill-opacity", 0.08)
+            .attr("stroke", d => colors[d.group])
+            .attr("stroke-width", 2);
 
         node.append("text")
             .attr("text-anchor", "middle")
@@ -214,7 +241,7 @@
             .attr("class", "label")
             .attr("text-anchor", "middle")
             .attr("dy", "50px")
-            .text(d => d.title.toUpperCase());
+            .text(d => d.title);
 
         simulation.on("tick", () => {
             link
@@ -225,7 +252,7 @@
 
             linkLabel
                 .attr("x", d => (d.source.x + d.target.x) / 2)
-                .attr("y", d => (d.source.y + d.target.y) / 2 - 5);
+                .attr("y", d => (d.source.y + d.target.y) / 2 - 10);
 
             node
                 .attr("transform", d => `translate(${d.x},${d.y})`);
@@ -258,15 +285,15 @@
                 </div>
                 <div class="text-xl font-black text-white mb-2 leading-tight tracking-tight">${d.title}</div>
                 <div class="text-[11px] text-slate-400 mb-5 leading-relaxed font-bold">${d.desc}</div>
+                ${d.url ? `
                 <div class="flex items-center justify-between pt-4 border-t border-slate-700/50">
-                    <span class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Interaction</span>
+                    <span class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Action</span>
                     <span class="text-[9px] font-black text-blue-500 uppercase tracking-widest leading-none">Open Document →</span>
-                </div>
+                </div>` : ''}
             `)
             .style("left", (event.pageX + 25) + "px")
             .style("top", (event.pageY - 25) + "px");
             
-            // Highlight links
             link.filter(l => l.source.id === d.id || l.target.id === d.id)
                 .transition().duration(200)
                 .style("stroke", colors[d.group])
@@ -278,7 +305,7 @@
             tooltip.transition().duration(200).style("opacity", 0);
             link.transition().duration(200)
                 .style("stroke", "#334155")
-                .style("stroke-opacity", 0.4)
+                .style("stroke-opacity", 0.3)
                 .style("stroke-width", 2);
         }
 
@@ -286,7 +313,7 @@
             const w = window.innerWidth;
             const h = window.innerHeight;
             svg.attr("width", w).attr("height", h);
-            simulation.force("center", d3.forceCenter(w / 2, h / 2)).restart();
+            simulation.alpha(0.3).restart();
         });
     </script>
 </body>
