@@ -20,50 +20,57 @@
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .node:hover {
-            filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.5));
+        .node:hover circle {
+            stroke-width: 4px;
+            stroke: #fff;
         }
         .link {
             stroke: #334155;
-            stroke-opacity: 0.6;
+            stroke-opacity: 0.4;
             stroke-width: 2px;
-            transition: all 0.3s;
+            fill: none;
         }
-        .link.highlight {
-            stroke: #3b82f6;
-            stroke-opacity: 1;
-            stroke-width: 4px;
+        .link-label {
+            font-size: 10px;
+            font-weight: 700;
+            fill: #64748b;
+            text-anchor: middle;
+            pointer-events: none;
+            background: #0f172a;
         }
         .label {
-            font-size: 12px;
-            font-weight: 700;
+            font-size: 11px;
+            font-weight: 800;
             pointer-events: none;
             fill: #94a3b8;
+            letter-spacing: 0.05em;
+        }
+        .layer-label {
+            font-size: 10px;
+            font-weight: 900;
+            fill: #334155;
+            text-anchor: end;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
         }
         .tooltip {
             position: absolute;
-            background: rgba(30, 41, 59, 0.95);
-            backdrop-filter: blur(8px);
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(12px);
             border: 1px solid #334155;
-            padding: 16px;
-            border-radius: 12px;
+            padding: 20px;
+            border-radius: 16px;
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.3s;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.5);
             z-index: 100;
-            max-width: 300px;
+            max-width: 320px;
         }
         .header {
             position: absolute;
             top: 40px;
             left: 40px;
-            z-index: 10;
-        }
-        .controls {
-            position: absolute;
-            bottom: 40px;
-            right: 40px;
             z-index: 10;
         }
         .bg-glow {
@@ -73,64 +80,51 @@
             background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
             z-index: -1;
         }
+        .layer-line {
+            stroke: #1e293b;
+            stroke-width: 1px;
+            stroke-dasharray: 4 4;
+        }
     </style>
 </head>
 <body>
     <div class="bg-glow"></div>
     
     <div class="header">
-        <h1 class="text-3xl font-black tracking-tighter text-white mb-2">PHASE 2 CORRELATION MAP</h1>
-        <p class="text-slate-400 text-sm font-bold tracking-widest uppercase">Infrastructure Refresh Ecosystem</p>
+        <h1 class="text-3xl font-black tracking-tighter text-white mb-2 italic">PHASE 2 RELATIONSHIP</h1>
+        <p class="text-slate-500 text-[10px] font-black tracking-[0.3em] uppercase">Architecture Correlation Logic</p>
         <div class="flex gap-4 mt-6">
-            <a href="index.html" class="px-4 py-2 border border-slate-700 rounded-full text-xs font-bold hover:bg-slate-800 transition">← BACK TO HUB</a>
+            <a href="index.html" class="px-5 py-2.5 bg-slate-800/50 backdrop-blur border border-slate-700 rounded-full text-[10px] font-black tracking-widest hover:bg-slate-700 transition">← COMMAND CENTER</a>
         </div>
     </div>
 
     <div id="map-container" class="w-full h-full"></div>
     <div id="tooltip" class="tooltip"></div>
 
-    <div class="controls flex gap-4">
-        <div class="flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-blue-500"></span>
-            <span class="text-[10px] font-bold text-slate-400">MANAGEMENT</span>
-        </div>
-        <div class="flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-cyan-500"></span>
-            <span class="text-[10px] font-bold text-slate-400">IDENTITY</span>
-        </div>
-        <div class="flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-rose-500"></span>
-            <span class="text-[10px] font-bold text-slate-400">SECURITY</span>
-        </div>
-        <div class="flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
-            <span class="text-[10px] font-bold text-slate-400">NETWORK</span>
-        </div>
-    </div>
-
     <script>
         const data = {
             "nodes": [
-                { "id": "p2_mgmt", "title": "Phase 2 Plan", "group": "management", "url": "project_management.html", "symbol": "📅", "desc": "Phase 2 全体の工程表とタスク管理" },
-                { "id": "p15_01", "title": "AD Cloud Lift", "group": "identity", "url": "project_15_01.html", "symbol": "🔑", "desc": "Active Directory のクラウド移行（基盤ID管理）" },
-                { "id": "p15_02", "title": "Secom Cloud", "group": "security", "url": "project_15_02.html", "symbol": "🛡️", "desc": "セキュリティゲートウェイの強靭化" },
-                { "id": "p15_combined", "title": "Integration Analysis", "group": "analysis", "url": "project_15_combined.html", "symbol": "⚖️", "desc": "ADとSECOMの統合コスト・構成分析" },
-                { "id": "p_ad_strategy", "title": "AD Scenarios", "group": "strategy", "url": "project_ad_scenarios.html", "symbol": "🎯", "desc": "移行シナリオ比較と戦略選定" },
-                { "id": "p_ad_matrix", "title": "Responsibility Matrix", "group": "management", "url": "project_ad_matrix.html", "symbol": "📋", "desc": "3社間の権限・責任分界点の定義" },
-                { "id": "sdwan_map", "title": "SD-WAN Visual", "group": "network", "url": "line_dashboard.html", "symbol": "🌐", "desc": "ネットワーク経路の視覚化ダッシュボード" },
-                { "id": "sdwan_strategy", "title": "SD-WAN Strategy", "group": "strategy", "url": "SD-WAN刷新_3社4シナリオ比較検討資料.html", "symbol": "🚀", "desc": "3社4シナリオによる回線刷新の検討" }
+                { "id": "p2_mgmt", "title": "Phase 2 Plan", "group": "management", "layer": 2, "url": "project_management.html", "symbol": "📅", "desc": "Phase 2 全体の統合管理・工程・タスク" },
+                { "id": "p15_01", "title": "AD Cloud Lift", "group": "identity", "layer": 1, "url": "project_15_01.html", "symbol": "🔑", "desc": "ID管理基盤のクラウド移行。DXのコアとなる認証系" },
+                { "id": "p15_02", "title": "Secom Cloud", "group": "security", "layer": 1, "url": "project_15_02.html", "symbol": "🛡️", "desc": "セキュリティゲートウェイの強靭化。境界防御の要" },
+                { "id": "p15_combined", "title": "Integration Analysis", "group": "analysis", "layer": 2, "url": "project_15_combined.html", "symbol": "⚖️", "desc": "ADとSecomのコスト・技術シナジーの統合分析" },
+                { "id": "p_ad_strategy", "title": "AD Scenarios", "group": "strategy", "layer": 2, "url": "project_ad_scenarios.html", "symbol": "🎯", "desc": "移行シナリオ（LBO/刷新）の戦略的比較" },
+                { "id": "p_ad_matrix", "title": "Responsibility Matrix", "group": "management", "layer": 2, "url": "project_ad_matrix.html", "symbol": "📋", "desc": "運用境界と責任の明確化（3社間合意）" },
+                { "id": "sdwan_map", "title": "SD-WAN Visual", "group": "network", "layer": 0, "url": "line_dashboard.html", "symbol": "🌐", "desc": "拠点間通信経路の可視化ダッシュボード" },
+                { "id": "sdwan_strategy", "title": "SD-WAN Strategy", "group": "strategy", "layer": 0, "url": "SD-WAN刷新_3社4シナリオ比較検討資料.html", "symbol": "🚀", "desc": "回線刷新・SD-WANによる通信土台の強靭化" }
             ],
             "links": [
-                { "source": "p2_mgmt", "target": "p15_01" },
-                { "source": "p2_mgmt", "target": "p15_02" },
-                { "source": "p2_mgmt", "target": "sdwan_strategy" },
-                { "source": "p15_01", "target": "p_ad_strategy" },
-                { "source": "p15_01", "target": "p_ad_matrix" },
-                { "source": "p15_01", "target": "p15_combined" },
-                { "source": "p15_02", "target": "p15_combined" },
-                { "source": "sdwan_strategy", "target": "sdwan_map" },
-                { "source": "sdwan_strategy", "target": "p15_01", "desc": "Enables Secure Access to Cloud AD" },
-                { "source": "p15_02", "target": "sdwan_strategy", "desc": "Secures Network Perimeter" }
+                { "source": "sdwan_strategy", "target": "p15_01", "label": "安全な転送路の提供" },
+                { "source": "sdwan_strategy", "target": "sdwan_map", "label": "視覚的管理" },
+                { "source": "p15_01", "target": "p15_02", "label": "認証連携" },
+                { "source": "p15_02", "target": "sdwan_strategy", "label": "境界防御" },
+                { "source": "p15_01", "target": "p_ad_strategy", "label": "戦略的根拠" },
+                { "source": "p15_01", "target": "p_ad_matrix", "label": "権限定義" },
+                { "source": "p15_01", "target": "p15_combined", "label": "統合分析" },
+                { "source": "p15_02", "target": "p15_combined", "label": "統合分析" },
+                { "source": "p2_mgmt", "target": "p15_01", "label": "推進" },
+                { "source": "p2_mgmt", "target": "p15_02", "label": "推進" },
+                { "source": "p2_mgmt", "target": "sdwan_strategy", "label": "推進" }
             ]
         };
 
@@ -142,10 +136,31 @@
             .attr("width", width)
             .attr("height", height);
 
+        // Layers setup
+        const layerPositions = [height * 0.75, height * 0.5, height * 0.25];
+        const layerNames = ["Foundation (Network)", "Core (Identity/Security)", "Strategy & Management"];
+
+        layerPositions.forEach((y, i) => {
+            svg.append("line")
+                .attr("class", "layer-line")
+                .attr("x1", 100)
+                .attr("y1", y)
+                .attr("x2", width - 100)
+                .attr("y2", y);
+            
+            svg.append("text")
+                .attr("class", "layer-label")
+                .attr("x", width - 120)
+                .attr("y", y - 10)
+                .text(layerNames[i]);
+        });
+
         const simulation = d3.forceSimulation(data.nodes)
-            .force("link", d3.forceLink(data.links).id(d => d.id).distance(250))
-            .force("charge", d3.forceManyBody().strength(-1500))
-            .force("center", d3.forceCenter(width / 2, height / 2 + 50));
+            .force("link", d3.forceLink(data.links).id(d => d.id).distance(220).strength(0.5))
+            .force("charge", d3.forceManyBody().strength(-1000))
+            .force("x", d3.forceX(width / 2).strength(0.1))
+            .force("y", d3.forceY(d => layerPositions[d.layer]).strength(2))
+            .force("collision", d3.forceCollide().radius(80));
 
         const colors = {
             management: "#3b82f6",
@@ -156,11 +171,18 @@
             analysis: "#f59e0b"
         };
 
-        const link = svg.append("g")
-            .selectAll("line")
+        // Link groups
+        const linkGroup = svg.append("g").selectAll(".link-group")
             .data(data.links)
-            .join("line")
+            .join("g")
+            .attr("class", "link-group");
+
+        const link = linkGroup.append("line")
             .attr("class", "link");
+
+        const linkLabel = linkGroup.append("text")
+            .attr("class", "link-label")
+            .text(d => d.label);
 
         const node = svg.append("g")
             .selectAll("g")
@@ -176,16 +198,16 @@
             .on("mouseout", hideTooltip);
 
         node.append("circle")
-            .attr("r", 35)
+            .attr("r", 32)
             .attr("fill", d => colors[d.group] || "#475569")
-            .attr("fill-opacity", 0.2)
+            .attr("fill-opacity", 0.1)
             .attr("stroke", d => colors[d.group] || "#475569")
-            .attr("stroke-width", 2);
+            .attr("stroke-width", 1.5);
 
         node.append("text")
             .attr("text-anchor", "middle")
             .attr("dy", ".35em")
-            .attr("font-size", "24px")
+            .attr("font-size", "22px")
             .text(d => d.symbol);
 
         node.append("text")
@@ -200,6 +222,10 @@
                 .attr("y1", d => d.source.y)
                 .attr("x2", d => d.target.x)
                 .attr("y2", d => d.target.y);
+
+            linkLabel
+                .attr("x", d => (d.source.x + d.target.x) / 2)
+                .attr("y", d => (d.source.y + d.target.y) / 2 - 5);
 
             node
                 .attr("transform", d => `translate(${d.x},${d.y})`);
@@ -227,28 +253,40 @@
         function showTooltip(event, d) {
             tooltip.transition().duration(200).style("opacity", 1);
             tooltip.html(`
-                <div class="text-[10px] font-black text-slate-500 mb-1 uppercase tracking-widest">${d.group}</div>
-                <div class="text-lg font-bold text-white mb-2 leading-tight">${d.title}</div>
-                <div class="text-sm text-slate-400 mb-4 leading-relaxed">${d.desc}</div>
-                <div class="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Click to view document →</div>
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="px-2 py-0.5 rounded text-[8px] font-black text-white uppercase tracking-widest" style="background:${colors[d.group]}">${d.group}</span>
+                </div>
+                <div class="text-xl font-black text-white mb-2 leading-tight tracking-tight">${d.title}</div>
+                <div class="text-[11px] text-slate-400 mb-5 leading-relaxed font-bold">${d.desc}</div>
+                <div class="flex items-center justify-between pt-4 border-t border-slate-700/50">
+                    <span class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Interaction</span>
+                    <span class="text-[9px] font-black text-blue-500 uppercase tracking-widest leading-none">Open Document →</span>
+                </div>
             `)
-            .style("left", (event.pageX + 20) + "px")
-            .style("top", (event.pageY - 20) + "px");
+            .style("left", (event.pageX + 25) + "px")
+            .style("top", (event.pageY - 25) + "px");
             
             // Highlight links
-            link.classed("highlight", l => l.source.id === d.id || l.target.id === d.id);
+            link.filter(l => l.source.id === d.id || l.target.id === d.id)
+                .transition().duration(200)
+                .style("stroke", colors[d.group])
+                .style("stroke-opacity", 1)
+                .style("stroke-width", 3);
         }
 
         function hideTooltip() {
             tooltip.transition().duration(200).style("opacity", 0);
-            link.classed("highlight", false);
+            link.transition().duration(200)
+                .style("stroke", "#334155")
+                .style("stroke-opacity", 0.4)
+                .style("stroke-width", 2);
         }
 
         window.addEventListener('resize', () => {
             const w = window.innerWidth;
             const h = window.innerHeight;
             svg.attr("width", w).attr("height", h);
-            simulation.force("center", d3.forceCenter(w / 2, h / 2 + 50)).restart();
+            simulation.force("center", d3.forceCenter(w / 2, h / 2)).restart();
         });
     </script>
 </body>
