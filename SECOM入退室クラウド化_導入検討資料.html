@@ -419,7 +419,7 @@
             <div class="flex items-center gap-3">
                 <span
                     class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700 border border-blue-200">
-                    🔄 最終更新：デザイン統一およびヘッダー標準化 (v20260211_1546)
+                    🔄 最終更新：ツールチップ位置修正・Day 0反映 (v20260211_1922)
                 </span>
             </div>
         </div>
@@ -1008,7 +1008,8 @@
                     <div style="font-weight:800; color:${d.color}; margin-top:6px; border-top:1px dashed #cbd5e1; padding-top:4px;">5年総額: ¥${d.total.toLocaleString()}</div>
                 `);
             }).on("mousemove", function (event) {
-                tooltip.style("left", (event.pageX + 10) + "px").style("top", (event.pageY + 10) + "px");
+                const [x, y] = d3.pointer(event, document.body);
+                tooltip.style("left", (x + 12) + "px").style("top", (y + 12) + "px");
             }).on("mouseout", () => tooltip.style("opacity", 0));
 
             rows.append("text")
@@ -1179,8 +1180,9 @@
                     `);
                 })
                 .on("mousemove", function (event) {
-                    tooltip.style("left", (event.pageX + 10) + "px")
-                        .style("top", (event.pageY + 10) + "px");
+                    const [x, y] = d3.pointer(event, document.body);
+                    tooltip.style("left", (x + 12) + "px")
+                        .style("top", (y + 12) + "px");
                 })
                 .on("mouseout", function () {
                     d3.select(this).style("opacity", 1);
