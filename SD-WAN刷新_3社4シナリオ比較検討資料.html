@@ -286,13 +286,13 @@
             
             <div style="background: #fffbeb; border-left: 4px solid #f59e0b; padding: 15px; border-radius: 4px;">
                 <div style="font-weight: 700; color: #92400e; margin-bottom: 8px;">
-                    意思決定のための確認事項
+                    🎯 2/13 X-Day 準備ステータス & 確認事項
                 </div>
                 <div style="font-size: 0.9rem; color: #78350f; line-height: 1.6;">
-                    • <strong>全拠点ルーター交換の必須性</strong>：大阪拠点以外の全拠点でSD-WAN対応機へのリプレースが必要（LBO実現のため）<br>
-                    • <strong>LBO対象範囲の再定義</strong>：主要SaaS（M365/Google等）の体感速度向上のため、全拠点でのLBO適用を推奨<br>
-                    • 海外拠点展開計画およびリモートワーク比率の再確認<br>
-                    • Cato Cloud正式見積の最終精査
+                    • <strong>準備完了</strong>：2/13のデータ受領（要員数・最終見積）に向けたマッピングテンプレートを整備済み<br>
+                    • <strong>全拠点ルーター交換の必須性</strong>：大阪拠点以外の全拠点でSD-WAN対応機へのリプレースを前提としたコスト分析へ固定<br>
+                    • <strong>SECOM費用明文化</strong>：環境開放・アプリ設定費用（¥198,000）を全社共通コストとして計上済み<br>
+                    • <strong>LBO対象範囲</strong>：主要SaaS（M365/Google等）の体感速度向上のため、全拠点でのLBO適用を推奨
                 </div>
             </div>
         </div>
@@ -492,11 +492,20 @@
                         .attr("font-weight", "bold")
                         .text("🛡️ Secure (Vario)");
                 } else {
-                    baseNodes.filter(n => n.type === 'branch').forEach(n => {
+                    // Future: Show router replacement (protective shield) on ALL nodes to reflect mandate
+                    nodes.filter(n => n.type === 'branch' || n.type === 'hub').forEach(n => {
                         gSecurity.append("text")
                             .attr("x", n.x + 10).attr("y", n.y - 10)
                             .attr("font-size", "10px")
+                            .attr("class", "security-icon")
                             .text("🛡️");
+                        
+                        gSecurity.append("text")
+                            .attr("x", n.x + 10).attr("y", n.y + 5)
+                            .attr("font-size", "8px")
+                            .attr("fill", "#188038")
+                            .attr("font-weight", "bold")
+                            .text("SD-WAN NW");
                     });
                 }
 

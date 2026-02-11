@@ -11,7 +11,8 @@
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <title>Project 15.02 SECOM Cloud Migration</title>
+    <title>プロジェクト 15.02: SECOM入退室クラウド化 導入検討報告</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="assets/toru_custom_design.css">
     <style>
         :root {
@@ -38,10 +39,14 @@
             background-color: var(--bg-body);
             color: var(--text-main);
             margin: 0;
-            padding: 40px 20px;
+            padding: 0;
             line-height: 1.6;
             background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
             background-size: 32px 32px;
+        }
+
+        .main-content {
+            padding: 40px 20px;
         }
 
         .container {
@@ -391,27 +396,38 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="version-header">
-            <div style="font-weight: 800;">PROD-VER-54 (2026-01-23 報告会反映版)</div>
-            <div>保守費高騰データの追加 | 更新: 2026-01-23 16:20</div>
+    <!-- Header Section -->
+    <header class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <a href="index.html"
+                    class="flex items-center gap-2 text-slate-500 hover:text-brand-navy transition-colors text-sm font-medium">
+                    <svg class="w-3 h-3 flex-shrink-0" style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    ポータルへ戻る
+                </a>
+                <div class="h-4 w-px bg-slate-300 mx-2" style="width: 1px; height: 16px; background-color: #cbd5e1;"></div>
+                <span class="text-base font-bold text-slate-700">プロジェクト 15.02: SECOM入退室クラウド化 導入検討報告</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <span
+                    class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700 border border-blue-200">
+                    🔄 最終更新：デザイン統一およびヘッダー標準化 (v20260211_1546)
+                </span>
+            </div>
         </div>
+    </header>
 
-        <header class="header">
-            <div>
-                <div
-                    style="background: var(--primary); color: white; display: inline-block; padding: 3px 12px; border-radius: 6px; font-weight: 700; font-size: 0.8rem; margin-bottom: 15px;">
-                    Executive Summary with D3.js</div>
-                <h1>セコム入退室管理サーバー クラウド化<br>ベンダー3社 サービス詳細比較</h1>
-            </div>
-            <div style="text-align: right;">
-                <p style="margin:0; font-weight: 700; color: #334155;">提出先: 篠部長、塩田部長</p>
-                <p style="margin:5px 0; color: var(--text-muted);">アキバホールディングス 情報システム部</p>
-                <div style="margin-top: 15px;">
-                    <a href="index.html" class="btn-portal">← ポータルに戻る</a>
-                </div>
-            </div>
-        </header>
+    <div class="container main-content">
+        <!-- Title Section -->
+        <section class="text-center space-y-4 mb-12 pt-8">
+            <h1 class="text-4xl font-black text-slate-900 tracking-tight leading-tight">
+                セコム入退室管理サーバー クラウド化<br>ベンダー3社 サービス詳細比較
+            </h1>
+            <p class="text-slate-500 font-medium">提出先: 篠部長、塩田部長 | アキバホールディングス 情報システム部</p>
+        </section>
 
         <section class="section-card">
             <div class="section-title">📉 1. 5年間トータルコスト (TCO) の可視化</div>
