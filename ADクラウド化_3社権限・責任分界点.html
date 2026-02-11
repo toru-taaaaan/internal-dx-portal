@@ -302,11 +302,53 @@
         </tbody>
     </table>
 
-    <!-- 4. 深掘り：IIJの「管理者権限なし」による具体的制約 -->
+
+    <!-- 4. オンプレミス継続との比較 -->
+    <h2>4. オンプレミス継続（サーバー更新）との比較</h2>
+    <p>クラウド化せず、築地本社の現行サーバーをリプレース（5年保守）した場合の比較です。</p>
+    
+    <table class="comp-table">
+        <thead>
+            <tr>
+                <th style="width: 20%;">比較項目</th>
+                <th style="width: 40%;">オンプレミス継続 (サーバー更新)</th>
+                <th style="width: 40%;">クラウド移行 (Link-At-Japan)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>5年コスト</th>
+                <td><span style="font-weight:bold; color:#1e293b;">約200万円〜</span><br><span style="font-size:0.85em; color:#64748b;">(機器更新 162万〜 + 延長保守 24.2万/2年)</span></td>
+                <td><span style="font-weight:bold; color:#e11d48;">約737万円</span><br><span style="font-size:0.85em; color:#64748b;">(運用代行・マネージドサービス込)</span></td>
+            </tr>
+            <tr>
+                <th>BCPリスク</th>
+                <td><span style="color:#e11d48; font-weight:bold;">✖ 非常に高い</span><br><span style="font-size:0.9em;">築地本社の落雷・停電・火災時に全11拠点が停止</span></td>
+                <td><span style="color:#16a34a; font-weight:bold;">✔ 極めて低い</span><br><span style="font-size:0.9em;">データセンター(Azure)での冗長稼働</span></td>
+            </tr>
+            <tr>
+                <th>運用負荷</th>
+                <td><span style="color:#e11d48; font-weight:bold;">✖ 情シス負担増</span><br><span style="font-size:0.9em;">HWトラブル対応、UPS管理、OS更新が自己責任</span></td>
+                <td><span style="color:#16a34a; font-weight:bold;">✔ ベンダーにお任せ</span><br><span style="font-size:0.9em;">24/365監視・OSパッチ・バックアップを代行</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="margin-top: 25px; margin-bottom: 40px; padding: 25px; background: #eff6ff; border-left: 5px solid #3b82f6; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+        <h3 style="color: #1e40af; margin: 0 0 15px 0; font-size: 1.1em; display:flex; align-items:center; gap:10px;">
+            <span style="font-size: 1.4em;">💡</span> 戦略的判断の核心：コスト平準化と事業継続性(BCP)の重要性
+        </h3>
+        <p style="margin: 0; font-size: 1em; line-height: 1.8; color: #334155;">
+            単純コストではオンプレが安価ですが、「保守料の急騰（6年目以降は年間2倍超）」と「情シスがハードウェアの看守を続けるリスク」とのトレードオフになります。<br>
+            特に築地本社の電力事情や物理的損壊時の影響が全11拠点に及ぶ点を踏まえ、クラウド化による<strong>「運用からの解放」</strong>が本主旨となります。
+        </p>
+    </div>
+
+    <!-- 5. 深掘り：IIJの「管理者権限なし」による具体的制約 -->
     <div style="margin-top: 40px; padding: 25px; background: #fff8f8; border: 2px solid #ffcccc; border-radius: 12px;">
         <h3 style="color: #c0392b; margin-top: 0; font-size: 1.25em; display: flex; align-items: center; gap: 10px;">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-            IIJ：『管理者権限なし』の具体的制約と実務への影響
+            5. IIJ：『管理者権限なし』の具体的制約と実務への影響
         </h3>
         <p style="font-size: 0.95em; color: #666; margin-bottom: 20px;">
             IIJ PaaS型を選択した場合、自社情シスはサーバーの「ドメイン管理者(Domain Admin)」権限を持ちません。これにより生じる制約は以下の通りです。
