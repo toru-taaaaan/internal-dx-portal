@@ -1007,7 +1007,7 @@
                     <div style="font-weight:800; color:${d.color}; margin-top:6px; border-top:1px dashed #cbd5e1; padding-top:4px;">5年総額: ¥${d.total.toLocaleString()}</div>
                 `);
             }).on("mousemove", function (event) {
-                tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 20) + "px");
+                tooltip.style("left", (event.pageX + 10) + "px").style("top", (event.pageY + 10) + "px");
             }).on("mouseout", () => tooltip.style("opacity", 0));
 
             rows.append("text")
@@ -1178,8 +1178,8 @@
                     `);
                 })
                 .on("mousemove", function (event) {
-                    tooltip.style("left", (event.pageX + 15) + "px")
-                        .style("top", (event.pageY - 20) + "px");
+                    tooltip.style("left", (event.pageX + 10) + "px")
+                        .style("top", (event.pageY + 10) + "px");
                 })
                 .on("mouseout", function () {
                     d3.select(this).style("opacity", 1);
