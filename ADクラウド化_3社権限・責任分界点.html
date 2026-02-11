@@ -78,11 +78,11 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <path d="M15 18l-6-6 6-6"></path>
             </svg>
-            プロジェクト一覧へ戻る
+            統合ボードへ戻る
         </a>
         <div class="flex items-center gap-3" style="display: flex; align-items: center; gap: 12px;">
-            <span class="tag tag-blue" style="padding: 4px 10px; background: #dbeafe; color: #1e40af; border-radius: 4px; font-size: 11px; font-weight: 900;">PHASE 2</span>
-            <span class="tag tag-slate-800" style="padding: 4px 10px; background: #1e293b; color: white; border-radius: 4px; font-size: 11px; font-weight: 900;">MATRIX</span>
+            <span class="tag tag-slate-100" style="padding: 4px 10px; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11px; font-weight: 900;">LAST UPDATE: 2月11日</span>
+            <span class="tag tag-green" style="padding: 4px 10px; background: #dcfce7; color: #166534; border-radius: 4px; font-size: 11px; font-weight: 900;">FINAL POLISHED</span>
         </div>
     </div>
 
@@ -301,6 +301,39 @@
             </tr>
         </tbody>
     </table>
+
+    <!-- 4. 深掘り：IIJの「管理者権限なし」による具体的制約 -->
+    <div style="margin-top: 40px; padding: 25px; background: #fff8f8; border: 2px solid #ffcccc; border-radius: 12px;">
+        <h3 style="color: #c0392b; margin-top: 0; font-size: 1.25em; display: flex; align-items: center; gap: 10px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            IIJ：『管理者権限なし』の具体的制約と実務への影響
+        </h3>
+        <p style="font-size: 0.95em; color: #666; margin-bottom: 20px;">
+            IIJ PaaS型を選択した場合、自社情シスはサーバーの「ドメイン管理者(Domain Admin)」権限を持ちません。これにより生じる制約は以下の通りです。
+        </p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            <div style="background: white; padding: 15px; border-radius: 8px; border-left: 5px solid #c0392b;">
+                <h4 style="margin: 0 0 10px 0; font-size: 1em;">❌ 直接できないこと</h4>
+                <ul style="font-size: 0.9em; padding-left: 20px; line-height: 1.8;">
+                    <li>DCサーバーへのリモートデスクトップ(RDP)ログイン</li>
+                    <li>OS設定（レジストリ、イベントログの詳細設定等）の直接変更</li>
+                    <li>任意のエージェントソフト、サードパーティ製資材のインストール</li>
+                    <li>ADスキーマ拡張、ドメイン機能レベルの手動変更</li>
+                </ul>
+            </div>
+            <div style="background: white; padding: 15px; border-radius: 8px; border-left: 5px solid #3498db;">
+                <h4 style="margin: 0 0 10px 0; font-size: 1em;">💡 実務での代替手段</h4>
+                <ul style="font-size: 0.9em; padding-left: 20px; line-height: 1.8;">
+                    <li><strong>ユーザー/GPO管理：</strong> 専用Webコンソールまたは管理用端末から実施可能。</li>
+                    <li><strong>特殊作業：</strong> IIJへのサービスデスク依頼により数日以内に代行実施（無償範囲内）。</li>
+                    <li><strong>ガバナンス：</strong> 「いじれない」ことが、そのまま「壊れない・汚れない」という品質保証のガードレールとして機能。</li>
+                </ul>
+            </div>
+        </div>
+        <p style="margin-top: 15px; font-size: 0.9em; font-weight: bold; color: #444;">
+            ※Cato NetworksやSECOM等の外部サービス連携においても、IIJ側で培われた実績のある手順で設定が代行されるため、実務上の「詰まり」は最小限に抑えられます。
+        </p>
+    </div>
 </div>
 
 </body>
