@@ -500,6 +500,61 @@
             </div>
         </section>
 
+        <!-- [NEW] 3.5 Security & Network Infrastructure Cost Matrix -->
+        <section class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden mb-12">
+            <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                    <span class="text-xl">🛡️</span> セキュリティ・NWインフラ追加費用 (詳細)
+                </h2>
+                <p class="text-sm text-slate-500 mt-1">※ADサーバー構築費用を除いた、SECOMソリューションおよび回線・保守の合算値です。</p>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-base text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-50">
+                            <th class="p-4 border-b border-slate-200 w-1/4">費用項目</th>
+                            <th class="p-4 border-b border-blue-200 bg-white w-1/4">IIJ (GIO)</th>
+                            <th class="p-4 border-b border-green-200 bg-green-50/10 w-1/4">USEN (AWS)</th>
+                            <th class="p-4 border-b border-amber-200 bg-amber-50/10 w-1/4">Link At Japan</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <tr>
+                            <td class="p-4 font-bold text-slate-700 bg-slate-50/30">初期費用 (一時金)</td>
+                            <td class="p-4 font-medium">¥762,750 <sup class="text-blue-500">[12]</sup></td>
+                            <td class="p-4 font-medium">¥438,000 <sup class="text-green-500">[13]</sup></td>
+                            <td class="p-4 font-medium">¥388,000 <sup class="text-amber-500">[14]</sup></td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-bold text-slate-700 bg-slate-50/30">月額費用 (運用込)</td>
+                            <td class="p-4 font-medium">¥133,290</td>
+                            <td class="p-4 font-medium">¥133,000</td>
+                            <td class="p-4 font-medium">¥116,376</td>
+                        </tr>
+                        <tr class="bg-slate-50/50">
+                            <td class="p-4 font-bold text-slate-700">初年度総額 (1年)</td>
+                            <td class="p-4 font-bold">¥2,362,230</td>
+                            <td class="p-4 font-bold">¥2,034,000</td>
+                            <td class="p-4 font-bold text-amber-600">¥1,784,512</td>
+                        </tr>
+                        <tr class="bg-slate-50">
+                            <td class="p-4 font-bold text-slate-700">5年間総費用 (TCO)</td>
+                            <td class="p-4 font-bold">¥8,760,150</td>
+                            <td class="p-4 font-bold">¥8,418,000</td>
+                            <td class="p-4 font-bold text-amber-600">¥7,370,560</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="px-6 py-4 bg-amber-50 border-t border-amber-100">
+                <p class="text-xs text-amber-800 leading-relaxed">
+                    <strong>⚠️ 注意事項：</strong><br>
+                    • 上記費用には、SECOM社へ直接支払う「環境開放・アプリ設定費用（¥198,000/一時金）」は含まれていません。各刷新プラン共通で別途発生します。<br>
+                    • 計算式： [各社SECOMソリューション費用] + [各社NW設定・保守費用] = 上記金額
+                </p>
+            </div>
+        </section>
+
         <!-- On-premise Cost Basis Reference -->
         <section class="bg-slate-50 rounded-xl border-2 border-dashed border-slate-300 p-8 mb-12">
             <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2 mb-6">
