@@ -1020,12 +1020,13 @@
 
         // Migration Process Diagram
         const migrationTasks = [
+            // Day 0
+            { day: 0, task: "サーバー初期セットアップ", start: 14, duration: 3, color: "#64748b", detail: "OSの役割と機能(54項目)の有効化、管理者設定、アプリデータ事前コピー（情シス作業）" },
             // Day 1
-            { day: 1, task: "サーバー初期セットアップ", start: 9, duration: 2, color: "#64748b", detail: "OSの役割と機能(54項目)の有効化、管理者設定（情シス作業）" },
-            { day: 1, task: "SQL Server インストール", start: 11, duration: 2, color: "#3b82f6", detail: "新サーバーへのSQL Serverインストール（SECOM作業）" },
-            { day: 1, task: "セサモTRⅡ インストール", start: 13, duration: 2, color: "#3b82f6", detail: "セサモTRⅡアプリケーションのインストール" },
-            { day: 1, task: "基本設定・動作確認", start: 15, duration: 1.5, color: "#3b82f6", detail: "基本設定・動作確認" },
-            { day: 1, task: "データ移行準備", start: 16.5, duration: 1.5, color: "#3b82f6", detail: "データ移行の準備作業" },
+            { day: 1, task: "SQL Server インストール", start: 9, duration: 2.5, color: "#3b82f6", detail: "新サーバーへのSQL Serverインストール（SECOM作業）" },
+            { day: 1, task: "セサモTRⅡ インストール", start: 11.5, duration: 2, color: "#3b82f6", detail: "セサモTRⅡアプリケーションのインストール" },
+            { day: 1, task: "基本設定・動作確認", start: 13.5, duration: 2, color: "#3b82f6", detail: "基本設定・動作確認" },
+            { day: 1, task: "データ移行準備", start: 15.5, duration: 2, color: "#3b82f6", detail: "データ移行の準備作業" },
             // Day 2
             { day: 2, task: "データ吸い出し (USB)", start: 9, duration: 2, color: "#10b981", detail: "既存サーバーからのデータ吸い出し（USB経由）" },
             { day: 2, task: "データ移行・投入", start: 11, duration: 2.5, color: "#10b981", detail: "新サーバーへのデータ移行・投入" },
@@ -1040,7 +1041,7 @@
 
             const bbox = container.node().getBoundingClientRect();
             const width = bbox.width;
-            const height = 300;
+            const height = 350; // Increased height to accommodate Day 0
             const margin = { top: 40, right: 180, bottom: 40, left: 180 };
             const innerWidth = width - margin.left - margin.right;
             const innerHeight = height - margin.top - margin.bottom;
@@ -1073,38 +1074,56 @@
                 .selectAll("text")
                 .attr("class", "time-label");
 
-            // Draw day divider
+            // Draw day dividers
+            const day0Tasks = migrationTasks.filter(d => d.day === 0);
             const day1Tasks = migrationTasks.filter(d => d.day === 1);
-            const day2Tasks = migrationTasks.filter(d => d.day === 2);
-            const dividerY = taskScale(day1Tasks.length - 0.5);
+            const divider0Y = taskScale(day0Tasks.length - 0.5);
+            const divider1Y = taskScale(day0Tasks.length + day1Tasks.length - 0.5);
 
             g.append("line")
                 .attr("class", "phase-divider")
                 .attr("x1", 0)
                 .attr("x2", innerWidth)
-                .attr("y1", dividerY)
-                .attr("y2", dividerY);
+                .attr("y1", divider0Y)
+                .attr("y2", divider0Y);
+
+            g.append("line")
+                .attr("class", "phase-divider")
+                .attr("x1", 0)
+                .attr("x2", innerWidth)
+                .attr("y1", divider1Y)
+                .attr("y2", divider1Y);
 
             // Day labels
             g.append("text")
                 .attr("x", -10)
-                .attr("y", taskScale(0) + (taskScale(day1Tasks.length - 1) + taskScale.bandwidth() - taskScale(0)) / 2)
+                .attr("y", taskScale(0) + (taskScale(day0Tasks.length - 1) + taskScale.bandwidth() - taskScale(0)) / 2)
+                .attr("text-anchor", "end")
+                .attr("dominant-baseline", "middle")
+                .style("font-weight", "700")
+                .style("font-size", "14px")
+                .style("fill", "#64748b")
+                .text("Day 0 (事前準備)");
+
+            g.append("text")
+                .attr("x", -10)
+                .attr("y", taskScale(day0Tasks.length) + (taskScale(day0Tasks.length + day1Tasks.length - 1) + taskScale.bandwidth() - taskScale(day0Tasks.length)) / 2)
                 .attr("text-anchor", "end")
                 .attr("dominant-baseline", "middle")
                 .style("font-weight", "700")
                 .style("font-size", "14px")
                 .style("fill", "#3b82f6")
-                .text("Day 1");
+                .text("Day 1 (セコム来社)");
 
             g.append("text")
                 .attr("x", -10)
-                .attr("y", taskScale(day1Tasks.length) + (taskScale(migrationTasks.length - 1) + taskScale.bandwidth() - taskScale(day1Tasks.length)) / 2)
+                .attr("y", taskScale(day0Tasks.length + day1Tasks.length) + (taskScale(migrationTasks.length - 1) + taskScale.bandwidth() - taskScale(day0Tasks.length + day1Tasks.length)) / 2)
                 .attr("text-anchor", "end")
                 .attr("dominant-baseline", "middle")
                 .style("font-weight", "700")
                 .style("font-size", "14px")
                 .style("fill", "#10b981")
-                .text("Day 2");
+                .text("Day 2 (切替本番)");
 
             // Tooltip
             const tooltip = d3.select("#tooltip");
