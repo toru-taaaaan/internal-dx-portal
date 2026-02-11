@@ -462,16 +462,22 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>初期費用（一時金）</strong><sup>[15]</sup></td>
+                        <td><strong>初期費用（一時金）</strong><sup>[15]</sup><br><span style="font-size: 0.75rem; color: #64748b;">(ベンダー提示額)</span></td>
                         <td><span class="price-val">¥762,750</span></td>
                         <td><span class="price-val">¥438,000</span></td>
                         <td><span class="price-val">¥388,000</span></td>
                     </tr>
-                    <tr>
-                        <td style="color: #64748b; font-size: 0.85rem;">└ <strong>SECOM社直接費用</strong><sup>[12]</sup></td>
-                        <td style="color: #64748b; font-size: 0.85rem;">¥198,000</td>
-                        <td style="color: #64748b; font-size: 0.85rem;">¥198,000</td>
-                        <td style="color: #64748b; font-size: 0.85rem;">¥198,000</td>
+                    <tr style="background-color: #fefce8;">
+                        <td style="color: #854d0e; font-weight: 700;">＋ SECOM社直接費用<sup>[12]</sup><br><span style="font-size: 0.75rem; font-weight: 400;">(環境開放・アプリ設定)</span></td>
+                        <td style="color: #854d0e; font-weight: 700;">¥198,000</td>
+                        <td style="color: #854d0e; font-weight: 700;">¥198,000</td>
+                        <td style="color: #854d0e; font-weight: 700;">¥198,000</td>
+                    </tr>
+                    <tr style="border-top: 2px solid #cbd5e1; background: #f1f5f9;">
+                         <td style="font-weight: 800; color: #1e293b;">初期導入費 合計</td>
+                         <td style="font-weight: 800; color: #1e293b;">¥960,750</td>
+                         <td style="font-weight: 800; color: #1e293b;">¥636,000</td>
+                         <td style="font-weight: 800; color: #1e293b;">¥586,000</td>
                     </tr>
                     <tr>
                         <td><strong>月額費用（運用込）</strong></td>
@@ -481,15 +487,15 @@
                     </tr>
                     <tr style="background: #f1f5f9; font-weight: 700;">
                         <td><strong>初年度総額 (1年間)</strong></td>
-                        <td><span class="price-val" style="color: #1e3a8a;">¥2,362,230</span></td>
-                        <td><span class="price-val" style="color: #1e3a8a;">¥2,034,000</span></td>
-                        <td><span class="price-val" style="color: #1e3a8a;">¥1,784,512</span></td>
+                        <td><span class="price-val" style="color: #1e3a8a;">¥2,560,230</span></td>
+                        <td><span class="price-val" style="color: #1e3a8a;">¥2,232,000</span></td>
+                        <td><span class="price-val" style="color: #1e3a8a;">¥1,982,512</span></td>
                     </tr>
                     <tr class="total-row" style="background: #1e293b; color: white; font-weight: 800;">
                         <td><strong>5年間総費用 (TCO)</strong><sup>[15]</sup></td>
-                        <td>¥8,760,150</td>
-                        <td>¥8,418,000</td>
-                        <td>¥7,370,560</td>
+                        <td>¥8,958,150</td>
+                        <td>¥8,616,000</td>
+                        <td>¥7,568,560</td>
                     </tr>
                 </tbody>
             </table>
@@ -921,9 +927,12 @@
 
     <script>
         const data = [
-            { vendor: "IIJ GIO", initial: 762750, monthly: 133290 * 60, total: 8760150, color: "#94a3b8" },
-            { vendor: "USEN (AWS)", initial: 438000, monthly: 133000 * 60, total: 8418000, color: "#64748b" },
-            { vendor: "Link-At-Japan", initial: 388000, monthly: 116376 * 60, total: 7370560, color: "#10b981" }
+            // IIJ: Initial Vender(762,750) + SECOM(198,000) = 960,750
+            { vendor: "IIJ GIO", initial: 960750, monthly: 133290 * 60, total: 8958150, color: "#94a3b8" },
+            // USEN: Initial Vender(438,000) + SECOM(198,000) = 636,000
+            { vendor: "USEN (AWS)", initial: 636000, monthly: 133000 * 60, total: 8616000, color: "#64748b" },
+            // LAJ: Initial Vender(388,000) + SECOM(198,000) = 586,000
+            { vendor: "Link-At-Japan", initial: 586000, monthly: 116376 * 60, total: 7568560, color: "#10b981" }
         ];
 
         function drawChart() {
@@ -950,13 +959,22 @@
 
             rows.append("rect")
                 .attr("y", d => yScale(d.vendor)).attr("x", 0).attr("height", yScale.bandwidth())
-                .attr("width", 0).attr("fill", "#3b82f6")
+                .attr("width", 0).attr("fill", d => d.color)
                 .attr("rx", 6).transition().duration(1000).attr("width", d => xScale(d.total));
+
+            // Initial Cost Overlay (Darker)
+            rows.append("rect")
+                .attr("y", d => yScale(d.vendor)).attr("x", 0).attr("height", yScale.bandwidth())
+                .attr("width", 0).attr("fill", "rgba(0,0,0,0.2)")
+                .attr("rx", 6).transition().duration(1000).delay(200).attr("width", d => xScale(d.initial));
 
             rows.on("mouseover", function (event, d) {
                 tooltip.style("opacity", 1).html(`
                     <div style="font-weight:700; border-bottom:1px solid #475569; margin-bottom:8px; padding-bottom:4px;">${d.vendor}</div>
-                    <div style="font-weight:800; color:#3b82f6; margin-top:4px;">5年総額: ¥${d.total.toLocaleString()}</div>
+                    <div style="font-size:0.85rem;">初期合計: ¥${d.initial.toLocaleString()}</div>
+                    <div style="font-size:0.8rem; color:#cbd5e1; margin-left:10px;">(内 SECOM直接費: ¥198,000)</div>
+                    <div style="font-size:0.85rem; margin-top:4px;">月額合計: ¥${Math.round(d.monthly / 60).toLocaleString()}/月</div>
+                    <div style="font-weight:800; color:${d.color}; margin-top:6px; border-top:1px dashed #cbd5e1; padding-top:4px;">5年総額: ¥${d.total.toLocaleString()}</div>
                 `);
             }).on("mousemove", function (event) {
                 tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 20) + "px");
