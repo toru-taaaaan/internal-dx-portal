@@ -424,7 +424,7 @@
         <!-- Title Section -->
         <section class="text-center space-y-4 mb-12 pt-8">
             <h1 class="text-4xl font-black text-slate-900 tracking-tight leading-tight">
-                セコム入退室管理サーバー クラウド化<br>ベンダー3社 サービス詳細比較
+                セコム入退室管理サーバー クラウド化<br>ベンダー3社 サービス詳細比較<sup>[15]</sup>
             </h1>
             <p class="text-slate-500 font-medium">提出先: 篠部長、塩田部長 | アキバホールディングス 情報システム部</p>
         </section>
@@ -462,10 +462,16 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>初期費用（一時金）</strong></td>
+                        <td><strong>初期費用（一時金）</strong><sup>[15]</sup></td>
                         <td><span class="price-val">¥762,750</span></td>
                         <td><span class="price-val">¥438,000</span></td>
                         <td><span class="price-val">¥388,000</span></td>
+                    </tr>
+                    <tr>
+                        <td style="color: #64748b; font-size: 0.85rem;">└ <strong>SECOM社直接費用</strong><sup>[12]</sup></td>
+                        <td style="color: #64748b; font-size: 0.85rem;">¥198,000</td>
+                        <td style="color: #64748b; font-size: 0.85rem;">¥198,000</td>
+                        <td style="color: #64748b; font-size: 0.85rem;">¥198,000</td>
                     </tr>
                     <tr>
                         <td><strong>月額費用（運用込）</strong></td>
@@ -480,7 +486,7 @@
                         <td><span class="price-val" style="color: #1e3a8a;">¥1,784,512</span></td>
                     </tr>
                     <tr class="total-row" style="background: #1e293b; color: white; font-weight: 800;">
-                        <td><strong>5年間総費用 (TCO)</strong></td>
+                        <td><strong>5年間総費用 (TCO)</strong><sup>[15]</sup></td>
                         <td>¥8,760,150</td>
                         <td>¥8,418,000</td>
                         <td>¥7,370,560</td>
@@ -817,8 +823,8 @@
                     <li>事前調査費用は<strong>作業費内（追加費用なし）</strong>で実施されます</li>
                     <li>移行当日は、SECOM担当者による<strong>全11拠点への現地訪問作業</strong>が必須となります（リモート不可）</li>
                     <li>全11拠点を<strong>一斉に移行</strong>（拠点ごとの順次切替ではない）</li>
-                    <li>切替時のサーバー通信断は<strong>1〜2時間程度</strong>（IIJは最大1日）</li>
-                    <li>入退室業務への実質的な影響は<strong>ゼロ</strong>（SECOM確認済み）</li>
+                    <li>切替時のサーバー通信断は<strong>1〜2時間程度</strong><sup>[10]</sup>（IIJは最大1日）</li>
+                    <li>入退室業務への実質的な影響は<strong>ゼロ</strong><sup>[10]</sup>（SECOM確認済み）</li>
                 </ul>
             </div>
         </section>
@@ -876,6 +882,41 @@
             style="text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 50px;">
             Professional Report Visualization Powered by D3.js • © 2026 Information System Department
         </footer>
+
+        <section class="section-card" style="margin-top: 40px; border-top: 4px solid var(--border);">
+            <div class="section-title">📚 参照資料 (Reference Materials)</div>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">
+                本報告書の数値および技術仕様は、以下のエビデンスに基づき作成されています。
+            </p>
+            <div style="font-size: 0.85rem; line-height: 1.8;">
+                <div style="margin-bottom: 12px;">
+                    <strong>[10] セコム移行・ダウンタイム確認メール (2025-12-26)</strong><br>
+                    <span style="color: var(--text-muted);">切替時の通信断「1〜2時間」および「オフライン動作による入退室影響ゼロ」の確約。</span>
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <strong>[12] SECOM社 正式見積書 (37702512-007)</strong><br>
+                    <span style="color: var(--text-muted);">環境開放・アプリ設定費用 ¥198,000 の確定。</span>
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <strong>[13] IIJ セコムサーバー追加見積資料 (2025-12-19)</strong><br>
+                    <span style="color: var(--text-muted);">IIJ GIO環境でのSECOMサーバー構築・NW設定費用の算出根拠。</span>
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <strong>[14] USEN セコムサーバー追加見積メール (2025-12-19)</strong><br>
+                    <span style="color: var(--text-muted);">AWS環境でのSECOMサーバー構築初期費用 ¥220,000 の回答。</span>
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <strong>[15] AD・SECOM同時依頼 コスト最適化分析レポート (PROD-FINAL-20260205)</strong><br>
+                    <span style="color: var(--text-muted);">共通インフラ(VPC/PBB)の重複排除による3社横並びTCO比較ロジック。</span>
+                </div>
+            </div>
+            <div class="info-box" style="margin-top: 20px; font-size: 0.8rem; background: #f1f5f9;">
+                <strong>💡 エビデンス管理について:</strong><br>
+                詳細な引用箇所、ファイルパス、および上記以外の共通資料（オンプレミス台帳等）については、
+                情報システム部内保存の <a href="file:///C:/Users/toru.tanji/Obsidian/SecondBrain_Final/01_Workspace/11_プロジェクト/15.01_AD_Cloud_Migration/00_エビデンス管理シート.md">00_エビデンス管理シート.md</a> を参照してください。
+                本ポータルに掲載されている全ての情報は、上記管理シートにより「事実」として検証済みです。
+            </div>
+        </section>
     </div>
 
     <script>
