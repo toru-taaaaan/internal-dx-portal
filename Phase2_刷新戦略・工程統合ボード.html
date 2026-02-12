@@ -21,6 +21,7 @@
     .status-completed { background: #dcfce7; color: #166534; }
     .status-pending { background: #fef3c7; color: #92400e; }
     .status-wait { background: #f1f5f9; color: #475569; border: 1px dashed #cbd5e1; }
+    .status-review { background: #fce7f3; color: #9f1239; }
     .sub-task-list { margin-top: 12px; font-size: 16px; color: #475569; line-height: 1.9; list-style: none; padding-left: 0; }
     .sub-task-list li { position: relative; padding-left: 20px; margin-bottom: 8px; }
     .sub-task-list li::before { content: '•'; position: absolute; left: 0; color: #3b82f6; font-weight: bold; }
@@ -37,6 +38,12 @@
     .task-completed-row .text-lg, .task-completed-row .sub-task-list { color: #64748b !important; text-decoration: none !important; }
     .task-completed-row .sub-task-list li::before { color: #94a3b8 !important; }
     .task-completed-row .status-badge { background-color: #f1f5f9 !important; color: #475569 !important; border: 1px solid #cbd5e1; }
+    /* Document Status Badge */
+    .doc-status { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 900; margin-left: 8px; }
+    .doc-status-100 { background: #dcfce7; color: #166534; }
+    .doc-status-80 { background: #fef3c7; color: #92400e; }
+    .doc-status-50 { background: #fed7aa; color: #9a3412; }
+    .doc-status-0 { background: #fee2e2; color: #991b1b; }
   </style>
 </head>
 <body class="bg-[#fcfcfc]">
@@ -46,7 +53,7 @@
     <aside class="sidebar">
       <header class="sidebar-header">
         <h1>統合指揮センター HUB</h1>
-        <p>MASTER COMMAND CENTER V2.2</p>
+        <p>MASTER COMMAND CENTER V2.3</p>
       </header>
       <nav>
         <div class="nav-label-small">トップ・ナビゲーション</div>
@@ -82,14 +89,14 @@
         </a>
       </nav>
       <footer class="sidebar-footer">
-        <p>User: 丹治 統<br>Last Sync: 2月13日 07:30</p>
+        <p>User: 丹治 統<br>Last Sync: 2月13日 08:45</p>
       </footer>
     </aside>
 
     <!-- Main Workspace -->
     <main class="main-scroll">
       <div class="p-16 max-w-full lg:max-w-[1400px] mx-auto">
-        
+
         <!-- Header -->
         <header class="mb-12">
           <div class="flex items-center gap-4 mb-6">
@@ -109,30 +116,30 @@
             <span class="text-xs font-black text-slate-500 uppercase tracking-[0.2em] block mb-2">Executive Highlights</span>
             <h2 class="text-3xl font-black text-slate-800">📋 経営層向け要約サマリ</h2>
           </div>
-          
+
           <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
             <div class="highlight-card">
               <div class="highlight-title">🏛️ 認証基盤 (Identity)</div>
               <div class="highlight-text">
-                老朽化した物理ADを撤廃し、Entra ID中心のクラウド認証へ。サーバー管理費用の削減とセキュリティガバナンス強化を実現。
+                老朽化した物理ADを撤廃し、Entra ID中心のクラウド認証へ。<strong>主要資料2件は完成済み</strong>、残り3件を最終チェック中。
               </div>
             </div>
             <div class="highlight-card">
               <div class="highlight-title">📈 ネットワーク (Network)</div>
               <div class="highlight-text">
-                国産安定型のIIJか、将来拡張性のCatoか。2月13日の見積判明後、投資対効果に基づき最終判断を行う最重要領域。
+                国産安定型のIIJか、将来拡張性のCatoか。<strong>ベンダー回答待ち（2/20期限）</strong>で比較分析は未着手。スコープ定義は完成。
               </div>
             </div>
             <div class="highlight-card">
               <div class="highlight-title">🛡️ セキュリティ (Security)</div>
               <div class="highlight-text">
-                物理入退室(SECOM)とIT認証を統合。入退社時の権限管理を自動化し、物理と論理の両面で安全性を向上。
+                物理入退室(SECOM)とIT認証を統合。<strong>SECOM単体資料は完成</strong>、AD+SECOM統合資料を作成中。
               </div>
             </div>
             <div class="highlight-card">
               <div class="highlight-title">📂 基盤整備 (Foundation)</div>
               <div class="highlight-text">
-                資料管理・エビデンス整備・ベンダー確認体制を構築。散在資料を一元化し、トレーサビリティを確保。プロジェクト遂行の土台完成。
+                資料管理・エビデンス整備・ベンダー確認体制を構築。散在資料を一元化し、トレーサビリティを確保。<strong>基盤フェーズ完遂</strong>。
               </div>
             </div>
           </div>
@@ -140,10 +147,10 @@
           <div class="decision-point">
             <h4 class="text-sm font-black text-amber-800 uppercase mb-3 flex items-center gap-2">
               <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-              Next Strategy Check: 2月13日 (Fri)
+              Next Strategy Check: 2月20日 (Thu)
             </h4>
             <div class="text-sm font-bold text-amber-900 leading-relaxed">
-              最終見積に基づき「国内安定 (IIJ)」か「未来型 (Cato)」か、および「拠点回線の物理増強」の要否を決定します。
+              ベンダー回答（IIJ・SCSK）に基づき「国内安定 (IIJ)」か「未来型 (Cato)」か、および「拠点回線の物理増強」の要否を決定します。
             </div>
           </div>
         </section>
@@ -155,7 +162,7 @@
               <span class="text-xs font-black text-blue-500 uppercase tracking-[0.2em] block mb-2">Identity Track</span>
               <h2 class="text-3xl font-black text-slate-800">🏛️ 認証基盤のクラウド化 (AD/Entra ID)</h2>
             </div>
-            
+
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
               <!-- Strategy Summary -->
               <div class="lg:col-span-4 strategy-card bg-blue-50/30 border-none">
@@ -164,14 +171,20 @@
                   物理サーバーの老朽化リスクを排除。クラウドネイティブな認証体系への刷新による、ガバナンス強化と運用コスト削減の両立。
                 </p>
                 <div class="space-y-4">
-                  <a href="ADクラウド移行_3社比較・導入計画.html" class="doc-link-card" style="opacity: 0.6; background: #f1f5f9; border-left-color: #22c55e;">ADサーバークラウド移行計画レポート <span class="text-xs text-emerald-600 font-black ml-2">[100% COMPLETED]</span> →</a>
-                  <a href="AD・EntraID刷新_移行シナリオ比較検討資料.html" class="doc-link-card" style="opacity: 0.6; background: #f1f5f9; border-left-color: #22c55e;">AD・EntraID刷新 移行シナリオ比較検討資料 <span class="text-xs text-emerald-600 font-black ml-2">[100% COMPLETED]</span> →</a>
-                  <a href="ADクラウド化_3社権限・責任分界点.html" class="doc-link-card" style="opacity: 0.6; background: #f1f5f9; border-left-color: #22c55e;">ADクラウド化に伴う3社権限・責任分界点 <span class="text-xs text-emerald-600 font-black ml-2">[100% COMPLETED]</span> →</a>
+                  <a href="ADクラウド移行_3社比較・導入計画.html" class="doc-link-card" style="opacity: 1; background: #dcfce7; border-left-color: #22c55e;">
+                    ADサーバークラウド移行計画レポート <span class="doc-status doc-status-100">100% 完成</span> →
+                  </a>
+                  <a href="AD・EntraID刷新_移行シナリオ比較検討資料.html" class="doc-link-card" style="border-left-color: #f59e0b;">
+                    AD・EntraID刷新 移行シナリオ比較検討資料 <span class="doc-status doc-status-0">未チェック</span> →
+                  </a>
+                  <a href="ADクラウド化_3社権限・責任分界点.html" class="doc-link-card" style="border-left-color: #f59e0b;">
+                    ADクラウド化に伴う3社権限・責任分界点 <span class="doc-status doc-status-0">未チェック</span> →
+                  </a>
                 </div>
                 <div class="mt-12 pt-8 border-t border-blue-100 text-center">
                     <div class="text-xs font-black text-blue-400 uppercase mb-3">Track Progress</div>
-                    <div class="track-pulse text-blue-600 italic">100%</div>
-                    <div class="mt-2 track-meta">認証戦略・RACI・BCP定義 完遂</div>
+                    <div class="track-pulse text-blue-600 italic">27%</div>
+                    <div class="mt-2 track-meta">全11タスク中3タスク完了</div>
                 </div>
               </div>
 
@@ -189,133 +202,28 @@
                   <tbody>
                     <tr class="task-completed-row">
                       <td>
-                        <div class="text-lg font-black text-slate-700">✅ SECOM入退室クラウド化 費用・サポート範囲の最終精緻化</div>
+                        <div class="text-lg font-black text-slate-700">✅ ADクラウド移行_3社比較・導入計画 完成</div>
                         <ul class="sub-task-list">
-                          <li class="text-emerald-600">✅ [2月11日] SECOM社直接費用 (¥198,000) を全シナリオに横並びで反映・修正完了。</li>
-                          <li class="text-emerald-600">✅ [2月11日] サポート範囲の記述適正化：IIJ (全レイヤー一括)、USEN (NW・AWS・OS一括)、LAJ (クラウド専業・回線分離) の実態を反映。</li>
+                          <li class="text-emerald-600">✅ [2月11日] ベンダー3社(IIJ/USEN/LAJ) 見積・RACI精査完了</li>
+                          <li class="text-emerald-600">✅ [2月11日] 初期導入費用 ＋ ライセンス維持費を含む5年TCO比較完了</li>
+                          <li class="text-emerald-600">✅ [2月13日] 最終チェック完了・合意済み</li>
                         </ul>
                       </td>
                       <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月11日</span>
+                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月13日</span>
                       </td>
                       <td><span class="status-badge status-completed">✅ 完了</span></td>
                     </tr>
-                    <tr class="task-completed-row">
-                        <td>
-                          <div class="text-lg font-black text-slate-700">✅ ベンダー3社(IIJ/USEN/LAJ) 見積・RACI精査</div>
-                          <ul class="sub-task-list">
-                            <li>✅ [2月11日] 各社の権限・責任分界点(RACI)の整合性および構築範囲のダブルチェック完了</li>
-                            <li>✅ [2月11日] 初期導入費用 ＋ ライセンス維持費を含む5年TCOの比較集計完了</li>
-                            <li>✅ [2月11日] BCPリスク（RTO/RPO）およびオンプレ維持コストのリサーチ完遂</li>
-                          </ul>
-                        </td>
-                        <td class="whitespace-nowrap">
-                          <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月11日</span>
-                        </td>
-                        <td><span class="status-badge status-completed">✅ 完了</span></td>
-                      </tr>
                     <tr class="task-completed-row">
                       <td>
                         <div class="text-lg font-black text-slate-700">✅ ADリネーム・不整合解消のアクション</div>
                         <ul class="sub-task-list">
-                          <li>✅ [2月10日] クラウド同期時に致命的となるレガシー属性・不整合のクレンジング完了</li>
-                          <li>✅ [2月10日] リネーム後の各社内システムへの影響調査と暫定対策の完了</li>
+                          <li class="text-emerald-600">✅ [2月10日] クラウド同期時に致命的となるレガシー属性・不整合のクレンジング完了</li>
+                          <li class="text-emerald-600">✅ [2月10日] リネーム後の各社内システムへの影響調査と暫定対策の完了</li>
                         </ul>
                       </td>
                       <td class="whitespace-nowrap">
                         <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月10日</span>
-                      </td>
-                      <td><span class="status-badge status-completed">✅ 完了</span></td>
-                    </tr>
-                    <tr class="task-completed-row">
-                      <td>
-                        <div class="text-lg font-black text-slate-700">✅ <a href="AD・EntraID刷新_移行シナリオ比較検討資料.html">AD・EntraID刷新 移行シナリオ比較検討資料</a></div>
-                        <ul class="sub-task-list">
-                          <li class="text-emerald-600">✅ [2月10日] ドキュメント全体のデザイン刷新（Portal Nexus スタイル適用）</li>
-                          <li class="text-emerald-600">✅ [2月10日] 「おすすめ構成（Scenario 2）」の視覚的強調と図解追加</li>
-                          <li class="text-emerald-600">✅ [2月10日] 「フィッシング耐性認証（Windows Hello/FIDO2）」の戦略的統合</li>
-                          <li class="text-emerald-600">✅ [2月10日] 移行シナリオ（L&S vs ハイブリッド vs 完全クラウド）の策定完了</li>
-                        </ul>
-                      </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月10日</span>
-                      </td>
-                      <td><span class="status-badge status-completed">✅ 完了</span></td>
-                    </tr>
-                    <tr class="task-completed-row">
-                      <td>
-                        <div class="text-lg font-black text-slate-700">✅ <a href="file_server_cloud_migration.html">ファイルサーバーのクラウド統合検討・分析</a></div>
-                        <ul class="sub-task-list">
-                          <li class="text-emerald-600">✅ [2月10日] 検討用専門ページ（file_server_cloud_migration.html）の立ち上げ</li>
-                          <li class="text-emerald-600">✅ [2月10日] 各ポータルページへのリンク紐付けとタスク反映</li>
-                          <li class="text-emerald-600">✅ [2月10日] Googleドライブ vs SharePoint vs Azure Files の一次比較分析完了</li>
-                          <li class="text-emerald-600">✅ [2月10日] AD移行計画側からのファイルサーバー管理項目の分離・統合完了</li>
-                        </ul>
-                      </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月10日</span>
-                      </td>
-                      <td><span class="status-badge status-completed">✅ 完了</span></td>
-                    </tr>
-                    <tr class="task-completed-row">
-                      <td>
-                        <div class="text-lg font-black text-slate-700">✅ ADクラウド化ロードマップの範囲適正化（GitHub同期済）</div>
-                        <ul class="sub-task-list">
-                          <li>✅ [2月10日] スコープ外（DR自動化・セコム連携・責任分界点戦略案）の項目削除完了</li>
-                          <li>✅ [2月10日] 次世代インフラへのロードマップを「2月13日意思決定」に特化した内容へ整理</li>
-                          <li>✅ [2月10日] ポータル全体の同期（Push漏れ防止）フローの確立</li>
-                        </ul>
-                      </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月10日</span>
-                      </td>
-                      <td><span class="status-badge status-completed">✅ 完了</span></td>
-                    </tr>
-                    <tr class="task-completed-row">
-                      <td>
-                        <div class="flex justify-between items-start">
-                          <div class="text-lg font-black text-slate-800">✅ Entra ID 戦略整理・ハイブリッド構成検討</div>
-                        </div>
-                        <ul class="sub-task-list">
-                          <li class="text-emerald-600">✅ [2月11日] MFA・条件付きアクセス等の高度なセキュリティ機能の実装ロードマップ定義完了</li>
-                          <li class="text-emerald-600">✅ [2月11日] AD ↔ Entra ID 各共存シナリオ(ハイブリッド/完全クラウド)の多軸分析の完遂</li>
-                          <li class="text-emerald-600">✅ [2月11日] ITガバナンス・運用工数・コストをベースとした最適構成の選定プロセス確立</li>
-                        </ul>
-                      </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月11日</span>
-                      </td>
-                      <td><span class="status-badge status-completed">✅ 完了</span></td>
-                    </tr>
-                    <tr class="task-completed-row">
-                      <td>
-                        <div class="flex justify-between items-start">
-                          <div class="text-lg font-black text-slate-800">✅ SECOM入退室基盤 クラウド化詳細精査（費用・戦略ロジック）</div>
-                        </div>
-                        <ul class="sub-task-list">
-                          <li class="text-emerald-600">✅ [2月11日] 短期/長期コストの可視化：初年度総額および5年間のTCO比較を反映。</li>
-                          <li class="text-emerald-600">✅ [2月11日] 戦略的判断基準の明確化：「オンプレ継続 vs クラウド」のBCPリスク and 保守料高騰対策をロジック化。</li>
-                          <li class="text-emerald-600">✅ [2月11日] 伴走支援の定義：各社（IIJ, USEN, LAJ）のサポート範囲 and 責任分界をマトリクス化。</li>
-                        </ul>
-                      </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月11日</span>
-                      </td>
-                      <td><span class="status-badge status-completed">✅ 完了</span></td>
-                    </tr>
-                    <tr class="task-completed-row">
-                      <td>
-                        <div class="flex justify-between items-start">
-                          <div class="text-lg font-black text-slate-800">✅ IIJ 認証基盤「管理者権限（Admin）非保持」の統制妥当性精査</div>
-                        </div>
-                        <ul class="sub-task-list">
-                          <li class="text-emerald-600">✅ [2月11日] 実務上の不便・実害の有無を再定義：旧来の「サーバーいじり」を排し、SaaS型管理への轉換を確認。</li>
-                          <li class="text-emerald-600">✅ [2月11日] SECOM連携等、他社ソフト同居時の構成リスク精査完了（統合見積内にて解決済み）。</li>
-                          <li class="text-emerald-600">✅ [2月11日] 結論：権限を持たないことは「不自由」ではなく「プロによる品質保証・統制のガードレール」であると定義。</li>
-                        </ul>
-                      </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月11日</span>
                       </td>
                       <td><span class="status-badge status-completed">✅ 完了</span></td>
                     </tr>
@@ -323,14 +231,149 @@
                       <td>
                         <div class="text-lg font-black text-slate-700">✅ 用語のビジネス表現平準化（グローバル置換）</div>
                         <ul class="sub-task-list">
-                          <li>✅ [2月10日] 不適切な表現「新星案」を「追加検討案」へ一律置換完了</li>
-                          <li>✅ [2月10日] ドキュメント間での用語の不整合を解消し、プロフェッショナルな品質へ向上</li>
+                          <li class="text-emerald-600">✅ [2月10日] 不適切な表現「新星案」を「追加検討案」へ一律置換完了</li>
+                          <li class="text-emerald-600">✅ [2月10日] ドキュメント間での用語の不整合を解消</li>
                         </ul>
                       </td>
                       <td class="whitespace-nowrap">
                         <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月10日</span>
                       </td>
                       <td><span class="status-badge status-completed">✅ 完了</span></td>
+                    </tr>
+                    <tr class="bg-blue-50/10">
+                      <td>
+                        <div class="text-lg font-black text-slate-800">AD・EntraID刷新 移行シナリオ比較検討資料 最終チェック</div>
+                        <ul class="sub-task-list">
+                          <li class="text-slate-400">⏳ ドキュメント全体の誤字脱字チェック</li>
+                          <li class="text-slate-400">⏳ データ整合性確認（費用・期間・構成の整合）</li>
+                          <li class="text-slate-400">⏳ エビデンスリンクの動作確認</li>
+                          <li class="text-slate-400">⏳ 塩田部長視点での可読性チェック</li>
+                        </ul>
+                      </td>
+                      <td class="font-black italic text-amber-600 text-lg">2月15日</td>
+                      <td>
+                        <span class="status-badge status-review">最終チェック待ち</span>
+                        <div class="text-xs font-bold text-slate-400 mt-4">
+                          ドラフト完成済み<br>レビュー未実施
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="bg-blue-50/10">
+                      <td>
+                        <div class="text-lg font-black text-slate-800">ADクラウド化_3社権限・責任分界点 最終チェック</div>
+                        <ul class="sub-task-list">
+                          <li class="text-slate-400">⏳ RACI定義の整合性確認</li>
+                          <li class="text-slate-400">⏳ 3社間の責任分界の明確性チェック</li>
+                          <li class="text-slate-400">⏳ 図表の視認性・正確性確認</li>
+                        </ul>
+                      </td>
+                      <td class="font-black italic text-amber-600 text-lg">2月15日</td>
+                      <td>
+                        <span class="status-badge status-review">最終チェック待ち</span>
+                        <div class="text-xs font-bold text-slate-400 mt-4">
+                          ドラフト完成済み<br>レビュー未実施
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="text-lg font-black text-slate-800">ファイルサーバーのクラウド統合検討・分析</div>
+                        <ul class="sub-task-list">
+                          <li class="text-slate-400">⏳ Googleドライブ vs SharePoint vs Azure Files の詳細比較</li>
+                          <li class="text-slate-400">⏳ 移行計画・コスト試算</li>
+                          <li class="text-slate-400">⏳ セキュリティ・アクセス権限設計</li>
+                        </ul>
+                      </td>
+                      <td class="font-black italic text-rose-600 text-lg">2月16日</td>
+                      <td>
+                        <span class="status-badge status-wait">未着手</span>
+                        <div class="text-xs font-bold text-slate-400 mt-4">
+                          週末までに<br>骨格作成予定
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="text-lg font-black text-slate-800">Entra ID 戦略整理・ハイブリッド構成検討 資料化</div>
+                        <ul class="sub-task-list">
+                          <li class="text-slate-400">⏳ MFA・条件付きアクセス実装ロードマップの文書化</li>
+                          <li class="text-slate-400">⏳ ハイブリッド/完全クラウド の比較表作成</li>
+                          <li class="text-slate-400">⏳ 最適構成の推奨根拠の明文化</li>
+                        </ul>
+                      </td>
+                      <td class="font-black italic text-rose-600 text-lg">2月16日</td>
+                      <td>
+                        <span class="status-badge status-wait">未着手</span>
+                        <div class="text-xs font-bold text-slate-400 mt-4">
+                          検討は完了<br>資料化が必要
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="text-lg font-black text-slate-800">ADクラウド化ロードマップ 最終版作成</div>
+                        <ul class="sub-task-list">
+                          <li class="text-slate-400">⏳ 全体スケジュール（Phase1-3）の可視化</li>
+                          <li class="text-slate-400">⏳ マイルストーンと依存関係の明確化</li>
+                          <li class="text-slate-400">⏳ リスク・対策の整理</li>
+                        </ul>
+                      </td>
+                      <td class="font-black italic text-rose-600 text-lg">2月16日</td>
+                      <td>
+                        <span class="status-badge status-wait">未着手</span>
+                        <div class="text-xs font-bold text-slate-400 mt-4">
+                          スコープ整理済み<br>ガントチャート作成待ち
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="text-lg font-black text-slate-800">IIJ 認証基盤「管理者権限非保持」の文書化</div>
+                        <ul class="sub-task-list">
+                          <li class="text-slate-400">⏳ 統制妥当性の検証結果を資料化</li>
+                          <li class="text-slate-400">⏳ FAQ形式での懸念点と回答整理</li>
+                        </ul>
+                      </td>
+                      <td class="font-black italic text-rose-600 text-lg">2月16日</td>
+                      <td>
+                        <span class="status-badge status-wait">未着手</span>
+                        <div class="text-xs font-bold text-slate-400 mt-4">
+                          検証完了<br>FAQ作成が必要
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="text-lg font-black text-slate-800">SECOM入退室クラウド化 費用精緻化の文書反映</div>
+                        <ul class="sub-task-list">
+                          <li class="text-slate-400">⏳ 全シナリオへの¥198,000反映確認</li>
+                          <li class="text-slate-400">⏳ サポート範囲の記述適正化確認</li>
+                        </ul>
+                      </td>
+                      <td class="font-black italic text-rose-600 text-lg">2月16日</td>
+                      <td>
+                        <span class="status-badge status-wait">未着手</span>
+                        <div class="text-xs font-bold text-slate-400 mt-4">
+                          データ更新済み<br>文書確認が必要
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="text-lg font-black text-slate-800">SECOM入退室基盤 クラウド化戦略ロジックの文書化</div>
+                        <ul class="sub-task-list">
+                          <li class="text-slate-400">⏳ TCO比較の可視化</li>
+                          <li class="text-slate-400">⏳ BCP観点の判断基準明文化</li>
+                          <li class="text-slate-400">⏳ 各社サポート範囲マトリクスの作成</li>
+                        </ul>
+                      </td>
+                      <td class="font-black italic text-rose-600 text-lg">2月16日</td>
+                      <td>
+                        <span class="status-badge status-wait">未着手</span>
+                        <div class="text-xs font-bold text-slate-400 mt-4">
+                          ロジック確立済み<br>資料化が必要
+                        </div>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -344,7 +387,7 @@
               <span class="text-xs font-black text-emerald-500 uppercase tracking-[0.2em] block mb-2">Network Track</span>
               <h2 class="text-3xl font-black text-slate-800">📈 通信構造の刷新 (SD-WAN & SASE)</h2>
             </div>
-            
+
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
               <div class="lg:col-span-4 strategy-card bg-emerald-50/30 border-none">
                 <h4 class="text-xs font-black text-slate-400 uppercase mb-6 tracking-widest">Strategic Context</h4>
@@ -352,14 +395,20 @@
                     「遅いインターネット」からの解放。各拠点からクラウドへの最短ルート(LBO)確立案に加え、回線帯域の物理増強（専有/速度保証）によるボトルネック解消の検討を開始。
                   </p>
                 <div class="space-y-4">
-                  <a href="sdwan_scope_definition.html" class="doc-link-card border-l-emerald-600">SD-WAN刷新_拠点構成・スコープ定義 →</a>
-                  <a href="SD-WAN刷新_3社4シナリオ比較検討資料.html" class="doc-link-card border-l-emerald-600">SD-WAN刷新 3社4シナリオ比較検討資料 →</a>
-                  <a href="line_dashboard.html" class="doc-link-card border-l-emerald-600">通信構造 Map (論理構成図) →</a>
+                  <a href="sdwan_scope_definition.html" class="doc-link-card border-l-emerald-600" style="background: #fef3c7;">
+                    SD-WAN刷新_拠点構成・スコープ定義 <span class="doc-status doc-status-80">80% ドラフト完成</span> →
+                  </a>
+                  <a href="SD-WAN刷新_3社4シナリオ比較検討資料.html" class="doc-link-card border-l-emerald-600" style="border-left-color: #ef4444;">
+                    SD-WAN刷新 3社4シナリオ比較検討資料 <span class="doc-status doc-status-0">未着手</span> →
+                  </a>
+                  <a href="line_dashboard.html" class="doc-link-card border-l-emerald-600" style="border-left-color: #ef4444;">
+                    通信構造 Map (論理構成図) <span class="doc-status doc-status-0">未着手</span> →
+                  </a>
                 </div>
                 <div class="mt-12 pt-8 border-t border-emerald-100 text-center">
                     <div class="text-xs font-black text-emerald-400 uppercase mb-3">Track Progress</div>
-                    <div class="track-pulse text-emerald-600 italic">65%</div>
-                    <div class="mt-2 track-meta">構成再定義（ルーター交換必須）反映中</div>
+                    <div class="track-pulse text-emerald-600 italic">30%</div>
+                    <div class="mt-2 track-meta">全10タスク中3タスク完了</div>
                 </div>
               </div>
 
@@ -378,11 +427,9 @@
                       <td>
                         <div class="text-lg font-black text-slate-700">✅ SD-WANスコープ定義ページの全面刷新</div>
                         <ul class="sub-task-list">
-                          <li class="text-emerald-600">✅ [2月12日] ファイル名を英語URL化（project_scope_definition.html → sdwan_scope_definition.html）</li>
-                          <li class="text-emerald-600">✅ [2月12日] 統一ヘッダースタイル適用（ADクラウド移行と同じデザイン）</li>
-                          <li class="text-emerald-600">✅ [2月12日] Cato SASE構成を全9拠点モデルに更新（IIJ 8拠点 + 仙台）</li>
-                          <li class="text-emerald-600">✅ [2月12日] Socket/Client配分を明記（Socket 2拠点、Client 7拠点の仮説モデル）</li>
-                          <li class="text-emerald-600">✅ [2月12日] Azure/AWSの用途を明記（AD + SECOM入退室管理サーバー）</li>
+                          <li class="text-emerald-600">✅ [2月12日] Cato SASE構成を全9拠点モデルに更新</li>
+                          <li class="text-emerald-600">✅ [2月12日] Socket/Client配分を明記（仮説モデル）</li>
+                          <li class="text-emerald-600">✅ [2月12日] Azure/AWSの用途を明記</li>
                         </ul>
                       </td>
                       <td class="whitespace-nowrap">
@@ -394,14 +441,12 @@
                       <td>
                         <div class="text-lg font-black text-slate-700">✅ ベンダー確認事項の整理・可視化</div>
                         <ul class="sub-task-list">
-                          <li class="text-emerald-600">✅ [2月12日] Azure/AWSへのSocket設置方法の確認項目追加</li>
-                          <li class="text-emerald-600">✅ [2月12日] モバイルアクセスライセンス形態の確認項目追加</li>
-                          <li class="text-emerald-600">✅ [2月12日] IIJ Omnibus詳細提案の確認項目追加</li>
                           <li class="text-emerald-600">✅ [2月12日] 重要な確認事項セクションをスコープ定義ページに実装</li>
+                          <li class="text-emerald-600">✅ [2月13日] ベンダー確認メールドラフト作成（IIJ/SCSK/社内宛）</li>
                         </ul>
                       </td>
                       <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月12日</span>
+                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月13日</span>
                       </td>
                       <td><span class="status-badge status-completed">✅ 完了</span></td>
                     </tr>
@@ -409,9 +454,8 @@
                       <td>
                         <div class="text-lg font-black text-slate-700">✅ IIJネットワーク構成図の更新（8拠点モデル確定）</div>
                         <ul class="sub-task-list">
-                          <li class="text-emerald-600">✅ [2月12日] 8拠点構成を正式に反映（築地本社、大阪、多摩、橋本、名古屋、福岡、和歌山、京橋）</li>
-                          <li class="text-emerald-600">✅ [2月12日] IIJ GIOの位置づけを明確化（クラウドサーバー、ルーター不要）</li>
-                          <li class="text-emerald-600">✅ [2月12日] ルーター交換必須の前提を構成図に反映</li>
+                          <li class="text-emerald-600">✅ [2月12日] 8拠点構成を正式に反映</li>
+                          <li class="text-emerald-600">✅ [2月12日] IIJ GIOの位置づけを明確化</li>
                         </ul>
                       </td>
                       <td class="whitespace-nowrap">
@@ -419,91 +463,123 @@
                       </td>
                       <td><span class="status-badge status-completed">✅ 完了</span></td>
                     </tr>
-                    <tr class="bg-emerald-50/10">
+                    <tr>
                       <td>
-                        <div class="text-lg font-black text-rose-700 underline decoration-rose-400 underline-offset-4">🚩 [至急] LBO・NW構成図の全面修正（全8拠点：交換必須）</div>
+                        <div class="text-lg font-black text-slate-500 italic">【確認中】IIJ Omnibus 正式見積・詳細提案の受領</div>
                         <ul class="sub-task-list">
-                          <li class="font-bold text-rose-600">✅ 大阪以外も全拠点ルーター交換必須として構成を再定義（完了）</li>
-                          <li class="text-emerald-600">✅ 2/13受領データ（要員数・最終見積）の流し込み準備完了</li>
-                          <li class="text-slate-400">⏳ LBOメリットとルーター交換の必要性の言語化（X-Dayに向けて最終調整）</li>
+                          <li>⏳ [確認先: IIJ] 8拠点 + モバイル50名の正式見積もり</li>
+                          <li>⏳ [確認先: IIJ] ローカルブレイクアウトの詳細仕様</li>
+                          <li>⏳ [確認先: IIJ] モバイルアクセスのライセンス形態</li>
                         </ul>
                       </td>
-                      <td class="font-black italic text-rose-600 text-lg">2月13日</td>
+                      <td class="text-rose-600 font-extrabold italic text-lg">2月20日</td>
                       <td>
-                        <span class="status-badge status-wait">X-Day：データ待ち</span>
-                        <div class="text-xs font-bold text-slate-400 mt-4 leading-relaxed">2/13の最終見積受領後、<br>コスト分析を自動反映予定</div>
+                        <span class="status-badge status-pending">回答待ち (緊急)</span>
+                        <div class="text-xs font-bold text-slate-400 mt-4">
+                          2月13日メール送付済<br>回答期限: 2月20日
+                        </div>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <div class="text-lg font-black text-slate-800 underline decoration-emerald-200 underline-offset-4">IIJ Omnibus vs Cato SASE 深掘り比較考察</div>
+                        <div class="text-lg font-black text-slate-500 italic">【確認中】SCSK社：Cato Networks SASE 正式案受領</div>
                         <ul class="sub-task-list">
-                          <li>✅ [2月11日] 国内統合性(IIJ)と、ゼロトラスト・グローバル性能(Cato)の比較検証</li>
-                          <li>✅ [2月11日] 将来のセキュリティ拡張性(SASE)を見据えた重み付け評価の実施</li>
+                          <li>⏳ [確認先: SCSK] 全拠点の Socket / Client 構成</li>
+                          <li>⏳ [確認先: SCSK] モバイルユーザーのライセンス体系</li>
+                          <li>⏳ [確認先: SCSK] Azure/AWSへのSocket設置方法</li>
                         </ul>
                       </td>
-                      <td class="font-black italic text-slate-400 text-lg">2月12日</td>
+                      <td class="text-rose-600 font-extrabold italic text-lg">2月20日</td>
                       <td>
-                        <span class="status-badge status-in-progress">進行中 (50%)</span>
-                        <div class="text-xs font-bold text-slate-400 mt-4 leading-relaxed">比較指標の<br>最終整合を実施中</div>
+                        <span class="status-badge status-pending">回答待ち (緊急)</span>
+                        <div class="text-xs font-bold text-slate-400 mt-4">
+                          2月13日メール送付済<br>回答期限: 2月20日
+                        </div>
                       </td>
                     </tr>
-                    <tr class="bg-emerald-50/10">
-                        <td>
-                          <div class="text-lg font-black text-slate-500 italic">SCSK社：Cato Networks SASE 正式案受領</div>
-                          <ul class="sub-task-list">
-                            <li>全拠点の vSocket / Socket 構成およびマネージド保守費用の精査</li>
-                            <li>モバイルユーザーのライセンス体系（ユーザー単位/デバイス単位）およびADアカウントとの紐づけ要件の確認</li>
-                            <li>M365 / Google Workspace 通信最適化の技術的妥当性の検証</li>
-                          </ul>
-                        </td>
-                        <td class="text-rose-600 font-extrabold italic text-lg">2月13日</td>
-                        <td>
-                          <span class="status-badge status-pending">回答待ち (緊急)</span>
-                          <div class="text-xs font-bold text-slate-400 mt-4">角田様からの<br>最終回答および<br>ライセンス定義待ち</div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="text-lg font-black text-slate-800 underline decoration-emerald-200 underline-offset-4">全拠点 従業員数（NW利用者数）の調査・精査</div>
-                          <ul class="sub-task-list">
-                            <li class="text-emerald-600">✅ [人事総務部] 従業員数（正・契・派遣内訳）の提供依頼済</li>
-                            <li class="text-blue-600 font-bold">✅ [情シス] 2/13受領後の精査用<a href="file:///c:/Users/toru.tanji/Obsidian/SecondBrain_Final/01_Workspace/11_プロジェクト/15.03_Network_Refresh/IT_Asset_Mapping_Template.md" class="underline">「マッピングテンプレート」</a>整備完了</li>
-                            <li>⏳ 2/13受領データに基づく「実利用ユーザー」の精査実行（ターゲット：X-Day）</li>
-                          </ul>
-                        </td>
-                        <td class="font-black italic text-rose-600 text-lg">2月13日</td>
-                        <td>
-                          <span class="status-badge status-wait">X-Day：データ待ち</span>
-                          <div class="text-xs font-bold text-slate-400 mt-4 leading-relaxed">テンプレート準備済み。<br>人事からのデータ受領を待機</div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="text-lg font-black text-slate-500 italic">IIJ・Cato両社への技術的裏取り</div>
-                          <ul class="sub-task-list">
-                            <li>✅ [2月11日] 通信品質保証(SLA)およびインシデント時の対応フローの比較</li>
-                            <li>✅ [2月11日] 各社の独自オプションと標準機能の境界線の明確化送付</li>
-                          </ul>
-                        </td>
-                        <td class="text-slate-400 font-bold">2月11日</td>
-                        <td><span class="status-badge status-wait">質問送付済</span></td>
-                      </tr>
-                      <tr class="bg-amber-50/20">
-                        <td>
-                          <div class="text-lg font-black text-slate-800 underline decoration-amber-300 underline-offset-4">【追加検討案：回線物理増強】回線足回り増強（専有/速度保証型）の調査</div>
-                          <ul class="sub-task-list">
-                            <li>多摩・橋本拠点のボトルネック解消に向けたフレッツ光 → 専有型回線(USEN等)への切替検討</li>
-                            <li>「LBO不要論」の検証：回線品質向上で既存Varioを維持できるか？</li>
-                            <li>トレードオフ選定：コスト増 vs セキュリティ継承(刷新見送り)のリスク分析</li>
-                          </ul>
-                        </td>
-                        <td class="font-black italic text-rose-600 text-lg">2月15日</td>
-                        <td>
-                          <span class="status-badge status-wait">回答待ち</span>
-                          <div class="text-xs font-bold text-slate-400 mt-4 leading-relaxed">USENへ問合せ済。<br>回線可用性と費用の回答待ち</div>
-                        </td>
-                      </tr>
+                    <tr>
+                      <td>
+                        <div class="text-lg font-black text-slate-800">SD-WANスコープ定義 最終チェック</div>
+                        <ul class="sub-task-list">
+                          <li class="text-slate-400">⏳ 9拠点構成の正確性確認</li>
+                          <li class="text-slate-400">⏳ 確認事項の網羅性チェック</li>
+                          <li class="text-slate-400">⏳ 図表の視認性確認</li>
+                        </ul>
+                      </td>
+                      <td class="font-black italic text-amber-600 text-lg">2月15日</td>
+                      <td>
+                        <span class="status-badge status-review">最終チェック待ち</span>
+                        <div class="text-xs font-bold text-slate-400 mt-4">
+                          ドラフト完成済み<br>レビュー未実施
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="text-lg font-black text-slate-800">SD-WAN刷新 3社4シナリオ比較検討資料 作成</div>
+                        <ul class="sub-task-list">
+                          <li class="text-slate-400">⏳ IIJ Omnibus / Cato SASE / 回線増強 の比較表作成</li>
+                          <li class="text-slate-400">⏳ TCO試算（5年間）</li>
+                          <li class="text-slate-400">⏳ 技術的特徴・メリット・デメリット整理</li>
+                        </ul>
+                      </td>
+                      <td class="font-black italic text-rose-600 text-lg">2月22日</td>
+                      <td>
+                        <span class="status-badge status-wait">ベンダー回答待ち</span>
+                        <div class="text-xs font-bold text-slate-400 mt-4">
+                          IIJ・SCSKからの<br>回答受領後に着手
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="text-lg font-black text-slate-800">通信構造 Map (論理構成図) 作成</div>
+                        <ul class="sub-task-list">
+                          <li class="text-slate-400">⏳ 現行構成（As-Is）の図解</li>
+                          <li class="text-slate-400">⏳ 各シナリオのTo-Be構成図</li>
+                          <li class="text-slate-400">⏳ 通信フロー・ボトルネックの可視化</li>
+                        </ul>
+                      </td>
+                      <td class="font-black italic text-rose-600 text-lg">2月16日</td>
+                      <td>
+                        <span class="status-badge status-wait">未着手</span>
+                        <div class="text-xs font-bold text-slate-400 mt-4">
+                          週末までに<br>骨格作成予定
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="bg-amber-50/20">
+                      <td>
+                        <div class="text-lg font-black text-slate-800">【追加検討案】回線物理増強（専有/速度保証型）の調査</div>
+                        <ul class="sub-task-list">
+                          <li>多摩・橋本拠点のボトルネック解消に向けたフレッツ光 → 専有型回線への切替検討</li>
+                          <li>「LBO不要論」の検証：回線品質向上で既存Varioを維持できるか？</li>
+                        </ul>
+                      </td>
+                      <td class="font-black italic text-rose-600 text-lg">2月15日</td>
+                      <td>
+                        <span class="status-badge status-wait">回答待ち</span>
+                        <div class="text-xs font-bold text-slate-400 mt-4">
+                          USENへ問合せ済<br>回線可用性と費用の回答待ち
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="text-lg font-black text-slate-800">IIJ Omnibus vs Cato SASE 深掘り比較考察</div>
+                        <ul class="sub-task-list">
+                          <li class="text-slate-400">⏳ 国内統合性(IIJ)と、ゼロトラスト・グローバル性能(Cato)の比較検証</li>
+                          <li class="text-slate-400">⏳ 将来のセキュリティ拡張性(SASE)を見据えた重み付け評価</li>
+                        </ul>
+                      </td>
+                      <td class="font-black italic text-amber-600 text-lg">2月22日</td>
+                      <td>
+                        <span class="status-badge status-wait">ベンダー回答待ち</span>
+                        <div class="text-xs font-bold text-slate-400 mt-4">
+                          IIJ・SCSKからの<br>回答受領後に着手
+                        </div>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -516,7 +592,7 @@
               <span class="text-xs font-black text-orange-500 uppercase tracking-[0.2em] block mb-2">Security Track</span>
               <h2 class="text-3xl font-black text-slate-800">🛡️ 境界防御 & クラウド入退室 (SECOM)</h2>
             </div>
-            
+
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
               <div class="lg:col-span-4 strategy-card bg-orange-50/30 border-none">
                 <h4 class="text-xs font-black text-slate-400 uppercase mb-6 tracking-widest">Strategic Context</h4>
@@ -524,13 +600,17 @@
                   物理入退室とIT認証の統合。持出PCまで含めたエンドポイント・セキュリティを Azure 基盤上で一元管理。
                 </p>
                 <div class="space-y-4">
-                  <a href="SECOM入退室クラウド化_導入検討資料.html" class="doc-link-card border-l-orange-600">セコム入退室管理サーバー クラウド化 ベンダー3社 サービス詳細比較 →</a>
-                  <a href="AD・SECOM同時依頼_コスト最適化分析.html" class="doc-link-card border-l-orange-600">ADサーバー + セコム入退室管理 「同時依頼」3社比較レポート →</a>
+                  <a href="SECOM入退室クラウド化_導入検討資料.html" class="doc-link-card border-l-orange-600" style="background: #dcfce7;">
+                    セコム入退室管理サーバー クラウド化 ベンダー3社 サービス詳細比較 <span class="doc-status doc-status-100">100% 完成</span> →
+                  </a>
+                  <a href="AD・SECOM同時依頼_コスト最適化分析.html" class="doc-link-card border-l-orange-600" style="border-left-color: #ef4444;">
+                    ADサーバー + セコム入退室管理 「同時依頼」3社比較レポート <span class="doc-status doc-status-0">未着手</span> →
+                  </a>
                 </div>
                 <div class="mt-12 pt-8 border-t border-orange-100 text-center">
                     <div class="text-xs font-black text-orange-400 uppercase mb-3">Track Progress</div>
-                    <div class="track-pulse text-orange-600 italic">100%</div>
-                    <div class="mt-2 track-meta">SECOM移行スキーム・詳細実行プラン 完遂</div>
+                    <div class="track-pulse text-orange-600 italic">50%</div>
+                    <div class="mt-2 track-meta">全4タスク中2タスク完了</div>
                 </div>
               </div>
 
@@ -547,68 +627,24 @@
                   <tbody>
                     <tr class="task-completed-row">
                       <td>
-                        <div class="text-lg font-black text-slate-700">✅ SECOM入退室クラウド化 導入検討資料の証跡リンク実装</div>
+                        <div class="text-lg font-black text-slate-700">✅ SECOM入退室クラウド化_導入検討資料 完成</div>
                         <ul class="sub-task-list">
-                          <li class="text-emerald-600">✅ [2月11日] 「参照資料」セクション（Reference Materials）の新規実装と、エビデンスNo.による紐付け完了</li>
-                          <li class="text-emerald-600">✅ [2月11日] 各構成費用（¥198,000等）およびダウンタイム時間への脚注リンク(Superscript)適用完了</li>
-                          <li class="text-emerald-600">✅ [2月11日] エビデンス管理シートとの相互リンクによる透明性担保</li>
+                          <li class="text-emerald-600">✅ [2月11日] 証跡リンク実装・エビデンス管理シート相互リンク完了</li>
+                          <li class="text-emerald-600">✅ [2月11日] 最終仕様・運用スキームの特定完了</li>
+                          <li class="text-emerald-600">✅ [2月13日] 最終チェック完了・合意済み</li>
                         </ul>
                       </td>
                       <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月11日</span>
+                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月13日</span>
                       </td>
                       <td><span class="status-badge status-completed">✅ 完了</span></td>
                     </tr>
                     <tr class="task-completed-row">
                       <td>
-                        <div class="text-lg font-black text-slate-800">✅ SECOMクラウド化 最終仕様・運用スキームの特定</div>
+                        <div class="text-lg font-black text-slate-700">✅ 塩田部長・篠部長 閲覧環境の共有</div>
                         <ul class="sub-task-list">
-                          <li class="text-emerald-600">✅ [2月11日] SQL Server Express版（無償）採用によるライセンスコスト不要の確定（エビデンス付）</li>
-                          <li class="text-emerald-600">✅ [2月11日] 情シス主体による「Day 0（前日準備）」工程の確立とガントチャートへの視覚的反映</li>
-                          <li class="text-emerald-600">✅ [2月11日] 致命的リスク（SQLバックアップ・USB転送・NW依存性）の特定と具体的対策の策定完了</li>
-                          <li class="text-emerald-600">✅ [2月11日] 公開資料のUI改善（ツールチップ位置修正・UX最適化）のデプロイ完了</li>
-                        </ul>
-                      </td>
-                      <td class="font-black italic text-slate-400 text-lg">2月11日</td>
-                      <td>
-                        <span class="status-badge status-completed">✅ 完了</span>
-                        <div class="text-xs font-bold text-slate-400 mt-4 leading-relaxed">全懸念点を解消し<br>「発注可能」状態へ到達</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="text-lg font-black text-slate-800 underline decoration-orange-200 underline-offset-4">パリオセキア(USEN) 追加オプション ROI分析</div>
-                        <ul class="sub-task-list">
-                          <li>✅ [2月11日] SECOM社連動オプションの導入メリットと、AD基盤相乗りによるインフラコスト削減効果</li>
-                          <li>✅ [2月11日] クラウド化に伴う物理資産（保守サーバー）の撤去・廃棄コストの算出</li>
-                        </ul>
-                      </td>
-                      <td class="font-black italic text-slate-400 text-lg">2月11日</td>
-                      <td>
-                        <span class="status-badge status-in-progress">進行中 (40%)</span>
-                        <div class="text-xs font-bold text-slate-400 mt-4 leading-relaxed">USEN社と構成仕様を<br>技術調整中</div>
-                      </td>
-                    </tr>
-                    <tr class="bg-orange-50/10">
-                        <td>
-                          <div class="text-lg font-black text-slate-500 italic">ADサーバー + セコム入退室管理 「同時依頼」3社比較分析</div>
-                          <ul class="sub-task-list">
-                            <li>✅ [2月11日] AD ＋ SECOM 同時発注による、ライセンスおよび構築作業のボリュームディスカウント精査</li>
-                            <li>✅ [2月11日] 運用統合（バックアップ監視・ネットワーク接続）のエンジニアリング・レポート完成</li>
-                          </ul>
-                        </td>
-                        <td class="text-slate-500 italic font-bold">2月13日</td>
-                        <td>
-                          <span class="status-badge status-wait">分析中</span>
-                          <div class="text-xs font-bold text-slate-400 mt-4">LAJ社と統合運用<br>スキームを詰め中</div>
-                        </td>
-                      </tr>
-                    <tr class="task-completed-row">
-                      <td>
-                        <div class="text-lg font-black text-slate-500">✅ 塩田部長・篠部長 閲覧環境の共有</div>
-                        <ul class="sub-task-list">
-                          <li>✅ [2月9日] shioda / shino ユーザーの ID/PW 発行と権限設定の完了</li>
-                          <li>✅ [2月9日] ポータル利用ガイドの共有完了</li>
+                          <li class="text-emerald-600">✅ [2月9日] shioda / shino ユーザーの ID/PW 発行と権限設定の完了</li>
+                          <li class="text-emerald-600">✅ [2月9日] ポータル利用ガイドの共有完了</li>
                         </ul>
                       </td>
                       <td class="whitespace-nowrap">
@@ -616,24 +652,43 @@
                       </td>
                       <td><span class="status-badge status-completed">✅ 完了</span></td>
                     </tr>
-                    <tr class="task-completed-row">
+                    <tr class="bg-orange-50/10">
                       <td>
-                        <div class="text-lg font-black text-slate-700">✅ 経営層向け意思決定サマリ（Executive Highlights）の統合</div>
+                        <div class="text-lg font-black text-slate-800">ADサーバー + セコム入退室管理 「同時依頼」3社比較レポート作成</div>
                         <ul class="sub-task-list">
-                          <li>✅ [2月10日] 各領域の要点を要約した「Executive Highlights」を統合ボードへ実装</li>
-                          <li>✅ [2月10日] 2月13日の見積受領後の意思決定ポイントを明確化</li>
+                          <li class="text-slate-400">⏳ AD ＋ SECOM 同時発注によるボリュームディスカウント精査</li>
+                          <li class="text-slate-400">⏳ 運用統合（バックアップ監視・ネットワーク接続）のエンジニアリング・レポート</li>
+                          <li class="text-slate-400">⏳ 3社の統合提案の比較表作成</li>
                         </ul>
                       </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月10日</span>
+                      <td class="text-rose-600 font-bold text-lg">2月16日</td>
+                      <td>
+                        <span class="status-badge status-in-progress">進行中 (30%)</span>
+                        <div class="text-xs font-bold text-slate-400 mt-4">LAJ社と統合運用<br>スキームを詰め中</div>
                       </td>
-                      <td><span class="status-badge status-completed">✅ 完了</span></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="text-lg font-black text-slate-800">経営層向け意思決定サマリ（Executive Highlights）の更新</div>
+                        <ul class="sub-task-list">
+                          <li class="text-slate-400">⏳ 最新の進捗状況を反映</li>
+                          <li class="text-slate-400">⏳ ベンダー回答受領後の意思決定ポイント明確化</li>
+                        </ul>
+                      </td>
+                      <td class="text-amber-600 font-bold text-lg">2月20日</td>
+                      <td>
+                        <span class="status-badge status-wait">随時更新</span>
+                        <div class="text-xs font-bold text-slate-400 mt-4">
+                          進捗に応じて<br>継続的に更新
+                        </div>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
           </section>
+
           <!-- Track 4: Project Infrastructure (Foundation) -->
           <section>
             <div class="section-header border-purple-600">
@@ -655,131 +710,73 @@
                 <div class="mt-12 pt-8 border-t border-purple-100 text-center">
                     <div class="text-xs font-black text-purple-400 uppercase mb-3">Track Progress</div>
                     <div class="track-pulse text-purple-600 italic">100%</div>
-                    <div class="mt-2 track-meta">基盤整備フェーズ 完遂</div>
+                    <div class="mt-2 track-meta">全8タスク完遂</div>
                 </div>
               </div>
 
               <div class="lg:col-span-8 strategy-card">
-                <h4 class="text-sm font-black text-purple-600 uppercase mb-6 border-b border-slate-100 pb-4">Current Engineering Progress</h4>
+                <h4 class="text-sm font-black text-purple-600 uppercase mb-6 border-b border-slate-100 pb-4">Completed Foundation Tasks</h4>
                 <table class="task-table">
                   <thead>
                     <tr>
-                      <th width="60%">詳細タスク・検討項目</th>
-                      <th width="15%">期限</th>
+                      <th width="75%">詳細タスク・検討項目</th>
                       <th width="25%">詳細ステータス</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr class="task-completed-row">
                       <td>
+                        <div class="text-lg font-black text-slate-700">✅ 原子記録（Primary Evidence）管理体制の構築</div>
+                        <p class="text-sm text-slate-500 mt-2">✅ [2月13日] Level 1/Level 2の分離完了、ハルシネーション防止体制確立</p>
+                      </td>
+                      <td><span class="status-badge status-completed">✅ 完了</span></td>
+                    </tr>
+                    <tr class="task-completed-row">
+                      <td>
                         <div class="text-lg font-black text-slate-700">✅ SD-WAN資料フォルダ構造の体系化</div>
-                        <ul class="sub-task-list">
-                          <li class="text-emerald-600">✅ [2月13日] 15.03_Network_Refresh配下に6サブフォルダ構造を構築</li>
-                          <li class="text-emerald-600">✅ [2月13日] IIJ_Omnibus、SCSK_Cato、比較検討資料の3セクション整備</li>
-                          <li class="text-emerald-600">✅ [2月13日] 各ベンダーに提案資料・見積もり・メール・議事録・PDFフォルダを配置</li>
-                        </ul>
-                      </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月13日</span>
+                        <p class="text-sm text-slate-500 mt-2">✅ [2月13日] 15.03_Network_Refresh配下に体系的フォルダ構造を構築</p>
                       </td>
                       <td><span class="status-badge status-completed">✅ 完了</span></td>
                     </tr>
                     <tr class="task-completed-row">
                       <td>
-                        <div class="text-lg font-black text-slate-700">✅ PDF資料の一元管理（分散解消）</div>
-                        <ul class="sub-task-list">
-                          <li class="text-emerald-600">✅ [2月13日] IIJ提案資料3件を01_IIJ/06_提案資料PDF/に集約</li>
-                          <li class="text-emerald-600">✅ [2月13日] LAJ提案資料2件を03_LinkAtJapan/06_提案資料PDF/に集約</li>
-                          <li class="text-emerald-600">✅ [2月13日] Archive_Context、ダウンロードフォルダから正式配置へ移動完了</li>
-                        </ul>
-                      </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月13日</span>
-                      </td>
-                      <td><span class="status-badge status-completed">✅ 完了</span></td>
-                    </tr>
-                    <tr class="task-completed-row">
-                      <td>
-                        <div class="text-lg font-black text-slate-700">✅ エビデンス管理シート（AD）の最新化</div>
-                        <ul class="sub-task-list">
-                          <li class="text-emerald-600">✅ [2月13日] 未解決の重要な確認事項セクション追加（Q001-Q003）</li>
-                          <li class="text-emerald-600">✅ [2月13日] Azure/AWSへのSocket設置方法、モバイルライセンス形態、IIJ Omnibus詳細提案を記録</li>
-                          <li class="text-emerald-600">✅ [2月13日] 最終更新日を2026-02-13に更新、更新履歴に記録</li>
-                        </ul>
-                      </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月13日</span>
-                      </td>
-                      <td><span class="status-badge status-completed">✅ 完了</span></td>
-                    </tr>
-                    <tr class="task-completed-row">
-                      <td>
-                        <div class="text-lg font-black text-slate-700">✅ SD-WAN専用エビデンスシート新規作成</div>
-                        <ul class="sub-task-list">
-                          <li class="text-emerald-600">✅ [2月13日] IIJ 8拠点構成、Cato 9拠点構成（仮説モデル）を記録</li>
-                          <li class="text-emerald-600">✅ [2月13日] 未解決確認事項7件（SD-Q001～SD-Q007）を整理</li>
-                          <li class="text-emerald-600">✅ [2月13日] 参考文献、関連ページへのリンク完備（9.6KB）</li>
-                        </ul>
-                      </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月13日</span>
+                        <div class="text-lg font-black text-slate-700">✅ エビデンス管理シート（AD・SD-WAN）構築</div>
+                        <p class="text-sm text-slate-500 mt-2">✅ [2月13日] 2つのエビデンス管理シート作成、未解決確認事項の可視化完了</p>
                       </td>
                       <td><span class="status-badge status-completed">✅ 完了</span></td>
                     </tr>
                     <tr class="task-completed-row">
                       <td>
                         <div class="text-lg font-black text-slate-700">✅ ベンダー確認事項トラッキングシート構築</div>
-                        <ul class="sub-task-list">
-                          <li class="text-emerald-600">✅ [2月13日] IIJ関連3件、SCSK関連3件、社内確認1件の計7件を登録</li>
-                          <li class="text-emerald-600">✅ [2月13日] 優先度（🔴高、🟡中）、ステータス、期限を明確化</li>
-                          <li class="text-emerald-600">✅ [2月13日] 各確認事項の詳細説明と想定回答パターンを記載（7.6KB）</li>
-                        </ul>
-                      </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月13日</span>
+                        <p class="text-sm text-slate-500 mt-2">✅ [2月13日] IIJ・SCSK・社内確認の7件を優先度付きで管理</p>
                       </td>
                       <td><span class="status-badge status-completed">✅ 完了</span></td>
                     </tr>
                     <tr class="task-completed-row">
                       <td>
                         <div class="text-lg font-black text-slate-700">✅ ベンダー確認メールドラフト作成</div>
-                        <ul class="sub-task-list">
-                          <li class="text-emerald-600">✅ [2月13日] IIJ営業宛、SCSK営業宛、社内宛の3種類のテンプレート作成</li>
-                          <li class="text-emerald-600">✅ [2月13日] 確認事項を具体的に記載（背景・目的・期限付き）</li>
-                          <li class="text-emerald-600">✅ [2月13日] メール送信チェックリスト、送信後の対応フロー完備（12KB）</li>
-                        </ul>
-                      </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月13日</span>
+                        <p class="text-sm text-slate-500 mt-2">✅ [2月13日] IIJ・SCSK・社内宛の3種類のテンプレート作成完了</p>
                       </td>
                       <td><span class="status-badge status-completed">✅ 完了</span></td>
                     </tr>
                     <tr class="task-completed-row">
                       <td>
                         <div class="text-lg font-black text-slate-700">✅ 資料管理ルール文書の制定</div>
-                        <ul class="sub-task-list">
-                          <li class="text-emerald-600">✅ [2月13日] フォルダ構造、ファイル命名規則、バージョン管理方法を文書化</li>
-                          <li class="text-emerald-600">✅ [2月13日] メール・議事録の管理ルール、トレーサビリティの確保方法を定義</li>
-                          <li class="text-emerald-600">✅ [2月13日] 禁止事項、機密情報の取り扱い、定期レビューの手順を明記（12KB）</li>
-                        </ul>
-                      </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月13日</span>
+                        <p class="text-sm text-slate-500 mt-2">✅ [2月13日] フォルダ構造・命名規則・バージョン管理方法を文書化</p>
                       </td>
                       <td><span class="status-badge status-completed">✅ 完了</span></td>
                     </tr>
                     <tr class="task-completed-row">
                       <td>
-                        <div class="text-lg font-black text-slate-700">✅ 原子記録（Primary Evidence）管理体制の構築</div>
-                        <ul class="sub-task-list">
-                          <li class="text-emerald-600">✅ [2月13日] 全ベンダーの06_提案資料PDF/にREADME.md作成（Level 1定義）</li>
-                          <li class="text-emerald-600">✅ [2月13日] エビデンス管理シートに信頼性レベル列追加（🟢 Level 1 / 🟡 Level 2）</li>
-                          <li class="text-emerald-600">✅ [2月13日] 資料管理ルールに Level 1/Level 2の詳細定義と[PRIMARY]命名規則を追加</li>
-                          <li class="text-emerald-600">✅ [2月13日] ポータルサイトに「本資料はLevel 2」の警告実装（ハルシネーション防止）</li>
-                        </ul>
+                        <div class="text-lg font-black text-slate-700">✅ PDF資料の一元管理（分散解消）</div>
+                        <p class="text-sm text-slate-500 mt-2">✅ [2月13日] IIJ・LAJ提案資料を各ベンダーフォルダに集約完了</p>
                       </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月13日</span>
+                      <td><span class="status-badge status-completed">✅ 完了</span></td>
+                    </tr>
+                    <tr class="task-completed-row">
+                      <td>
+                        <div class="text-lg font-black text-slate-700">✅ GitHub Pages自動デプロイ環境の構築完了</div>
+                        <p class="text-sm text-slate-500 mt-2">✅ [2月12日] GitHub Actions + Cloudflare Workersによる1-3分自動デプロイ基盤確立</p>
                       </td>
                       <td><span class="status-badge status-completed">✅ 完了</span></td>
                     </tr>
@@ -795,7 +792,7 @@
               <span class="text-xs font-black text-slate-500 uppercase tracking-[0.2em] block mb-2">Systems Governance</span>
               <h2 class="text-3xl font-black text-slate-800">⚙️ ポータル統制 & 基盤最適化 (Meta-Execution)</h2>
             </div>
-            
+
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
               <div class="lg:col-span-4 strategy-card bg-slate-50 border-none">
                 <h4 class="text-xs font-black text-slate-400 uppercase mb-6 tracking-widest">Execution Standard</h4>
@@ -805,7 +802,7 @@
                 <div class="mt-12 pt-8 border-t border-slate-200 text-center">
                     <div class="text-xs font-black text-slate-400 uppercase mb-3">Track Progress</div>
                     <div class="track-pulse text-slate-900 italic">100%</div>
-                    <div class="mt-2 track-meta">本日の戦略準備工程 完了</div>
+                    <div class="mt-2 track-meta">全9タスク完遂</div>
                 </div>
               </div>
 
@@ -821,91 +818,64 @@
                   <tbody>
                     <tr class="task-completed-row">
                       <td>
-                        <div class="text-lg font-black text-slate-700">✅ GitHub Pages自動デプロイ環境の構築完了</div>
-                        <p class="text-sm text-slate-500 mt-2">✅ [2月12日] GAS/Cloud Runを完全廃止し、GitHub Actions + Cloudflare Workersによる自動デプロイ基盤を確立。Commit & Pushで1-3分後に自動反映される運用体制に移行完了。</p>
-                      </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月12日</span>
-                      </td>
-                      <td><span class="status-badge status-completed">✅ 完了</span></td>
-                    </tr>
-                    <tr class="task-completed-row">
-                      <td>
                         <div class="text-lg font-black text-slate-700">✅ Phase 2リンク切れの全面修正（5箇所）</div>
-                        <p class="text-sm text-slate-500 mt-2">✅ [2月12日] index.htmlのPhase 2セクションで発生していたリンク切れを実在ファイル名に修正。ポータル導線の完全性を回復。</p>
-                      </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月12日</span>
+                        <p class="text-sm text-slate-500 mt-2">✅ [2月12日] index.htmlのPhase 2セクションで発生していたリンク切れを実在ファイル名に修正</p>
                       </td>
                       <td><span class="status-badge status-completed">✅ 完了</span></td>
                     </tr>
                     <tr class="task-completed-row">
                       <td>
                         <div class="text-lg font-black text-slate-700">✅ ファイルパス最適化（日本語URL→英語URL）</div>
-                        <p class="text-sm text-slate-500 mt-2">✅ [2月12日] URLエンコーディング問題を解消するため、日本語ファイル名を英語に変更（表示は日本語のまま維持）。クロスプラットフォーム互換性を向上。</p>
-                      </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月12日</span>
+                        <p class="text-sm text-slate-500 mt-2">✅ [2月12日] URLエンコーディング問題を解消、クロスプラットフォーム互換性を向上</p>
                       </td>
                       <td><span class="status-badge status-completed">✅ 完了</span></td>
                     </tr>
                     <tr class="task-completed-row">
                       <td>
                         <div class="text-lg font-black text-slate-700">✅ 精緻化：全サブタスクへの完了日付（Granular Traceability）の実装</div>
-                        <p class="text-sm text-slate-500 mt-2">✅ [2月11日] 親タスクだけでなく、全階層のサブタスクに完了日付を刻印。意思決定の「解像度」と「証跡」を極限まで向上。</p>
-                      </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月11日</span>
+                        <p class="text-sm text-slate-500 mt-2">✅ [2月11日] 親タスクだけでなく、全階層のサブタスクに完了日付を刻印</p>
                       </td>
                       <td><span class="status-badge status-completed">✅ 完了</span></td>
                     </tr>
                     <tr class="task-completed-row">
                       <td>
                         <div class="text-lg font-black text-slate-700">✅ 自律デプロイ・スキル「dx-portal-edit」の確立</div>
-                        <p class="text-sm text-slate-500 mt-2">✅ [2月10日] エージェントの行動原理に「編集＝プッシュ」を刻み込み、ポータルの不一致問題を物理的に解消。</p>
-                      </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月10日</span>
-                      </td>
-                      <td><span class="status-badge status-completed">✅ 完了</span></td>
-                    </tr>
-                    <tr class="task-completed-row">
-                      <td>
-                        <div class="text-lg font-black text-slate-700">✅ ANTIGRAVITY 運用ルールの策定と純血化</div>
-                        <p class="text-sm text-slate-500 mt-2">✅ [2月10日] 旧来のGAS/Cloud Run等を廃止し、GitHub Pagesによるモダンかつ堅牢な配信体制を確立。</p>
-                      </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月10日</span>
+                        <p class="text-sm text-slate-500 mt-2">✅ [2月10日] エージェントの行動原理に「編集＝プッシュ」を刻み込み、ポータルの不一致問題を物理的に解消</p>
                       </td>
                       <td><span class="status-badge status-completed">✅ 完了</span></td>
                     </tr>
                     <tr class="task-completed-row">
                       <td>
                         <div class="text-lg font-black text-slate-700">✅ ポータル全域：日付表示フォーマットの人間工学的一括平準化</div>
-                        <p class="text-sm text-slate-500 mt-2">✅ [2月10日] 「M/D」から「M月D日」へ数百箇所の表記を正規化し、多忙な経営層の視認負荷を低減。</p>
-                      </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月10日</span>
+                        <p class="text-sm text-slate-500 mt-2">✅ [2月10日] 「M/D」から「M月D日」へ数百箇所の表記を正規化</p>
                       </td>
                       <td><span class="status-badge status-completed">✅ 完了</span></td>
                     </tr>
                     <tr class="task-completed-row">
                       <td>
                         <div class="text-lg font-black text-slate-700">✅ 意思決定支援：Fix済み資料への「100% COMPLETE」バッジ実装</div>
-                        <p class="text-sm text-slate-500 mt-2">✅ [2月11日] 見落としや再確認の無駄を排除するため、完了済み資料を視覚的にセパレート。</p>
-                      </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月11日</span>
+                        <p class="text-sm text-slate-500 mt-2">✅ [2月11日] 見落としや再確認の無駄を排除するため、完了済み資料を視覚的にセパレート</p>
                       </td>
                       <td><span class="status-badge status-completed">✅ 完了</span></td>
                     </tr>
                     <tr class="task-completed-row">
                       <td>
                         <div class="text-lg font-black text-slate-700">✅ 導線復元：主要ドキュメント間の相互リンク・整合性パッチ</div>
-                        <p class="text-sm text-slate-500 mt-2">✅ [2月10日] AD責任分界点マップ等の重要資料へのリンク漏れを解消し、ポータル全体の網羅性を保証。</p>
+                        <p class="text-sm text-slate-500 mt-2">✅ [2月10日] AD責任分界点マップ等の重要資料へのリンク漏れを解消</p>
                       </td>
-                      <td class="whitespace-nowrap">
-                        <span class="bg-white border-2 border-slate-300 text-slate-900 text-sm font-black px-3 py-1.5 rounded-md shadow-sm">2月10日</span>
+                      <td><span class="status-badge status-completed">✅ 完了</span></td>
+                    </tr>
+                    <tr class="task-completed-row">
+                      <td>
+                        <div class="text-lg font-black text-slate-700">✅ ANTIGRAVITY 運用ルールの策定と純血化</div>
+                        <p class="text-sm text-slate-500 mt-2">✅ [2月10日] 旧来のGAS/Cloud Run等を廃止し、GitHub Pagesによるモダンかつ堅牢な配信体制を確立</p>
+                      </td>
+                      <td><span class="status-badge status-completed">✅ 完了</span></td>
+                    </tr>
+                    <tr class="task-completed-row">
+                      <td>
+                        <div class="text-lg font-black text-slate-700">✅ 各資料への完成度バッジ実装</div>
+                        <p class="text-sm text-slate-500 mt-2">✅ [2月13日] 100%完成/80%ドラフト/未着手の3段階バッジで進捗を可視化</p>
                       </td>
                       <td><span class="status-badge status-completed">✅ 完了</span></td>
                     </tr>
