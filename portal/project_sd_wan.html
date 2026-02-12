@@ -302,7 +302,8 @@
                 { id: "wakayama", label: "Wakayama", type: "branch", x: 700, y: 500 },
                 { id: "hashimoto", label: "Hashimoto", type: "branch", x: 800, y: 450 },
                 { id: "kyobashi", label: "Kyobashi", type: "branch", x: 700, y: 400 },
-                { id: "nagoya", label: "Nagoya", type: "branch", x: 380, y: 550 }
+                { id: "nagoya", label: "Nagoya", type: "branch", x: 380, y: 550 },
+                { id: "tama", label: "多摩拠線 (Botlleneck)", type: "branch", x: 820, y: 520 }
             ];
 
             const cloudUtmNode = { id: "cloud_utm", label: "IIJ Cloud UTM", type: "utm", x: 450, y: 220 };
@@ -384,7 +385,8 @@
                     links.push({ source: "tokyo", target: "internet", type: "bottleneck" });
                     links.push({ source: "osaka", target: "internet", type: "breakout" });
                     links.push({ source: "osaka", target: "tokyo", type: "vpn" });
-                    baseNodes.filter(n => n.type === 'branch' && n.id !== 'osaka').forEach(n => {
+                    links.push({ source: "tama", target: "tokyo", type: "bottleneck" });
+                    baseNodes.filter(n => n.type === 'branch' && n.id !== 'osaka' && n.id !== 'tama').forEach(n => {
                         links.push({ source: n.id, target: "tokyo", type: "vpn" });
                     });
                 } else {
@@ -392,6 +394,9 @@
                     links.push({ source: "tokyo", target: "cloud_utm", type: "breakout" });
                     baseNodes.filter(n => n.type === 'branch').forEach(n => {
                         links.push({ source: n.id, target: "cloud_utm", type: "breakout" });
+                        if (n.id === 'tama') {
+                            links.push({ source: "tama", target: "internet", type: "breakout_heavy" }); // Physical Expansion
+                        }
                         links.push({ source: n.id, target: "saas", type: "lbo_active" });
                         links.push({ source: n.id, target: "tokyo", type: "vpn_light" });
                     });
@@ -408,13 +413,14 @@
                     .attr("stroke", d => {
                         if (d.type === 'bottleneck') return "#EA4335";
                         if (d.type === 'breakout') return "#34A853";
+                        if (d.type === 'breakout_heavy') return "#1e3a8a"; // Deep Blue for Physical Expansion
                         if (d.type === 'lbo_active') return "#9334E6";
                         if (d.type === 'breakout_legacy') return "#FBBC05";
                         if (d.type === 'vpn_light') return "#ccc";
                         return "#999";
                     })
-                    .attr("stroke-width", d => d.type === 'bottleneck' ? 4 : (d.type === 'breakout' ? 3 : (d.type === 'lbo_active' ? 3 : 1)))
-                    .attr("stroke-dasharray", d => d.type === 'vpn_light' ? "4 4" : (d.type === 'lbo_active' ? "2 2" : "none"));
+                    .attr("stroke-width", d => d.type === 'bottleneck' ? 4 : (d.type === 'breakout' ? 3 : (d.type === 'breakout_heavy' ? 6 : (d.type === 'lbo_active' ? 3 : 1))))
+                    .attr("stroke-dasharray", d => d.type === 'vpn_light' ? "4 4" : (d.type === 'lbo_active' ? "2 2" : (d.type === 'breakout_heavy' ? "10 2" : "none")));
 
                 // Draw security annotations
                 if (mode === 'current') {
@@ -742,6 +748,16 @@
                     <tr style="background-color: #ffffff;">
                         <td
                             style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">
+                            ライセンス数（想定）</td>
+                        <td style="padding: 12px; border: 1px solid #ddd; text-align: center; color: #999;">-</td>
+                        <td style="padding: 12px; border: 1px solid #ddd; text-align: center; color: #999;">-</td>
+                        <td
+                            style="padding: 12px; border: 1px solid #ddd; text-align: center; background-color: #fff9c4; font-weight: bold;">
+                            200 名<br><small>(調査集計待ち)</small></td>
+                    </tr>
+                    <tr style="background-color: #ffffff;">
+                        <td
+                            style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">
                             月額コスト (8拠点)</td>
                         <td style="padding: 12px; border: 1px solid #ddd; text-align: center; color: #555;">
                             約14.2万円<br><small>(20%値上げ後)</small></td>
@@ -750,9 +766,9 @@
                         <td
                             style="padding: 12px; border: 1px solid #ddd; text-align: center; background-color: #f1f8e9; color: #2e7d32; font-weight: bold;">
                             約39万円〜<br><span
-                                style="font-weight: normal; font-size: 0.8rem; color: #666;">(NW/SD-WAN費用)<br>
-                                <strong>⚠️ 全8拠点ルーター交換構成</strong><br>
-                                <small>※精査済みの35コスト項目を含む</small>
+                                style="font-weight: normal; font-size: 0.8rem; color: #666;">(NW/Cato SASE費用)<br>
+                                <strong>⚠️ 2/17 正式見積待ち</strong><br>
+                                <small>※暫定 200ID x 単価 で試算</small>
                             </span></td>
                     </tr>
                     <tr style="background-color: #ffffff;">
