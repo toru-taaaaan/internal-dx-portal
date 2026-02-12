@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>統合司令拠点 HUB | プロジェクト一覧</title>
+  <title>Command Center | Internal DX Portal</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/portal_nexus.css">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -86,27 +86,27 @@
       <nav>
         <div class="nav-label-small">トップ・ナビゲーション</div>
         <a href="/landing.html" class="nav-link">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
           </svg>
           ポータルホーム
         </a>
         <a href="/index.html" class="nav-link active">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
           プロジェクト
         </a>
         <a href="/executive_hub.html" class="nav-link">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
           </svg>
           全体課題管理表
         </a>
         <a href="/daily_log.html" class="nav-link">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
@@ -114,7 +114,7 @@
         </a>
       </nav>
       <footer class="sidebar-footer">
-        <p>User: 丹治 統<br>Last Sync: 2月11日 19:45</p>
+        <p>User: 丹治 統<br>Last Sync: 1/24 21:00</p>
       </footer>
     </aside>
 
@@ -140,6 +140,15 @@
                 <span class="item-label">Infra Assessment (Project 15.14)</span>
                 <span class="item-meta">ASSESSMENT</span>
               </a>
+              <div class="mt-4 pt-4 border-t border-slate-100">
+                <div class="text-[10px] font-black text-slate-400 mb-2 tracking-widest">NETWORK TOPOLOGY MAPS</div>
+                <div class="space-y-2">
+                  <a href="/project_as_is_network_map.html" class="directory-item !py-2 !px-4">
+                    <span class="item-label text-xs">現行ネットワーク全体俯瞰図 (As-Is)</span>
+                    <span class="item-meta">AS-IS</span>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -150,37 +159,37 @@
               <h2 class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Phase 2: Infrastructure Refresh</h2>
             </div>
             <div class="directory-list">
-              <a href="/Phase2_刷新戦略・工程統合ボード.html" class="directory-item" style="border-color: #3b82f6; background: #eff6ff; border-left-width: 8px;">
-                <span class="item-label" style="color: #1d4ed8; font-size: 16px;">【統合】Phase 2 刷新戦略・工程統合ボード</span>
-                <span class="item-meta" style="color: #3b82f6;">COMMAND CENTER</span>
+              <a href="/schedule.html" class="directory-item">
+                <span class="item-label">Phase 2: Schedule & Tasks</span>
+                <span class="item-meta">SCHEDULE</span>
               </a>
-              <a href="/ADクラウド移行_3社比較・導入計画.html" class="directory-item" style="border-color: #10b981; background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%); border-left-width: 8px; box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.1);">
-                <span class="item-label" style="color: #065f46; font-size: 15px; font-weight: 800;">[15.01] ADクラウド移行：3社比較・導入計画</span>
-                <span class="item-meta" style="color: #059669; font-weight: 900; background: #d1fae5; padding: 4px 8px; border-radius: 4px; border: 1px solid #10b981;">[100% COMPLETED]</span>
+              <a href="/project_15_01.html" class="directory-item">
+                <span class="item-label">AD Cloud Lift (Project 15.01)</span>
+                <span class="item-meta">IDENTITY</span>
               </a>
-              <a href="/SECOM入退室クラウド化_導入検討資料.html" class="directory-item" style="border-color: #f59e0b; background: linear-gradient(135deg, #fffbeb 0%, #fff7ed 100%); border-left-width: 8px; box-shadow: 0 4px 6px -1px rgba(245, 158, 11, 0.1);">
-                <span class="item-label" style="color: #92400e; font-size: 15px; font-weight: 800;">[15.02] SECOM入退室クラウド化：導入検討資料</span>
-                <span class="item-meta" style="color: #d97706; font-weight: 900; background: #fef3c7; padding: 4px 8px; border-radius: 4px; border: 1px solid #f59e0b;">[100% COMPLETED]</span>
+              <a href="/project_15_02.html" class="directory-item">
+                <span class="item-label">Secom Cloud (Project 15.02)</span>
+                <span class="item-meta">SECURITY</span>
               </a>
-              <a href="/AD・SECOM同時依頼_コスト最適化分析.html" class="directory-item">
-                <span class="item-label">[15.03] AD・SECOM同時依頼によるコスト最適化分析</span>
+              <a href="/project_15_combined.html" class="directory-item">
+                <span class="item-label">AD + SECOM 統合比較 (Bundle Analysis)</span>
                 <span class="item-meta">BUNDLE</span>
               </a>
               <a href="/AD・EntraID刷新_移行シナリオ比較検討資料.html" class="directory-item">
                 <span class="item-label">AD・EntraID刷新 移行シナリオ比較検討資料</span>
                 <span class="item-meta">AD-ENTRAID</span>
               </a>
-              <a href="/ADクラウド化_3社権限・責任分界点.html" class="directory-item">
-                <span class="item-label">ADクラウド化に伴う3社権限・責任分界点</span>
+              <a href="/project_ad_matrix.html" class="directory-item">
+                <span class="item-label">3社権限・責任分界点 (Responsibility Matrix)</span>
                 <span class="item-meta">AD-RESP-MAT</span>
               </a>
               <a href="/SD-WAN刷新_3社4シナリオ比較検討資料.html" class="directory-item">
-                <span class="item-label">[15.04] SD-WAN刷新_3社4シナリオ比較検討資料</span>
+                <span class="item-label">SD-WAN刷新_3社4シナリオ比較検討資料</span>
                 <span class="item-meta">SD-WAN</span>
               </a>
-              <a href="/file_server_cloud_migration.html" class="directory-item">
-                <span class="item-label">[15.05] ファイルサーバーのクラウド統合検討</span>
-                <span class="item-meta">FILE_SERVER</span>
+              <a href="/project_scope_definition.html" class="directory-item">
+                <span class="item-label">Project Scope Definition (Network/SD-WAN)</span>
+                <span class="item-meta">SCOPE_DEF</span>
               </a>
             </div>
           </div>
@@ -236,9 +245,12 @@
                 <span class="item-label">Entra ID Proposal (Alternative Design)</span>
                 <span class="item-meta">ALT_PROPOSAL</span>
               </a>
-
+              <a href="/project_sd_wan.html" class="directory-item">
+                <span class="item-label">SD-WAN Strategy</span>
+                <span class="item-meta">SD-WAN</span>
+              </a>
               <a href="/bcp_risk_matrix.html" class="directory-item">
-                <span class="item-label">BCPリスク評価マトリクス</span>
+                <span class="item-label">BCP Risk Matrix</span>
                 <span class="item-meta">RISK_MGT</span>
               </a>
               <a href="/SITEMAP.html" class="directory-item">
