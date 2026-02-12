@@ -754,12 +754,16 @@
 
     <!-- 1.3 Cato SASE ネットワーク構成案 (比較用) -->
     <section id="cato-scope-diagram-section" style="margin-top: 40px;">
-        <h3>1.3 Cato SASE ネットワーク構成案 (7拠点 + 2 Client拠点)</h3>
+        <h3>1.3 Cato SASE ネットワーク構成案 (IIJ + 仙台拡張モデル)</h3>
         <div class="info-box" style="background: #fdfaff; border-color: #7b1fa2;">
             <p style="font-size: 13px; color: #7b1fa2; margin-bottom: 0;">
-                <strong>Cato SASE提案（構成案：5拠点Socket + 2拠点Client + Azure）</strong><br>
-                ※コスト最適化のため、小規模拠点（仙台・京橋・鬼怒川）をClient接続とする<strong>仮説モデル</strong>です。<br>
-                （BN系4拠点は除外されています）
+                <strong>Cato SASE提案（構成案：全9拠点 = Socket 2 + Client 7）</strong><br>
+                ※<strong>ベース</strong>: IIJの8拠点構成 + 仙台(新規追加) - IIJ GIOサーバー(Azure/AWSに置換)<br>
+                ※<strong>Socket設置</strong>: 東京本社 AH 6F(57名) + Azure/AWS(AD + SECOM入退室管理サーバー) = 2拠点<br>
+                ※<strong>Client接続</strong>: AD本社 7F、多摩、橋本、大阪、京橋、鬼怒川、仙台(新規) = 7拠点<br>
+                ※<strong>対象外</strong>: HPCテック、BN系4拠点（福岡、名古屋、和歌山CC、東京3-5F）<br>
+                <span style="font-weight: 700; color: #c2185b;">⚠️ Socket/Client配分は仮説モデルです。ベンダー提案を待って最終決定します。</span><br>
+                <span style="font-weight: 700; color: #f59e0b;">⚠️ 確認事項: Azure/AWSクラウドサーバーへのSocket設置の技術的実装方法を明確化する必要があります。</span>
             </p>
         </div>
         <div id="cato-scope-diagram" style="height: 500px; background: white; border: 1px solid var(--border-color); border-radius: 8px; margin-top: 20px; position: relative;"></div>
@@ -814,9 +818,12 @@
     </ul>
 
     <!-- 5. Cato SASE 高度設計案 -->
-    <h2>5. Cato SASE 高度設計案</h2>
+    <h2>5. Cato SASE 高度設計案（IIJ + 仙台拡張モデル / 全9拠点）</h2>
     <p>
-        SASEによる拠点ミニマリズム構成の具体案です。東京・大阪・多摩・橋本はSocket、仙台・京橋・鬼怒川はClientのみでPoPへ集約し、コストとセキュリティを両立します。
+        SASEによる拠点構成の具体案です。<strong>IIJの8拠点構成をベースに仙台を追加</strong>し、合計9拠点をカバーします。<br>
+        <strong>Socket設置は東京本社 AH 6FとAzure/AWSのみ</strong>とし、<strong>他の7拠点（AD本社7F、多摩、橋本、大阪、京橋、鬼怒川、仙台）は全てClient接続</strong>でPoPへ集約。<br>
+        コストとセキュリティを両立する最適化モデルです。<br>
+        <span style="color: #c2185b; font-weight: 700;">※この構成は仮説であり、ベンダーからの提案を受けて最終決定します。</span>
     </p>
 
     <div class="cato-vis-wrapper">
@@ -828,18 +835,18 @@
                 <span class="cato-step-desc">全世界90以上のPoPを冗長専用線で結合。不確実性を排除。</span>
             </div>
             <div class="cato-step-card" onclick="updateCatoScenario(2)">
-                <span class="cato-step-title">2: Socket 設置 (Tier 1)</span>
-                <span class="cato-step-desc">東京・大阪・多摩・橋本に物理Socket。WAN高速化。</span>
+                <span class="cato-step-title">2: Socket 設置 (本社+Azure)</span>
+                <span class="cato-step-desc">東京本社(57名)とAzure/AWSにSocket。拠点数最小化。</span>
             </div>
             <div class="cato-step-card" onclick="updateCatoScenario(3)">
-                <span class="cato-step-title">3: Client 統合 (Tier 2/3)</span>
-                <span class="cato-step-desc">仙台・京橋・鬼怒川をClient統合。コスト最小化。</span>
+                <span class="cato-step-title">3: Client 統合 (7拠点)</span>
+                <span class="cato-step-desc">AD本社7F・多摩・橋本・大阪・京橋・鬼怒川・仙台をClient接続。</span>
             </div>
         </div>
     </div>
 
     <div class="data-table-section" id="cato-detail-table" style="margin-top: 20px;">
-        <h3 style="font-size: 18px; color: var(--cato-purple); border-bottom: 2px solid var(--cato-light); padding-bottom: 10px;">拠点別 接続・人数定義明細 (Cato SASE 最適化案)</h3>
+        <h3 style="font-size: 18px; color: var(--cato-purple); border-bottom: 2px solid var(--cato-light); padding-bottom: 10px;">拠点別 接続・人数定義明細 (Cato SASE 全9拠点構成)</h3>
         <table>
             <thead>
                 <tr>
@@ -852,46 +859,53 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>東京本社 (築地)</strong></td>
-                    <td>AH / AD</td>
+                    <td><strong>東京本社 AH (築地 6F)</strong></td>
+                    <td>AH</td>
                     <td><span class="badge-socket">Cato Socket</span></td>
-                    <td><strong>57</strong></td>
+                    <td><strong>21</strong></td>
                     <td>メインハブ。全トラフィックの基点。</td>
+                </tr>
+                <tr>
+                    <td><strong>東京本社 AD (築地 7F)</strong></td>
+                    <td>AD</td>
+                    <td><span class="badge-client">Cato Client</span></td>
+                    <td><strong>36</strong></td>
+                    <td>AD本社。6FのSocket経由で接続。</td>
                 </tr>
                 <tr>
                     <td><strong>R&D・物流センター (多摩)</strong></td>
                     <td>AD</td>
-                    <td><span class="badge-socket">Cato Socket</span></td>
+                    <td><span class="badge-client">Cato Client</span></td>
                     <td><strong>12</strong></td>
-                    <td>開発拠点。大容量通信を想定。</td>
+                    <td>開発・物流拠点。Client接続。</td>
                 </tr>
                 <tr>
                     <td><strong>IoT開発Lab (橋本)</strong></td>
                     <td>AD</td>
-                    <td><span class="badge-socket">Cato Socket</span></td>
+                    <td><span class="badge-client">Cato Client</span></td>
                     <td><strong>9</strong></td>
-                    <td>開発拠点。常時インターネット接続。</td>
+                    <td>IoT開発拠点。Client接続。</td>
                 </tr>
                 <tr>
                     <td><strong>大阪営業所</strong></td>
                     <td>AD</td>
-                    <td><span class="badge-socket">Cato Socket</span></td>
+                    <td><span class="badge-client">Cato Client</span></td>
                     <td><strong>3</strong></td>
-                    <td>西日本拠点。SocketによりBCP強化。</td>
+                    <td>西日本拠点。Client接続。</td>
                 </tr>
                 <tr>
                     <td><strong>京橋オフィス</strong></td>
                     <td>AH</td>
                     <td><span class="badge-client">Cato Client</span></td>
                     <td><strong>5</strong></td>
-                    <td>最小限のライセンスでセキュア化。</td>
+                    <td>小規模拠点。ルーターレス構成。</td>
                 </tr>
                 <tr>
-                    <td><strong>仙台事務所</strong></td>
+                    <td><strong>仙台事務所 (新規追加)</strong></td>
                     <td>AD</td>
                     <td><span class="badge-client">Cato Client</span></td>
                     <td><strong>3</strong></td>
-                    <td>ルーターレス構成によるコスト最適化。</td>
+                    <td>IIJ構成に追加。ルーターレス構成。</td>
                 </tr>
                 <tr>
                     <td><strong>鬼怒川 絆</strong></td>
@@ -900,12 +914,15 @@
                     <td><strong>13〜23</strong></td>
                     <td>現場実態を確認中（人事回答:13名）。業務NW統合対象。</td>
                 </tr>
-                <tr>
+                <tr style="background: #fffbeb; border-left: 4px solid #f59e0b;">
                     <td><strong>Azure / AWS</strong></td>
-                    <td>(System)</td>
-                    <td><span class="badge-socket" style="background: #e0f2fe; color: #0369a1;">vSocket</span></td>
+                    <td>(Cloud)</td>
+                    <td><span class="badge-socket" style="background: #e0f2fe; color: #0369a1;">vSocket (?)</span></td>
                     <td>N/A</td>
-                    <td>AD/ファイルサーバーへの安全な経路。</td>
+                    <td>
+                        <strong>用途:</strong> ActiveDirectory、SECOM入退室管理サーバー<br>
+                        <span style="color: #f59e0b; font-weight: 700;">⚠️ 確認事項: クラウドサーバーへのSocket設置方法の技術的詳細をベンダーに確認する必要あり</span>
+                    </td>
                 </tr>
             </tbody>
         </table>
