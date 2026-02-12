@@ -817,6 +817,48 @@
         <li>バディネットが独自にCato導入を進めた場合、Hub以下の構成変更（共用廃止など）が発生する可能性がある。</li>
     </ul>
 
+    <!-- 4.5. ベンダーへの確認事項 -->
+    <h2>4.5 ベンダーへの確認事項</h2>
+
+    <div class="info-box" style="background: #fffbeb; border: 2px solid #f59e0b; padding: 20px;">
+        <h3 style="color: #f59e0b; margin-top: 0;">🔍 重要な未確認事項</h3>
+
+        <h4 style="color: #ea580c; margin-top: 20px;">1. Azure/AWSクラウドサーバーへのSocket設置方法</h4>
+        <ul>
+            <li><strong>確認先</strong>: Cato (SCSK経由)</li>
+            <li><strong>内容</strong>: Azure/AWS上のクラウドサーバー（AD + SECOM入退室管理）にCato Socketをどのように設置するか？技術的実装方法の詳細</li>
+            <li><strong>重要度</strong>: 高（構成の実現可能性に直結）</li>
+        </ul>
+
+        <h4 style="color: #ea580c; margin-top: 20px;">2. モバイルアクセス/リモートアクセスのライセンス形態</h4>
+        <ul>
+            <li><strong>確認先</strong>: IIJ, Cato (SCSK経由)</li>
+            <li><strong>内容</strong>:
+                <ul>
+                    <li>モバイルユーザー（50名想定）のライセンスは、本社で接続しても自宅で接続しても同じ1ライセンスでカウントされるか？</li>
+                    <li>それとも「拠点接続用Client」と「リモートアクセス用Client」は別ライセンスか？</li>
+                    <li>IIJの「モバイル50名」の具体的な内容と料金</li>
+                </ul>
+            </li>
+            <li><strong>重要度</strong>: 高（コスト試算に直結）</li>
+            <li><strong>参考</strong>: `SD-WAN刷新_3社4シナリオ比較検討資料.html` に「8拠点 + モバイル50名」という想定あり</li>
+        </ul>
+
+        <h4 style="color: #ea580c; margin-top: 20px;">3. IIJ Omnibus の詳細提案</h4>
+        <ul>
+            <li><strong>確認先</strong>: IIJ（次回MTG予定）</li>
+            <li><strong>内容</strong>:
+                <ul>
+                    <li>8拠点 + モバイル50名の正式見積もり</li>
+                    <li>ローカルブレイクアウトの詳細仕様</li>
+                    <li>リモートアクセスサービスの詳細</li>
+                </ul>
+            </li>
+            <li><strong>重要度</strong>: 高（IIJとの比較検討に必須）</li>
+            <li><strong>状況</strong>: 2025-12-12 MTGで次回提案することが決定</li>
+        </ul>
+    </div>
+
     <!-- 5. Cato SASE 高度設計案 -->
     <h2>5. Cato SASE 高度設計案（IIJ + 仙台拡張モデル / 全9拠点）</h2>
     <p>
