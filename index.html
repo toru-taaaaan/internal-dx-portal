@@ -67,9 +67,48 @@
     .item-meta {
       font-size: 10px;
       font-weight: 900;
-      color: #94a3b8;
+      color: #ffffff;
       letter-spacing: 0.1em;
       font-family: monospace;
+      padding: 4px 12px;
+      border-radius: 4px;
+      background: #94a3b8;
+    }
+
+    /* 企業カラー定義（引き継ぎ書準拠） */
+    .directory-item:has(.item-meta:contains("IDENTITY")) .item-meta,
+    .item-meta[data-type="identity"] {
+      background: #1a73e8; /* AH Blue */
+    }
+
+    .directory-item:has(.item-meta:contains("SECURITY")) .item-meta,
+    .item-meta[data-type="security"] {
+      background: #4caf50; /* AD Green */
+    }
+
+    .directory-item:has(.item-meta:contains("BUNDLE")) .item-meta,
+    .item-meta[data-type="bundle"] {
+      background: #ff9800; /* BuddyNet Orange */
+    }
+
+    .directory-item:has(.item-meta:contains("AD-")) .item-meta,
+    .item-meta[data-type="ad"] {
+      background: #4caf50; /* AD Green */
+    }
+
+    .directory-item:has(.item-meta:contains("SD-WAN")) .item-meta,
+    .directory-item:has(.item-meta:contains("SCOPE")) .item-meta,
+    .item-meta[data-type="sdwan"] {
+      background: #1a73e8; /* AH Blue */
+    }
+
+    .directory-item:has(.item-meta:contains("AI_")) .item-meta,
+    .item-meta[data-type="ai"] {
+      background: #9c27b0; /* Purple for AI */
+    }
+
+    .directory-item:has(.item-meta:contains("SCHEDULE")) .item-meta {
+      background: #64748b; /* Neutral gray */
     }
   </style>
 </head>
@@ -138,14 +177,14 @@
             <div class="directory-list">
               <a href="/project_15_14.html" class="directory-item">
                 <span class="item-label">Infra Assessment (Project 15.14)</span>
-                <span class="item-meta">ASSESSMENT</span>
+                <span class="item-meta" style="background: #64748b;">ASSESSMENT</span>
               </a>
               <div class="mt-4 pt-4 border-t border-slate-100">
                 <div class="text-[10px] font-black text-slate-400 mb-2 tracking-widest">NETWORK TOPOLOGY MAPS</div>
                 <div class="space-y-2">
                   <a href="/project_as_is_network_map.html" class="directory-item !py-2 !px-4">
                     <span class="item-label text-xs">現行ネットワーク全体俯瞰図 (As-Is)</span>
-                    <span class="item-meta">AS-IS</span>
+                    <span class="item-meta" style="background: #64748b;">AS-IS</span>
                   </a>
                 </div>
               </div>
@@ -159,37 +198,37 @@
               <h2 class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Phase 2: Infrastructure Refresh</h2>
             </div>
             <div class="directory-list">
-              <a href="/schedule.html" class="directory-item">
+              <a href="/task_tracker.html" class="directory-item">
                 <span class="item-label">Phase 2: Schedule & Tasks</span>
-                <span class="item-meta">SCHEDULE</span>
+                <span class="item-meta" style="background: #64748b;">SCHEDULE</span>
               </a>
               <a href="/project_15_01.html" class="directory-item">
                 <span class="item-label">AD Cloud Lift (Project 15.01)</span>
-                <span class="item-meta">IDENTITY</span>
+                <span class="item-meta" style="background: #1a73e8;">IDENTITY</span>
               </a>
               <a href="/project_15_02.html" class="directory-item">
                 <span class="item-label">Secom Cloud (Project 15.02)</span>
-                <span class="item-meta">SECURITY</span>
+                <span class="item-meta" style="background: #4caf50;">SECURITY</span>
               </a>
               <a href="/project_15_combined.html" class="directory-item">
                 <span class="item-label">AD + SECOM 統合比較 (Bundle Analysis)</span>
-                <span class="item-meta">BUNDLE</span>
+                <span class="item-meta" style="background: #ff9800;">BUNDLE</span>
               </a>
               <a href="/AD・EntraID刷新_移行シナリオ比較検討資料.html" class="directory-item">
                 <span class="item-label">AD・EntraID刷新 移行シナリオ比較検討資料</span>
-                <span class="item-meta">AD-ENTRAID</span>
+                <span class="item-meta" style="background: #4caf50;">AD-ENTRAID</span>
               </a>
               <a href="/project_ad_matrix.html" class="directory-item">
                 <span class="item-label">3社権限・責任分界点 (Responsibility Matrix)</span>
-                <span class="item-meta">AD-RESP-MAT</span>
+                <span class="item-meta" style="background: #4caf50;">AD-RESP-MAT</span>
               </a>
               <a href="/SD-WAN刷新_3社4シナリオ比較検討資料.html" class="directory-item">
                 <span class="item-label">SD-WAN刷新_3社4シナリオ比較検討資料</span>
-                <span class="item-meta">SD-WAN</span>
+                <span class="item-meta" style="background: #1a73e8;">SD-WAN</span>
               </a>
               <a href="/project_scope_definition.html" class="directory-item">
                 <span class="item-label">Project Scope Definition (Network/SD-WAN)</span>
-                <span class="item-meta">SCOPE_DEF</span>
+                <span class="item-meta" style="background: #1a73e8;">SCOPE_DEF</span>
               </a>
             </div>
           </div>
@@ -203,19 +242,19 @@
             <div class="directory-list">
               <a href="/project_15_12.html" class="directory-item">
                 <span class="item-label">AI Champion Initiative (Project 15.12)</span>
-                <span class="item-meta">AI_INIT</span>
+                <span class="item-meta" style="background: #9c27b0;">AI_INIT</span>
               </a>
               <a href="/project_15_12_proposal.html" class="directory-item">
                 <span class="item-label">AI Champion Proposal</span>
-                <span class="item-meta">AI_PROPOSAL</span>
+                <span class="item-meta" style="background: #9c27b0;">AI_PROPOSAL</span>
               </a>
               <a href="/project_15_12_ishii.html" class="directory-item">
                 <span class="item-label">AI Initiative - Ishii Version</span>
-                <span class="item-meta">AI_VARIANT</span>
+                <span class="item-meta" style="background: #9c27b0;">AI_VARIANT</span>
               </a>
               <a href="/project_15_12_antigravity.html" class="directory-item">
                 <span class="item-label">AI Initiative - Antigravity Version</span>
-                <span class="item-meta">AI_VARIANT</span>
+                <span class="item-meta" style="background: #9c27b0;">AI_VARIANT</span>
               </a>
             </div>
           </div>
@@ -229,7 +268,7 @@
             <div class="directory-list">
               <a href="/project_bn_report.html" class="directory-item">
                 <span class="item-label">Financial Automation (BuddyNet)</span>
-                <span class="item-meta">FINANCE_DX</span>
+                <span class="item-meta" style="background: #00acc1;">FINANCE_DX</span>
               </a>
             </div>
           </div>
@@ -243,19 +282,19 @@
             <div class="directory-list">
               <a href="/project_15_01_entraid_proposal.html" class="directory-item">
                 <span class="item-label">Entra ID Proposal (Alternative Design)</span>
-                <span class="item-meta">ALT_PROPOSAL</span>
+                <span class="item-meta" style="background: #1a73e8;">ALT_PROPOSAL</span>
               </a>
               <a href="/project_sd_wan.html" class="directory-item">
                 <span class="item-label">SD-WAN Strategy</span>
-                <span class="item-meta">SD-WAN</span>
+                <span class="item-meta" style="background: #1a73e8;">SD-WAN</span>
               </a>
               <a href="/bcp_risk_matrix.html" class="directory-item">
                 <span class="item-label">BCP Risk Matrix</span>
-                <span class="item-meta">RISK_MGT</span>
+                <span class="item-meta" style="background: #e91e63;">RISK_MGT</span>
               </a>
               <a href="/SITEMAP.html" class="directory-item">
                 <span class="item-label">Portal Sitemap</span>
-                <span class="item-meta">SITEMAP</span>
+                <span class="item-meta" style="background: #64748b;">SITEMAP</span>
               </a>
             </div>
           </div>
