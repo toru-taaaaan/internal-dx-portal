@@ -419,7 +419,7 @@
             <div class="flex items-center gap-3">
                 <span
                     class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700 border border-blue-200">
-                    🔄 最終更新：ツールチップ位置修正・Day 0反映 (v20260211_1922)
+                    📊 2026年度 予算承認資料
                 </span>
             </div>
         </div>
@@ -446,9 +446,9 @@
             </div>
 
             <div class="info-box" style="margin-top: 30px; border-left: 4px solid var(--primary);">
-                <strong style="color: var(--text-main);">💡 可視化によるインサイト:</strong><br>
-                全社とも「運用代行あり」の条件で揃えても、<strong>リンクアット・ジャパン（LAJ）が5年間で130万円以上のコスト削減</strong>を実現できます。
-                LAJは初期費だけでなく、月額ランニングコストの低さが長期的なメリットに直結しています。
+                <strong style="color: var(--text-main);">💡 コスト比較:</strong><br>
+                全社とも「運用代行あり」の条件で揃えても、<strong>リンクアット・ジャパン（LAJ）が5年間で130万円以上のコスト削減</strong>が可能。
+                LAJは初期費だけでなく、月額ランニングコストの低さが長期的なメリット。
             </div>
         </section>
 
@@ -563,25 +563,6 @@
                 クラウド化せず、築地本社の現行サーバーをリプレース（5年保守）した場合の比較です。
             </p>
 
-            <!-- Link to AD Page -->
-            <!-- Link to AD Page -->
-            <!-- Link to AD Page (Fixed Design using Tailwind) -->
-            <a href="ADクラウド化_3社権限・責任分界点.html" class="block group bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-blue-400 transition-all duration-200 mb-6 border-l-4 border-l-blue-500 no-underline">
-                <div class="flex items-start justify-between gap-4">
-                    <div class="flex-1">
-                        <div class="text-lg font-bold text-blue-700 group-hover:text-blue-800 mb-2 flex items-center gap-2">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                            詳しくはこちら：ADクラウド化 3社権限・責任分界点
-                        </div>
-                        <p class="text-sm text-slate-500 leading-relaxed m-0">
-                            権限保持の観点や、IIJ/USEN/Link-At-Japanの並走型サポートによるBCPリスク低減効果についてのより詳細な議論は、こちらのページで解説しています。
-                        </p>
-                    </div>
-                    <div class="text-slate-300 group-hover:text-blue-500 transition-colors pt-1">
-                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                    </div>
-                </div>
-            </a>
             <table>
                 <thead>
                     <tr>
@@ -597,13 +578,6 @@
                         <td><strong>約737万円</strong><br><small>(運用代行・マネージドサービス込)</small></td>
                     </tr>
                     <tr>
-                        <td><strong>BCPリスク</strong></td>
-                        <td><span class="cross-ng">✖ 非常に高い</span><br><span
-                                class="desc-text">築地本社の落雷・停電・火災時に全11拠点が停止</span></td>
-                        <td><span class="check-ok">✔ 極めて低い</span><br><span class="desc-text">データセンター(Azure)での冗長稼働</span>
-                        </td>
-                    </tr>
-                    <tr>
                         <td><strong>運用負荷</strong></td>
                         <td><span class="cross-ng">✖ 情シス負担増</span><br><span
                                 class="desc-text">HWトラブル対応、UPS管理、OS更新が自己責任</span></td>
@@ -612,10 +586,70 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="info-box" style="background: #f8fafc; border-color: #cbd5e1;">
-                <strong>💡 戦略的判断の核心：コスト平準化と事業継続性(BCP)の重要性:</strong><br>
-                単純コストではオンプレが安価ですが、<strong>「保守料の急騰（6年目以降は年間2倍超）」</strong>と<strong>「情シスがハードウェアの看守を続けるリスク」</strong>とのトレードオフになります。
-                特に築地本社の電力事情や物理的損壊時の影響が全11拠点に及ぶ点を踏まえ、クラウド化による「運用からの解放」が本主旨となります。
+
+            <!-- Cost Justification Section -->
+            <div class="info-box" style="background: #fffbeb; border-left: 4px solid #f59e0b; margin-top: 30px;">
+                <strong style="color: #92400e;">💡 537万円増加の根拠</strong><br><br>
+                <p style="font-size: 0.9rem; color: #78350f; margin: 0; line-height: 1.8;">
+                    単純なコスト比較では「オンプレ継続が安価」に見えますが、以下のリスク分析資料をご参照ください:
+                </p>
+            </div>
+
+            <!-- Link Collection -->
+            <div style="display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 16px;">
+                <!-- BCP Risk Matrix -->
+                <a href="bcp_risk_matrix.html" class="block group bg-slate-900 border border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-rose-500 transition-all duration-200 no-underline">
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="flex-1">
+                            <div class="text-base font-bold text-rose-400 group-hover:text-rose-300 mb-1 flex items-center gap-2">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                BCP・リスク比較評価マトリクス
+                            </div>
+                            <p class="text-xs text-slate-400 leading-relaxed m-0">
+                                築地本社の単一障害点リスク、保守切れ・コスト急騰の詳細分析
+                            </p>
+                        </div>
+                        <div class="text-slate-600 group-hover:text-rose-500 transition-colors">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- AD 3社権限・責任分界点 -->
+                <a href="ADクラウド化_3社権限・責任分界点.html" class="block group bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-blue-400 transition-all duration-200 no-underline">
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="flex-1">
+                            <div class="text-base font-bold text-blue-700 group-hover:text-blue-800 mb-1 flex items-center gap-2">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                                ADクラウド化_3社権限・責任分界点
+                            </div>
+                            <p class="text-xs text-slate-500 leading-relaxed m-0">
+                                ベンダー選定時のRACI・並走型サポートによるリスク低減
+                            </p>
+                        </div>
+                        <div class="text-slate-300 group-hover:text-blue-500 transition-colors">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- AD・SECOM同時依頼 -->
+                <a href="AD・SECOM同時依頼_コスト最適化分析.html" class="block group bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-green-400 transition-all duration-200 no-underline">
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="flex-1">
+                            <div class="text-base font-bold text-green-700 group-hover:text-green-800 mb-1 flex items-center gap-2">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                AD・SECOM同時依頼_コスト最適化分析
+                            </div>
+                            <p class="text-xs text-slate-500 leading-relaxed m-0">
+                                共通インフラ統合による実質コスト削減効果
+                            </p>
+                        </div>
+                        <div class="text-slate-300 group-hover:text-green-500 transition-colors">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+                    </div>
+                </a>
             </div>
         </section>
 
@@ -705,7 +739,7 @@
             </table>
             <div class="info-box" style="font-size: 0.85rem; margin-top: 20px; border-left: 4px solid #1e293b;">
                 <strong>💡 移行時の作業ポイント:</strong><br>
-                移行作業では、これら11台の機器に対し、新サーバーのIPアドレスへの向き先変更（リモート設定）をセコム社にて実施します。現地訪問を伴わない効率的な切替を想定しています。
+                移行作業では、これら11台の機器に対し、新サーバーのIPアドレスへの向き先変更（リモート設定）をセコム社にて実施。現地訪問を伴わない効率的な切替を想定。
             </div>
         </section>
 
@@ -920,42 +954,42 @@
             <div style="font-size: 0.85rem; line-height: 1.8;">
                 <div style="margin-bottom: 12px;">
                     <strong>[10] セコム移行・ダウンタイム確認メール (2025-12-26)</strong><br>
-                    <span style="color: var(--text-muted);">切替時の通信断「1〜2時間」および「オフライン動作による入退室影響ゼロ」の確約。</span>
+                    <span style="color: var(--text-muted);">切替時の通信断「1〜2時間」および「オフライン動作による入退室影響ゼロ」を確認。</span>
                 </div>
                 <div style="margin-bottom: 12px;">
                     <strong>[12] SECOM社 正式見積書 (37702512-007)</strong><br>
-                    <span style="color: var(--text-muted);">環境開放・アプリ設定費用 ¥198,000 の確定。</span>
+                    <span style="color: var(--text-muted);">環境開放・アプリ設定費用 ¥198,000。</span>
                 </div>
                 <div style="margin-bottom: 12px;">
                     <strong>[13] IIJ セコムサーバー追加見積資料 (2025-12-19)</strong><br>
-                    <span style="color: var(--text-muted);">IIJ GIO環境でのSECOMサーバー構築・NW設定費用の算出根拠。</span>
+                    <span style="color: var(--text-muted);">IIJ GIO環境でのSECOMサーバー構築・NW設定費用。</span>
                 </div>
                 <div style="margin-bottom: 12px;">
                     <strong>[14] USEN セコムサーバー追加見積メール (2025-12-19)</strong><br>
-                    <span style="color: var(--text-muted);">AWS環境でのSECOMサーバー構築初期費用 ¥220,000 の回答。</span>
+                    <span style="color: var(--text-muted);">AWS環境でのSECOMサーバー構築初期費用 ¥220,000。</span>
                 </div>
                 <div style="margin-bottom: 12px;">
                     <strong>[15] AD・SECOM同時依頼 コスト最適化分析レポート (PROD-FINAL-20260205)</strong><br>
-                    <span style="color: var(--text-muted);">共通インフラ(VPC/PBB)の重複排除による3社横並びTCO比較ロジック。</span>
+                    <span style="color: var(--text-muted);">共通インフラ(VPC/PBB)の重複排除による3社横並びTCO比較。</span>
                 </div>
                 <div style="margin-bottom: 12px;">
                     <strong>[16] IIJ - ADクラウド化サービスガイドブック</strong><br>
-                    <span style="color: var(--text-muted);">行644: 「アドバンストサポートの利用で、Active Directoryの操作や設定など技術的な相談にも対応」と明記 (専門サポートチーム窓口)。</span>
+                    <span style="color: var(--text-muted);">行644: 「アドバンストサポートの利用で、Active Directoryの操作や設定など技術的な相談にも対応」(専門サポートチーム窓口)。</span>
                 </div>
                 <div style="margin-bottom: 12px;">
                     <strong>[17] USEN - Active Directory クラウド化のご提案 (2025-12-04)</strong><br>
-                    <span style="color: var(--text-muted);">行104: 「ネットワークからOSまでワンストップ提供」。OSパッチ管理もフルマネージドに含まれる (議事録にて月次適用等の柔軟な運用を示唆)。</span>
+                    <span style="color: var(--text-muted);">行104: 「ネットワークからOSまでワンストップ提供」。OSパッチ管理もフルマネージドに含む(議事録にて月次適用等の柔軟な運用を示唆)。</span>
                 </div>
                 <div style="margin-bottom: 12px;">
                     <strong>[18] SECOM社 クラウド制約確認メール (2025-12-03)</strong><br>
-                    <span style="color: var(--text-muted);">行951: 「セコムで無償版SQL（Express）をインストールします」との回答。ライセンス費用が198,000円に含まれる（追加費用なし）ことのエビデンス。</span>
+                    <span style="color: var(--text-muted);">行951: 「セコムで無償版SQL（Express）をインストールします」との回答。ライセンス費用が198,000円に含まれる(追加費用なし)。</span>
                 </div>
             </div>
             <div class="info-box" style="margin-top: 20px; font-size: 0.8rem; background: #f1f5f9;">
                 <strong>💡 エビデンス管理について:</strong><br>
-                詳細な引用箇所、ファイルパス、および上記以外の共通資料（オンプレミス台帳等）については、
-                情報システム部内保存の <a href="file:///C:/Users/toru.tanji/Obsidian/SecondBrain_Final/01_Workspace/11_プロジェクト/15.01_AD_Cloud_Migration/00_エビデンス管理シート.md">00_エビデンス管理シート.md</a> を参照してください。
-                本ポータルに掲載されている全ての情報は、上記管理シートにより「事実」として検証済みです。
+                詳細な引用箇所、ファイルパス、および上記以外の共通資料（オンプレミス台帳等）は、
+                情報システム部内保存の <a href="file:///C:/Users/toru.tanji/Obsidian/SecondBrain_Final/01_Workspace/11_プロジェクト/15.01_AD_Cloud_Migration/00_エビデンス管理シート.md">00_エビデンス管理シート.md</a> を参照。
+                本ポータルに掲載されている全ての情報は、上記管理シートにより「事実」として検証済み。
             </div>
         </section>
     </div>

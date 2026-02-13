@@ -215,14 +215,70 @@
                     </div>
                 </div>
 
+                <!-- オンプレミス継続リスクの詳細分析 -->
+                <div class="matrix-card mb-12">
+                    <h2 class="text-lg font-black text-white mb-6 flex items-center gap-2">
+                        <span class="w-2 h-6 bg-rose-600 rounded"></span>
+                        オンプレミス継続の具体的リスク
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <!-- ADサーバー -->
+                        <div class="bg-slate-900/50 border border-white/10 rounded-xl p-6">
+                            <h3 class="text-white font-black mb-3 flex items-center gap-2">
+                                <span class="text-blue-400">🖥️</span> ADサーバー (築地本社)
+                            </h3>
+                            <div class="text-sm text-slate-400 space-y-2">
+                                <p><b class="text-rose-400">火災・地震リスク:</b> 全社員がログイン不可（全拠点業務停止）</p>
+                                <p><b class="text-rose-400">停電リスク:</b> UPS切れ後にサーバー停止、起動トラブルの二次リスク</p>
+                                <p><b class="text-rose-400">保守切れ:</b> 5年後にメーカー保守終了。修理・交換不可</p>
+                                <p><b class="text-orange-400">コスト急騰:</b> 6年目以降の延長保守は<b>年間48万円（現在の2倍超）</b></p>
+                            </div>
+                        </div>
+
+                        <!-- SECOMサーバー -->
+                        <div class="bg-slate-900/50 border border-white/10 rounded-xl p-6">
+                            <h3 class="text-white font-black mb-3 flex items-center gap-2">
+                                <span class="text-orange-400">🔐</span> SECOM入退室管理サーバー (築地本社)
+                            </h3>
+                            <div class="text-sm text-slate-400 space-y-2">
+                                <p><b class="text-rose-400">火災・地震リスク:</b> 全11拠点の入退室管理が停止</p>
+                                <p class="text-xs pl-4">→ 東京本社、大阪、橋本、福岡、和歌山、京橋、名古屋など</p>
+                                <p><b class="text-rose-400">停電リスク:</b> サーバー停止中は管理者操作不可（カード登録・削除等）</p>
+                                <p><b class="text-orange-400">運用負荷:</b> ハードウェア障害時は情シスが現地対応必須</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-rose-950/30 border border-rose-500/30 rounded-xl p-6">
+                        <h3 class="text-rose-400 font-black mb-3">⚠️ 最大のリスク: 築地本社の単一障害点 (SPOF)</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            現状、AD・SECOMの両サーバーが<b>築地本社の同一フロアに設置</b>されています。
+                            これにより、<b>1箇所の被災で全社業務が停止</b>する構造的リスクを抱えています。
+                        </p>
+                        <ul class="text-sm text-slate-400 mt-4 space-y-2 list-disc list-inside">
+                            <li>クラウド移行により、Azureデータセンターの地理冗長化（東日本・西日本）を確保</li>
+                            <li>保守切れリスクの排除（ハードウェア依存からの脱却）</li>
+                            <li>コスト平準化（6年目以降の急騰を回避）</li>
+                            <li>情シスの運用負荷削減（ハードウェア保守・UPS管理・OS更新作業からの解放）</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- クラウドベンダー比較は別資料へ誘導 -->
                 <div class="bg-slate-900 border border-white/5 text-white p-8 rounded-2xl">
                     <h3 class="text-xl font-black mb-4 flex items-center gap-2">
-                        <span class="text-blue-500">◆</span> 戦略的評価
+                        <span class="text-blue-500">📋</span> クラウド化の意思決定後、次に読む資料
                     </h3>
-                    <p class="text-sm leading-loose text-slate-400">
-                        「安全性と安定運用」を最優先とするならば、<b>IIJ (フルマネージド)</b>
-                        が圧倒的に優位です。一方、自由度を重視する場合は他社クラウドが候補となりますが、その場合は情シスの運用負荷をコストとして再計算する必要があります。
+                    <p class="text-sm leading-loose text-slate-400 mb-4">
+                        上記のオンプレリスク分析により「クラウド化すべき」という判断に至った場合、
+                        次は<b>どのベンダーを選ぶか</b>の比較検討が必要です。
                     </p>
+                    <a href="ADクラウド化_3社権限・責任分界点.html"
+                       class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-all"
+                       style="text-decoration: none;">
+                        → IIJ・USEN・Link-At-Japan 3社の責任体制比較へ
+                    </a>
                 </div>
             </div>
         </main>
