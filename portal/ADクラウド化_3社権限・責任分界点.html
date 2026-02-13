@@ -291,45 +291,93 @@
             <tr>
                 <th>比較項目</th>
                 <th>IIJ (PaaS)</th>
-                <th>USEN (AWS)</th>
+                <th>USEN (AWS IaaS)</th>
                 <th>LinkAtJapan (Azure)</th>
             </tr>
         </thead>
         <tbody>
+            <!-- アカウント・権限 -->
             <tr>
-                <th>管理負担<br>(パッチ・監視)</th>
-                <td><span style="color:#059669; font-weight: 700">◎ ゼロ</span><br>IIJ側で自動的に実施</td>
-                <td><span style="color:#dc2626; font-weight: 700">× 自社責任</span><br>OS・ADパッチ適用は自社対応<br>（有償サポート依頼可）</td>
-                <td><span style="color:#059669; font-weight: 700">◎ ほぼゼロ</span><br>手順に基づき実務を代行</td>
+                <th>クラウドアカウント<br>所有権</th>
+                <td><span style="color:#777; font-weight: 700">IIJ名義</span><br>顧客からは見えない<br>（PaaSモデル）</td>
+                <td><span style="color:#777; font-weight: 700">USEN名義</span><br>VPCで論理分割<br>（共有テナント）<br><small>※2026/2/2 内田様メール確認</small></td>
+                <td><span style="color:#059669; font-weight: 700">顧客名義</span><br>独立環境<br>（共同管理可）</td>
             </tr>
             <tr>
-                <th>緊急時の対応</th>
-                <td><span style="color:#777">× 操作不可</span><br>IIJの対応待ち</td>
-                <td><span style="color:#dc2626; font-weight: 700">× 自己責任</span><br>AWS基盤はUSEN対応<br>OS・AD障害は自社で調査・復旧<br>（有償サポート依頼可）</td>
-                <td><span style="color:#059669; font-weight: 700">○ プロと共同</span><br>プロと共同作業可</td>
+                <th>管理コンソール<br>アクセス権</th>
+                <td><span style="color:#c0392b; font-weight: 700">× 不可</span><br>専用ポータルのみ</td>
+                <td><span style="color:#c0392b; font-weight: 700">× 不可</span><br>USEN管理<br>（操作は依頼ベース）<br><small>※Route53/VPC/IAM/CloudWatch等すべて不可</small></td>
+                <td><span style="color:#059669; font-weight: 700">○ 可能</span><br>Azure Portal共同管理</td>
             </tr>
             <tr>
-                <th>管理コンソール<br>(クラウド基盤)</th>
-                <td><span style="color:#777">提供なし</span><br>(専用ポータルのみ)</td>
-                <td><span style="color:#c0392b">利用不可</span><br>(USEN管理)</td>
-                <td><span style="color:#3498db">◎ 共同管理</span><br>(Azure Portal)</td>
+                <th>ADサーバーへの<br>アクセス方法</th>
+                <td>RSAT（リモート管理ツール）<br>または管理コンソールオプション<br><span style="color:#c0392b">※RDP接続不可</span></td>
+                <td><span style="color:#059669; font-weight: 700">RDP接続可能</span><br>VPN経由で直接操作<br>標準2セッション<br><small>※2025/12/8 内田様メール確認</small></td>
+                <td>Azure Bastion経由<br>RDP接続<br>（運用代行も可）</td>
+            </tr>
+            <!-- 監視・パッチ -->
+            <tr>
+                <th>24/365監視</th>
+                <td><span style="color:#059669; font-weight: 700">◎ IIJ実施</span><br>すべてのレイヤー</td>
+                <td><span style="color:#059669; font-weight: 700">○ USEN実施</span><br>死活・サービス・リソース監視<br><small>※2026/2/2 内田様メール確認</small></td>
+                <td><span style="color:#059669; font-weight: 700">○ プロ実施</span><br>OS・インフラ監視</td>
             </tr>
             <tr>
-                <th>ADへのアクセス<br>・設定方法</th>
-                <td>専用の管理ツール<br>(一部制限あり)</td>
-                <td>RDPで直接操作<br><span style="color:#c0392b">(AWS権限なし)</span></td>
-                <td>Azure Bastion経由での<br>リモートデスクトップ (RDP)接続<br>(運用代行も可)</td>
+                <th>OSパッチ適用<br>頻度・方式</th>
+                <td><span style="color:#059669; font-weight: 700">◎ 自動実施</span><br>すべてのパッチ<br>顧客の関与不要</td>
+                <td><span style="color:#f59e0b; font-weight: 700">△ 定期実施</span><br>四半期~半年ごと<br>重要パッチのみ<br>事前調整あり<br><small>※2025/12/3 議事録、2025/12/4 提案資料</small><br><small>※緊急パッチ対応は要確認</small></td>
+                <td><span style="color:#059669; font-weight: 700">○ プロ実施</span><br>手順に基づき代行</td>
             </tr>
             <tr>
-                <th>英語アラート対応</th>
-                <td>不要</td>
-                <td><span style="color:#dc2626; font-weight: 700">× 基本的に自社</span><br>AWS基盤はUSENが監視<br>OS・ADイベントは自社で確認</td>
+                <th>営業時間外対応</th>
+                <td>標準範囲内<br>（自動実施のため）</td>
+                <td><span style="color:#f59e0b; font-weight: 700">△ 有償</span><br>Windows Update等の<br>時間外対応は別途見積<br><small>※2026/2/2 内田様メール確認</small></td>
+                <td>標準範囲内<br>（要確認）</td>
+            </tr>
+            <!-- 障害対応 -->
+            <tr>
+                <th>インフラ障害<br>（AWS/Azure基盤）</th>
+                <td><span style="color:#059669; font-weight: 700">○ IIJ対応</span><br>自動切替（Act/Act）<br>SLA 99.99%</td>
+                <td><span style="color:#f59e0b; font-weight: 700">△ USEN対応</span><br>ベストエフォート<br><span style="color:#c0392b">※SLAなし</span><br><small>※2026/1/22 内田様メール確認</small></td>
+                <td><span style="color:#059669; font-weight: 700">○ プロ対応</span><br>Azure基盤</td>
+            </tr>
+            <tr>
+                <th>OS・AD障害</th>
+                <td><span style="color:#059669; font-weight: 700">○ IIJ対応</span><br>すべてIIJ責任<br>SLA 99.99%</td>
+                <td><span style="color:#059669; font-weight: 700">○ USEN対応</span><br>既知の障害は自動復旧<br>未知の障害は調整<br><span style="color:#c0392b">※SLAなし</span><br><small>※2026/2/2 内田様メール確認</small></td>
+                <td><span style="color:#059669; font-weight: 700">○ プロ対応</span><br>共同作業可</td>
+            </tr>
+            <tr>
+                <th>アプリケーション障害</th>
+                <td><span style="color:#c0392b; font-weight: 700">× 自社責任</span></td>
+                <td><span style="color:#c0392b; font-weight: 700">× 自社責任</span><br>システムベンダーへ相談<br><small>※2026/1/22 内田様メール確認</small></td>
+                <td><span style="color:#c0392b; font-weight: 700">× 自社責任</span></td>
+            </tr>
+            <!-- 英語対応 -->
+            <tr>
+                <th>英語アラート対応<br>（AWS/Azure通知）</th>
+                <td><span style="color:#059669; font-weight: 700">○ 不要</span><br>すべて日本語</td>
+                <td><span style="color:#059669; font-weight: 700">○ 不要</span><br>AWSアカウントはUSEN名義<br>英語メールはUSENに届く<br>顧客への通知は日本語<br><small>※2026/2/2 内田様メール確認</small></td>
                 <td><span style="color:#059669; font-weight: 700">○ プロが翻訳</span><br>必要なものだけ通知</td>
             </tr>
+            <!-- 移行 -->
+            <tr>
+                <th>移行時<br>ダウンタイム</th>
+                <td>要確認</td>
+                <td><span style="color:#059669; font-weight: 700">◎ なし</span><br>AD同期方式<br>（インフラ層）<br><small>※DNS切替は顧客作業</small><br><small>※2026/1/22 内田様メール確認</small></td>
+                <td>要確認</td>
+            </tr>
+            <tr>
+                <th>移行支援範囲</th>
+                <td>要確認</td>
+                <td><span style="color:#059669; font-weight: 700">○ 充実</span><br>新AD昇格、FSMO移行、<br>AD降格、疎通確認<br>（初期費用に含む）<br><small>※2025/12/19 内田様メール確認</small></td>
+                <td>要確認</td>
+            </tr>
+            <!-- 総合評価 -->
             <tr>
                 <th>脱属人化・<br>持続可能性</th>
-                <td><span style="color:#059669; font-weight: 700">◎</span><br>全てベンダー任せで完結</td>
-                <td><span style="color:#dc2626; font-weight: 700">×</span><br>AWS基盤のみUSEN<br>OS・AD運用は自社に依存<br>（有償サポートで軽減可）</td>
+                <td><span style="color:#059669; font-weight: 700">◎</span><br>全てベンダー任せで完結<br>SLA保証あり</td>
+                <td><span style="color:#f59e0b; font-weight: 700">○（条件付き）</span><br>AWS・OS監視、パッチ適用は<br>USEN実施<br><span style="color:#c0392b">※SLAなし</span><br>※定期メンテナンスは事前調整必要</td>
                 <td><span style="color:#059669; font-weight: 700">○</span><br>OS・インフラ運用をプロが担保</td>
             </tr>
         </tbody>
