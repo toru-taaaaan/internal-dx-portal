@@ -1308,141 +1308,17 @@
         }
     </script>
 
-    <!-- 📚 参照資料セクション -->
+    <!-- 📚 エビデンスセクション -->
     <section class="mx-auto px-6 py-12 mb-12" style="max-width: 1200px;">
         <div class="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl shadow-lg p-8 border border-slate-200">
-            <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center">
                 <span class="text-3xl mr-3">📚</span>
-                参照資料 (Reference Materials)
+                エビデンス
             </h2>
-            <p class="text-slate-600 mb-6">このページで記載・参照したエビデンス(根拠資料)の一覧です。</p>
-            
-            <div class="space-y-6">
-                <!-- IIJ関連 -->
-                <div>
-                    <h3 class="text-lg font-semibold text-slate-700 mb-3 border-b border-slate-300 pb-2">IIJ関連資料</h3>
-                    <ol class="space-y-2 text-sm">
-                        <li id="ref-1" class="pl-4 border-l-4 border-blue-400 bg-white p-3 rounded">
-                            <span class="font-bold text-blue-600">[1]</span> 
-                            <span class="font-semibold">IIJ - 概算費用 (2025.11.14).pdf.txt</span><br>
-                            <span class="text-slate-600">引用箇所: 行90 - "Active Directoryは東日本リージョンで冗長構成となります"</span><br>
-                            <span class="text-xs text-slate-500">ファイルパス: 01_IIJ/_archive/IIJ - 概算費用 (2025.11.14).pdf.txt</span>
-                        </li>
-                    </ol>
-                </div>
-
-                <!-- USEN関連 -->
-                <div>
-                    <h3 class="text-lg font-semibold text-slate-700 mb-3 border-b border-slate-300 pb-2">USEN関連資料</h3>
-                    <ol class="space-y-2 text-sm" start="2">
-                        <li id="ref-2" class="pl-4 border-l-4 border-green-400 bg-white p-3 rounded">
-                            <span class="font-bold text-green-600">[2]</span> 
-                            <span class="font-semibold">USEN西川様_メール_20251204.md</span><br>
-                            <span class="text-slate-600">引用箇所: 行28 - "どのリージョンに配置されるか→東京リージョンになります"</span><br>
-                            <span class="text-xs text-slate-500">ファイルパス: 02_USEN/04_メール履歴/USEN西川様_メール_20251204.md</span>
-                        </li>
-                    </ol>
-                </div>
-
-                <!-- Link At Japan関連 -->
-                <div>
-                    <h3 class="text-lg font-semibold text-slate-700 mb-3 border-b border-slate-300 pb-2">Link At Japan関連資料</h3>
-                    <ol class="space-y-2 text-sm" start="3">
-                        <li id="ref-3" class="pl-4 border-l-4 border-purple-400 bg-white p-3 rounded">
-                            <span class="font-bold text-purple-600">[3]</span> 
-                            <span class="font-semibold">リンクアットジャパン - ADサーバのAzureリフト化提案書 Ver.2.pdf.txt</span><br>
-                            <span class="text-slate-600">引用箇所: 15ページ - "東日本リージョン単一構成"</span><br>
-                            <span class="text-xs text-slate-500">ファイルパス: 03_LinkAtJapan/リンクアットジャパン - ADサーバのAzureリフト化提案書 Ver.2.pdf.txt</span>
-                        </li>
-                    </ol>
-                </div>
-
-                <!-- オンプレミス関連 -->
-                <div>
-                    <h3 class="text-lg font-semibold text-slate-700 mb-3 border-b border-slate-300 pb-2">プロジェクト基本資料</h3>
-                    <ol class="space-y-2 text-sm" start="4">
-                        <li id="ref-4" class="pl-4 border-l-4 border-orange-400 bg-white p-3 rounded">
-                            <span class="font-bold text-orange-600">[4]</span> 
-                            <span class="font-semibold">オンプレミスサーバー一覧_2026-01-26.md</span><br>
-                            <span class="text-slate-600">引用箇所: 行16-17 - "PDCSVR (DC1) + BDCSVR (DC2) の2台冗長構成"</span><br>
-                            <span class="text-xs text-slate-500">ファイルパス: オンプレミスサーバー一覧_2026-01-26.md</span>
-                        </li>
-                        <li id="ref-5" class="pl-4 border-l-4 border-orange-400 bg-white p-3 rounded">
-                            <span class="font-bold text-orange-600">[5]</span> 
-                            <span class="font-semibold">00_エビデンス管理シート.md</span><br>
-                            <span class="text-slate-600">引用箇所: 行32-34 - "現状のRTO/RPO / 移行ダウンタイム証跡"</span><br>
-                            <span class="text-xs text-slate-500">ファイルパス: 00_エビデンス管理シート.md</span>
-                        </li>
-                        <li id="ref-6" class="pl-4 border-l-4 border-slate-400 bg-white p-3 rounded">
-                            <span class="font-bold text-slate-600">[6]</span> 
-                            <span class="font-semibold">2026-01-22_USEN内田様回答_AD・セコムダウンタイム確認.md</span><br>
-                            <span class="text-slate-600">引用箇所: 行15 - "移行ダウンタイムなし（並行稼働）"</span><br>
-                            <span class="text-xs text-slate-500">ファイルパス: 02_USEN/04_メール履歴/...</span>
-                        </li>
-                        <li id="ref-7" class="pl-4 border-l-4 border-slate-400 bg-white p-3 rounded">
-                            <span class="font-bold text-slate-600">[7]</span> 
-                            <span class="font-semibold">2025-12-16_リンクアットジャパン確認メール.md</span><br>
-                            <span class="text-slate-600">引用箇所: 行23 - "移行ダウンタイムは約8時間程度"</span><br>
-                            <span class="text-xs text-slate-500">ファイルパス: 03_LinkAtJapan/2025-12-16_...</span>
-                        </li>
-                        <li id="ref-8" class="pl-4 border-l-4 border-blue-400 bg-white p-3 rounded">
-                            <span class="font-bold text-blue-600">[8]</span> 
-                            <span class="font-semibold">2025-12-12_IIJ議事録_MTG.md</span><br>
-                            <span class="text-slate-600">引用箇所: 行172 - "バックアップ世代数制限なし", 行488 - "ADゴミ箱復旧"</span><br>
-                            <span class="text-xs text-slate-500">ファイルパス: 01_IIJ/05_会議議事録/2025-12-12_...</span>
-                        </li>
-                        <li id="ref-9" class="pl-4 border-l-4 border-emerald-400 bg-white p-3 rounded">
-                            <span class="font-bold text-emerald-600">[9]</span> 
-                            <span class="font-semibold">2025-12-04_USEN_AD提案.md</span><br>
-                            <span class="text-slate-600">引用箇所: 行63 - "バックアップ7世代保管"</span><br>
-                            <span class="text-xs text-slate-500">ファイルパス: 02_USEN/01_提案資料/2025-12-04_...</span>
-                        </li>
-                        <li id="ref-10" class="pl-4 border-l-4 border-emerald-400 bg-white p-3 rounded">
-                            <span class="font-bold text-emerald-600">[10]</span> 
-                            <span class="font-semibold">02_提案詳細_LinkAtJapan.md</span><br>
-                            <span class="text-slate-600">引用箇所: 行59 - "Azure Backup仕様"</span><br>
-                            <span class="text-xs text-slate-500">ファイルパス: 03_LinkAtJapan/02_提案詳細_LinkAtJapan.md</span>
-                        </li>
-                        <li id="ref-11" class="pl-4 border-l-4 border-blue-400 bg-white p-3 rounded">
-                            <span class="font-bold text-blue-600">[11]</span> 
-                            <span class="font-semibold">2025-12-15_IIJ提案_ADクラウド化詳細.md</span><br>
-                            <span class="text-slate-600">引用箇所: 行52 - "運用負荷大幅軽減/Act-Act構成"</span><br>
-                            <span class="text-xs text-slate-500">ファイルパス: 01_IIJ/01_提案資料/2025-12-15_...</span>
-                        </li>
-                    </ol>
-                </div>
-                <!-- 各社SECOM/NW合算資料 -->
-                <div>
-                    <h3 class="text-lg font-semibold text-slate-700 mb-3 border-b border-slate-300 pb-2">AD・SECOM統合分析エビデンス</h3>
-                    <ol class="space-y-2 text-sm" start="12">
-                        <li id="ref-12" class="pl-4 border-l-4 border-slate-800 bg-white p-3 rounded">
-                            <span class="font-bold text-slate-800">[12]</span> 
-                            <span class="font-semibold">AD・SECOM同時依頼_コスト最適化分析.html</span><br>
-                            <span class="text-slate-600">算出根拠: IIJ SECOM初期(673,000) + IIJ NW設定(89,750) = 762,750</span><br>
-                            <span class="text-xs text-slate-500">関連資料: [SECOM入退室クラウド化_導入検討資料.html]</span>
-                        </li>
-                        <li id="ref-13" class="pl-4 border-l-4 border-slate-800 bg-white p-3 rounded">
-                            <span class="font-bold text-slate-800">[13]</span> 
-                            <span class="font-semibold">AD・SECOM同時依頼_コスト最適化分析.html</span><br>
-                            <span class="text-slate-600">算出根拠: USEN SECOM初期(318,000) + USEN NW設定(120,000) = 438,000</span><br>
-                            <span class="text-xs text-slate-500">関連資料: [SECOM入退室クラウド化_導入検討資料.html]</span>
-                        </li>
-                        <li id="ref-14" class="pl-4 border-l-4 border-slate-800 bg-white p-3 rounded">
-                            <span class="font-bold text-slate-800">[14]</span> 
-                            <span class="font-semibold">AD・SECOM同時依頼_コスト最適化分析.html</span><br>
-                            <span class="text-slate-600">算出根拠: LAJ SECOM初期(138,000) + LAJ NW設定(250,000) = 388,000</span><br>
-                            <span class="text-xs text-slate-500">関連資料: [SECOM入退室クラウド化_導入検討資料.html]</span>
-                        </li>
-                    </ol>
-                </div>
-            </div>
-
-            <div class="mt-6 p-4 bg-blue-50 border-l-4 border-blue-400 rounded">
-                <p class="text-sm text-slate-700">
-                    <span class="font-bold">💡 エビデンス管理:</span> 
-                    すべてのエビデンスは <code class="bg-white px-2 py-1 rounded text-xs">00_エビデンス管理シート.md</code> で一元管理されています。
-                </p>
-            </div>
+            <p class="text-slate-700 leading-relaxed">
+                本資料の数値・仕様はベンダー提出資料（見積書・提案書・メール）に基づきます。<br><br>
+                詳細確認が必要な場合は、Claude CodeがGmailから直接ベンダーメールを参照できます。
+            </p>
         </div>
     </section>
 
