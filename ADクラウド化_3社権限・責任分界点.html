@@ -11,9 +11,11 @@
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
             line-height: 1.6;
             color: #333;
-            background-color: #f4f4f9;
+            background-color: #f8fafc;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 32px 32px;
             margin: 0;
-            padding: 20px;
+            padding: 0;
         }
         .container {
             max-width: 1200px;
@@ -70,23 +72,33 @@
         .highlight { background: #fff9c4; font-weight: bold; }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body>
 
-<div class="container mx-auto" style="max-width: 1200px;">
-    <!-- Action Bar -->
-    <div class="action-bar mb-6 rounded-lg" style="max-width: 1400px; margin: 0 auto 24px; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; background: white; border: 1px solid #e2e8f0;">
-        <a href="index.html" class="back-btn" style="display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: #1e293b; color: white; border-radius: 6px; font-size: 13px; font-weight: 700; text-decoration: none;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="M15 18l-6-6 6-6"></path>
-            </svg>
-            統合ボードへ戻る
-        </a>
-        <div class="flex items-center gap-3" style="display: flex; align-items: center; gap: 12px;">
-            <span class="tag tag-slate-100" style="padding: 4px 10px; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11px; font-weight: 900;">LAST UPDATE: 2月11日</span>
-            <span class="tag tag-green" style="padding: 4px 10px; background: #dcfce7; color: #166534; border-radius: 4px; font-size: 11px; font-weight: 900;">FINAL POLISHED</span>
+<!-- Header Section -->
+<header class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50">
+    <div class="mx-auto h-16 flex items-center justify-between" style="max-width: 1400px; margin: 0 auto; padding: 0 40px;">
+        <div class="flex items-center gap-4">
+            <a href="index.html"
+                class="flex items-center gap-2 text-slate-500 hover:text-brand-navy transition-colors text-sm font-medium">
+                <svg class="w-3 h-3 flex-shrink-0" style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                ポータルへ戻る
+            </a>
+            <div class="h-4 w-px bg-slate-300 mx-2" style="width: 1px; height: 16px; background-color: #cbd5e1;"></div>
+            <span class="text-base font-bold text-slate-700">ADクラウド化 3社権限・責任分界点比較表</span>
+        </div>
+        <div class="flex items-center gap-3">
+            <span
+                class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700 border border-blue-200">
+                📊 2026年度 予算承認資料
+            </span>
         </div>
     </div>
+</header>
 
+<div class="mx-auto p-4 md:p-8" style="max-width: 1200px;">
     <h1>ADクラウド化 3社権限・責任分界点比較表</h1>
 
     <!-- 1. ひとことで言うと -->
