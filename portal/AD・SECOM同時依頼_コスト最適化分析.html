@@ -215,42 +215,43 @@
     </style>
 </head>
 
-<body class="min-h-screen font-sans antialiased text-slate-700" style="font-family: 'Inter', 'Noto Sans JP', sans-serif; background-color: #f8fafc;">
+<body>
     <!-- Sticky Header -->
-    <header class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-4">
+    <header style="background: white; border-bottom: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 50;">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 40px; height: 64px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 16px;">
                 <a href="index.html"
-                    class="flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-colors text-sm font-medium">
-                    <svg class="w-3 h-3 flex-shrink-0" style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    style="display: flex; align-items: center; gap: 8px; color: #64748b; text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s;"
+                    onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#64748b'">
+                    <svg style="width: 12px; height: 12px; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                             d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                     ポータルへ戻る
                 </a>
-                <div class="h-4 w-px bg-slate-300 mx-2" style="width: 1px; height: 16px; background-color: #cbd5e1;"></div>
-                <span class="text-base font-bold text-slate-700">プロジェクト 15.01 + 15.02: AD・SECOM同時依頼 コスト最適化分析</span>
+                <div style="width: 1px; height: 16px; background-color: #cbd5e1; margin: 0 8px;"></div>
+                <span style="font-size: 1rem; font-weight: 700; color: #334155;">プロジェクト 15.01 + 15.02: AD・SECOM同時依頼 コスト最適化分析</span>
             </div>
-            <div class="flex items-center gap-3">
+            <div style="display: flex; align-items: center; gap: 12px;">
                 <span
-                    class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700 border border-blue-200">
+                    style="display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 999px; font-size: 0.875rem; font-weight: 500; background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe;">
                     🔄 最終更新：エビデンスリンク実装 (v20260213_1030)
                 </span>
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto p-4 md:p-8 space-y-16">
+    <div class="container">
 
         <!-- Title Section -->
-        <section class="text-center space-y-6 pt-8">
+        <section style="text-align: center; margin: 40px 0 50px 0;">
             <div style="display: inline-block; background: #6366f1; color: white; padding: 4px 12px; border-radius: 6px; font-weight: 700; font-size: 0.8rem; margin-bottom: 15px;">
                 BUNDLE COST FINALIZATION
             </div>
-            <h1 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+            <h1 style="font-size: 2.5rem; font-weight: 900; color: #0f172a; line-height: 1.2; margin: 15px 0;">
                 ADサーバー + セコム入退室管理<br>「同時依頼」3社比較レポート
             </h1>
-            <p class="text-lg text-slate-600 max-w-3xl mx-auto">
+            <p style="font-size: 1rem; color: #64748b; margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
                 全ベンダー数値を正式エビデンスで検証完了。提出資料・議事録・見積メールによる裏付けあり。
             </p>
         </section>
@@ -539,7 +540,7 @@
             Professional Report Visualization Powered by D3.js • © 2026 Information System Department
         </footer>
 
-    </main>
+    </div>
 
     <script>
         // Corrected calculation: SECOM Direct Fee (198k) now properly separated to avoid double-counting
