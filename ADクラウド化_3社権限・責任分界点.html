@@ -118,7 +118,7 @@
     <section class="text-center space-y-4 mb-12 pt-8">
         <h1 class="text-4xl font-black text-slate-900 tracking-tight leading-tight">AD・SECOMクラウド化<br>3社権限・責任分界点比較表</h1>
         <p class="text-lg text-slate-600 font-medium mt-2">ベンダー選定における運用負荷とサポート体制の比較</p>
-        <p class="text-slate-500 font-medium">提出先: 篠部長、塩田部長 | アキバホールディングス 情報システム部</p>
+        <p class="text-slate-500 font-medium">提出先: 篠部長、塩田部長 | AKIBAホールディングス 情報システム部</p>
     </section>
 
     <!-- 1. ひとことで言うと -->
@@ -301,84 +301,121 @@
                 <th>クラウドアカウント<br>所有権</th>
                 <td><span style="color:#777; font-weight: 700">IIJ名義</span><br>顧客からは見えない<br>（PaaSモデル）</td>
                 <td><span style="color:#777; font-weight: 700">USEN名義</span><br>VPCで論理分割<br>（共有テナント）<br><small>※2026/2/2 内田様メール確認</small></td>
-                <td><span style="color:#059669; font-weight: 700">顧客名義</span><br>独立環境<br>（共同管理可）</td>
+                <td><span style="color:#059669; font-weight: 700">顧客名義</span><br>独立環境<br>（共同管理可）<br><small>※2025/12/3 議事録確認</small></td>
             </tr>
             <tr>
                 <th>管理コンソール<br>アクセス権</th>
                 <td><span style="color:#c0392b; font-weight: 700">× 不可</span><br>専用ポータルのみ</td>
                 <td><span style="color:#c0392b; font-weight: 700">× 不可</span><br>USEN管理<br>（操作は依頼ベース）<br><small>※Route53/VPC/IAM/CloudWatch等すべて不可</small></td>
-                <td><span style="color:#059669; font-weight: 700">○ 可能</span><br>Azure Portal共同管理</td>
+                <td><span style="color:#059669; font-weight: 700">○ 可能</span><br>Azure Portal共同管理<br><small>※2025/12/3 議事録確認</small></td>
             </tr>
             <tr>
                 <th>ADサーバーへの<br>アクセス方法</th>
                 <td>RSAT（リモート管理ツール）<br>または管理コンソールオプション<br><span style="color:#c0392b">※RDP接続不可</span></td>
                 <td><span style="color:#059669; font-weight: 700">RDP接続可能</span><br>VPN経由で直接操作<br>標準2セッション<br><small>※2025/12/8 内田様メール確認</small></td>
-                <td>Azure Bastion経由<br>RDP接続<br>（運用代行も可）</td>
+                <td><span style="color:#059669; font-weight: 700">RDP接続可能</span><br>VPN経由でリモート対応<br>（切替作業は休日日中帯）<br><small>※2025/12/3 議事録確認</small></td>
             </tr>
             <!-- 監視・パッチ -->
             <tr>
                 <th>24/365監視</th>
                 <td><span style="color:#059669; font-weight: 700">◎ IIJ実施</span><br>すべてのレイヤー</td>
                 <td><span style="color:#059669; font-weight: 700">○ USEN実施</span><br>死活・サービス・リソース監視<br><small>※2026/2/2 内田様メール確認</small></td>
-                <td><span style="color:#059669; font-weight: 700">○ プロ実施</span><br>OS・インフラ監視</td>
+                <td><span style="color:#059669; font-weight: 700">○ プロ実施</span><br>アシストプラン: 監視・障害対応<br>アシストプラスプラン: +パッチ適用<br><small>※2025/12/3 議事録確認</small></td>
             </tr>
             <tr>
                 <th>OSパッチ適用<br>頻度・方式</th>
                 <td><span style="color:#059669; font-weight: 700">◎ 自動実施</span><br>すべてのパッチ<br>顧客の関与不要</td>
                 <td><span style="color:#f59e0b; font-weight: 700">△ 定期実施</span><br>四半期~半年ごと<br>重要パッチのみ<br>事前調整あり<br><small>※2025/12/3 議事録、2025/12/4 提案資料</small><br><small>※緊急パッチ対応は要確認</small></td>
-                <td><span style="color:#059669; font-weight: 700">○ プロ実施</span><br>手順に基づき代行</td>
+                <td><span style="color:#059669; font-weight: 700">○ Windows Updateのみ</span><br>アシストプラスプラン<br>（¥68,000/月）で実施<br><small>※2025/12/3 議事録確認</small></td>
             </tr>
             <tr>
                 <th>営業時間外対応</th>
                 <td>標準範囲内<br>（自動実施のため）</td>
                 <td><span style="color:#f59e0b; font-weight: 700">△ 有償</span><br>Windows Update等の<br>時間外対応は別途見積<br><small>※2026/2/2 内田様メール確認</small></td>
-                <td>標準範囲内<br>（要確認）</td>
+                <td><span style="color:#059669; font-weight: 700">○ 対応可</span><br>切替作業は休日日中帯で<br>リモート対応<br><small>※2025/12/3 議事録確認</small></td>
+            </tr>
+            <!-- SLA -->
+            <tr>
+                <th>SLA<br>（稼働率保証）</th>
+                <td><span style="color:#059669; font-weight: 700">✅ 99.99%保証</span><br>年間52分以内のダウンタイム<br>全レイヤーで保証<br><small>※提案資料確認済み</small></td>
+                <td><span style="color:#c0392b; font-weight: 700">❌ なし</span><br>ベストエフォート対応<br>24時間体制（土日祝日・夜間はベストエフォート）<br><small>※2026/1/22 内田様メール確認</small></td>
+                <td><span style="color:#f59e0b; font-weight: 700">❓ 要確認</span><br>24/365監視・障害対応あり<br>SLA数値は確認中<br><small>※2026/02/14 澤口様へメール送信済み</small></td>
             </tr>
             <!-- 障害対応 -->
             <tr>
                 <th>インフラ障害<br>（AWS/Azure基盤）</th>
-                <td><span style="color:#059669; font-weight: 700">○ IIJ対応</span><br>自動切替（Act/Act）<br>SLA 99.99%</td>
-                <td><span style="color:#f59e0b; font-weight: 700">△ USEN対応</span><br>ベストエフォート<br><span style="color:#c0392b">※SLAなし</span><br><small>※2026/1/22 内田様メール確認</small></td>
-                <td><span style="color:#059669; font-weight: 700">○ プロ対応</span><br>Azure基盤</td>
+                <td><span style="color:#059669; font-weight: 700">○ IIJ対応</span><br>自動切替（Act/Act）</td>
+                <td><span style="color:#f59e0b; font-weight: 700">△ USEN対応</span><br>ベストエフォート<br><small>※2026/1/22 内田様メール確認</small></td>
+                <td><span style="color:#059669; font-weight: 700">○ プロ対応</span><br>東日本リージョンのみ<br>（BCP観点で推奨は東西冗長）<br><small>※2025/12/3 議事録確認</small></td>
             </tr>
             <tr>
                 <th>OS・AD障害</th>
-                <td><span style="color:#059669; font-weight: 700">○ IIJ対応</span><br>すべてIIJ責任<br>SLA 99.99%</td>
-                <td><span style="color:#059669; font-weight: 700">○ USEN対応</span><br>既知の障害は自動復旧<br>未知の障害は調整<br><span style="color:#c0392b">※SLAなし</span><br><small>※2026/2/2 内田様メール確認</small></td>
-                <td><span style="color:#059669; font-weight: 700">○ プロ対応</span><br>共同作業可</td>
+                <td><span style="color:#059669; font-weight: 700">○ IIJ対応</span><br>すべてIIJ責任</td>
+                <td><span style="color:#059669; font-weight: 700">○ USEN対応</span><br>既知の障害は自動復旧<br>未知の障害は調整<br><small>※2026/2/2 内田様メール確認</small></td>
+                <td><span style="color:#059669; font-weight: 700">○ プロ対応</span><br>Managed Service For Azure<br>アシストプラン: ¥50,000/月<br>アシストプラスプラン: ¥68,000/月<br><small>※2025/12/3 議事録確認</small></td>
             </tr>
             <tr>
                 <th>アプリケーション障害</th>
                 <td><span style="color:#c0392b; font-weight: 700">× 自社責任</span></td>
                 <td><span style="color:#c0392b; font-weight: 700">× 自社責任</span><br>システムベンダーへ相談<br><small>※2026/1/22 内田様メール確認</small></td>
-                <td><span style="color:#c0392b; font-weight: 700">× 自社責任</span></td>
+                <td><span style="color:#c0392b; font-weight: 700">× 自社責任</span><br>AD機能以外の<br>独自アプリは対象外<br><small>※2025/12/3 議事録確認</small></td>
             </tr>
             <!-- 英語対応 -->
             <tr>
                 <th>英語アラート対応<br>（AWS/Azure通知）</th>
                 <td><span style="color:#059669; font-weight: 700">○ 不要</span><br>すべて日本語</td>
                 <td><span style="color:#059669; font-weight: 700">○ 不要</span><br>AWSアカウントはUSEN名義<br>英語メールはUSENに届く<br>顧客への通知は日本語<br><small>※2026/2/2 内田様メール確認</small></td>
-                <td><span style="color:#059669; font-weight: 700">○ プロが翻訳</span><br>必要なものだけ通知</td>
+                <td><span style="color:#059669; font-weight: 700">○ 不要</span><br>顧客名義Azureアカウントだが<br>ベンダーが日本語で通知<br><small>※2025/12/3 議事録確認</small></td>
             </tr>
             <!-- 移行 -->
             <tr>
                 <th>移行時<br>ダウンタイム</th>
-                <td>要確認</td>
+                <td><span style="color:#059669; font-weight: 700">◎ 最小限</span><br>レプリケーション方式<br>（並行稼働）<br><small>※2025/11/06 議事録確認</small></td>
                 <td><span style="color:#059669; font-weight: 700">◎ なし</span><br>AD同期方式<br>（インフラ層）<br><small>※DNS切替は顧客作業</small><br><small>※2026/1/22 内田様メール確認</small></td>
-                <td>要確認</td>
+                <td><span style="color:#059669; font-weight: 700">○ 最小限</span><br>Azure上に新AD構築→<br>既存ADから複製→<br>確認後に既存AD降格・停止<br><small>※2025/12/3 議事録確認</small></td>
             </tr>
             <tr>
                 <th>移行支援範囲</th>
-                <td>要確認</td>
+                <td><span style="color:#059669; font-weight: 700">○ IIJ実施</span><br>新AD昇格・FSMO移管はIIJ<br>既存AD降格は顧客<br><small>※2025/11/06 議事録、2025/11/07 メール確認</small></td>
                 <td><span style="color:#059669; font-weight: 700">○ 充実</span><br>新AD昇格、FSMO移行、<br>AD降格、疎通確認<br>（初期費用に含む）<br><small>※2025/12/19 内田様メール確認</small></td>
-                <td>要確認</td>
+                <td><span style="color:#059669; font-weight: 700">○ 充実</span><br>SI費用¥1,305,000に含む<br>詳細設計書・試験計画書・<br>試験成績書を納品<br><small>※2025/12/3 議事録確認</small></td>
+            </tr>
+            <tr>
+                <th>DHCP機能</th>
+                <td><span style="color:#059669; font-weight: 700">○ 提供可能</span><br>標準機能<br>WAN越しの場合は<br>DHCPリレー設定が必要<br><small>※2025/12/12 議事録、2025/12/08 ヒアリングシート確認</small></td>
+                <td>拠点側ルーター（バリオセキュア）<br>で管理<br><span style="color:#c0392b">※クラウドADでのDHCP運用は非推奨</span><br><small>※2025/12/3 USEN議事録確認</small></td>
+                <td>拠点側ルーター（バリオセキュア）<br>で管理<br><span style="color:#c0392b">※クラウドADでのDHCP運用は非推奨</span><br>（Azure/AWS共通）<br><small>※2025/12/3 議事録確認</small></td>
+            </tr>
+            <tr>
+                <th>VPN接続方式</th>
+                <td>IIJ Omnibus経由<br>インターネットVPN<br>拠点側SEIL/X4<br><small>※2026/01/29 提案資料PDF確認</small></td>
+                <td>IPsec VPN<br>VSR600 Amazon VPCオプション<br>（初期¥22,000、月額¥12,000）<br><small>※2025/12/3 議事録確認</small></td>
+                <td>IPsec VPN<br>Azure VPNゲートウェイと<br>拠点側ルーター接続<br><small>※2025/12/3 議事録確認</small></td>
+            </tr>
+            <tr>
+                <th>バックアップ方式</th>
+                <td><span style="color:#059669; font-weight: 700">○ バックアップオプション</span><br>遠隔地保管<br>エージェントレス<br>（¥3,300/月 + ¥2,640/月）<br><small>※2026/01/29 提案資料PDF確認</small></td>
+                <td>AWS EBSスナップショット<br>7世代保管<br>S3へ保管<br><small>※2025/12/4 提案資料確認</small></td>
+                <td>Azure Backup<br>GRS（東西冗長）<br><small>※2025/12/3 議事録確認</small></td>
+            </tr>
+            <tr>
+                <th>構築期間</th>
+                <td>初期費用に含む<br>（具体的な日数は未記載）<br><small>※2026/01/29 提案資料PDF確認</small></td>
+                <td>初期費用に含む<br>（具体的な日数は未記載）<br><small>※2025/12/4 提案資料確認</small></td>
+                <td>約1.5ヶ月<br><small>※2025/12/3 議事録確認</small></td>
+            </tr>
+            <tr>
+                <th>契約形態</th>
+                <td>IIJ直接契約<br>IIJディレクトリサービス<br>for Microsoft<br><small>※提案資料確認</small></td>
+                <td>USEN ICT Solutions<br>直接契約<br><small>※2025/12/4 提案資料確認</small></td>
+                <td>Link-At-Japanと直接契約<br>Azure直接契約不要<br><small>※2025/12/3 議事録確認</small></td>
             </tr>
             <!-- 総合評価 -->
             <tr>
                 <th>脱属人化・<br>持続可能性</th>
                 <td><span style="color:#059669; font-weight: 700">◎</span><br>全てベンダー任せで完結<br>SLA保証あり</td>
                 <td><span style="color:#f59e0b; font-weight: 700">○（条件付き）</span><br>AWS・OS監視、パッチ適用は<br>USEN実施<br><span style="color:#c0392b">※SLAなし</span><br>※定期メンテナンスは事前調整必要</td>
-                <td><span style="color:#059669; font-weight: 700">○</span><br>OS・インフラ運用をプロが担保</td>
+                <td><span style="color:#059669; font-weight: 700">○</span><br>Managed Serviceで<br>監視・パッチ適用・障害対応を<br>プロが担保<br><span style="color:#c0392b">※SLAは要確認</span><br><small>※2025/12/3 議事録確認</small></td>
             </tr>
         </tbody>
     </table>
