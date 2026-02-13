@@ -75,6 +75,29 @@
       background: #94a3b8;
     }
 
+    .completion-badge {
+      font-size: 10px;
+      font-weight: 900;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-left: 6px;
+    }
+
+    .completion-100 {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .completion-80 {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .completion-50 {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
     /* 企業カラー定義（引き継ぎ書準拠） */
     .directory-item:has(.item-meta:contains("IDENTITY")) .item-meta,
     .item-meta[data-type="identity"] {
@@ -204,35 +227,59 @@
               </a>
               <a href="/ADクラウド移行_3社比較・導入計画.html" class="directory-item">
                 <span class="item-label">[予算] AD移行 ベンダー3社 見積比較</span>
-                <span class="item-meta" style="background: #1e40af;">予算</span>
+                <div style="display: flex; gap: 6px; align-items: center;">
+                  <span class="completion-badge completion-100">✓ 完成</span>
+                  <span class="item-meta" style="background: #1e40af;">予算</span>
+                </div>
               </a>
               <a href="/SECOM入退室クラウド化_導入検討資料.html" class="directory-item">
                 <span class="item-label">[予算] SECOM入退室管理 クラウド移行 費用比較</span>
-                <span class="item-meta" style="background: #1e40af;">予算</span>
+                <div style="display: flex; gap: 6px; align-items: center;">
+                  <span class="completion-badge completion-100">✓ 完成</span>
+                  <span class="item-meta" style="background: #1e40af;">予算</span>
+                </div>
               </a>
               <a href="/AD・SECOM同時依頼_コスト最適化分析.html" class="directory-item">
                 <span class="item-label">[予算] AD・SECOM同時移行 コスト削減効果</span>
-                <span class="item-meta" style="background: #1e40af;">予算</span>
+                <div style="display: flex; gap: 6px; align-items: center;">
+                  <span class="completion-badge completion-80">80%</span>
+                  <span class="item-meta" style="background: #1e40af;">予算</span>
+                </div>
               </a>
               <a href="/ADクラウド化_3社権限・責任分界点.html" class="directory-item">
                 <span class="item-label">[技術] AD移行 ベンダー責任範囲</span>
-                <span class="item-meta" style="background: #64748b;">技術</span>
+                <div style="display: flex; gap: 6px; align-items: center;">
+                  <span class="completion-badge completion-80">80%</span>
+                  <span class="item-meta" style="background: #64748b;">技術</span>
+                </div>
               </a>
               <a href="/bcp_risk_matrix.html" class="directory-item">
                 <span class="item-label">[技術] オンプレミス継続 リスク評価</span>
-                <span class="item-meta" style="background: #64748b;">技術</span>
+                <div style="display: flex; gap: 6px; align-items: center;">
+                  <span class="completion-badge completion-100">✓ 完成</span>
+                  <span class="item-meta" style="background: #64748b;">技術</span>
+                </div>
               </a>
               <a href="/AD・EntraID刷新_移行シナリオ比較検討資料.html" class="directory-item">
                 <span class="item-label">[技術] AD・EntraID ハイブリッド構成検討</span>
-                <span class="item-meta" style="background: #64748b;">技術</span>
+                <div style="display: flex; gap: 6px; align-items: center;">
+                  <span class="completion-badge completion-80">80%</span>
+                  <span class="item-meta" style="background: #64748b;">技術</span>
+                </div>
               </a>
               <a href="/SD-WAN刷新_3社4シナリオ比較検討資料.html" class="directory-item">
                 <span class="item-label">[技術] SD-WAN刷新 4シナリオ比較</span>
-                <span class="item-meta" style="background: #64748b;">技術</span>
+                <div style="display: flex; gap: 6px; align-items: center;">
+                  <span class="completion-badge completion-80">80%</span>
+                  <span class="item-meta" style="background: #64748b;">技術</span>
+                </div>
               </a>
               <a href="/sdwan_scope_definition.html" class="directory-item">
                 <span class="item-label">[技術] SD-WAN刷新 プロジェクト範囲定義</span>
-                <span class="item-meta" style="background: #64748b;">技術</span>
+                <div style="display: flex; gap: 6px; align-items: center;">
+                  <span class="completion-badge completion-100">✓ 完成</span>
+                  <span class="item-meta" style="background: #64748b;">技術</span>
+                </div>
               </a>
             </div>
           </div>
