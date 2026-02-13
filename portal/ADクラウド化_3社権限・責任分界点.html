@@ -92,16 +92,16 @@
     <!-- 1. ひとことで言うと -->
     <div class="metaphor-container">
         <div class="card iij">
-            <h3>IIJ：お任せ「ホテル」</h3>
-            <p>管理負担が極めて少なく、障害対応を含め全レイヤーをプロが責任を持って管理。</p>
+            <h3>IIJ：お任せ型</h3>
+            <p>管理負担が少なく、障害対応を含め全レイヤーをプロが管理。</p>
         </div>
         <div class="card usen">
-            <h3>USEN：自力「マンション」</h3>
-            <p>建物（AWS基盤）の管理はUSEN。<strong>部屋（OS・AD）の管理・トラブル対応は自社責任。</strong></p>
+            <h3>USEN：分離型</h3>
+            <p>建物（AWS基盤）の管理はUSEN。部屋（OS・AD）の管理・トラブル対応は自社責任。</p>
         </div>
         <div class="card link">
-            <h3>LinkAtJapan：伴走「コンシェルジュ」</h3>
-            <p><strong>監視・パッチ適用等のOS/インフラ運用実務をプロが代行。</strong>（必要な権限は保持）</p>
+            <h3>LinkAtJapan：並走型</h3>
+            <p>監視・パッチ適用等のOS/インフラ運用実務をプロが代行。必要な権限は保持。</p>
         </div>
     </div>
 
@@ -156,9 +156,9 @@
                 <!-- Annotation -->
                 <foreignObject x="0" y="420" width="270" height="120">
                     <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px; color:#555; background:#f9f9f9; padding:10px; border-radius:4px; border:1px solid #eee;">
-                        <strong>【完全お任せ型】</strong><br/>
+                        <strong>お任せ型</strong><br/>
                         AD操作は専用画面のみ。<br/>
-                        OSやインフラには一切触れず、すべてIIJに管理を委任するスタイル。
+                        OSやインフラには一切触れず、すべてIIJに管理を委任。
                     </div>
                 </foreignObject>
             </g>
@@ -193,9 +193,9 @@
                 <!-- Annotation -->
                 <foreignObject x="0" y="420" width="270" height="120">
                     <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px; color:#555; background:#fffbf0; padding:10px; border-radius:4px; border:1px solid #ffeebb;">
-                        <strong>【分離型】</strong><br/>
+                        <strong>分離型</strong><br/>
                         RDPでOSに入り操作可能。<br/>
-                        OS設定の自由度は高いが、<strong>設定変更やトラブル対応の責任も自社（自己責任）</strong>となる。
+                        OS設定の自由度は高いが、設定変更やトラブル対応の責任も自社となる。
                     </div>
                 </foreignObject>
             </g>
@@ -243,9 +243,9 @@
                 <!-- Annotation -->
                 <foreignObject x="0" y="420" width="270" height="120">
                     <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px; color:#555; background:#f0f7ff; padding:10px; border-radius:4px; border:1px solid #d0e7ff;">
-                        <strong>【伴走型】</strong><br/>
+                        <strong>並走型</strong><br/>
                         RDPでAD/OSを操作可能。<br/>
-                        Azure基盤・OS共に自社でフル権限を持つ。<strong>ベンダーも同じ特権IDを持ち、常に横で支えてくれる。</strong>
+                        Azure基盤・OS共に自社でフル権限を持つ。ベンダーも同じ特権IDを持ち、横で支援。
                     </div>
                 </foreignObject>
             </g>
@@ -272,9 +272,9 @@
             </tr>
             <tr>
                 <th>緊急時の対応</th>
-                <td><span style="color:#777">× 操作不可</span><br>IIJの対応を待つのみ</td>
-                <td><span style="color:#f39c12">△ 連携対応</span><br>インフラはUSEN。<br>OS内は自社主体（支援あり）。</td>
-                <td><span style="color:#27ae60">◎ 並走対応</span><br>プロと共同作業可</td>
+                <td><span style="color:#777">× 操作不可</span><br>IIJの対応待ち</td>
+                <td><span style="color:#f39c12">△ 連携対応</span><br>インフラはUSEN<br>OS内は自社主体（支援あり）</td>
+                <td><span style="color:#27ae60">○ プロと共同</span><br>プロと共同作業可</td>
             </tr>
             <tr>
                 <th>管理コンソール<br>(クラウド基盤)</th>
@@ -296,9 +296,9 @@
             </tr>
             <tr>
                 <th>脱属人化・<br>持続可能性</th>
-                <td><span style="color:#27ae60">◎ 最高</span><br>全てベンダー任せで完結</td>
-                <td><span style="color:#f39c12">△ 分離型</span><br>インフラはUSEN。<br>AD/OSの運用責任は自社。</td>
-                <td><span style="color:#27ae60">○ 高い</span><br>OS・インフラ運用をプロが担保</td>
+                <td><span style="color:#27ae60">◎</span><br>全てベンダー任せで完結</td>
+                <td><span style="color:#f39c12">△</span><br>インフラはUSEN<br>AD/OSの運用責任は自社</td>
+                <td><span style="color:#27ae60">○</span><br>OS・インフラ運用をプロが担保</td>
             </tr>
         </tbody>
     </table>
@@ -324,35 +324,34 @@
             </tr>
             <tr>
                 <th>BCPリスク</th>
-                <td><span style="color:#e11d48; font-weight:bold;">✖ 非常に高い</span><br><span style="font-size:0.9em;">築地本社の落雷・停電・火災時に全11拠点が停止</span></td>
-                <td><span style="color:#16a34a; font-weight:bold;">✔ 極めて低い</span><br><span style="font-size:0.9em;">データセンター(Azure)での冗長稼働</span></td>
+                <td><span style="color:#e11d48; font-weight:bold;">× 高い</span><br><span style="font-size:0.9em;">築地本社の落雷・停電・火災時に全11拠点が停止</span></td>
+                <td><span style="color:#16a34a; font-weight:bold;">○ 低い</span><br><span style="font-size:0.9em;">データセンター(Azure)での冗長稼働</span></td>
             </tr>
             <tr>
                 <th>運用負荷</th>
-                <td><span style="color:#e11d48; font-weight:bold;">✖ 情シス負担増</span><br><span style="font-size:0.9em;">HWトラブル対応、UPS管理、OS更新が自己責任</span></td>
-                <td><span style="color:#16a34a; font-weight:bold;">✔ ベンダーにお任せ</span><br><span style="font-size:0.9em;">24/365監視・OSパッチ・バックアップを代行</span></td>
+                <td><span style="color:#e11d48; font-weight:bold;">× 情シス負担</span><br><span style="font-size:0.9em;">HWトラブル対応、UPS管理、OS更新が自己責任</span></td>
+                <td><span style="color:#16a34a; font-weight:bold;">○ ベンダーが代行</span><br><span style="font-size:0.9em;">24/365監視・OSパッチ・バックアップを代行</span></td>
             </tr>
         </tbody>
     </table>
 
     <div style="margin-top: 25px; margin-bottom: 40px; padding: 25px; background: #eff6ff; border-left: 5px solid #3b82f6; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
         <h3 style="color: #1e40af; margin: 0 0 15px 0; font-size: 1.1em;">
-            判断のポイント：コスト平準化と事業継続性(BCP)
+            判断のポイント
         </h3>
         <p style="margin: 0; font-size: 1em; line-height: 1.8; color: #334155;">
-            初期コストではオンプレが安価だが、保守料の急騰（6年目以降は年間2倍超）と情シスのハードウェア管理負担がある。<br>
-            築地本社の電力事情や物理的損壊時の影響が全11拠点に及ぶ点を踏まえ、クラウド化による運用負担の軽減が主眼となる。
+            初期コストではオンプレが安価だが、保守料の急騰（6年目以降は年間2倍超）と情シスのハードウェア管理負担がある。
+            築地本社の電力事情や物理的損壊時の影響が全11拠点に及ぶ点を踏まえ、クラウド化による運用負担の軽減が主眼。
         </p>
     </div>
 
     <!-- 5. 深掘り：IIJの「管理者権限なし」による具体的制約 -->
     <div style="margin-top: 40px; padding: 25px; background: #fff8f8; border: 2px solid #ffcccc; border-radius: 12px;">
         <h3 style="color: #c0392b; margin-top: 0; font-size: 1.25em; display: flex; align-items: center; gap: 10px;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-            5. IIJ：『管理者権限なし』の具体的制約と実務への影響
+            5. IIJ：管理者権限なしの具体的制約
         </h3>
         <p style="font-size: 0.95em; color: #666; margin-bottom: 20px;">
-            IIJ PaaS型を選択した場合、自社情シスはサーバーの「ドメイン管理者(Domain Admin)」権限を持ちません。これにより生じる制約は以下の通りです。
+            IIJ PaaS型を選択した場合、自社情シスはサーバーの「ドメイン管理者(Domain Admin)」権限を持たない。これにより生じる制約は以下の通り。
         </p>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
             <div style="background: white; padding: 15px; border-radius: 8px; border-left: 5px solid #c0392b;">
@@ -374,7 +373,7 @@
             </div>
         </div>
         <p style="margin-top: 15px; font-size: 0.9em; font-weight: bold; color: #444;">
-            ※Cato NetworksやSECOM等の外部サービス連携においても、IIJ側で培われた実績のある手順で設定が代行されるため、実務上の「詰まり」は最小限に抑えられます。
+            Cato NetworksやSECOM等の外部サービス連携においても、IIJ側で実績のある手順で設定が代行されるため、実務上の問題は最小限。
         </p>
     </div>
 

@@ -156,9 +156,9 @@
         <main class="main-scroll p-0">
             <div class="matrix-container px-12 py-12">
                 <header class="mb-10 text-center">
-                    <span class="tag-blue">Strategic Analysis</span>
+                    <span class="tag-blue">BCP Risk Analysis</span>
                     <h1 class="text-4xl font-black text-white mt-4 tracking-tight">BCP・リスク比較評価マトリクス</h1>
-                    <p class="text-slate-400 mt-2 font-medium">AD・セコム移行案における事業継続性とリスク比較</p>
+                    <p class="text-slate-400 mt-2 font-medium">AD・セコム移行案の事業継続性とリスク比較</p>
                 </header>
 
                 <div class="matrix-card mb-12">
@@ -200,17 +200,17 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                     <div class="scenario-box">
-                        <h3 class="font-black text-white mb-2">SCENARIO A: 本社被災</h3>
+                        <h3 class="font-black text-white mb-2">想定1: 本社被災</h3>
                         <p class="text-xs leading-relaxed text-slate-400">
-                            <b>オンプレミス:</b> サーバー物理損壊により全拠点の認証停止。<br>
-                            <b>クラウド案:</b> 認証基盤は安全。他拠点や在宅ワーカーは通常通り業務継続が可能。
+                            <b>オンプレミス:</b> サーバー物理損壊により全拠点の認証停止<br>
+                            <b>クラウド案:</b> 認証基盤は安全、他拠点や在宅ワーカーは業務継続
                         </p>
                     </div>
                     <div class="scenario-box border-rose-600 bg-rose-600/5">
-                        <h3 class="font-black text-white mb-2 text-rose-400">SCENARIO B: ビル停電</h3>
+                        <h3 class="font-black text-white mb-2 text-rose-400">想定2: ビル停電</h3>
                         <p class="text-xs leading-relaxed text-slate-400">
-                            <b>オンプレミス:</b> サーバー停止に伴う起動トラブル等の二次リスク。<br>
-                            <b>クラウド案:</b> 特段の対応不要。他拠点の業務への影響なし。
+                            <b>オンプレミス:</b> サーバー停止に伴う起動トラブル等の二次リスク<br>
+                            <b>クラウド案:</b> 特段の対応不要、他拠点への影響なし
                         </p>
                     </div>
                 </div>
@@ -226,35 +226,35 @@
                         <!-- ADサーバー -->
                         <div class="bg-slate-900/50 border border-white/10 rounded-xl p-6">
                             <h3 class="text-white font-black mb-3 flex items-center gap-2">
-                                <span class="text-blue-400">🖥️</span> ADサーバー (築地本社)
+                                ADサーバー (築地本社)
                             </h3>
                             <div class="text-sm text-slate-400 space-y-2">
-                                <p><b class="text-rose-400">火災・地震リスク:</b> 全社員がログイン不可（全拠点業務停止）</p>
-                                <p><b class="text-rose-400">停電リスク:</b> UPS切れ後にサーバー停止、起動トラブルの二次リスク</p>
-                                <p><b class="text-rose-400">保守切れ:</b> 5年後にメーカー保守終了。修理・交換不可</p>
-                                <p><b class="text-orange-400">コスト急騰:</b> 6年目以降の延長保守は<b>年間48万円（現在の2倍超）</b></p>
+                                <p><b class="text-rose-400">火災・地震:</b> 全社員がログイン不可（全拠点業務停止）</p>
+                                <p><b class="text-rose-400">停電:</b> UPS切れ後にサーバー停止、起動トラブルの二次リスク</p>
+                                <p><b class="text-rose-400">保守切れ:</b> 5年後にメーカー保守終了、修理・交換不可</p>
+                                <p><b class="text-orange-400">コスト:</b> 6年目以降の延長保守は年間48万円（現在の2倍超）</p>
                             </div>
                         </div>
 
                         <!-- SECOMサーバー -->
                         <div class="bg-slate-900/50 border border-white/10 rounded-xl p-6">
                             <h3 class="text-white font-black mb-3 flex items-center gap-2">
-                                <span class="text-orange-400">🔐</span> SECOM入退室管理サーバー (築地本社)
+                                SECOM入退室管理サーバー (築地本社)
                             </h3>
                             <div class="text-sm text-slate-400 space-y-2">
-                                <p><b class="text-rose-400">火災・地震リスク:</b> 全11拠点の入退室管理が停止</p>
-                                <p class="text-xs pl-4">→ 東京本社、大阪、橋本、福岡、和歌山、京橋、名古屋など</p>
-                                <p><b class="text-rose-400">停電リスク:</b> サーバー停止中は管理者操作不可（カード登録・削除等）</p>
+                                <p><b class="text-rose-400">火災・地震:</b> 全11拠点の入退室管理が停止</p>
+                                <p class="text-xs pl-4">対象: 東京本社、大阪、橋本、福岡、和歌山、京橋、名古屋など</p>
+                                <p><b class="text-rose-400">停電:</b> サーバー停止中は管理者操作不可（カード登録・削除等）</p>
                                 <p><b class="text-orange-400">運用負荷:</b> ハードウェア障害時は情シスが現地対応必須</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="bg-rose-950/30 border border-rose-500/30 rounded-xl p-6">
-                        <h3 class="text-rose-400 font-black mb-3">⚠️ 最大のリスク: 築地本社の単一障害点 (SPOF)</h3>
+                        <h3 class="text-rose-400 font-black mb-3">築地本社の単一障害点 (SPOF)</h3>
                         <p class="text-sm text-slate-300 leading-relaxed">
-                            現状、AD・SECOMの両サーバーが<b>築地本社の同一フロアに設置</b>されています。
-                            これにより、<b>1箇所の被災で全社業務が停止</b>する構造的リスクを抱えています。
+                            現状、AD・SECOMの両サーバーが築地本社の同一フロアに設置されている。
+                            1箇所の被災で全社業務が停止する構造的リスクがある。
                         </p>
                         <ul class="text-sm text-slate-400 mt-4 space-y-2 list-disc list-inside">
                             <li>クラウド移行により、Azureデータセンターの地理冗長化（東日本・西日本）を確保</li>
@@ -268,16 +268,16 @@
                 <!-- クラウドベンダー比較は別資料へ誘導 -->
                 <div class="bg-slate-900 border border-white/5 text-white p-8 rounded-2xl">
                     <h3 class="text-xl font-black mb-4 flex items-center gap-2">
-                        <span class="text-blue-500">📋</span> クラウド化の意思決定後、次に読む資料
+                        次の検討資料
                     </h3>
                     <p class="text-sm leading-loose text-slate-400 mb-4">
                         上記のオンプレリスク分析により「クラウド化すべき」という判断に至った場合、
-                        次は<b>どのベンダーを選ぶか</b>の比較検討が必要です。
+                        次はどのベンダーを選ぶかの比較検討が必要です。
                     </p>
                     <a href="ADクラウド化_3社権限・責任分界点.html"
                        class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-all"
                        style="text-decoration: none;">
-                        → IIJ・USEN・Link-At-Japan 3社の責任体制比較へ
+                        IIJ・USEN・Link-At-Japan 3社の責任体制比較へ
                     </a>
                 </div>
             </div>
