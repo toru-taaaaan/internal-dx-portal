@@ -1,19 +1,14 @@
 name: Deploy to GitHub Pages
-
   on:
     push:
-      branches:
-        - main
-
+      branches: [main]
   permissions:
     contents: read
     pages: write
     id-token: write
-
   concurrency:
-    group: "pages"
+    group: pages
     cancel-in-progress: false
-
   jobs:
     deploy:
       environment:
@@ -21,23 +16,15 @@ name: Deploy to GitHub Pages
         url: ${{ steps.deployment.outputs.page_url }}
       runs-on: ubuntu-latest
       steps:
-        - name: Checkout
-          uses: actions/checkout@v4
-
-        - name: Setup Pages
-          uses: actions/configure-pages@v4
-
+        - uses: actions/checkout@v4
+        - uses: actions/configure-pages@v4
         - name: Prepare deploy directory
           run: |
             mkdir -p _site
             cp -r src/* _site/
             cp -r assets _site/
-
-        - name: Upload artifact
-          uses: actions/upload-pages-artifact@v3
+        - uses: actions/upload-pages-artifact@v3
           with:
-            path: '_site'
-
-        - name: Deploy to GitHub Pages
-          id: deployment
+            path: _site
+        - id: deployment
           uses: actions/deploy-pages@v4
