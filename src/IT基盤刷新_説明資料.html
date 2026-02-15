@@ -2866,7 +2866,8 @@
     let currentSentenceIndex = 0; // 文単位の位置
     let currentUtterance = null;
     let speechRate = 1.0;
-    let currentSentences = []; // 現在のセクションの文配列
+    let currentSentences = []; // 現在のセクションの補正済み文配列
+    let currentOriginalSentences = []; // 元テキストの文配列（スクロール用）
     let highlightedEl = null; // 現在ハイライト中の要素
     let useAI = true; // AI読みがな補正を使用するか
     let correctionCache = {}; // 補正結果のキャッシュ
@@ -2875,11 +2876,15 @@
     const GEMINI_API_KEY = 'AIzaSyBZWgnsUAD5UjU-hRWsQM9r8Z7DQy7gb_Y';
     const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
+    // セクション全体のテキストをまとめてAPI補正（1セクション=1API呼び出し）
     async function correctPronunciation(text) {
         if (!useAI) return text;
         if (correctionCache[text]) return correctionCache[text];
 
         try {
+            const sectionLabel = document.getElementById('speech-current-section');
+            if (sectionLabel) sectionLabel.textContent += '  [AI補正中...]';
+
             const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -2896,7 +2901,8 @@
 - 99.99%→99.99パーセント
 - 会社名: Link-At-Japan→リンクアットジャパン、VarioSecure→バリオセキュア、HPCテック→エイチピーシーテック、Gartner→ガートナー
 - 人名等は変換不要
-- 文の意味や構造は変えない
+- 文の意味や構造は一切変えない
+- 「。」の区切りをそのまま保持する
 - 補足や説明を追加しない
 - 変換後のテキストだけを返す
 
@@ -2906,7 +2912,7 @@ ${text}`
                     }],
                     generationConfig: {
                         temperature: 0.1,
-                        maxOutputTokens: 1024
+                        maxOutputTokens: 4096
                     }
                 })
             });
@@ -2917,8 +2923,7 @@ ${text}`
                     useAI = false;
                     const btn = document.getElementById('ai-toggle');
                     if (btn) { btn.style.background = '#dc2626'; btn.style.borderColor = '#b91c1c'; btn.textContent = 'API上限'; }
-                    const label = document.getElementById('speech-current-section');
-                    if (label) label.textContent += '  [API無料枠を超過しました。AI補正をOFFにして継続します]';
+                    alert('Gemini API無料枠の上限に達しました。しばらく待ってから再度お試しください。AI補正をOFFにして継続します。');
                 }
                 return text;
             }
@@ -3035,20 +3040,18 @@ ${text}`
         prepareSectionAndSpeak();
     }
 
-    // セクションの文を準備して再生開始
-    function prepareSectionAndSpeak() {
+    // セクションの文を準備して再生開始（セクション単位でAI補正）
+    async function prepareSectionAndSpeak() {
         if (currentSectionIndex >= speechSections.length) {
             stopSpeech();
             return;
         }
 
         const section = speechSections[currentSectionIndex];
-        currentSentences = splitToSentences(section.text);
 
         // セクションにスクロール＆ハイライト
         const el = document.getElementById(section.id);
         if (el) {
-            // 前のセクションのハイライトを消す
             speechSections.forEach(s => {
                 const prev = document.getElementById(s.id);
                 if (prev) prev.style.outline = 'none';
@@ -3060,11 +3063,28 @@ ${text}`
         }
 
         updateUI();
+
+        // セクション全体をまとめてAI補正（1セクション=1API呼び出し）
+        let correctedText = section.text;
+        try {
+            correctedText = await correctPronunciation(section.text);
+        } catch (e) {
+            console.warn('Section correction failed:', e);
+        }
+
+        // 再生が停止されていたら中断
+        if (speechState !== 'playing') return;
+
+        // 補正済みテキストを文分割
+        currentSentences = splitToSentences(correctedText);
+        // 元テキストも文分割（スクロール用）
+        currentOriginalSentences = splitToSentences(section.text);
+
         speakCurrentSentence();
     }
 
-    // 文単位で再生（AI補正付き）
-    async function speakCurrentSentence() {
+    // 文単位で再生（補正済みテキストを使用）
+    function speakCurrentSentence() {
         if (currentSentenceIndex >= currentSentences.length) {
             clearContentHighlight();
             currentSectionIndex++;
@@ -3076,18 +3096,10 @@ ${text}`
             return;
         }
 
-        const originalText = currentSentences[currentSentenceIndex];
-
-        // AI読みがな補正（キャッシュ済みならすぐ返る）
-        let sentenceText = originalText;
-        try {
-            sentenceText = await correctPronunciation(originalText);
-        } catch (e) {
-            console.warn('Pronunciation correction failed, using original:', e);
-        }
-
-        // 再生が停止されていたら中断
-        if (speechState !== 'playing') return;
+        // 補正済みテキストで読み上げ
+        const sentenceText = currentSentences[currentSentenceIndex];
+        // 元テキストでスクロール位置検索
+        const originalText = currentOriginalSentences[currentSentenceIndex] || sentenceText;
 
         const utterance = new SpeechSynthesisUtterance(sentenceText);
         utterance.lang = 'ja-JP';
@@ -3098,7 +3110,7 @@ ${text}`
         const jaVoice = voices.find(v => v.lang.startsWith('ja')) || voices[0];
         if (jaVoice) utterance.voice = jaVoice;
 
-        // 文の内容に基づいてページ内要素にスクロール（元テキストで検索）
+        // 元テキストでページ内要素にスクロール
         const section = speechSections[currentSectionIndex];
         findAndScrollToContent(originalText, section.id);
 
