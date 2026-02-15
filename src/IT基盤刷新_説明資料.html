@@ -2732,6 +2732,7 @@
                     <option value="3">3.0x</option>
                     <option value="4">4.0x</option>
                 </select>
+                <button id="ai-toggle" onclick="toggleAI()" style="background: #10b981; border: 1px solid #059669; border-radius: 6px; padding: 4px 8px; font-size: 0.65rem; color: white; cursor: pointer; font-weight: 600;" title="AI読みがな補正のON/OFF">AI補正</button>
             </div>
         </div>
         <!-- 再生ボタン -->
@@ -2867,6 +2868,73 @@
     let speechRate = 1.0;
     let currentSentences = []; // 現在のセクションの文配列
     let highlightedEl = null; // 現在ハイライト中の要素
+    let useAI = true; // AI読みがな補正を使用するか
+    let correctionCache = {}; // 補正結果のキャッシュ
+
+    // Gemini APIで読みがな補正
+    const GEMINI_API_KEY = 'AIzaSyBZWgnsUAD5UjU-hRWsQM9r8Z7DQy7gb_Y';
+    const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+
+    async function correctPronunciation(text) {
+        if (!useAI) return text;
+        if (correctionCache[text]) return correctionCache[text];
+
+        try {
+            const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{
+                            text: `以下の日本語テキストを、音声合成（TTS）で正しく読み上げられるように変換してください。
+
+ルール:
+- 英字略語はカタカナ読みに変換: IIJ→アイアイジェイ、AD→エーディー、SECOM→セコム、USEN→ユーセン、AWS→エーダブリューエス、Azure→アジュール、GIO→ジーアイオー、SLA→エスエルエー、VPN→ブイピーエヌ、SD-WAN→エスディーワン、SASE→サシー、UTM→ユーティーエム、Cato→ケイト、SCSK→エスシーエスケー、Entra ID→エントラアイディー、RSAT→アールサット、RDP→アールディーピー、PoC→ピーオーシー、DDoS→ディードス、SSL→エスエスエル、TLS→ティーエルエス、FW→ファイアウォール、IDS→アイディーエス、IPS→アイピーエス、QoS→キューオーエス、BN→ビーエヌ、DP&R→ディーピーアンドアール、AH→エーエイチ、IoT→アイオーティー、MFA→エムエフエー、PC→ピーシー、OS→オーエス、AI→エーアイ、UPS→ユーピーエス、LBO→エルビーオー
+- 金額は読みやすく: ¥722,150→72万2150円、¥170,400→17万400円、¥2,764,850→276万4850円、約¥467,000→約46万7000円
+- 5年間総額の大きな数字: 約¥1,022万→約1022万円、¥46,093,850→約4609万円、約¥28,500,000→約2850万円
+- 月額約10万→月額約10万円
+- 99.99%→99.99パーセント
+- 会社名: Link-At-Japan→リンクアットジャパン、VarioSecure→バリオセキュア、HPCテック→エイチピーシーテック、Gartner→ガートナー
+- 人名等は変換不要
+- 文の意味や構造は変えない
+- 補足や説明を追加しない
+- 変換後のテキストだけを返す
+
+テキスト:
+${text}`
+                        }]
+                    }],
+                    generationConfig: {
+                        temperature: 0.1,
+                        maxOutputTokens: 1024
+                    }
+                })
+            });
+
+            if (!response.ok) {
+                console.warn('Gemini API error:', response.status);
+                if (response.status === 429 || response.status === 403) {
+                    useAI = false;
+                    const btn = document.getElementById('ai-toggle');
+                    if (btn) { btn.style.background = '#dc2626'; btn.style.borderColor = '#b91c1c'; btn.textContent = 'API上限'; }
+                    const label = document.getElementById('speech-current-section');
+                    if (label) label.textContent += '  [API無料枠を超過しました。AI補正をOFFにして継続します]';
+                }
+                return text;
+            }
+
+            const data = await response.json();
+            const corrected = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+            if (corrected && corrected.length > 0) {
+                correctionCache[text] = corrected;
+                return corrected;
+            }
+            return text;
+        } catch (e) {
+            console.warn('Gemini API call failed:', e);
+            return text;
+        }
+    }
 
     // テキストを文単位に分割（。で区切る）
     function splitToSentences(text) {
@@ -2995,10 +3063,9 @@
         speakCurrentSentence();
     }
 
-    // 文単位で再生
-    function speakCurrentSentence() {
+    // 文単位で再生（AI補正付き）
+    async function speakCurrentSentence() {
         if (currentSentenceIndex >= currentSentences.length) {
-            // このセクション終了、次のセクションへ
             clearContentHighlight();
             currentSectionIndex++;
             currentSentenceIndex = 0;
@@ -3009,7 +3076,19 @@
             return;
         }
 
-        const sentenceText = currentSentences[currentSentenceIndex];
+        const originalText = currentSentences[currentSentenceIndex];
+
+        // AI読みがな補正（キャッシュ済みならすぐ返る）
+        let sentenceText = originalText;
+        try {
+            sentenceText = await correctPronunciation(originalText);
+        } catch (e) {
+            console.warn('Pronunciation correction failed, using original:', e);
+        }
+
+        // 再生が停止されていたら中断
+        if (speechState !== 'playing') return;
+
         const utterance = new SpeechSynthesisUtterance(sentenceText);
         utterance.lang = 'ja-JP';
         utterance.rate = speechRate;
@@ -3019,18 +3098,26 @@
         const jaVoice = voices.find(v => v.lang.startsWith('ja')) || voices[0];
         if (jaVoice) utterance.voice = jaVoice;
 
-        // 文の内容に基づいてページ内要素にスクロール
+        // 文の内容に基づいてページ内要素にスクロール（元テキストで検索）
         const section = speechSections[currentSectionIndex];
-        findAndScrollToContent(sentenceText, section.id);
+        findAndScrollToContent(originalText, section.id);
 
         // 進捗テキスト更新
         const sectionLabel = document.getElementById('speech-current-section');
         if (sectionLabel) {
-            const sentencePreview = sentenceText.length > 40 ? sentenceText.substring(0, 40) + '...' : sentenceText;
+            const sentencePreview = originalText.length > 40 ? originalText.substring(0, 40) + '...' : originalText;
             sectionLabel.textContent = section.title + '  |  ' + sentencePreview;
         }
 
         utterance.onend = function() {
+            if (speechState === 'playing') {
+                currentSentenceIndex++;
+                speakCurrentSentence();
+            }
+        };
+
+        utterance.onerror = function(e) {
+            console.warn('Speech error:', e);
             if (speechState === 'playing') {
                 currentSentenceIndex++;
                 speakCurrentSentence();
@@ -3091,9 +3178,22 @@
     function updateSpeechRate() {
         speechRate = parseFloat(document.getElementById('speech-rate').value);
         if (speechState === 'playing') {
-            // 現在の文番号を保持して、その文から新しいrateで再開
             window.speechSynthesis.cancel();
             speakCurrentSentence();
+        }
+    }
+
+    function toggleAI() {
+        useAI = !useAI;
+        const btn = document.getElementById('ai-toggle');
+        if (useAI) {
+            btn.style.background = '#10b981';
+            btn.style.borderColor = '#059669';
+            btn.textContent = 'AI補正';
+        } else {
+            btn.style.background = '#94a3b8';
+            btn.style.borderColor = '#64748b';
+            btn.textContent = 'AI OFF';
         }
     }
 
