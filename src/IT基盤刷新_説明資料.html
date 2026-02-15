@@ -3110,7 +3110,7 @@ ${text}`
             // スクロール先: trの場合はその行自体、sp-*の場合は次のh3、sectionの場合はsection自体
             const scrollTarget = el.tagName === 'TR' ? el : (el.tagName === 'SECTION' ? el : (el.nextElementSibling && el.nextElementSibling.tagName === 'H3' ? el.nextElementSibling : el));
             const rect = scrollTarget.getBoundingClientRect();
-            const offset = 40; // 見出しの上に40pxの余白を確保
+            const offset = el.tagName === 'TR' ? 120 : 40; // trは表ヘッダー分を考慮して大きめのオフセット
             window.scrollTo({ top: window.scrollY + rect.top - offset, behavior: 'smooth' });
             // ハイライト: trの場合は行自体、それ以外はsection要素に適用
             const highlightEl = el.tagName === 'TR' ? el : targetEl;
