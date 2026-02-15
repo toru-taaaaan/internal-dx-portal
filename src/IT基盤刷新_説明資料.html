@@ -1409,6 +1409,261 @@
 
     </main>
 
+    <!-- ========================================= -->
+    <!-- 音声読み上げ機能（説明練習用） -->
+    <!-- ========================================= -->
+    <div id="speech-panel" style="position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+        <!-- 進捗表示 -->
+        <div id="speech-progress" style="display: none; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 320px; font-family: 'Noto Sans JP', sans-serif;">
+            <div style="font-size: 0.7rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">読み上げ中</div>
+            <div id="speech-current-section" style="font-size: 0.85rem; font-weight: 600; color: #0f172a; margin-top: 2px;"></div>
+            <div style="background: #f1f5f9; border-radius: 4px; height: 4px; margin-top: 8px; overflow: hidden;">
+                <div id="speech-bar" style="background: #3b82f6; height: 100%; width: 0%; transition: width 0.3s;"></div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 8px;">
+                <button onclick="speechSkipPrev()" style="background: none; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-size: 0.75rem; color: #64748b;">◀ 前</button>
+                <button onclick="speechSkipNext()" style="background: none; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-size: 0.75rem; color: #64748b;">次 ▶</button>
+                <select id="speech-rate" onchange="updateSpeechRate()" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 8px; font-size: 0.7rem; color: #64748b; cursor: pointer;">
+                    <option value="0.8">0.8x</option>
+                    <option value="1" selected>1.0x</option>
+                    <option value="1.2">1.2x</option>
+                    <option value="1.5">1.5x</option>
+                </select>
+            </div>
+        </div>
+        <!-- 再生ボタン -->
+        <button id="speech-btn" onclick="toggleSpeech()" style="
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        " title="説明を音声で読み上げる（練習用）">
+            ▶
+        </button>
+    </div>
+
+    <script>
+    // ========================================
+    // 説明スクリプト（話し言葉）
+    // ========================================
+    const speechSections = [
+        {
+            id: 'sec1',
+            title: 'この資料について',
+            text: 'まず、この資料の全体像からご説明します。今回検討しているのは、3つの領域です。1つ目が、社員のPCログインやファイルサーバーを管理しているADサーバー。2つ目が、11拠点の入退室を管理しているSECOMサーバー。3つ目が、全拠点をつなぐネットワークです。いずれも、築地本社のサーバー室にある機器に関わるものです。'
+        },
+        {
+            id: 'sec2',
+            title: 'サーバー室の現状',
+            text: '現在、築地本社のサーバー室には、大きく2台のサーバーがあります。1台目がADサーバーです。これは、社員がPCにログインするときに「この人は社員かどうか」「どのファイルにアクセスしてよいか」を確認する仕組みです。もう1台がSECOMサーバーで、各拠点のドアのカードキーを管理しています。この2台は、いずれも2020年に導入されたもので、標準の5年保守は既に終了しています。現在は延長保守で対応しており、期限は2027年10月末です。残り約1年8ヶ月です。そして、どちらも予備の機器がない、いわゆる冗長構成がない状態です。'
+        },
+        {
+            id: 'sec3',
+            title: 'このまま使い続けた場合',
+            text: '仮に、このまま使い続けた場合について整理します。まず、火災や地震でサーバーが物理的に壊れた場合。ADサーバーが停止すると、全社員がPCにログインできなくなります。復旧には新しいサーバーの調達と構築が必要で、数日から1週間程度かかる見込みです。SECOMサーバーが停止すると、11拠点の入退室管理が止まります。また、延長保守の期限である2027年10月以降は、メーカー修理を受けられなくなります。なお、上場企業のIT統制では、基幹システムの冗長構成は一般的な監査確認項目に含まれています。現在の構成は、2台が同じフロアに1台ずつあり、単一障害点に該当します。'
+        },
+        {
+            id: 'sec4',
+            title: 'ADクラウド移行 3社比較',
+            text: 'そこで、ADサーバーをクラウドに移行する案を検討しました。3社から提案を受けています。IIJは「お任せ型」で、サーバーの管理を全てIIJに任せる方式です。自社ではADの操作画面だけを使い、サーバー本体には触れません。パッチ適用や監視も全てIIJが行います。USENは「分離型」で、AWS上に仮想サーバーを立て、OSやADの管理は自社で行います。Link-At-Japanは「並走型」で、Azure上に自社名義の環境を構築し、Link-At-Japanが技術支援する形です。費用面では、初期費用はUSENが約86万円と最も安く、月額ではLink-At-Japanが約10万円と最も安くなっています。5年間の総額で見ると、Link-At-Japanが約768万円、USENが約832万円、IIJが約1,191万円です。IIJは全て任せる分、費用は高めですが、運用負荷が最も軽い構成になっています。'
+        },
+        {
+            id: 'sec5',
+            title: 'Entra IDについて',
+            text: 'ADの移行を検討する中で、「Entra IDを使えばADサーバー自体が不要になるのでは」という疑問がありました。結論から申し上げると、ADとEntra IDは役割が違います。ADは社内ネットワークの管理、つまりPCログインやファイルサーバーのアクセス権を制御するものです。一方、Entra IDはOffice 365などクラウドサービスのログインを管理するものです。Entra IDだけにすると、ファイルサーバーへの自動ログインや、PCの詳細な設定制御ができなくなります。実際、大手企業の約80%は、ADを残しつつEntra IDと併用するハイブリッド構成を採用しています。まずADのクラウド移行を進め、Entra IDの追加機能は段階的に導入するのが現実的です。'
+        },
+        {
+            id: 'sec6',
+            title: 'SECOM入退室管理',
+            text: 'SECOMの入退室管理サーバーは、ADと同じサーバー室に設置されています。ADを移行するなら、同時にSECOMも検討することで効率が上がります。SECOM単独の5年間総額は、IIJが約896万円、USENが約862万円、Link-At-Japanが約757万円です。そして、ADとSECOMを同じベンダーにまとめて依頼すると、VPN構築などの共通作業が1回で済むため、SECOMの構築費用が下がります。削減額は、IIJで約29万円、USENで約22万円、Link-At-Japanで約20万円です。'
+        },
+        {
+            id: 'sec7',
+            title: 'ネットワーク刷新',
+            text: '次にネットワークです。現在、各拠点のインターネット通信は全て築地本社を経由しています。そのため、Office 365やGoogle Workspaceなどクラウドサービスの利用時に速度低下が起きています。4つのシナリオを検討しています。1つ目は現状維持で、月額約17万円。ただし現在の課題は解消しません。2つ目はVarioSecureにオプション追加で、月額約123万円。部分的な改善のみです。3つ目がIIJ Omnibusで、月額約39万円。各拠点から直接インターネットに接続できる構成です。4つ目がCato SASEで、現在見積を依頼中です。なお、ADの移行先にIIJを選んだ場合、ネットワークもIIJ Omnibusの利用が前提になるという依存関係があります。'
+        },
+        {
+            id: 'sec8',
+            title: '費用の全体像',
+            text: '最後に、3領域の費用を合わせた全体像です。AD、SECOM、ネットワークを合算した場合、5年間の概算は約3,500万円から4,100万円程度です。ベンダーとシナリオの組み合わせにより変動します。なお、現状維持の場合でも費用は発生します。延長保守終了後にはサーバーの更新が必要ですし、ネットワーク回線の月額費用も継続します。'
+        },
+        {
+            id: 'sec9',
+            title: '今後の進め方',
+            text: '現在、いくつかのベンダーに追加の確認を行っています。USENには緊急パッチ対応の方針を、Link-At-JapanにはSLAの数値を、Cato SASEにはSCSK社経由で見積を依頼しています。今後のスケジュールとしては、2月から3月にかけてベンダー回答を収集し、4月に最終選定と来期予算申請、下半期から段階的に移行を開始する案で考えています。ご判断いただきたい事項は3点です。1点目、ADサーバーのクラウド移行の方針とベンダー選定の方向性。2点目、SECOMをADと同時に進めるか。3点目、ネットワーク刷新は残りの見積が出揃った時点で改めて検討するか、です。以上が、現在の検討状況です。'
+        }
+    ];
+
+    let speechState = 'stopped'; // stopped, playing, paused
+    let currentSectionIndex = 0;
+    let currentUtterance = null;
+    let speechRate = 1.0;
+
+    function toggleSpeech() {
+        if (speechState === 'stopped') {
+            startSpeech(0);
+        } else if (speechState === 'playing') {
+            pauseSpeech();
+        } else if (speechState === 'paused') {
+            resumeSpeech();
+        }
+    }
+
+    function startSpeech(fromIndex) {
+        window.speechSynthesis.cancel();
+        currentSectionIndex = fromIndex;
+        speechState = 'playing';
+        updateUI();
+        speakCurrentSection();
+    }
+
+    function speakCurrentSection() {
+        if (currentSectionIndex >= speechSections.length) {
+            stopSpeech();
+            return;
+        }
+
+        const section = speechSections[currentSectionIndex];
+        const utterance = new SpeechSynthesisUtterance(section.text);
+        utterance.lang = 'ja-JP';
+        utterance.rate = speechRate;
+        utterance.pitch = 1.0;
+
+        // 日本語の音声を選択
+        const voices = window.speechSynthesis.getVoices();
+        const jaVoice = voices.find(v => v.lang.startsWith('ja')) || voices[0];
+        if (jaVoice) utterance.voice = jaVoice;
+
+        utterance.onend = function() {
+            if (speechState === 'playing') {
+                currentSectionIndex++;
+                updateUI();
+                // 少し間を置いて次のセクション
+                setTimeout(() => speakCurrentSection(), 800);
+            }
+        };
+
+        currentUtterance = utterance;
+        updateUI();
+
+        // 該当セクションにスクロール
+        const el = document.getElementById(section.id);
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            el.style.outline = '3px solid #3b82f6';
+            el.style.outlineOffset = '8px';
+            el.style.transition = 'outline 0.3s';
+            // 前のセクションのハイライトを消す
+            if (currentSectionIndex > 0) {
+                const prevEl = document.getElementById(speechSections[currentSectionIndex - 1].id);
+                if (prevEl) { prevEl.style.outline = 'none'; }
+            }
+        }
+
+        window.speechSynthesis.speak(utterance);
+    }
+
+    function pauseSpeech() {
+        window.speechSynthesis.pause();
+        speechState = 'paused';
+        updateUI();
+    }
+
+    function resumeSpeech() {
+        window.speechSynthesis.resume();
+        speechState = 'playing';
+        updateUI();
+    }
+
+    function stopSpeech() {
+        window.speechSynthesis.cancel();
+        speechState = 'stopped';
+        currentSectionIndex = 0;
+        // 全セクションのハイライトを消す
+        speechSections.forEach(s => {
+            const el = document.getElementById(s.id);
+            if (el) el.style.outline = 'none';
+        });
+        updateUI();
+    }
+
+    function speechSkipNext() {
+        if (currentSectionIndex < speechSections.length - 1) {
+            window.speechSynthesis.cancel();
+            currentSectionIndex++;
+            updateUI();
+            speakCurrentSection();
+        }
+    }
+
+    function speechSkipPrev() {
+        if (currentSectionIndex > 0) {
+            window.speechSynthesis.cancel();
+            currentSectionIndex--;
+            updateUI();
+            speakCurrentSection();
+        }
+    }
+
+    function updateSpeechRate() {
+        speechRate = parseFloat(document.getElementById('speech-rate').value);
+        // 読み上げ中なら現在のセクションを最初からやり直す
+        if (speechState === 'playing') {
+            window.speechSynthesis.cancel();
+            speakCurrentSection();
+        }
+    }
+
+    function updateUI() {
+        const btn = document.getElementById('speech-btn');
+        const progress = document.getElementById('speech-progress');
+        const sectionLabel = document.getElementById('speech-current-section');
+        const bar = document.getElementById('speech-bar');
+
+        if (speechState === 'stopped') {
+            btn.textContent = '▶';
+            btn.style.background = 'linear-gradient(135deg, #3b82f6, #1d4ed8)';
+            btn.title = '説明を音声で読み上げる（練習用）';
+            progress.style.display = 'none';
+        } else if (speechState === 'playing') {
+            btn.textContent = '⏸';
+            btn.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
+            btn.title = '一時停止';
+            progress.style.display = 'block';
+            if (currentSectionIndex < speechSections.length) {
+                sectionLabel.textContent = speechSections[currentSectionIndex].title;
+                bar.style.width = ((currentSectionIndex + 1) / speechSections.length * 100) + '%';
+            }
+        } else if (speechState === 'paused') {
+            btn.textContent = '▶';
+            btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+            btn.title = '再開';
+            progress.style.display = 'block';
+        }
+    }
+
+    // 音声一覧の読み込み（ブラウザによっては非同期）
+    if (window.speechSynthesis) {
+        window.speechSynthesis.getVoices();
+        window.speechSynthesis.onvoiceschanged = function() {
+            window.speechSynthesis.getVoices();
+        };
+    }
+
+    // 停止ボタン（進捗パネルをダブルクリックで停止）
+    document.getElementById('speech-progress').addEventListener('dblclick', function() {
+        stopSpeech();
+    });
+    </script>
+
 </body>
 
 </html>
