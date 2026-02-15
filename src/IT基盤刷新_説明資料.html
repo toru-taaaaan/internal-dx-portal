@@ -2733,6 +2733,9 @@
                     <option value="4">4.0x</option>
                 </select>
                 <button id="ai-toggle" onclick="toggleAI()" style="background: #10b981; border: 1px solid #059669; border-radius: 6px; padding: 4px 8px; font-size: 0.65rem; color: white; cursor: pointer; font-weight: 600;" title="AI読みがな補正のON/OFF">AI補正</button>
+                <select id="voice-select" onchange="changeVoice()" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 6px; font-size: 0.6rem; color: #64748b; cursor: pointer; max-width: 120px;" title="音声を選択">
+                    <option value="">自動選択</option>
+                </select>
             </div>
         </div>
         <!-- 再生ボタン -->
@@ -3104,10 +3107,10 @@ ${text}`
         const utterance = new SpeechSynthesisUtterance(sentenceText);
         utterance.lang = 'ja-JP';
         utterance.rate = speechRate;
-        utterance.pitch = 1.0;
+        utterance.pitch = 0.95;
 
         const voices = window.speechSynthesis.getVoices();
-        const jaVoice = voices.find(v => v.lang.startsWith('ja')) || voices[0];
+        const jaVoice = selectBestJapaneseVoice(voices);
         if (jaVoice) utterance.voice = jaVoice;
 
         // 元テキストでページ内要素にスクロール
@@ -3124,7 +3127,9 @@ ${text}`
         utterance.onend = function() {
             if (speechState === 'playing') {
                 currentSentenceIndex++;
-                speakCurrentSentence();
+                // 文と文の間に短いポーズを入れて自然に
+                const pauseMs = speechRate >= 2 ? 100 : 200;
+                setTimeout(() => speakCurrentSentence(), pauseMs);
             }
         };
 
@@ -3240,11 +3245,69 @@ ${text}`
         }
     }
 
+    // 高品質日本語音声を選択する関数
+    let cachedBestVoice = null;
+    let userSelectedVoice = null; // ユーザーが手動選択した音声
+
+    function selectBestJapaneseVoice(voices) {
+        if (userSelectedVoice) return userSelectedVoice;
+        if (cachedBestVoice) return cachedBestVoice;
+        const jaVoices = voices.filter(v => v.lang === 'ja-JP' || v.lang === 'ja');
+        if (jaVoices.length === 0) return voices[0] || null;
+
+        // 優先順位: Google日本語 > Microsoft Online > その他Online > ローカル
+        const priorities = [
+            v => v.name.includes('Google') && v.name.includes('日本語'),
+            v => v.name.includes('Google') && v.lang.startsWith('ja'),
+            v => v.name.includes('Nanami') && v.name.includes('Online'),
+            v => v.name.includes('Microsoft') && v.name.includes('Online'),
+            v => v.name.includes('Online') || v.name.includes('Natural'),
+            v => !v.localService,
+        ];
+        for (const check of priorities) {
+            const found = jaVoices.find(check);
+            if (found) { cachedBestVoice = found; return found; }
+        }
+        cachedBestVoice = jaVoices[0];
+        return jaVoices[0];
+    }
+
+    function populateVoiceSelect(voices) {
+        const select = document.getElementById('voice-select');
+        if (!select) return;
+        const jaVoices = voices.filter(v => v.lang === 'ja-JP' || v.lang === 'ja');
+        // 既存オプションをクリア（自動選択は残す）
+        while (select.options.length > 1) select.remove(1);
+        jaVoices.forEach((v, i) => {
+            const opt = document.createElement('option');
+            opt.value = i;
+            const quality = v.localService ? '' : ' (高品質)';
+            opt.textContent = v.name.replace('Microsoft ', 'MS ').replace('Japanese', 'JP').substring(0, 20) + quality;
+            select.appendChild(opt);
+        });
+    }
+
+    function changeVoice() {
+        const select = document.getElementById('voice-select');
+        const voices = window.speechSynthesis.getVoices();
+        const jaVoices = voices.filter(v => v.lang === 'ja-JP' || v.lang === 'ja');
+        if (select.value === '') {
+            userSelectedVoice = null;
+            cachedBestVoice = null;
+        } else {
+            userSelectedVoice = jaVoices[parseInt(select.value)] || null;
+        }
+    }
+
     // 音声一覧の読み込み（ブラウザによっては非同期）
     if (window.speechSynthesis) {
         window.speechSynthesis.getVoices();
         window.speechSynthesis.onvoiceschanged = function() {
-            window.speechSynthesis.getVoices();
+            cachedBestVoice = null;
+            const voices = window.speechSynthesis.getVoices();
+            populateVoiceSelect(voices);
+            const best = selectBestJapaneseVoice(voices);
+            if (best) console.log('選択された音声:', best.name, best.lang, best.localService ? '(ローカル)' : '(オンライン)');
         };
     }
 
