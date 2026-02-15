@@ -2733,9 +2733,6 @@
                     <option value="4">4.0x</option>
                 </select>
                 <button id="ai-toggle" onclick="toggleAI()" style="background: #10b981; border: 1px solid #059669; border-radius: 6px; padding: 4px 8px; font-size: 0.65rem; color: white; cursor: pointer; font-weight: 600;" title="AI読みがな補正のON/OFF">AI補正</button>
-                <select id="voice-select" onchange="changeVoice()" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 6px; font-size: 0.6rem; color: #64748b; cursor: pointer; max-width: 120px;" title="音声を選択">
-                    <option value="">自動選択</option>
-                </select>
             </div>
         </div>
         <!-- 再生ボタン -->
@@ -2924,9 +2921,7 @@ ${text}`
                 console.warn('Gemini API error:', response.status);
                 if (response.status === 429 || response.status === 403) {
                     useAI = false;
-                    const btn = document.getElementById('ai-toggle');
-                    if (btn) { btn.style.background = '#dc2626'; btn.style.borderColor = '#b91c1c'; btn.textContent = 'API上限'; }
-                    alert('Gemini API無料枠の上限に達しました。しばらく待ってから再度お試しください。AI補正をOFFにして継続します。');
+                    alert('Gemini API無料枠の上限に達しました。AI補正をOFFにして継続します。');
                 }
                 return text;
             }
@@ -2950,59 +2945,101 @@ ${text}`
     }
 
     // 金額・キーワードを含む要素をページ内から探してスクロール
-    function findAndScrollToContent(sentence, sectionId) {
-        // 前回のハイライトを消す
-        clearContentHighlight();
+    let lastScrollTop = 0; // 前回スクロール位置（逆戻り防止）
 
-        // 金額パターンを抽出
-        const moneyPatterns = sentence.match(/[¥￥][\d,]+|約[\d,]+万|[\d,]+万円|月額約?\d+万|[\d,]+円/g);
-        const keyTerms = sentence.match(/IIJ|Cato|USEN|Link-At-Japan|VarioSecure|Omnibus|SECOM|Entra ID|Socket|ルーター/g);
+    function findAndScrollToContent(sentence, sectionId) {
+        clearContentHighlight();
 
         const section = document.getElementById(sectionId);
         if (!section) return;
 
-        // 金額が含まれる場合、テーブルのセルから該当金額を探す
-        if (moneyPatterns && moneyPatterns.length > 0) {
-            const cells = section.querySelectorAll('td, th');
-            for (const cell of cells) {
-                for (const pattern of moneyPatterns) {
-                    // ¥やカンマを除去して数値比較
-                    const cleanPattern = pattern.replace(/[¥￥約万円,]/g, '');
-                    const cleanCell = cell.textContent.replace(/[¥￥約万円,\s※\d]/g, '');
-                    if (cell.textContent.includes(cleanPattern) || cell.textContent.includes(pattern)) {
-                        highlightElement(cell.closest('tr') || cell);
-                        return;
-                    }
+        // 文からキーフレーズを複数抽出（長い順にソート → 長い方が精度が高い）
+        const keyPhrases = extractKeyPhrases(sentence);
+        if (keyPhrases.length === 0) return; // マッチ候補がなければ何もしない
+
+        // セクション内の全要素を取得（テーブル行、リスト、段落など）
+        const candidates = section.querySelectorAll('tr, li, p, h3, h4, strong, div.risk-note, div.evidence-warning, div[style*="border-left"]');
+
+        let bestMatch = null;
+        let bestScore = 0;
+
+        for (const el of candidates) {
+            const elText = el.textContent;
+            if (elText.length < 3 || elText.length > 500) continue;
+
+            let score = 0;
+            let matched = 0;
+            for (const phrase of keyPhrases) {
+                if (elText.includes(phrase.text)) {
+                    score += phrase.weight;
+                    matched++;
                 }
+            }
+            // 複数フレーズが同時にマッチする要素を優先
+            if (matched >= 2) score *= 1.5;
+
+            if (score > bestScore) {
+                bestScore = score;
+                bestMatch = el;
             }
         }
 
-        // キーワードで見出しやリスト要素を探す
-        if (keyTerms && keyTerms.length > 0) {
-            const elements = section.querySelectorAll('h3, li, td, p, strong');
-            for (const el of elements) {
-                let matchCount = 0;
-                for (const term of keyTerms) {
-                    if (el.textContent.includes(term)) matchCount++;
+        // スコアが閾値未満なら移動しない（間違いを避ける）
+        if (!bestMatch || bestScore < 3) return;
+
+        // 逆戻り防止: 前回より上にはスクロールしない（同セクション内）
+        const elTop = bestMatch.getBoundingClientRect().top + window.scrollY;
+        if (elTop < lastScrollTop - 100) return; // 100px程度の余裕
+
+        lastScrollTop = elTop;
+        highlightElement(bestMatch);
+    }
+
+    function extractKeyPhrases(sentence) {
+        const phrases = [];
+
+        // 金額パターン（最も信頼度が高い）
+        const moneyMatches = sentence.match(/約?[\d,]+万円|月額約?[\d,]+万|[\d,]+円|約[\d,]+万/g);
+        if (moneyMatches) {
+            for (const m of moneyMatches) {
+                // 数値部分だけ抽出して照合用に
+                const numOnly = m.replace(/[約万円月額,]/g, '');
+                if (numOnly.length >= 2) {
+                    phrases.push({ text: numOnly, weight: 5 });
                 }
-                if (matchCount >= 1 && el.textContent.length < 200) {
-                    highlightElement(el);
-                    return;
-                }
+                phrases.push({ text: m, weight: 8 });
             }
         }
 
-        // 文の冒頭キーワードでマッチ（「1つ目」「2つ目」「Step 1」等）
-        const orderMatch = sentence.match(/^(1つ目|2つ目|3つ目|4つ目|まず|次に|最後に|Step\s?\d)/);
-        if (orderMatch) {
-            const elements = section.querySelectorAll('li, .card, div[style*="border-left"], strong, h3');
-            for (const el of elements) {
-                if (el.textContent.includes(orderMatch[1]) || el.textContent.includes(orderMatch[0])) {
-                    highlightElement(el);
-                    return;
-                }
-            }
+        // 固有名詞（信頼度高）
+        const properNouns = sentence.match(/IIJ(?:\s?Omnibus|\s?GIO)?|Cato(?:\s?SASE|\s?Client|\s?Socket)?|USEN|Link-At-Japan|VarioSecure|SECOM|Entra\s?ID|SCSK|Azure|AWS|Google\s?(?:Meet|Workspace)|BN拠点|Buddynet/g);
+        if (properNouns) {
+            const unique = [...new Set(properNouns)];
+            for (const n of unique) phrases.push({ text: n, weight: 3 });
         }
+
+        // 拠点名（信頼度中）
+        const locations = sentence.match(/築地|多摩|橋本|大阪|京橋|仙台|鬼怒川|名古屋|福岡|和歌山/g);
+        if (locations) {
+            const unique = [...new Set(locations)];
+            for (const l of unique) phrases.push({ text: l, weight: 2 });
+        }
+
+        // 技術用語（信頼度中）
+        const techTerms = sentence.match(/ルーター|Socket|VPN|ファイアウォール|SSL検査|多要素認証|ゼロトラスト|バックアップ|パッチ|冗長/g);
+        if (techTerms) {
+            const unique = [...new Set(techTerms)];
+            for (const t of unique) phrases.push({ text: t, weight: 2 });
+        }
+
+        // 具体的な数字＋単位（信頼度中）
+        const numbers = sentence.match(/\d+拠点|\d+台|\d+名|\d+年|2027年|2034年|5年間|月額/g);
+        if (numbers) {
+            const unique = [...new Set(numbers)];
+            for (const n of unique) phrases.push({ text: n, weight: 2 });
+        }
+
+        return phrases;
     }
 
     function highlightElement(el) {
@@ -3051,6 +3088,7 @@ ${text}`
         }
 
         const section = speechSections[currentSectionIndex];
+        lastScrollTop = 0; // セクション切替時にリセット
 
         // セクションにスクロール＆ハイライト
         const el = document.getElementById(section.id);
@@ -3162,6 +3200,7 @@ ${text}`
         speechState = 'stopped';
         currentSectionIndex = 0;
         currentSentenceIndex = 0;
+        lastScrollTop = 0;
         clearContentHighlight();
         speechSections.forEach(s => {
             const el = document.getElementById(s.id);
@@ -3247,10 +3286,8 @@ ${text}`
 
     // 高品質日本語音声を選択する関数
     let cachedBestVoice = null;
-    let userSelectedVoice = null; // ユーザーが手動選択した音声
 
     function selectBestJapaneseVoice(voices) {
-        if (userSelectedVoice) return userSelectedVoice;
         if (cachedBestVoice) return cachedBestVoice;
         const jaVoices = voices.filter(v => v.lang === 'ja-JP' || v.lang === 'ja');
         if (jaVoices.length === 0) return voices[0] || null;
@@ -3272,40 +3309,12 @@ ${text}`
         return jaVoices[0];
     }
 
-    function populateVoiceSelect(voices) {
-        const select = document.getElementById('voice-select');
-        if (!select) return;
-        const jaVoices = voices.filter(v => v.lang === 'ja-JP' || v.lang === 'ja');
-        // 既存オプションをクリア（自動選択は残す）
-        while (select.options.length > 1) select.remove(1);
-        jaVoices.forEach((v, i) => {
-            const opt = document.createElement('option');
-            opt.value = i;
-            const quality = v.localService ? '' : ' (高品質)';
-            opt.textContent = v.name.replace('Microsoft ', 'MS ').replace('Japanese', 'JP').substring(0, 20) + quality;
-            select.appendChild(opt);
-        });
-    }
-
-    function changeVoice() {
-        const select = document.getElementById('voice-select');
-        const voices = window.speechSynthesis.getVoices();
-        const jaVoices = voices.filter(v => v.lang === 'ja-JP' || v.lang === 'ja');
-        if (select.value === '') {
-            userSelectedVoice = null;
-            cachedBestVoice = null;
-        } else {
-            userSelectedVoice = jaVoices[parseInt(select.value)] || null;
-        }
-    }
-
     // 音声一覧の読み込み（ブラウザによっては非同期）
     if (window.speechSynthesis) {
         window.speechSynthesis.getVoices();
         window.speechSynthesis.onvoiceschanged = function() {
             cachedBestVoice = null;
             const voices = window.speechSynthesis.getVoices();
-            populateVoiceSelect(voices);
             const best = selectBestJapaneseVoice(voices);
             if (best) console.log('選択された音声:', best.name, best.lang, best.localService ? '(ローカル)' : '(オンライン)');
         };
