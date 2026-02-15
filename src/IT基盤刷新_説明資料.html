@@ -20,7 +20,7 @@
         }
 
         /* 音声読み上げ時のスクロール位置調整 */
-        section[id], div[id^="sp-"] {
+        section[id], div[id^="sp-"], tr[id^="risk-row"] {
             scroll-margin-top: 2rem;
         }
 
@@ -824,27 +824,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr id="risk-row-1">
                         <td style="font-weight: 600;">火災・地震</td>
                         <td>2台とも同一フロアのため、同時に物理損壊する可能性あり。両方が損壊した場合、全社員のPCログイン不可。復旧には新規サーバーの調達・構築が必要（数日〜1週間程度）</td>
                         <td>各拠点の入退室は拠点側機器で継続可能。ただし勤怠管理システムとの自動連携が停止</td>
                     </tr>
-                    <tr>
+                    <tr id="risk-row-2">
                         <td style="font-weight: 600;">漏水（上階からの水漏れ等）</td>
                         <td>サーバー室に防水対策がないため、上階の給排水管破損や空調ドレンの詰まり等で浸水した場合、2台とも同時に損壊する可能性あり</td>
                         <td>同様に浸水で損壊の可能性。各拠点の入退室は継続可能だが、勤怠連携が停止</td>
                     </tr>
-                    <tr>
+                    <tr id="risk-row-3">
                         <td style="font-weight: 600;">ビル停電</td>
                         <td>2台ともUPS（無停電装置）のバッテリー消耗後に停止。再起動時にトラブルが発生する場合あり</td>
                         <td>各拠点の入退室は継続。勤怠連携が停止</td>
                     </tr>
-                    <tr>
+                    <tr id="risk-row-4">
                         <td style="font-weight: 600;">ハードウェア故障</td>
                         <td>2台構成のため、片方の故障では業務継続可能。ただし、残り1台での運用となり、その間にもう1台が故障するとログイン不可</td>
                         <td>1台構成のため故障即停止。各拠点の入退室は継続可能だが、勤怠連携が停止</td>
                     </tr>
-                    <tr>
+                    <tr id="risk-row-5">
                         <td style="font-weight: 600;">延長保守終了後</td>
                         <td>2027年10月末で保守終了。メーカー修理不可。さらなる延長は条件次第。機器更新の場合、2020年実績で¥1,620,000（物価上昇で増加見込み）</td>
                         <td>2027年3月9日で保守終了。メーカー修理不可。故障時の対応手段が限定される</td>
@@ -2807,7 +2807,37 @@
         {
             id: 'sec3',
             title: '3. このまま使い続けた場合',
-            text: '3番、このまま使い続けた場合のリスクです。これらのサーバーは、専用のデータセンターではなく、本社6階の事務所の一角に置かれています。データセンターであれば、耐震・耐火設備、24時間の温湿度管理、防水対策が整っています。一方、事務所内では空調がエアコンに依存しており、夜間や休日に止まることがあります。漏水対策もなく、埃や紙の粉がサーバーに入り込むリスクもあります。画面の表をご覧ください。想定される状況ごとに、ADサーバーとSECOMサーバーへの影響を整理しています。まず火災・地震の場合、ADサーバーは2台とも同じフロアにあるため同時に壊れる可能性があり、全社員のPCログインができなくなります。復旧には数日から1週間程度かかります。次に漏水、上階からの水漏れでも同様に2台とも損壊する可能性があります。ビル停電では、無停電装置のバッテリーが切れた時点で停止します。ハードウェア故障は、ADは2台あるので片方壊れても継続できますが、SECOMは1台のみなので故障すると即停止です。最後に延長保守の期限です。SECOMサーバーは2027年3月9日、ADサーバーは2027年10月末でそれぞれ保守が終了し、それ以降はメーカー修理ができなくなります。SECOMの方がADより約7ヶ月早く保守が切れます。'
+            text: '3番、このまま使い続けた場合のリスクです。これらのサーバーは、専用のデータセンターではなく、本社6階の事務所の一角に置かれています。データセンターであれば、耐震・耐火設備、24時間の温湿度管理、防水対策が整っています。一方、事務所内では空調がエアコンに依存しており、夜間や休日に止まることがあります。漏水対策もなく、埃や紙の粉がサーバーに入り込むリスクもあります。画面にひょうが表示されています。想定される状況ごとに、ADサーバーとSECOMサーバーへの影響を整理しています。上から順に説明します。'
+        },
+        // ── 3-1. 火災・地震 ──
+        {
+            id: 'risk-row-1',
+            title: '3-1. 火災・地震',
+            text: '3の1、火災・地震の場合です。ひょうの1行目をご覧ください。ADサーバーは2台とも同じフロアにあるため、同時に壊れる可能性があります。両方が壊れると、全社員のPCログインができなくなります。復旧には新しいサーバーの調達と構築が必要で、数日から1週間程度かかります。SECOMサーバーについては、各拠点の入退室は拠点側の機器で継続できますが、勤怠管理システムとの自動連携は止まります。'
+        },
+        // ── 3-2. 漏水 ──
+        {
+            id: 'risk-row-2',
+            title: '3-2. 漏水',
+            text: '3の2、漏水です。ひょうの2行目をご覧ください。サーバー室に防水対策がないため、上階の給排水管が破損したり空調ドレンが詰まった場合、浸水してADサーバー2台とも同時に壊れる可能性があります。SECOMも同様に損壊の可能性がありますが、各拠点の入退室は継続できます。'
+        },
+        // ── 3-3. ビル停電 ──
+        {
+            id: 'risk-row-3',
+            title: '3-3. ビル停電',
+            text: '3の3、ビル停電です。ひょうの3行目です。ADサーバーは2台とも、無停電装置のバッテリーが切れた時点で停止します。再起動時にトラブルが起きる場合もあります。SECOMは各拠点の入退室は継続できますが、勤怠連携は止まります。'
+        },
+        // ── 3-4. ハードウェア故障 ──
+        {
+            id: 'risk-row-4',
+            title: '3-4. ハードウェア故障',
+            text: '3の4、ハードウェア故障です。ひょうの4行目です。ADサーバーは2台構成なので、片方が壊れても業務は継続できます。ただし、残り1台で運用している間にもう1台も壊れるとログインできなくなります。SECOMサーバーは1台のみなので、故障すると即停止です。'
+        },
+        // ── 3-5. 延長保守終了後 ──
+        {
+            id: 'risk-row-5',
+            title: '3-5. 延長保守終了後',
+            text: '3の5、延長保守の終了後です。ひょうの最後の行をご覧ください。SECOMサーバーは2027年3月9日、ADサーバーは2027年10月末で、それぞれ保守が終了します。それ以降はメーカーの修理が受けられなくなります。SECOMの方がADより約7ヶ月早く保守が切れる点にご注意ください。ADサーバーの機器を更新する場合、2020年の実績では162万円でしたが、物価上昇により増加が見込まれます。'
         },
         // ── 4. ADクラウド移行：3社の提案 ──
         {
@@ -3075,19 +3105,20 @@ ${text}`
         // セクションにスクロール＆ハイライト（薄い青背景）
         const el = document.getElementById(section.id);
         if (el) {
-            // sectionの場合はそのまま、div(sp-*)の場合は親のsectionまたは自分
+            // sectionの場合はそのまま、それ以外は親のsectionまたは自分
             const targetEl = el.tagName === 'SECTION' ? el : el.closest('section') || el;
-            // sp-*アンカーの場合は次のh3を基準にスクロール、sectionの場合はsection-titleを基準
-            const scrollTarget = el.tagName === 'SECTION' ? el : (el.nextElementSibling && el.nextElementSibling.tagName === 'H3' ? el.nextElementSibling : el);
+            // スクロール先: trの場合はその行自体、sp-*の場合は次のh3、sectionの場合はsection自体
+            const scrollTarget = el.tagName === 'TR' ? el : (el.tagName === 'SECTION' ? el : (el.nextElementSibling && el.nextElementSibling.tagName === 'H3' ? el.nextElementSibling : el));
             const rect = scrollTarget.getBoundingClientRect();
             const offset = 40; // 見出しの上に40pxの余白を確保
             window.scrollTo({ top: window.scrollY + rect.top - offset, behavior: 'smooth' });
-            // ハイライトはsection要素に適用
-            targetEl.style.backgroundColor = 'rgba(59, 130, 246, 0.06)';
-            targetEl.style.outline = '2px solid rgba(59, 130, 246, 0.3)';
-            targetEl.style.outlineOffset = '4px';
-            targetEl.style.transition = 'all 0.3s';
-            highlightedSectionEl = targetEl;
+            // ハイライト: trの場合は行自体、それ以外はsection要素に適用
+            const highlightEl = el.tagName === 'TR' ? el : targetEl;
+            highlightEl.style.backgroundColor = el.tagName === 'TR' ? 'rgba(59, 130, 246, 0.12)' : 'rgba(59, 130, 246, 0.06)';
+            highlightEl.style.outline = '2px solid rgba(59, 130, 246, 0.3)';
+            highlightEl.style.outlineOffset = el.tagName === 'TR' ? '0px' : '4px';
+            highlightEl.style.transition = 'all 0.3s';
+            highlightedSectionEl = highlightEl;
         }
 
         // 進捗テキスト更新
