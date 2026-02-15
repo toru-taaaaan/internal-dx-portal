@@ -2023,16 +2023,16 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="font-weight: 600;">築地本社</td>
-                            <td>対象（ルーター設置）</td>
-                            <td>対象（Socket設置）</td>
+                            <td style="font-weight: 600;">築地本社（6F・7F）</td>
+                            <td>対象（ルーター1台）</td>
+                            <td>対象（Socket 1台）</td>
                             <td>主要拠点</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">多摩</td>
                             <td>対象（ルーター設置）</td>
-                            <td>対象（Socket設置）</td>
-                            <td>主要拠点</td>
+                            <td>対象（モバイル）</td>
+                            <td>人数少・特殊通信があればSocket検討</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">橋本</td>
@@ -2067,20 +2067,20 @@
                         <tr>
                             <td style="font-weight: 600;">名古屋（BN）</td>
                             <td>対象（ルーター設置）</td>
-                            <td>対象（Client）</td>
-                            <td>SECOM機器の接続のみ</td>
+                            <td style="color: #dc2626;">対象外</td>
+                            <td>BN管理・SECOMのみ</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">福岡（BN）</td>
                             <td>対象（ルーター設置）</td>
-                            <td>対象（Client）</td>
-                            <td>SECOM機器の接続のみ</td>
+                            <td style="color: #dc2626;">対象外</td>
+                            <td>BN管理・SECOMのみ</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">和歌山（BN）</td>
                             <td>対象（ルーター設置）</td>
-                            <td>対象（Client）</td>
-                            <td>SECOM機器の接続のみ</td>
+                            <td style="color: #dc2626;">対象外</td>
+                            <td>BN管理・SECOMのみ</td>
                         </tr>
                         <tr style="background: #f8fafc; font-weight: 600;">
                             <td>クラウド（AD/SECOM）</td>
@@ -2091,17 +2091,17 @@
                         <tr style="background: #f1f5f9; font-weight: 700;">
                             <td>合計</td>
                             <td>8拠点 + GIO</td>
-                            <td>10（拠点Socket 2 + Client 7 + サーバー1）</td>
+                            <td>7（Socket 1 + Client/モバイル 5 + サーバー1）</td>
                             <td></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">※ BN = バディネット社管理拠点。PCはバディネットが管理、AKIBAホールディングスとしてはSECOM機器の接続のみ。Cato構成はBN拠点を含む全拠点 + 仙台 + サーバーの10拠点。</p>
+            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">※ BN = バディネット社管理拠点。PCはバディネットが管理、AKIBAホールディングスとしてはSECOM機器の接続のみ。BN拠点はCato対象外。<br>※ 築地本社は6F・7Fでルーター/Socket 1台を共有。多摩は対象人数が少ないためモバイル予定（特殊通信がある場合はSocket設置を検討）。</p>
 
             <div class="risk-note" style="margin-top: 1rem;">
                 <p style="margin: 0; font-weight: 600;">Cato Clientの特徴</p>
-                <p style="margin: 0.5rem 0 0; line-height: 1.8;">Cato Clientをインストールした端末は、<strong>自宅やモバイル環境からも社内ネットワークに接続可能</strong>。Socket未設置の拠点でも、個人端末からCatoクラウドを経由して安全に業務が行える。IIJ Omnibusでは全拠点にルーター設置が必要であるのに対し、Catoは主要拠点（築地・多摩）のみSocket設置、その他はClientで対応するため、拠点あたりの機器コストを抑えられる。</p>
+                <p style="margin: 0.5rem 0 0; line-height: 1.8;">Cato Clientをインストールした端末は、<strong>自宅やモバイル環境からも社内ネットワークに接続可能</strong>。Socket未設置の拠点でも、個人端末からCatoクラウドを経由して安全に業務が行える。IIJ Omnibusでは全拠点にルーター設置が必要であるのに対し、Catoは築地本社のみSocket設置、その他はClient/モバイルで対応するため、拠点あたりの機器コストを抑えられる。</p>
             </div>
 
             <div class="fact-box" style="border-left-color: #f59e0b; margin-top: 1rem;">
@@ -2131,26 +2131,15 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="font-weight: 600;">築地本社 6F</td>
-                            <td>AH</td>
-                            <td>21名</td>
-                            <td style="font-weight: 700; color: #1d4ed8;">21名</td>
+                            <td style="font-weight: 600;">築地本社（6F・7F）</td>
+                            <td>AH+AD</td>
+                            <td>57名</td>
+                            <td style="font-weight: 700; color: #1d4ed8;">57名</td>
                             <td>自社</td>
                             <td>あり</td>
-                            <td>ルーター</td>
-                            <td>ルーター</td>
-                            <td>Socket</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 600;">築地本社 7F</td>
-                            <td>AD</td>
-                            <td>36名</td>
-                            <td style="font-weight: 700; color: #1d4ed8;">36名</td>
-                            <td>自社</td>
-                            <td>あり</td>
-                            <td>ルーター</td>
-                            <td>モバイル</td>
-                            <td>Socket</td>
+                            <td>ルーター1台</td>
+                            <td>ルーター1台</td>
+                            <td>Socket 1台</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">多摩（R&D）</td>
@@ -2161,7 +2150,7 @@
                             <td>あり</td>
                             <td>ルーター</td>
                             <td>モバイル</td>
-                            <td>Client</td>
+                            <td>モバイル</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">橋本（IoT）</td>
@@ -2294,7 +2283,7 @@
                             <td colspan="5"></td>
                             <td>ルーター 8台</td>
                             <td>ルーター 1台</td>
-                            <td>Socket 2台</td>
+                            <td>Socket 1台</td>
                         </tr>
                         <tr style="background: #f1f5f9; font-weight: 700;">
                             <td>モバイル/Client数</td>
@@ -2994,13 +2983,13 @@
         {
             id: 'sp-nw-sites',
             title: '20. 対象拠点の比較',
-            text: '20番、対象拠点の比較です。画面の表をご覧ください。縦軸が各拠点名、横軸がIIJ OmnibusとCato SASEです。上から、築地本社と多摩はどちらも対象で、IIJはルーター設置、CatoはSocket設置です。橋本、大阪、京橋、鬼怒川、仙台、名古屋、福岡、和歌山はClient接続です。仙台はCatoのみ対象で、IIJには含まれていません。BN拠点の名古屋、福岡、和歌山もCato対象です。合計は、IIJが8拠点プラスGIO、Catoが10拠点でSocket2台、Client7、サーバー1です。なお、IIJ Omnibusでもルーターを設置せずモバイル接続で対応できるか、現在IIJに問い合わせ中です。もし対応可能であれば、ルーター費用が不要となり大幅なコスト削減が見込め、Catoと同じ拠点構成で対応できる可能性があります。'
+            text: '20番、対象拠点の比較です。画面のひょうをご覧ください。築地本社は6階と7階でルーターまたはSocket1台を共有します。IIJはルーター設置、CatoはSocket設置です。多摩は対象人数が少ないため、Catoではモバイル接続の予定です。ただし、固定IPが必要な特殊通信がある場合はSocket設置を検討します。橋本、大阪、京橋、鬼怒川、仙台はClient接続です。仙台はCatoのみ対象で、IIJには含まれていません。BN拠点の名古屋、福岡、和歌山はバディネットが管理しているため、IIJではルーター設置対象ですが、Catoでは対象外です。合計は、IIJが8拠点プラスGIO、Catoが7でSocket1台、Clientまたはモバイル5拠点、サーバー1です。なお、IIJ Omnibusでもルーターを設置せずモバイル接続で対応できるか、現在IIJに問い合わせ中です。もし対応可能であれば、ルーター費用が不要となり大幅なコスト削減が見込めます。'
         },
         // ── 21. 拠点別管理区分 ──
         {
             id: 'sp-nw-mgmt',
             title: '21. 拠点別 管理区分・人数',
-            text: '21番、拠点別の管理区分と人数です。画面の表をご覧ください。列が多いので、主要な点を説明します。所属人数の合計は102名です。ただし、対象人数、つまり日常的にPCを使う社員は、築地本社57名と鬼怒川13名の合計70名が確定しています。残り5拠点の32名は情報システム部でのヒアリングで確定予定です。BN拠点の名古屋、福岡、和歌山、京橋3から5階は黄色い背景で表示されており、バディネットがPCを管理しているため、AKIBAホールディングスとしてはSECOM機器の接続のみです。表の下に、今後の確認事項として2点、特殊通信の有無と実利用アカウント数のヒアリングが記載されています。'
+            text: '21番、拠点別の管理区分と人数です。画面のひょうをご覧ください。列が多いので、主要な点を説明します。築地本社は6階と7階を合わせて57名、ルーターまたはSocketは1台で共有します。多摩は12名で、CatoではSocket設置ではなくモバイル接続の予定です。特殊な通信がある場合にはSocket設置を再検討します。所属人数の合計は102名ですが、対象人数は築地本社57名と鬼怒川13名の合計70名が確定しています。残り5拠点の32名は情報システム部でのヒアリングで確定予定です。BN拠点の名古屋、福岡、和歌山、京橋3から5階は黄色い背景で表示されており、バディネットがPCを管理しているため、AKIBAホールディングスとしてはSECOM機器の接続のみです。ひょうの下に、今後の確認事項として2点、特殊通信の有無と実利用アカウント数のヒアリングが記載されています。'
         },
         // ── 22. ネットワーク費用比較 ──
         {
