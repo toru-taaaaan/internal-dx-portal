@@ -20,8 +20,8 @@
         }
 
         /* 音声読み上げ時のスクロール位置調整 */
-        section[id], div[id^="sp-"], tr[id^="risk-row"] {
-            scroll-margin-top: 2rem;
+        section[id], div[id^="sp-"], tr[id^="risk-row"], div[id^="sp-entra-"] {
+            scroll-margin-top: 6rem;
         }
 
         .modern-card {
@@ -1190,7 +1190,7 @@
             <div id="sp-vendor-usen"></div>
             <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem; display: flex; align-items: center; gap: 8px;">
                 <span style="display: inline-block; width: 4px; height: 20px; background: #10b981; border-radius: 2px;"></span>
-                8. USENを選んだ場合（分離型）
+                8-a. USENを選んだ場合（分離型）
             </h3>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
@@ -1225,7 +1225,7 @@
             <div id="sp-vendor-laj"></div>
             <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem; display: flex; align-items: center; gap: 8px;">
                 <span style="display: inline-block; width: 4px; height: 20px; background: #f59e0b; border-radius: 2px;"></span>
-                Link-At-Japanを選んだ場合（並走型）
+                8-b. Link-At-Japanを選んだ場合（並走型）
             </h3>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
@@ -1475,32 +1475,32 @@
             </p>
 
             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0;">
-                <div style="background: #f0fdf4; border-radius: 0.75rem; padding: 1.25rem; border: 1px solid #bbf7d0;">
-                    <div style="font-size: 0.85rem; font-weight: 700; color: #166534; margin-bottom: 0.5rem;">多要素認証（MFA）</div>
+                <div id="sp-entra-mfa" style="background: #f0fdf4; border-radius: 0.75rem; padding: 1.25rem; border: 1px solid #bbf7d0;">
+                    <div style="font-size: 0.85rem; font-weight: 700; color: #166534; margin-bottom: 0.5rem;">11-1. 多要素認証（MFA）</div>
                     <p style="font-size: 0.8rem; color: #475569; margin: 0; line-height: 1.6;">
                         パスワードに加え、スマートフォンの認証アプリや生体認証を要求する。
                         パスワードが漏洩しても、第三者はログインできない。
                         <strong>ADにはこの機能がない。</strong>
                     </p>
                 </div>
-                <div style="background: #f0fdf4; border-radius: 0.75rem; padding: 1.25rem; border: 1px solid #bbf7d0;">
-                    <div style="font-size: 0.85rem; font-weight: 700; color: #166534; margin-bottom: 0.5rem;">条件付きアクセス</div>
+                <div id="sp-entra-ca" style="background: #f0fdf4; border-radius: 0.75rem; padding: 1.25rem; border: 1px solid #bbf7d0;">
+                    <div style="font-size: 0.85rem; font-weight: 700; color: #166534; margin-bottom: 0.5rem;">11-2. 条件付きアクセス</div>
                     <p style="font-size: 0.8rem; color: #475569; margin: 0; line-height: 1.6;">
                         「会社のPCからのみ許可」「海外からのログインは拒否」「私物スマホからはメール閲覧のみ」など、
                         状況に応じたアクセス制御ができる。
                         <strong>ADにはこの機能がない。</strong>
                     </p>
                 </div>
-                <div style="background: #f0fdf4; border-radius: 0.75rem; padding: 1.25rem; border: 1px solid #bbf7d0;">
-                    <div style="font-size: 0.85rem; font-weight: 700; color: #166534; margin-bottom: 0.5rem;">不正ログインのAI検知</div>
+                <div id="sp-entra-ai" style="background: #f0fdf4; border-radius: 0.75rem; padding: 1.25rem; border: 1px solid #bbf7d0;">
+                    <div style="font-size: 0.85rem; font-weight: 700; color: #166534; margin-bottom: 0.5rem;">11-3. 不正ログインのAI検知</div>
                     <p style="font-size: 0.8rem; color: #475569; margin: 0; line-height: 1.6;">
                         普段と異なる場所・時間・端末からのログインをAIが自動検知し、追加認証を要求する。
                         不正アクセスの兆候を人手に頼らず検出できる。
                         <strong>ADにはこの機能がない。</strong>
                     </p>
                 </div>
-                <div style="background: #f0fdf4; border-radius: 0.75rem; padding: 1.25rem; border: 1px solid #bbf7d0;">
-                    <div style="font-size: 0.85rem; font-weight: 700; color: #166534; margin-bottom: 0.5rem;">パスワードレス認証</div>
+                <div id="sp-entra-pwless" style="background: #f0fdf4; border-radius: 0.75rem; padding: 1.25rem; border: 1px solid #bbf7d0;">
+                    <div style="font-size: 0.85rem; font-weight: 700; color: #166534; margin-bottom: 0.5rem;">11-4. パスワードレス認証</div>
                     <p style="font-size: 0.8rem; color: #475569; margin: 0; line-height: 1.6;">
                         PCに顔認証カメラや指紋認証リーダーが搭載されている場合、Windows Helloと連携してパスワード入力を不要にできる。
                         パスワードが存在しないため、漏洩リスクそのものがなくなる。
@@ -1524,21 +1524,21 @@
             </p>
 
             <div style="display: grid; gap: 1rem; margin: 1rem 0 1.5rem;">
-                <div class="fact-box" style="border-left-color: #dc2626;">
+                <div id="sp-entra-f1" class="fact-box" style="border-left-color: #dc2626;">
                     <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
-                        <strong>1. ADの新機能開発は事実上停止している</strong><br>
+                        <strong>12-1. ADの新機能開発は事実上停止している</strong><br>
                         MicrosoftはID管理に関する新機能の開発を全てEntra IDに集中させています。ADは今ある機能の維持とセキュリティ修正のみで、新しい機能が追加されることはありません。サポートは2034年まで継続しますが、それ以降は不明です。
                     </p>
                 </div>
-                <div class="fact-box" style="border-left-color: #f59e0b;">
+                <div id="sp-entra-f2" class="fact-box" style="border-left-color: #f59e0b;">
                     <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
-                        <strong>2. ADの全機能をそのままEntra IDに移すわけではない</strong><br>
+                        <strong>12-2. ADの全機能をそのままEntra IDに移すわけではない</strong><br>
                         ADが担ってきた機能のうち、クラウド時代に不要になるものは新しい仕組みに置き換えます。例えば、グループポリシー（GPO）はIntuneへ、ファイルサーバーはSharePointへ、プリンター管理はUniversal Printへ。ADの機能を丸ごとコピーするのではなく、クラウド時代の新しい基準で再設計する方針です。
                     </p>
                 </div>
-                <div class="fact-box" style="border-left-color: #3b82f6;">
+                <div id="sp-entra-f3" class="fact-box" style="border-left-color: #3b82f6;">
                     <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
-                        <strong>3. ただし、今すぐADをやめることはできない</strong><br>
+                        <strong>12-3. ただし、今すぐADをやめることはできない</strong><br>
                         現時点ではEntra IDだけではADの全機能を代替できません。Intuneはグループポリシーと完全互換ではなく、初回ログイン時にインターネット接続が必須になるなど制限があります。大手企業の約80%がADとEntra IDを併用する「ハイブリッド構成」を採用しており、一気にADを廃止する方法は推奨されていません。
                     </p>
                 </div>
@@ -1617,6 +1617,7 @@
                 ADのクラウド移行を検討するのであれば、同時にSECOMも検討することで効率が上がります。
             </p>
 
+            <div id="sp-secom-cost"></div>
             <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 1rem;">14. SECOM クラウド移行費用（3社比較）</h3>
 
             <div style="overflow-x: auto;">
@@ -2863,11 +2864,17 @@
             title: '7. IIJを選んだ場合',
             text: '7番、IIJを選んだ場合の日常業務です。画面の左側の緑色の枠が「自社でできること」、右側の赤色の枠が「できないこと」です。自社でできるのは、ユーザーの追加・削除やグループポリシーの変更です。できないのは、サーバーへのリモートデスクトップ接続やOS直接操作です。障害時はIIJが検知から復旧まで全て行い、情シスへは事後報告です。'
         },
-        // ── 8. ベンダー別：USEN・LAJ ──
+        // ── 8a. ベンダー別：USEN ──
         {
             id: 'sp-vendor-usen',
-            title: '8. USEN・Link-At-Japanを選んだ場合',
-            text: '8番、USENとLink-At-Japanの場合です。USENは分離型で、VPN経由でサーバーにRDP接続して直接操作できます。ただしAWSの管理コンソールにはアクセスできません。Link-At-Japanは並走型で、自由度が最も高い構成です。RDPでの接続に加え、Azureの管理コンソールにも直接アクセスできます。クラウドアカウントがAKIBAホールディングス名義なので、全ての情報に自社でアクセス可能です。'
+            title: '8a. USENを選んだ場合',
+            text: '8のa、USENを選んだ場合です。USENは分離型で、VPN経由でサーバーにRDP接続して直接操作できます。イベントログ等を自社で確認して原因調査が可能です。ただしAWSの管理コンソールにはアクセスできません。サーバーの停止や再起動はUSENへの依頼が必要です。'
+        },
+        // ── 8b. ベンダー別：LAJ ──
+        {
+            id: 'sp-vendor-laj',
+            title: '8b. Link-At-Japanを選んだ場合',
+            text: '8のb、Link-At-Japanを選んだ場合です。並走型で、自由度が最も高い構成です。RDPでの接続に加え、Azureの管理コンソールにも直接アクセスできます。クラウドアカウントがAKIBAホールディングス名義なので、全ての情報に自社でアクセス可能です。解約時のデータ取り出しも自由にできます。'
         },
         // ── 9. 管理権限のリスク ──
         {
@@ -2881,17 +2888,59 @@
             title: '10. Entra IDとは',
             text: '10番、Entra IDについてです。ADの移行を検討するにあたり、MicrosoftのクラウドID管理サービス「Entra ID」を調査しました。AKIBAホールディングスでも、Office 365の認証にはすでにEntra IDが使われています。画面の2枚のカードをご覧ください。左がAD、右がEntra IDです。ADは社内ネットワークの管理、PCログインやファイルサーバーのアクセス権を制御するものです。Entra IDはクラウドサービスのログインを管理するものです。名前は似ていますが、役割が異なります。'
         },
-        // ── 11. Entra ID：ADにはない機能 ──
+        // ── 11. Entra ID：ADにはない機能（導入） ──
         {
             id: 'sp-entra-features',
             title: '11. Entra IDのセキュリティ機能',
-            text: '11番、Entra IDで初めて使えるセキュリティ機能です。画面のリストをご覧ください。1つ目が多要素認証、パスワードに加えてスマートフォンの認証アプリを要求します。2つ目が条件付きアクセス、会社のPCからのみ許可する、海外からは拒否するといった制御です。3つ目がAIによる不正ログイン検知。4つ目がパスワードレス認証、PCに顔認証カメラや指紋認証リーダーが搭載されていれば、パスワード入力なしでログインできるようになります。AD単体ではこの仕組みは使えません。ハイブリッド構成にする目的は、ADの管理機能を維持しつつ、これらのセキュリティ機能を追加で使えるようにすることです。'
+            text: '11番、ADにはできず、Entra IDで初めて使える機能です。ADとEntra IDは同じMicrosoftの製品ですが、Entra IDにはAD単体では実現できないセキュリティ機能があります。ハイブリッド構成にする最大の理由は、これらの機能を使えるようにするためです。画面に4つのカードが表示されています。順番に説明します。'
         },
-        // ── 12. Entra ID：将来像 ──
+        // ── 11-1. 多要素認証 ──
+        {
+            id: 'sp-entra-mfa',
+            title: '11-1. 多要素認証（MFA）',
+            text: '11の1、多要素認証です。画面左上のカードをご覧ください。パスワードに加えて、スマートフォンの認証アプリや生体認証を要求します。パスワードが漏洩しても、第三者はログインできません。ADにはこの機能がありません。'
+        },
+        // ── 11-2. 条件付きアクセス ──
+        {
+            id: 'sp-entra-ca',
+            title: '11-2. 条件付きアクセス',
+            text: '11の2、条件付きアクセスです。画面右上のカードをご覧ください。会社のPCからのみ許可する、海外からのログインは拒否する、私物スマホからはメール閲覧のみ、など状況に応じたアクセス制御ができます。ADにはこの機能がありません。'
+        },
+        // ── 11-3. AI検知 ──
+        {
+            id: 'sp-entra-ai',
+            title: '11-3. 不正ログインのAI検知',
+            text: '11の3、不正ログインのAI検知です。画面左下のカードをご覧ください。普段と異なる場所、時間、端末からのログインをAIが自動検知し、追加認証を要求します。人手に頼らず不正アクセスの兆候を検出できます。ADにはこの機能がありません。'
+        },
+        // ── 11-4. パスワードレス認証 ──
+        {
+            id: 'sp-entra-pwless',
+            title: '11-4. パスワードレス認証',
+            text: '11の4、パスワードレス認証です。画面右下のカードをご覧ください。PCに顔認証カメラや指紋認証リーダーが搭載されていれば、Windows Helloと連携してパスワード入力なしでログインできます。パスワードが存在しないため、漏洩リスクそのものがなくなります。AD単体ではこの仕組みは利用できず、Entra IDの導入が必要です。'
+        },
+        // ── 12. Entra ID：将来像（導入） ──
         {
             id: 'sp-entra-future',
-            title: '12. Entra IDの将来像と進め方',
-            text: '12番、将来像と進め方です。画面に3つのポイントが示されています。まず1つ目、ADの新機能開発は事実上止まっています。Microsoftは、新しい機能を全てEntra IDに集中させており、ADには今後新しい機能は追加されません。これは非常に重要なポイントです。2つ目、ADの機能をそのままEntra IDに移すのではなく、クラウド時代の新しい仕組みで置き換える方針です。例えばグループポリシーはIntuneへ、ファイルサーバーはSharePointへ、といった形です。3つ目、ただし今すぐADをやめることはできません。Entra IDだけではまだADの全機能を代替できないため、大手企業の約80パーセントがハイブリッド構成を採用しています。Microsoftが目指す未来に合わせるのであれば、今のうちからハイブリッド構成を検討しておくことは、一つの考え方として合理的です。画面の下に3段階の進め方が示されています。Step 1が今回のADクラウド移行、Step 2が1から2年後のハイブリッド構成導入、Step 3が3から5年後のEntra ID集約の再評価です。'
+            title: '12. Entra IDの将来像',
+            text: '12番、将来像と進め方です。Microsoftが目指す方向を理解するために、3つのポイントを整理します。画面に3つの枠が表示されています。上から順に説明します。'
+        },
+        // ── 12-1. AD開発停止 ──
+        {
+            id: 'sp-entra-f1',
+            title: '12-1. ADの新機能開発は停止',
+            text: '12の1、ADの新機能開発は事実上停止しています。画面の赤い枠をご覧ください。Microsoftは、新しい機能を全てEntra IDに集中させており、ADには今後新しい機能は追加されません。サポートは2034年まで継続しますが、それ以降は不明です。これは非常に重要なポイントです。'
+        },
+        // ── 12-2. 置換方針 ──
+        {
+            id: 'sp-entra-f2',
+            title: '12-2. 新しい仕組みで置き換え',
+            text: '12の2、ADの機能をそのままEntra IDに移すのではなく、クラウド時代の新しい仕組みで置き換える方針です。画面の黄色い枠をご覧ください。例えばグループポリシーはIntuneへ、ファイルサーバーはSharePointへ、プリンター管理はUniversal Printへ、といった形です。'
+        },
+        // ── 12-3. ハイブリッド構成の現実 ──
+        {
+            id: 'sp-entra-f3',
+            title: '12-3. 今すぐADはやめられない',
+            text: '12の3、ただし今すぐADをやめることはできません。画面の青い枠をご覧ください。Entra IDだけではまだADの全機能を代替できないため、大手企業の約80パーセントがハイブリッド構成を採用しています。Microsoftが目指す未来に合わせるのであれば、今のうちからハイブリッド構成を検討しておくことは、一つの考え方として合理的です。画面の下に3段階の進め方が示されています。Step 1が今回のADクラウド移行、Step 2が1から2年後のハイブリッド構成導入、Step 3が3から5年後のEntra ID集約の再評価です。'
         },
         // ── 13. SECOM ──
         {
@@ -2899,11 +2948,17 @@
             title: '13. SECOM入退室管理',
             text: '13番、SECOMの入退室管理です。SECOMサーバーはADと同じサーバー室に設置されています。1台構成で予備機がありません。ただし、各拠点にインターフェース機器がありますので、サーバーが止まっても入退室自体は継続できます。影響があるのは勤怠管理システムとの連携です。'
         },
-        // ── 14. SECOM費用 ──
+        // ── 14a. SECOM費用（単独） ──
+        {
+            id: 'sp-secom-cost',
+            title: '14a. SECOM費用（3社比較）',
+            text: '14のa、SECOMクラウド移行の費用比較です。画面の表をご覧ください。初期費用は、Link-At-Japanが約39万円で最も安く、USENが約44万円、IIJが約76万円です。SECOM社への直接費用19万8千円はどの社でも共通です。月額費用は、Link-At-Japanが約12万円で最も安く、USENが約13万円、IIJも約13万円です。5年間総額は、表の一番下の行で、IIJが約896万円、USENが約862万円、Link-At-Japanが約757万円です。'
+        },
+        // ── 14b. AD同時移行の費用削減 ──
         {
             id: 'sp-secom-combo',
-            title: '14. SECOM費用とAD同時移行',
-            text: '14番、費用です。画面に2つの表があります。上の表がSECOM単独の費用比較、下の表がADとSECOMを同時に移行した場合の費用です。同じベンダーにまとめると、VPN構築などの共通作業が1回で済むため、構築費用が下がります。SECOM単独の5年間総額は、表の一番下の行で、IIJが約896万円、USENが約862万円、Link-At-Japanが約757万円です。'
+            title: '14b. AD + SECOM同時移行の費用',
+            text: '14のb、ADとSECOMを同時に移行した場合の費用削減です。画面の下の表をご覧ください。同じベンダーにまとめると、VPN構築などの共通作業が1回で済むため、SECOM構築費用が下がります。削減額は、IIJが約29万円、USENが約22万円、Link-At-Japanが約20万円です。AD＋SECOMの5年間総額は、IIJが約1,765万円、USENが約1,563万円、Link-At-Japanが約1,205万円です。'
         },
         // ── 15. ネットワーク：現状 ──
         {
@@ -3107,16 +3162,33 @@ ${text}`
         if (el) {
             // sectionの場合はそのまま、それ以外は親のsectionまたは自分
             const targetEl = el.tagName === 'SECTION' ? el : el.closest('section') || el;
-            // スクロール先: trの場合はその行自体、sp-*の場合は次のh3、sectionの場合はsection自体
-            const scrollTarget = el.tagName === 'TR' ? el : (el.tagName === 'SECTION' ? el : (el.nextElementSibling && el.nextElementSibling.tagName === 'H3' ? el.nextElementSibling : el));
+            // スクロール先の決定
+            let scrollTarget;
+            if (el.tagName === 'TR') {
+                scrollTarget = el; // テーブル行はそのまま
+            } else if (el.tagName === 'SECTION') {
+                scrollTarget = el; // sectionはそのまま
+            } else if (el.nextElementSibling && el.nextElementSibling.tagName === 'H3') {
+                scrollTarget = el.nextElementSibling; // 次がh3ならh3にスクロール
+            } else {
+                scrollTarget = el; // それ以外は要素自体
+            }
             const rect = scrollTarget.getBoundingClientRect();
-            const offset = el.tagName === 'TR' ? 120 : 40; // trは表ヘッダー分を考慮して大きめのオフセット
+            const offset = el.tagName === 'TR' ? 120 : 100; // 見出しが画面上端で切れないよう余裕を持たせる
             window.scrollTo({ top: window.scrollY + rect.top - offset, behavior: 'smooth' });
-            // ハイライト: trの場合は行自体、それ以外はsection要素に適用
-            const highlightEl = el.tagName === 'TR' ? el : targetEl;
-            highlightEl.style.backgroundColor = el.tagName === 'TR' ? 'rgba(59, 130, 246, 0.12)' : 'rgba(59, 130, 246, 0.06)';
+            // ハイライト: trの場合は行自体、カード要素はカード自体、それ以外はsection要素に適用
+            let highlightEl;
+            if (el.tagName === 'TR') {
+                highlightEl = el;
+            } else if (el.id && (el.id.startsWith('sp-entra-mfa') || el.id.startsWith('sp-entra-ca') || el.id.startsWith('sp-entra-ai') || el.id.startsWith('sp-entra-pwless') || el.id.startsWith('sp-entra-f'))) {
+                highlightEl = el; // Entra ID機能カード・ポイント枠は個別にハイライト
+            } else {
+                highlightEl = targetEl;
+            }
+            const isFocused = el.tagName === 'TR' || highlightEl === el;
+            highlightEl.style.backgroundColor = isFocused ? 'rgba(59, 130, 246, 0.12)' : 'rgba(59, 130, 246, 0.06)';
             highlightEl.style.outline = '2px solid rgba(59, 130, 246, 0.3)';
-            highlightEl.style.outlineOffset = el.tagName === 'TR' ? '0px' : '4px';
+            highlightEl.style.outlineOffset = isFocused ? '0px' : '4px';
             highlightEl.style.transition = 'all 0.3s';
             highlightedSectionEl = highlightEl;
         }
