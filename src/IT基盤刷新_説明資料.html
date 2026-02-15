@@ -619,11 +619,12 @@
                 <a href="#sec2" class="toc-item"><span class="toc-num">02</span>サーバー室の現状</a>
                 <a href="#sec3" class="toc-item"><span class="toc-num">03</span>このまま使い続けた場合</a>
                 <a href="#sec4" class="toc-item"><span class="toc-num">04</span>ADクラウド移行 3社比較</a>
-                <a href="#sec5" class="toc-item"><span class="toc-num">05</span>Entra IDについて</a>
-                <a href="#sec6" class="toc-item"><span class="toc-num">06</span>SECOM入退室管理</a>
-                <a href="#sec7" class="toc-item"><span class="toc-num">07</span>ネットワーク刷新</a>
-                <a href="#sec8" class="toc-item"><span class="toc-num">08</span>費用の全体像</a>
-                <a href="#sec9" class="toc-item"><span class="toc-num">09</span>今後の進め方</a>
+                <a href="#sec5" class="toc-item"><span class="toc-num">05</span>3社の管理体制比較</a>
+                <a href="#sec6" class="toc-item"><span class="toc-num">06</span>Entra IDについて</a>
+                <a href="#sec7" class="toc-item"><span class="toc-num">07</span>SECOM入退室管理</a>
+                <a href="#sec8" class="toc-item"><span class="toc-num">08</span>ネットワーク刷新</a>
+                <a href="#sec9" class="toc-item"><span class="toc-num">09</span>費用の全体像</a>
+                <a href="#sec10" class="toc-item"><span class="toc-num">10</span>今後の進め方</a>
             </div>
         </nav>
 
@@ -980,14 +981,140 @@
             </div>
 
             <p class="transition-text">
-                ADのクラウド移行について検討する中で、「Entra IDを使えばADサーバー自体が不要になるのでは」という疑問が出ました。次にこの点を整理します。
+                3社は費用だけでなく、日常の管理体制も大きく異なります。次にその比較を確認します。
             </p>
         </section>
 
         <!-- ========================================= -->
-        <!-- Section 5: Entra IDについて -->
+        <!-- Section 5: 3社の管理体制比較 -->
         <!-- ========================================= -->
         <section id="sec5" class="modern-card">
+            <div class="section-title">3社の管理体制比較</div>
+
+            <p class="section-lead">
+                3社は「サーバーの預け方」だけでなく、日常の管理体制も大きく異なります。以下は、実際の運用で重要になる項目の比較です。
+            </p>
+
+            <div style="overflow-x: auto;">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 16%;">項目</th>
+                            <th class="col-iij" style="width: 28%;">IIJ（お任せ型）</th>
+                            <th class="col-usen" style="width: 28%;">USEN（分離型）</th>
+                            <th class="col-laj" style="width: 28%;">Link-At-Japan（並走型）</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 600;">クラウドアカウント名義</td>
+                            <td>IIJ名義（非公開）</td>
+                            <td>USEN名義（VPCで論理分割）</td>
+                            <td>AKIBAホールディングス名義（独立環境）</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">管理コンソールアクセス</td>
+                            <td>不可（専用ポータルのみ）</td>
+                            <td>不可（AWS非公開）</td>
+                            <td>可能（Azure Portal共同管理）</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">サーバー直接接続（RDP）</td>
+                            <td>不可（RSATのみ）</td>
+                            <td>可能（VPN経由）</td>
+                            <td>可能（VPN経由）</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">OS管理者権限</td>
+                            <td>IIJが保持</td>
+                            <td>確認中</td>
+                            <td>自社+ベンダー双方</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">パッチ適用</td>
+                            <td>全自動・月次（19時以降）</td>
+                            <td>四半期〜半年・事前調整</td>
+                            <td>Windows Updateのみ（¥68,000/月プラン）</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">緊急パッチ対応</td>
+                            <td>IIJが自動実施</td>
+                            <td>確認中（2/14問合せ済）</td>
+                            <td>確認中</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">24時間監視</td>
+                            <td>IIJ実施（全レイヤー）</td>
+                            <td>USEN実施（死活・リソース）</td>
+                            <td>実施（¥50,000/月プラン）</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">インフラ障害</td>
+                            <td>自動切替（Act/Act）</td>
+                            <td>ベストエフォート対応</td>
+                            <td>ベンダー対応</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">OS・AD障害</td>
+                            <td>IIJ対応</td>
+                            <td>既知→自動、未知→調整</td>
+                            <td>ベンダー対応</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">SLA（稼働率保証）</td>
+                            <td>確認中</td>
+                            <td>なし（ベストエフォート）</td>
+                            <td>確認中（2/14問合せ済）</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">バックアップ</td>
+                            <td>制限なし（任意設定）</td>
+                            <td>7世代（日次・S3保管）</td>
+                            <td>30世代相当（Azure Backup・GRS）</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">RTO（復旧目標時間）</td>
+                            <td>瞬断〜分単位</td>
+                            <td>数時間〜1日</td>
+                            <td>数時間〜1日</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">RPO（復旧目標時点）</td>
+                            <td>ほぼ0（リアルタイム）</td>
+                            <td>最大24時間</td>
+                            <td>最大24時間</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">データ可搬性（解約時）</td>
+                            <td>PowerShellで自社エクスポート</td>
+                            <td>ベンダー名義のため要相談</td>
+                            <td>自社名義のため自由に取出可</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">契約形態</td>
+                            <td>IIJ直接契約</td>
+                            <td>USEN直接契約（最低1年・中途解約は違約金）</td>
+                            <td>LAJ直接契約（Azure直接不要）</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="fact-box" style="margin-top: 1.5rem;">
+                <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
+                    IIJは運用負荷が最も軽い反面、サーバーへの直接アクセスや自由な設定変更ができません。USENはサーバーにログインして操作できますが、AWS管理コンソールは非公開です。Link-At-Japanは自社名義の環境を持てるため自由度が最も高く、解約時のデータ取り出しも容易です。
+                </p>
+            </div>
+
+            <p class="transition-text">
+                管理体制を踏まえ、次にEntra IDに関する疑問を整理します。
+            </p>
+        </section>
+
+        <!-- ========================================= -->
+        <!-- Section 6: Entra IDについて -->
+        <!-- ========================================= -->
+        <section id="sec6" class="modern-card">
             <div class="section-title">Entra IDについて</div>
 
             <p class="section-lead">
@@ -1049,15 +1176,33 @@
                 AKIBAホールディングスの現状を考えると、まずADサーバーのクラウド移行を進め、Entra IDの追加機能（多要素認証、条件付きアクセス等）は段階的に導入していくのが現実的な進め方です。
             </p>
 
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">参考: Entra IDに完全移行する場合に必要な作業</h3>
+
+            <ol style="font-size: 0.9rem; color: #475569; line-height: 2.2; padding-left: 1.25rem;">
+                <li>全クライアントPC（約200台）をAzure AD Joinに切り替え（ドメイン離脱→再参加）</li>
+                <li>Microsoft Intuneの導入・設定（現在のグループポリシーの代替）</li>
+                <li>ファイルサーバーのクラウド移行（SharePoint Online または Azure Files + Azure AD DS）</li>
+                <li>Kerberos認証に依存する社内アプリケーションの改修 or 代替手段の検討</li>
+                <li>プリンター・複合機の認証方式の変更</li>
+                <li>VPN構成の見直し（条件付きアクセスへの移行）</li>
+                <li>全社員への操作手順の周知・教育</li>
+            </ol>
+
+            <div class="fact-box" style="border-left-color: #8b5cf6; margin-top: 1.5rem;">
+                <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
+                    上記の作業を全て実施するには、複数のベンダーとの調整が必要であり、全社員のPC操作に影響が出ます。IIJは「Entra IDへの完全移行に該当するサービスはない」と回答しており（2026/1/29）、USENは「Windows Serverがドメイン参加されている場合、EntraIDへの移管は難しい」と回答しています（2026/1/26）。
+                </p>
+            </div>
+
             <p class="transition-text">
                 次に、同じサーバー室に設置されているSECOMの入退室管理サーバーについて説明します。
             </p>
         </section>
 
         <!-- ========================================= -->
-        <!-- Section 6: SECOM入退室管理 -->
+        <!-- Section 7: SECOM入退室管理 -->
         <!-- ========================================= -->
-        <section id="sec6" class="modern-card">
+        <section id="sec7" class="modern-card">
             <div class="section-title">SECOM入退室管理のクラウド移行</div>
 
             <p class="section-lead">
@@ -1164,19 +1309,45 @@
         </section>
 
         <!-- ========================================= -->
-        <!-- Section 7: ネットワーク刷新 -->
+        <!-- Section 8: ネットワーク刷新 -->
         <!-- ========================================= -->
-        <section id="sec7" class="modern-card">
+        <section id="sec8" class="modern-card">
             <div class="section-title">ネットワークの課題と刷新案</div>
 
             <p class="section-lead">
                 現在、各拠点のインターネット通信は、一度築地本社を経由してから外部に接続する構成になっています。
-                全拠点のトラフィックが築地に集中するため、Office 365やGoogle Workspace等のクラウドサービス利用時に速度低下が発生しています。
+                特にGoogle MeetによるWeb会議で、映像の遅延や音声の途切れが発生しています。Office 365はアカウント管理として利用しており、業務の中心はGoogle Workspaceです。Web会議の利用が増えるにつれ、全拠点のトラフィックが築地本社を経由する構成が問題になっています。
             </p>
 
             <p class="section-lead">
                 また、現在使用しているVarioSecure社のVPN機器は、セキュリティ面での制約があり、テレワーク環境への対応も限定的です。
             </p>
+
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 1rem;">VPN・SD-WAN・SASEの違い</h3>
+
+            <div class="vendor-type-grid">
+                <div class="vendor-type-card" style="border-top-color: #94a3b8;">
+                    <div class="vendor-type-name" style="color: #94a3b8;">現行</div>
+                    <div class="vendor-type-title">VPN（VarioSecure）</div>
+                    <div class="vendor-type-desc">
+                        各拠点にルーターを設置し、暗号化されたトンネル（VPN）で本社と接続する仕組み。全てのインターネット通信が本社を経由するため、本社の回線に負荷が集中する。セキュリティ機能はルーターに依存。
+                    </div>
+                </div>
+                <div class="vendor-type-card" style="border-top-color: #3b82f6;">
+                    <div class="vendor-type-name" style="color: #3b82f6;">SD-WAN</div>
+                    <div class="vendor-type-title">IIJ Omnibus</div>
+                    <div class="vendor-type-desc">
+                        ソフトウェアで通信経路を自動制御する仕組み。各拠点から直接インターネットに接続できるため、本社への負荷集中を解消できる。Google MeetやMicrosoft 365などは拠点から直接接続（ローカルブレイクアウト）。セキュリティはクラウド型UTM（ファイアウォール）で確保。
+                    </div>
+                </div>
+                <div class="vendor-type-card" style="border-top-color: #8b5cf6;">
+                    <div class="vendor-type-name" style="color: #8b5cf6;">SASE</div>
+                    <div class="vendor-type-title">Cato</div>
+                    <div class="vendor-type-desc">
+                        SD-WANの機能に加え、ファイアウォール、不正侵入検知、ウイルス対策、URLフィルタ、SSL検査などのセキュリティ機能をクラウド上で一体提供する仕組み。拠点側にはSocket（小型機器）1台を設置するだけ。リモートアクセスも標準機能として含まれる。
+                    </div>
+                </div>
+            </div>
 
             <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 1rem;">検討中の4シナリオ</h3>
 
@@ -1189,7 +1360,7 @@
                 <div class="scenario-card">
                     <div class="scenario-num">Scenario 2</div>
                     <div class="scenario-title">既存機器にオプション追加</div>
-                    <div class="scenario-desc">VarioSecure社の機器にセキュリティオプションを追加。部分的な改善が見込めるが、構成は変わらない。</div>
+                    <div class="scenario-desc">VarioSecure社の機器にIDS/ADS、URLフィルタ、ウイルスプロテクション等のセキュリティオプションを追加。ただし、SSL/TLS検査やアプリケーション制御には対応不可。VSR800以上への機器交換やプラン変更が必要な項目あり。</div>
                 </div>
                 <div class="scenario-card" style="border-top-color: #3b82f6;">
                     <div class="scenario-num" style="color: #3b82f6;">Scenario 3</div>
@@ -1199,8 +1370,70 @@
                 <div class="scenario-card" style="border-top-color: #8b5cf6;">
                     <div class="scenario-num" style="color: #8b5cf6;">Scenario 4</div>
                     <div class="scenario-title">Cato SASE</div>
-                    <div class="scenario-desc">次世代型のSASE（ネットワーク+セキュリティ統合）サービス。グローバル対応。現在、見積を依頼中。</div>
+                    <div class="scenario-desc">ネットワークとセキュリティを統合したSASEサービス。グローバル対応。SCSK角田様より概算費用の先行情報を入手済み（正式見積は2/17頃）。</div>
                 </div>
+            </div>
+
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">VarioSecure セキュリティオプションの対応状況</h3>
+            <div style="overflow-x: auto;">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">機能</th>
+                            <th style="width: 15%;">対応状況</th>
+                            <th style="width: 60%;">備考</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 600;">IDS/ADS（不正侵入検知）</td>
+                            <td><span class="status-badge status-confirmed">対応可</span></td>
+                            <td>VSR800以上への交換が必要</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">URLフィルタリング</td>
+                            <td><span class="status-badge status-confirmed">対応可</span></td>
+                            <td>ビジネスセキュリティへの切替が必要</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">ウイルスプロテクション</td>
+                            <td><span class="status-badge status-confirmed">対応可</span></td>
+                            <td>ビジネスセキュリティへの切替が必要</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">SSL/TLS検査</td>
+                            <td><span class="status-badge status-waiting">対応不可</span></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">アプリケーション制御</td>
+                            <td><span class="status-badge status-waiting">対応不可</span></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">DDoS対策</td>
+                            <td><span class="status-badge status-waiting">対応不可</span></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">統合管理</td>
+                            <td><span class="status-badge status-waiting">不可</span></td>
+                            <td>8拠点を1台ずつ個別に設定変更</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">LBO自動追従</td>
+                            <td><span class="status-badge status-sent">対応（限定的）</span></td>
+                            <td>Salesforce, Webex, Zoom, Google, M365のみ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">出典: USEN西川様 2026/2/6 メール回答に基づく</p>
+
+            <div class="risk-note">
+                <p style="margin: 0; line-height: 1.8;">
+                    VarioSecureにオプションを追加した場合、費用が大幅に増加する（USEN担当者コメント）。また、SSL/TLS検査やアプリ制御など、現在のセキュリティ標準で求められる機能の一部に対応できない。
+                </p>
             </div>
 
             <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">費用比較</h3>
@@ -1221,22 +1454,22 @@
                             <td style="font-weight: 600;">月額費用</td>
                             <td>¥170,400 ※2</td>
                             <td>¥1,228,800</td>
-                            <td>約¥390,000</td>
-                            <td><span class="status-badge status-waiting">見積待ち</span></td>
+                            <td>¥722,150 ※3</td>
+                            <td>約¥467,000 ※4</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">初期費用</td>
                             <td>¥0</td>
                             <td>¥1,000,000</td>
-                            <td>要確認</td>
-                            <td>¥0（Zero Touch）</td>
+                            <td>¥2,764,850</td>
+                            <td>¥500,000</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">5年間総額</td>
                             <td>約¥1,022万</td>
                             <td>約¥7,473万</td>
-                            <td>約¥2,340万</td>
-                            <td><span class="status-badge status-waiting">見積待ち</span></td>
+                            <td>¥46,093,850</td>
+                            <td>約¥28,500,000</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">セキュリティ</td>
@@ -1264,7 +1497,9 @@
             </div>
 
             <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">
-                ※2 現行¥142,000から2026年4月に20%値上げ予定。金額は全て税抜
+                ※2 現行¥142,000から2026年4月に20%値上げ予定。金額は全て税抜<br>
+                ※3 IIJ Omnibus月額内訳: 拠点間WAN ¥325,950 + インターネットGW(FW含む) ¥227,000 + リモートアクセス50名 ¥73,200 + ブレイクアウト ¥96,000<br>
+                ※4 SCSK角田様 2/13メールによる概算値。ライセンス約500万/年 + マネージド60万/年 の月割。正式見積は2/17頃提示予定
             </p>
 
             <div class="risk-note" style="margin-top: 1.5rem;">
@@ -1293,57 +1528,237 @@
         </section>
 
         <!-- ========================================= -->
-        <!-- Section 8: 費用の全体像 -->
+        <!-- Section 9: 費用の全体像 -->
         <!-- ========================================= -->
-        <section id="sec8" class="modern-card">
+        <section id="sec9" class="modern-card">
             <div class="section-title">費用の全体像</div>
 
             <p class="section-lead">
-                AD + SECOM同時移行を前提とし、ネットワークについてはシナリオ③（IIJ Omnibus）を仮定した場合の概算です。
+                AD + SECOM同時移行を前提とし、ネットワーク刷新の4シナリオを含めた費用の全体像を以下に整理します。
             </p>
 
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 0 0 1rem;">AD + SECOM 同時移行 + ネットワーク刷新（IIJ Omnibus）</h3>
+            <!-- テーブルA -->
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 0 0 1rem;">テーブルA: AD + SECOM 同時移行費用（3社比較）</h3>
 
             <div style="overflow-x: auto;">
                 <table class="compare-table">
                     <thead>
                         <tr>
-                            <th style="width: 30%;">領域</th>
-                            <th style="width: 23%;">初年度概算</th>
-                            <th style="width: 23%;">5年間概算</th>
-                            <th style="width: 24%;">備考</th>
+                            <th style="width: 25%;">費目</th>
+                            <th class="col-iij" style="width: 25%;">IIJ</th>
+                            <th class="col-usen" style="width: 25%;">USEN</th>
+                            <th class="col-laj" style="width: 25%;">Link-At-Japan</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="font-weight: 600;">AD + SECOM（同時移行）</td>
-                            <td>¥3,964,124〜¥5,207,230</td>
-                            <td>¥12,048,620〜¥17,653,150</td>
-                            <td>ベンダーにより異なる</td>
+                            <td style="font-weight: 600;">AD初期費用</td>
+                            <td>¥1,422,750</td>
+                            <td>¥860,000</td>
+                            <td>¥1,555,000</td>
                         </tr>
                         <tr>
-                            <td style="font-weight: 600;">ネットワーク刷新</td>
-                            <td>約¥568万</td>
-                            <td>約¥2,340万</td>
-                            <td>IIJ Omnibus（約¥390,000/月）</td>
+                            <td style="font-weight: 600;">SECOM初期費用（同時割引）</td>
+                            <td>¥475,000</td>
+                            <td>¥220,000</td>
+                            <td>¥190,000</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">SECOM社直接費用</td>
+                            <td>¥198,000</td>
+                            <td>¥198,000</td>
+                            <td>¥198,000</td>
                         </tr>
                         <tr class="summary-row-highlight">
-                            <td style="font-weight: 700;">合計（概算）</td>
-                            <td style="font-weight: 700;">約¥960万〜¥1,090万</td>
-                            <td style="font-weight: 700;">約¥3,545万〜¥4,105万</td>
-                            <td>ベンダー・シナリオにより変動</td>
+                            <td style="font-weight: 700;">初期費用合計</td>
+                            <td style="font-weight: 700;">¥2,095,750</td>
+                            <td style="font-weight: 700;">¥1,278,000</td>
+                            <td style="font-weight: 700;">¥1,943,000</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">AD月額</td>
+                            <td>¥174,750</td>
+                            <td>¥124,300</td>
+                            <td>¥102,051</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">SECOM月額（同時割引）</td>
+                            <td>¥84,540</td>
+                            <td>¥114,900</td>
+                            <td>¥66,376</td>
+                        </tr>
+                        <tr class="summary-row-highlight">
+                            <td style="font-weight: 700;">月額合計</td>
+                            <td style="font-weight: 700;">¥259,290</td>
+                            <td style="font-weight: 700;">¥239,200</td>
+                            <td style="font-weight: 700;">¥168,427</td>
+                        </tr>
+                        <tr class="summary-row-highlight">
+                            <td style="font-weight: 700;">年額（月額×12）</td>
+                            <td style="font-weight: 700;">¥3,111,480</td>
+                            <td style="font-weight: 700;">¥2,870,400</td>
+                            <td style="font-weight: 700;">¥2,021,124</td>
+                        </tr>
+                        <tr class="summary-row-highlight">
+                            <td style="font-weight: 700;">初年度総額（初期+年額）</td>
+                            <td style="font-weight: 700;">¥5,207,230</td>
+                            <td style="font-weight: 700;">¥4,148,400</td>
+                            <td style="font-weight: 700;">¥3,964,124</td>
+                        </tr>
+                        <tr class="summary-row-highlight">
+                            <td style="font-weight: 700;">5年間総額（初期+年額×5）</td>
+                            <td style="font-weight: 700;">¥17,653,150</td>
+                            <td style="font-weight: 700;">¥15,630,000</td>
+                            <td style="font-weight: 700;">¥12,048,620</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">金額は全て税抜</p>
+
+            <!-- テーブルB -->
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">テーブルB: ネットワーク刷新費用（4シナリオ比較）</h3>
+
+            <div style="overflow-x: auto;">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 20%;">費目</th>
+                            <th style="width: 20%;">①現状維持</th>
+                            <th style="width: 20%;">②オプション追加</th>
+                            <th style="width: 20%; border-top: 3px solid #3b82f6;">③IIJ Omnibus</th>
+                            <th style="width: 20%; border-top: 3px solid #8b5cf6;">④Cato SASE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 600;">初期費用</td>
+                            <td>¥0</td>
+                            <td>¥1,000,000</td>
+                            <td>¥2,764,850</td>
+                            <td>¥500,000</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">月額費用</td>
+                            <td>¥170,400</td>
+                            <td>¥1,228,800</td>
+                            <td>¥722,150</td>
+                            <td>約¥467,000</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">年額</td>
+                            <td>¥2,044,800</td>
+                            <td>¥14,745,600</td>
+                            <td>¥8,665,800</td>
+                            <td>約¥5,600,000</td>
+                        </tr>
+                        <tr class="summary-row-highlight">
+                            <td style="font-weight: 700;">初年度総額</td>
+                            <td style="font-weight: 700;">¥2,044,800</td>
+                            <td style="font-weight: 700;">¥15,745,600</td>
+                            <td style="font-weight: 700;">¥11,430,650</td>
+                            <td style="font-weight: 700;">約¥6,100,000</td>
+                        </tr>
+                        <tr class="summary-row-highlight">
+                            <td style="font-weight: 700;">5年間総額</td>
+                            <td style="font-weight: 700;">¥10,224,000</td>
+                            <td style="font-weight: 700;">¥74,728,000</td>
+                            <td style="font-weight: 700;">¥46,093,850</td>
+                            <td style="font-weight: 700;">約¥28,500,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">
+                ①現状維持: 2026年4月の20%値上げ後の月額。VarioSecure利用料のみ<br>
+                ②オプション追加: USEN西川様回答に基づく概算。IDS/ADS、URLフィルタ、AV全追加時<br>
+                ③IIJ Omnibus: 2026/1/13提案資料の概算費用。8拠点+リモートアクセス50名<br>
+                ④Cato SASE: SCSK角田様 2/13メールの先行情報。正式見積は2/17頃
+            </p>
+
+            <!-- テーブルC -->
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">テーブルC: 全体合計（主要3パターン）</h3>
+
+            <div style="overflow-x: auto;">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 22%;">費目</th>
+                            <th class="col-laj" style="width: 26%;">パターン1: LAJ + Cato</th>
+                            <th class="col-usen" style="width: 26%;">パターン2: USEN + Cato</th>
+                            <th class="col-iij" style="width: 26%;">パターン3: IIJ一括</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 600;">AD+SECOM初期</td>
+                            <td>¥1,943,000</td>
+                            <td>¥1,278,000</td>
+                            <td>¥2,095,750</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">NW初期</td>
+                            <td>¥500,000</td>
+                            <td>¥500,000</td>
+                            <td>¥2,764,850</td>
+                        </tr>
+                        <tr class="summary-row-highlight">
+                            <td style="font-weight: 700;">初期費用合計</td>
+                            <td style="font-weight: 700;">¥2,443,000</td>
+                            <td style="font-weight: 700;">¥1,778,000</td>
+                            <td style="font-weight: 700;">¥4,860,600</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">AD+SECOM月額</td>
+                            <td>¥168,427</td>
+                            <td>¥239,200</td>
+                            <td>¥259,290</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">NW月額</td>
+                            <td>¥467,000</td>
+                            <td>¥467,000</td>
+                            <td>¥722,150</td>
+                        </tr>
+                        <tr class="summary-row-highlight">
+                            <td style="font-weight: 700;">月額合計</td>
+                            <td style="font-weight: 700;">¥635,427</td>
+                            <td style="font-weight: 700;">¥706,200</td>
+                            <td style="font-weight: 700;">¥981,440</td>
+                        </tr>
+                        <tr class="summary-row-highlight">
+                            <td style="font-weight: 700;">年額</td>
+                            <td style="font-weight: 700;">¥7,625,124</td>
+                            <td style="font-weight: 700;">¥8,474,400</td>
+                            <td style="font-weight: 700;">¥11,777,280</td>
+                        </tr>
+                        <tr class="summary-row-highlight">
+                            <td style="font-weight: 700;">初年度総額</td>
+                            <td style="font-weight: 700;">¥10,068,124</td>
+                            <td style="font-weight: 700;">¥10,252,400</td>
+                            <td style="font-weight: 700;">¥16,637,880</td>
+                        </tr>
+                        <tr class="summary-row-highlight">
+                            <td style="font-weight: 700;">5年間総額</td>
+                            <td style="font-weight: 700;">¥40,568,620</td>
+                            <td style="font-weight: 700;">¥44,150,000</td>
+                            <td style="font-weight: 700;">¥63,747,000</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">金額は全て税抜。Cato SASEの見積が出揃った場合、ネットワーク部分の金額が変わる可能性あり</p>
+            <div style="background: #f8fafc; border-radius: 1rem; padding: 1.5rem; margin: 1.5rem 0;">
+                <ul style="font-size: 0.9rem; color: #475569; line-height: 2; padding-left: 1.25rem; margin: 0;">
+                    <li><strong>パターン1:</strong> AD+SECOMはLink-At-Japan（Azure、並走型）、ネットワークはCato SASE → 月額が最も安い</li>
+                    <li><strong>パターン2:</strong> AD+SECOMはUSEN（AWS、分離型）、ネットワークはCato SASE → 初期費用が最も安い</li>
+                    <li><strong>パターン3:</strong> IIJ一括（AD+SECOM+Omnibus全てIIJ） → 運用負荷は最も軽い</li>
+                </ul>
+            </div>
 
             <div class="fact-box" style="border-left-color: #64748b; margin-top: 1.5rem;">
                 <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
-                    なお、現状維持の場合も費用は発生します。
-                    現在のサーバーは2020年導入で、標準保守5年は終了済みです。現在は延長保守中（2027年10月末まで）であり、延長保守終了後には機器更新が必要です。
-                    機器更新費用（2020年実績: ¥1,880,000、物価上昇考慮: 約¥2,820,000）に加え、ネットワーク回線の月額（¥170,400/月、4月以降の値上げ後）が継続します。
+                    現状維持の場合: サーバー更新費約¥243万（2020年実績の1.5倍予測）+ ネットワーク月額¥170,400/月（年額¥204万）= 5年間で約¥1,265万。ただし、地理的冗長化やセキュリティ強化は含まれない。
                 </p>
             </div>
 
@@ -1353,9 +1768,9 @@
         </section>
 
         <!-- ========================================= -->
-        <!-- Section 9: 今後の進め方 -->
+        <!-- Section 10: 今後の進め方 -->
         <!-- ========================================= -->
-        <section id="sec9" class="modern-card">
+        <section id="sec10" class="modern-card">
             <div class="section-title">確認事項と今後の進め方</div>
 
             <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 0 0 1rem;">ベンダーへの確認状況</h3>
@@ -1511,26 +1926,31 @@
         },
         {
             id: 'sec5',
-            title: 'Entra IDについて',
-            text: 'ADの移行を検討する中で、「Entra IDを使えばADサーバー自体が不要になるのでは」という疑問がありました。結論から申し上げると、ADとEntra IDは役割が違います。ADは社内ネットワークの管理、つまりPCログインやファイルサーバーのアクセス権を制御するものです。一方、Entra IDはOffice 365などクラウドサービスのログインを管理するものです。Entra IDだけにすると、ファイルサーバーへの自動ログインや、PCの詳細な設定制御ができなくなります。実際、大手企業の約80%は、ADを残しつつEntra IDと併用するハイブリッド構成を採用しています。まずADのクラウド移行を進め、Entra IDの追加機能は段階的に導入するのが現実的です。'
+            title: '3社の管理体制比較',
+            text: '3社は費用だけでなく、日常の管理体制も大きく異なります。主な違いを説明します。まず、クラウドアカウントの名義です。IIJはIIJ名義で、管理コンソールにはアクセスできません。USENはUSEN名義で、AWSの管理コンソールは非公開です。Link-At-JapanはAKIBAホールディングス名義で、Azure Portalを共同管理できます。サーバーへの直接接続は、IIJは不可でRSATのみ、USENとLink-At-JapanはVPN経由で可能です。パッチ適用は、IIJが全自動で月次、USENは四半期から半年ごと、Link-At-JapanはWindows Updateのみのプランがあります。バックアップは、IIJは制限なし、USENは7世代の日次、Link-At-Japanは30世代相当でAzure Backupを使います。復旧時間は、IIJが瞬断から分単位と最も短く、USENとLink-At-Japanは数時間から1日です。解約時のデータ取り出しは、IIJはPowerShellでエクスポート、USENはベンダー名義のため要相談、Link-At-Japanは自社名義なので自由に取り出せます。'
         },
         {
             id: 'sec6',
+            title: 'Entra IDについて',
+            text: 'ADの移行を検討する中で、「Entra IDを使えばADサーバー自体が不要になるのでは」という疑問がありました。結論から申し上げると、ADとEntra IDは役割が違います。ADは社内ネットワークの管理、つまりPCログインやファイルサーバーのアクセス権を制御するものです。一方、Entra IDはOffice 365などクラウドサービスのログインを管理するものです。Entra IDだけにすると、ファイルサーバーへの自動ログインや、PCの詳細な設定制御ができなくなります。実際、大手企業の約80%は、ADを残しつつEntra IDと併用するハイブリッド構成を採用しています。仮にEntra IDに完全移行する場合は、全PCのドメイン離脱と再参加、Intuneの導入、ファイルサーバーのクラウド移行など、大規模な作業が必要です。IIJは「Entra IDへの完全移行に該当するサービスはない」、USENは「Windows Serverがドメイン参加されている場合、移管は難しい」と回答しています。まずADのクラウド移行を進め、Entra IDの追加機能は段階的に導入するのが現実的です。'
+        },
+        {
+            id: 'sec7',
             title: 'SECOM入退室管理',
             text: 'SECOMの入退室管理サーバーは、ADと同じサーバー室に設置されています。こちらは1台構成で予備機がありません。ただし、各拠点にインターフェース機器がありますので、サーバーが止まっても入退室自体は問題なく継続できます。影響があるのは、勤怠管理システムとの連携です。入室で出勤、退室で退勤が自動打刻される仕組みなので、サーバーが止まるとこの連携が停止します。ADを移行するなら、同時にSECOMも検討することで効率が上がります。SECOM単独の5年間総額は、IIJが約896万円、USENが約862万円、Link-At-Japanが約757万円です。ADとSECOMを同じベンダーにまとめると、VPN構築などの共通作業が1回で済むため、構築費用が下がります。'
         },
         {
-            id: 'sec7',
-            title: 'ネットワーク刷新',
-            text: '次にネットワークです。現在、各拠点のインターネット通信は全て築地本社を経由しています。そのため、Office 365やGoogle Workspaceなどクラウドサービスの利用時に速度低下が起きています。4つのシナリオを検討しています。1つ目は現状維持で、月額約17万円。ただし現在の課題は解消しません。2つ目はVarioSecureにオプション追加で、月額約123万円。部分的な改善のみです。3つ目がIIJ Omnibusで、月額約39万円。各拠点から直接インターネットに接続できる構成です。4つ目がCato SASEで、現在見積を依頼中です。なお、ADの移行先にIIJを選んだ場合、ネットワークもIIJ Omnibusの利用が前提になるという依存関係があります。'
-        },
-        {
             id: 'sec8',
-            title: '費用の全体像',
-            text: '最後に、3領域の費用を合わせた全体像です。AD、SECOM、ネットワークを合算した場合、5年間の概算は約3,500万円から4,100万円程度です。ベンダーとシナリオの組み合わせにより変動します。なお、現状維持の場合でも費用は発生します。延長保守終了後にはサーバーの更新が必要ですし、ネットワーク回線の月額費用も継続します。'
+            title: 'ネットワーク刷新',
+            text: '次にネットワークです。現在、各拠点のインターネット通信は全て築地本社を経由しています。特にGoogle MeetによるWeb会議で、映像の遅延や音声の途切れが発生しています。業務の中心はGoogle Workspaceで、Web会議の利用が増えるにつれ、全拠点のトラフィックが本社を経由する構成が問題になっています。まず、VPN、SD-WAN、SASEの違いを説明します。現行のVarioSecureはVPNで、全通信が本社を経由します。IIJ OmnibusはSD-WANで、ソフトウェアで通信経路を自動制御し、Google Meetなどは拠点から直接接続できます。Cato SASEは、SD-WANに加えてファイアウォールやウイルス対策などのセキュリティをクラウド上で一体提供します。4つのシナリオを検討しています。1つ目は現状維持で月額約17万円。2つ目はVarioSecureにオプション追加で月額約123万円ですが、SSL検査やアプリ制御には対応できません。3つ目がIIJ Omnibusで月額約72万円。内訳は拠点間WANが約33万円、インターネットゲートウェイが約23万円、リモートアクセス50名が約7万円、ブレイクアウトが約10万円です。4つ目がCato SASEで月額約47万円。SCSK角田様から2月13日に概算の先行情報をいただいており、正式見積は2月17日頃の予定です。'
         },
         {
             id: 'sec9',
+            title: '費用の全体像',
+            text: '費用の全体像を、主要3パターンで比較します。パターン1は、AD・SECOMをLink-At-Japan、ネットワークをCatoにする組み合わせです。5年間総額は約4,057万円で、月額が最も安い構成です。パターン2は、AD・SECOMをUSEN、ネットワークをCatoにする組み合わせです。5年間総額は約4,415万円で、初期費用が最も安い構成です。パターン3は、IIJに一括で任せる構成で、5年間総額は約6,375万円です。費用は最も高くなりますが、運用負荷は最も軽くなります。なお、現状維持の場合でも、サーバー更新費約243万円にネットワーク月額17万円を加えると、5年間で約1,265万円の費用が発生します。ただし、地理的な冗長化やセキュリティ強化は含まれません。'
+        },
+        {
+            id: 'sec10',
             title: '今後の進め方',
             text: '現在、いくつかのベンダーに追加の確認を行っています。USENには緊急パッチ対応の方針を、Link-At-JapanにはSLAの数値を、Cato SASEにはSCSK社経由で見積を依頼しています。今後のスケジュールとしては、2月から3月にかけてベンダー回答を収集し、4月に最終選定と来期予算申請、下半期から段階的に移行を開始する案で考えています。ご判断いただきたい事項は3点です。1点目、ADサーバーのクラウド移行の方針とベンダー選定の方向性。2点目、SECOMをADと同時に進めるか。3点目、ネットワーク刷新は残りの見積が出揃った時点で改めて検討するか、です。以上が、現在の検討状況です。'
         }
