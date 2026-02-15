@@ -2074,6 +2074,218 @@
                 <p style="margin: 0.5rem 0 0; line-height: 1.8;">Cato Clientをインストールした端末は、<strong>自宅やモバイル環境からも社内ネットワークに接続可能</strong>。Socket未設置の拠点でも、個人端末からCatoクラウドを経由して安全に業務が行える。IIJ Omnibusでは全拠点にルーター設置が必要であるのに対し、Catoは主要拠点（築地・多摩）のみSocket設置、その他はClientで対応するため、拠点あたりの機器コストを抑えられる。</p>
             </div>
 
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">拠点別 管理区分・人数・接続方式</h3>
+            <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 0.75rem;">各拠点のPC管理者、SECOM有無、シナリオ別の接続方式を整理したもの。</p>
+            <div style="overflow-x: auto;">
+                <table class="compare-table" style="font-size: 0.8rem;">
+                    <thead>
+                        <tr>
+                            <th>拠点</th>
+                            <th>所属</th>
+                            <th>所属人数</th>
+                            <th>対象人数</th>
+                            <th>PC管理</th>
+                            <th>SECOM</th>
+                            <th style="border-top: 3px solid #3b82f6;">③IIJ（現提案）</th>
+                            <th style="border-top: 3px solid #60a5fa;">③IIJ（モバイル案）</th>
+                            <th style="border-top: 3px solid #8b5cf6;">④Cato</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 600;">築地本社 6F</td>
+                            <td>AH</td>
+                            <td>21名</td>
+                            <td style="font-weight: 700; color: #1d4ed8;">21名</td>
+                            <td>自社</td>
+                            <td>あり</td>
+                            <td>ルーター</td>
+                            <td>ルーター</td>
+                            <td>Socket</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">築地本社 7F</td>
+                            <td>AD</td>
+                            <td>36名</td>
+                            <td style="font-weight: 700; color: #1d4ed8;">36名</td>
+                            <td>自社</td>
+                            <td>あり</td>
+                            <td>ルーター</td>
+                            <td>モバイル</td>
+                            <td>Socket</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">多摩（R&D）</td>
+                            <td>AD</td>
+                            <td>12名</td>
+                            <td style="color: #9333ea;">要確認</td>
+                            <td>自社</td>
+                            <td>あり</td>
+                            <td>ルーター</td>
+                            <td>モバイル</td>
+                            <td>Client</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">橋本（IoT）</td>
+                            <td>AD</td>
+                            <td>9名</td>
+                            <td style="color: #9333ea;">要確認</td>
+                            <td>自社</td>
+                            <td>あり</td>
+                            <td>ルーター</td>
+                            <td>モバイル</td>
+                            <td>Client</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">大阪</td>
+                            <td>AD</td>
+                            <td>3名</td>
+                            <td style="color: #9333ea;">要確認</td>
+                            <td>自社</td>
+                            <td>あり</td>
+                            <td>ルーター</td>
+                            <td>モバイル</td>
+                            <td>Client</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">京橋</td>
+                            <td>AH</td>
+                            <td>5名</td>
+                            <td style="color: #9333ea;">要確認</td>
+                            <td>自社</td>
+                            <td>あり</td>
+                            <td>ルーター</td>
+                            <td>モバイル</td>
+                            <td>Client</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">仙台</td>
+                            <td>AD</td>
+                            <td>3名</td>
+                            <td style="color: #9333ea;">要確認</td>
+                            <td>自社</td>
+                            <td>あり</td>
+                            <td style="color: #dc2626;">対象外</td>
+                            <td>モバイル</td>
+                            <td>Client</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">鬼怒川</td>
+                            <td>DP&R</td>
+                            <td>13名</td>
+                            <td style="font-weight: 700; color: #1d4ed8;">13名</td>
+                            <td>自社</td>
+                            <td>あり</td>
+                            <td>ルーター</td>
+                            <td>モバイル</td>
+                            <td>Client</td>
+                        </tr>
+                        <tr style="background: #fef9ee;">
+                            <td style="font-weight: 600;">名古屋（BN）</td>
+                            <td>BN</td>
+                            <td>―</td>
+                            <td>―</td>
+                            <td>BN管理</td>
+                            <td>SECOMのみ</td>
+                            <td>ルーター</td>
+                            <td>モバイル</td>
+                            <td style="color: #dc2626;">対象外</td>
+                        </tr>
+                        <tr style="background: #fef9ee;">
+                            <td style="font-weight: 600;">福岡（BN）</td>
+                            <td>BN</td>
+                            <td>―</td>
+                            <td>―</td>
+                            <td>BN管理</td>
+                            <td>SECOMのみ</td>
+                            <td>ルーター</td>
+                            <td>モバイル</td>
+                            <td style="color: #dc2626;">対象外</td>
+                        </tr>
+                        <tr style="background: #fef9ee;">
+                            <td style="font-weight: 600;">和歌山（BN）</td>
+                            <td>BN</td>
+                            <td>―</td>
+                            <td>―</td>
+                            <td>BN管理</td>
+                            <td>SECOMのみ</td>
+                            <td>ルーター</td>
+                            <td>モバイル</td>
+                            <td style="color: #dc2626;">対象外</td>
+                        </tr>
+                        <tr style="background: #fef9ee;">
+                            <td style="font-weight: 600;">京橋3-5F（BN）</td>
+                            <td>BN</td>
+                            <td>―</td>
+                            <td>―</td>
+                            <td>BN管理</td>
+                            <td>SECOMのみ</td>
+                            <td style="color: #dc2626;">対象外</td>
+                            <td style="color: #dc2626;">対象外</td>
+                            <td style="color: #dc2626;">対象外</td>
+                        </tr>
+                        <tr style="background: #f8fafc;">
+                            <td style="font-weight: 600;">クラウド（AD/SECOM）</td>
+                            <td>―</td>
+                            <td>―</td>
+                            <td>―</td>
+                            <td>―</td>
+                            <td>―</td>
+                            <td>IIJ GIO</td>
+                            <td>IIJ GIO</td>
+                            <td>Azure/AWS</td>
+                        </tr>
+                        <tr style="background: #e0f2fe; font-weight: 700;">
+                            <td>所属人数 合計</td>
+                            <td></td>
+                            <td>102名</td>
+                            <td></td>
+                            <td colspan="2"></td>
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr style="background: #dbeafe; font-weight: 700;">
+                            <td>対象人数 確定分</td>
+                            <td></td>
+                            <td></td>
+                            <td>70名</td>
+                            <td colspan="2">※築地57名+鬼怒川13名</td>
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr style="background: #f1f5f9; font-weight: 700;">
+                            <td>機器設置数</td>
+                            <td colspan="5"></td>
+                            <td>ルーター 8台</td>
+                            <td>ルーター 1台</td>
+                            <td>Socket 2台</td>
+                        </tr>
+                        <tr style="background: #f1f5f9; font-weight: 700;">
+                            <td>モバイル/Client数</td>
+                            <td colspan="5"></td>
+                            <td>50名</td>
+                            <td>102名+</td>
+                            <td>102名+</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">
+                ※ 所属人数はADアカウント上の人数（上限値）。対象人数は日常的にPCを使用する社員数で、ヒアリングにより確定する。<br>
+                ※ 築地本社（AH 21名 + AD 36名 = 57名）と鬼怒川（13名）は対象人数として確定済み。合計70名。<br>
+                ※ 鬼怒川13名は人事回答による日常PC利用者数（正社員）。アルバイト6名・繁忙期派遣は対象外。<br>
+                ※ 残り5拠点（多摩・橋本・大阪・京橋・仙台、所属合計32名）は情報システム部でのヒアリングにて確定予定。<br>
+                ※ BN拠点はバディネットが独自にPC・ネットワークを管理。AKIBAホールディングスとしてはSECOM機器の接続のみ。
+            </p>
+
+            <div class="evidence-warning" style="margin-top: 1rem;">
+                <div class="evidence-warning-title">今後の確認事項</div>
+                <div class="evidence-warning-text">
+                    <ol style="margin: 0; padding-left: 1.25rem; line-height: 2;">
+                        <li><strong>特殊通信の有無を確認</strong>: 固定IPが必要な複合機、監視カメラ、入退室管理機器など、モバイルアクセスでは対応できない通信を行っている拠点がないか確認する。該当する拠点にはルーター（またはSocket）の設置が必要となり、上記の機器設置数が増える場合がある。</li>
+                        <li><strong>実利用アカウント数のヒアリング</strong>: 情報システム部にて、日常的にPCを使用している社員のアカウント数を拠点ごとに確認し、上記102名から絞り込む。これにより正確なモバイルアクセスライセンス数を確定する。</li>
+                    </ol>
+                </div>
+            </div>
+
             <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">費用比較</h3>
 
             <div style="overflow-x: auto;">
