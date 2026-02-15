@@ -19,6 +19,11 @@
             line-height: 1.8;
         }
 
+        /* 音声読み上げ時のスクロール位置調整 */
+        section[id], div[id^="sp-"] {
+            scroll-margin-top: 2rem;
+        }
+
         .modern-card {
             background: #ffffff;
             border: 1px solid #e2e8f0;
@@ -633,7 +638,7 @@
         <!-- Section 1: この資料について -->
         <!-- ========================================= -->
         <section id="sec1" class="modern-card mt-8">
-            <div class="section-title">この資料について</div>
+            <div class="section-title">1. この資料について</div>
             <p class="section-lead">
                 本資料は、築地本社サーバー室に設置されている機器のクラウド移行と、社内ネットワークの刷新について、検討状況をまとめたものです。
                 検討対象は以下の3領域です。
@@ -669,7 +674,7 @@
         <!-- Section 2: サーバー室の現状 -->
         <!-- ========================================= -->
         <section id="sec2" class="modern-card">
-            <div class="section-title">サーバー室の現状</div>
+            <div class="section-title">2. サーバー室の現状</div>
 
             <p class="section-lead">
                 築地本社6階のサーバー室には、全社の業務に関わるサーバーが設置されています。
@@ -715,7 +720,7 @@
                 </div>
             </div>
 
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 0.75rem;">ADサーバーとは</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 0.75rem;">2. ADサーバーとは</h3>
             <p class="section-lead" style="margin-bottom: 0.75rem;">
                 Active Directory（AD）は、社員がPCにログインする際に「この人は本当に社員か」「どのファイルにアクセスしてよいか」を確認する仕組みです。
                 社員がPCを起動してログインするたびに、このサーバーに問い合わせが行われます。
@@ -726,7 +731,7 @@
                 ただし、2台とも築地本社6階の同じサーバー室に設置されているため、火災・地震等で同時に被害を受ける可能性があります。
             </p>
 
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 0.75rem;">SECOMサーバーとは</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 0.75rem;">2. SECOMサーバーとは</h3>
             <p class="section-lead" style="margin-bottom: 0.75rem;">
                 各拠点のドアに設置されたカードリーダーと連携し、誰がいつどこに入退室したかを管理するサーバーです。
                 各拠点にインターフェース機器が設置されており、入退室の認証自体は拠点側で動作します。
@@ -781,7 +786,7 @@
         <!-- Section 3: このまま使い続けた場合 -->
         <!-- ========================================= -->
         <section id="sec3" class="modern-card">
-            <div class="section-title">このまま使い続けた場合</div>
+            <div class="section-title">3. このまま使い続けた場合</div>
 
             <p class="section-lead">
                 現在の構成は、導入当時の一般的な設計です。
@@ -837,7 +842,7 @@
                     </tr>
                     <tr>
                         <td style="font-weight: 600;">現在の延長保守終了後<br>（2027年10月以降）</td>
-                        <td>メーカー修理不可。さらなる保守延長は条件次第。機器更新の場合、2020年実績で約¥162万（物価上昇で増加見込み）</td>
+                        <td>メーカー修理不可。さらなる保守延長は条件次第。機器更新の場合、2020年実績で¥1,620,000（物価上昇で増加見込み）</td>
                         <td>同様にメーカー保守終了。故障時の対応手段が限定される</td>
                     </tr>
                 </tbody>
@@ -871,7 +876,7 @@
         <!-- Section 4: ADクラウド移行 3社比較 -->
         <!-- ========================================= -->
         <section id="sec4" class="modern-card">
-            <div class="section-title">ADサーバーのクラウド移行</div>
+            <div class="section-title">4. ADサーバーのクラウド移行</div>
 
             <p class="section-lead">
                 現在のADサーバーは2台構成で、片方の故障には対応できます。
@@ -911,7 +916,7 @@
 
             <!-- Cost comparison table - placeholder for actual data -->
             <div id="sp-ad-cost"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">費用比較</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">5. 費用比較</h3>
 
             <div style="overflow-x: auto;">
                 <table class="compare-table">
@@ -930,14 +935,14 @@
                             <td>¥1,422,750</td>
                             <td>¥860,000</td>
                             <td>¥1,555,000</td>
-                            <td>約¥2,430,000 ※1</td>
+                            <td>¥2,430,000 ※1</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">月額費用</td>
                             <td>¥174,750</td>
                             <td>¥124,300</td>
                             <td>¥102,051</td>
-                            <td>約¥6,500</td>
+                            <td>¥6,500</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">初年度総額</td>
@@ -951,7 +956,7 @@
                             <td>¥11,907,750</td>
                             <td>¥8,318,000</td>
                             <td>¥7,678,060</td>
-                            <td>約¥2,820,000 ※1</td>
+                            <td>¥2,820,000 ※1</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">SLA（稼働率保証）</td>
@@ -1008,7 +1013,7 @@
         <!-- Section 5: 3社の管理体制比較 -->
         <!-- ========================================= -->
         <section id="sec5" class="modern-card">
-            <div class="section-title">3社の管理体制比較</div>
+            <div class="section-title">6. 3社の管理体制比較</div>
 
             <p class="section-lead">
                 3社は「サーバーの預け方」だけでなく、日常の管理体制も大きく異なります。以下は、実際の運用で重要になる項目の比較です。
@@ -1134,7 +1139,7 @@
         <!-- Section 5b: ベンダー別：日常運用でできること -->
         <!-- ========================================= -->
         <section id="sec5b" class="modern-card">
-            <div class="section-title">ベンダー別：日常運用でできること</div>
+            <div class="section-title">7. ベンダー別：日常運用でできること</div>
 
             <p class="section-lead">
                 各社を選んだ場合に、情報システム部がクラウド上のADサーバーに対して「何ができて、何ができないか」を整理します。
@@ -1145,7 +1150,7 @@
             <div id="sp-vendor-iij"></div>
             <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem; display: flex; align-items: center; gap: 8px;">
                 <span style="display: inline-block; width: 4px; height: 20px; background: #3b82f6; border-radius: 2px;"></span>
-                IIJを選んだ場合（お任せ型）
+                7. IIJを選んだ場合（お任せ型）
             </h3>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
@@ -1181,7 +1186,7 @@
             <div id="sp-vendor-usen"></div>
             <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem; display: flex; align-items: center; gap: 8px;">
                 <span style="display: inline-block; width: 4px; height: 20px; background: #10b981; border-radius: 2px;"></span>
-                USENを選んだ場合（分離型）
+                8. USENを選んだ場合（分離型）
             </h3>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
@@ -1216,7 +1221,7 @@
             <div id="sp-vendor-laj"></div>
             <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem; display: flex; align-items: center; gap: 8px;">
                 <span style="display: inline-block; width: 4px; height: 20px; background: #f59e0b; border-radius: 2px;"></span>
-                Link-At-Japanを選んだ場合（並走型）
+                8. Link-At-Japanを選んだ場合（並走型）
             </h3>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
@@ -1252,7 +1257,7 @@
 
             <!-- アカウント名義と解約時の比較 -->
             <div id="sp-vendor-ownership"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">クラウド環境の所有権と解約時の影響</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">9. クラウド環境の所有権と解約時の影響</h3>
 
             <div style="overflow-x: auto;">
                 <table class="compare-table">
@@ -1313,7 +1318,7 @@
 
             <!-- 自社管理のリスクとプロ委託の意義 -->
             <div id="sp-vendor-risk"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2.5rem 0 1rem;">自社で管理権限を持つことのリスク</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2.5rem 0 1rem;">9. 自社で管理権限を持つことのリスク</h3>
 
             <p class="section-lead">
                 サーバーに直接アクセスできることは自由度が高い反面、それに伴うリスクも発生します。
@@ -1348,7 +1353,7 @@
                 </ul>
             </div>
 
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">専門事業者に運用を委託する意義</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">9. 専門事業者に運用を委託する意義</h3>
 
             <p class="section-lead">
                 上記のリスクに対し、マネージドサービス（運用代行）を活用することで、以下の効果が期待できます。
@@ -1392,7 +1397,7 @@
         <!-- Section 6: Entra IDについて -->
         <!-- ========================================= -->
         <section id="sec6" class="modern-card">
-            <div class="section-title">Entra IDについて</div>
+            <div class="section-title">10. Entra IDについて</div>
 
             <p class="section-lead">
                 ADの移行を検討するにあたり、MicrosoftのクラウドID管理サービス「Entra ID（旧Azure AD）」について調査しました。
@@ -1410,7 +1415,7 @@
             </div>
 
             <div id="sp-entra-role"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 1rem;">ADとEntra IDの役割の違い</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 1rem;">10. ADとEntra IDの役割の違い</h3>
 
             <p class="section-lead">
                 ADとEntra IDは、名前は似ていますが役割が異なります。
@@ -1441,7 +1446,7 @@
                 </div>
             </div>
 
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 1rem;">Entra IDだけでは対応できないこと</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 1rem;">10. Entra IDだけでは対応できないこと</h3>
 
             <p class="section-lead">
                 現時点では、Entra IDだけでADの全機能を代替することはできません。以下の機能はADに依存しています。
@@ -1458,7 +1463,7 @@
             </p>
 
             <div id="sp-entra-features"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">ADにはできず、Entra IDで初めて使える機能</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">11. ADにはできず、Entra IDで初めて使える機能</h3>
 
             <p class="section-lead">
                 ADとEntra IDは同じMicrosoftの製品ですが、Entra IDにはAD単体では実現できないセキュリティ機能があります。
@@ -1508,7 +1513,7 @@
             </div>
 
             <div id="sp-entra-future"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">将来像: Entra IDへの集約は目指すべきか</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">12. 将来像: Entra IDへの集約は目指すべきか</h3>
 
             <p class="section-lead">
                 Microsoftは、ID管理に関する新機能開発を全てEntra IDに集中させており、ADへの新機能投資は事実上停止しています。
@@ -1535,7 +1540,7 @@
                 </p>
             </div>
 
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">AKIBAホールディングスにとっての現実的な進め方</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">12. AKIBAホールディングスにとっての現実的な進め方</h3>
 
             <p class="section-lead">
                 以下の3段階で進めることが現実的です。
@@ -1565,7 +1570,7 @@
                 </div>
             </div>
 
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">参考: Entra IDに完全移行する場合に必要な作業</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">12. 参考: Entra IDに完全移行する場合に必要な作業</h3>
 
             <p class="section-lead">
                 将来的にEntra IDへ完全移行する場合、以下の作業が必要になります。現時点で着手する必要はありませんが、長期計画の参考として記載します。
@@ -1597,14 +1602,14 @@
         <!-- Section 7: SECOM入退室管理 -->
         <!-- ========================================= -->
         <section id="sec7" class="modern-card">
-            <div class="section-title">SECOM入退室管理のクラウド移行</div>
+            <div class="section-title">13. SECOM入退室管理のクラウド移行</div>
 
             <p class="section-lead">
                 SECOMの入退室管理サーバーは、ADサーバーと同じサーバー室に設置されています。
                 ADのクラウド移行を検討するのであれば、同時にSECOMも検討することで効率が上がります。
             </p>
 
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 1rem;">SECOM クラウド移行費用（3社比較）</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 1rem;">14. SECOM クラウド移行費用（3社比較）</h3>
 
             <div style="overflow-x: auto;">
                 <table class="compare-table">
@@ -1652,7 +1657,7 @@
             <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">金額は全て税抜</p>
 
             <div id="sp-secom-combo"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">AD + SECOM 同時移行による費用削減</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">14. AD + SECOM 同時移行による費用削減</h3>
 
             <p class="section-lead">
                 ADとSECOMを同じベンダーにまとめて依頼する場合、ネットワーク設定やVPN構築等の共通作業が1回で済むため、SECOM構築費用が下がります。
@@ -1707,7 +1712,7 @@
         <!-- Section 8: ネットワーク刷新 -->
         <!-- ========================================= -->
         <section id="sec8" class="modern-card">
-            <div class="section-title">ネットワークの課題と刷新案</div>
+            <div class="section-title">15. ネットワークの課題と刷新案</div>
 
             <p class="section-lead">
                 現在、各拠点のインターネット通信は、一度築地本社を経由してから外部に接続する構成になっています。
@@ -1719,7 +1724,7 @@
             </p>
 
             <div id="sp-nw-vpn"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 1rem;">VPN・SD-WAN・SASEの違い</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 1rem;">16. VPN・SD-WAN・SASEの違い</h3>
 
             <div class="vendor-type-grid">
                 <div class="vendor-type-card" style="border-top-color: #94a3b8;">
@@ -1746,7 +1751,7 @@
             </div>
 
             <div id="sp-nw-scenario"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 1rem;">検討中の4シナリオ</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 1rem;">17. 検討中の4シナリオ</h3>
 
             <div class="scenario-grid">
                 <div class="scenario-card">
@@ -1772,7 +1777,7 @@
             </div>
 
             <div id="sp-nw-vario"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">VarioSecure セキュリティオプションの対応状況</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">18. VarioSecure セキュリティオプションの対応状況</h3>
             <div style="overflow-x: auto;">
                 <table class="compare-table">
                     <thead>
@@ -1835,7 +1840,7 @@
             </div>
 
             <div id="sp-nw-sec"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">セキュリティ機能比較（4シナリオ横断）</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">18. セキュリティ機能比較（4シナリオ横断）</h3>
 
             <div style="overflow-x: auto;">
                 <table class="compare-table">
@@ -1934,7 +1939,7 @@
             </p>
 
             <div id="sp-nw-iijcato"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">IIJ Omnibus と Cato SASE の主な違い</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">19. IIJ Omnibus と Cato SASE の主な違い</h3>
 
             <p class="section-lead">
                 セキュリティ機能が充実している③と④の違いを整理します。
@@ -1995,7 +2000,7 @@
             </div>
 
             <div id="sp-nw-sites"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">対象拠点の比較</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">20. 対象拠点の比較</h3>
             <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 0.75rem;">IIJ OmnibusとCato SASEでは、対象となる拠点構成が異なる。</p>
             <div style="overflow-x: auto;">
                 <table class="compare-table">
@@ -2091,7 +2096,7 @@
             </div>
 
             <div id="sp-nw-mgmt"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">拠点別 管理区分・人数・接続方式</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">21. 拠点別 管理区分・人数・接続方式</h3>
             <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 0.75rem;">各拠点のPC管理者、SECOM有無、シナリオ別の接続方式を整理したもの。</p>
             <div style="overflow-x: auto;">
                 <table class="compare-table" style="font-size: 0.8rem;">
@@ -2304,7 +2309,7 @@
             </div>
 
             <div id="sp-nw-cost"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">費用比較</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">22. 費用比較</h3>
 
             <div style="overflow-x: auto;">
                 <table class="compare-table">
@@ -2323,7 +2328,7 @@
                             <td>¥170,400 ※2</td>
                             <td>¥1,228,800</td>
                             <td>¥722,150 ※3</td>
-                            <td>約¥467,000 ※4</td>
+                            <td>¥467,000 ※4</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">初期費用</td>
@@ -2334,10 +2339,10 @@
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">5年間総額</td>
-                            <td>約¥1,022万</td>
-                            <td>約¥7,473万</td>
+                            <td>¥10,224,000</td>
+                            <td>¥74,728,000</td>
                             <td>¥46,093,850</td>
-                            <td>約¥28,500,000</td>
+                            <td>¥28,500,000</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">セキュリティ</td>
@@ -2367,7 +2372,7 @@
             <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">
                 ※2 現行¥142,000から2026年4月に20%値上げ予定。金額は全て税抜<br>
                 ※3 IIJ Omnibus月額内訳: 拠点間WAN ¥325,950 + インターネットGW(FW含む) ¥227,000 + リモートアクセス50名 ¥73,200 + ブレイクアウト ¥96,000<br>
-                ※4 SCSK角田様 2/13メールによる概算値。ライセンス約500万/年 + マネージド60万/年 + 初期導入50万 の月割。正式見積は2月下旬提示予定（与信手続きのため）
+                ※4 SCSK角田様 2/13メールによる概算値。ライセンス¥5,000,000/年 + マネージド¥600,000/年 + 初期導入¥500,000 の月割。正式見積は2月下旬提示予定（与信手続きのため）
             </p>
 
             <div class="risk-note" style="margin-top: 1.5rem;">
@@ -2399,7 +2404,7 @@
         <!-- Section 9: 費用の全体像 -->
         <!-- ========================================= -->
         <section id="sec9" class="modern-card">
-            <div class="section-title">費用の全体像</div>
+            <div class="section-title">23. 費用の全体像</div>
 
             <p class="section-lead">
                 AD + SECOM同時移行を前提とし、ネットワーク刷新の4シナリオを含めた費用の全体像を以下に整理します。
@@ -2407,7 +2412,7 @@
 
             <!-- テーブルA -->
             <div id="sp-total-a"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 0 0 1rem;">テーブルA: AD + SECOM 同時移行費用（3社比較）</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 0 0 1rem;">23. テーブルA: AD + SECOM 同時移行費用（3社比較）</h3>
 
             <div style="overflow-x: auto;">
                 <table class="compare-table">
@@ -2487,7 +2492,7 @@
 
             <!-- テーブルB -->
             <div id="sp-total-b"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">テーブルB: ネットワーク刷新費用（4シナリオ比較）</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">24. テーブルB: ネットワーク刷新費用（4シナリオ比較）</h3>
 
             <div style="overflow-x: auto;">
                 <table class="compare-table">
@@ -2513,28 +2518,28 @@
                             <td>¥170,400</td>
                             <td>¥1,228,800</td>
                             <td>¥722,150</td>
-                            <td>約¥467,000</td>
+                            <td>¥467,000</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">年額</td>
                             <td>¥2,044,800</td>
                             <td>¥14,745,600</td>
                             <td>¥8,665,800</td>
-                            <td>約¥5,600,000</td>
+                            <td>¥5,600,000</td>
                         </tr>
                         <tr class="summary-row-highlight">
                             <td style="font-weight: 700;">初年度総額</td>
                             <td style="font-weight: 700;">¥2,044,800</td>
                             <td style="font-weight: 700;">¥15,745,600</td>
                             <td style="font-weight: 700;">¥11,430,650</td>
-                            <td style="font-weight: 700;">約¥6,100,000</td>
+                            <td style="font-weight: 700;">¥6,100,000</td>
                         </tr>
                         <tr class="summary-row-highlight">
                             <td style="font-weight: 700;">5年間総額</td>
                             <td style="font-weight: 700;">¥10,224,000</td>
                             <td style="font-weight: 700;">¥74,728,000</td>
                             <td style="font-weight: 700;">¥46,093,850</td>
-                            <td style="font-weight: 700;">約¥28,500,000</td>
+                            <td style="font-weight: 700;">¥28,500,000</td>
                         </tr>
                     </tbody>
                 </table>
@@ -2548,7 +2553,7 @@
 
             <!-- テーブルC -->
             <div id="sp-total-c"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">テーブルC: 全体合計（主要3パターン）</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">25. テーブルC: 全体合計（主要3パターン）</h3>
 
             <div style="overflow-x: auto;">
                 <table class="compare-table">
@@ -2629,7 +2634,7 @@
 
             <div class="fact-box" style="border-left-color: #64748b; margin-top: 1.5rem;">
                 <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
-                    現状維持の場合: サーバー更新費約¥243万（2020年実績の1.5倍予測）+ ネットワーク月額¥170,400/月（年額¥204万）= 5年間で約¥1,265万。ただし、地理的冗長化やセキュリティ強化は含まれない。
+                    現状維持の場合: サーバー更新費¥2,430,000（2020年実績の1.5倍予測）+ ネットワーク月額¥170,400/月（年額¥2,044,800）= 5年間で¥12,654,000。ただし、地理的冗長化やセキュリティ強化は含まれない。
                 </p>
             </div>
 
@@ -2642,9 +2647,9 @@
         <!-- Section 10: 今後の進め方 -->
         <!-- ========================================= -->
         <section id="sec10" class="modern-card">
-            <div class="section-title">確認事項と今後の進め方</div>
+            <div class="section-title">26. 確認事項と今後の進め方</div>
 
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 0 0 1rem;">ベンダーへの確認状況</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 0 0 1rem;">26. ベンダーへの確認状況</h3>
 
             <div style="overflow-x: auto;">
                 <table class="compare-table">
@@ -2692,7 +2697,7 @@
             </div>
 
             <div id="sp-next-decision"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">ご判断いただきたい事項</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">27. ご判断いただきたい事項</h3>
 
             <div style="background: #f8fafc; border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.5rem;">
                 <ol style="font-size: 0.95rem; color: #334155; line-height: 2.2; padding-left: 1.25rem; margin: 0;">
@@ -2702,22 +2707,6 @@
                 </ol>
             </div>
 
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">今後のスケジュール（案）</h3>
-
-            <div class="timeline-steps">
-                <div class="timeline-step">
-                    <div class="timeline-period">2月〜3月</div>
-                    <div class="timeline-action">ベンダー回答の収集<br>追加比較検討</div>
-                </div>
-                <div class="timeline-step">
-                    <div class="timeline-period">4月</div>
-                    <div class="timeline-action">最終選定<br>来期予算申請</div>
-                </div>
-                <div class="timeline-step">
-                    <div class="timeline-period">下半期</div>
-                    <div class="timeline-action">段階的に移行開始</div>
-                </div>
-            </div>
         </section>
 
         <!-- ========================================= -->
@@ -2941,7 +2930,7 @@
         {
             id: 'sp-next-decision',
             title: '27. ご判断いただきたい事項',
-            text: '27番、最後にご判断いただきたい事項です。画面のグレーの枠内に3点記載しています。1点目、ADサーバーのクラウド移行の方針とベンダー選定の方向性。2点目、SECOMをADと同時に進めるか。3点目、ネットワーク刷新は残りの見積が出揃った時点で改めて検討するか、です。スケジュールとしては、2月から3月でベンダー回答を収集し、4月に最終選定と来期予算申請、下半期から段階的に移行を開始する案です。以上が、現在の検討状況です。'
+            text: '27番、最後にご判断いただきたい事項です。画面のグレーの枠内に3点記載しています。1点目、ADサーバーのクラウド移行の方針とベンダー選定の方向性。2点目、SECOMをADと同時に進めるか。3点目、ネットワーク刷新は残りの見積が出揃った時点で改めて検討するか、です。以上が、現在の検討状況です。'
         }
     ];
 
@@ -2981,6 +2970,7 @@
 - 月額約10万→月額約10万円
 - 99.99%→99.99パーセント
 - 会社名: Link-At-Japan→リンクアットジャパン、VarioSecure→バリオセキュア、HPCテック→エイチピーシーテック、Gartner→ガートナー
+- 単独の「表」は「ひょう」と読む（「表示」「代表」などの熟語はそのまま）
 - 人名等は変換不要
 - 文の意味や構造は一切変えない
 - 「。」の区切りをそのまま保持する
@@ -3093,6 +3083,9 @@ ${text}`
         }
 
         if (speechState !== 'playing') return;
+
+        // 「表」を「ひょう」に置換（「表示」「代表」等の熟語は除外）
+        textToSpeak = textToSpeak.replace(/(?<![一-龥])表(?![一-龥示現裏面])/g, 'ひょう');
 
         // セクション全体を一括読み上げ
         const utterance = new SpeechSynthesisUtterance(textToSpeak);
