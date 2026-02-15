@@ -2951,6 +2951,7 @@
     let speechRate = 1.0;
     let useAI = true; // AI読みがな補正を使用するか
     let correctionCache = {}; // 補正結果のキャッシュ
+    let isCancelling = false; // cancel()によるonend発火を無視するフラグ
 
     // Gemini APIで読みがな補正
     const GEMINI_API_KEY = 'AIzaSyBZWgnsUAD5UjU-hRWsQM9r8Z7DQy7gb_Y';
@@ -3001,7 +3002,9 @@ ${text}`
                 console.warn('Gemini API error:', response.status);
                 if (response.status === 429 || response.status === 403) {
                     useAI = false;
-                    alert('Gemini API無料枠の上限に達しました。AI補正をOFFにして継続します。');
+                    console.warn('Gemini API無料枠の上限に達しました。AI補正をOFFにして継続します。');
+                    const btn = document.getElementById('ai-toggle');
+                    if (btn) { btn.style.background = '#94a3b8'; btn.style.borderColor = '#64748b'; btn.textContent = 'AI OFF'; }
                 }
                 return text;
             }
@@ -3032,8 +3035,14 @@ ${text}`
 
     let highlightedSectionEl = null; // 現在ハイライト中のセクション要素
 
-    function startSpeech(fromIndex) {
+    function safeCancel() {
+        isCancelling = true;
         window.speechSynthesis.cancel();
+        setTimeout(() => { isCancelling = false; }, 100);
+    }
+
+    function startSpeech(fromIndex) {
+        safeCancel();
         currentSectionIndex = fromIndex;
         speechState = 'playing';
         updateUI();
@@ -3096,15 +3105,16 @@ ${text}`
         if (jaVoice) utterance.voice = jaVoice;
 
         utterance.onend = function() {
+            if (isCancelling) return; // 手動キャンセル時は無視
             if (speechState === 'playing') {
                 currentSectionIndex++;
                 updateUI();
-                // セクション間のポーズ
                 setTimeout(() => prepareSectionAndSpeak(), 500);
             }
         };
 
         utterance.onerror = function(e) {
+            if (isCancelling) return;
             console.warn('Speech error:', e);
             if (speechState === 'playing') {
                 currentSectionIndex++;
@@ -3138,7 +3148,7 @@ ${text}`
     }
 
     function stopSpeech() {
-        window.speechSynthesis.cancel();
+        safeCancel();
         speechState = 'stopped';
         currentSectionIndex = 0;
         clearSectionHighlight();
@@ -3147,28 +3157,28 @@ ${text}`
 
     function speechSkipNext() {
         if (currentSectionIndex < speechSections.length - 1) {
-            window.speechSynthesis.cancel();
+            safeCancel();
             currentSectionIndex++;
             updateUI();
-            prepareSectionAndSpeak();
+            setTimeout(() => prepareSectionAndSpeak(), 150);
         }
     }
 
     function speechSkipPrev() {
         if (currentSectionIndex > 0) {
-            window.speechSynthesis.cancel();
+            safeCancel();
             currentSectionIndex--;
             updateUI();
-            prepareSectionAndSpeak();
+            setTimeout(() => prepareSectionAndSpeak(), 150);
         }
     }
 
     function updateSpeechRate() {
         speechRate = parseFloat(document.getElementById('speech-rate').value);
         if (speechState === 'playing') {
-            window.speechSynthesis.cancel();
-            // 現在のセクションを最初から再生
-            prepareSectionAndSpeak();
+            safeCancel();
+            // 現在のセクションを最初から再生（キャンセル完了後）
+            setTimeout(() => prepareSectionAndSpeak(), 150);
         }
     }
 
@@ -3240,8 +3250,9 @@ ${text}`
         return jaVoices[0];
     }
 
-    // 音声一覧の読み込み（ブラウザによっては非同期）
+    // ページロード時に前回の音声を確実に停止
     if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
         window.speechSynthesis.getVoices();
         window.speechSynthesis.onvoiceschanged = function() {
             cachedBestVoice = null;
@@ -3250,6 +3261,11 @@ ${text}`
             if (best) console.log('選択された音声:', best.name, best.lang, best.localService ? '(ローカル)' : '(オンライン)');
         };
     }
+
+    // ページ離脱時にも停止
+    window.addEventListener('beforeunload', function() {
+        if (window.speechSynthesis) window.speechSynthesis.cancel();
+    });
 
     // 停止ボタン（進捗パネルをダブルクリックで停止）
     document.getElementById('speech-progress').addEventListener('dblclick', function() {
