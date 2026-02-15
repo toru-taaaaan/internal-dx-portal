@@ -2862,8 +2862,91 @@
 
     let speechState = 'stopped'; // stopped, playing, paused
     let currentSectionIndex = 0;
+    let currentSentenceIndex = 0; // 文単位の位置
     let currentUtterance = null;
     let speechRate = 1.0;
+    let currentSentences = []; // 現在のセクションの文配列
+    let highlightedEl = null; // 現在ハイライト中の要素
+
+    // テキストを文単位に分割（。で区切る）
+    function splitToSentences(text) {
+        return text.split(/(?<=。)/).filter(s => s.trim().length > 0);
+    }
+
+    // 金額・キーワードを含む要素をページ内から探してスクロール
+    function findAndScrollToContent(sentence, sectionId) {
+        // 前回のハイライトを消す
+        clearContentHighlight();
+
+        // 金額パターンを抽出
+        const moneyPatterns = sentence.match(/[¥￥][\d,]+|約[\d,]+万|[\d,]+万円|月額約?\d+万|[\d,]+円/g);
+        const keyTerms = sentence.match(/IIJ|Cato|USEN|Link-At-Japan|VarioSecure|Omnibus|SECOM|Entra ID|Socket|ルーター/g);
+
+        const section = document.getElementById(sectionId);
+        if (!section) return;
+
+        // 金額が含まれる場合、テーブルのセルから該当金額を探す
+        if (moneyPatterns && moneyPatterns.length > 0) {
+            const cells = section.querySelectorAll('td, th');
+            for (const cell of cells) {
+                for (const pattern of moneyPatterns) {
+                    // ¥やカンマを除去して数値比較
+                    const cleanPattern = pattern.replace(/[¥￥約万円,]/g, '');
+                    const cleanCell = cell.textContent.replace(/[¥￥約万円,\s※\d]/g, '');
+                    if (cell.textContent.includes(cleanPattern) || cell.textContent.includes(pattern)) {
+                        highlightElement(cell.closest('tr') || cell);
+                        return;
+                    }
+                }
+            }
+        }
+
+        // キーワードで見出しやリスト要素を探す
+        if (keyTerms && keyTerms.length > 0) {
+            const elements = section.querySelectorAll('h3, li, td, p, strong');
+            for (const el of elements) {
+                let matchCount = 0;
+                for (const term of keyTerms) {
+                    if (el.textContent.includes(term)) matchCount++;
+                }
+                if (matchCount >= 1 && el.textContent.length < 200) {
+                    highlightElement(el);
+                    return;
+                }
+            }
+        }
+
+        // 文の冒頭キーワードでマッチ（「1つ目」「2つ目」「Step 1」等）
+        const orderMatch = sentence.match(/^(1つ目|2つ目|3つ目|4つ目|まず|次に|最後に|Step\s?\d)/);
+        if (orderMatch) {
+            const elements = section.querySelectorAll('li, .card, div[style*="border-left"], strong, h3');
+            for (const el of elements) {
+                if (el.textContent.includes(orderMatch[1]) || el.textContent.includes(orderMatch[0])) {
+                    highlightElement(el);
+                    return;
+                }
+            }
+        }
+    }
+
+    function highlightElement(el) {
+        if (!el) return;
+        highlightedEl = el;
+        el.style.outline = '3px solid #f59e0b';
+        el.style.outlineOffset = '4px';
+        el.style.transition = 'outline 0.2s';
+        el.style.backgroundColor = 'rgba(245, 158, 11, 0.08)';
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function clearContentHighlight() {
+        if (highlightedEl) {
+            highlightedEl.style.outline = 'none';
+            highlightedEl.style.outlineOffset = '';
+            highlightedEl.style.backgroundColor = '';
+            highlightedEl = null;
+        }
+    }
 
     function toggleSpeech() {
         if (speechState === 'stopped') {
@@ -2878,54 +2961,83 @@
     function startSpeech(fromIndex) {
         window.speechSynthesis.cancel();
         currentSectionIndex = fromIndex;
+        currentSentenceIndex = 0;
         speechState = 'playing';
         updateUI();
-        speakCurrentSection();
+        prepareSectionAndSpeak();
     }
 
-    function speakCurrentSection() {
+    // セクションの文を準備して再生開始
+    function prepareSectionAndSpeak() {
         if (currentSectionIndex >= speechSections.length) {
             stopSpeech();
             return;
         }
 
         const section = speechSections[currentSectionIndex];
-        const utterance = new SpeechSynthesisUtterance(section.text);
+        currentSentences = splitToSentences(section.text);
+
+        // セクションにスクロール＆ハイライト
+        const el = document.getElementById(section.id);
+        if (el) {
+            // 前のセクションのハイライトを消す
+            speechSections.forEach(s => {
+                const prev = document.getElementById(s.id);
+                if (prev) prev.style.outline = 'none';
+            });
+            el.style.outline = '3px solid #3b82f6';
+            el.style.outlineOffset = '8px';
+            el.style.transition = 'outline 0.3s';
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        updateUI();
+        speakCurrentSentence();
+    }
+
+    // 文単位で再生
+    function speakCurrentSentence() {
+        if (currentSentenceIndex >= currentSentences.length) {
+            // このセクション終了、次のセクションへ
+            clearContentHighlight();
+            currentSectionIndex++;
+            currentSentenceIndex = 0;
+            updateUI();
+            if (speechState === 'playing') {
+                setTimeout(() => prepareSectionAndSpeak(), 600);
+            }
+            return;
+        }
+
+        const sentenceText = currentSentences[currentSentenceIndex];
+        const utterance = new SpeechSynthesisUtterance(sentenceText);
         utterance.lang = 'ja-JP';
         utterance.rate = speechRate;
         utterance.pitch = 1.0;
 
-        // 日本語の音声を選択
         const voices = window.speechSynthesis.getVoices();
         const jaVoice = voices.find(v => v.lang.startsWith('ja')) || voices[0];
         if (jaVoice) utterance.voice = jaVoice;
 
+        // 文の内容に基づいてページ内要素にスクロール
+        const section = speechSections[currentSectionIndex];
+        findAndScrollToContent(sentenceText, section.id);
+
+        // 進捗テキスト更新
+        const sectionLabel = document.getElementById('speech-current-section');
+        if (sectionLabel) {
+            const sentencePreview = sentenceText.length > 40 ? sentenceText.substring(0, 40) + '...' : sentenceText;
+            sectionLabel.textContent = section.title + '  |  ' + sentencePreview;
+        }
+
         utterance.onend = function() {
             if (speechState === 'playing') {
-                currentSectionIndex++;
-                updateUI();
-                // 少し間を置いて次のセクション
-                setTimeout(() => speakCurrentSection(), 800);
+                currentSentenceIndex++;
+                speakCurrentSentence();
             }
         };
 
         currentUtterance = utterance;
-        updateUI();
-
-        // 該当セクションにスクロール
-        const el = document.getElementById(section.id);
-        if (el) {
-            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            el.style.outline = '3px solid #3b82f6';
-            el.style.outlineOffset = '8px';
-            el.style.transition = 'outline 0.3s';
-            // 前のセクションのハイライトを消す
-            if (currentSectionIndex > 0) {
-                const prevEl = document.getElementById(speechSections[currentSectionIndex - 1].id);
-                if (prevEl) { prevEl.style.outline = 'none'; }
-            }
-        }
-
         window.speechSynthesis.speak(utterance);
     }
 
@@ -2945,7 +3057,8 @@
         window.speechSynthesis.cancel();
         speechState = 'stopped';
         currentSectionIndex = 0;
-        // 全セクションのハイライトを消す
+        currentSentenceIndex = 0;
+        clearContentHighlight();
         speechSections.forEach(s => {
             const el = document.getElementById(s.id);
             if (el) el.style.outline = 'none';
@@ -2956,27 +3069,31 @@
     function speechSkipNext() {
         if (currentSectionIndex < speechSections.length - 1) {
             window.speechSynthesis.cancel();
+            clearContentHighlight();
             currentSectionIndex++;
+            currentSentenceIndex = 0;
             updateUI();
-            speakCurrentSection();
+            prepareSectionAndSpeak();
         }
     }
 
     function speechSkipPrev() {
         if (currentSectionIndex > 0) {
             window.speechSynthesis.cancel();
+            clearContentHighlight();
             currentSectionIndex--;
+            currentSentenceIndex = 0;
             updateUI();
-            speakCurrentSection();
+            prepareSectionAndSpeak();
         }
     }
 
     function updateSpeechRate() {
         speechRate = parseFloat(document.getElementById('speech-rate').value);
-        // 読み上げ中なら現在のセクションを最初からやり直す
         if (speechState === 'playing') {
+            // 現在の文番号を保持して、その文から新しいrateで再開
             window.speechSynthesis.cancel();
-            speakCurrentSection();
+            speakCurrentSentence();
         }
     }
 
@@ -2997,7 +3114,10 @@
             btn.title = '一時停止';
             progress.style.display = 'block';
             if (currentSectionIndex < speechSections.length) {
-                sectionLabel.textContent = speechSections[currentSectionIndex].title;
+                const section = speechSections[currentSectionIndex];
+                if (!sectionLabel.textContent.includes('|')) {
+                    sectionLabel.textContent = section.title;
+                }
                 bar.style.width = ((currentSectionIndex + 1) / speechSections.length * 100) + '%';
             }
         } else if (speechState === 'paused') {
