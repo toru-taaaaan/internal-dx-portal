@@ -788,14 +788,16 @@
                 ADサーバーは2台構成（PDC + BDC）のため、片方の故障時にはもう片方で業務継続が可能です。
                 ただし、2台とも同じサーバー室（築地6階）に設置されており、地理的な冗長性はありません。
                 SECOMサーバーは1台のみで、予備機がない状態です。
-                なお、サーバーは2020年に導入され、標準の5年保守は既に終了しています。現在は延長保守中で、2027年10月末が期限です。
+                なお、ADサーバーは2020年に導入され、標準の5年保守は既に終了しています。現在は延長保守中で、2027年10月末が期限です。
+                SECOMサーバーも延長保守中ですが、導入時期・保守期限はADサーバーとは異なります。
             </p>
 
             <div class="risk-note">
                 <p style="margin: 0; font-weight: 600;">設置場所について</p>
                 <p style="margin: 0.5rem 0 0; line-height: 1.8;">
                     これらのサーバーは、本社6階の事務所の一角に設けられたサーバー室に設置されています。
-                    専用データセンターであれば、耐震・耐火設備、電源の冗長化（自家発電・UPS）、専用空調、厳格な入退室管理などが整備されていますが、事務所内のサーバー室はオフィスビルの一般的な設備に依存しています。
+                    専用データセンターでは、耐震・耐火設備、電源の冗長化（自家発電・UPS）、専用空調（24時間365日の温度・湿度管理）、防水対策（漏水検知・二重床）、高性能フィルターによる埃の除去、厳格な入退室管理などが整備されています。
+                    事務所内のサーバー室は、これらの設備を持たず、オフィスビルの一般的な設備に依存しています。空調は業務用エアコンで、夜間や休日に停止する場合があり、上階からの漏水対策もありません。
                     クラウドへ移行した場合、サーバーはベンダーのデータセンター（国内複数拠点に分散）で運用されるため、設置場所に起因するリスクは解消されます。
                 </p>
             </div>
@@ -819,6 +821,11 @@
                         <td>各拠点の入退室は拠点側機器で継続可能。ただし勤怠管理システムとの自動連携が停止</td>
                     </tr>
                     <tr>
+                        <td style="font-weight: 600;">漏水（上階からの水漏れ等）</td>
+                        <td>サーバー室に防水対策がないため、上階の給排水管破損や空調ドレンの詰まり等で浸水した場合、2台とも同時に損壊する可能性あり</td>
+                        <td>同様に浸水で損壊の可能性。各拠点の入退室は継続可能だが、勤怠連携が停止</td>
+                    </tr>
+                    <tr>
                         <td style="font-weight: 600;">ビル停電</td>
                         <td>2台ともUPS（無停電装置）のバッテリー消耗後に停止。再起動時にトラブルが発生する場合あり</td>
                         <td>各拠点の入退室は継続。勤怠連携が停止</td>
@@ -836,11 +843,22 @@
                 </tbody>
             </table>
 
-            <div class="fact-box" style="border-left-color: #64748b;">
-                <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
-                    なお、上場企業のIT統制において、基幹システムの冗長構成は一般的な監査確認項目に含まれます。
-                    ADサーバーは2台構成ですが、同一フロアに設置されているため、災害時には地理的な単一障害点となります。
-                    SECOMサーバーは1台のみで、こちらはハードウェア故障でも停止する単一障害点に該当します。
+            <div class="risk-note" style="margin-top: 1.5rem;">
+                <p style="margin: 0; font-weight: 600;">水害リスク（漏水）</p>
+                <p style="margin: 0.5rem 0 0; line-height: 1.8;">
+                    サーバー室が事務所ビルの一角にある場合、上階からの漏水（給排水管の破損、空調ドレンの詰まり等）によりサーバーが損壊するリスクがあります。
+                    専用データセンターでは防水対策（二重床、漏水検知センサー、排水設備）が整備されていますが、一般のオフィスビルではこうした対策は行われていません。
+                </p>
+            </div>
+
+            <div class="risk-note" style="margin-top: 1rem;">
+                <p style="margin: 0; font-weight: 600;">温度・空気環境の違い</p>
+                <p style="margin: 0.5rem 0 0; line-height: 1.8;">
+                    サーバーは高温・高湿度・埃に弱い精密機器です。
+                    専用データセンターでは、年間を通じて室温22〜25℃・湿度40〜50%に維持する専用空調が常時稼働し、高性能フィルターで埃を除去しています。
+                    一方、事務所内のサーバー室は、業務用エアコンに依存しており、夜間・休日に空調が停止する場合があります。
+                    また、事務所と同じ空気を共有するため、埃や紙粉がサーバー内部に蓄積し、故障の原因となることがあります。
+                    クラウドへ移行した場合、こうした物理環境に関するリスクは全てデータセンター側の管理となります。
                 </p>
             </div>
 
@@ -936,7 +954,7 @@
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">SLA（稼働率保証）</td>
-                            <td>確認中 ※3</td>
+                            <td>99.99%（年間ダウンタイム52分以内）</td>
                             <td>なし（ベストエフォート）</td>
                             <td>確認中</td>
                             <td>なし</td>
@@ -967,8 +985,7 @@
             </div>
 
             <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">
-                ※1 2020年実績（¥1,880,000）に物価上昇を考慮し1.5倍で算出した予測値。金額は全て税抜<br>
-                ※3 IIJのADクラウドサービス固有のSLA数値は提案資料に明記なし。別途確認予定
+                ※1 2020年実績（¥1,880,000）に物価上昇を考慮し1.5倍で算出した予測値。金額は全て税抜
             </p>
 
             <div class="evidence-warning" style="margin-top: 1.5rem;">
@@ -1063,7 +1080,7 @@
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">SLA（稼働率保証）</td>
-                            <td>確認中</td>
+                            <td>99.99%</td>
                             <td>なし（ベストエフォート）</td>
                             <td>確認中（2/14問合せ済）</td>
                         </tr>
@@ -1287,6 +1304,77 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+
+            <!-- 自社管理のリスクとプロ委託の意義 -->
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2.5rem 0 1rem;">自社で管理権限を持つことのリスク</h3>
+
+            <p class="section-lead">
+                サーバーに直接アクセスできることは自由度が高い反面、それに伴うリスクも発生します。
+                管理コンソールやサーバーへのアクセス権限は、裏を返せば「システムを止められる権限」でもあります。
+            </p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0;">
+                <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 0.75rem; padding: 1.25rem;">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: #991b1b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">管理権限の漏洩・不正利用</div>
+                    <ul style="font-size: 0.85rem; color: #334155; line-height: 2; padding-left: 1.25rem; margin: 0;">
+                        <li>管理者アカウントが漏洩した場合、全社員のPCログインに影響する障害を引き起こされる可能性がある</li>
+                        <li>大手企業の情シス部門の51.3%が情報漏洩の危機を経験しており、「アクセス権限の誤設定」が原因の17.7%を占める（Assured社 2023年調査）</li>
+                        <li>退職者のアカウントが削除されず残っている場合、元社員による不正アクセスのリスクがある</li>
+                    </ul>
+                </div>
+                <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 0.75rem; padding: 1.25rem;">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: #991b1b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">操作ミスと属人化</div>
+                    <ul style="font-size: 0.85rem; color: #334155; line-height: 2; padding-left: 1.25rem; margin: 0;">
+                        <li>管理者権限での操作ミス（設定変更、パッチ適用の失敗等）は、全社員のPC認証に直接影響する</li>
+                        <li>担当者が退職した場合、サーバーの設定内容やパスワードがブラックボックス化し、引き継ぎが困難になる</li>
+                        <li>中堅企業の約38%が情シス担当者1人以下で運用しており、その担当者の離職がシステム全体の機能不全を招く（Dell EMC IT投資動向調査）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 1.5rem;">
+                <div style="font-size: 0.75rem; font-weight: 700; color: #991b1b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">学習コストとセキュリティ対応の限界</div>
+                <ul style="font-size: 0.85rem; color: #334155; line-height: 2; padding-left: 1.25rem; margin: 0;">
+                    <li>クラウド環境（AWS / Azure）の管理には専門知識が必要であり、担当者の学習・習熟に相応の時間がかかる</li>
+                    <li>サイバー攻撃の手法は日々高度化しており、ランサムウェアやゼロデイ攻撃への対応を自社の少人数で行うことには限界がある</li>
+                    <li>クラウドの特権IDは、オンプレミス以上に攻撃者に狙われやすく、アクセス経路の多さから管理の難易度が高い（NRIセキュアテクノロジーズ）</li>
+                </ul>
+            </div>
+
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">専門事業者に運用を委託する意義</h3>
+
+            <p class="section-lead">
+                上記のリスクに対し、マネージドサービス（運用代行）を活用することで、以下の効果が期待できます。
+            </p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0;">
+                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 0.75rem; padding: 1.25rem;">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: #166534; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">契約によるリスク移転</div>
+                    <ul style="font-size: 0.85rem; color: #334155; line-height: 2; padding-left: 1.25rem; margin: 0;">
+                        <li>SLA（稼働率保証）により、障害時の対応責任と復旧目標がベンダーとの契約で担保される</li>
+                        <li>操作ミスや設定不備の責任がベンダー側に移転するため、自社の担当者個人にリスクが集中しない</li>
+                        <li>担当者が退職してもベンダーの運用体制は変わらず、業務継続性が確保される</li>
+                    </ul>
+                </div>
+                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 0.75rem; padding: 1.25rem;">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: #166534; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">専門家による継続的な防御</div>
+                    <ul style="font-size: 0.85rem; color: #334155; line-height: 2; padding-left: 1.25rem; margin: 0;">
+                        <li>セキュリティパッチの適用判断や脆弱性対応を、最新の知見を持つ専門家が継続的に実施する</li>
+                        <li>24時間365日の監視により、異常の早期検知と迅速な対応が可能になる</li>
+                        <li>自社の担当者がクラウド管理の学習に時間を割く必要がなく、本来の業務（社内のIT活用推進等）に集中できる</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="fact-box" style="border-left-color: #3b82f6; margin-top: 1.5rem;">
+                <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
+                    <strong>まとめ:</strong>
+                    サーバーに自由にアクセスできることは、技術的には柔軟性が高い構成です。
+                    一方で、管理権限を自社で持つことは、その権限の漏洩・誤操作・属人化といったリスクも同時に引き受けることになります。
+                    ADサーバーは全社員のPC認証を担う基盤であり、障害が発生すると全拠点の業務が停止します。
+                    このような重要基盤の運用管理を、契約に基づくSLAと専門家の体制で守ることは、経営上のリスク管理として合理的な選択です。
+                </p>
             </div>
 
             <p class="transition-text">
@@ -1991,7 +2079,7 @@
                             <td style="font-weight: 600;">IIJ</td>
                             <td>ADクラウドサービスのSLA（稼働率保証）</td>
                             <td>—</td>
-                            <td><span class="status-badge status-waiting">確認予定</span></td>
+                            <td><span class="status-badge status-confirmed">確認済（99.99%）</span></td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">IIJ / Cato</td>
@@ -2100,7 +2188,7 @@
         {
             id: 'sec3',
             title: 'このまま使い続けた場合',
-            text: '仮に、このまま使い続けた場合について整理します。まず設置場所についてですが、これらのサーバーは本社6階の事務所の一角に置かれています。専用のデータセンターと違い、耐震・耐火設備や電源の冗長化といった設備はオフィスビルの一般的なものに依存しています。ADサーバーは2台構成なので、片方の故障では業務は止まりません。ただし、同じ部屋にあるため、火災や地震で2台とも壊れた場合は全社員がPCにログインできなくなります。SECOMサーバーは1台のみですが、各拠点のインターフェース機器で入退室自体は継続できます。サーバーが止まると勤怠管理システムとの連携が停止します。延長保守の期限は2027年10月で、以降はメーカー修理を受けられなくなります。'
+            text: '仮に、このまま使い続けた場合について整理します。まず設置場所についてですが、これらのサーバーは本社6階の事務所の一角に置かれています。専用のデータセンターでは、耐震・耐火設備、24時間365日の温度・湿度管理、防水対策、埃の除去など、サーバーを守るための設備が整っています。一方、事務所内のサーバー室は、空調は業務用エアコンに依存しており、夜間や休日に停止する場合があります。また、上の階からの漏水対策もなく、事務所と同じ空気を共有するため、埃や紙粉がサーバー内部に溜まり、故障の原因になることがあります。リスクとしては、火災や地震で2台とも壊れた場合に全社員がPCにログインできなくなること、漏水によるサーバーの損壊、停電時のUPSバッテリー消耗後の停止などがあります。SECOMサーバーは1台のみですが、各拠点のインターフェース機器で入退室自体は継続できます。サーバーが止まると勤怠管理システムとの連携が停止します。ADサーバーの延長保守期限は2027年10月で、以降はメーカー修理を受けられなくなります。'
         },
         {
             id: 'sec4',
