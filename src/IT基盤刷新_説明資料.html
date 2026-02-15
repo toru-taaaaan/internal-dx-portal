@@ -1979,6 +1979,101 @@
                 </table>
             </div>
 
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">対象拠点の比較</h3>
+            <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 0.75rem;">IIJ OmnibusとCato SASEでは、対象となる拠点構成が異なる。</p>
+            <div style="overflow-x: auto;">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th>拠点</th>
+                            <th style="border-top: 3px solid #3b82f6;">③IIJ Omnibus</th>
+                            <th style="border-top: 3px solid #8b5cf6;">④Cato SASE</th>
+                            <th>備考</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 600;">築地本社</td>
+                            <td>対象（ルーター設置）</td>
+                            <td>対象（Socket設置）</td>
+                            <td>主要拠点</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">多摩</td>
+                            <td>対象（ルーター設置）</td>
+                            <td>対象（Socket設置）</td>
+                            <td>主要拠点</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">橋本</td>
+                            <td>対象（ルーター設置）</td>
+                            <td>対象（Client）</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">大阪</td>
+                            <td>対象（ルーター設置）</td>
+                            <td>対象（Client）</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">京橋</td>
+                            <td>対象（ルーター設置）</td>
+                            <td>対象（Client）</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">仙台</td>
+                            <td style="color: #dc2626;">対象外</td>
+                            <td>対象（Client）</td>
+                            <td>Catoのみ対象</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">鬼怒川</td>
+                            <td>対象（ルーター設置）</td>
+                            <td>対象（Client）</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">名古屋（BN）</td>
+                            <td>対象（ルーター設置）</td>
+                            <td style="color: #dc2626;">対象外</td>
+                            <td>BN拠点はIIJのみ</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">福岡（BN）</td>
+                            <td>対象（ルーター設置）</td>
+                            <td style="color: #dc2626;">対象外</td>
+                            <td>BN拠点はIIJのみ</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">和歌山（BN）</td>
+                            <td>対象（ルーター設置）</td>
+                            <td style="color: #dc2626;">対象外</td>
+                            <td>BN拠点はIIJのみ</td>
+                        </tr>
+                        <tr style="background: #f8fafc; font-weight: 600;">
+                            <td>クラウド（AD/SECOM）</td>
+                            <td>IIJ GIO上に構築</td>
+                            <td>Azure/AWSに構築</td>
+                            <td>クラウド基盤が異なる</td>
+                        </tr>
+                        <tr style="background: #f1f5f9; font-weight: 700;">
+                            <td>合計</td>
+                            <td>8拠点 + GIO</td>
+                            <td>9拠点（Socket 2 + Client 7）</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">※ BN = ビジネスネットワーク社の拠点。Cato構成にはBN拠点を含まず、仙台を追加した9拠点構成。</p>
+
+            <div class="risk-note" style="margin-top: 1rem;">
+                <p style="margin: 0; font-weight: 600;">Cato Clientの特徴</p>
+                <p style="margin: 0.5rem 0 0; line-height: 1.8;">Cato Clientをインストールした端末は、<strong>自宅やモバイル環境からも社内ネットワークに接続可能</strong>。Socket未設置の拠点でも、個人端末からCatoクラウドを経由して安全に業務が行える。IIJ Omnibusでは全拠点にルーター設置が必要であるのに対し、Catoは主要拠点（築地・多摩）のみSocket設置、その他はClientで対応するため、拠点あたりの機器コストを抑えられる。</p>
+            </div>
+
             <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">費用比較</h3>
 
             <div style="overflow-x: auto;">
@@ -2042,7 +2137,7 @@
             <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">
                 ※2 現行¥142,000から2026年4月に20%値上げ予定。金額は全て税抜<br>
                 ※3 IIJ Omnibus月額内訳: 拠点間WAN ¥325,950 + インターネットGW(FW含む) ¥227,000 + リモートアクセス50名 ¥73,200 + ブレイクアウト ¥96,000<br>
-                ※4 SCSK角田様 2/13メールによる概算値。ライセンス約500万/年 + マネージド60万/年 の月割。正式見積は2/17頃提示予定
+                ※4 SCSK角田様 2/13メールによる概算値。ライセンス約500万/年 + マネージド60万/年 + 初期導入50万 の月割。正式見積は2月下旬提示予定（与信手続きのため）
             </p>
 
             <div class="risk-note" style="margin-top: 1.5rem;">
@@ -2531,6 +2626,11 @@
             id: 'sec8',
             title: 'ネットワーク：IIJ Omnibus vs Cato SASE',
             text: 'IIJ OmnibusとCato SASEの主な違いです。この表は、縦軸が比較項目、横軸がIIJ OmnibusとCato SASEの2社です。処理方式は、IIJが機能を直列で処理するのに対し、Catoは全てを同時並列で処理するため、セキュリティ機能を全てオンにしても速度が落ちません。バックボーンは、IIJが国内最強の閉域網を持ち、Catoは世界90拠点以上のプライベートバックボーンを持っています。運用面では、IIJがフルマネージドで全てIIJに依頼する方式、CatoはSCSKによる運用代行ですが緊急時には自社でも設定変更が可能です。ADの移行先にIIJを選んだ場合、ネットワークもIIJ Omnibusが前提となる点も重要な違いです。'
+        },
+        {
+            id: 'sec8',
+            title: 'ネットワーク：対象拠点の比較',
+            text: '対象拠点の比較です。この表は、縦軸が各拠点名、横軸がIIJ OmnibusとCato SASEの2社です。IIJ Omnibusは8拠点にルーターを設置し、加えてIIJ GIO上にクラウドADを構築する構成です。Cato SASEは、築地と多摩の2拠点にSocketという機器を設置し、残り7拠点はCato Clientというソフトウェアで接続します。大きな違いは3点あります。1点目、仙台はCatoのみ対象で、IIJには含まれていません。2点目、BN拠点の名古屋、福岡、和歌山はIIJのみ対象で、Catoには含まれていません。3点目、Cato Clientをインストールした端末は、自宅やモバイル環境からも社内ネットワークに安全に接続できます。そのため、Socket未設置の拠点でも個人端末から業務が可能です。IIJは各拠点にルーターを設置する必要があるのに対し、Catoは主要2拠点のみ機器設置で済むため、拠点あたりのコストが抑えられる構造です。'
         },
         {
             id: 'sec9',
