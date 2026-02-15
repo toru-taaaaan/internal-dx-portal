@@ -620,6 +620,7 @@
                 <a href="#sec3" class="toc-item"><span class="toc-num">03</span>このまま使い続けた場合</a>
                 <a href="#sec4" class="toc-item"><span class="toc-num">04</span>ADクラウド移行 3社比較</a>
                 <a href="#sec5" class="toc-item"><span class="toc-num">05</span>3社の管理体制比較</a>
+                <a href="#sec5b" class="toc-item"><span class="toc-num">05b</span>ベンダー別：日常運用でできること</a>
                 <a href="#sec6" class="toc-item"><span class="toc-num">06</span>Entra IDについて</a>
                 <a href="#sec7" class="toc-item"><span class="toc-num">07</span>SECOM入退室管理</a>
                 <a href="#sec8" class="toc-item"><span class="toc-num">08</span>ネットワーク刷新</a>
@@ -1104,6 +1105,188 @@
                 <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
                     IIJは運用負荷が最も軽い反面、サーバーへの直接アクセスや自由な設定変更ができません。USENはサーバーにログインして操作できますが、AWS管理コンソールは非公開です。Link-At-Japanは自社名義の環境を持てるため自由度が最も高く、解約時のデータ取り出しも容易です。
                 </p>
+            </div>
+
+            <p class="transition-text">
+                次に、各社を選んだ場合に情報システム部の日常業務がどう変わるかを、より具体的に整理します。
+            </p>
+        </section>
+
+        <!-- ========================================= -->
+        <!-- Section 5b: ベンダー別：日常運用でできること -->
+        <!-- ========================================= -->
+        <section id="sec5b" class="modern-card">
+            <div class="section-title">ベンダー別：日常運用でできること</div>
+
+            <p class="section-lead">
+                各社を選んだ場合に、情報システム部がクラウド上のADサーバーに対して「何ができて、何ができないか」を整理します。
+                日常のユーザー追加やパスワードリセットだけでなく、障害時の調査やトラブル対応など、実務で必要になる操作の可否をまとめました。
+            </p>
+
+            <!-- IIJ -->
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem; display: flex; align-items: center; gap: 8px;">
+                <span style="display: inline-block; width: 4px; height: 20px; background: #3b82f6; border-radius: 2px;"></span>
+                IIJを選んだ場合（お任せ型）
+            </h3>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 0.75rem; padding: 1.25rem;">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: #166534; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">自社でできること</div>
+                    <ul style="font-size: 0.85rem; color: #334155; line-height: 2; padding-left: 1.25rem; margin: 0;">
+                        <li>ユーザーの追加・削除・パスワードリセット（専用管理画面またはRSAT経由）</li>
+                        <li>グループポリシー（GPO）の作成・変更</li>
+                        <li>OUの作成・編集</li>
+                        <li>DNS/DHCPの基本操作</li>
+                    </ul>
+                </div>
+                <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 0.75rem; padding: 1.25rem;">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: #991b1b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">自社ではできないこと</div>
+                    <ul style="font-size: 0.85rem; color: #334155; line-height: 2; padding-left: 1.25rem; margin: 0;">
+                        <li>サーバーへのリモートデスクトップ（RDP）接続</li>
+                        <li>OSの設定変更（レジストリ、イベントログ詳細設定等）</li>
+                        <li>任意のソフトウェアのインストール</li>
+                        <li>ADスキーマの拡張</li>
+                        <li>AWS/Azure管理コンソールへのアクセス（IIJ独自基盤のため該当なし）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="fact-box" style="border-left-color: #3b82f6;">
+                <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
+                    <strong>障害時の対応イメージ:</strong>
+                    ADに障害が発生した場合、IIJが検知・対応・復旧まで全て実施する。情シスへは事後報告。自社で調査のためにサーバーにログインすることはできないが、その必要もない。IIJ側で24時間365日監視しており、自動切替（Active/Active構成）で瞬断〜分単位での復旧が見込める。
+                </p>
+            </div>
+
+            <!-- USEN -->
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem; display: flex; align-items: center; gap: 8px;">
+                <span style="display: inline-block; width: 4px; height: 20px; background: #10b981; border-radius: 2px;"></span>
+                USENを選んだ場合（分離型）
+            </h3>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 0.75rem; padding: 1.25rem;">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: #166534; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">自社でできること</div>
+                    <ul style="font-size: 0.85rem; color: #334155; line-height: 2; padding-left: 1.25rem; margin: 0;">
+                        <li>サーバーへのRDP接続（VPN経由、標準2セッション）</li>
+                        <li>ユーザー・GPO・OU・DNS/DHCPの全操作</li>
+                        <li>OS内部の設定変更（イベントログの確認、レジストリ編集等）</li>
+                        <li>障害発生時にサーバーにログインして直接調査</li>
+                    </ul>
+                </div>
+                <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 0.75rem; padding: 1.25rem;">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: #991b1b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">自社ではできないこと</div>
+                    <ul style="font-size: 0.85rem; color: #334155; line-height: 2; padding-left: 1.25rem; margin: 0;">
+                        <li>AWS管理コンソールへのアクセス（Route53、VPC、IAM、CloudWatch等すべて不可）</li>
+                        <li>サーバーの停止・再起動（USENへ依頼が必要）</li>
+                        <li>ネットワーク構成の変更（VPC、セキュリティグループ等）</li>
+                        <li>OS管理者権限の有無 → <span class="status-badge status-sent">確認中（2/14問合せ済）</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="fact-box" style="border-left-color: #10b981;">
+                <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
+                    <strong>障害時の対応イメージ:</strong>
+                    USENが死活監視・リソース監視を24時間実施しており、異常を検知した場合は連絡が入る。既知の障害はUSEN側で自動復旧。未知の障害は調整の上で対応。情シスもRDPでサーバーにログインし、イベントログ等を直接確認して原因調査が可能。ただし、AWS基盤側の問題（ネットワーク、ストレージ等）はUSENへの依頼が必要で、SLAはない（ベストエフォート対応）。
+                </p>
+            </div>
+
+            <!-- Link-At-Japan -->
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem; display: flex; align-items: center; gap: 8px;">
+                <span style="display: inline-block; width: 4px; height: 20px; background: #f59e0b; border-radius: 2px;"></span>
+                Link-At-Japanを選んだ場合（並走型）
+            </h3>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 0.75rem; padding: 1.25rem;">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: #166534; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">自社でできること</div>
+                    <ul style="font-size: 0.85rem; color: #334155; line-height: 2; padding-left: 1.25rem; margin: 0;">
+                        <li>サーバーへのRDP接続（VPN経由）</li>
+                        <li>ユーザー・GPO・OU・DNS/DHCPの全操作</li>
+                        <li>Azure Portal（管理コンソール）への直接アクセス</li>
+                        <li>OS内部の設定変更・直接調査</li>
+                        <li>サーバーの停止・再起動</li>
+                        <li>解約時のデータ取り出し（自社名義のため自由）</li>
+                    </ul>
+                </div>
+                <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 0.75rem; padding: 1.25rem;">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: #1e40af; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">ベンダーが代行してくれること</div>
+                    <ul style="font-size: 0.85rem; color: #334155; line-height: 2; padding-left: 1.25rem; margin: 0;">
+                        <li>24時間365日の監視（Zabbix / Azure Monitor）</li>
+                        <li>障害発生時の一次対応・復旧（アシストプラン: ¥50,000/月）</li>
+                        <li>Windows Updateの適用代行（アシストプラスプラン: ¥68,000/月）</li>
+                        <li>Azure英語通知の日本語変換・連絡</li>
+                        <li>Azure基盤側の構成変更支援</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="fact-box" style="border-left-color: #f59e0b;">
+                <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
+                    <strong>障害時の対応イメージ:</strong>
+                    Link-At-Japanが24時間365日監視しており、異常検知時は一次対応と復旧を実施。情シスもRDPやAzure Portalから直接状況を確認できる。自社名義のAzure環境のため、ログの確認、リソースの状態確認、ネットワーク設定の確認など、全ての情報に自社でアクセス可能。ベンダーと同じ画面を見ながら対応を進められる。
+                </p>
+            </div>
+
+            <!-- アカウント名義と解約時の比較 -->
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">クラウド環境の所有権と解約時の影響</h3>
+
+            <div style="overflow-x: auto;">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 22%;">項目</th>
+                            <th class="col-iij" style="width: 26%;">IIJ</th>
+                            <th class="col-usen" style="width: 26%;">USEN</th>
+                            <th class="col-laj" style="width: 26%;">Link-At-Japan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 600;">クラウドアカウント名義</td>
+                            <td>IIJ名義（非公開）</td>
+                            <td>USEN名義（VPCで論理分割）</td>
+                            <td style="color: #059669; font-weight: 600;">AKIBAホールディングス名義</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">管理コンソール</td>
+                            <td>アクセス不可</td>
+                            <td>アクセス不可</td>
+                            <td style="color: #059669;">Azure Portal共同管理</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">サーバー直接接続（RDP）</td>
+                            <td>不可（RSATのみ）</td>
+                            <td>可能（VPN経由）</td>
+                            <td>可能（VPN経由）</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">OS管理者権限</td>
+                            <td>IIJが保持</td>
+                            <td><span class="status-badge status-sent">確認中</span></td>
+                            <td>自社 + ベンダー双方</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">英語アラート対応</td>
+                            <td>不要（IIJ独自基盤）</td>
+                            <td>不要（USENが受信）</td>
+                            <td>不要（ベンダーが日本語で通知）</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">解約時のデータ取り出し</td>
+                            <td>PowerShellでエクスポート</td>
+                            <td>ベンダー名義のため要相談</td>
+                            <td style="color: #059669;">自社名義のため自由に取り出し可</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">契約形態</td>
+                            <td>IIJ直接契約</td>
+                            <td>USEN直接契約（最低1年・中途解約は違約金）</td>
+                            <td>LAJ直接契約（Azure直接契約不要）</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <p class="transition-text">
@@ -1928,6 +2111,11 @@
             id: 'sec5',
             title: '3社の管理体制比較',
             text: '3社は費用だけでなく、日常の管理体制も大きく異なります。主な違いを説明します。まず、クラウドアカウントの名義です。IIJはIIJ名義で、管理コンソールにはアクセスできません。USENはUSEN名義で、AWSの管理コンソールは非公開です。Link-At-JapanはAKIBAホールディングス名義で、Azure Portalを共同管理できます。サーバーへの直接接続は、IIJは不可でRSATのみ、USENとLink-At-JapanはVPN経由で可能です。パッチ適用は、IIJが全自動で月次、USENは四半期から半年ごと、Link-At-JapanはWindows Updateのみのプランがあります。バックアップは、IIJは制限なし、USENは7世代の日次、Link-At-Japanは30世代相当でAzure Backupを使います。復旧時間は、IIJが瞬断から分単位と最も短く、USENとLink-At-Japanは数時間から1日です。解約時のデータ取り出しは、IIJはPowerShellでエクスポート、USENはベンダー名義のため要相談、Link-At-Japanは自社名義なので自由に取り出せます。'
+        },
+        {
+            id: 'sec5b',
+            title: 'ベンダー別：日常運用でできること',
+            text: 'ここからは、各社を選んだ場合に情報システム部の日常業務がどう変わるかを具体的に説明します。まずIIJの場合です。IIJはお任せ型なので、ユーザーの追加・削除やグループポリシーの変更は専用管理画面から操作できます。ただし、サーバーにリモートデスクトップで接続することはできません。障害が起きた場合はIIJが検知から復旧まで全て行い、情シスへは事後報告です。次にUSENの場合です。USENは分離型で、VPN経由でサーバーにRDP接続して直接操作できます。イベントログを見たり、設定を変えたりといった作業が自分たちでできます。ただし、AWSの管理コンソールにはアクセスできず、サーバーの再起動やネットワーク構成の変更はUSENに依頼が必要です。なお、OS管理者権限の詳細は現在確認中です。最後にLink-At-Japanの場合です。並走型のため、自由度が最も高い構成です。RDPでサーバーに接続できるだけでなく、Azureの管理コンソールにも直接アクセスできます。クラウドアカウントがAKIBAホールディングス名義なので、全ての情報に自社でアクセス可能です。監視やパッチ適用はLink-At-Japanが代行しますが、自社でも同じ画面を見ながら状況を確認できます。解約時のデータ取り出しも、自社名義のため自由にできます。'
         },
         {
             id: 'sec6',
