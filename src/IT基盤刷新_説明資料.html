@@ -1378,7 +1378,7 @@
             </div>
 
             <p class="transition-text">
-                管理体制を踏まえ、次にEntra IDに関する疑問を整理します。
+                管理体制を踏まえ、次にMicrosoftのクラウドID管理サービス「Entra ID」について調査した結果を報告します。
             </p>
         </section>
 
@@ -1389,12 +1389,15 @@
             <div class="section-title">Entra IDについて</div>
 
             <p class="section-lead">
-                Microsoft Entra ID（旧Azure AD）は、Office 365やTeamsなどのクラウドサービスにログインする際に使われるID管理の仕組みです。
+                ADの移行を検討するにあたり、MicrosoftのクラウドID管理サービス「Entra ID（旧Azure AD）」について調査しました。
                 AKIBAホールディングスでも、Office 365の認証にはすでにEntra IDが使われています。
+                今後の基盤を考えるうえで、ADとEntra IDの関係を整理します。
             </p>
 
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 1rem;">ADとEntra IDの役割の違い</h3>
+
             <p class="section-lead">
-                「Entra IDがあるなら、ADサーバーは不要では」という考え方がありますが、実際にはこの2つは役割が異なります。
+                ADとEntra IDは、名前は似ていますが役割が異なります。
             </p>
 
             <!-- AD vs Entra comparison -->
@@ -1422,8 +1425,10 @@
                 </div>
             </div>
 
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 1rem;">Entra IDだけでは対応できないこと</h3>
+
             <p class="section-lead">
-                この2つは役割が違うため、Entra IDだけに移行してADを廃止しようとすると、以下のことができなくなります。
+                現時点では、Entra IDだけでADの全機能を代替することはできません。以下の機能はADに依存しています。
             </p>
 
             <ul style="font-size: 0.9rem; color: #475569; line-height: 2; padding-left: 1.25rem;">
@@ -1436,23 +1441,61 @@
                 これらを補うには、Microsoft Intuneという別のサービスの契約が必要であり、さらに社内の全アプリケーションがクラウドに対応している必要があります。
             </p>
 
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">将来像: Entra IDへの集約は目指すべきか</h3>
+
+            <p class="section-lead">
+                Microsoftは、Entra IDを中心としたクラウドID管理への移行を推進しています。
+                長期的には、Entra IDに認証基盤を集約する方向が業界の標準的な流れです。
+            </p>
+
             <div class="fact-box" style="border-left-color: #8b5cf6;">
                 <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
-                    参考として、製造業を含む大手企業の約80%は、ADを残しつつEntra IDと併用する「ハイブリッド構成」を採用しています。
-                    AD全廃は全体の約20%にとどまり、その多くはSaaS中心のスタートアップ企業です。
+                    ただし、現時点では製造業を含む大手企業の約80%がADとEntra IDを併用する「ハイブリッド構成」を採用しています。
+                    AD全廃は全体の約20%にとどまり、その多くはSaaS中心の企業です。
+                    Microsoftも段階的な移行（ハイブリッド → クラウド集約）を推奨しており、一気にADを廃止する方法は推奨していません。
                 </p>
             </div>
 
-            <p class="section-lead" style="margin-top: 1rem;">
-                AKIBAホールディングスの現状を考えると、まずADサーバーのクラウド移行を進め、Entra IDの追加機能（多要素認証、条件付きアクセス等）は段階的に導入していくのが現実的な進め方です。
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">AKIBAホールディングスにとっての現実的な進め方</h3>
+
+            <p class="section-lead">
+                以下の3段階で進めることが現実的です。
             </p>
+
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0;">
+                <div style="background: #f8fafc; border-radius: 0.75rem; padding: 1.25rem; border-top: 3px solid #3b82f6;">
+                    <div style="font-size: 0.7rem; font-weight: 700; color: #3b82f6; text-transform: uppercase; letter-spacing: 0.05em;">Step 1（今回）</div>
+                    <div style="font-size: 0.95rem; font-weight: 700; color: #0f172a; margin: 0.5rem 0 0.25rem;">ADサーバーのクラウド移行</div>
+                    <p style="font-size: 0.8rem; color: #64748b; margin: 0; line-height: 1.6;">
+                        オンプレミスのADサーバーをクラウド上に移行し、災害リスクと保守切れの問題を解消する
+                    </p>
+                </div>
+                <div style="background: #f8fafc; border-radius: 0.75rem; padding: 1.25rem; border-top: 3px solid #8b5cf6;">
+                    <div style="font-size: 0.7rem; font-weight: 700; color: #8b5cf6; text-transform: uppercase; letter-spacing: 0.05em;">Step 2（1〜2年後）</div>
+                    <div style="font-size: 0.95rem; font-weight: 700; color: #0f172a; margin: 0.5rem 0 0.25rem;">ハイブリッド構成の導入</div>
+                    <p style="font-size: 0.8rem; color: #64748b; margin: 0; line-height: 1.6;">
+                        クラウドADとEntra IDを連携させ、多要素認証や条件付きアクセスなどのセキュリティ機能を段階的に追加する
+                    </p>
+                </div>
+                <div style="background: #f8fafc; border-radius: 0.75rem; padding: 1.25rem; border-top: 3px solid #10b981;">
+                    <div style="font-size: 0.7rem; font-weight: 700; color: #10b981; text-transform: uppercase; letter-spacing: 0.05em;">Step 3（3〜5年後）</div>
+                    <div style="font-size: 0.95rem; font-weight: 700; color: #0f172a; margin: 0.5rem 0 0.25rem;">Entra IDへの集約を検討</div>
+                    <p style="font-size: 0.8rem; color: #64748b; margin: 0; line-height: 1.6;">
+                        社内アプリのクラウド対応が進んだ段階で、ADサーバーを廃止しEntra IDに一本化できるか再評価する
+                    </p>
+                </div>
+            </div>
 
             <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">参考: Entra IDに完全移行する場合に必要な作業</h3>
 
+            <p class="section-lead">
+                将来的にEntra IDへ完全移行する場合、以下の作業が必要になります。現時点で着手する必要はありませんが、長期計画の参考として記載します。
+            </p>
+
             <ol style="font-size: 0.9rem; color: #475569; line-height: 2.2; padding-left: 1.25rem;">
-                <li>全クライアントPC（約200台）をAzure AD Joinに切り替え（ドメイン離脱→再参加）</li>
+                <li>全クライアントPC（約200台）をEntra ID Join（旧Azure AD Join）に切り替え（ドメイン離脱→再参加）</li>
                 <li>Microsoft Intuneの導入・設定（現在のグループポリシーの代替）</li>
-                <li>ファイルサーバーのクラウド移行（SharePoint Online または Azure Files + Azure AD DS）</li>
+                <li>ファイルサーバーのクラウド移行（SharePoint Online または Azure Files）</li>
                 <li>Kerberos認証に依存する社内アプリケーションの改修 or 代替手段の検討</li>
                 <li>プリンター・複合機の認証方式の変更</li>
                 <li>VPN構成の見直し（条件付きアクセスへの移行）</li>
@@ -1461,7 +1504,8 @@
 
             <div class="fact-box" style="border-left-color: #8b5cf6; margin-top: 1.5rem;">
                 <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
-                    上記の作業を全て実施するには、複数のベンダーとの調整が必要であり、全社員のPC操作に影響が出ます。IIJは「Entra IDへの完全移行に該当するサービスはない」と回答しており（2026/1/29）、USENは「Windows Serverがドメイン参加されている場合、EntraIDへの移管は難しい」と回答しています（2026/1/26）。
+                    IIJは「Entra IDへの完全移行に該当するサービスはない」と回答しており（2026/1/29）、USENは「Windows Serverがドメイン参加されている場合、Entra IDへの移管は難しい」と回答しています（2026/1/26）。
+                    いずれのベンダーも、まずADのクラウド移行を行い、ハイブリッド構成で運用を安定させた後に、段階的にEntra IDの機能を拡張する方法を推奨しています。
                 </p>
             </div>
 
@@ -1705,6 +1749,164 @@
                 <p style="margin: 0; line-height: 1.8;">
                     VarioSecureにオプションを追加した場合、費用が大幅に増加する（USEN担当者コメント）。また、SSL/TLS検査やアプリ制御など、現在のセキュリティ標準で求められる機能の一部に対応できない。
                 </p>
+            </div>
+
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">セキュリティ機能比較（4シナリオ横断）</h3>
+
+            <div style="overflow-x: auto;">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 22%;">セキュリティ機能</th>
+                            <th style="width: 19.5%;">①現状維持<br><span style="font-size: 0.75rem; font-weight: 400;">VarioSecure</span></th>
+                            <th style="width: 19.5%;">②オプション追加<br><span style="font-size: 0.75rem; font-weight: 400;">VarioSecure</span></th>
+                            <th style="width: 19.5%; border-top: 3px solid #3b82f6;">③IIJ Omnibus<br><span style="font-size: 0.75rem; font-weight: 400;">クラウドUTM</span></th>
+                            <th style="width: 19.5%; border-top: 3px solid #8b5cf6;">④Cato SASE<br><span style="font-size: 0.75rem; font-weight: 400;">統合SASE</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 600;">ファイアウォール</td>
+                            <td><span class="status-badge status-confirmed">対応</span></td>
+                            <td><span class="status-badge status-confirmed">対応</span></td>
+                            <td><span class="status-badge status-confirmed">対応</span></td>
+                            <td><span class="status-badge status-confirmed">対応</span></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">IDS/IPS（不正侵入検知・防御）</td>
+                            <td><span class="status-badge status-waiting">非対応</span></td>
+                            <td><span class="status-badge status-sent">要機器交換</span></td>
+                            <td><span class="status-badge status-confirmed">標準</span></td>
+                            <td><span class="status-badge status-confirmed">標準</span></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">URLフィルタリング</td>
+                            <td><span class="status-badge status-waiting">非対応</span></td>
+                            <td><span class="status-badge status-sent">要プラン変更</span></td>
+                            <td><span class="status-badge status-confirmed">標準</span></td>
+                            <td><span class="status-badge status-confirmed">標準</span></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">アンチウイルス（通信経路上）</td>
+                            <td><span class="status-badge status-waiting">非対応</span></td>
+                            <td><span class="status-badge status-sent">要プラン変更</span></td>
+                            <td><span class="status-badge status-confirmed">標準</span></td>
+                            <td><span class="status-badge status-confirmed">標準</span></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">SSL/TLS検査</td>
+                            <td><span class="status-badge status-waiting">非対応</span></td>
+                            <td><span class="status-badge status-waiting">対応不可</span></td>
+                            <td><span class="status-badge status-confirmed">標準</span></td>
+                            <td><span class="status-badge status-confirmed">標準</span></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">アプリケーション制御</td>
+                            <td><span class="status-badge status-waiting">非対応</span></td>
+                            <td><span class="status-badge status-waiting">対応不可</span></td>
+                            <td><span class="status-badge status-confirmed">標準</span></td>
+                            <td><span class="status-badge status-confirmed">標準</span></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">DDoS対策</td>
+                            <td><span class="status-badge status-waiting">非対応</span></td>
+                            <td><span class="status-badge status-waiting">対応不可</span></td>
+                            <td><span class="status-badge status-sent">確認中</span></td>
+                            <td><span class="status-badge status-confirmed">標準</span></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">ゼロトラストネットワーク</td>
+                            <td><span class="status-badge status-waiting">非対応</span></td>
+                            <td><span class="status-badge status-waiting">非対応</span></td>
+                            <td><span class="status-badge status-waiting">非対応</span></td>
+                            <td><span class="status-badge status-confirmed">標準</span></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">リモートアクセス</td>
+                            <td><span class="status-badge status-confirmed">VPN</span></td>
+                            <td><span class="status-badge status-confirmed">VPN</span></td>
+                            <td><span class="status-badge status-sent">オプション</span></td>
+                            <td><span class="status-badge status-confirmed">標準統合</span></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">ローカルブレイクアウト</td>
+                            <td><span class="status-badge status-sent">限定的</span></td>
+                            <td><span class="status-badge status-sent">限定的</span></td>
+                            <td><span class="status-badge status-confirmed">標準</span></td>
+                            <td><span class="status-badge status-confirmed">標準</span></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">統合管理（全拠点一括）</td>
+                            <td><span class="status-badge status-waiting">不可</span></td>
+                            <td><span class="status-badge status-waiting">不可</span></td>
+                            <td><span class="status-badge status-confirmed">対応</span></td>
+                            <td><span class="status-badge status-confirmed">対応</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">
+                出典: IIJ 2026/1/13提案資料、USEN西川様 2026/2/6メール回答、SCSK角田様 2/13メールに基づく
+            </p>
+
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">IIJ Omnibus と Cato SASE の主な違い</h3>
+
+            <p class="section-lead">
+                セキュリティ機能が充実している③と④の違いを整理します。
+            </p>
+
+            <div style="overflow-x: auto;">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 22%;">比較項目</th>
+                            <th style="width: 39%; border-top: 3px solid #3b82f6;">③IIJ Omnibus（SD-WAN）</th>
+                            <th style="width: 39%; border-top: 3px solid #8b5cf6;">④Cato SASE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 600;">基本的な位置づけ</td>
+                            <td>SD-WAN + クラウド型UTM（別機能を組み合わせ）</td>
+                            <td>ネットワークとセキュリティを一体で提供するSASEサービス</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">処理方式</td>
+                            <td>直列処理（Service Chaining）<br><span style="font-size: 0.8rem; color: #94a3b8;">機能追加時に遅延の可能性あり</span></td>
+                            <td>並列処理（Single Pass Cloud Engine）<br><span style="font-size: 0.8rem; color: #94a3b8;">機能を全てONにしても速度低下しない</span></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">バックボーン</td>
+                            <td>IIJ国内バックボーン直結<br><span style="font-size: 0.8rem; color: #94a3b8;">国内拠点間の通信品質が高い</span></td>
+                            <td>Catoグローバルプライベートバックボーン<br><span style="font-size: 0.8rem; color: #94a3b8;">世界90以上のPoPで海外も高品質</span></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">拠点側の機器</td>
+                            <td>SEIL/X4ルーター（各拠点に設置）</td>
+                            <td>Socket（小型機器1台を設置するだけ）</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">リモートアクセス</td>
+                            <td>オプション（VPNクライアント方式）</td>
+                            <td>標準統合（ゼロトラスト方式、世界中から接続可能）</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">運用管理</td>
+                            <td>フルマネージド（IIJに依頼ベース）<br><span style="font-size: 0.8rem; color: #94a3b8;">設定変更はチケット起票→数日で対応</span></td>
+                            <td>マネージドサービス（SCSK運用代行）<br><span style="font-size: 0.8rem; color: #94a3b8;">緊急時は自社でも即時設定変更可能</span></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">AD移行との関係</td>
+                            <td>ADをIIJに移行する場合、Omnibusが前提</td>
+                            <td>ADの移行先を問わず利用可能</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">向いている組織</td>
+                            <td>国内拠点中心、運用を全て任せたい組織</td>
+                            <td>リモートワーク推進、将来の海外展開も視野に入れる組織</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">費用比較</h3>
@@ -2208,7 +2410,7 @@
         {
             id: 'sec6',
             title: 'Entra IDについて',
-            text: 'ADの移行を検討する中で、「Entra IDを使えばADサーバー自体が不要になるのでは」という疑問がありました。結論から申し上げると、ADとEntra IDは役割が違います。ADは社内ネットワークの管理、つまりPCログインやファイルサーバーのアクセス権を制御するものです。一方、Entra IDはOffice 365などクラウドサービスのログインを管理するものです。Entra IDだけにすると、ファイルサーバーへの自動ログインや、PCの詳細な設定制御ができなくなります。実際、大手企業の約80%は、ADを残しつつEntra IDと併用するハイブリッド構成を採用しています。仮にEntra IDに完全移行する場合は、全PCのドメイン離脱と再参加、Intuneの導入、ファイルサーバーのクラウド移行など、大規模な作業が必要です。IIJは「Entra IDへの完全移行に該当するサービスはない」、USENは「Windows Serverがドメイン参加されている場合、移管は難しい」と回答しています。まずADのクラウド移行を進め、Entra IDの追加機能は段階的に導入するのが現実的です。'
+            text: 'ADの移行を検討するにあたり、MicrosoftのクラウドID管理サービス「Entra ID」について調査しました。AKIBAホールディングスでも、Office 365の認証にはすでにEntra IDが使われています。まず、ADとEntra IDの役割の違いです。ADは社内ネットワークの管理、つまりPCログインやファイルサーバーのアクセス権を制御するものです。一方、Entra IDはOffice 365などクラウドサービスのログインを管理するものです。名前は似ていますが、役割が異なります。現時点では、Entra IDだけでADの全機能を代替することはできません。ファイルサーバーへの自動ログインや、PCの詳細な設定制御はADに依存しています。次に、将来像についてです。Microsoftは、Entra IDを中心としたクラウドID管理への移行を推進しており、長期的にはEntra IDに集約する方向が業界の標準的な流れです。ただし、現時点では大手企業の約80%がADとEntra IDを併用するハイブリッド構成を採用しており、一気にADを廃止する方法は推奨されていません。AKIBAホールディングスにとっての現実的な進め方としては、3段階を提案します。まずStep 1として今回のADサーバーのクラウド移行。次にStep 2として1〜2年後にハイブリッド構成を導入し、多要素認証や条件付きアクセスなどのセキュリティ機能を段階的に追加。そしてStep 3として3〜5年後に社内アプリのクラウド対応が進んだ段階で、Entra IDへの集約を再評価する流れです。IIJは「Entra IDへの完全移行に該当するサービスはない」、USENは「ドメイン参加されている場合、移管は難しい」と回答しています。いずれのベンダーも、まずADのクラウド移行を行い、ハイブリッド構成で安定させた後に段階的にEntra IDの機能を拡張する方法を推奨しています。'
         },
         {
             id: 'sec7',
@@ -2218,7 +2420,7 @@
         {
             id: 'sec8',
             title: 'ネットワーク刷新',
-            text: '次にネットワークです。現在、各拠点のインターネット通信は全て築地本社を経由しています。特にGoogle MeetによるWeb会議で、映像の遅延や音声の途切れが発生しています。業務の中心はGoogle Workspaceで、Web会議の利用が増えるにつれ、全拠点のトラフィックが本社を経由する構成が問題になっています。まず、VPN、SD-WAN、SASEの違いを説明します。現行のVarioSecureはVPNで、全通信が本社を経由します。IIJ OmnibusはSD-WANで、ソフトウェアで通信経路を自動制御し、Google Meetなどは拠点から直接接続できます。Cato SASEは、SD-WANに加えてファイアウォールやウイルス対策などのセキュリティをクラウド上で一体提供します。4つのシナリオを検討しています。1つ目は現状維持で月額約17万円。2つ目はVarioSecureにオプション追加で月額約123万円ですが、SSL検査やアプリ制御には対応できません。3つ目がIIJ Omnibusで月額約72万円。内訳は拠点間WANが約33万円、インターネットゲートウェイが約23万円、リモートアクセス50名が約7万円、ブレイクアウトが約10万円です。4つ目がCato SASEで月額約47万円。SCSK角田様から2月13日に概算の先行情報をいただいており、正式見積は2月17日頃の予定です。'
+            text: '次にネットワークです。現在、各拠点のインターネット通信は全て築地本社を経由しています。特にGoogle MeetによるWeb会議で、映像の遅延や音声の途切れが発生しています。業務の中心はGoogle Workspaceで、Web会議の利用が増えるにつれ、全拠点のトラフィックが本社を経由する構成が問題になっています。まず、VPN、SD-WAN、SASEの違いを説明します。現行のVarioSecureはVPNで、全通信が本社を経由します。IIJ OmnibusはSD-WANで、ソフトウェアで通信経路を自動制御し、Google Meetなどは拠点から直接接続できます。Cato SASEは、SD-WANに加えてファイアウォールやウイルス対策などのセキュリティをクラウド上で一体提供します。4つのシナリオを検討しています。1つ目は現状維持で月額約17万円。2つ目はVarioSecureにオプション追加で月額約123万円ですが、SSL検査やアプリ制御には対応できません。3つ目がIIJ Omnibusで月額約72万円。4つ目がCato SASEで月額約47万円です。セキュリティ機能の比較では、現行のVarioSecureはファイアウォールのみですが、オプションを追加してもSSL検査やアプリ制御には対応できません。一方、IIJ OmnibusとCato SASEは、IDS/IPS、URLフィルタ、アンチウイルス、SSL検査、アプリ制御まで標準で備えています。Cato SASEはさらに、ゼロトラストネットワークやリモートアクセスも標準で統合されています。IIJ OmnibusとCato SASEの主な違いについてです。処理方式は、IIJが機能を直列で処理するのに対し、Catoは全てを同時並列で処理するため、セキュリティ機能を全てオンにしても速度が落ちません。バックボーンは、IIJが国内最強の閉域網を持ち、Catoは世界90拠点以上のプライベートバックボーンを持っています。運用面では、IIJがフルマネージドで全てIIJに依頼する方式、CatoはSCSKによる運用代行ですが緊急時には自社でも設定変更が可能です。ADの移行先にIIJを選んだ場合、ネットワークもIIJ Omnibusが前提となる点も重要な違いです。'
         },
         {
             id: 'sec9',
