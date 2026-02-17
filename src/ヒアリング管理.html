@@ -166,7 +166,7 @@
         <!-- Summary -->
         <div class="summary-bar">
           <div class="summary-item">
-            <div class="summary-num" style="color: #dc2626;">11</div>
+            <div class="summary-num" style="color: #dc2626;">17</div>
             <div class="summary-label">送信済・回答待ち</div>
           </div>
           <div class="summary-item">
@@ -409,6 +409,84 @@
           </div>
         </div>
 
+        <!-- ===== フルクラウド入退室管理 ===== -->
+        <div class="vendor-card" style="border-left: 6px solid #ec4899;">
+          <div class="vendor-header">
+            <div>
+              <div class="vendor-name">フルクラウド入退室管理（6社一斉問い合わせ）</div>
+              <div class="vendor-contact">SECOM VPN依存を解消するための代替サービス調査｜2/17 Webフォーム一斉送信</div>
+            </div>
+            <span class="st st-sent">2/17 6社送信</span>
+          </div>
+          <div class="vendor-body">
+            <table class="item-table">
+              <thead>
+                <tr><th style="width:30%;">サービス / 提供元</th><th style="width:15%;">ステータス</th><th style="width:15%;">FeliCa</th><th>備考</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="q-label">Akerun</div>
+                    <div class="q-detail">Photosynth｜導入6,000社超</div>
+                  </td>
+                  <td><span class="st st-sent">2/17 送信済</span></td>
+                  <td>要確認</td>
+                  <td>自動返信: 江口さん（20:37）</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="q-label">ALLIGATE</div>
+                    <div class="q-detail">アート｜FeliCa対応明記</div>
+                  </td>
+                  <td><span class="st st-sent">2/17 送信済</span></td>
+                  <td style="color:#166534; font-weight:700;">○</td>
+                  <td>自動返信あり（20:40）</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="q-label">SPLATS</div>
+                    <div class="q-detail">YE DIGITAL / クマヒラ｜LTE標準装備</div>
+                  </td>
+                  <td><span class="st st-sent">2/17 送信済</span></td>
+                  <td style="color:#166534; font-weight:700;">○</td>
+                  <td>自動返信あり（20:43）</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="q-label">bitlock PRO</div>
+                    <div class="q-detail">ビットキー｜12種の解錠方法</div>
+                  </td>
+                  <td><span class="st st-sent">2/17 送信済</span></td>
+                  <td>要確認</td>
+                  <td>自動返信あり（20:46）</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="q-label">FreeiD</div>
+                    <div class="q-detail">DXYZ｜顔認証型</div>
+                  </td>
+                  <td><span class="st st-sent">2/17 送信済</span></td>
+                  <td style="color:#94a3b8;">×（顔認証）</td>
+                  <td>自動返信あり（20:49）</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="q-label">カギカン</div>
+                    <div class="q-detail">Qrio（ソニーグループ）｜後付け型</div>
+                  </td>
+                  <td><span class="st st-sent">2/17 送信済</span></td>
+                  <td>△ Lite-S</td>
+                  <td>自動返信未確認</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="padding: 16px 24px; background: #fdf4ff; border-top: 1px solid #f5d0fe; font-size: 13px; color: #86198f; line-height: 1.6;">
+              <strong>共通要件:</strong> 8拠点 / VPN・拠点サーバー不要のクラウド完結型 / FeliCa継続可否 / CSV出力（e-works勤怠連携用）/ 費用体系 / 導入期間<br>
+              <strong>重要発見:</strong> e-worksはフォルダベースのファイル取込（APIなし）→ CSV出力できるサービスなら連携可能
+            </div>
+          </div>
+        </div>
+
         <!-- ===== 社内確認 ===== -->
         <div class="vendor-card" style="border-left: 6px solid #8b5cf6;">
           <div class="vendor-header">
@@ -442,11 +520,11 @@
                 </tr>
                 <tr>
                   <td>
-                    <div class="q-label">e-works 勤怠連携の代替可否</div>
-                    <div class="q-detail">SECOM cloud化時にe-works連携が維持できるか</div>
+                    <div class="q-label">e-works 勤怠連携の仕組み確認</div>
+                    <div class="q-detail">現行はフォルダにファイルを渡す方式（APIなし）→ CSV出力できれば代替可能と判明</div>
                   </td>
-                  <td><span class="st st-na">未着手</span></td>
-                  <td>SECOM回答（■2）を受けてから判断</td>
+                  <td><span class="st st-done">解決済</span></td>
+                  <td>イーワークス何子鵬 11/11「APIの提供は対応しておりません」→ ファイル取込フォーマット仕様の入手が次ステップ</td>
                 </tr>
                 <tr>
                   <td>
