@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ヒアリング管理 | Internal DX Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/portal_nexus.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Noto Sans JP', sans-serif; background-color: #fcfcfc; color: #1e293b; font-size: 16px; }
+
+    /* Status Badges */
+    .st { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 900; white-space: nowrap; }
+    .st-sent    { background: #dbeafe; color: #1e40af; }
+    .st-waiting { background: #fef3c7; color: #92400e; }
+    .st-done    { background: #dcfce7; color: #166534; }
+    .st-na      { background: #f1f5f9; color: #94a3b8; }
+    .st-fadeout { background: #f1f5f9; color: #94a3b8; text-decoration: line-through; }
+
+    /* Vendor Cards */
+    .vendor-card {
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    }
+    .vendor-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 28px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .vendor-name { font-size: 18px; font-weight: 900; }
+    .vendor-contact { font-size: 13px; color: #64748b; font-weight: 500; }
+    .vendor-body { padding: 0; }
+
+    /* Item Table */
+    .item-table { width: 100%; border-collapse: collapse; }
+    .item-table th {
+      padding: 12px 24px;
+      background: #f8fafc;
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: left;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .item-table td {
+      padding: 14px 24px;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 14px;
+      vertical-align: top;
+      line-height: 1.6;
+    }
+    .item-table tr:last-child td { border-bottom: none; }
+    .item-table .q-label { font-weight: 700; color: #334155; }
+    .item-table .q-detail { color: #64748b; font-size: 13px; margin-top: 2px; }
+
+    /* Summary Bar */
+    .summary-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .summary-item {
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 20px 24px;
+      text-align: center;
+    }
+    .summary-num { font-size: 36px; font-weight: 900; line-height: 1; }
+    .summary-label { font-size: 12px; font-weight: 700; color: #64748b; margin-top: 6px; letter-spacing: 0.05em; }
+
+    /* Deadline */
+    .deadline-banner {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      color: white;
+      border-radius: 16px;
+      padding: 20px 28px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .deadline-banner .label { font-size: 14px; font-weight: 700; opacity: 0.9; }
+    .deadline-banner .date { font-size: 28px; font-weight: 900; }
+  </style>
+</head>
+<body class="bg-[#fcfcfc]">
+
+  <div class="layout-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <header class="sidebar-header">
+        <h1>統合指揮センター HUB</h1>
+        <p>MASTER COMMAND CENTER V2.3</p>
+      </header>
+      <nav>
+        <div class="nav-label-small">トップ・ナビゲーション</div>
+        <a href="landing.html" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+          ポータルホーム
+        </a>
+        <a href="index.html" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+          プロジェクト
+        </a>
+        <a href="Phase2_刷新戦略・工程統合ボード.html" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+          完了実績
+        </a>
+        <a href="IT基盤刷新_説明資料.html" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+          IT基盤刷新 説明資料
+        </a>
+        <a href="契約管理台帳.html" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+          契約管理台帳
+        </a>
+        <a href="ヒアリング管理.html" class="nav-link active">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+          ヒアリング管理
+        </a>
+        <a href="network_topology.html" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+          ネットワーク構成図
+        </a>
+      </nav>
+      <footer class="sidebar-footer">
+        <p>User: 丹治 統<br>Last Update: 2月17日</p>
+      </footer>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="main-scroll">
+      <div class="p-16 max-w-full lg:max-w-[1200px] mx-auto">
+
+        <!-- Header -->
+        <header class="mb-8">
+          <h1 class="text-3xl font-black tracking-tight text-slate-800 leading-tight">ヒアリング管理</h1>
+          <p class="mt-3 text-slate-500 font-bold text-base leading-relaxed">
+            IT基盤刷新に関する各ベンダー・社内への確認事項とステータス管理
+          </p>
+        </header>
+
+        <!-- Deadline Banner -->
+        <div class="deadline-banner">
+          <div>
+            <div class="label">予算申請 提出期限</div>
+            <div class="date">2/24（火）</div>
+          </div>
+          <div style="text-align: right;">
+            <div class="label">塩田部長 → 会社提出 2/25</div>
+            <div style="font-size: 13px; opacity: 0.8; margin-top: 4px;">逆算して全回答を2/21までに揃えたい</div>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="summary-bar">
+          <div class="summary-item">
+            <div class="summary-num" style="color: #1e40af;">3</div>
+            <div class="summary-label">送信済・回答待ち</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-num" style="color: #166534;">3</div>
+            <div class="summary-label">回答済み</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-num" style="color: #92400e;">3</div>
+            <div class="summary-label">社内確認 未着手</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-num" style="color: #94a3b8;">1</div>
+            <div class="summary-label">フェイドアウト</div>
+          </div>
+        </div>
+
+        <!-- ===== SECOM ===== -->
+        <div class="vendor-card" style="border-left: 6px solid #ef4444;">
+          <div class="vendor-header">
+            <div>
+              <div class="vendor-name">SECOM（セコム）</div>
+              <div class="vendor-contact">担当: 神山 直己（築地支社）｜n-kamiyama@secom.co.jp</div>
+            </div>
+            <span class="st st-sent">2/17 送信済</span>
+          </div>
+          <div class="vendor-body">
+            <table class="item-table">
+              <thead>
+                <tr><th style="width:40%;">確認事項</th><th style="width:20%;">ステータス</th><th>備考</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="q-label">■1. VPN以外の通信方式の可否</div>
+                    <div class="q-detail">インターフェース機器がインターネット経由でTRIISVRと通信できるか</div>
+                  </td>
+                  <td><span class="st st-waiting">回答待ち</span></td>
+                  <td>以前も確認済みだがネットワーク見直し文脈で再確認。ここが「No」ならSocket必須 or VPN残置</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="q-label">■2. クラウド型サービスへの移行</div>
+                    <div class="q-detail">FeliCaカード継続・e-works勤怠連携・複数拠点管理・履歴データ移行</div>
+                  </td>
+                  <td><span class="st st-waiting">回答待ち</span></td>
+                  <td>e-works連携が最重要。これが不可ならクラウド移行は困難</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="q-label">■3. 現行費用の全体像</div>
+                    <div class="q-detail">全拠点・全費目（月額・保守・カード発行・監視等）の一覧</div>
+                  </td>
+                  <td><span class="st st-waiting">回答待ち</span></td>
+                  <td>クラウド移行が「費用組み替え」であることを示す根拠にする</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===== SCSK / Cato ===== -->
+        <div class="vendor-card" style="border-left: 6px solid #3b82f6;">
+          <div class="vendor-header">
+            <div>
+              <div class="vendor-name">SCSK（Cato SASE）</div>
+              <div class="vendor-contact">担当: 角田｜Cato正規代理店</div>
+            </div>
+            <span class="st st-waiting">見積待ち</span>
+          </div>
+          <div class="vendor-body">
+            <table class="item-table">
+              <thead>
+                <tr><th style="width:40%;">確認事項</th><th style="width:20%;">ステータス</th><th>備考</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="q-label">正式見積書</div>
+                    <div class="q-detail">Socket 1台(本社) + 50Mbps + Mobile 200名構成</div>
+                  </td>
+                  <td><span class="st st-waiting">回答待ち</span></td>
+                  <td>概算: ライセンス ¥5M/年 + マネージド ¥600K/年 + 初期 ¥500K</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="q-label">SECOM機器のSocket接続可否</div>
+                    <div class="q-detail">Cato Client非対応機器のSocket LAN経由接続の技術要件</div>
+                  </td>
+                  <td><span class="st st-waiting">回答待ち</span></td>
+                  <td>SECOM cloud化が前提になる可能性が高い（構造的制約）</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===== LAJ ===== -->
+        <div class="vendor-card" style="border-left: 6px solid #22c55e;">
+          <div class="vendor-header">
+            <div>
+              <div class="vendor-name">LAJ（Linkat Japan）</div>
+              <div class="vendor-contact">担当: 澤口｜Azure基盤・ADクラウド化</div>
+            </div>
+            <span class="st st-done">回答済み</span>
+          </div>
+          <div class="vendor-body">
+            <table class="item-table">
+              <thead>
+                <tr><th style="width:40%;">確認事項</th><th style="width:20%;">ステータス</th><th>備考</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="q-label">SLA / SLO 体制</div>
+                    <div class="q-detail">稼働率保証、未達時の対応</div>
+                  </td>
+                  <td><span class="st st-done">2/17 回答済</span></td>
+                  <td>LAJ自社: SLAなし（SLOベース）。Azure基盤: VM 99.99%, VPN GW 99.95%（Microsoft SLA）</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="q-label">緊急対応体制</div>
+                    <div class="q-detail">営業時間外の障害対応（例: 日曜深夜3時のAD障害）</div>
+                  </td>
+                  <td><span class="st st-done">2/17 回答済</span></td>
+                  <td>24/365監視、夜間休日オンコール体制あり。電話・メール・フォーム対応</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===== USEN ===== -->
+        <div class="vendor-card" style="border-left: 6px solid #f59e0b;">
+          <div class="vendor-header">
+            <div>
+              <div class="vendor-name">USEN</div>
+              <div class="vendor-contact">現行ISP（GATE 02）｜約10年未見直し</div>
+            </div>
+            <span class="st st-na">未着手</span>
+          </div>
+          <div class="vendor-body">
+            <table class="item-table">
+              <thead>
+                <tr><th style="width:40%;">確認事項</th><th style="width:20%;">ステータス</th><th>備考</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="q-label">契約形態・バンドル割引の有無</div>
+                    <div class="q-detail">他USENサービス解約時に回線料金が上がるリスク</div>
+                  </td>
+                  <td><span class="st st-na">未着手</span></td>
+                  <td>塩田部長の懸念事項。光回線見直し（QUICK WIN）の前提確認</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="q-label">現行プラン・料金の詳細</div>
+                    <div class="q-detail">8回線の個別料金、契約更新時期</div>
+                  </td>
+                  <td><span class="st st-na">未着手</span></td>
+                  <td>年間 ¥950,400（推計）の内訳確認</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===== IIJ ===== -->
+        <div class="vendor-card" style="border-left: 6px solid #94a3b8;">
+          <div class="vendor-header">
+            <div>
+              <div class="vendor-name" style="color: #94a3b8; text-decoration: line-through;">IIJ</div>
+              <div class="vendor-contact">担当: 梅原｜選択肢から除外</div>
+            </div>
+            <span class="st st-fadeout">フェイドアウト</span>
+          </div>
+          <div class="vendor-body">
+            <table class="item-table">
+              <thead>
+                <tr><th style="width:40%;">確認事項</th><th style="width:20%;">ステータス</th><th>備考</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="q-label">■1. 本社ルーター1台構成の可否</div>
+                  </td>
+                  <td><span class="st st-done">2/17 回答済</span></td>
+                  <td>可能。他拠点はリモートアクセス接続OK</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="q-label">■2,3. SECOM機器接続・見積</div>
+                  </td>
+                  <td><span class="st st-fadeout">確認不要と連絡済</span></td>
+                  <td>2/17 丹治より「SECOM機器にソフト不可」と伝達、方向性まとまり次第と保留</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===== 社内確認 ===== -->
+        <div class="vendor-card" style="border-left: 6px solid #8b5cf6;">
+          <div class="vendor-header">
+            <div>
+              <div class="vendor-name">社内確認事項</div>
+              <div class="vendor-contact">AKIBA HD 情報システム部</div>
+            </div>
+            <span class="st st-na">対応中</span>
+          </div>
+          <div class="vendor-body">
+            <table class="item-table">
+              <thead>
+                <tr><th style="width:40%;">確認事項</th><th style="width:20%;">ステータス</th><th>備考</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="q-label">SECOM全拠点の実コスト把握</div>
+                    <div class="q-detail">契約管理台帳の ¥18,000/年 は保守のみ。全費目を確認</div>
+                  </td>
+                  <td><span class="st st-sent">SECOM に照会中</span></td>
+                  <td>名古屋: 初期¥485,400 + 月額¥10,000 が判明済み</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="q-label">各拠点オンプレサーバー棚卸し</div>
+                    <div class="q-detail">P5: 篠部長フィードバック対応</div>
+                  </td>
+                  <td><span class="st st-na">未着手</span></td>
+                  <td>ヒアリングシート配布 → 拠点担当者に記入依頼が必要</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="q-label">e-works 勤怠連携の代替可否</div>
+                    <div class="q-detail">SECOM cloud化時にe-works連携が維持できるか</div>
+                  </td>
+                  <td><span class="st st-na">未着手</span></td>
+                  <td>SECOM回答（■2）を受けてから判断</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="q-label">VPN契約期限対応</div>
+                    <div class="q-detail">和歌山 2/28、本社 3/11</div>
+                  </td>
+                  <td><span class="st st-waiting" style="background:#fee2e2; color:#991b1b;">期限迫る</span></td>
+                  <td>更新 or 延長の判断が必要。VarioSecure（SCSK経由）に確認</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>
