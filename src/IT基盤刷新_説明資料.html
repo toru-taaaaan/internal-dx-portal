@@ -918,6 +918,33 @@
                 </div>
             </div>
 
+            <!-- 3社比較サマリ -->
+            <div style="background: #f0f9ff; border: 2px solid #bae6fd; border-radius: 1rem; padding: 1.5rem 2rem; margin: 2rem 0;">
+                <h4 style="font-size: 1rem; font-weight: 700; color: #0369a1; margin: 0 0 1rem;">3社比較の要点</h4>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;">
+                    <div style="background: white; border-radius: 0.75rem; padding: 1rem; border-top: 3px solid #3b82f6;">
+                        <div style="font-size: 0.85rem; font-weight: 700; color: #3b82f6; margin-bottom: 0.5rem;">IIJ（お任せ型）</div>
+                        <div style="font-size: 0.8rem; color: #166534; margin-bottom: 0.25rem; line-height: 1.6;">◎ SLA 99.99%、24時間全自動運用、パッチ適用もIIJ実施</div>
+                        <div style="font-size: 0.8rem; color: #991b1b; line-height: 1.6;">△ 5年TCO最高額（¥11.9M）、サーバー直接操作不可</div>
+                    </div>
+                    <div style="background: white; border-radius: 0.75rem; padding: 1rem; border-top: 3px solid #10b981;">
+                        <div style="font-size: 0.85rem; font-weight: 700; color: #10b981; margin-bottom: 0.5rem;">USEN（分離型）</div>
+                        <div style="font-size: 0.8rem; color: #166534; margin-bottom: 0.25rem; line-height: 1.6;">◎ 初期費用最安（¥86万）、サーバーRDP接続可</div>
+                        <div style="font-size: 0.8rem; color: #991b1b; line-height: 1.6;">△ SLAなし、AWS管理画面アクセス不可、OS管理権限は確認中</div>
+                    </div>
+                    <div style="background: white; border-radius: 0.75rem; padding: 1rem; border-top: 3px solid #d97706;">
+                        <div style="font-size: 0.85rem; font-weight: 700; color: #d97706; margin-bottom: 0.5rem;">Link-At-Japan（並走型）</div>
+                        <div style="font-size: 0.8rem; color: #166534; margin-bottom: 0.25rem; line-height: 1.6;">◎ 5年TCO最安（¥7.7M）、Azure自社名義、全権限保持</div>
+                        <div style="font-size: 0.8rem; color: #991b1b; line-height: 1.6;">△ 自社に一定の管理責任、監視・パッチ適用は別途オプション</div>
+                    </div>
+                </div>
+                <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid #bae6fd; font-size: 0.85rem; color: #0f172a; line-height: 1.7;">
+                    <strong>判断の軸:</strong>
+                    選定基準は、①自社に残す管理範囲をどこまで許容するか、②SLA（稼働率保証）を重視するか、③5年間の総費用をどこまで圧縮するか。
+                    IIJは「全てお任せ」の安心感、Link-At-Japanは「コストと自由度」の両立、USENは「その中間」という位置づけ。
+                </div>
+            </div>
+
             <!-- Cost comparison table - placeholder for actual data -->
             <div id="sp-ad-cost"></div>
             <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">5. 費用比較</h3>
@@ -1382,13 +1409,65 @@
                 </div>
             </div>
 
+            <!-- AKIBAホールディングスのAD運用における現状課題 -->
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2.5rem 0 1rem;">AKIBAホールディングス / ADTECのAD運用における現状課題</h3>
+
+            <p class="section-lead">
+                上記は一般論としてのリスクですが、AKIBAホールディングスの現行AD運用には以下の具体的な課題があります。
+            </p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0;">
+                <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 0.75rem; padding: 1.25rem;">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: #991b1b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">情シス2名体制の属人化リスク</div>
+                    <ul style="font-size: 0.85rem; color: #334155; line-height: 2; padding-left: 1.25rem; margin: 0;">
+                        <li>ADサーバーの管理権限を持つのは実質2名（丹治・家田）</li>
+                        <li>GPO設定、ファイルサーバー権限、DNS設定の全容を把握しているのは限られた担当者</li>
+                        <li>担当者の退職・長期不在時にAD障害が発生した場合、復旧に必要な知識が引き継がれていない可能性</li>
+                    </ul>
+                </div>
+                <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 0.75rem; padding: 1.25rem;">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: #991b1b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">ハードウェア老朽化と災害リスク</div>
+                    <ul style="font-size: 0.85rem; color: #334155; line-height: 2; padding-left: 1.25rem; margin: 0;">
+                        <li>ADサーバー2台が同一フロアに設置されており、水害・火災時に同時に喪失するリスク</li>
+                        <li>保守切れ後のハードウェア障害対応は自社負担（部品調達の長期化リスク）</li>
+                        <li>ファイルサーバー（ADSHARESVR/IOTSVR）も同一サーバー室に設置されており、AD障害時にはファイルアクセスも連鎖停止</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4 style="font-size: 0.95rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 0.75rem;">各ベンダーはこれらの課題を解決できるか</h4>
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                    <thead>
+                        <tr style="background: #f8fafc;">
+                            <th style="padding: 10px 14px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 700; width: 30%;">課題</th>
+                            <th style="padding: 10px 14px; text-align: center; border-bottom: 2px solid #e2e8f0; font-weight: 700; color: #3b82f6;">IIJ</th>
+                            <th style="padding: 10px 14px; text-align: center; border-bottom: 2px solid #e2e8f0; font-weight: 700; color: #10b981;">USEN</th>
+                            <th style="padding: 10px 14px; text-align: center; border-bottom: 2px solid #e2e8f0; font-weight: 700; color: #d97706;">Link-At-Japan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td style="padding: 8px 14px; border-bottom: 1px solid #f1f5f9;">属人化の解消</td><td style="padding: 8px 14px; border-bottom: 1px solid #f1f5f9; text-align: center; color: #166534; font-weight: 700;">◎ 全委託</td><td style="padding: 8px 14px; border-bottom: 1px solid #f1f5f9; text-align: center; color: #d97706; font-weight: 700;">△ OS管理は自社</td><td style="padding: 8px 14px; border-bottom: 1px solid #f1f5f9; text-align: center; color: #d97706; font-weight: 700;">△ 管理権限は自社</td></tr>
+                        <tr><td style="padding: 8px 14px; border-bottom: 1px solid #f1f5f9;">地理的冗長化</td><td style="padding: 8px 14px; border-bottom: 1px solid #f1f5f9; text-align: center; color: #166534; font-weight: 700;">◎ IIJ DC</td><td style="padding: 8px 14px; border-bottom: 1px solid #f1f5f9; text-align: center; color: #166534; font-weight: 700;">◎ AWS</td><td style="padding: 8px 14px; border-bottom: 1px solid #f1f5f9; text-align: center; color: #166534; font-weight: 700;">◎ Azure</td></tr>
+                        <tr><td style="padding: 8px 14px; border-bottom: 1px solid #f1f5f9;">保守切れ解消</td><td style="padding: 8px 14px; border-bottom: 1px solid #f1f5f9; text-align: center; color: #166534; font-weight: 700;">◎</td><td style="padding: 8px 14px; border-bottom: 1px solid #f1f5f9; text-align: center; color: #166534; font-weight: 700;">◎</td><td style="padding: 8px 14px; border-bottom: 1px solid #f1f5f9; text-align: center; color: #166534; font-weight: 700;">◎</td></tr>
+                        <tr><td style="padding: 8px 14px; border-bottom: 1px solid #f1f5f9;">24時間監視</td><td style="padding: 8px 14px; border-bottom: 1px solid #f1f5f9; text-align: center; color: #166534; font-weight: 700;">◎ 標準</td><td style="padding: 8px 14px; border-bottom: 1px solid #f1f5f9; text-align: center; color: #166534; font-weight: 700;">◎ 標準</td><td style="padding: 8px 14px; border-bottom: 1px solid #f1f5f9; text-align: center; color: #d97706; font-weight: 700;">○ オプション</td></tr>
+                        <tr><td style="padding: 8px 14px; border-bottom: 1px solid #f1f5f9;">SLA（稼働率保証）</td><td style="padding: 8px 14px; border-bottom: 1px solid #f1f5f9; text-align: center; color: #166534; font-weight: 700;">◎ 99.99%</td><td style="padding: 8px 14px; border-bottom: 1px solid #f1f5f9; text-align: center; color: #991b1b; font-weight: 700;">× なし</td><td style="padding: 8px 14px; border-bottom: 1px solid #f1f5f9; text-align: center; color: #d97706; font-weight: 700;">△ 確認中</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
             <div class="fact-box" style="border-left-color: #3b82f6; margin-top: 1.5rem;">
                 <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
                     <strong>まとめ:</strong>
-                    サーバーに自由にアクセスできることは、技術的には柔軟性が高い構成です。
-                    一方で、管理権限を自社で持つことは、その権限の漏洩・誤操作・属人化といったリスクも同時に引き受けることになります。
-                    ADサーバーは全社員のPC認証を担う基盤であり、障害が発生すると全拠点の業務が停止します。
-                    IIJは3社の中で最も高額ですが、契約に基づくSLAと専門家の体制でこの基盤を守るという意味では、最も安心できる選択肢ともいえます。
+                    サーバーに自由にアクセスできることは柔軟性が高い反面、管理権限の漏洩・誤操作・属人化というリスクも引き受けることになります。
+                    ADサーバーは全社員のPC認証を担う基盤であり、障害時は全拠点の業務が停止します。
+                </p>
+                <p style="font-size: 0.9rem; color: #475569; margin: 0.75rem 0 0; line-height: 1.7;">
+                    <strong>なぜ「オンプレミスの再構築」ではなく「クラウド移行」なのか:</strong>
+                    オンプレミスでサーバーを新規購入・再構築する選択肢も考えられますが、それでは上記の課題のうち「属人化」「災害時の同時喪失リスク」「24時間監視の不在」は解消されません。
+                    新しいハードウェアを買っても、保守切れの問題は5〜7年後に再び発生します。
+                    クラウド移行は、ハードウェア更新のサイクルから脱却し、地理的冗長化と専門家による継続運用を同時に手に入れる手段です。
+                    費用面でも、現状維持の5年コスト（サーバー更新¥243万＋運用工数）と比較して、クラウド移行が極端に高額になるわけではありません。
                 </p>
             </div>
 
@@ -1465,6 +1544,73 @@
             <p class="section-lead">
                 これらを補うには、Microsoft Intuneという別のサービスの契約が必要であり、さらに社内の全アプリケーションがクラウドに対応している必要があります。
             </p>
+
+            <!-- AKIBA固有のEntra ID移行ボトルネック -->
+            <div id="sp-entra-bottleneck"></div>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">AKIBAホールディングス固有の移行ボトルネック</h3>
+
+            <p class="section-lead">
+                GPO管理台帳とアクセス制御管理台帳を分析した結果、AKIBAホールディングスがEntra IDに移行する際の具体的な障壁が明らかになりました。
+            </p>
+
+            <div style="background: #fef2f2; border: 2px solid #fecaca; border-radius: 1rem; padding: 1.5rem 2rem; margin: 1.5rem 0;">
+                <h4 style="font-size: 0.95rem; font-weight: 700; color: #991b1b; margin: 0 0 1rem;">ボトルネック①: ファイルサーバーのドライブマッピング（最大の障壁）</h4>
+                <p style="font-size: 0.85rem; color: #475569; line-height: 1.7; margin: 0 0 0.75rem;">
+                    現在のGPOで以下のネットワークドライブが全社員のPCに自動割り当てされています。
+                </p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                    <div style="background: white; border-radius: 0.5rem; padding: 0.75rem 1rem; border: 1px solid #fecaca;">
+                        <div style="font-size: 0.75rem; font-weight: 700; color: #64748b;">Sドライブ（Shared User GPO）</div>
+                        <div style="font-size: 0.85rem; font-weight: 600; color: #0f172a;">\\adsharesvr\public → 全社員が利用</div>
+                    </div>
+                    <div style="background: white; border-radius: 0.5rem; padding: 0.75rem 1rem; border: 1px solid #fecaca;">
+                        <div style="font-size: 0.75rem; font-weight: 700; color: #64748b;">Uドライブ（IoT GPO）</div>
+                        <div style="font-size: 0.85rem; font-weight: 600; color: #0f172a;">\\iotsvr\share → IoT部門が利用</div>
+                    </div>
+                </div>
+                <p style="font-size: 0.85rem; color: #475569; line-height: 1.7; margin: 0;">
+                    これらのドライブマッピングはAD（Kerberos認証）に依存しています。Entra IDに完全移行すると、この自動接続が動作しなくなります。
+                    Azure FilesやSharePoint Onlineへの移行が必要ですが、ADSHARESVRには<strong>40以上の部門別フォルダ</strong>があり、個人名ベースのアクセス権限が細かく設定されています。
+                    IOTSVRにも6つの極秘フォルダがあります。これらのACL（アクセス制御）をクラウド上で再現する作業は、移行プロジェクトの中で最も工数がかかる部分です。
+                </p>
+            </div>
+
+            <div style="background: #fffbeb; border: 2px solid #fde68a; border-radius: 1rem; padding: 1.5rem 2rem; margin: 1.5rem 0;">
+                <h4 style="font-size: 0.95rem; font-weight: 700; color: #92400e; margin: 0 0 1rem;">ボトルネック②: GPOの移行（段階的に対応可能）</h4>
+                <p style="font-size: 0.85rem; color: #475569; line-height: 1.7; margin: 0 0 0.75rem;">
+                    現行のGPO設定を分析した結果、大部分はIntuneで代替可能ですが、一部に対応策の検討が必要なものがあります。
+                </p>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.8rem;">
+                        <thead>
+                            <tr style="background: #fefce8;">
+                                <th style="padding: 8px 12px; text-align: left; border-bottom: 1px solid #fde68a; font-weight: 700; color: #92400e;">現行GPO設定</th>
+                                <th style="padding: 8px 12px; text-align: left; border-bottom: 1px solid #fde68a; font-weight: 700; color: #92400e;">Intune代替</th>
+                                <th style="padding: 8px 12px; text-align: center; border-bottom: 1px solid #fde68a; font-weight: 700; color: #92400e;">判定</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td style="padding: 6px 12px; border-bottom: 1px solid #f5f5f4;">Windows Update制御（WSUS連携）</td><td style="padding: 6px 12px; border-bottom: 1px solid #f5f5f4;">Windows Update for Business</td><td style="padding: 6px 12px; border-bottom: 1px solid #f5f5f4; text-align: center; color: #166534; font-weight: 700;">○</td></tr>
+                            <tr><td style="padding: 6px 12px; border-bottom: 1px solid #f5f5f4;">スクリーンセーバー（300秒+パスワード）</td><td style="padding: 6px 12px; border-bottom: 1px solid #f5f5f4;">デバイス構成プロファイル</td><td style="padding: 6px 12px; border-bottom: 1px solid #f5f5f4; text-align: center; color: #166534; font-weight: 700;">○</td></tr>
+                            <tr><td style="padding: 6px 12px; border-bottom: 1px solid #f5f5f4;">IE Enterprise Mode（レガシーWeb対応）</td><td style="padding: 6px 12px; border-bottom: 1px solid #f5f5f4;">Edge IEモード（Intune配信）</td><td style="padding: 6px 12px; border-bottom: 1px solid #f5f5f4; text-align: center; color: #166534; font-weight: 700;">○</td></tr>
+                            <tr><td style="padding: 6px 12px; border-bottom: 1px solid #f5f5f4;">RDP有効化</td><td style="padding: 6px 12px; border-bottom: 1px solid #f5f5f4;">Intuneスクリプト or カスタムOMA-URI</td><td style="padding: 6px 12px; border-bottom: 1px solid #f5f5f4; text-align: center; color: #166534; font-weight: 700;">○</td></tr>
+                            <tr><td style="padding: 6px 12px; border-bottom: 1px solid #f5f5f4;">Defender定義ファイル更新</td><td style="padding: 6px 12px; border-bottom: 1px solid #f5f5f4;">Intune Endpoint Security</td><td style="padding: 6px 12px; border-bottom: 1px solid #f5f5f4; text-align: center; color: #166534; font-weight: 700;">○</td></tr>
+                            <tr style="background: #fef2f2;"><td style="padding: 6px 12px; border-bottom: 1px solid #f5f5f4; font-weight: 600;">ドライブマッピング（S:, U:）</td><td style="padding: 6px 12px; border-bottom: 1px solid #f5f5f4;">Intuneスクリプト or Azure Files</td><td style="padding: 6px 12px; border-bottom: 1px solid #f5f5f4; text-align: center; color: #991b1b; font-weight: 700;">△要検討</td></tr>
+                            <tr style="background: #fef2f2;"><td style="padding: 6px 12px; border-bottom: 1px solid #f5f5f4; font-weight: 600;">LANSCOPE/位置情報取得</td><td style="padding: 6px 12px; border-bottom: 1px solid #f5f5f4;">ベンダー対応状況の確認が必要</td><td style="padding: 6px 12px; border-bottom: 1px solid #f5f5f4; text-align: center; color: #991b1b; font-weight: 700;">△要確認</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div style="background: #f0f9ff; border: 2px solid #bae6fd; border-radius: 1rem; padding: 1.5rem 2rem; margin: 1.5rem 0;">
+                <h4 style="font-size: 0.95rem; font-weight: 700; color: #0369a1; margin: 0 0 0.75rem;">Entra IDに移行しない場合のリスク</h4>
+                <ul style="font-size: 0.85rem; color: #475569; line-height: 2; padding-left: 1.25rem; margin: 0;">
+                    <li>MicrosoftはADの新機能開発を停止しており、今後のセキュリティ機能（MFA、条件付きアクセス等）はEntra IDにのみ追加される</li>
+                    <li>ADサーバーのWindows Serverサポート期限後、パッチ提供が終了し脆弱性が放置されるリスクがある</li>
+                    <li>クラウドサービス（Microsoft 365、SaaS）との認証統合がAD単体では実現できず、パスワード管理の二重化が続く</li>
+                    <li>将来的にADサポートが完全終了した際の移行が、準備なしでは大規模かつ高リスクになる</li>
+                </ul>
+            </div>
 
             <div id="sp-entra-features"></div>
             <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">11. ADにはできず、Entra IDで初めて使える機能</h3>
@@ -2635,12 +2781,68 @@
                 </table>
             </div>
 
-            <div style="background: #f8fafc; border-radius: 1rem; padding: 1.5rem; margin: 1.5rem 0;">
-                <ul style="font-size: 0.9rem; color: #475569; line-height: 2; padding-left: 1.25rem; margin: 0;">
-                    <li><strong>パターン1:</strong> AD+SECOMはLink-At-Japan（Azure、並走型）、ネットワークはCato SASE → 月額が最も安い</li>
-                    <li><strong>パターン2:</strong> AD+SECOMはUSEN（AWS、分離型）、ネットワークはCato SASE → 初期費用が最も安い</li>
-                    <li><strong>パターン3:</strong> IIJ一括（AD+SECOM+Omnibus全てIIJ） → 運用負荷は最も軽い</li>
-                </ul>
+            <!-- パターン別メリット・デメリット比較 -->
+            <div style="margin: 2rem 0;">
+                <h4 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin: 0 0 1rem;">パターン別 メリット・デメリット比較</h4>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                    <!-- パターン1 -->
+                    <div style="background: white; border-radius: 1rem; padding: 1.25rem; border: 2px solid #e2e8f0; border-top: 4px solid #d97706;">
+                        <div style="font-size: 0.75rem; font-weight: 700; color: #d97706; text-transform: uppercase; letter-spacing: 0.05em;">パターン1</div>
+                        <div style="font-size: 0.95rem; font-weight: 700; color: #0f172a; margin: 0.25rem 0 0.75rem;">LAJ + Cato SASE</div>
+                        <div style="font-size: 0.75rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">5年TCO: ¥40.6M（最安）</div>
+                        <div style="font-size: 0.8rem; color: #166534; margin-bottom: 0.5rem; line-height: 1.6;">
+                            <strong>メリット:</strong><br>
+                            ・5年総額が最も安い<br>
+                            ・Azure自社名義で将来のEntra ID移行に有利<br>
+                            ・サーバー全権限を保持（自社で調査・対応可能）
+                        </div>
+                        <div style="font-size: 0.8rem; color: #991b1b; line-height: 1.6;">
+                            <strong>デメリット:</strong><br>
+                            ・自社にAD管理責任が残る（属人化リスク継続）<br>
+                            ・監視・パッチ適用は別途オプション契約<br>
+                            ・SLA未確認
+                        </div>
+                    </div>
+                    <!-- パターン2 -->
+                    <div style="background: white; border-radius: 1rem; padding: 1.25rem; border: 2px solid #e2e8f0; border-top: 4px solid #10b981;">
+                        <div style="font-size: 0.75rem; font-weight: 700; color: #10b981; text-transform: uppercase; letter-spacing: 0.05em;">パターン2</div>
+                        <div style="font-size: 0.95rem; font-weight: 700; color: #0f172a; margin: 0.25rem 0 0.75rem;">USEN + Cato SASE</div>
+                        <div style="font-size: 0.75rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">5年TCO: ¥44.2M</div>
+                        <div style="font-size: 0.8rem; color: #166534; margin-bottom: 0.5rem; line-height: 1.6;">
+                            <strong>メリット:</strong><br>
+                            ・初期費用が最も安い（¥1.78M）<br>
+                            ・サーバーRDP接続可能で障害時の直接調査が可能<br>
+                            ・24時間死活監視が標準付属
+                        </div>
+                        <div style="font-size: 0.8rem; color: #991b1b; line-height: 1.6;">
+                            <strong>デメリット:</strong><br>
+                            ・SLAなし（ベストエフォート）<br>
+                            ・AWS管理コンソールへのアクセス不可<br>
+                            ・パッチ適用頻度が低い（四半期〜半年）<br>
+                            ・USEN名義のためベンダー変更時にデータ移行が必要
+                        </div>
+                    </div>
+                    <!-- パターン3 -->
+                    <div style="background: white; border-radius: 1rem; padding: 1.25rem; border: 2px solid #e2e8f0; border-top: 4px solid #3b82f6;">
+                        <div style="font-size: 0.75rem; font-weight: 700; color: #3b82f6; text-transform: uppercase; letter-spacing: 0.05em;">パターン3</div>
+                        <div style="font-size: 0.95rem; font-weight: 700; color: #0f172a; margin: 0.25rem 0 0.75rem;">IIJ 一括</div>
+                        <div style="font-size: 0.75rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">5年TCO: ¥63.7M（最高額）</div>
+                        <div style="font-size: 0.8rem; color: #166534; margin-bottom: 0.5rem; line-height: 1.6;">
+                            <strong>メリット:</strong><br>
+                            ・全サービスを1社に集約（窓口一本化）<br>
+                            ・SLA 99.99%の稼働率保証<br>
+                            ・パッチ適用・監視・障害対応すべてIIJが実施<br>
+                            ・属人化リスクを最も軽減
+                        </div>
+                        <div style="font-size: 0.8rem; color: #991b1b; line-height: 1.6;">
+                            <strong>デメリット:</strong><br>
+                            ・5年総額が最も高い<br>
+                            ・サーバー直接操作不可（調査・カスタマイズに制限）<br>
+                            ・IIJ独自基盤のため他社への移行が困難
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="fact-box" style="border-left-color: #64748b; margin-top: 1.5rem;">
