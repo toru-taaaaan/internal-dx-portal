@@ -132,7 +132,7 @@
                         元のsec4には3社（IIJ・USEN・LAJ）の費用比較テーブル（初期費用・月額・5年TCO・SLA）とベンダー別の特徴カードがあったが、<strong>「で、どれがいいの？」に答える要約が冒頭になかった</strong>。読み手は数万〜数百万の数字が並ぶ表を自力で読み解き、自分で結論を出す必要があった。部長クラスが判断するには「3社の違いを一言で言うと何か」「選ぶ基準は何か」が最初に書かれている必要がある。
                       </div>
                     </td>
-                    <td style="font-size: 14px; color: #475569;">sec4 冒頭にサマリボックスを追加</td>
+                    <td style="font-size: 14px; color: #475569; line-height: 1.7;">sec4の費用比較テーブル直前に「3社比較の要点」サマリボックスを新設。IIJ＝お任せ型（SLA99.99%/TCO最高）、USEN＝分離型（初期最安/SLAなし）、LAJ＝並走型（TCO最安/自社名義Azure）の位置づけを明記し、選定基準3軸（①管理範囲 ②SLA ③費用）を提示</td>
                     <td><a href="IT基盤刷新_説明資料.html#sec4" style="background: #dbeafe; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #1d4ed8; text-decoration: none;">sec4 →</a></td>
                     <td><span class="status-badge" style="background: #dcfce7; color: #166534;">反映済</span></td>
                   </tr>
@@ -158,7 +158,7 @@
                         元のsec6はEntra IDの一般的な説明（MFA・条件付きアクセス等の機能紹介）に留まっており、「AKIBAが移行しようとしたら具体的に何が壊れるのか」が書かれていなかった。実際にはS:ドライブ（\\adsharesvr\public）やU:ドライブ（\\iotsvr\share）の自動接続がAD依存で動いており、40+部門フォルダの個人名ACLをクラウドで再現する膨大な工数が発生する。こうした<strong>AKIBA固有の地雷</strong>を明示しないと、「Entra IDに変えましょう」が簡単に聞こえすぎる。
                       </div>
                     </td>
-                    <td style="font-size: 14px; color: #475569;">GPO台帳・ACL台帳を分析し sec6 に反映</td>
+                    <td style="font-size: 14px; color: #475569; line-height: 1.7;">sec6に「AKIBA固有の移行ボトルネック」を新設。①ドライブマッピングS:/U:のAD依存が最大障壁 ②ADSHARESVRの40+部門・個人名ACLのクラウド再現工数 ③GPOのIntune代替可否判定表 ④移行しない場合のリスク4点を追加</td>
                     <td><a href="IT基盤刷新_説明資料.html#sec6" style="background: #dbeafe; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #1d4ed8; text-decoration: none;">sec6 →</a></td>
                     <td><span class="status-badge" style="background: #dcfce7; color: #166534;">反映済</span></td>
                   </tr>
@@ -188,7 +188,7 @@
                         元の資料では「GPOはIntuneで代替可能」と一般論で書いていたが、AKIBAのGPOが実際に何件あり、どんな設定をしているか把握していなかった。篠部長がGPO管理台帳（10シートのGoogleスプレッドシート）を共有し、<strong>「まず現状を正確に把握してからIntuneで代替できるか判断せよ」</strong>という指示。机上の空論ではなく実データに基づいた分析が求められた。
                       </div>
                     </td>
-                    <td style="font-size: 14px; color: #475569;">全10シート読込完了 → Intune代替可否表を作成</td>
+                    <td style="font-size: 14px; color: #475569; line-height: 1.7;">GPO管理台帳（全10シート）を全件読込し、設定ごとにIntune代替可否を判定。WinUpdate→WUfB / スクリーンセーバー→デバイス構成 / IEモード→Edge等は○代替可。ドライブマップS:/U:とLANSCOPEは△要検討。結果をsec6に一覧表として追加</td>
                     <td><a href="IT基盤刷新_説明資料.html#sec6" style="background: #dbeafe; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #1d4ed8; text-decoration: none;">sec6 →</a></td>
                     <td><span class="status-badge" style="background: #dcfce7; color: #166534;">反映済</span></td>
                   </tr>
@@ -218,7 +218,7 @@
                         ファイルサーバー移行の工数を「大変そう」と曖昧に書いていたが、実際のフォルダ数・権限構造を確認していなかった。篠部長からアクセス制御管理台帳（Googleスプレッドシート）が共有され、<strong>「どれだけの部門フォルダがあり、どれだけ細かいACL（個人名ベースの権限）が設定されているか具体的に把握せよ」</strong>という指示。移行工数の見積もりには実データが不可欠。
                       </div>
                     </td>
-                    <td style="font-size: 14px; color: #475569;">ADSHARESVR・IOTSVRの権限構造を分析 → sec6に反映</td>
+                    <td style="font-size: 14px; color: #475569; line-height: 1.7;">アクセス制御管理台帳を全件読込。ADSHARESVR（40+部門フォルダ・深いネスト・個人名ACL多数）とIOTSVR（6フォルダ・IoTG+情シスのみ）の権限構造を分析。Azure Files移行工数の根拠としてsec6ボトルネック分析に反映</td>
                     <td><a href="IT基盤刷新_説明資料.html#sec6" style="background: #dbeafe; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #1d4ed8; text-decoration: none;">sec6 →</a></td>
                     <td><span class="status-badge" style="background: #dcfce7; color: #166534;">反映済</span></td>
                   </tr>
@@ -247,7 +247,7 @@
                         sec8のネットワーク刷新は本社インフラ（VPN・FW・SD-WAN）中心の議論で、大阪・東北等の拠点にどんなオンプレサーバーが存在するか把握されていなかった。SASE（Cato）導入でSocket配置や通信経路が変わるため、<strong>各拠点のサーバー実態（台数・用途・ネットワーク構成）を事前に把握しなければ導入計画が立てられない</strong>。拠点側の現状が不明なまま進めるのはリスク。
                       </div>
                     </td>
-                    <td style="font-size: 14px; color: #475569;">各拠点のサーバー台数・用途・構成をヒアリング</td>
+                    <td style="font-size: 14px; color: #475569; line-height: 1.7;">本社以外の各拠点（大阪・東北等）のオンプレサーバー実態を担当者にヒアリング。①台数 ②用途（ファイル/業務アプリ/プリント等） ③ネットワーク構成を確認し、sec8のCato Socket配置計画・スコープ定義に反映予定</td>
                     <td><a href="IT基盤刷新_説明資料.html#sec8" style="background: #fef3c7; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #92400e; text-decoration: none;">sec8 →</a></td>
                     <td><span class="status-badge wip">未着手</span></td>
                   </tr>
@@ -271,7 +271,7 @@
                         元のsec8ではIIJ OmnibusとCato SASEを同等の選択肢として並列比較していたが、篠部長が方針を決定。IIJ Omnibusは国内専用バックボーン・各拠点にルーター設置が必要・IIJ AD契約との密結合などの制約があり、<strong>Catoのグローバル90+ PoP・Socket1台で完結・ゼロトラスト標準搭載の方が柔軟性が高い</strong>と判断。IIJ Omnibus単独シナリオの深掘りに工数を割くのは無駄であり、Cato前提で資料を再構成する指示。
                       </div>
                     </td>
-                    <td style="font-size: 14px; color: #475569;">sec8/sec9をCato SASE中心に再構成</td>
+                    <td style="font-size: 14px; color: #475569; line-height: 1.7;">①sec8のSD-WAN比較をCato前提に再構成（IIJ Omnibus単独シナリオを縮小） ②sec9の3パターンをCato統一: LAJ+Cato / USEN+Cato / IIJ AD+Cato ③IIJ一括は参考比較として残すが推奨から外す</td>
                     <td>
                       <a href="IT基盤刷新_説明資料.html#sec8" style="background: #fef3c7; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #92400e; text-decoration: none;">sec8 →</a>
                       <a href="IT基盤刷新_説明資料.html#sec9" style="background: #fef3c7; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #92400e; text-decoration: none; margin-left: 4px;">sec9 →</a>
@@ -327,7 +327,7 @@
                         元のsec5bは各ベンダーの「できること・できないこと」を抽象的に列挙していたが、それがAKIBAの問題を解決するかどうかの検証がなかった。問うべきは「各社何ができるか」ではなく<strong>「情シス2名体制の属人化リスク」「同一フロアのサーバー災害リスク」「保守切れハードウェア」という当社固有の課題を、各ベンダーがどの程度解決できるか</strong>。機能一覧ではなく課題起点の比較が必要。
                       </div>
                     </td>
-                    <td style="font-size: 14px; color: #475569;">sec5bに固有課題＋解決度合い比較表を追加</td>
+                    <td style="font-size: 14px; color: #475569; line-height: 1.7;">sec5bに「AH/AD運用の現状課題」を新設。①情シス2名の属人化リスク ②同一フロアの災害リスクを明文化し、各ベンダーが5項目（属人化解消・地理的冗長化・保守切れ・24時間監視・SLA）でどこまで解決できるか比較表を追加</td>
                     <td><a href="IT基盤刷新_説明資料.html#sec5b" style="background: #d1fae5; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #065f46; text-decoration: none;">sec5b →</a></td>
                     <td><span class="status-badge" style="background: #dcfce7; color: #166534;">反映済</span></td>
                   </tr>
@@ -357,7 +357,7 @@
                         資料はクラウド移行を前提に書かれていたが、「なぜオンプレでサーバーを新しく買い直すのではダメなのか」という当然の反論に対する回答がなかった。新しいハードウェアの方が初期費用は安く、業務フローも変わらない。<strong>決裁会議で「オンプレ更新でよくない？」と聞かれた時に論理的に反論できる材料</strong>（属人化は解消されない・地理的冗長化がない・24時間監視がない・5〜7年後にまた同じ問題が来る）を資料内に持っておく必要がある。
                       </div>
                     </td>
-                    <td style="font-size: 14px; color: #475569;">sec5bまとめにロジック補強を追加</td>
+                    <td style="font-size: 14px; color: #475569; line-height: 1.7;">sec5b末尾に「なぜオンプレ再構築ではなくクラウドか」のロジック補強を追加。新HW購入でも属人化・災害リスク・24時間監視不在は未解決。5〜7年後に再び保守切れ。現状維持5年コスト（¥243万+運用工数）との費用比較を明記</td>
                     <td><a href="IT基盤刷新_説明資料.html#sec5b" style="background: #d1fae5; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #065f46; text-decoration: none;">sec5b →</a></td>
                     <td><span class="status-badge" style="background: #dcfce7; color: #166534;">反映済</span></td>
                   </tr>
@@ -382,7 +382,7 @@
                         P2と同様の指摘。Entra IDの機能紹介（MFA・条件付きアクセス等）はあったが、<strong>「AKIBAがEntra IDに移行しなかった場合に何が起きるか」</strong>のリスクが書かれていなかった。MSがオンプレADの新機能開発を停止している事実、Windows Serverサポート期限後のパッチ終了リスク、M365との認証統合がAD単体では不可能な点など、「移行しない選択肢」のコストを明示しなければ移行の必要性が伝わらない。
                       </div>
                     </td>
-                    <td style="font-size: 14px; color: #475569;">P2と統合。sec6にリスク分析を追加</td>
+                    <td style="font-size: 14px; color: #475569; line-height: 1.7;">P2（篠部長指摘）と統合しsec6に「移行しない場合のリスク」を追加。①MSがAD新機能開発停止 ②Win Serverサポート終了後のパッチ停止 ③M365/SaaSとのSSO不可 ④将来の強制移行時の大規模リスクの4点を明記</td>
                     <td><a href="IT基盤刷新_説明資料.html#sec6" style="background: #d1fae5; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #065f46; text-decoration: none;">sec6 →</a></td>
                     <td><span class="status-badge" style="background: #dcfce7; color: #166534;">反映済</span></td>
                   </tr>
@@ -408,7 +408,7 @@
                         元のsec9には費用テーブル（初期・月額・5年TCO）が3つ並んでいたが、数字だけでは「安い方を選べばいいのか？」という短絡的な判断しかできない。<strong>最安のLAJパターンは自社管理責任が残り、最高額のIIJパターンは全てお任せだがコスト1.5倍</strong>。この「コスト vs リスク vs 自由度」のトレードオフを明示しなければ、金額表は意思決定の材料にならない。
                       </div>
                     </td>
-                    <td style="font-size: 14px; color: #475569;">sec9にメリデメカードを追加</td>
+                    <td style="font-size: 14px; color: #475569; line-height: 1.7;">sec9の費用テーブル直後に3パターンのメリット・デメリットカードを新設。パターン1: LAJ+Cato（¥40.6M/最安/自社管理残） パターン2: USEN+Cato（¥44.2M/初期最安/SLAなし） パターン3: IIJ一括（¥63.7M/全委託/最高額）のトレードオフを明示</td>
                     <td><a href="IT基盤刷新_説明資料.html#sec9" style="background: #d1fae5; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #065f46; text-decoration: none;">sec9 →</a></td>
                     <td><span class="status-badge" style="background: #dcfce7; color: #166534;">反映済</span></td>
                   </tr>
