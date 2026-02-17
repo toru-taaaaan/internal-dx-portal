@@ -483,6 +483,244 @@
           </section>
 
 
+          <!-- Phase 4: 2/17 塩田部長ミーティング — 課題・論点・業者問い合わせ -->
+          <section>
+            <div class="section-header" style="border-left-color: #dc2626;">
+              <h2 class="text-2xl font-black text-slate-800">Phase 4: 課題・論点整理（2/17 塩田部長MTG）</h2>
+              <p class="text-sm font-bold text-slate-500 mt-2">提出期限 <strong style="color: #dc2626;">2/24（火）</strong> → 塩田部長が2/25に予算申請提出</p>
+            </div>
+
+            <!-- 優先順位サマリ -->
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px;">
+              <div style="background: #fef2f2; border: 2px solid #fca5a5; border-radius: 16px; padding: 20px; text-align: center;">
+                <div style="font-size: 12px; font-weight: 900; color: #dc2626; text-transform: uppercase; letter-spacing: 0.1em;">優先1</div>
+                <div style="font-size: 18px; font-weight: 900; color: #991b1b; margin-top: 8px;">光回線・ISP</div>
+                <div style="font-size: 13px; color: #b91c1c; margin-top: 4px;">→ USEN に問い合わせ</div>
+              </div>
+              <div style="background: #fff7ed; border: 2px solid #fdba74; border-radius: 16px; padding: 20px; text-align: center;">
+                <div style="font-size: 12px; font-weight: 900; color: #ea580c; text-transform: uppercase; letter-spacing: 0.1em;">優先2</div>
+                <div style="font-size: 18px; font-weight: 900; color: #9a3412; margin-top: 8px;">Cato + LAJ</div>
+                <div style="font-size: 13px; color: #c2410c; margin-top: 4px;">→ Linkat Japan に問い合わせ</div>
+              </div>
+              <div style="background: #eff6ff; border: 2px solid #93c5fd; border-radius: 16px; padding: 20px; text-align: center;">
+                <div style="font-size: 12px; font-weight: 900; color: #2563eb; text-transform: uppercase; letter-spacing: 0.1em;">新規課題</div>
+                <div style="font-size: 18px; font-weight: 900; color: #1e40af; margin-top: 8px;">攻めの情シス</div>
+                <div style="font-size: 13px; color: #1d4ed8; margin-top: 4px;">→ 社内企画・提案</div>
+              </div>
+              <div style="background: #f5f3ff; border: 2px solid #c4b5fd; border-radius: 16px; padding: 20px; text-align: center;">
+                <div style="font-size: 12px; font-weight: 900; color: #7c3aed; text-transform: uppercase; letter-spacing: 0.1em;">時間があれば</div>
+                <div style="font-size: 18px; font-weight: 900; color: #5b21b6; margin-top: 8px;">ファイルサーバー</div>
+                <div style="font-size: 13px; color: #6d28d9; margin-top: 4px;">→ 調査・比較</div>
+              </div>
+            </div>
+
+            <!-- 課題1: 光回線 -->
+            <div class="strategy-card mb-8" style="border-left: 6px solid #dc2626;">
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                <div style="background: #fef2f2; border-radius: 10px; padding: 8px 16px;">
+                  <span style="font-size: 13px; font-weight: 900; color: #dc2626; letter-spacing: 0.05em;">ISSUE 1 — 最優先</span>
+                </div>
+                <div>
+                  <h3 class="text-lg font-black text-slate-800" style="margin: 0;">光回線・ISP契約の見直し（QUICK WIN）</h3>
+                  <p style="font-size: 13px; color: #64748b; font-weight: 700; margin: 2px 0 0;">影響範囲小・すぐ着手可能 → 最初の成果として提案</p>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                  <div style="font-size: 12px; font-weight: 900; color: #dc2626; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">背景・現状</div>
+                  <ul style="font-size: 14px; color: #334155; line-height: 2; padding-left: 16px; margin: 0;">
+                    <li>ISPは USEN GATE 02（約10年未見直し）</li>
+                    <li>NTT光 4拠点 + USEN ISP 8回線</li>
+                    <li>年間コスト ¥950,400</li>
+                    <li>sec1b に QUICK WIN として記載済み</li>
+                  </ul>
+                </div>
+                <div>
+                  <div style="font-size: 12px; font-weight: 900; color: #dc2626; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">塩田部長の懸念</div>
+                  <div style="background: #fef2f2; border-radius: 10px; padding: 16px; font-size: 14px; color: #991b1b; line-height: 1.8; font-weight: 700;">
+                    光回線自体は USEN と契約している。他の USEN サービス（ISP等）を解約したら、<strong>回線料金が上がるのではないか？</strong> バンドル割引の有無を確認する必要がある。
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 20px; background: #1e293b; border-radius: 12px; padding: 20px;">
+                <div style="font-size: 12px; font-weight: 900; color: #fca5a5; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;">USEN への問い合わせ事項</div>
+                <ol style="font-size: 14px; color: #e2e8f0; line-height: 2.2; padding-left: 20px; margin: 0;">
+                  <li>現在の契約形態（光回線とISPがセット契約か個別か）</li>
+                  <li>ISPのみ解約した場合、光回線の月額料金に変更はあるか</li>
+                  <li>現契約の最低利用期間・違約金の有無</li>
+                  <li>USEN側で提案可能なプラン見直し（帯域変更・コスト削減）はあるか</li>
+                  <li>光コラボレーション転用（NTT直契約化）した場合の手続き・影響</li>
+                </ol>
+              </div>
+            </div>
+
+            <!-- 課題2: Cato + Linkat Japan -->
+            <div class="strategy-card mb-8" style="border-left: 6px solid #ea580c;">
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                <div style="background: #fff7ed; border-radius: 10px; padding: 8px 16px;">
+                  <span style="font-size: 13px; font-weight: 900; color: #ea580c; letter-spacing: 0.05em;">ISSUE 2 — 優先2</span>
+                </div>
+                <div>
+                  <h3 class="text-lg font-black text-slate-800" style="margin: 0;">Cato SASE + Linkat Japan を軸に詳細化</h3>
+                  <p style="font-size: 13px; color: #64748b; font-weight: 700; margin: 2px 0 0;">塩田部長・丹治ともに Cato+LAJ が最適と判断 → IIJ・USENの深掘りは不要</p>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                  <div style="font-size: 12px; font-weight: 900; color: #ea580c; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">方針決定</div>
+                  <ul style="font-size: 14px; color: #334155; line-height: 2; padding-left: 16px; margin: 0;">
+                    <li><strong>Cato SASE + Linkat Japan</strong> の組み合わせで推進</li>
+                    <li>5年TCO最安（¥7.7M）</li>
+                    <li>Azure自社名義で全権限保持</li>
+                    <li>IIJ・USENについてはこれ以上の深掘り不要</li>
+                  </ul>
+                </div>
+                <div>
+                  <div style="font-size: 12px; font-weight: 900; color: #ea580c; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">資料での位置づけ</div>
+                  <ul style="font-size: 14px; color: #334155; line-height: 2; padding-left: 16px; margin: 0;">
+                    <li>sec4: 3社比較 → LAJ推薦の根拠を強化</li>
+                    <li>sec9: 費用全体像 → LAJ+Catoパターンを主軸に再構成</li>
+                    <li>P6（未着手）: Cato中心のネットワーク再構成を具体化</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div style="margin-top: 20px; background: #1e293b; border-radius: 12px; padding: 20px;">
+                <div style="font-size: 12px; font-weight: 900; color: #fdba74; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;">Linkat Japan への問い合わせ事項</div>
+                <ol style="font-size: 14px; color: #e2e8f0; line-height: 2.2; padding-left: 20px; margin: 0;">
+                  <li>Cato SASE の AKIBA向け構成提案（4拠点+リモートユーザー数）</li>
+                  <li>Cato導入時の既存VPN（USEN）からの移行手順・スケジュール感</li>
+                  <li>Azure上でのファイルサーバー構成（Azure Files / Azure File Sync）の提案</li>
+                  <li>Azure ファイルサーバーのセキュリティ管理体制（アクセス制御・暗号化・監査ログ）</li>
+                  <li>AD → Entra ID 移行支援の対応範囲と費用感</li>
+                  <li>マネージドサービスの範囲（どこまでLAJが運用し、どこから自社か）</li>
+                  <li>詳細見積もり（Cato + Azure + 移行支援 + 月次運用の内訳）</li>
+                </ol>
+              </div>
+            </div>
+
+            <!-- 課題3: 攻めの情シス -->
+            <div class="strategy-card mb-8" style="border-left: 6px solid #2563eb;">
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                <div style="background: #eff6ff; border-radius: 10px; padding: 8px 16px;">
+                  <span style="font-size: 13px; font-weight: 900; color: #2563eb; letter-spacing: 0.05em;">ISSUE 3 — 新規課題</span>
+                </div>
+                <div>
+                  <h3 class="text-lg font-black text-slate-800" style="margin: 0;">「攻めの情シス」— 刷新後の役割転換ビジョン</h3>
+                  <p style="font-size: 13px; color: #64748b; font-weight: 700; margin: 2px 0 0;">白鳥さん経由の指摘: 外注化後に情シスは何をするのか</p>
+                </div>
+              </div>
+
+              <div style="margin-bottom: 20px;">
+                <div style="font-size: 12px; font-weight: 900; color: #2563eb; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">背景</div>
+                <div style="background: #eff6ff; border-radius: 10px; padding: 16px; font-size: 14px; color: #1e40af; line-height: 1.8;">
+                  <strong>白鳥さんからの指摘（塩田部長経由）:</strong><br>
+                  「情報システム部の人たちはそんなに忙しそうに見えない。IT基盤を外に出すなら、空いた工数で何をやるのか？」<br><br>
+                  → 単なるコスト削減・技術更新だけでは予算申請が通らない。<strong>「浮いたリソースで何を生み出すか」</strong>のストーリーがセットで必要。
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                  <div style="font-size: 12px; font-weight: 900; color: #2563eb; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">現状（守りの情シス）</div>
+                  <ul style="font-size: 14px; color: #334155; line-height: 2; padding-left: 16px; margin: 0;">
+                    <li>障害対応・サーバー監視</li>
+                    <li>パッチ適用・物理機器管理</li>
+                    <li>ヘルプデスク（PC設定・トラブル対応）</li>
+                    <li>VPN・ネットワーク機器の保守</li>
+                    <li>契約更新・ベンダー連絡</li>
+                  </ul>
+                </div>
+                <div>
+                  <div style="font-size: 12px; font-weight: 900; color: #2563eb; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">刷新後（攻めの情シス）</div>
+                  <ul style="font-size: 14px; color: #334155; line-height: 2; padding-left: 16px; margin: 0;">
+                    <li><strong>AI活用による業務自動化</strong>（丹治提案済み）</li>
+                    <li>DX推進（業務プロセス改善・ツール導入支援）</li>
+                    <li>セキュリティガバナンス強化</li>
+                    <li>社内ITリテラシー向上</li>
+                    <li>データ活用・分析基盤の整備</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div style="margin-top: 20px; background: #1e293b; border-radius: 12px; padding: 20px;">
+                <div style="font-size: 12px; font-weight: 900; color: #93c5fd; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;">提案資料に盛り込むべき内容</div>
+                <ol style="font-size: 14px; color: #e2e8f0; line-height: 2.2; padding-left: 20px; margin: 0;">
+                  <li>現状の工数内訳（何にどれだけ時間を使っているか）の可視化</li>
+                  <li>刷新により削減される運用工数の試算</li>
+                  <li>削減工数の振り向け先 — AI時代の「攻めの情シス」ロードマップ</li>
+                  <li>AI活用の具体例（手作業の自動化・エンジニア不要でプログラミング可能な時代）</li>
+                  <li>来期の情報システム部 方向性ビジョン（1枚もの）</li>
+                </ol>
+              </div>
+            </div>
+
+            <!-- 課題4: ファイルサーバー -->
+            <div class="strategy-card mb-8" style="border-left: 6px solid #7c3aed;">
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                <div style="background: #f5f3ff; border-radius: 10px; padding: 8px 16px;">
+                  <span style="font-size: 13px; font-weight: 900; color: #7c3aed; letter-spacing: 0.05em;">ISSUE 4 — 時間があれば</span>
+                </div>
+                <div>
+                  <h3 class="text-lg font-black text-slate-800" style="margin: 0;">ファイルサーバー移行検討</h3>
+                  <p style="font-size: 13px; color: #64748b; font-weight: 700; margin: 2px 0 0;">オンプレ維持 vs Google Drive vs NAS vs Azure Files の比較</p>
+                </div>
+              </div>
+
+              <div style="margin-bottom: 20px;">
+                <div style="font-size: 12px; font-weight: 900; color: #7c3aed; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">ミーティングでの議論</div>
+                <table class="task-table" style="margin-top: 0;">
+                  <thead>
+                    <tr>
+                      <th style="width: 25%;">案</th>
+                      <th style="width: 20%;">提案者</th>
+                      <th style="width: 55%;">評価・コメント</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="font-weight: 900;">Google Drive に集約</td>
+                      <td>下野さん</td>
+                      <td>家田さん「機能不足で無理ではないか」</td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 900;">最新NAS（オンプレ）</td>
+                      <td>塩田部長</td>
+                      <td>Google Drive バックアップ連携も可能。コスト・管理面のバランス</td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 900;">Azure Files（クラウド）</td>
+                      <td>丹治</td>
+                      <td>Linkat Japan で Azure を借りるなら統合可能。塩田部長「セキュリティ管理できるならOK」</td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 900;">既存クラウドストレージ</td>
+                      <td>（要確認）</td>
+                      <td>以前契約していたサービスがあるはず → 詳細確認必要</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div style="margin-top: 20px; background: #1e293b; border-radius: 12px; padding: 20px;">
+                <div style="font-size: 12px; font-weight: 900; color: #c4b5fd; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;">調査すべき論点</div>
+                <ol style="font-size: 14px; color: #e2e8f0; line-height: 2.2; padding-left: 20px; margin: 0;">
+                  <li>Google Driveでファイルサーバー代替を実現している企業事例はあるか</li>
+                  <li>現行ファイルサーバーの利用実態（誰が・どんな使い方をしているか）</li>
+                  <li>誤削除時の復旧能力・保存期間の比較（Google Drive vs NAS vs Azure Files vs 現行）</li>
+                  <li>各方式のコスト比較（初期・月額・5年TCO）</li>
+                  <li>既存で契約中のクラウドストレージサービスの確認と活用可能性</li>
+                  <li>セキュリティ要件（ACL再現、暗号化、監査ログ、コンプライアンス）</li>
+                </ol>
+              </div>
+            </div>
+
+          </section>
+
+
           <!-- Track 1: Identity -->
           <section>
             <div class="section-header border-blue-600">
