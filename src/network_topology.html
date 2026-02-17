@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>現行ネットワーク構成図 | Internal DX Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/portal_nexus.css">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --secondary: #64748b;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+            --vpn-blue: #2563eb;
+            --vpn-gray: #94a3b8;
+            --lbo-green: #10b981;
+            --internet-amber: #f59e0b;
+            --secom-emerald: #059669;
+            --type-a: #1e40af;
+            --type-b: #64748b;
+            --cato-purple: #7b1fa2;
+        }
+        body {
+            background: var(--bg);
+            color: #334155;
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* --- Layout --- */
+        .page-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px 40px 60px;
+        }
+        .page-header {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 0 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .page-header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        .back-link:hover { color: var(--accent); }
+        .page-title {
+            font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* --- Card --- */
+        .modern-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 1.25rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            padding: 2rem 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 0 0 1rem;
+        }
+        .section-title::before {
+            content: "";
+            width: 6px;
+            height: 24px;
+            background: var(--accent);
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+        .section-lead {
+            font-size: 0.95rem;
+            color: #475569;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* --- Diagram Container --- */
+        .diagram-container {
+            position: relative;
+            width: 100%;
+            height: 920px;
+            background: #fafbfc;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .diagram-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* --- Site Node --- */
+        .site-node {
+            position: absolute;
+            z-index: 2;
+            border-radius: 12px;
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: box-shadow 0.2s, border-color 0.2s;
+        }
+        .site-node:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            border-color: #cbd5e1;
+        }
+        .site-node.hub {
+            border-color: var(--vpn-blue);
+            border-width: 3px;
+            box-shadow: 0 4px 16px rgba(37,99,235,0.1);
+        }
+        .site-node.type-a { border-left: 5px solid var(--type-a); }
+        .site-node.type-b { border-left: 5px solid var(--type-b); }
+
+        .site-header {
+            padding: 10px 14px 6px;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .site-name {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--primary);
+        }
+        .site-badge {
+            font-size: 0.6rem;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 4px;
+            letter-spacing: 0.03em;
+        }
+        .badge-hub { background: #dbeafe; color: #1e40af; }
+        .badge-type-a { background: #dbeafe; color: #1e40af; }
+        .badge-type-b { background: #f1f5f9; color: #64748b; }
+        .badge-lbo { background: #d1fae5; color: #065f46; }
+
+        .site-body {
+            padding: 8px 14px 10px;
+            font-size: 0.72rem;
+            color: #64748b;
+            line-height: 1.6;
+        }
+        .equip-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 2px 0;
+        }
+        .equip-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            flex-shrink: 0;
+        }
+        .equip-router { background: #dbeafe; color: #1e40af; }
+        .equip-server { background: #fef3c7; color: #92400e; }
+        .equip-secom { background: #d1fae5; color: #065f46; }
+        .equip-pc { background: #f1f5f9; color: #475569; }
+        .equip-printer { background: #f5f3ff; color: #6b21a8; }
+
+        .equip-label {
+            font-size: 0.7rem;
+            color: #475569;
+        }
+        .equip-detail {
+            font-size: 0.62rem;
+            color: #94a3b8;
+            margin-left: 19px;
+        }
+
+        /* --- Internet Cloud --- */
+        .cloud-node {
+            position: absolute;
+            z-index: 2;
+            text-align: center;
+        }
+        .cloud-shape {
+            display: inline-block;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 50px;
+            padding: 10px 28px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #92400e;
+        }
+        .cloud-sub {
+            font-size: 0.65rem;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        /* --- SECOM Server --- */
+        .secom-server-node {
+            position: absolute;
+            z-index: 2;
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border: 2px solid var(--secom-emerald);
+            border-radius: 10px;
+            padding: 8px 14px;
+            text-align: center;
+        }
+        .secom-server-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #065f46;
+        }
+        .secom-server-detail {
+            font-size: 0.6rem;
+            color: #059669;
+        }
+
+        /* --- Legend --- */
+        .legend {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(255,255,255,0.95);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 0.68rem;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .legend-title {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 6px;
+            font-size: 0.72rem;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 2px 0;
+            color: #475569;
+        }
+        .legend-line {
+            width: 24px;
+            height: 3px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        /* --- Info Panel (below diagram) --- */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .info-box {
+            background: #f8fafc;
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            border-radius: 0 0.75rem 0.75rem 0;
+        }
+        .info-box.warn {
+            background: #fffbeb;
+            border-left-color: #f59e0b;
+        }
+        .info-box h4 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0 0 0.5rem;
+        }
+        .info-box p, .info-box ul {
+            font-size: 0.82rem;
+            color: #475569;
+            margin: 0;
+            line-height: 1.7;
+        }
+        .info-box ul {
+            padding-left: 1.2rem;
+        }
+        .info-box li {
+            margin-bottom: 0.25rem;
+        }
+
+        /* --- GWS Label --- */
+        .gws-label {
+            position: absolute;
+            z-index: 3;
+            background: #d1fae5;
+            color: #065f46;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid #6ee7b7;
+            white-space: nowrap;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 1200px) {
+            .diagram-container { height: 1100px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="page-header">
+        <div class="page-header-inner">
+            <a href="index.html" class="back-link">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+                INDEX
+            </a>
+            <div class="page-title">現行ネットワーク構成図</div>
+            <div style="width: 60px;"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="page-content">
+        <section class="modern-card">
+            <div class="section-title">現行ネットワーク構成（VarioSecure VPN）</div>
+            <p class="section-lead">
+                全拠点がVarioSecure社のVPNルーターでハブ&amp;スポーク接続されている。
+                インターネット通信は原則として築地本社を経由。大阪のみGoogle Workspace向けの部分的LBO（ローカルブレイクアウト）を実施中。
+                <strong>Secom入退室管理機器</strong>が各拠点に設置されており、Cato導入時のSocket/Client判断に影響する。
+            </p>
+
+            <!-- === DIAGRAM === -->
+            <div class="diagram-container" id="topology">
+
+                <!-- SVG Connection Lines -->
+                <svg class="diagram-svg" viewBox="0 0 1320 920" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                        <!-- VPN Tunnel (Type A) -->
+                        <marker id="arrow-blue" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+                        </marker>
+                        <!-- VPN Tunnel (Type B) -->
+                        <marker id="arrow-gray" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8"/>
+                        </marker>
+                        <!-- LBO -->
+                        <marker id="arrow-green" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#10b981"/>
+                        </marker>
+                    </defs>
+
+                    <!-- Internet → 本社 -->
+                    <line x1="660" y1="65" x2="660" y2="145" stroke="#f59e0b" stroke-width="3" />
+
+                    <!-- 本社 → 大阪 (VPN) -->
+                    <path d="M 545 310 Q 350 400 240 435" stroke="#2563eb" stroke-width="2.5" fill="none" marker-end="url(#arrow-blue)" />
+                    <!-- 大阪 → Internet (GWS LBO) -->
+                    <path d="M 190 435 Q 120 250 580 55" stroke="#10b981" stroke-width="2" fill="none" stroke-dasharray="6,4" marker-end="url(#arrow-green)" />
+
+                    <!-- 本社 → 多摩 (VPN) -->
+                    <path d="M 580 310 Q 510 380 470 435" stroke="#2563eb" stroke-width="2.5" fill="none" marker-end="url(#arrow-blue)" />
+
+                    <!-- 本社 → 橋本 (VPN) -->
+                    <path d="M 740 310 Q 780 380 790 435" stroke="#2563eb" stroke-width="2.5" fill="none" marker-end="url(#arrow-blue)" />
+
+                    <!-- 本社 → 東京3-5F (VPN/Secom) -->
+                    <path d="M 820 290 Q 960 340 1030 400" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#arrow-gray)" />
+
+                    <!-- 本社 → 福岡 (VPN/Secom) -->
+                    <path d="M 520 310 Q 260 590 200 700" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#arrow-gray)" />
+
+                    <!-- 本社 → 和歌山 (VPN/Secom) -->
+                    <path d="M 600 310 Q 450 590 430 700" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#arrow-gray)" />
+
+                    <!-- 本社 → 京橋 (VPN/Secom) -->
+                    <path d="M 700 310 Q 700 590 680 700" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#arrow-gray)" />
+
+                    <!-- 本社 → 名古屋 (VPN/Secom) -->
+                    <path d="M 780 310 Q 900 590 910 700" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#arrow-gray)" />
+
+                    <!-- SECOM Server ← 各拠点 (概念線: 本社内接続) -->
+                    <line x1="1090" y1="200" x2="890" y2="200" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,3" />
+
+                    <!-- Type区分ラベル -->
+                    <text x="50" y="410" font-size="11" font-weight="700" fill="#1e40af" font-family="Inter, sans-serif">Type A: 業務NW</text>
+                    <text x="50" y="690" font-size="11" font-weight="700" fill="#64748b" font-family="Inter, sans-serif">Type B: Secom VPNのみ</text>
+
+                    <!-- 区分線 -->
+                    <line x1="40" y1="660" x2="1280" y2="660" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="8,4" />
+                </svg>
+
+                <!-- ====== Internet Cloud ====== -->
+                <div class="cloud-node" style="left: 560px; top: 16px;">
+                    <div class="cloud-shape">Internet</div>
+                    <div class="cloud-sub">USEN GATE 02 / NTT光</div>
+                </div>
+
+                <!-- GWS LBO Label -->
+                <div class="gws-label" style="left: 260px; top: 230px;">
+                    GWS のみ LBO
+                </div>
+
+                <!-- ====== 本社（築地 6F/7F）====== -->
+                <div class="site-node hub" style="left: 480px; top: 145px; width: 360px;">
+                    <div class="site-header">
+                        <span class="site-name">本社（築地 6F/7F）</span>
+                        <span class="site-badge badge-hub">HUB</span>
+                        <span class="site-badge badge-type-a">Type A</span>
+                    </div>
+                    <div class="site-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px;">
+                        <div>
+                            <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR601J (Hub)</span></div>
+                            <div class="equip-detail">VarioSecure VPN ハブ</div>
+                            <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">AD Primary</span></div>
+                            <div class="equip-detail">PDCSVR 192.168.1.6</div>
+                            <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">AD Secondary</span></div>
+                            <div class="equip-detail">BDCSVR 192.168.1.7</div>
+                        </div>
+                        <div>
+                            <div class="equip-item"><span class="equip-icon equip-secom">T</span><span class="equip-label">SECOM Server</span></div>
+                            <div class="equip-detail">TRIISVR 192.168.1.30</div>
+                            <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器</span></div>
+                            <div class="equip-item"><span class="equip-icon equip-pc">P</span><span class="equip-label">業務PC (57名)</span></div>
+                            <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ====== SECOM Server (separate callout) ====== -->
+                <div class="secom-server-node" style="left: 1090px; top: 175px;">
+                    <div class="secom-server-label">Sesamo TRII</div>
+                    <div class="secom-server-detail">入退室管理サーバー</div>
+                    <div class="secom-server-detail">全拠点のログを集約</div>
+                </div>
+
+                <!-- ====== 大阪営業所 ====== -->
+                <div class="site-node type-a" style="left: 100px; top: 435px; width: 200px;">
+                    <div class="site-header">
+                        <span class="site-name">大阪営業所</span>
+                        <span class="site-badge badge-type-a">A</span>
+                        <span class="site-badge badge-lbo">LBO</span>
+                    </div>
+                    <div class="site-body">
+                        <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR601J</span></div>
+                        <div class="equip-detail">LBO用に機種変更済</div>
+                        <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">BN用ルーター</span></div>
+                        <div class="equip-detail">Hub で分岐</div>
+                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-pc">P</span><span class="equip-label">業務PC (4名)</span></div>
+                        <div style="margin-top: 4px; padding: 3px 6px; background: #ecfdf5; border-radius: 4px; font-size: 0.62rem; color: #065f46; line-height: 1.4;">
+                            GWS のみ直接 Internet へ<br>
+                            他は本社 VPN 経由
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ====== 多摩 (R&D) ====== -->
+                <div class="site-node type-a" style="left: 370px; top: 435px; width: 180px;">
+                    <div class="site-header">
+                        <span class="site-name">多摩 (R&D)</span>
+                        <span class="site-badge badge-type-a">A</span>
+                    </div>
+                    <div class="site-body">
+                        <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR402J</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-pc">P</span><span class="equip-label">業務PC</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機</span></div>
+                        <div style="margin-top: 4px; padding: 3px 6px; background: #fef3c7; border-radius: 4px; font-size: 0.62rem; color: #92400e; line-height: 1.4;">
+                            全通信が本社経由<br>
+                            Google Meet 遅延あり
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ====== 橋本 (IoT Lab) ====== -->
+                <div class="site-node type-a" style="left: 700px; top: 435px; width: 180px;">
+                    <div class="site-header">
+                        <span class="site-name">橋本 (IoT Lab)</span>
+                        <span class="site-badge badge-type-a">A</span>
+                    </div>
+                    <div class="site-body">
+                        <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR402J</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-pc">P</span><span class="equip-label">業務PC</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機</span></div>
+                        <div style="margin-top: 4px; padding: 3px 6px; background: #fef3c7; border-radius: 4px; font-size: 0.62rem; color: #92400e; line-height: 1.4;">
+                            全通信が本社経由<br>
+                            Google Meet 遅延あり
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ====== 東京 3-5F (Type B) ====== -->
+                <div class="site-node type-b" style="left: 970px; top: 400px; width: 180px;">
+                    <div class="site-header">
+                        <span class="site-name">東京 3-5F</span>
+                        <span class="site-badge badge-type-b">B</span>
+                    </div>
+                    <div class="site-body">
+                        <div class="equip-detail" style="margin-left: 0; color: #94a3b8; margin-bottom: 4px;">BN管理（同一ビル内）</div>
+                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器</span></div>
+                        <div class="equip-detail">本社ルーター経由で接続</div>
+                    </div>
+                </div>
+
+                <!-- ====== Type B Sites ====== -->
+
+                <!-- 福岡 -->
+                <div class="site-node type-b" style="left: 100px; top: 700px; width: 170px;">
+                    <div class="site-header">
+                        <span class="site-name">福岡</span>
+                        <span class="site-badge badge-type-b">B</span>
+                    </div>
+                    <div class="site-body">
+                        <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR402J</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器</span></div>
+                        <div class="equip-detail">ONU→Hub→Router→Secom</div>
+                        <div class="equip-detail" style="color: #94a3b8;">BN管理 / Secom通信のみ</div>
+                    </div>
+                </div>
+
+                <!-- 和歌山 -->
+                <div class="site-node type-b" style="left: 330px; top: 700px; width: 170px;">
+                    <div class="site-header">
+                        <span class="site-name">和歌山</span>
+                        <span class="site-badge badge-type-b">B</span>
+                    </div>
+                    <div class="site-body">
+                        <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR402J</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器</span></div>
+                        <div class="equip-detail">ONU→Hub→Router→Secom</div>
+                        <div class="equip-detail" style="color: #94a3b8;">BN管理 / Secom通信のみ</div>
+                    </div>
+                </div>
+
+                <!-- 京橋 -->
+                <div class="site-node type-b" style="left: 560px; top: 700px; width: 170px;">
+                    <div class="site-header">
+                        <span class="site-name">京橋ビル</span>
+                        <span class="site-badge badge-type-b">B</span>
+                    </div>
+                    <div class="site-body">
+                        <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR402J</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器</span></div>
+                        <div class="equip-detail">ONU→Hub→Router→Secom</div>
+                        <div class="equip-detail" style="color: #94a3b8;">BN管理 / Secom通信のみ</div>
+                    </div>
+                </div>
+
+                <!-- 名古屋 -->
+                <div class="site-node type-b" style="left: 790px; top: 700px; width: 170px;">
+                    <div class="site-header">
+                        <span class="site-name">名古屋</span>
+                        <span class="site-badge badge-type-b">B</span>
+                    </div>
+                    <div class="site-body">
+                        <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR402J</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器</span></div>
+                        <div class="equip-detail">ONU→Hub→Router→Secom</div>
+                        <div class="equip-detail" style="color: #94a3b8;">BN管理 / Secom通信のみ</div>
+                    </div>
+                </div>
+
+                <!-- ====== Legend ====== -->
+                <div class="legend">
+                    <div class="legend-title">凡例</div>
+                    <div class="legend-item">
+                        <div class="legend-line" style="background: #2563eb;"></div>
+                        <span>VPN トンネル（業務通信）</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-line" style="background: repeating-linear-gradient(90deg, #94a3b8 0, #94a3b8 4px, transparent 4px, transparent 7px);"></div>
+                        <span>VPN トンネル（Secomのみ）</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-line" style="background: repeating-linear-gradient(90deg, #10b981 0, #10b981 4px, transparent 4px, transparent 7px);"></div>
+                        <span>GWS ローカルブレイクアウト</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-line" style="background: repeating-linear-gradient(90deg, #059669 0, #059669 3px, transparent 3px, transparent 6px);"></div>
+                        <span>Secom ログ通信</span>
+                    </div>
+                    <div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid #e2e8f0;">
+                        <div class="legend-item">
+                            <div style="width: 14px; height: 10px; border-left: 4px solid #1e40af; background: #f8fafc; border-radius: 2px;"></div>
+                            <span>Type A: AKIBA管理 / 業務NW</span>
+                        </div>
+                        <div class="legend-item">
+                            <div style="width: 14px; height: 10px; border-left: 4px solid #94a3b8; background: #f8fafc; border-radius: 2px;"></div>
+                            <span>Type B: BN管理 / Secomのみ</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /diagram-container -->
+
+            <!-- ====== Info Panels Below Diagram ====== -->
+            <div class="info-grid">
+                <div class="info-box">
+                    <h4>VPN構成の概要</h4>
+                    <ul>
+                        <li>VarioSecure社 VSR601J/VSR402J による<strong>ハブ&amp;スポーク</strong>構成</li>
+                        <li>本社 VSR601J がハブ、他7拠点がスポーク</li>
+                        <li>全拠点の Internet 通信が本社を経由（ボトルネック）</li>
+                        <li>ISP: USEN GATE 02（全8回線）/ NTT フレッツ光</li>
+                    </ul>
+                </div>
+                <div class="info-box">
+                    <h4>大阪の部分的LBO</h4>
+                    <ul>
+                        <li>ルーターを VSR601J に変更し、GWS 向けの LBO を実現</li>
+                        <li>Google Workspace のトラフィックのみ大阪から直接 Internet へ</li>
+                        <li>業務通信のメインは依然として本社 VPN 経由</li>
+                        <li>他拠点への LBO 展開は「1台ずつ個別設定」が必要（USEN回答）</li>
+                    </ul>
+                </div>
+                <div class="info-box warn">
+                    <h4>Cato Socket/Client 判断のポイント</h4>
+                    <ul>
+                        <li><strong>Socket が必要な条件</strong>: Cato Client をインストールできない機器が、Cato ネットワーク経由の通信を必要とする場合</li>
+                        <li><strong>Secom 入退室機器</strong>: Client インストール不可 → VPN or Socket が必要</li>
+                        <li>複合機: ローカル LAN で完結 → Socket 不要</li>
+                        <li>業務 PC: Client インストール可 → Socket 不要</li>
+                    </ul>
+                </div>
+                <div class="info-box warn">
+                    <h4>SECOM クラウド化とのセット提案</h4>
+                    <ul>
+                        <li>Secom 機器が Socket 要件の唯一のドライバー</li>
+                        <li><strong>セサモ TR2Web</strong>（クラウド版）に移行すれば VPN 全廃が可能</li>
+                        <li>VPN 全廃 → Socket 最小化（本社 1台 + Azure のみ）</li>
+                        <li>VPN 残存なら年間 ¥2.4M の二重投資が発生</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
