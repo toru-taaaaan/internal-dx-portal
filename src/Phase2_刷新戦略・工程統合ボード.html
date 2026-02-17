@@ -127,61 +127,127 @@
                     <td style="font-weight: 900; color: #3b82f6;">P1</td>
                     <td>
                       <div class="text-base font-black text-slate-700">3社比較の要点・結論サマリ追加</div>
-                      <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">「結局どこがいいのか」が読んでもわからない</div>
+                      <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">篠部長:「結局どこがいいのか」が読んでもわからない</div>
                     </td>
-                    <td style="font-size: 14px; color: #475569;">sec4 冒頭に各社の強み・弱み・推奨理由のサマリボックスを追加</td>
+                    <td style="font-size: 14px; color: #475569;">sec4 冒頭にサマリボックスを追加</td>
                     <td><code style="background: #f1f5f9; padding: 2px 8px; border-radius: 6px; font-size: 12px;">sec4</code></td>
                     <td><span class="status-badge" style="background: #dcfce7; color: #166534;">反映済</span></td>
+                  </tr>
+                  <tr>
+                    <td colspan="5" style="background: #f8fafc; padding: 12px 24px 16px; border-bottom: 2px solid #e2e8f0;">
+                      <div style="font-size: 13px; color: #475569; line-height: 1.8;">
+                        <strong style="color: #1d4ed8;">反映内容:</strong> sec4の費用比較テーブル直前に「3社比較の要点」サマリボックスを新設。<br>
+                        <strong>IIJ（お任せ型）</strong>: SLA 99.99%、24時間全自動運用、パッチ適用もIIJ実施。ただし5年TCO最高額（¥11.9M）でサーバー直接操作不可。<br>
+                        <strong>USEN（分離型）</strong>: 初期費用最安（¥86万）、サーバーRDP接続可。ただしSLAなし、AWS管理画面アクセス不可。<br>
+                        <strong>LAJ（並走型）</strong>: 5年TCO最安（¥7.7M）、Azure自社名義で全権限保持。ただし自社に一定の管理責任あり。<br>
+                        <strong>判断の軸:</strong> ①自社に残す管理範囲をどこまで許容するか ②SLA（稼働率保証）を重視するか ③5年間の総費用をどこまで圧縮するか
+                      </div>
+                    </td>
                   </tr>
                   <tr>
                     <td style="font-weight: 900; color: #3b82f6;">P2</td>
                     <td>
                       <div class="text-base font-black text-slate-700">Entra ID移行のAKIBA固有ボトルネック</div>
-                      <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">一般論ではなくAKIBAの具体的な障壁を示せ</div>
+                      <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">篠部長: 一般論ではなくAKIBAの具体的な障壁を示せ</div>
                     </td>
-                    <td style="font-size: 14px; color: #475569;">GPO台帳・ACL台帳を分析し、ドライブマップ（S:/U:）が最大障壁であることを明記</td>
+                    <td style="font-size: 14px; color: #475569;">GPO台帳・ACL台帳を分析し sec6 に反映</td>
                     <td><code style="background: #f1f5f9; padding: 2px 8px; border-radius: 6px; font-size: 12px;">sec6</code></td>
                     <td><span class="status-badge" style="background: #dcfce7; color: #166534;">反映済</span></td>
+                  </tr>
+                  <tr>
+                    <td colspan="5" style="background: #f8fafc; padding: 12px 24px 16px; border-bottom: 2px solid #e2e8f0;">
+                      <div style="font-size: 13px; color: #475569; line-height: 1.8;">
+                        <strong style="color: #1d4ed8;">反映内容:</strong> sec6に「AKIBA固有の移行ボトルネック」セクションを新設。<br>
+                        <strong>ボトルネック① ドライブマッピング（最大の障壁）:</strong>
+                        現行GPOで自動割当されている S:ドライブ（\\adsharesvr\public → 全社員利用）と U:ドライブ（\\iotsvr\share → IoT部門利用）。
+                        これらはAD（Kerberos認証）に依存しており、Entra ID完全移行で自動接続が動作しなくなる。
+                        Azure FilesやSharePoint Onlineへの移行が必要だが、ADSHARESVRには<strong style="color: #991b1b;">40以上の部門別フォルダ</strong>に個人名ベースACLが細かく設定されており、クラウド再現が移行プロジェクト最大の工数。<br>
+                        <strong>ボトルネック② GPO移行:</strong>
+                        ドライブマップ以外のGPO（WinUpdate, スクリーンセーバー, IEモード, RDP, Defender等）はIntuneで代替可能。ドライブマップとLANSCOPEのみ要検討。<br>
+                        <strong>Entra ID移行しない場合のリスク:</strong>
+                        MSはADの新機能開発を停止済。MFA・条件付きアクセス等のセキュリティ機能はEntra IDにのみ追加。ADサーバーのWin Serverサポート期限後はパッチ提供終了で脆弱性放置リスク。M365/SaaSとの認証統合がAD単体では不可でパスワード二重管理が継続。
+                      </div>
+                    </td>
                   </tr>
                   <tr>
                     <td style="font-weight: 900; color: #3b82f6;">P3</td>
                     <td>
                       <div class="text-base font-black text-slate-700">GPO現状調査</div>
-                      <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">GPO管理台帳を共有するので読んでおくこと</div>
+                      <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">篠部長: GPO管理台帳を共有するので読んでおくこと</div>
                     </td>
-                    <td style="font-size: 14px; color: #475569;">全10シート読込完了。Intune代替可否の一覧表をsec6に追加</td>
+                    <td style="font-size: 14px; color: #475569;">全10シート読込完了 → Intune代替可否表を作成</td>
                     <td><code style="background: #f1f5f9; padding: 2px 8px; border-radius: 6px; font-size: 12px;">sec6</code></td>
                     <td><span class="status-badge" style="background: #dcfce7; color: #166534;">反映済</span></td>
+                  </tr>
+                  <tr>
+                    <td colspan="5" style="background: #f8fafc; padding: 12px 24px 16px; border-bottom: 2px solid #e2e8f0;">
+                      <div style="font-size: 13px; color: #475569; line-height: 1.8;">
+                        <strong style="color: #1d4ed8;">反映内容:</strong> 篠部長から共有されたGPO管理台帳（Googleスプレッドシート、10シート）を全シート読込。sec6にIntune代替可否の一覧表を追加。<br>
+                        <strong>Intune代替可能 ○:</strong> Windows Update制御（→WUfB）、スクリーンセーバー300秒（→デバイス構成プロファイル）、IE Enterprise Mode（→Edge IEモード）、RDP有効化（→Intuneスクリプト）、Defender定義更新（→Endpoint Security）<br>
+                        <strong>要検討 △:</strong> ドライブマッピング S:/U:（→Intuneスクリプト or Azure Files）、LANSCOPE/位置情報取得（→ベンダー対応状況の確認が必要）<br>
+                        <strong>結論:</strong> ドライブマップ以外はIntune移行可能。ドライブマップの代替手段が移行計画のクリティカルパス。
+                      </div>
+                    </td>
                   </tr>
                   <tr>
                     <td style="font-weight: 900; color: #3b82f6;">P4</td>
                     <td>
                       <div class="text-base font-black text-slate-700">ファイルサーバーアクセス権限確認</div>
-                      <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">アクセス制御管理台帳を共有するので確認すること</div>
+                      <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">篠部長: アクセス制御管理台帳を共有するので確認すること</div>
                     </td>
-                    <td style="font-size: 14px; color: #475569;">ADSHARESVR（40+フォルダ）・IOTSVR（6フォルダ）の権限構造をsec6に反映</td>
+                    <td style="font-size: 14px; color: #475569;">ADSHARESVR・IOTSVRの権限構造を分析 → sec6に反映</td>
                     <td><code style="background: #f1f5f9; padding: 2px 8px; border-radius: 6px; font-size: 12px;">sec6</code></td>
                     <td><span class="status-badge" style="background: #dcfce7; color: #166534;">反映済</span></td>
+                  </tr>
+                  <tr>
+                    <td colspan="5" style="background: #f8fafc; padding: 12px 24px 16px; border-bottom: 2px solid #e2e8f0;">
+                      <div style="font-size: 13px; color: #475569; line-height: 1.8;">
+                        <strong style="color: #1d4ed8;">反映内容:</strong> 篠部長から共有されたアクセス制御管理台帳（Googleスプレッドシート）を読込、sec6のボトルネック分析に反映。<br>
+                        <strong>ADSHARESVR（全社共有）:</strong> 40+部門フォルダ。HD直下にグループ監査室・コンプライアンス・経営企画室・人事部・総務部等。深いネスト構造（総務専用→取締役会→資料→グループ経営会議）。<strong style="color: #991b1b;">個人名ベースのフルアクセス権限</strong>が多数設定されており、クラウド上での再現が最大工数。<br>
+                        <strong>IOTSVR（IoTG専用）:</strong> 6フォルダ（sales_極秘、engineer_極秘等）。アクセス権限はIoTグループ＋情シスのみ。比較的シンプル。<br>
+                        <strong>結論:</strong> ADSHARESVRの個人名ベースACLをAzure Filesで再現する作業が、ファイルサーバー移行の最重要検討事項。
+                      </div>
+                    </td>
                   </tr>
                   <tr>
                     <td style="font-weight: 900; color: #3b82f6;">P5</td>
                     <td>
                       <div class="text-base font-black text-slate-700">各拠点オンプレサーバーヒアリング</div>
-                      <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">各拠点にどんなサーバーがあるか把握できていない</div>
+                      <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">篠部長: 各拠点にどんなサーバーがあるか把握できていない</div>
                     </td>
-                    <td style="font-size: 14px; color: #475569;">本社・大阪・東北等の拠点ヒアリングを実施。SASE導入の影響範囲を確認</td>
+                    <td style="font-size: 14px; color: #475569;">各拠点のサーバー台数・用途・構成をヒアリング</td>
                     <td><code style="background: #f1f5f9; padding: 2px 8px; border-radius: 6px; font-size: 12px;">sec8</code></td>
                     <td><span class="status-badge wip">未着手</span></td>
+                  </tr>
+                  <tr>
+                    <td colspan="5" style="background: #fffbeb; padding: 12px 24px 16px; border-bottom: 2px solid #fde68a;">
+                      <div style="font-size: 13px; color: #78350f; line-height: 1.8;">
+                        <strong style="color: #92400e;">やること:</strong> 本社以外の拠点（大阪・東北等）にどのようなオンプレサーバーが存在するか、現状把握ができていない。<br>
+                        SASE（Cato Networks）導入時に拠点内サーバーへのアクセスパスが変わる可能性があるため、<strong>導入前に実態を把握しておく必要がある</strong>。<br>
+                        各拠点の担当者に対して、サーバー台数・用途（ファイルサーバー/業務アプリ/プリントサーバー等）・ネットワーク構成をヒアリングする。<br>
+                        結果はsec8（SD-WAN/SASE比較）のスコープ定義に反映し、Cato Socket配置計画の精度を上げる。
+                      </div>
+                    </td>
                   </tr>
                   <tr>
                     <td style="font-weight: 900; color: #3b82f6;">P6</td>
                     <td>
                       <div class="text-base font-black text-slate-700">IIJ深掘り中止、Cato中心に</div>
-                      <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">IIJ Omnibusの深掘りは不要。Cato SASEを中心に検討</div>
+                      <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">篠部長: IIJ Omnibusの深掘りは不要。Cato SASEを中心に検討</div>
                     </td>
-                    <td style="font-size: 14px; color: #475569;">sec8/sec9の比較表をCato SASE中心に再構成</td>
+                    <td style="font-size: 14px; color: #475569;">sec8/sec9をCato SASE中心に再構成</td>
                     <td><code style="background: #f1f5f9; padding: 2px 8px; border-radius: 6px; font-size: 12px;">sec8/9</code></td>
                     <td><span class="status-badge wip">未着手</span></td>
+                  </tr>
+                  <tr>
+                    <td colspan="5" style="background: #fffbeb; padding: 12px 24px 16px; border-bottom: 2px solid #fde68a;">
+                      <div style="font-size: 13px; color: #78350f; line-height: 1.8;">
+                        <strong style="color: #92400e;">やること:</strong> 篠部長の方針決定 — ネットワーク刷新はIIJ Omnibus（IIJ独自SD-WAN）の深掘りは不要。<strong>Cato SASE Cloudを中心に検討を進める</strong>。<br>
+                        現状のsec8（SD-WAN比較）にはIIJ Omnibus単独シナリオが含まれているが、これをCato＋各ADベンダーの組み合わせパターンに整理し直す。<br>
+                        sec9（費用全体像）の3パターン比較もCato前提で再構成：パターン1（LAJ + Cato）、パターン2（USEN + Cato）、パターン3（IIJ AD + Cato）の形に統一する。<br>
+                        IIJ一括パターンは「ADもネットワークもIIJ」の参考比較として残すが、推奨からは外す。
+                      </div>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -214,41 +280,85 @@
                     <td style="font-weight: 900; color: #10b981;">S1</td>
                     <td>
                       <div class="text-base font-black text-slate-700">ベンダー別運用でAH・ADの課題と解決策の妥当性を明記</div>
-                      <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">AKIBAの具体的な課題に対して各ベンダーが解決できるか検証せよ</div>
+                      <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">塩田部長: AKIBAの具体的な課題に対して各ベンダーが解決できるか検証せよ</div>
                     </td>
-                    <td style="font-size: 14px; color: #475569;">sec5bにAH/AD固有課題（属人化・災害リスク）と各社の解決度合い比較表を追加</td>
+                    <td style="font-size: 14px; color: #475569;">sec5bに固有課題＋解決度合い比較表を追加</td>
                     <td><code style="background: #f1f5f9; padding: 2px 8px; border-radius: 6px; font-size: 12px;">sec5b</code></td>
                     <td><span class="status-badge" style="background: #dcfce7; color: #166534;">反映済</span></td>
+                  </tr>
+                  <tr>
+                    <td colspan="5" style="background: #f0fdf4; padding: 12px 24px 16px; border-bottom: 2px solid #bbf7d0;">
+                      <div style="font-size: 13px; color: #475569; line-height: 1.8;">
+                        <strong style="color: #059669;">反映内容:</strong> sec5bに「AKIBAホールディングス/ADTECのAD運用における現状課題」を新設。<br>
+                        <strong>課題① 情シス2名体制の属人化リスク:</strong> AD管理権限は実質 丹治・家田の2名。GPO設定・ファイルサーバー権限・DNS設定の全容把握は限定的。退職・長期不在時にAD障害が発生した場合、復旧知識が断絶するリスク。<br>
+                        <strong>課題② ハードウェア老朽化と災害リスク:</strong> ADサーバー2台が同一フロアに設置。水害・火災時に同時喪失。保守切れ後のハードウェア障害は自社負担（部品調達長期化）。ファイルサーバー（ADSHARESVR/IOTSVR）も同一サーバー室で、AD障害時にファイルアクセスも連鎖停止。<br>
+                        <strong>各社の課題解決度合い（5項目比較表）:</strong> 属人化解消 IIJ◎全委託/USEN△OS管理は自社/LAJ△管理権限は自社。地理的冗長化 全社◎。保守切れ解消 全社◎。24時間監視 IIJ◎標準/USEN◎標準/LAJ○オプション。SLA IIJ◎99.99%/USEN×なし/LAJ△確認中。
+                      </div>
+                    </td>
                   </tr>
                   <tr>
                     <td style="font-weight: 900; color: #10b981;">S2</td>
                     <td>
                       <div class="text-base font-black text-slate-700">「ベンダー依存運用が理想」→「オンプレ再構築でいいのでは」のロジック矛盾解消</div>
-                      <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">クラウド移行が必要な理由が弱い。オンプレ更新でいい反論に答えられない</div>
+                      <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">塩田部長: クラウド移行が必要な理由が弱い。オンプレ更新でいい反論に答えられない</div>
                     </td>
-                    <td style="font-size: 14px; color: #475569;">sec5bまとめに「なぜオンプレ再構築ではなくクラウドか」のロジック補強</td>
+                    <td style="font-size: 14px; color: #475569;">sec5bまとめにロジック補強を追加</td>
                     <td><code style="background: #f1f5f9; padding: 2px 8px; border-radius: 6px; font-size: 12px;">sec5b</code></td>
                     <td><span class="status-badge" style="background: #dcfce7; color: #166534;">反映済</span></td>
+                  </tr>
+                  <tr>
+                    <td colspan="5" style="background: #f0fdf4; padding: 12px 24px 16px; border-bottom: 2px solid #bbf7d0;">
+                      <div style="font-size: 13px; color: #475569; line-height: 1.8;">
+                        <strong style="color: #059669;">反映内容:</strong> sec5bのまとめに「なぜオンプレ再構築ではなくクラウド移行なのか」のロジックを追加。<br>
+                        <strong>論旨:</strong> オンプレでサーバーを新規購入・再構築しても、S1で挙げた「属人化」「災害時の同時喪失リスク」「24時間監視の不在」は解消されない。
+                        新しいハードウェアを買っても、保守切れの問題は5〜7年後に再び発生する。
+                        クラウド移行は、ハードウェア更新サイクルからの脱却＋地理的冗長化＋専門家による継続運用を同時に実現する手段。<br>
+                        <strong>費用面の反論:</strong> 現状維持の5年コスト（サーバー更新¥243万＋運用工数）と比較して、クラウド移行が極端に高額になるわけではない。
+                      </div>
+                    </td>
                   </tr>
                   <tr>
                     <td style="font-weight: 900; color: #10b981;">S3</td>
                     <td>
                       <div class="text-base font-black text-slate-700">Entra ID: AH・AD移行課題、対応策、移行しない場合のデメリット</div>
-                      <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">Entra IDの説明が一般的すぎる。AKIBAの場合のリスクを具体的に</div>
+                      <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">塩田部長: Entra IDの説明が一般的すぎる。AKIBAの場合のリスクを具体的に</div>
                     </td>
-                    <td style="font-size: 14px; color: #475569;">P2と統合。sec6にAKIBA固有ボトルネック分析＋移行しない場合のリスクを追加</td>
+                    <td style="font-size: 14px; color: #475569;">P2と統合。sec6にリスク分析を追加</td>
                     <td><code style="background: #f1f5f9; padding: 2px 8px; border-radius: 6px; font-size: 12px;">sec6</code></td>
                     <td><span class="status-badge" style="background: #dcfce7; color: #166534;">反映済</span></td>
+                  </tr>
+                  <tr>
+                    <td colspan="5" style="background: #f0fdf4; padding: 12px 24px 16px; border-bottom: 2px solid #bbf7d0;">
+                      <div style="font-size: 13px; color: #475569; line-height: 1.8;">
+                        <strong style="color: #059669;">反映内容:</strong> P2の対応と統合し、sec6に「Entra IDに移行しない場合のリスク」を追加。<br>
+                        <strong>リスク①:</strong> MicrosoftはオンプレADの新機能開発を停止済み。MFA・条件付きアクセス等のセキュリティ機能はEntra IDにのみ追加される。<br>
+                        <strong>リスク②:</strong> Windows Serverサポート期限後、パッチ提供が終了し脆弱性が放置されるリスク。<br>
+                        <strong>リスク③:</strong> M365・SaaSとの認証統合がAD単体では実現できず、パスワード管理の二重化が続く。<br>
+                        <strong>リスク④:</strong> 将来ADサポートが完全終了した際、準備なしの移行は大規模かつ高リスクになる。<br>
+                        これらをsec6のボトルネック分析（P2）と一体で記載し、「移行の障壁」と「移行しないリスク」を対比させた。
+                      </div>
+                    </td>
                   </tr>
                   <tr>
                     <td style="font-weight: 900; color: #10b981;">S4</td>
                     <td>
                       <div class="text-base font-black text-slate-700">費用全体像にパターンごとのメリデメ追加</div>
-                      <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">金額だけ並べても判断できない。各パターンの利点・欠点を示せ</div>
+                      <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">塩田部長: 金額だけ並べても判断できない。各パターンの利点・欠点を示せ</div>
                     </td>
-                    <td style="font-size: 14px; color: #475569;">sec9のテーブルC直後にパターン別メリット・デメリットカードを追加</td>
+                    <td style="font-size: 14px; color: #475569;">sec9にメリデメカードを追加</td>
                     <td><code style="background: #f1f5f9; padding: 2px 8px; border-radius: 6px; font-size: 12px;">sec9</code></td>
                     <td><span class="status-badge" style="background: #dcfce7; color: #166534;">反映済</span></td>
+                  </tr>
+                  <tr>
+                    <td colspan="5" style="background: #f0fdf4; padding: 12px 24px 16px; border-bottom: 2px solid #bbf7d0;">
+                      <div style="font-size: 13px; color: #475569; line-height: 1.8;">
+                        <strong style="color: #059669;">反映内容:</strong> sec9の費用テーブル直後に3パターンのメリット・デメリットカードを新設。<br>
+                        <strong>パターン1（LAJ + Cato）5年TCO ¥40.6M 最安:</strong> Azure自社名義でEntra ID移行に有利、全権限保持。ただし自社にAD管理責任が残り属人化リスク継続。監視・パッチ適用は別途オプション。<br>
+                        <strong>パターン2（USEN + Cato）5年TCO ¥44.2M:</strong> 初期費用最安¥1.78M、RDP接続可で障害時に直接調査可能、24時間死活監視標準。ただしSLAなし、AWS管理コンソール不可、パッチ適用は四半期〜半年。USEN名義のためベンダー変更時にデータ移行が必要。<br>
+                        <strong>パターン3（IIJ一括）5年TCO ¥63.7M 最高額:</strong> 全サービス1社集約で窓口一本化、SLA 99.99%、パッチ・監視・障害対応すべてIIJ実施で属人化リスク最軽減。ただしサーバー直接操作不可、IIJ独自基盤で他社移行が困難。<br>
+                        <strong>参考:</strong> 現状維持5年間 ¥12.6M（ただし地理的冗長化・セキュリティ強化は含まず）
+                      </div>
+                    </td>
                   </tr>
                 </tbody>
               </table>
