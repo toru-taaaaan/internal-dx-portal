@@ -621,6 +621,7 @@
             </div>
             <div class="toc">
                 <a href="#sec1" class="toc-item"><span class="toc-num">01</span>この資料について</a>
+                <a href="#sec1b" class="toc-item" style="background: linear-gradient(135deg, #fefce8, #fef9c3); border-left: 3px solid #eab308;"><span class="toc-num" style="background: #eab308; color: #fff;">★</span>光回線・ISP契約の見直し</a>
                 <a href="#sec2" class="toc-item"><span class="toc-num">02</span>サーバー室の現状</a>
                 <a href="#sec3" class="toc-item"><span class="toc-num">03</span>このまま使い続けた場合</a>
                 <a href="#sec4" class="toc-item"><span class="toc-num">04</span>ADクラウド移行 3社比較</a>
@@ -667,6 +668,250 @@
 
             <p class="transition-text">
                 まず、現在のサーバー室に何が設置されているかを確認します。
+            </p>
+        </section>
+
+        <!-- ========================================= -->
+        <!-- Section 1b: 光回線・ISP契約の見直し -->
+        <!-- ========================================= -->
+        <section id="sec1b" class="modern-card">
+            <div class="section-title" style="color: #b45309;">
+                <span style="font-size: 0.75rem; background: #fef3c7; color: #92400e; padding: 2px 10px; border-radius: 999px; font-weight: 700; letter-spacing: 0.05em;">QUICK WIN</span>
+                光回線・ISP契約の見直し
+            </div>
+
+            <div class="risk-note" style="background: #f0fdf4; border-left-color: #22c55e; color: #166534; margin-top: 0;">
+                <strong>影響範囲が最も小さく、すぐに実行可能な施策です。</strong><br>
+                ISP（プロバイダ）の変更は社内システムに影響を与えず、契約更新タイミングに合わせて実施できます。
+                ネットワーク刷新（Cato SASE）やADクラウド移行とは独立して進められるため、最優先で提案します。
+            </div>
+
+            <p class="section-lead">
+                現在、全拠点のインターネット接続は <strong>NTT東日本/西日本のフレッツ光回線</strong> と、
+                ISP（プロバイダ）として <strong>USEN GATE 02</strong> を利用しています。
+                いずれも <strong>2016年の契約開始から約10年間</strong>、一度も見直しが行われていません。
+            </p>
+
+            <!-- 現状の契約一覧 -->
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem; display: flex; align-items: center; gap: 8px;">
+                <span style="background: #dbeafe; color: #1e40af; font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; font-weight: 700;">現状</span>
+                光回線（NTT東日本 / 西日本）
+            </h3>
+            <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                <thead>
+                    <tr style="background: #f1f5f9;">
+                        <th style="padding: 10px 12px; text-align: left; font-weight: 700; border-bottom: 2px solid #e2e8f0;">拠点</th>
+                        <th style="padding: 10px 12px; text-align: left; font-weight: 700; border-bottom: 2px solid #e2e8f0;">プラン</th>
+                        <th style="padding: 10px 12px; text-align: left; font-weight: 700; border-bottom: 2px solid #e2e8f0;">キャリア</th>
+                        <th style="padding: 10px 12px; text-align: right; font-weight: 700; border-bottom: 2px solid #e2e8f0;">月額</th>
+                        <th style="padding: 10px 12px; text-align: left; font-weight: 700; border-bottom: 2px solid #e2e8f0;">契約期限</th>
+                        <th style="padding: 10px 12px; text-align: left; font-weight: 700; border-bottom: 2px solid #e2e8f0;">経過</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 10px 12px; font-weight: 600;">本社（築地）</td>
+                        <td style="padding: 10px 12px;">フレッツ 光ネクスト ファミリー・ギガラインタイプ</td>
+                        <td style="padding: 10px 12px;">NTT東日本</td>
+                        <td style="padding: 10px 12px; text-align: right; font-weight: 600;">¥14,800</td>
+                        <td style="padding: 10px 12px;">2026/6/30</td>
+                        <td style="padding: 10px 12px; color: #64748b;">9年8ヶ月</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 10px 12px; font-weight: 600;">多摩</td>
+                        <td style="padding: 10px 12px; color: #94a3b8;">（本社一括契約）</td>
+                        <td style="padding: 10px 12px;">NTT東日本</td>
+                        <td style="padding: 10px 12px; text-align: right; color: #94a3b8;">—</td>
+                        <td style="padding: 10px 12px; color: #94a3b8;">—</td>
+                        <td style="padding: 10px 12px; color: #94a3b8;">—</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 10px 12px; font-weight: 600;">橋本</td>
+                        <td style="padding: 10px 12px; color: #94a3b8;">（本社一括契約）</td>
+                        <td style="padding: 10px 12px;">NTT東日本</td>
+                        <td style="padding: 10px 12px; text-align: right; color: #94a3b8;">—</td>
+                        <td style="padding: 10px 12px; color: #94a3b8;">—</td>
+                        <td style="padding: 10px 12px; color: #94a3b8;">—</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 10px 12px; font-weight: 600;">大阪</td>
+                        <td style="padding: 10px 12px;">フレッツ 光ネクスト ファミリー・スーパーハイスピードタイプ隼</td>
+                        <td style="padding: 10px 12px;">NTT西日本</td>
+                        <td style="padding: 10px 12px; text-align: right; color: #94a3b8;">—</td>
+                        <td style="padding: 10px 12px; color: #94a3b8;">—</td>
+                        <td style="padding: 10px 12px; color: #94a3b8;">—</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem; display: flex; align-items: center; gap: 8px;">
+                <span style="background: #dbeafe; color: #1e40af; font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; font-weight: 700;">現状</span>
+                ISP — USEN GATE 02（全拠点）
+            </h3>
+            <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                <thead>
+                    <tr style="background: #f1f5f9;">
+                        <th style="padding: 10px 12px; text-align: left; font-weight: 700; border-bottom: 2px solid #e2e8f0;">拠点</th>
+                        <th style="padding: 10px 12px; text-align: left; font-weight: 700; border-bottom: 2px solid #e2e8f0;">プラン</th>
+                        <th style="padding: 10px 12px; text-align: right; font-weight: 700; border-bottom: 2px solid #e2e8f0;">月額</th>
+                        <th style="padding: 10px 12px; text-align: left; font-weight: 700; border-bottom: 2px solid #e2e8f0;">契約期限</th>
+                        <th style="padding: 10px 12px; text-align: left; font-weight: 700; border-bottom: 2px solid #e2e8f0;">経過</th>
+                        <th style="padding: 10px 12px; text-align: left; font-weight: 700; border-bottom: 2px solid #e2e8f0;">契約会社</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 10px 12px; font-weight: 600;">本社（築地）</td>
+                        <td style="padding: 10px 12px;">フレッツアクセス(AJ) ギガラインタイプ <strong>IP1</strong></td>
+                        <td style="padding: 10px 12px; text-align: right; font-weight: 700; color: #dc2626;">¥41,800</td>
+                        <td style="padding: 10px 12px;">2026/5/31</td>
+                        <td style="padding: 10px 12px; color: #64748b;">9年8ヶ月</td>
+                        <td style="padding: 10px 12px;">アドテック</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 10px 12px; font-weight: 600;">IoT開発Lab</td>
+                        <td style="padding: 10px 12px;">フレッツアクセス(AJ) ギガラインタイプ IP0</td>
+                        <td style="padding: 10px 12px; text-align: right; color: #94a3b8;">（一括）</td>
+                        <td style="padding: 10px 12px; color: #94a3b8;">—</td>
+                        <td style="padding: 10px 12px; color: #94a3b8;">—</td>
+                        <td style="padding: 10px 12px; color: #94a3b8;">—</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 10px 12px; font-weight: 600;">R&D・物流センター</td>
+                        <td style="padding: 10px 12px;">フレッツアクセス(AJ) ギガラインタイプ IP0</td>
+                        <td style="padding: 10px 12px; text-align: right; color: #94a3b8;">（一括）</td>
+                        <td style="padding: 10px 12px; color: #94a3b8;">—</td>
+                        <td style="padding: 10px 12px; color: #94a3b8;">—</td>
+                        <td style="padding: 10px 12px; color: #94a3b8;">—</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 10px 12px; font-weight: 600;">大阪</td>
+                        <td style="padding: 10px 12px;">フレッツアクセス(AJ) スーパーハイスピード隼 IP0</td>
+                        <td style="padding: 10px 12px; text-align: right; color: #94a3b8;">（一括）</td>
+                        <td style="padding: 10px 12px; color: #94a3b8;">—</td>
+                        <td style="padding: 10px 12px; color: #94a3b8;">—</td>
+                        <td style="padding: 10px 12px; color: #94a3b8;">—</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0; background: #fffbeb;">
+                        <td style="padding: 10px 12px; font-weight: 600;">本社ゲスト用</td>
+                        <td style="padding: 10px 12px;">フレッツアクセス(AJ) ギガラインタイプ IP0</td>
+                        <td style="padding: 10px 12px; text-align: right; font-weight: 600;">¥1,000</td>
+                        <td style="padding: 10px 12px; font-weight: 700; color: #dc2626;">2026/3/17</td>
+                        <td style="padding: 10px 12px; color: #64748b;">5年10ヶ月</td>
+                        <td style="padding: 10px 12px;">AKIBA</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 10px 12px; font-weight: 600;">福岡</td>
+                        <td style="padding: 10px 12px;">フレッツアクセス(AJ) スーパーハイスピード隼 IP0</td>
+                        <td style="padding: 10px 12px; text-align: right; font-weight: 600;">¥10,000</td>
+                        <td style="padding: 10px 12px;">2026/9/30</td>
+                        <td style="padding: 10px 12px; color: #64748b;">6年4ヶ月</td>
+                        <td style="padding: 10px 12px;">バディネット</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 10px 12px; font-weight: 600;">和歌山</td>
+                        <td style="padding: 10px 12px;">フレッツアクセス(AJ) 光ネクスト HS隼 IP0</td>
+                        <td style="padding: 10px 12px; text-align: right; font-weight: 600;">¥2,800</td>
+                        <td style="padding: 10px 12px; font-weight: 700; color: #b45309;">2026/4/30</td>
+                        <td style="padding: 10px 12px; color: #64748b;">5年9ヶ月</td>
+                        <td style="padding: 10px 12px;">—</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 10px 12px; font-weight: 600;">京橋ビル</td>
+                        <td style="padding: 10px 12px;">フレッツアクセス(AJ) ギガラインタイプ IP0</td>
+                        <td style="padding: 10px 12px; text-align: right; font-weight: 600;">¥8,800</td>
+                        <td style="padding: 10px 12px;">2026/6/30</td>
+                        <td style="padding: 10px 12px; color: #64748b;">4年8ヶ月</td>
+                        <td style="padding: 10px 12px;">—</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr style="background: #f8fafc; border-top: 2px solid #cbd5e1;">
+                        <td style="padding: 12px; font-weight: 700;" colspan="2">ISP合計（USEN GATE 02）</td>
+                        <td style="padding: 12px; text-align: right; font-weight: 700; font-size: 1.05rem; color: #dc2626;">¥64,400/月</td>
+                        <td style="padding: 12px; font-weight: 600; color: #475569;" colspan="3">年間 ¥772,800</td>
+                    </tr>
+                    <tr style="background: #f1f5f9;">
+                        <td style="padding: 12px; font-weight: 700;" colspan="2">光回線 + ISP 合計</td>
+                        <td style="padding: 12px; text-align: right; font-weight: 700; font-size: 1.1rem; color: #0f172a;">¥79,200/月</td>
+                        <td style="padding: 12px; font-weight: 700; color: #0f172a;" colspan="3">年間 ¥950,400</td>
+                    </tr>
+                </tfoot>
+            </table>
+            </div>
+
+            <!-- 問題点 -->
+            <div class="fact-box" style="border-left-color: #ef4444; background: #fef2f2; margin-top: 2rem;">
+                <dt style="color: #991b1b;">ISSUE 1</dt>
+                <dd style="color: #991b1b;">約10年間、契約の見直しが行われていない</dd>
+                <p style="font-size: 0.9rem; color: #7f1d1d; margin: 0; line-height: 1.7;">
+                    2016年の契約開始以降、料金プラン・プロバイダの比較検討が一度も実施されていません。
+                    通信業界は価格競争が進んでおり、同等サービスがより安価に提供されている可能性があります。
+                </p>
+            </div>
+            <div class="fact-box" style="border-left-color: #ef4444; background: #fef2f2;">
+                <dt style="color: #991b1b;">ISSUE 2</dt>
+                <dd style="color: #991b1b;">本社ISPの月額¥41,800は固定IP1個付きプラン</dd>
+                <p style="font-size: 0.9rem; color: #7f1d1d; margin: 0; line-height: 1.7;">
+                    本社回線は固定IP1個（IP1プラン）が含まれた高額プランです。
+                    Cato SASE Cloud導入後はVPN構成が変わるため、固定IPの必要性を再検討する余地があります。
+                    IP0プラン（固定IPなし）への変更だけでも大幅なコスト削減が見込めます。
+                </p>
+            </div>
+            <div class="fact-box" style="border-left-color: #f59e0b; background: #fffbeb;">
+                <dt style="color: #92400e;">ISSUE 3</dt>
+                <dd style="color: #92400e;">直近で3回線の契約更新が迫っている</dd>
+                <p style="font-size: 0.9rem; color: #78350f; margin: 0; line-height: 1.7;">
+                    本社ゲスト用（3/17）、和歌山（4/30）、本社ISP（5/31）の3回線が2026年上半期に更新を迎えます。
+                    更新前に見直しを行うことで、自動更新による現状維持を防げます。
+                </p>
+            </div>
+
+            <!-- 提案 -->
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem; display: flex; align-items: center; gap: 8px;">
+                <span style="background: #dcfce7; color: #166534; font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; font-weight: 700;">提案</span>
+                見直しの方向性
+            </h3>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.25rem;">
+                    <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">1. ISPプラン見直し</div>
+                    <p style="font-size: 0.85rem; color: #475569; margin: 0; line-height: 1.7;">
+                        本社の固定IP1付きプラン（¥41,800/月）について、Cato導入後の固定IP必要性を精査。
+                        IP0プランへの変更、または他社ISPへの切替で <strong>月額¥20,000〜30,000の削減</strong> を見込む。
+                    </p>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.25rem;">
+                    <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">2. 他社ISPとの比較</div>
+                    <p style="font-size: 0.85rem; color: #475569; margin: 0; line-height: 1.7;">
+                        USEN GATE 02の現行料金を基準に、他社法人向けISP（OCN光、IIJmio法人、NURO Biz等）の見積を取得。
+                        同一品質でのコスト比較を実施。
+                    </p>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.25rem;">
+                    <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">3. 光コラボへの転用</div>
+                    <p style="font-size: 0.85rem; color: #475569; margin: 0; line-height: 1.7;">
+                        現在のフレッツ光回線を「光コラボレーション」に転用することで、回線とISPを一本化。
+                        工事不要・番号変更なしで移行でき、セット割引で <strong>月額¥3,000〜5,000の追加削減</strong> も可能。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Cato SASEとの関係 -->
+            <div class="risk-note" style="margin-top: 1.5rem;">
+                <strong>Cato SASE Cloud導入との関係</strong><br>
+                <span style="font-size: 0.9rem;">
+                    Cato導入後もインターネット回線（光回線+ISP）は引き続き必要です。
+                    ただし、現在VPNルーター（VarioSecure）経由で構成されている拠点間通信はCatoに置き換わるため、
+                    ISPに求める機能要件が変わります。固定IPやVPN対応オプションが不要になる分、よりシンプルで安価なプランを選択できます。
+                </span>
+            </div>
+
+            <p class="transition-text">
+                以降のセクションでは、サーバー室の現状とクラウド移行の本体について説明します。
             </p>
         </section>
 
