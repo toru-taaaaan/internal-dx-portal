@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>契約管理台帳 | Internal DX Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/portal_nexus.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Noto Sans JP', sans-serif; background-color: #fcfcfc; color: #1e293b; font-size: 15px; }
+    .section-header { border-left: 8px solid #1e293b; padding-left: 24px; margin-bottom: 24px; }
+    .contract-card { background: white; border: 2px solid #e2e8f0; border-radius: 20px; padding: 28px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 32px; }
+    .ct { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; }
+    .ct th { padding: 12px 16px; background: #f8fafc; color: #64748b; font-size: 12px; text-transform: uppercase; text-align: left; border-bottom: 1px solid #e2e8f0; letter-spacing: 0.08em; white-space: nowrap; }
+    .ct td { padding: 12px 16px; border-bottom: 1px solid #f1f5f9; font-size: 14px; vertical-align: top; line-height: 1.6; }
+    .ct tr:hover { background: #f8fafc; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 900; white-space: nowrap; }
+    .badge-ok { background: #dcfce7; color: #166534; }
+    .badge-warn { background: #fef3c7; color: #92400e; }
+    .badge-danger { background: #fee2e2; color: #991b1b; }
+    .badge-auto { background: #dbeafe; color: #1e40af; }
+    .badge-end { background: #f3e8ff; color: #6b21a8; }
+    .dash-card { background: white; border-radius: 16px; padding: 24px; border: 2px solid #e2e8f0; text-align: center; }
+    .dash-num { font-size: 36px; font-weight: 900; line-height: 1; }
+    .dash-label { font-size: 12px; font-weight: 700; color: #64748b; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .cat-badge { display: inline-block; padding: 4px 12px; border-radius: 8px; font-size: 11px; font-weight: 900; letter-spacing: 0.05em; margin-bottom: 12px; }
+    .amount { font-family: 'Courier New', monospace; font-weight: 700; white-space: nowrap; }
+    .note-row td { background: #f8fafc; font-size: 13px; color: #64748b; padding: 8px 16px; border-bottom: 1px solid #e2e8f0; }
+    .source-link { display: inline-block; background: #eff6ff; padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 700; color: #1d4ed8; text-decoration: none; margin-top: 8px; }
+    .source-link:hover { background: #dbeafe; }
+  </style>
+</head>
+<body class="bg-[#fcfcfc]">
+
+  <div class="layout-wrapper">
+    <aside class="sidebar">
+      <header class="sidebar-header">
+        <h1>統合指揮センター HUB</h1>
+        <p>MASTER COMMAND CENTER V2.3</p>
+      </header>
+      <nav>
+        <div class="nav-label-small">トップ・ナビゲーション</div>
+        <a href="landing.html" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+          ポータルホーム
+        </a>
+        <a href="index.html" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+          プロジェクト
+        </a>
+        <a href="Phase2_刷新戦略・工程統合ボード.html" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+          完了実績
+        </a>
+        <a href="IT基盤刷新_説明資料.html" class="nav-link">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+          IT基盤刷新 説明資料
+        </a>
+        <a href="契約管理台帳.html" class="nav-link active">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+          契約管理台帳
+        </a>
+      </nav>
+      <footer class="sidebar-footer">
+        <p>User: 丹治 統<br>Last Update: 2月17日</p>
+      </footer>
+    </aside>
+
+    <main class="main-scroll">
+      <div class="p-16 max-w-full lg:max-w-[1600px] mx-auto">
+
+        <!-- Header -->
+        <header class="mb-8">
+          <h1 class="text-4xl font-black tracking-tight text-slate-800 leading-tight">契約管理台帳</h1>
+          <p class="mt-3 text-slate-500 font-bold text-base leading-relaxed">
+            IT関連のハードウェア保守・通信・SaaS等の全契約を一覧管理。基準日: 2026年2月17日
+          </p>
+          <a href="https://docs.google.com/spreadsheets/d/1D5pIY1ZJyBZnqWbvOopO7auFQ6w9uZoeGE86SpwLIfI/edit" target="_blank" class="source-link">元データ: Google Sheets「6.契約管理台帳」を開く →</a>
+        </header>
+
+        <!-- Dashboard -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 40px;">
+          <div class="dash-card" style="border-left: 6px solid #3b82f6;">
+            <div class="dash-num" style="color: #3b82f6;">48</div>
+            <div class="dash-label">全契約数</div>
+          </div>
+          <div class="dash-card" style="border-left: 6px solid #ef4444;">
+            <div class="dash-num" style="color: #ef4444;">4</div>
+            <div class="dash-label">期限切れ</div>
+          </div>
+          <div class="dash-card" style="border-left: 6px solid #f59e0b;">
+            <div class="dash-num" style="color: #f59e0b;">9</div>
+            <div class="dash-label">3ヶ月以内に期限</div>
+          </div>
+          <div class="dash-card" style="border-left: 6px solid #8b5cf6;">
+            <div class="dash-num" style="color: #8b5cf6;">2</div>
+            <div class="dash-label">サービス終了予定</div>
+          </div>
+        </div>
+
+        <!-- ===== 1. ハードウェア保守契約 ===== -->
+        <div class="contract-card" style="border-left: 6px solid #ef4444;">
+          <div class="cat-badge" style="background: #fee2e2; color: #991b1b;">HARDWARE MAINTENANCE</div>
+          <div class="section-header" style="border-left: none; padding-left: 0; margin-bottom: 16px;">
+            <h2 class="text-xl font-black text-slate-800">ハードウェア保守契約（サーバ）</h2>
+          </div>
+          <table class="ct">
+            <thead>
+              <tr>
+                <th>サーバ名</th>
+                <th>概要</th>
+                <th>メーカー / 型番</th>
+                <th>保守体制</th>
+                <th>保守期限</th>
+                <th>開始</th>
+                <th>経過</th>
+                <th>延長</th>
+                <th>契約会社</th>
+                <th>確認先</th>
+                <th>決裁</th>
+                <th>状況</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight: 900;">TENDBSVR</td>
+                <td>基幹システム（TENSUITE）<br>データベースサーバ</td>
+                <td>hp ML30 GEN10 8SFF</td>
+                <td>月-金 8:45-17:30 受付<br>オンサイト4時間対応</td>
+                <td style="font-weight: 700; color: #991b1b;">2024/7/23</td>
+                <td>2019/7/23</td>
+                <td>6年6ヶ月</td>
+                <td>可能</td>
+                <td>アドテック</td>
+                <td>篠</td>
+                <td>JC:18679</td>
+                <td><span class="badge badge-danger">期限切れ</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 900;">TENAPSVR</td>
+                <td>基幹システム（TENSUITE）<br>アプリケーションサーバ</td>
+                <td>hp ML30 GEN10 8SFF</td>
+                <td>2024年7月末まで稼働</td>
+                <td style="font-weight: 700; color: #991b1b;">2024/7/23</td>
+                <td>2019/7/23</td>
+                <td>6年6ヶ月</td>
+                <td>可能</td>
+                <td>アドテック</td>
+                <td>篠</td>
+                <td>JC:18679</td>
+                <td><span class="badge badge-danger">期限切れ</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 900;">PDCSVR</td>
+                <td>Active Directory<br>プライマリドメインコントローラ</td>
+                <td>Fujitsu PRIMERGY TX1320 M1</td>
+                <td>9:00-17:00 受付<br>当日オンサイト</td>
+                <td style="font-weight: 700;">2027/10/31</td>
+                <td>2020/9/23</td>
+                <td>5年4ヶ月</td>
+                <td style="color: #991b1b; font-weight: 700;">Max延長済<br>もう不可</td>
+                <td>アドテック</td>
+                <td>篠</td>
+                <td>JC:33475</td>
+                <td><span class="badge badge-ok">1年8ヶ月</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 900;">BDCSVR</td>
+                <td>Active Directory<br>バックアップドメインコントローラ</td>
+                <td>Fujitsu PRIMERGY TX1320 M1</td>
+                <td>（PDCSVRと同一契約）</td>
+                <td style="font-weight: 700;">2027/10/31</td>
+                <td>2020/9/23</td>
+                <td>5年4ヶ月</td>
+                <td style="color: #991b1b; font-weight: 700;">Max延長済<br>もう不可</td>
+                <td>アドテック</td>
+                <td>篠</td>
+                <td>JC:116270</td>
+                <td><span class="badge badge-ok">1年8ヶ月</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 900;">TRIISVR</td>
+                <td>SESAMO-TRII<br>セコム入退室管理システム</td>
+                <td>hp MicroServer Gen10<br>Opteron X3216</td>
+                <td>月-金 9:00-17:00 受付<br>オンサイト4時間対応</td>
+                <td style="font-weight: 700;">2027/3/09</td>
+                <td>2020/3/10</td>
+                <td>5年11ヶ月</td>
+                <td>不明</td>
+                <td>AKIBA</td>
+                <td>篠</td>
+                <td>JC:28095</td>
+                <td><span class="badge badge-ok">1年0ヶ月</span></td>
+              </tr>
+              <tr class="note-row">
+                <td colspan="12">※ TRIISVR: セコム入退室管理（http://192.168.1.30/）＋ 勤怠管理システム e-works。セサモTRII年間保守: ¥18,000（JC:101548）</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 900;">IOTSVR</td>
+                <td>IoT事業部用ファイルサーバ<br>設置場所: 橋本オフィス</td>
+                <td>ニューテック Cloudy3-LC2</td>
+                <td>月-金 9:00-17:30 受付<br>オンサイト対応</td>
+                <td style="font-weight: 700;">2026/9/27</td>
+                <td>2020/9/28</td>
+                <td>5年4ヶ月</td>
+                <td>不明</td>
+                <td>アドテック</td>
+                <td>岡田(康)</td>
+                <td>JC:34237</td>
+                <td><span class="badge badge-ok">7ヶ月</span></td>
+              </tr>
+              <tr class="note-row">
+                <td colspan="12">※ IOTSVR: 年1回請求 ¥114,750（JC:118735）</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ===== 2. ハードウェアレンタル（VPNルータ） ===== -->
+        <div class="contract-card" style="border-left: 6px solid #f59e0b;">
+          <div class="cat-badge" style="background: #fef3c7; color: #92400e;">HARDWARE RENTAL</div>
+          <div class="section-header" style="border-left: none; padding-left: 0; margin-bottom: 16px;">
+            <h2 class="text-xl font-black text-slate-800">ハードウェアレンタル契約（VPNルータ）</h2>
+            <p class="text-sm text-slate-500 font-bold mt-1">契約先: USEN / バリオセキュア ｜ 保守: 当日オンサイト4時間目標 ｜ サポート: 0120-377-241（24H）</p>
+          </div>
+          <table class="ct">
+            <thead>
+              <tr>
+                <th>型番</th>
+                <th>拠点</th>
+                <th>契約期限</th>
+                <th>開始</th>
+                <th>経過</th>
+                <th>契約会社</th>
+                <th>利用会社</th>
+                <th>決裁</th>
+                <th>月額</th>
+                <th>状況</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>VSR601J</td>
+                <td style="font-weight: 700;">本社（築地）</td>
+                <td style="font-weight: 700; color: #92400e;">2026/3/11</td>
+                <td>2016/3/11</td>
+                <td>9年11ヶ月</td>
+                <td>アドテック</td>
+                <td>アドテック</td>
+                <td>伺出書:0009479</td>
+                <td class="amount">¥41,800</td>
+                <td><span class="badge badge-warn">22日</span></td>
+              </tr>
+              <tr>
+                <td>VSR402J</td>
+                <td style="font-weight: 700;">多摩</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td class="amount">—</td>
+                <td><span class="badge badge-auto">本社一括</span></td>
+              </tr>
+              <tr>
+                <td>VSR601J</td>
+                <td style="font-weight: 700;">大阪</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td class="amount">—</td>
+                <td><span class="badge badge-auto">本社一括</span></td>
+              </tr>
+              <tr>
+                <td>VSR402J</td>
+                <td style="font-weight: 700;">橋本</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>JC:91290</td>
+                <td class="amount">¥12,000</td>
+                <td><span class="badge badge-auto">本社一括</span></td>
+              </tr>
+              <tr>
+                <td>VSR402J</td>
+                <td style="font-weight: 700;">福岡</td>
+                <td>2026/9/30</td>
+                <td>2019/10/1</td>
+                <td>6年4ヶ月</td>
+                <td>AKIBA</td>
+                <td>バディネット</td>
+                <td>JC:22447</td>
+                <td class="amount">¥10,000</td>
+                <td><span class="badge badge-ok">7ヶ月</span></td>
+              </tr>
+              <tr>
+                <td>VSR402J</td>
+                <td style="font-weight: 700;">和歌山</td>
+                <td style="font-weight: 700; color: #991b1b;">2026/2/28</td>
+                <td>2020/3/1</td>
+                <td>5年11ヶ月</td>
+                <td>—</td>
+                <td>バディネット</td>
+                <td>JC:28096</td>
+                <td class="amount">¥72,000</td>
+                <td><span class="badge badge-danger">11日!</span></td>
+              </tr>
+              <tr>
+                <td>VSR402J</td>
+                <td style="font-weight: 700;">京橋ビル</td>
+                <td style="font-weight: 700; color: #92400e;">2026/5/31</td>
+                <td>2021/5/1</td>
+                <td>4年9ヶ月</td>
+                <td>—</td>
+                <td>バディネット</td>
+                <td>JC:41595</td>
+                <td class="amount">¥8,800</td>
+                <td><span class="badge badge-warn">3ヶ月</span></td>
+              </tr>
+              <tr>
+                <td>VSR402J</td>
+                <td style="font-weight: 700;">名古屋</td>
+                <td>2026/8/22</td>
+                <td>2024/8/22</td>
+                <td>1年5ヶ月</td>
+                <td>—</td>
+                <td>ブランチテクノ</td>
+                <td>JC:91713</td>
+                <td class="amount">¥10,000</td>
+                <td><span class="badge badge-ok">6ヶ月</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ===== 3. ソフトウェア保守契約 ===== -->
+        <div class="contract-card" style="border-left: 6px solid #8b5cf6;">
+          <div class="cat-badge" style="background: #f3e8ff; color: #6b21a8;">SOFTWARE MAINTENANCE</div>
+          <div class="section-header" style="border-left: none; padding-left: 0; margin-bottom: 16px;">
+            <h2 class="text-xl font-black text-slate-800">ソフトウェア保守契約</h2>
+          </div>
+          <table class="ct">
+            <thead>
+              <tr>
+                <th>ソフト名</th>
+                <th>内容</th>
+                <th>契約先</th>
+                <th>期限</th>
+                <th>開始</th>
+                <th>経過</th>
+                <th>契約会社</th>
+                <th>利用会社</th>
+                <th>確認先</th>
+                <th>決裁</th>
+                <th>請求</th>
+                <th>状況</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight: 900;">TENSUITE</td>
+                <td>ヘルプデスク、障害対応</td>
+                <td>日立システムズ</td>
+                <td style="font-weight: 700; color: #991b1b;">2025/4/30</td>
+                <td>2015/5/1</td>
+                <td>10年9ヶ月</td>
+                <td>アドテック</td>
+                <td>アドテック</td>
+                <td>篠</td>
+                <td>—</td>
+                <td>年1</td>
+                <td><span class="badge badge-danger">期限切れ</span></td>
+              </tr>
+              <tr class="note-row">
+                <td colspan="12">※ 担当: 山元秀一 shuichi.yamamoto.ro@hitachi-systems.com 03-5435-4152 090-6508-0765</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 900;">弥生会計<br>プロフェッショナル</td>
+                <td>安心保守サポート<br>リビジョン更新・法令対応</td>
+                <td>弥生</td>
+                <td>自動更新</td>
+                <td>2022/4/20</td>
+                <td>3年9ヶ月</td>
+                <td>AKIBA</td>
+                <td>DP&R</td>
+                <td>萩原</td>
+                <td>JC:82650</td>
+                <td>年1</td>
+                <td><span class="badge badge-auto">自動更新</span></td>
+              </tr>
+              <tr class="note-row">
+                <td colspan="12">※ 利用者: 村上さん ｜ お客様番号: 6304262 ｜ 電話: 050-3388-1001（平日 9:30-12:00/13:00-17:30）</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 900;">PCA会計DX<br>システムB</td>
+                <td>PSS会員<br>リビジョン更新・法令対応</td>
+                <td>ピー・シー・エー</td>
+                <td style="font-weight: 700; color: #92400e;">2026/5/31</td>
+                <td>2021/5/1</td>
+                <td>4年9ヶ月</td>
+                <td>AKIBA</td>
+                <td>HPCテック</td>
+                <td>萩原</td>
+                <td>JC:106301</td>
+                <td>年1</td>
+                <td><span class="badge badge-warn">3ヶ月</span></td>
+              </tr>
+              <tr class="note-row">
+                <td colspan="12">※ 会員専用番号: 0120-982-518 ｜ 登録番号: 22001608 ｜ 製造番号: 120025268</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ===== 4. 通信利用契約 ===== -->
+        <div class="contract-card" style="border-left: 6px solid #06b6d4;">
+          <div class="cat-badge" style="background: #cffafe; color: #155e75;">COMMUNICATIONS</div>
+          <div class="section-header" style="border-left: none; padding-left: 0; margin-bottom: 16px;">
+            <h2 class="text-xl font-black text-slate-800">通信利用契約（光回線・ISP）</h2>
+          </div>
+
+          <!-- 光回線 -->
+          <h3 class="font-black text-slate-700 mb-3">光回線（NTT東日本 / 西日本）</h3>
+          <table class="ct" style="margin-bottom: 24px;">
+            <thead>
+              <tr><th>拠点</th><th>プラン</th><th>キャリア</th><th>期限</th><th>開始</th><th>回線ID</th><th>決裁</th><th>月額</th><th>状況</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight: 700;">本社（築地）</td>
+                <td>フレッツ 光ネクスト ファミリー・ギガラインタイプ</td>
+                <td>NTT東日本</td>
+                <td>2026/6/30</td>
+                <td>2016/6/3</td>
+                <td>CAF1249549770</td>
+                <td>伺出書:0010648</td>
+                <td class="amount">¥14,800</td>
+                <td><span class="badge badge-ok">4ヶ月</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">多摩</td>
+                <td>—</td>
+                <td>NTT東日本</td>
+                <td>—</td>
+                <td>—</td>
+                <td>CAF1249571719</td>
+                <td>—</td>
+                <td class="amount">—</td>
+                <td><span class="badge badge-auto">本社一括</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">橋本</td>
+                <td>—</td>
+                <td>NTT東日本</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td class="amount">—</td>
+                <td><span class="badge badge-auto">本社一括</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">大阪</td>
+                <td>フレッツ 光ネクスト ファミリー・スーパーハイスピードタイプ隼</td>
+                <td>NTT西日本</td>
+                <td>—</td>
+                <td>—</td>
+                <td>CAF5219095687</td>
+                <td>—</td>
+                <td class="amount">—</td>
+                <td>—</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- ISP -->
+          <h3 class="font-black text-slate-700 mb-3">ISP（USEN GATE 02）</h3>
+          <table class="ct">
+            <thead>
+              <tr><th>拠点</th><th>プラン</th><th>期限</th><th>開始</th><th>契約会社</th><th>利用会社</th><th>決裁</th><th>月額</th><th>状況</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight: 700;">本社（築地）</td>
+                <td>フレッツアクセス(AJ) ギガラインタイプ IP1</td>
+                <td style="font-weight: 700; color: #92400e;">2026/5/31</td>
+                <td>2016/6/1</td>
+                <td>アドテック</td>
+                <td>アドテック</td>
+                <td>伺出書:0009479</td>
+                <td class="amount">¥41,800</td>
+                <td><span class="badge badge-warn">3ヶ月</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">IoT開発Lab</td>
+                <td>フレッツアクセス(AJ) ギガラインタイプ IP0</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td class="amount">—</td>
+                <td><span class="badge badge-auto">本社一括</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">R&D・物流センター</td>
+                <td>フレッツアクセス(AJ) ギガラインタイプ IP0</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td class="amount">—</td>
+                <td><span class="badge badge-auto">本社一括</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">大阪</td>
+                <td>フレッツアクセス(AJ) スーパーハイスピード隼 IP0</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td class="amount">—</td>
+                <td><span class="badge badge-auto">本社一括</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">本社ゲスト用</td>
+                <td>フレッツアクセス(AJ) ギガラインタイプ IP0</td>
+                <td style="font-weight: 700; color: #92400e;">2026/3/17</td>
+                <td>2020/3/18</td>
+                <td>AKIBA</td>
+                <td>AKIBA</td>
+                <td>JC:27741</td>
+                <td class="amount">¥1,000</td>
+                <td><span class="badge badge-warn">28日</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">福岡</td>
+                <td>フレッツアクセス(AJ) スーパーハイスピード隼 IP0</td>
+                <td>2026/9/30</td>
+                <td>2019/10/1</td>
+                <td>—</td>
+                <td>バディネット</td>
+                <td>JC:22447</td>
+                <td class="amount">¥10,000</td>
+                <td><span class="badge badge-ok">7ヶ月</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">和歌山</td>
+                <td>フレッツ(AJ) 光ネクスト HS隼 IP0</td>
+                <td style="font-weight: 700; color: #92400e;">2026/4/30</td>
+                <td>2020/4/20</td>
+                <td>—</td>
+                <td>—</td>
+                <td>JC:29961</td>
+                <td class="amount">¥2,800</td>
+                <td><span class="badge badge-warn">2ヶ月</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">京橋ビル</td>
+                <td>フレッツアクセス(AJ) ギガラインタイプ IP0</td>
+                <td>2026/6/30</td>
+                <td>2021/6/1</td>
+                <td>—</td>
+                <td>—</td>
+                <td>JC:41595</td>
+                <td class="amount">¥8,800</td>
+                <td><span class="badge badge-ok">4ヶ月</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ===== 5. サービス利用契約 ===== -->
+        <div class="contract-card" style="border-left: 6px solid #10b981;">
+          <div class="cat-badge" style="background: #dcfce7; color: #166534;">SERVICE CONTRACTS</div>
+          <div class="section-header" style="border-left: none; padding-left: 0; margin-bottom: 16px;">
+            <h2 class="text-xl font-black text-slate-800">サービス利用契約</h2>
+          </div>
+
+          <!-- レンタルサーバ -->
+          <h3 class="font-black text-slate-700 mb-3" style="margin-top: 8px;">レンタルサーバ</h3>
+          <table class="ct" style="margin-bottom: 24px;">
+            <thead>
+              <tr><th>サービス</th><th>用途</th><th>契約先</th><th>期限</th><th>開始</th><th>契約会社</th><th>利用</th><th>確認先</th><th>決裁</th><th>年額</th><th>状況</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>さくら スタンダード</td>
+                <td>AKIBA-HD 旧コーポレートサイト</td>
+                <td>さくらインターネット</td>
+                <td>毎月自動更新</td>
+                <td>2015/8/10</td>
+                <td>AKIBA</td>
+                <td>AKIBA</td>
+                <td>塩田</td>
+                <td>伺出書:0008060</td>
+                <td class="amount">¥5,004</td>
+                <td><span class="badge badge-auto">自動更新</span></td>
+              </tr>
+              <tr>
+                <td>さくら スタンダード</td>
+                <td>AKIBA-HD コーポレートサイト（未使用）</td>
+                <td>さくらインターネット</td>
+                <td>毎月自動更新</td>
+                <td>2022/5/31</td>
+                <td>AKIBA</td>
+                <td>AKIBA</td>
+                <td>塩田</td>
+                <td>JC:56132</td>
+                <td class="amount">¥5,100</td>
+                <td><span class="badge badge-auto">自動更新</span></td>
+              </tr>
+              <tr>
+                <td>さくら スタンダード</td>
+                <td>ダイヤモンドペッツ コーポレートサイト</td>
+                <td>さくらインターネット</td>
+                <td>毎月自動更新</td>
+                <td>2020/6/8</td>
+                <td>DP&R</td>
+                <td>DP&R</td>
+                <td>塩田</td>
+                <td>JC:31617</td>
+                <td class="amount">¥6,288</td>
+                <td><span class="badge badge-auto">自動更新</span></td>
+              </tr>
+              <tr>
+                <td>さくら プレミアム</td>
+                <td>アドテック コーポレートサイト</td>
+                <td>さくらインターネット</td>
+                <td>1年自動更新</td>
+                <td>2019/5/21</td>
+                <td>アドテック</td>
+                <td>アドテック</td>
+                <td>篠</td>
+                <td>JC:17380</td>
+                <td class="amount">¥15,428</td>
+                <td><span class="badge badge-auto">自動更新</span></td>
+              </tr>
+              <tr>
+                <td>さくら ビジネスプロ</td>
+                <td>アキバデバイス ECサイト</td>
+                <td>さくらインターネット</td>
+                <td>1年自動更新</td>
+                <td>2022/12/16</td>
+                <td>アドテック</td>
+                <td>アドテック</td>
+                <td>篠</td>
+                <td>JC:63719</td>
+                <td class="amount">¥47,143</td>
+                <td><span class="badge badge-auto">自動更新</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">Xserver スタンダード</td>
+                <td>AKIBA-HD 新コーポレートサイト</td>
+                <td>エックスサーバー</td>
+                <td>1年自動更新</td>
+                <td>2022/6/30</td>
+                <td>AKIBA</td>
+                <td>AKIBA</td>
+                <td>篠</td>
+                <td>JC:111693</td>
+                <td class="amount">¥13,200</td>
+                <td><span class="badge badge-auto">自動更新</span></td>
+              </tr>
+              <tr>
+                <td>さくら スタンダード</td>
+                <td>旧シーアールボックス コーポレートサイト</td>
+                <td>さくらインターネット</td>
+                <td>1年自動更新</td>
+                <td>2022/9/1</td>
+                <td>ADTEC(旧CR)</td>
+                <td>アドテック</td>
+                <td>下津</td>
+                <td>JC:112988</td>
+                <td class="amount">¥6,600</td>
+                <td><span class="badge badge-auto">自動更新</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- ドメイン -->
+          <h3 class="font-black text-slate-700 mb-3">ドメイン</h3>
+          <table class="ct" style="margin-bottom: 24px;">
+            <thead>
+              <tr><th>ドメイン</th><th>レジストラ</th><th>期限</th><th>開始</th><th>契約会社</th><th>利用</th><th>確認先</th><th>決裁</th><th>年額</th><th>状況</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight: 700;">akiba-holdings.co.jp</td>
+                <td>お名前.com</td>
+                <td>2026/7/31</td>
+                <td>2015/7/23</td>
+                <td>AKIBA</td>
+                <td>AKIBA</td>
+                <td>塩田</td>
+                <td>JC:112547</td>
+                <td class="amount">¥8,714</td>
+                <td><span class="badge badge-ok">5ヶ月</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">akibadevice.co.jp</td>
+                <td>お名前.com</td>
+                <td>2026/12/27</td>
+                <td>2022/12/20</td>
+                <td>アドテック</td>
+                <td>アドテック</td>
+                <td>塩田</td>
+                <td>JC:122160</td>
+                <td class="amount">¥8,874</td>
+                <td><span class="badge badge-ok">10ヶ月</span></td>
+              </tr>
+              <tr>
+                <td>akibadevice.jp</td>
+                <td>お名前.com</td>
+                <td>2026/12/31</td>
+                <td>2022/12/20</td>
+                <td>アドテック</td>
+                <td>アドテック</td>
+                <td>塩田</td>
+                <td>JC:122043</td>
+                <td class="amount">¥3,852</td>
+                <td><span class="badge badge-ok">10ヶ月</span></td>
+              </tr>
+              <tr>
+                <td>akibadevice.com</td>
+                <td>お名前.com</td>
+                <td>2026/12/05</td>
+                <td>2022/12/27</td>
+                <td>アドテック</td>
+                <td>アドテック</td>
+                <td>塩田</td>
+                <td>JC:120320</td>
+                <td class="amount">¥1,702</td>
+                <td><span class="badge badge-ok">9ヶ月</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">adtec.jp</td>
+                <td>お名前.com</td>
+                <td style="font-weight: 700; color: #92400e;">2026/3/31</td>
+                <td>2008/3/14</td>
+                <td>アドテック</td>
+                <td>アドテック</td>
+                <td>塩田</td>
+                <td>JC:105291</td>
+                <td class="amount">¥3,907</td>
+                <td><span class="badge badge-warn">42日</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">adtec.co.jp</td>
+                <td>お名前.com</td>
+                <td>2026/10/31</td>
+                <td>2008/2/20</td>
+                <td>アドテック</td>
+                <td>アドテック</td>
+                <td>塩田</td>
+                <td>JC:118002</td>
+                <td class="amount">¥8,767</td>
+                <td><span class="badge badge-ok">8ヶ月</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">diamondpets.co.jp</td>
+                <td>お名前.com</td>
+                <td style="font-weight: 700; color: #92400e;">2026/5/31</td>
+                <td>2020/5/12</td>
+                <td>DP&R</td>
+                <td>DP&R</td>
+                <td>塩田</td>
+                <td>JC:109001</td>
+                <td class="amount">¥8,785</td>
+                <td><span class="badge badge-warn">3ヶ月</span></td>
+              </tr>
+              <tr>
+                <td>brancher.cloud</td>
+                <td>お名前.com</td>
+                <td>2027/2/16</td>
+                <td>2024/2/16</td>
+                <td>アドテック</td>
+                <td>アドテック</td>
+                <td>岡田(康)</td>
+                <td>JC:125403</td>
+                <td class="amount">¥6,023</td>
+                <td><span class="badge badge-ok">1年</span></td>
+              </tr>
+              <tr>
+                <td>smahel.jp</td>
+                <td>お名前.com</td>
+                <td>2026/6/05</td>
+                <td>2025/6/6</td>
+                <td>アドテック</td>
+                <td>アドテック</td>
+                <td>平山</td>
+                <td>JC:110830</td>
+                <td class="amount">¥2,274</td>
+                <td><span class="badge badge-ok">3ヶ月</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">crbox.co.jp</td>
+                <td>さくらインターネット</td>
+                <td>2027/2/28</td>
+                <td>2022/3/1</td>
+                <td>アドテック</td>
+                <td>アドテック</td>
+                <td>塩田</td>
+                <td>JC:122492</td>
+                <td class="amount">¥7,700</td>
+                <td><span class="badge badge-ok">1年</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- SaaS -->
+          <h3 class="font-black text-slate-700 mb-3">SaaS・クラウドサービス</h3>
+          <table class="ct">
+            <thead>
+              <tr><th>サービス</th><th>内容</th><th>契約先</th><th>期限</th><th>契約会社</th><th>利用</th><th>確認先</th><th>決裁</th><th>請求</th><th>年額</th><th>状況</th></tr>
+            </thead>
+            <tbody>
+              <!-- Google Workspace -->
+              <tr>
+                <td style="font-weight: 900;">Google Workspace</td>
+                <td>Business Standard<br>113ライセンス</td>
+                <td>Google<br>（サテライトオフィス）</td>
+                <td style="font-weight: 700; color: #92400e;">2026/4/26</td>
+                <td>AKIBA</td>
+                <td>AKIBA<br>アドテック</td>
+                <td>篠</td>
+                <td>JC:107485</td>
+                <td>年1</td>
+                <td class="amount">¥1,952,640<br><span style="font-size:11px;color:#64748b;">@¥17,280×113</span></td>
+                <td><span class="badge badge-warn">2ヶ月</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 900;">Google アドオン</td>
+                <td>組織カレンダー<br>電子帳簿保存法FS<br>113ライセンス</td>
+                <td>サテライトオフィス</td>
+                <td style="font-weight: 700; color: #92400e;">2026/4/26</td>
+                <td>AKIBA</td>
+                <td>AKIBA<br>アドテック</td>
+                <td>篠</td>
+                <td>JC:107487</td>
+                <td>年1</td>
+                <td class="amount">¥203,400<br><span style="font-size:11px;color:#64748b;">@¥1,800×113</span></td>
+                <td><span class="badge badge-warn">2ヶ月</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 900;">Google Workspace</td>
+                <td>Business Standard<br>10ライセンス（DP&R）</td>
+                <td>Google<br>（サテライトオフィス）</td>
+                <td style="font-weight: 700; color: #92400e;">2026/3/31</td>
+                <td>DP&R</td>
+                <td>DP&R</td>
+                <td>篠</td>
+                <td>JC:106355</td>
+                <td>年1</td>
+                <td class="amount">¥182,400<br><span style="font-size:11px;color:#64748b;">@¥18,240×10</span></td>
+                <td><span class="badge badge-warn">42日</span></td>
+              </tr>
+              <!-- ジョブカン -->
+              <tr>
+                <td style="font-weight: 900;">ジョブカン</td>
+                <td>ワークフロー</td>
+                <td>ドーナッツ</td>
+                <td>毎月自動更新</td>
+                <td>AKIBA</td>
+                <td>全グループ会社</td>
+                <td>篠</td>
+                <td>伺出書:16882</td>
+                <td>毎月</td>
+                <td class="amount">¥684,000/年<br><span style="font-size:11px;color:#64748b;">@¥600×各社計</span></td>
+                <td><span class="badge badge-auto">自動更新</span></td>
+              </tr>
+              <tr>
+                <td>cloudstep</td>
+                <td>ワークフロー 3ライセンス</td>
+                <td>システナ</td>
+                <td>2027/2/09</td>
+                <td>アドテック</td>
+                <td>アドテック</td>
+                <td>篠</td>
+                <td>JC:120101</td>
+                <td>年1</td>
+                <td class="amount">¥10,800<br><span style="font-size:11px;color:#64748b;">@¥3,600×3</span></td>
+                <td><span class="badge badge-ok">11ヶ月</span></td>
+              </tr>
+              <!-- M365 -->
+              <tr>
+                <td style="font-weight: 900;">Microsoft 365</td>
+                <td>Apps for business<br>102→92ライセンス（25年5月〜）</td>
+                <td>KDDIまとめてオフィス</td>
+                <td style="font-weight: 700; color: #92400e;">2026/4/30</td>
+                <td>AKIBA</td>
+                <td>AKIBA<br>アドテック</td>
+                <td>篠</td>
+                <td>—</td>
+                <td>毎月</td>
+                <td class="amount">—</td>
+                <td><span class="badge badge-warn">2ヶ月</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 900;">Microsoft 365</td>
+                <td>Business Standard<br>5ライセンス</td>
+                <td>KDDIまとめてオフィス</td>
+                <td>2026/10/18</td>
+                <td>AKIBA</td>
+                <td>AKIBA<br>アドテック</td>
+                <td>篠</td>
+                <td>—</td>
+                <td>毎月</td>
+                <td class="amount">—</td>
+                <td><span class="badge badge-ok">8ヶ月</span></td>
+              </tr>
+              <tr class="note-row">
+                <td colspan="11">※ M365: 契約番号 M17503466 ｜ ID増は随時、ID減は年次更新日 ｜ 管理: https://businessportal.kddi.com/</td>
+              </tr>
+              <!-- Adobe -->
+              <tr>
+                <td style="font-weight: 900;">Adobe</td>
+                <td>Acrobat / Creative Cloud</td>
+                <td>アドビシステムズ<br>（ウチダスペクトラム）</td>
+                <td>2026/10/21</td>
+                <td>AKIBA</td>
+                <td>AKIBA<br>アドテック</td>
+                <td>篠</td>
+                <td>JC:117518</td>
+                <td>年1</td>
+                <td class="amount">¥822,660<br><span style="font-size:11px;color:#64748b;">AKB:¥524,064<br>AD:¥298,596</span></td>
+                <td><span class="badge badge-ok">8ヶ月</span></td>
+              </tr>
+              <!-- 電子印鑑 -->
+              <tr>
+                <td style="font-weight: 900;">電子印鑑</td>
+                <td>パソコン決裁Cloud<br>100印鑑</td>
+                <td>シヤチハタ</td>
+                <td>2026/10/31</td>
+                <td>アドテック</td>
+                <td>アドテック</td>
+                <td>篠</td>
+                <td>JC:118011</td>
+                <td>年1</td>
+                <td class="amount">¥120,000<br><span style="font-size:11px;color:#64748b;">@¥1,200×100</span></td>
+                <td><span class="badge badge-ok">8ヶ月</span></td>
+              </tr>
+              <!-- LANSCOPE -->
+              <tr>
+                <td style="font-weight: 900;">LANSCOPE</td>
+                <td>クラウド版<br>130ライセンス</td>
+                <td>セコムトラストシステムズ</td>
+                <td>2026/12/31</td>
+                <td>AKIBA</td>
+                <td>AKIBA<br>アドテック<br>DP&R</td>
+                <td>家田</td>
+                <td>JC:98614</td>
+                <td>年1</td>
+                <td class="amount">¥491,400<br><span style="font-size:11px;color:#64748b;">@¥3,780×130</span></td>
+                <td><span class="badge badge-ok">10ヶ月</span></td>
+              </tr>
+              <tr>
+                <td>LANSCOPE Free</td>
+                <td>エンドポイントマネージャー<br>クラウド版 Free</td>
+                <td>エムオーテックス</td>
+                <td style="font-weight: 700; color: #6b21a8;">2026/5/31</td>
+                <td>AKIBA</td>
+                <td>AKIBA<br>アドテック<br>DP&R</td>
+                <td>篠</td>
+                <td>JC:47224</td>
+                <td>—</td>
+                <td class="amount">¥0</td>
+                <td><span class="badge badge-end">サービス終了</span></td>
+              </tr>
+              <!-- EDR -->
+              <tr>
+                <td style="font-weight: 900;">EDR</td>
+                <td>セキュアエンドポイント</td>
+                <td>セコムトラストシステムズ</td>
+                <td>2026/7/02</td>
+                <td>AKIBA</td>
+                <td>AKIBA<br>アドテック<br>DP&R</td>
+                <td>家田</td>
+                <td>JC:42230</td>
+                <td>毎月</td>
+                <td class="amount">—</td>
+                <td><span class="badge badge-end">2027/3末<br>サービス終了</span></td>
+              </tr>
+              <tr class="note-row">
+                <td colspan="11">※ EDR: サポート 0120-318-756（24H365D）sts-endpoint@secom.co.jp ｜ 営業: セコムトラストシステムズ 藤井 力 ｜ 2027年3月末でサービス終了</td>
+              </tr>
+              <!-- ファイルサーバ -->
+              <tr>
+                <td style="font-weight: 900;">日立ファイルサーバ</td>
+                <td>コンテンツクラウドサービス<br>ファイル共有（500GB）</td>
+                <td>日立システムズ</td>
+                <td style="font-weight: 700; color: #991b1b;">2026/1/31</td>
+                <td>AKIBA</td>
+                <td>AKIBA<br>アドテック</td>
+                <td>篠</td>
+                <td>JC:82106</td>
+                <td>毎月</td>
+                <td class="amount">¥312,000/年<br><span style="font-size:11px;color:#64748b;">サービス¥180,000<br>サポート¥132,000</span></td>
+                <td><span class="badge badge-danger">期限切れ</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight: 900;">DirectCloud</td>
+                <td>スタンダードプラン</td>
+                <td>ダイレクトクラウド<br>（サテライトオフィス）</td>
+                <td>2026/7/31</td>
+                <td>AKIBA</td>
+                <td>AKIBA<br>アドテック</td>
+                <td>篠</td>
+                <td>JC:110573</td>
+                <td>年1</td>
+                <td class="amount">¥388,800</td>
+                <td><span class="badge badge-ok">5ヶ月</span></td>
+              </tr>
+              <!-- HENNGE One -->
+              <tr>
+                <td style="font-weight: 900;">HENNGE One</td>
+                <td>Basic<br>113ライセンス</td>
+                <td>セコムトラストシステムズ</td>
+                <td>2026/9/30</td>
+                <td>AKIBA</td>
+                <td>AKIBA<br>アドテック</td>
+                <td>家田</td>
+                <td>JC:113092</td>
+                <td>年1</td>
+                <td class="amount">¥1,050,900<br><span style="font-size:11px;color:#64748b;">@¥9,300×113</span></td>
+                <td><span class="badge badge-ok">7ヶ月</span></td>
+              </tr>
+              <!-- セキュリオ -->
+              <tr>
+                <td style="font-weight: 900;">セキュリオ</td>
+                <td>セキュリティ教育<br>400ライセンス</td>
+                <td>LRM</td>
+                <td>2026/8/31</td>
+                <td>AKIBA</td>
+                <td>全グループ会社</td>
+                <td>家田</td>
+                <td>JC:114402</td>
+                <td>年1</td>
+                <td class="amount">¥720,000<br><span style="font-size:11px;color:#64748b;">@¥1,800×400</span></td>
+                <td><span class="badge badge-ok">6ヶ月</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ===== 6. Adobeライセンス一覧 ===== -->
+        <div class="contract-card" style="border-left: 6px solid #ec4899;">
+          <div class="cat-badge" style="background: #fce7f3; color: #9d174d;">ADOBE LICENSES</div>
+          <div class="section-header" style="border-left: none; padding-left: 0; margin-bottom: 16px;">
+            <h2 class="text-xl font-black text-slate-800">Adobeライセンス一覧（現在の利用者）</h2>
+            <p class="text-sm text-slate-500 font-bold mt-1">年間合計: AKIBA ¥524,064 + アドテック ¥298,596 = ¥822,660</p>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <!-- Creative Cloud -->
+            <div>
+              <h4 style="font-size: 14px; font-weight: 900; color: #9d174d; margin-bottom: 8px;">Creative Cloud コンプリートプラン（@¥126,228/年 × 5名）</h4>
+              <table class="ct">
+                <thead><tr><th>利用者</th><th>会社</th><th>上長</th><th>備考</th></tr></thead>
+                <tbody>
+                  <tr><td>篠 敦史</td><td>AKIBA</td><td>篠 敦史</td><td></td></tr>
+                  <tr><td>冨山 理布</td><td>AKIBA</td><td>冨山 理布</td><td style="color: #991b1b; font-weight: 700;">Acrobat SDに変更OK<br>【2026/2/16 塩田確認】</td></tr>
+                  <tr><td>佐藤 萌加</td><td>AKIBA</td><td>尾﨑 敦郎</td><td></td></tr>
+                  <tr><td>小澤 緋菜子</td><td>AKIBA</td><td>尾﨑 敦郎</td><td></td></tr>
+                  <tr><td>高原 大欣</td><td>アドテック</td><td>平山 治子</td><td></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- Acrobat -->
+            <div>
+              <h4 style="font-size: 14px; font-weight: 900; color: #9d174d; margin-bottom: 8px;">Acrobat Standard DC（@¥19,152/年 × 10名）</h4>
+              <table class="ct">
+                <thead><tr><th>利用者</th><th>会社</th><th>上長</th></tr></thead>
+                <tbody>
+                  <tr><td>岡田 康裕</td><td>アドテック</td><td>岡田 康裕</td></tr>
+                  <tr><td>古田 美紀</td><td>アドテック</td><td>岡田 康裕</td></tr>
+                  <tr><td>内海 孝弘</td><td>アドテック</td><td>岡田 康裕</td></tr>
+                  <tr><td>名倉 健太郎</td><td>アドテック</td><td>岡田 康裕</td></tr>
+                  <tr><td>石村 祐里</td><td>アドテック</td><td>岡田 康裕</td></tr>
+                  <tr><td>今井 紀子</td><td>アドテック</td><td>小田切 守</td></tr>
+                  <tr><td>宮澤 敏生</td><td>アドテック</td><td>成井 勇二</td></tr>
+                  <tr><td>蛯名 琢磨</td><td>アドテック</td><td>成井 勇二</td></tr>
+                  <tr><td>荒井 保志</td><td>アドテック</td><td>荒井 保志</td></tr>
+                  <tr><td>岡田 冬佳</td><td>AKIBA</td><td>高麗 泰裕</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== 7. 費用按分サマリ ===== -->
+        <div class="contract-card" style="border-left: 6px solid #3b82f6;">
+          <div class="cat-badge" style="background: #dbeafe; color: #1e40af;">COST ALLOCATION</div>
+          <div class="section-header" style="border-left: none; padding-left: 0; margin-bottom: 16px;">
+            <h2 class="text-xl font-black text-slate-800">費用按分サマリ（年額・最新）</h2>
+            <p class="text-sm text-slate-500 font-bold mt-1">AH=AKIBAホールディングス AD=アドテック BN=バディネット DP=ダイヤモンドペッツ&リゾーツ CR=旧シーアールボックス</p>
+          </div>
+          <table class="ct">
+            <thead>
+              <tr>
+                <th>項目</th>
+                <th>内容</th>
+                <th>請求元</th>
+                <th>年額合計</th>
+                <th style="text-align:right;">AH</th>
+                <th style="text-align:right;">AD</th>
+                <th style="text-align:right;">BN</th>
+                <th style="text-align:right;">DP</th>
+                <th style="text-align:right;">CR</th>
+                <th>按分基準</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight: 700;">ファイルサーバ</td>
+                <td>クラウドファイルサーバ</td>
+                <td>日立システムズ</td>
+                <td class="amount" style="text-align:right;">¥576,000</td>
+                <td class="amount" style="text-align:right;">¥172,800</td>
+                <td class="amount" style="text-align:right;">¥403,200</td>
+                <td class="amount" style="text-align:right;">—</td>
+                <td class="amount" style="text-align:right;">—</td>
+                <td class="amount" style="text-align:right;">—</td>
+                <td>AKB:3 AD:7</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">メール</td>
+                <td>Google Workspace 84名</td>
+                <td>サテライトオフィス</td>
+                <td class="amount" style="text-align:right;">¥1,233,792</td>
+                <td class="amount" style="text-align:right;">¥381,888</td>
+                <td class="amount" style="text-align:right;">¥807,840</td>
+                <td class="amount" style="text-align:right;">—</td>
+                <td class="amount" style="text-align:right;">—</td>
+                <td class="amount" style="text-align:right;">¥44,064</td>
+                <td>単価×アカウント</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">ワークフロー</td>
+                <td>ジョブカン 187名</td>
+                <td>Donuts</td>
+                <td class="amount" style="text-align:right;">¥1,346,400</td>
+                <td class="amount" style="text-align:right;">¥194,400</td>
+                <td class="amount" style="text-align:right;">¥324,000</td>
+                <td class="amount" style="text-align:right;">¥691,200</td>
+                <td class="amount" style="text-align:right;">¥36,000</td>
+                <td class="amount" style="text-align:right;">¥100,800</td>
+                <td>単価×アカウント</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">Office</td>
+                <td>M365 合計 62名</td>
+                <td>KDDI</td>
+                <td class="amount" style="text-align:right;">¥712,440</td>
+                <td class="amount" style="text-align:right;">¥259,200</td>
+                <td class="amount" style="text-align:right;">¥453,240</td>
+                <td class="amount" style="text-align:right;">—</td>
+                <td class="amount" style="text-align:right;">—</td>
+                <td class="amount" style="text-align:right;">—</td>
+                <td>単価×アカウント</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">Adobe</td>
+                <td>Acrobat+CC 合計 12名</td>
+                <td>ウチダスペクトラム</td>
+                <td class="amount" style="text-align:right;">¥451,884</td>
+                <td class="amount" style="text-align:right;">¥296,388</td>
+                <td class="amount" style="text-align:right;">¥155,496</td>
+                <td class="amount" style="text-align:right;">—</td>
+                <td class="amount" style="text-align:right;">—</td>
+                <td class="amount" style="text-align:right;">—</td>
+                <td>単価×アカウント</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">Web会議</td>
+                <td>Zoom 40名</td>
+                <td>日商エレクトロニクス</td>
+                <td class="amount" style="text-align:right;">¥958,100</td>
+                <td class="amount" style="text-align:right;">¥213,840</td>
+                <td class="amount" style="text-align:right;">¥457,600</td>
+                <td class="amount" style="text-align:right;">¥261,360</td>
+                <td class="amount" style="text-align:right;">—</td>
+                <td class="amount" style="text-align:right;">—</td>
+                <td>単価×アカウント</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">IT資産管理</td>
+                <td>LANSCOPE 100名</td>
+                <td>セコムトラストシステムズ</td>
+                <td class="amount" style="text-align:right;">¥362,250</td>
+                <td class="amount" style="text-align:right;">¥128,520</td>
+                <td class="amount" style="text-align:right;">¥204,120</td>
+                <td class="amount" style="text-align:right;">—</td>
+                <td class="amount" style="text-align:right;">¥22,050</td>
+                <td class="amount" style="text-align:right;">¥7,560</td>
+                <td>単価×アカウント</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">EDR</td>
+                <td>セキュアエンドポイント 93名</td>
+                <td>セコムトラストシステムズ</td>
+                <td class="amount" style="text-align:right;">¥2,274,000</td>
+                <td class="amount" style="text-align:right;">¥709,097</td>
+                <td class="amount" style="text-align:right;">¥1,295,935</td>
+                <td class="amount" style="text-align:right;">—</td>
+                <td class="amount" style="text-align:right;">¥220,065</td>
+                <td class="amount" style="text-align:right;">¥48,903</td>
+                <td>基本料+単価×アカウント</td>
+              </tr>
+              <tr style="background: #f1f5f9; font-weight: 900;">
+                <td colspan="3" style="text-align: right; font-size: 15px;">按分対象 年間合計</td>
+                <td class="amount" style="text-align:right; font-size: 15px;">¥7,914,866</td>
+                <td class="amount" style="text-align:right;">¥2,356,133</td>
+                <td class="amount" style="text-align:right;">¥4,101,431</td>
+                <td class="amount" style="text-align:right;">¥952,560</td>
+                <td class="amount" style="text-align:right;">¥278,115</td>
+                <td class="amount" style="text-align:right;">¥201,327</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="font-size: 12px; color: #94a3b8; margin-top: 12px;">※ 上記は費用按分シートの「最新情報」セクションから抽出。詳細な按分計算・過去期分は元台帳を参照。</p>
+        </div>
+
+        <!-- ===== 凡例 ===== -->
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; margin-bottom: 40px;">
+          <span class="badge badge-danger">期限切れ</span>
+          <span class="badge badge-warn">3ヶ月以内</span>
+          <span class="badge badge-ok">OK</span>
+          <span class="badge badge-auto">自動更新</span>
+          <span class="badge badge-end">サービス終了予定</span>
+          <span style="font-size: 12px; color: #94a3b8; padding: 3px 0;">｜ JC = ジョブカン決裁番号 ｜ 認証情報は元台帳参照</span>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>
