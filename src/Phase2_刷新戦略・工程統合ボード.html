@@ -127,7 +127,10 @@
                     <td style="font-weight: 900; color: #3b82f6;">P1</td>
                     <td>
                       <div class="text-base font-black text-slate-700">3社比較の要点・結論サマリ追加</div>
-                      <div style="font-size: 14px; color: #94a3b8; margin-top: 4px;">篠部長:「結局どこがいいのか」が読んでもわからない</div>
+                      <div style="font-size: 14px; color: #64748b; margin-top: 6px; line-height: 1.8; background: #f8fafc; padding: 10px 14px; border-radius: 8px; border-left: 3px solid #94a3b8;">
+                        <strong style="color: #475569;">篠部長:「結局どこがいいのか」が読んでもわからない</strong><br>
+                        元のsec4には3社（IIJ・USEN・LAJ）の費用比較テーブル（初期費用・月額・5年TCO・SLA）とベンダー別の特徴カードがあったが、<strong>「で、どれがいいの？」に答える要約が冒頭になかった</strong>。読み手は数万〜数百万の数字が並ぶ表を自力で読み解き、自分で結論を出す必要があった。部長クラスが判断するには「3社の違いを一言で言うと何か」「選ぶ基準は何か」が最初に書かれている必要がある。
+                      </div>
                     </td>
                     <td style="font-size: 14px; color: #475569;">sec4 冒頭にサマリボックスを追加</td>
                     <td><a href="IT基盤刷新_説明資料.html#sec4" style="background: #dbeafe; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #1d4ed8; text-decoration: none;">sec4 →</a></td>
@@ -150,7 +153,10 @@
                     <td style="font-weight: 900; color: #3b82f6;">P2</td>
                     <td>
                       <div class="text-base font-black text-slate-700">Entra ID移行のAKIBA固有ボトルネック</div>
-                      <div style="font-size: 14px; color: #94a3b8; margin-top: 4px;">篠部長: 一般論ではなくAKIBAの具体的な障壁を示せ</div>
+                      <div style="font-size: 14px; color: #64748b; margin-top: 6px; line-height: 1.8; background: #f8fafc; padding: 10px 14px; border-radius: 8px; border-left: 3px solid #94a3b8;">
+                        <strong style="color: #475569;">篠部長: 一般論ではなくAKIBAの具体的な障壁を示せ</strong><br>
+                        元のsec6はEntra IDの一般的な説明（MFA・条件付きアクセス等の機能紹介）に留まっており、「AKIBAが移行しようとしたら具体的に何が壊れるのか」が書かれていなかった。実際にはS:ドライブ（\\adsharesvr\public）やU:ドライブ（\\iotsvr\share）の自動接続がAD依存で動いており、40+部門フォルダの個人名ACLをクラウドで再現する膨大な工数が発生する。こうした<strong>AKIBA固有の地雷</strong>を明示しないと、「Entra IDに変えましょう」が簡単に聞こえすぎる。
+                      </div>
                     </td>
                     <td style="font-size: 14px; color: #475569;">GPO台帳・ACL台帳を分析し sec6 に反映</td>
                     <td><a href="IT基盤刷新_説明資料.html#sec6" style="background: #dbeafe; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #1d4ed8; text-decoration: none;">sec6 →</a></td>
@@ -177,7 +183,10 @@
                     <td style="font-weight: 900; color: #3b82f6;">P3</td>
                     <td>
                       <div class="text-base font-black text-slate-700">GPO現状調査</div>
-                      <div style="font-size: 14px; color: #94a3b8; margin-top: 4px;">篠部長: GPO管理台帳を共有するので読んでおくこと</div>
+                      <div style="font-size: 14px; color: #64748b; margin-top: 6px; line-height: 1.8; background: #f8fafc; padding: 10px 14px; border-radius: 8px; border-left: 3px solid #94a3b8;">
+                        <strong style="color: #475569;">篠部長: GPO管理台帳を共有するので読んでおくこと</strong><br>
+                        元の資料では「GPOはIntuneで代替可能」と一般論で書いていたが、AKIBAのGPOが実際に何件あり、どんな設定をしているか把握していなかった。篠部長がGPO管理台帳（10シートのGoogleスプレッドシート）を共有し、<strong>「まず現状を正確に把握してからIntuneで代替できるか判断せよ」</strong>という指示。机上の空論ではなく実データに基づいた分析が求められた。
+                      </div>
                     </td>
                     <td style="font-size: 14px; color: #475569;">全10シート読込完了 → Intune代替可否表を作成</td>
                     <td><a href="IT基盤刷新_説明資料.html#sec6" style="background: #dbeafe; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #1d4ed8; text-decoration: none;">sec6 →</a></td>
@@ -204,7 +213,10 @@
                     <td style="font-weight: 900; color: #3b82f6;">P4</td>
                     <td>
                       <div class="text-base font-black text-slate-700">ファイルサーバーアクセス権限確認</div>
-                      <div style="font-size: 14px; color: #94a3b8; margin-top: 4px;">篠部長: アクセス制御管理台帳を共有するので確認すること</div>
+                      <div style="font-size: 14px; color: #64748b; margin-top: 6px; line-height: 1.8; background: #f8fafc; padding: 10px 14px; border-radius: 8px; border-left: 3px solid #94a3b8;">
+                        <strong style="color: #475569;">篠部長: アクセス制御管理台帳を共有するので確認すること</strong><br>
+                        ファイルサーバー移行の工数を「大変そう」と曖昧に書いていたが、実際のフォルダ数・権限構造を確認していなかった。篠部長からアクセス制御管理台帳（Googleスプレッドシート）が共有され、<strong>「どれだけの部門フォルダがあり、どれだけ細かいACL（個人名ベースの権限）が設定されているか具体的に把握せよ」</strong>という指示。移行工数の見積もりには実データが不可欠。
+                      </div>
                     </td>
                     <td style="font-size: 14px; color: #475569;">ADSHARESVR・IOTSVRの権限構造を分析 → sec6に反映</td>
                     <td><a href="IT基盤刷新_説明資料.html#sec6" style="background: #dbeafe; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #1d4ed8; text-decoration: none;">sec6 →</a></td>
@@ -230,7 +242,10 @@
                     <td style="font-weight: 900; color: #3b82f6;">P5</td>
                     <td>
                       <div class="text-base font-black text-slate-700">各拠点オンプレサーバーヒアリング</div>
-                      <div style="font-size: 14px; color: #94a3b8; margin-top: 4px;">篠部長: 各拠点にどんなサーバーがあるか把握できていない</div>
+                      <div style="font-size: 14px; color: #64748b; margin-top: 6px; line-height: 1.8; background: #f8fafc; padding: 10px 14px; border-radius: 8px; border-left: 3px solid #94a3b8;">
+                        <strong style="color: #475569;">篠部長: 各拠点にどんなサーバーがあるか把握できていない</strong><br>
+                        sec8のネットワーク刷新は本社インフラ（VPN・FW・SD-WAN）中心の議論で、大阪・東北等の拠点にどんなオンプレサーバーが存在するか把握されていなかった。SASE（Cato）導入でSocket配置や通信経路が変わるため、<strong>各拠点のサーバー実態（台数・用途・ネットワーク構成）を事前に把握しなければ導入計画が立てられない</strong>。拠点側の現状が不明なまま進めるのはリスク。
+                      </div>
                     </td>
                     <td style="font-size: 14px; color: #475569;">各拠点のサーバー台数・用途・構成をヒアリング</td>
                     <td><a href="IT基盤刷新_説明資料.html#sec8" style="background: #fef3c7; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #92400e; text-decoration: none;">sec8 →</a></td>
@@ -251,7 +266,10 @@
                     <td style="font-weight: 900; color: #3b82f6;">P6</td>
                     <td>
                       <div class="text-base font-black text-slate-700">IIJ深掘り中止、Cato中心に</div>
-                      <div style="font-size: 14px; color: #94a3b8; margin-top: 4px;">篠部長: IIJ Omnibusの深掘りは不要。Cato SASEを中心に検討</div>
+                      <div style="font-size: 14px; color: #64748b; margin-top: 6px; line-height: 1.8; background: #f8fafc; padding: 10px 14px; border-radius: 8px; border-left: 3px solid #94a3b8;">
+                        <strong style="color: #475569;">篠部長: IIJ Omnibusの深掘りは不要。Cato SASEを中心に検討せよ</strong><br>
+                        元のsec8ではIIJ OmnibusとCato SASEを同等の選択肢として並列比較していたが、篠部長が方針を決定。IIJ Omnibusは国内専用バックボーン・各拠点にルーター設置が必要・IIJ AD契約との密結合などの制約があり、<strong>Catoのグローバル90+ PoP・Socket1台で完結・ゼロトラスト標準搭載の方が柔軟性が高い</strong>と判断。IIJ Omnibus単独シナリオの深掘りに工数を割くのは無駄であり、Cato前提で資料を再構成する指示。
+                      </div>
                     </td>
                     <td style="font-size: 14px; color: #475569;">sec8/sec9をCato SASE中心に再構成</td>
                     <td>
@@ -304,7 +322,10 @@
                     <td style="font-weight: 900; color: #10b981;">S1</td>
                     <td>
                       <div class="text-base font-black text-slate-700">ベンダー別運用でAH・ADの課題と解決策の妥当性を明記</div>
-                      <div style="font-size: 14px; color: #94a3b8; margin-top: 4px;">塩田部長: AKIBAの具体的な課題に対して各ベンダーが解決できるか検証せよ</div>
+                      <div style="font-size: 14px; color: #64748b; margin-top: 6px; line-height: 1.8; background: #f0fdf4; padding: 10px 14px; border-radius: 8px; border-left: 3px solid #86efac;">
+                        <strong style="color: #475569;">塩田部長: AKIBAの具体的な課題に対して各ベンダーが解決できるか検証せよ</strong><br>
+                        元のsec5bは各ベンダーの「できること・できないこと」を抽象的に列挙していたが、それがAKIBAの問題を解決するかどうかの検証がなかった。問うべきは「各社何ができるか」ではなく<strong>「情シス2名体制の属人化リスク」「同一フロアのサーバー災害リスク」「保守切れハードウェア」という当社固有の課題を、各ベンダーがどの程度解決できるか</strong>。機能一覧ではなく課題起点の比較が必要。
+                      </div>
                     </td>
                     <td style="font-size: 14px; color: #475569;">sec5bに固有課題＋解決度合い比較表を追加</td>
                     <td><a href="IT基盤刷新_説明資料.html#sec5b" style="background: #d1fae5; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #065f46; text-decoration: none;">sec5b →</a></td>
@@ -331,7 +352,10 @@
                     <td style="font-weight: 900; color: #10b981;">S2</td>
                     <td>
                       <div class="text-base font-black text-slate-700">「ベンダー依存運用が理想」→「オンプレ再構築でいいのでは」のロジック矛盾解消</div>
-                      <div style="font-size: 14px; color: #94a3b8; margin-top: 4px;">塩田部長: クラウド移行が必要な理由が弱い。オンプレ更新でいい反論に答えられない</div>
+                      <div style="font-size: 14px; color: #64748b; margin-top: 6px; line-height: 1.8; background: #f0fdf4; padding: 10px 14px; border-radius: 8px; border-left: 3px solid #86efac;">
+                        <strong style="color: #475569;">塩田部長: クラウド移行が必要な理由が弱い。「オンプレ更新でいいのでは」に答えられない</strong><br>
+                        資料はクラウド移行を前提に書かれていたが、「なぜオンプレでサーバーを新しく買い直すのではダメなのか」という当然の反論に対する回答がなかった。新しいハードウェアの方が初期費用は安く、業務フローも変わらない。<strong>決裁会議で「オンプレ更新でよくない？」と聞かれた時に論理的に反論できる材料</strong>（属人化は解消されない・地理的冗長化がない・24時間監視がない・5〜7年後にまた同じ問題が来る）を資料内に持っておく必要がある。
+                      </div>
                     </td>
                     <td style="font-size: 14px; color: #475569;">sec5bまとめにロジック補強を追加</td>
                     <td><a href="IT基盤刷新_説明資料.html#sec5b" style="background: #d1fae5; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #065f46; text-decoration: none;">sec5b →</a></td>
@@ -353,7 +377,10 @@
                     <td style="font-weight: 900; color: #10b981;">S3</td>
                     <td>
                       <div class="text-base font-black text-slate-700">Entra ID: AH・AD移行課題、対応策、移行しない場合のデメリット</div>
-                      <div style="font-size: 14px; color: #94a3b8; margin-top: 4px;">塩田部長: Entra IDの説明が一般的すぎる。AKIBAの場合のリスクを具体的に</div>
+                      <div style="font-size: 14px; color: #64748b; margin-top: 6px; line-height: 1.8; background: #f0fdf4; padding: 10px 14px; border-radius: 8px; border-left: 3px solid #86efac;">
+                        <strong style="color: #475569;">塩田部長: Entra IDの説明が一般的すぎる。AKIBAの場合のリスクを具体的に</strong><br>
+                        P2と同様の指摘。Entra IDの機能紹介（MFA・条件付きアクセス等）はあったが、<strong>「AKIBAがEntra IDに移行しなかった場合に何が起きるか」</strong>のリスクが書かれていなかった。MSがオンプレADの新機能開発を停止している事実、Windows Serverサポート期限後のパッチ終了リスク、M365との認証統合がAD単体では不可能な点など、「移行しない選択肢」のコストを明示しなければ移行の必要性が伝わらない。
+                      </div>
                     </td>
                     <td style="font-size: 14px; color: #475569;">P2と統合。sec6にリスク分析を追加</td>
                     <td><a href="IT基盤刷新_説明資料.html#sec6" style="background: #d1fae5; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #065f46; text-decoration: none;">sec6 →</a></td>
@@ -376,7 +403,10 @@
                     <td style="font-weight: 900; color: #10b981;">S4</td>
                     <td>
                       <div class="text-base font-black text-slate-700">費用全体像にパターンごとのメリデメ追加</div>
-                      <div style="font-size: 14px; color: #94a3b8; margin-top: 4px;">塩田部長: 金額だけ並べても判断できない。各パターンの利点・欠点を示せ</div>
+                      <div style="font-size: 14px; color: #64748b; margin-top: 6px; line-height: 1.8; background: #f0fdf4; padding: 10px 14px; border-radius: 8px; border-left: 3px solid #86efac;">
+                        <strong style="color: #475569;">塩田部長: 金額だけ並べても判断できない。各パターンの利点・欠点を示せ</strong><br>
+                        元のsec9には費用テーブル（初期・月額・5年TCO）が3つ並んでいたが、数字だけでは「安い方を選べばいいのか？」という短絡的な判断しかできない。<strong>最安のLAJパターンは自社管理責任が残り、最高額のIIJパターンは全てお任せだがコスト1.5倍</strong>。この「コスト vs リスク vs 自由度」のトレードオフを明示しなければ、金額表は意思決定の材料にならない。
+                      </div>
                     </td>
                     <td style="font-size: 14px; color: #475569;">sec9にメリデメカードを追加</td>
                     <td><a href="IT基盤刷新_説明資料.html#sec9" style="background: #d1fae5; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #065f46; text-decoration: none;">sec9 →</a></td>
