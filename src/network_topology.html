@@ -219,6 +219,115 @@
             color: #94a3b8;
             margin-left: 19px;
         }
+        .needs-socket.investigating {
+            background: #f59e0b;
+        }
+        .cloud-migrate-hint {
+            font-size: 0.58rem;
+            color: #2563eb;
+            margin-left: 19px;
+            font-style: italic;
+        }
+
+        /* --- Socket削減シミュレーション --- */
+        .socket-sim {
+            margin-top: 1.5rem;
+            background: linear-gradient(135deg, #faf5ff 0%, #f5f3ff 100%);
+            border: 2px solid #7b1fa2;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+        }
+        .socket-sim h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 0 0.4rem;
+        }
+        .socket-sim h3::before {
+            content: "";
+            width: 6px;
+            height: 22px;
+            background: #7b1fa2;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+        .socket-sim .sim-lead {
+            font-size: 0.85rem;
+            color: #475569;
+            margin: 0 0 1rem;
+            line-height: 1.7;
+        }
+        .socket-sim table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+        .socket-sim th {
+            background: #ede9fe;
+            color: #4c1d95;
+            font-weight: 700;
+            padding: 8px 10px;
+            text-align: left;
+            border-bottom: 2px solid #c4b5fd;
+            font-size: 0.75rem;
+        }
+        .socket-sim td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #e9e5f5;
+            color: #334155;
+            vertical-align: top;
+        }
+        .socket-sim tr:last-child td {
+            border-bottom: none;
+        }
+        .socket-sim .site-freed {
+            display: inline-block;
+            background: #dcfce7;
+            color: #166534;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin: 1px 2px;
+        }
+        .socket-sim .count-badge {
+            display: inline-block;
+            font-weight: 800;
+            font-size: 0.9rem;
+            padding: 2px 8px;
+            border-radius: 6px;
+        }
+        .socket-sim .count-before {
+            background: #fecaca;
+            color: #991b1b;
+        }
+        .socket-sim .count-after {
+            background: #dcfce7;
+            color: #166534;
+        }
+        .socket-sim .dep-table { margin-bottom: 1.25rem; }
+        .socket-sim .dep-table th:first-child,
+        .socket-sim .dep-table td:first-child {
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .socket-sim .dep-table td.dep-yes {
+            text-align: center;
+            color: #7b1fa2;
+            font-weight: 700;
+        }
+        .socket-sim .dep-table td.dep-inv {
+            text-align: center;
+            color: #f59e0b;
+            font-weight: 700;
+        }
+        .socket-sim .dep-table td.dep-no {
+            text-align: center;
+            color: #cbd5e1;
+        }
 
         /* --- Internet Cloud --- */
         .cloud-node {
@@ -462,6 +571,7 @@
                             <div class="equip-detail">BDCSVR 192.168.1.7</div>
                             <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">ファイルサーバー<span class="needs-socket">Socket</span></span></div>
                             <div class="equip-detail">ADSHARESVR 192.168.1.15</div>
+                            <div class="cloud-migrate-hint">→ クラウド統合でSocket不要化</div>
                             <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">TENSUITE (勤怠)<span class="needs-socket">Socket</span></span></div>
                             <div class="equip-detail">AP .1.12 / DB .1.14</div>
                         </div>
@@ -471,8 +581,9 @@
                             <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器<span class="needs-socket">Socket</span></span></div>
                             <div class="equip-detail">6-7F + 3-5F(BN管理)</div>
                             <div class="equip-item"><span class="equip-icon equip-pc">P</span><span class="equip-label">業務PC (57名)</span></div>
-                            <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機<span class="needs-socket">Socket</span></span></div>
+                            <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機<span class="needs-socket investigating">要否調査中</span></span></div>
                             <div class="equip-detail">RICOH IM C4500 .1.55</div>
+                            <div class="equip-detail" style="color: #b45309;">VPN不要の可能性あり（通信調査中）</div>
                         </div>
                     </div>
                 </div>
@@ -515,9 +626,10 @@
                         <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR400</span></div>
                         <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">CRBファイルサーバー<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-detail">CRB八王子用 .60.7</div>
+                        <div class="cloud-migrate-hint">→ クラウド統合でSocket不要化</div>
                         <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-item"><span class="equip-icon equip-pc">P</span><span class="equip-label">業務PC</span></div>
-                        <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機 x2<span class="needs-socket">Socket</span></span></div>
+                        <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機 x2<span class="needs-socket investigating">要否調査中</span></span></div>
                         <div style="margin-top: 4px; padding: 3px 6px; background: #fef3c7; border-radius: 4px; font-size: 0.62rem; color: #92400e; line-height: 1.4;">
                             全通信が本社経由
                         </div>
@@ -535,13 +647,15 @@
                         <div class="equip-detail">R&Dセンターと同一サブネット</div>
                         <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">IoTファイルサーバー<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-detail">IOTSVR .30.15 / BMC .30.16</div>
+                        <div class="cloud-migrate-hint">→ クラウド統合でSocket不要化</div>
                         <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">QNAP NAS<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-detail">TS-431U .30.10 ENG用</div>
+                        <div class="cloud-migrate-hint">→ クラウド統合でSocket不要化</div>
                         <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">OrCADサーバー x2<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-detail">旧.30.12 / 新.30.13</div>
                         <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-item"><span class="equip-icon equip-pc">P</span><span class="equip-label">業務PC</span></div>
-                        <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機<span class="needs-socket">Socket</span></span></div>
+                        <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機<span class="needs-socket investigating">要否調査中</span></span></div>
                         <div style="margin-top: 4px; padding: 3px 6px; background: #fef3c7; border-radius: 4px; font-size: 0.62rem; color: #92400e; line-height: 1.4;">
                             全通信が本社経由
                         </div>
@@ -639,10 +753,179 @@
                             <span class="needs-socket" style="margin-left: 0;">Socket</span>
                             <span>Cato Client不可 → Socket必須</span>
                         </div>
+                        <div class="legend-item">
+                            <span class="needs-socket investigating" style="margin-left: 0;">要否調査中</span>
+                            <span>Socket要否を調査中</span>
+                        </div>
                     </div>
                 </div>
 
             </div><!-- /diagram-container -->
+
+            <!-- ====== Socket削減シミュレーション ====== -->
+            <div class="socket-sim">
+                <h3>Socket削減シミュレーション</h3>
+                <p class="sim-lead">
+                    各対策を実施した場合に、Cato Socket設置が不要になる拠点を示します。<br>
+                    <strong>現状: 全8拠点にSocket必要</strong>（Cato Clientをインストールできない機器が各拠点に存在するため）
+                </p>
+
+                <!-- 拠点別Socket依存マトリクス -->
+                <p style="font-size: 0.78rem; font-weight: 700; color: #4c1d95; margin: 0 0 0.5rem;">拠点別 Socket依存マトリクス</p>
+                <table class="dep-table">
+                    <thead>
+                        <tr>
+                            <th>拠点</th>
+                            <th style="text-align:center;">SECOM<br>入退室</th>
+                            <th style="text-align:center;">ファイル<br>サーバー</th>
+                            <th style="text-align:center;">複合機</th>
+                            <th style="text-align:center;">TENSUITE<br>勤怠</th>
+                            <th style="text-align:center;">OrCAD<br>サーバー</th>
+                            <th style="text-align:center;">Socket<br>依存数</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>本社（築地）</td>
+                            <td class="dep-yes">●</td>
+                            <td class="dep-yes">●</td>
+                            <td class="dep-inv">▲</td>
+                            <td class="dep-yes">●</td>
+                            <td class="dep-no">-</td>
+                            <td style="text-align:center; font-weight:700;">3〜4</td>
+                        </tr>
+                        <tr>
+                            <td>大阪</td>
+                            <td class="dep-yes">●</td>
+                            <td class="dep-no">-</td>
+                            <td class="dep-no">-</td>
+                            <td class="dep-no">-</td>
+                            <td class="dep-no">-</td>
+                            <td style="text-align:center; font-weight:700;">1</td>
+                        </tr>
+                        <tr>
+                            <td>多摩（R&D）</td>
+                            <td class="dep-yes">●</td>
+                            <td class="dep-yes">●</td>
+                            <td class="dep-inv">▲</td>
+                            <td class="dep-no">-</td>
+                            <td class="dep-no">-</td>
+                            <td style="text-align:center; font-weight:700;">2〜3</td>
+                        </tr>
+                        <tr>
+                            <td>橋本（IoT Lab）</td>
+                            <td class="dep-yes">●</td>
+                            <td class="dep-yes">●</td>
+                            <td class="dep-inv">▲</td>
+                            <td class="dep-no">-</td>
+                            <td class="dep-yes">●</td>
+                            <td style="text-align:center; font-weight:700;">3〜4</td>
+                        </tr>
+                        <tr style="color: #64748b;">
+                            <td>福岡 / 和歌山 / 京橋 / 名古屋</td>
+                            <td class="dep-yes">●</td>
+                            <td class="dep-no">-</td>
+                            <td class="dep-no">-</td>
+                            <td class="dep-no">-</td>
+                            <td class="dep-no">-</td>
+                            <td style="text-align:center; font-weight:700;">各1</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 0.7rem; color: #64748b; margin: 0 0 1.25rem;">
+                    ● = Socket必須 &nbsp; <span style="color: #f59e0b; font-weight:700;">▲ = 要否調査中</span> &nbsp; - = 該当なし
+                </p>
+
+                <!-- 対策別Socket削減シナリオ -->
+                <p style="font-size: 0.78rem; font-weight: 700; color: #4c1d95; margin: 0 0 0.5rem;">対策別 Socket削減シナリオ（累積効果）</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30px;">#</th>
+                            <th>対策</th>
+                            <th>解消されるSocket依存</th>
+                            <th>Socket不要になる拠点</th>
+                            <th style="text-align:center; width: 80px;">残り</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #faf5ff;">
+                            <td style="font-weight:800; color:#7b1fa2;">①</td>
+                            <td><strong>SECOMフルクラウド化</strong></td>
+                            <td>全拠点のSecom入退室機器</td>
+                            <td>
+                                <span class="site-freed">大阪</span>
+                                <span class="site-freed">福岡</span>
+                                <span class="site-freed">和歌山</span>
+                                <span class="site-freed">京橋</span>
+                                <span class="site-freed">名古屋</span>
+                            </td>
+                            <td style="text-align:center;">
+                                <span class="count-badge count-before">8</span>
+                                →
+                                <span class="count-badge count-after">3</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:800; color:#7b1fa2;">②</td>
+                            <td><strong>ファイルサーバー<br>クラウド統合</strong></td>
+                            <td>ADSHARESVR（本社）<br>IOTSVR/QNAP（橋本）<br>CRBファイルサーバー（多摩）<br><span style="font-size:0.72rem; color:#2563eb;">→ SharePoint / Azure Files等</span></td>
+                            <td style="color: #94a3b8; font-size: 0.75rem;">
+                                （単独では0 — 各拠点に他の依存が残る）
+                            </td>
+                            <td style="text-align:center;">
+                                <span class="count-badge count-after">3</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:800; color:#7b1fa2;">③</td>
+                            <td><strong>複合機 VPN不要化</strong><br><span style="font-size:0.7rem; color:#f59e0b;">※調査中</span></td>
+                            <td>本社/多摩/橋本の複合機<br><span style="font-size:0.72rem; color:#64748b;">②と合わせて多摩の全依存が解消</span></td>
+                            <td>
+                                <span class="site-freed">多摩</span>
+                                <span style="font-size:0.72rem; color:#64748b;">（②+③の合わせ技）</span>
+                            </td>
+                            <td style="text-align:center;">
+                                <span class="count-badge count-before">3</span>
+                                →
+                                <span class="count-badge count-after">2</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:800; color:#7b1fa2;">④</td>
+                            <td><strong>TENSUITEクラウド化</strong></td>
+                            <td>勤怠管理 AP/DB（本社 .1.12/.14）</td>
+                            <td>
+                                <span class="site-freed">本社</span>
+                            </td>
+                            <td style="text-align:center;">
+                                <span class="count-badge count-before">2</span>
+                                →
+                                <span class="count-badge count-after">1</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:800; color:#7b1fa2;">⑤</td>
+                            <td><strong>OrCAD移行/廃止</strong></td>
+                            <td>OrCADサーバー x2（橋本 .30.12/.13）</td>
+                            <td>
+                                <span class="site-freed">橋本</span>
+                            </td>
+                            <td style="text-align:center;">
+                                <span class="count-badge count-before">1</span>
+                                →
+                                <span class="count-badge count-after" style="background:#bbf7d0; font-size:1rem;">0</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="margin-top: 1rem; padding: 10px 14px; background: rgba(123,31,162,0.06); border-radius: 8px; font-size: 0.78rem; color: #475569; line-height: 1.7;">
+                    <strong style="color: #7b1fa2;">結論:</strong>
+                    ①SECOMフルクラウド化だけで <strong>5拠点</strong>（Type B全4拠点 + 大阪）のSocketが不要に。
+                    ①〜③を実施すれば<strong>6拠点</strong>まで削減可能。
+                    全5対策で<strong>Socket完全ゼロ</strong>（= VPN全廃）を達成できる。
+                </div>
+            </div>
 
             <!-- ====== Info Panels Below Diagram ====== -->
             <div class="info-grid">
@@ -680,20 +963,21 @@
                     <h4>Cato Socket/Client 判断のポイント</h4>
                     <ul>
                         <li><strong>Socket が必要な条件</strong>: Client をインストールできない機器が Cato NW経由の通信を必要とする場合</li>
-                        <li><strong>Secom入退室機器</strong>: Client不可 → VPN or Socket 必須</li>
-                        <li><strong>ファイルサーバー/TENSUITE</strong>: サーバーOS → Socket または クラウド移行が必要</li>
+                        <li><strong>Secom入退室機器</strong>: Client不可 → VPN or Socket 必須（フルクラウド化で解消可能）</li>
+                        <li><strong>ファイルサーバー</strong>: クラウド統合（SharePoint/Azure Files等）で Socket不要化可能 → ユーザーは Cato Client経由でアクセス</li>
+                        <li><strong>複合機</strong>: <span style="color: #f59e0b; font-weight: 600;">要否調査中</span> — そもそもVPNを通す必要がない可能性あり（通信パターン確認中）</li>
                         <li>業務PC: Client インストール可 → Socket 不要</li>
-                        <li><strong>複合機</strong>: Client不可 → AD参照（LDAP/SMB）がVPN経由のため Socket必要</li>
                     </ul>
                 </div>
                 <div class="info-box">
                     <h4>VPN全廃に向けたロードマップ</h4>
                     <ul>
-                        <li>Secom入退室: <strong>フルクラウド型</strong>に移行すればVPN不要（別途検討中）</li>
-                        <li>AD: Entra ID（旧Azure AD）移行で拠点間VPN不要に</li>
-                        <li>ファイルサーバー: SharePoint / Azure Files 等への集約でVPN不要に</li>
-                        <li>TENSUITE: クラウド版への移行 or VPN経由の維持を判断</li>
-                        <li><strong>全て移行完了まではVPN残存</strong> → Cato導入時にSocket台数に影響</li>
+                        <li><strong>① Secom入退室</strong>: フルクラウド型に移行 → <strong>5拠点のSocket不要化</strong>（最大効果）</li>
+                        <li><strong>② ファイルサーバー</strong>: クラウド統合（SharePoint/Azure Files等）→ 本社/橋本/多摩の依存解消</li>
+                        <li><strong>③ 複合機</strong>: VPN不要の可能性あり（調査中）→ ②と合わせて多摩のSocket不要化</li>
+                        <li><strong>④ TENSUITE</strong>: クラウド版移行 → 本社のSocket不要化</li>
+                        <li><strong>⑤ OrCAD</strong>: 移行/廃止 → 橋本のSocket不要化（全拠点Socket完全ゼロ）</li>
+                        <li>AD: Entra ID（旧Azure AD）移行で拠点間VPN不要に（Socket削減とは別軸）</li>
                     </ul>
                 </div>
             </div>
