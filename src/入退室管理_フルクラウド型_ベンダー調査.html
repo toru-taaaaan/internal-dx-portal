@@ -411,7 +411,7 @@
         <!-- Version Header -->
         <div class="version-header">
             <span>入退室管理 フルクラウド型 ベンダー調査 | プロジェクト 15.02b</span>
-            <span id="version-date">ver 2026-02-18b ALLIGATE打合せ2/20確定・Akerun詳細回答反映</span>
+            <span id="version-date">ver 2026-02-18c ALLIGATE打合せ確定・Akerun提案資料PDF解析反映</span>
         </div>
 
         <!-- Header -->
@@ -1039,22 +1039,31 @@
 
         <!-- sec-detail-akerun: Akerun詳細 -->
         <section id="sec-detail-akerun" class="section-card">
-            <div class="section-title">Akerun 詳細情報（2026-02-18 小林回答 + 資料解析）</div>
+            <div class="section-title">Akerun 詳細情報（2026-02-18 小林回答 + 提案資料PDF 20p解析）</div>
             <table>
-                <tr><th style="width: 20%;">提供元</th><td>株式会社Photosynth</td></tr>
+                <tr><th style="width: 20%;">提供元</th><td>株式会社Photosynth（2014年設立、東証グロース 証券コード4379、従業員143名）<br><small>ISMS認証: JUSE-IR-462 | CISO: 小嶋聡史（最高情報セキュリティ責任者）</small></td></tr>
                 <tr><th>担当</th><td>小林 純大 (junta.kobayashi@photosynth.co.jp / 080-4418-2855)</td></tr>
+                <tr><th>導入実績</th><td>累計7,000社、アカウント91万+、1日最大98万回解錠<br><small>docomo, 三井不動産, 野村不動産, NTT都市開発, JR九州, ANA, 芝浦工業大学 等</small><br><small>スマートロック・クラウド型入退室管理 導入社数/利用者数 4冠No.1（2023年11月 日本マーケティングリサーチ機構）</small></td></tr>
+                <tr><th>システム稼働率</th><td><strong>99.998%</strong></td></tr>
                 <tr><th>4要件</th><td><span class="badge badge-ok">VPN不要</span> <span class="badge badge-ok">FeliCa全種</span> <span class="badge badge-ok">CSV+タイムカード</span> <span class="badge badge-ok">複数拠点OK</span></td></tr>
                 <tr><th>製品ラインナップ</th><td>
                     <strong>Akerun Pro（電池式・後付）</strong>: 月額19,800円/扉(税抜)、初期0円(工事なし)/6-8万(工事あり)、最短3営業日納品<br>
-                    <strong>Akerun CTL（配線式）</strong>: 月額27,800円/扉(税抜)、初期10-15万、既設電気錠流用はこちら
+                    → サムターン付きドア向け。レンタル: Pro本体×1, ICカードリーダー×2(内外), Akerun Remote×1, ドアセンサー×1<br>
+                    <strong>Akerun CTL（配線式）</strong>: 月額27,800円/扉(税抜)、初期10-15万<br>
+                    → <strong>既設電気錠流用はこちら（弊社はCTLが前提）</strong>。レンタル: コントローラー本体, ICカードリーダー(内外)<br>
+                    <small>CTL対応: 電気錠, 電磁錠, 自動ドア。火災報知器連動（パニックオープン）対応。解錠ボタン追加可（別途オプション）</small>
                 </td></tr>
-                <tr><th>FeliCa対応</th><td>全種認証可能</td></tr>
-                <tr><th>CSV出力</th><td>入退室ログ + タイムカード(始業/終業のみ抽出)機能あり</td></tr>
+                <tr><th>設置要件(CTL)</th><td>有線LAN(DHCP) + AC100V×1口。ICカードリーダーはバッテリー駆動+無線通信のため配線不要<br><small>電磁式電気錠: DC24V対応、通電時施錠タイプ、信号線(4芯)+施解錠動作(2芯)+施錠信号(2芯)で制御</small></td></tr>
+                <tr><th>認証方式</th><td>交通系IC（Suica/PASMO/ICOCA等）、社員証（FeliCa）、スマートフォン（iOS/Android）、Apple Watch/おサイフケータイ、URL合カギ（ゲスト用ワンタイムパス）、生体認証（外部連携で顔認証対応）</td></tr>
+                <tr><th>アクセス制御</th><td>ドア×人×曜日×時間帯の組み合わせで権限設定可能。正社員/外部委託/パートタイム等の区分管理</td></tr>
+                <tr><th>ログ・監査</th><td>入退室ログ: リアルタイム可視化、<strong>件数無制限・半永久保存</strong>、CSV抽出可。タイムカード機能あり</td></tr>
+                <tr><th>勤怠連携</th><td>KING of TIME, freee人事労務, チームスピリット, HRMOS勤怠, ジョブカン勤怠管理</td></tr>
+                <tr><th>API</th><td>外部システム連携用API提供あり（会員管理、予約管理、決済連携等）</td></tr>
                 <tr><th>長期契約割引</th><td>契約期間の長期化(最大5年)で月額調整可能</td></tr>
-                <tr><th>配線式(CTL)注意</th><td>現地調査必須</td></tr>
+                <tr><th>配線式(CTL)注意</th><td><strong>現地調査必須</strong>（既設電気錠の型式・配線状態を確認）</td></tr>
                 <tr><th>21扉での月額試算</th><td>
-                    Pro: 19,800円 × 21 = <strong>月額415,800円</strong>（年額4,989,600円）<br>
-                    CTL: 27,800円 × 21 = <strong>月額583,800円</strong>（年額7,005,600円）
+                    <span style="color: var(--text-muted);"><s>Pro: 19,800円 × 21 = 月額415,800円（年額4,989,600円）</s> ← サムターン向け、弊社は該当しない可能性大</span><br>
+                    CTL: 27,800円 × 21 = <strong>月額583,800円</strong>（年額7,005,600円）← <strong>こちらが現実的な試算</strong>
                 </td></tr>
                 <tr><th>次のステップ</th><td>
                     扉写真送付先: 取付診断フォーム<br>
