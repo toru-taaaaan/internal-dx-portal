@@ -10,6 +10,7 @@
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔐</text></svg>">
     <title>入退室管理 フルクラウド型 ベンダー調査</title>
+    <link rel="stylesheet" href="assets/toru_custom_design.css">
     <style>
         :root {
             --primary: #3b82f6;
@@ -44,7 +45,7 @@
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 30px;
         }
@@ -75,7 +76,7 @@
         }
 
         .header h1 {
-            font-size: 2rem;
+            font-size: 2.1rem;
             font-weight: 800;
             margin: 0;
             color: #0f172a;
@@ -426,7 +427,8 @@
 
         <!-- Navigation -->
         <div class="nav-pills no-print">
-            <a href="#sec-dashboard" class="nav-pill">Dashboard</a>
+            <a href="index.html" class="nav-pill" style="background: #1e293b; color: white; border-color: #1e293b;">← HUB</a>
+            <a href="#sec-dashboard" class="nav-pill">概況</a>
             <a href="#sec-requirements" class="nav-pill">要件</a>
             <a href="#sec-comparison" class="nav-pill">ベンダー比較</a>
             <a href="#sec-detail-alligate" class="nav-pill">ALLIGATE</a>
@@ -434,9 +436,9 @@
             <a href="#sec-detail-splats" class="nav-pill">SPLATS</a>
             <a href="#sec-detail-bitlock" class="nav-pill">bitlock PRO</a>
             <a href="#sec-detail-secom" class="nav-pill">SECOM</a>
-            <a href="#sec-timeline" class="nav-pill">コミュニケーション履歴</a>
+            <a href="#sec-timeline" class="nav-pill">履歴</a>
             <a href="#sec-evidence" class="nav-pill">エビデンス</a>
-            <a href="#sec-actions" class="nav-pill">Next Actions</a>
+            <a href="#sec-actions" class="nav-pill">次のアクション</a>
         </div>
 
         <!-- sec-dashboard: KPIs -->
@@ -1362,13 +1364,13 @@
             <div style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.8;">
                 <p>ネットワーク刷新（VPN→Cato SASE）の検討過程で、SECOM セサモTRII の入退室管理機器がVPN通信に依存していることが判明。Cato導入にはこのVPN依存の解消が前提条件となる。</p>
                 <p>当初は「サーバー移設型」（TRIISVRをクラウドに移設、IIJ/USEN/LAJで見積済み）のみ検討していたが、どうせ投資するなら入退室管理システム自体の見直しも選択肢に含めるべきと判断。2026-02-17より「フルクラウド型」（システム自体をクラウドネイティブに切替）の調査を並行開始。</p>
-                <p><strong>重要な発見:</strong> e-works（勤怠管理）との連携はAPIではなくフォルダベースのファイル取込方式であることが判明（2025-11-11 何子鵬回答）。これにより、CSVエクスポート可能なサービスであれば連携が再現可能であり、ベンダー選択の自由度が大幅に向上した。</p>
+                <p><strong>重要な発見:</strong> e-works（勤怠管理）との連携はAPIではなくフォルダベースのファイル取込方式であることが判明（2025-11-11 何子鵬回答）。これにより、CSVエクスポート可能なサービスであれば連携が再現可能であり、ベンダー選択の幅が広がった。</p>
             </div>
         </section>
 
         <!-- sec-actions: Next Actions -->
         <section id="sec-actions" class="section-card">
-            <div class="section-title">Next Actions</div>
+            <div class="section-title">次のアクション</div>
 
             <!-- 共通準備（最優先） -->
             <h4 style="color: var(--danger); margin: 0 0 12px 0;">0. 共通準備（複数ベンダーに必要・最優先）</h4>
