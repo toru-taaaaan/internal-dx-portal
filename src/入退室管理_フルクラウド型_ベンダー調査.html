@@ -568,7 +568,7 @@
                         <tr>
                             <td><strong>資料入手</strong></td>
                             <td><span class="badge badge-waiting">なし</span></td>
-                            <td style="background: #eff6ff;"><span class="badge badge-ok">PDF</span></td>
+                            <td style="background: #eff6ff;"><span class="badge badge-ok">PDF(50p)解析済</span></td>
                             <td><span class="badge badge-pending">DLリンクあり</span></td>
                             <td><span class="badge badge-waiting">なし</span></td>
                             <td><span class="badge badge-pending">DLリンクあり</span></td>
@@ -970,6 +970,55 @@
                 <strong>問い合わせ先:</strong> 担当: 丸亀 麻綾 (m.marugame@art-japan.co.jp / 080-7202-6304) |
                 一般: alligate_sales@art-japan.co.jp / 044-430-5321 (9:00〜17:30) |
                 資料管理番号: AL01-018-251125
+            </div>
+        </section>
+
+        <!-- sec-cost: コスト試算 -->
+        <section id="sec-cost" class="section-card">
+            <div class="section-title">コスト試算（ALLIGATE Lock Pro vs サーバー移設型）</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                <div>
+                    <h4 style="margin: 0 0 12px 0; color: var(--primary);">ALLIGATE Lock Pro 概算（扉数別）</h4>
+                    <table>
+                        <thead>
+                            <tr><th>扉数</th><th>月額(税抜)</th><th>年額</th><th>5年TCO</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>10扉</td><td>180,000円</td><td>2,160,000円</td><td><strong>10,800,000円</strong></td></tr>
+                            <tr style="background: #eff6ff;"><td>15扉</td><td>270,000円</td><td>3,240,000円</td><td><strong>16,200,000円</strong></td></tr>
+                            <tr><td>20扉</td><td>360,000円</td><td>4,320,000円</td><td><strong>21,600,000円</strong></td></tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 8px;">
+                        ※月額18,000円/扉(税抜)で試算。初期費用・オプション別途。<br>
+                        ※月額に機器利用料・クラウド・24/365保守・機器保証すべて含む
+                    </p>
+                </div>
+                <div>
+                    <h4 style="margin: 0 0 12px 0; color: var(--info);">サーバー移設型 5年TCO（見積済）</h4>
+                    <table>
+                        <thead>
+                            <tr><th>ベンダー</th><th>5年TCO</th><th>備考</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background: #eff6ff;"><td><strong>LAJ (Azure)</strong></td><td><strong>7,568,560円</strong></td><td>推薦候補</td></tr>
+                            <tr><td>USEN (AWS)</td><td>8,616,000円</td><td>3件未回答</td></tr>
+                            <tr><td>IIJ GIO</td><td>8,958,150円</td><td>-</td></tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 8px;">
+                        ※TRIISVRをクラウドに移設する方式<br>
+                        ※VPN不要になるかはSECOM回答次第
+                    </p>
+                </div>
+            </div>
+            <div style="margin-top: 20px; padding: 16px; background: #fefce8; border-radius: 8px; border: 1px solid #fde68a;">
+                <strong style="color: #92400e;">判断ポイント:</strong>
+                <span style="font-size: 0.9rem;">
+                    フルクラウド型は5年TCOでサーバー移設型より高くなる可能性が高い。
+                    ただし (1)VPN完全不要が確実 (2)SECOM機器保守終了リスク解消 (3)API・クラウド管理の将来性 (4)24/365保守+機器無償交換込み
+                    を総合的に評価する必要あり。<strong>扉数確定後に正確な比較表を作成予定。</strong>
+                </span>
             </div>
         </section>
 
