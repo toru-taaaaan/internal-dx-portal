@@ -394,6 +394,12 @@
         .cost-sim .c-low { background: #dcfce7; color: #166534; }
         .cost-sim .c-unknown { background: #fef3c7; color: #92400e; }
         .cost-sim .c-mid { background: #f8fafc; color: #94a3b8; font-size: 0.72rem; }
+        .cost-sim .detail-row td { font-size: 0.68rem; color: #475569; padding: 3px 8px; border-bottom: 1px dashed #cbd5e1; background: rgba(255,255,255,0.4); }
+        .cost-sim .detail-row td:first-child { padding-left: 20px; }
+        .cost-sim .subtotal-row td { font-weight: 700; border-top: 2px solid #93c5fd; font-size: 0.78rem; background: rgba(219,234,254,0.3); }
+        .cost-sim .section-label td { font-weight: 600; font-size: 0.7rem; color: #0c4a6e; background: rgba(14,165,233,0.06); padding: 5px 8px; border-bottom: none; letter-spacing: 0.03em; }
+        .cost-sim .calc { font-size: 0.58rem; color: #94a3b8; display: block; }
+        .cost-sim .blank-cell { color: #cbd5e1; text-align: center; font-style: italic; font-size: 0.65rem; }
 
         /* --- Internet Cloud --- */
         .cloud-node {
@@ -970,8 +976,8 @@
                             <td><strong>対策範囲</strong><br><span style="font-size:0.65rem; color:#64748b;">上の阻害要因マップ参照</span></td>
                             <td class="c-mid">なし</td>
                             <td class="c-mid">SECOM移設のみ</td>
-                            <td class="c-mid">①</td>
-                            <td class="c-mid">①②③④</td>
+                            <td class="c-mid">①入退室入替</td>
+                            <td class="c-mid">①②③④全対策</td>
                         </tr>
                         <tr>
                             <td><strong>Cato Socket数</strong><br><span style="font-size:0.65rem; color:#64748b;">1台 = ¥80万/年</span></td>
@@ -980,25 +986,159 @@
                             <td class="c-unknown" style="text-align:center; font-size:1rem; font-weight:800;">4台</td>
                             <td class="c-low" style="text-align:center; font-size:1rem; font-weight:800;">0台</td>
                         </tr>
-                        <tr>
-                            <td><strong>ネットワーク</strong><br><span style="font-size:0.65rem; color:#64748b;">VPN or Cato (lic+mgd+init)</span></td>
-                            <td style="text-align:right;">¥420万<br><span style="font-size:0.6rem; color:#94a3b8;">VPN ¥7万/月×60</span></td>
-                            <td class="c-high" style="text-align:right; font-weight:700;">¥5,650万<br><span style="font-size:0.6rem;">Socket8台+Mobile</span></td>
-                            <td style="text-align:right;">¥4,050万<br><span style="font-size:0.6rem;">Socket4台+Mobile</span></td>
-                            <td class="c-low" style="text-align:right; font-weight:700;">¥2,450万<br><span style="font-size:0.6rem;">Mobile のみ</span></td>
+
+                        <!-- ========== 1. ネットワーク基盤 ========== -->
+                        <tr class="section-label"><td colspan="5">▼ 1. ネットワーク基盤</td></tr>
+                        <tr class="detail-row">
+                            <td>VPN月額（現行）<span class="calc">¥7万/月 × 60ヶ月</span></td>
+                            <td style="text-align:right;">¥420万</td>
+                            <td style="text-align:center; color:#16a34a;">廃止 → ¥0</td>
+                            <td style="text-align:center; color:#16a34a;">廃止 → ¥0</td>
+                            <td style="text-align:center; color:#16a34a;">廃止 → ¥0</td>
                         </tr>
-                        <tr>
-                            <td><strong>入退室管理</strong><br><span style="font-size:0.65rem; color:#64748b;">月額+初期 (5年合計)</span></td>
-                            <td class="c-unknown" style="text-align:right;">¥150万+α<br><span style="font-size:0.6rem;">SECOM保守不明<br>+SVR更新¥150万</span></td>
-                            <td style="text-align:right;">¥756万<br><span style="font-size:0.6rem;">LAJ Azure移設</span></td>
-                            <td style="text-align:right;">¥1,596万<br><span style="font-size:0.6rem;">SPLATS ¥1万/扉/月<br>×21扉+工事¥336万</span></td>
-                            <td style="text-align:right;">¥1,596万<br><span style="font-size:0.6rem;">同左</span></td>
+                        <tr class="detail-row">
+                            <td>Cato基本ライセンス<span class="calc">Socket1台+Mobile込 / 年額</span></td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td style="text-align:right;">¥2,500万<span class="calc">¥500万/年 × 5年</span></td>
+                            <td style="text-align:right;">¥2,500万<span class="calc">¥500万/年 × 5年</span></td>
+                            <td style="text-align:right;">¥2,100万<span class="calc">¥420万/年 × 5年<br>※Socket不要で減額想定</span></td>
                         </tr>
-                        <tr>
-                            <td><strong>FS/MFP/OrCAD</strong><br><span style="font-size:0.65rem; color:#64748b;">②③④の対策費用</span></td>
+                        <tr class="detail-row">
+                            <td>Cato Socket追加<span class="calc">¥80万/台/年</span></td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td style="text-align:right; color:#dc2626; font-weight:600;">+¥2,800万<span class="calc">7台 × ¥80万 × 5年</span></td>
+                            <td style="text-align:right; color:#ea580c; font-weight:600;">+¥1,200万<span class="calc">3台 × ¥80万 × 5年</span></td>
+                            <td style="text-align:right; color:#16a34a;">¥0<span class="calc">追加不要</span></td>
+                        </tr>
+                        <tr class="detail-row">
+                            <td>Cato マネージド運用<span class="calc">¥60万/年 × 5年</span></td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td style="text-align:right;">¥300万</td>
+                            <td style="text-align:right;">¥300万</td>
+                            <td style="text-align:right;">¥300万</td>
+                        </tr>
+                        <tr class="detail-row">
+                            <td>Cato 初期導入費</td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td style="text-align:right;">¥50万</td>
+                            <td style="text-align:right;">¥50万</td>
+                            <td style="text-align:right;">¥50万</td>
+                        </tr>
+                        <tr class="subtotal-row">
+                            <td>ネットワーク小計</td>
+                            <td style="text-align:right;">¥420万</td>
+                            <td class="c-high" style="text-align:right;">¥5,650万</td>
+                            <td style="text-align:right;">¥4,050万</td>
+                            <td class="c-low" style="text-align:right;">¥2,450万</td>
+                        </tr>
+
+                        <!-- ========== 2. 入退室管理 ========== -->
+                        <tr class="section-label"><td colspan="5">▼ 2. 入退室管理</td></tr>
+                        <tr class="detail-row">
+                            <td>SECOM保守料（現行月額）<span class="calc">神山氏の回答待ち</span></td>
+                            <td class="c-unknown" style="text-align:right; font-style:italic;">　</td>
+                            <td style="text-align:center; color:#16a34a;">廃止 → ¥0</td>
+                            <td style="text-align:center; color:#16a34a;">廃止 → ¥0</td>
+                            <td style="text-align:center; color:#16a34a;">廃止 → ¥0</td>
+                        </tr>
+                        <tr class="detail-row">
+                            <td>TRIISVR更新費（推定）<span class="calc">現行サーバー入替時</span></td>
+                            <td style="text-align:right;">¥150万</td>
+                            <td style="text-align:center; color:#16a34a;">不要</td>
+                            <td style="text-align:center; color:#16a34a;">不要</td>
+                            <td style="text-align:center; color:#16a34a;">不要</td>
+                        </tr>
+                        <tr class="detail-row">
+                            <td>LAJ Azure移設<span class="calc">初期¥39万+月額¥9.8万×60+Azure基盤</span></td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td style="text-align:right;">¥756万<span class="calc">LAJ 5年TCO</span></td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                        </tr>
+                        <tr class="detail-row">
+                            <td>SPLATS月額利用料<span class="calc">¥1万/扉/月 × 21扉</span></td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td style="text-align:right;">¥1,260万<span class="calc">¥21万/月 × 60ヶ月</span></td>
+                            <td style="text-align:right;">¥1,260万</td>
+                        </tr>
+                        <tr class="detail-row">
+                            <td>SPLATS工事費<span class="calc">リーダー交換・設置 ¥16万/扉</span></td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td style="text-align:right;">¥336万<span class="calc">¥16万 × 21扉</span></td>
+                            <td style="text-align:right;">¥336万</td>
+                        </tr>
+                        <tr class="subtotal-row">
+                            <td>入退室管理小計</td>
+                            <td class="c-unknown" style="text-align:right;">¥150万+α</td>
+                            <td style="text-align:right;">¥756万</td>
+                            <td style="text-align:right;">¥1,596万</td>
+                            <td style="text-align:right;">¥1,596万</td>
+                        </tr>
+
+                        <!-- ========== 3. ファイルサーバー ========== -->
+                        <tr class="section-label"><td colspan="5">▼ 3. ファイルサーバー移行</td></tr>
+                        <tr class="detail-row">
+                            <td>クラウドFS移行費<span class="calc">Azure Files / SharePoint 等</span></td>
                             <td style="text-align:center; color:#cbd5e1;">—</td>
                             <td style="text-align:center; color:#cbd5e1;">—</td>
                             <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td class="blank-cell">要見積</td>
+                        </tr>
+                        <tr class="detail-row">
+                            <td>クラウドFS月額<span class="calc">ストレージ・ライセンス</span></td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td class="blank-cell">要見積</td>
+                        </tr>
+                        <tr class="subtotal-row">
+                            <td>FS小計</td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td class="c-unknown" style="text-align:center;">要見積</td>
+                        </tr>
+
+                        <!-- ========== 4. 複合機(MFP) ========== -->
+                        <tr class="section-label"><td colspan="5">▼ 4. 複合機(MFP)対応</td></tr>
+                        <tr class="detail-row">
+                            <td>SMTP/LDAP設定変更<span class="calc">ファームウェア更新・OAuth対応</span></td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td class="blank-cell">要調査</td>
+                        </tr>
+                        <tr class="subtotal-row">
+                            <td>MFP小計</td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td class="c-unknown" style="text-align:center;">要調査</td>
+                        </tr>
+
+                        <!-- ========== 5. 移行・導入費用 ========== -->
+                        <tr class="section-label"><td colspan="5">▼ 5. 移行・導入費用（SI/PM）</td></tr>
+                        <tr class="detail-row">
+                            <td>設計・構築・テスト<span class="calc">ベンダーSI費用</span></td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td class="blank-cell">要見積</td>
+                            <td class="blank-cell">要見積</td>
+                            <td class="blank-cell">要見積</td>
+                        </tr>
+                        <tr class="detail-row">
+                            <td>教育・マニュアル整備<span class="calc">利用者向け研修・手順書</span></td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td class="blank-cell">　</td>
+                            <td class="blank-cell">　</td>
+                            <td class="blank-cell">　</td>
+                        </tr>
+                        <tr class="subtotal-row">
+                            <td>移行費小計</td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td class="c-unknown" style="text-align:center;">要見積</td>
+                            <td class="c-unknown" style="text-align:center;">要見積</td>
                             <td class="c-unknown" style="text-align:center;">要見積</td>
                         </tr>
                     </tbody>
@@ -1032,19 +1172,18 @@
                     B（Catoのみ導入）を基準として、入退室管理をSPLATSに入れ替える（C）と<strong>5年で¥760万削減</strong>。
                     さらにFS移行等の全対策を実施する（D）と<strong>5年で¥2,360万以上削減</strong>。
                     入退室管理の月額はLAJ移設より高くなるが、Socket削減によるCato費用の圧縮がそれを大きく上回る。
-                    <br><span style="font-size:0.72rem; color:#94a3b8;">
-                    Cato内訳: ライセンス ¥500万/年(Socket1台+Mobile込) + Socket追加 ¥80万/台/年 + マネージド ¥60万/年 + 初期¥50万
-                    </span>
+                    <br>
+                    ※ 5年合計はカテゴリ1＋2の確定分のみ。カテゴリ3〜5は見積取得後に加算されます。
                 </div>
 
                 <div style="margin-top: 0.75rem; padding: 10px 14px; background: rgba(245,158,11,0.08); border-left: 3px solid #f59e0b; border-radius: 0 8px 8px 0; font-size: 0.72rem; color: #78716c; line-height: 1.7;">
                     <strong style="color: #92400e;">注意事項:</strong><br>
-                    ・ 本表はネットワーク＋入退室管理の直接コストのみを比較しています<br>
-                    ・ <strong>システム入替に伴う間接費用（FS移行費、カード再発行、教育、工事立会い等）は含んでいません</strong><br>
-                    ・ SECOM現行費用（保守料・月額利用料）は神山氏の回答待ちのため「α」表記<br>
-                    ・ Cato費用: SCSK角田氏見積ベース / 入退室: メーカー公表価格ベース（正式見積ではない）<br>
-                    ・ SPLATS: ベーシック ¥10,000/扉/月×21扉×60ヶ月 + 工事費¥336万（参考: 1扉¥16万）<br>
-                    ・ ALLIGATE参考: Lock Pro ¥18,000/扉/月×21扉の場合、入退室5年で¥2,268万+初期費 → C案より約¥672万増
+                    ・ SECOM現行費用（保守料・月額利用料）は神山氏の回答待ちのため空欄<br>
+                    ・ Cato費用: SCSK角田氏見積ベース（Mobile 200名想定、100名で再見積依頼中）<br>
+                    ・ SPLATS: ベーシック ¥10,000/扉/月 × 21扉 × 60ヶ月 + 工事費 ¥16万/扉 × 21扉<br>
+                    ・ ALLIGATE参考: Lock Pro ¥18,000/扉/月の場合 → 入退室5年で¥2,268万+初期費（C案より約¥672万増）<br>
+                    ・ LAJ Azure移設: 15.02_SECOM比較資料の5年TCOベース（初期¥39万+月額¥9.8万+Azure基盤費含む）<br>
+                    ・ カテゴリ3〜5は今後ベンダー見積を取得して記入予定
                 </div>
             </div>
 
