@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
         rel="stylesheet">
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔐</text></svg>">
@@ -34,14 +34,12 @@
         * { box-sizing: border-box; }
 
         body {
-            font-family: 'Outfit', 'Inter', "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
             background-color: var(--bg-body);
             color: var(--text-main);
             margin: 0;
             padding: 0;
             line-height: 1.6;
-            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
-            background-size: 32px 32px;
         }
 
         .container {
@@ -50,43 +48,43 @@
             padding: 30px;
         }
 
-        .version-header {
-            background: #1e293b;
-            color: white;
-            padding: 10px 25px;
-            border-radius: 99px;
-            margin-bottom: 30px;
-            font-size: 0.85rem;
+        .page-header {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border);
+            padding: 0 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .page-header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 56px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            box-shadow: var(--shadow-md);
-        }
-
-        .header {
-            display: flex;
             justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 40px;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border);
         }
-
-        .header h1 {
-            font-size: 2.1rem;
-            font-weight: 800;
-            margin: 0;
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        .back-link:hover { color: #2563eb; }
+        .page-title {
+            font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
             color: #0f172a;
-            letter-spacing: -0.02em;
         }
-
-        .header-sub {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-top: 8px;
+        .page-version {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            font-weight: 500;
         }
 
         /* Dashboard KPIs */
@@ -407,27 +405,22 @@
 </head>
 
 <body>
-    <div class="container">
-        <!-- Version Header -->
-        <div class="version-header">
-            <span>入退室管理 フルクラウド型 ベンダー調査 | プロジェクト 15.02b</span>
-            <span id="version-date">ver 2026-02-18c ALLIGATE打合せ確定・Akerun提案資料PDF解析反映</span>
+    <!-- Sticky Header -->
+    <div class="page-header">
+        <div class="page-header-inner">
+            <a href="index.html" class="back-link">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+                INDEX
+            </a>
+            <div class="page-title">入退室管理 フルクラウド型 ベンダー調査</div>
+            <div class="page-version" id="version-date">ver 2026-02-18c</div>
         </div>
+    </div>
 
-        <!-- Header -->
-        <div class="header">
-            <div>
-                <h1>入退室管理 フルクラウド型 ベンダー調査</h1>
-                <div class="header-sub">
-                    SECOM セサモTRII → フルクラウド型入退室管理への切替検討<br>
-                    調査期間: 2026年2月〜 ｜ 予算申請期限: 2026-02-24
-                </div>
-            </div>
-        </div>
+    <div class="container">
 
         <!-- Navigation -->
         <div class="nav-pills no-print">
-            <a href="index.html" class="nav-pill" style="background: #1e293b; color: white; border-color: #1e293b;">← HUB</a>
             <a href="#sec-dashboard" class="nav-pill">概況</a>
             <a href="#sec-requirements" class="nav-pill">要件</a>
             <a href="#sec-comparison" class="nav-pill">ベンダー比較</a>
