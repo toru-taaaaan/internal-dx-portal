@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔐</text></svg>">
+    <title>入退室管理 フルクラウド型 ベンダー調査</title>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --accent: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #6366f1;
+            --bg-body: #f8fafc;
+            --surface: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Outfit', 'Inter', "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        .version-header {
+            background: #1e293b;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 99px;
+            margin-bottom: 30px;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+        }
+
+        .header-sub {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        /* Dashboard KPIs */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .kpi-card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 20px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+        }
+
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .kpi-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 4px;
+        }
+
+        /* Section card */
+        .section-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 35px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0 0 25px 0;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title::before {
+            content: "";
+            width: 6px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            text-align: left;
+        }
+
+        th:last-child, td:last-child { border-right: none; }
+        tr:last-child td { border-bottom: none; }
+
+        th {
+            background: #f8fafc;
+            color: #475569;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        /* Sticky first column */
+        .comparison-table th:first-child,
+        .comparison-table td:first-child {
+            position: sticky;
+            left: 0;
+            background: white;
+            z-index: 1;
+            font-weight: 600;
+        }
+        .comparison-table th:first-child {
+            background: #f8fafc;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-ok { background: #d1fae5; color: #065f46; }
+        .badge-ng { background: #fee2e2; color: #991b1b; }
+        .badge-pending { background: #fef3c7; color: #92400e; }
+        .badge-waiting { background: #e0e7ff; color: #3730a3; }
+        .badge-info { background: #f1f5f9; color: #475569; }
+
+        .status-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .dot-green { background: var(--accent); }
+        .dot-yellow { background: var(--warning); }
+        .dot-gray { background: #94a3b8; }
+        .dot-blue { background: var(--info); }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+            padding: 16px 20px;
+            background: #f8fafc;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -26px;
+            top: 20px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 2px solid white;
+        }
+
+        .timeline-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .timeline-content {
+            margin-top: 6px;
+            font-size: 0.9rem;
+        }
+
+        .timeline-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .tag-send { background: #dbeafe; color: #1e40af; }
+        .tag-recv { background: #d1fae5; color: #065f46; }
+        .tag-doc { background: #fae8ff; color: #86198f; }
+        .tag-mtg { background: #fef3c7; color: #92400e; }
+
+        /* Action items */
+        .action-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+        }
+
+        .action-item.urgent {
+            border-left: 4px solid var(--danger);
+            background: #fef2f2;
+        }
+
+        .action-item.normal {
+            border-left: 4px solid var(--primary);
+        }
+
+        .action-priority {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .priority-high { background: #fee2e2; color: #991b1b; }
+        .priority-mid { background: #fef3c7; color: #92400e; }
+        .priority-low { background: #e0e7ff; color: #3730a3; }
+
+        /* Evidence */
+        .evidence-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            margin-bottom: 10px;
+        }
+
+        .evidence-icon {
+            font-size: 1.5rem;
+            width: 40px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .evidence-meta {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Requirements checklist */
+        .req-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .req-card {
+            padding: 20px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            background: #f8fafc;
+        }
+
+        .req-card h4 {
+            margin: 0 0 8px 0;
+            font-size: 0.95rem;
+        }
+
+        .req-card p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Responsive table wrapper */
+        .table-scroll {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Print */
+        @media print {
+            body { background: white; background-image: none; }
+            .container { max-width: 100%; padding: 10px; }
+            .section-card { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; }
+            .no-print { display: none; }
+        }
+
+        /* Nav */
+        .nav-pills {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .nav-pill {
+            padding: 8px 16px;
+            border-radius: 99px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--text-muted);
+            background: white;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .nav-pill:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Version Header -->
+        <div class="version-header">
+            <span>入退室管理 フルクラウド型 ベンダー調査 | プロジェクト 15.02b</span>
+            <span id="version-date">ver 2026-02-18</span>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <h1>入退室管理 フルクラウド型 ベンダー調査</h1>
+                <div class="header-sub">
+                    SECOM セサモTRII → フルクラウド型入退室管理への切替検討<br>
+                    調査期間: 2026年2月〜 ｜ 予算申請期限: 2026-02-24
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-pills no-print">
+            <a href="#sec-dashboard" class="nav-pill">Dashboard</a>
+            <a href="#sec-requirements" class="nav-pill">要件</a>
+            <a href="#sec-comparison" class="nav-pill">ベンダー比較</a>
+            <a href="#sec-detail-alligate" class="nav-pill">ALLIGATE</a>
+            <a href="#sec-detail-akerun" class="nav-pill">Akerun</a>
+            <a href="#sec-detail-bitlock" class="nav-pill">bitlock PRO</a>
+            <a href="#sec-detail-secom" class="nav-pill">SECOM</a>
+            <a href="#sec-timeline" class="nav-pill">コミュニケーション履歴</a>
+            <a href="#sec-evidence" class="nav-pill">エビデンス</a>
+            <a href="#sec-actions" class="nav-pill">Next Actions</a>
+        </div>
+
+        <!-- sec-dashboard: KPIs -->
+        <section id="sec-dashboard">
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-value">7</div>
+                    <div class="kpi-label">調査ベンダー数</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" style="color: var(--accent);">1</div>
+                    <div class="kpi-label">回答済み</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" style="color: var(--warning);">6</div>
+                    <div class="kpi-label">回答待ち</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" style="color: var(--danger);">6</div>
+                    <div class="kpi-label">2/24まで残日数</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" style="color: var(--info);">4/4</div>
+                    <div class="kpi-label">ALLIGATE 要件充足</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- sec-requirements: 必須要件 -->
+        <section id="sec-requirements" class="section-card">
+            <div class="section-title">必須要件（4項目）</div>
+            <div class="req-grid">
+                <div class="req-card">
+                    <h4>1. VPN不要・クラウド完結</h4>
+                    <p>リーダー/機器からクラウドへの通信がLTE・WiFi等で完結し、VPNや拠点側サーバーが不要であること。Cato SASE導入の前提条件。</p>
+                </div>
+                <div class="req-card">
+                    <h4>2. FeliCaカード継続利用</h4>
+                    <p>既存のFeliCaカード（全従業員配布済み）をそのまま利用できること。カード再発行コストの回避。</p>
+                </div>
+                <div class="req-card">
+                    <h4>3. CSVファイル出力</h4>
+                    <p>入退室ログのCSVエクスポート機能。e-works勤怠管理システムへのファイル取込（フォルダベース）に使用。※e-worksはAPI非対応。</p>
+                </div>
+                <div class="req-card">
+                    <h4>4. 複数拠点一元管理</h4>
+                    <p>全8拠点（東京本社・大阪・福岡・名古屋・京橋・和歌山・多摩・橋本）を一つの管理画面で運用。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- sec-comparison: ベンダー比較マトリクス -->
+        <section id="sec-comparison" class="section-card">
+            <div class="section-title">ベンダー比較マトリクス</div>
+            <div class="table-scroll">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th style="min-width: 130px;">項目</th>
+                            <th>SECOM<br><small>セサモクラウド</small></th>
+                            <th style="background: #eff6ff;">ALLIGATE<br><small>アート</small></th>
+                            <th>Akerun<br><small>Photosynth</small></th>
+                            <th>SPLATS<br><small>YE DIGITAL</small></th>
+                            <th>bitlock PRO<br><small>ビットキー</small></th>
+                            <th>FreeiD<br><small>DXYZ</small></th>
+                            <th>カギカン<br><small>Qrio</small></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>回答状態</strong></td>
+                            <td><span class="badge badge-waiting">回答待ち</span></td>
+                            <td style="background: #eff6ff;"><span class="badge badge-ok">回答済 2/18</span></td>
+                            <td><span class="badge badge-waiting">回答待ち</span></td>
+                            <td><span class="badge badge-waiting">回答待ち</span></td>
+                            <td><span class="badge badge-waiting">回答待ち</span></td>
+                            <td><span class="badge badge-waiting">回答待ち</span></td>
+                            <td><span class="badge badge-ng">FeliCa非対応</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>1. VPN不要</strong></td>
+                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td style="background: #eff6ff;"><span class="badge badge-ok">OK</span></td>
+                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td><span class="badge badge-info">-</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. FeliCa</strong></td>
+                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td style="background: #eff6ff;"><span class="badge badge-ok">OK</span></td>
+                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td><span class="badge badge-ng">非対応</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. CSV出力</strong></td>
+                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td style="background: #eff6ff;"><span class="badge badge-ok">OK</span></td>
+                            <td><span class="badge badge-pending">API+CSV</span></td>
+                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td><span class="badge badge-pending">CSV</span></td>
+                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td><span class="badge badge-info">CSV</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>4. 複数拠点</strong></td>
+                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td style="background: #eff6ff;"><span class="badge badge-ok">OK</span></td>
+                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td><span class="badge badge-info">-</span></td>
+                        </tr>
+                        <tr style="background: #f8fafc;">
+                            <td><strong>要件充足</strong></td>
+                            <td><strong>0/4</strong></td>
+                            <td style="background: #eff6ff;"><strong style="color: var(--accent);">4/4</strong></td>
+                            <td><strong>0/4</strong></td>
+                            <td><strong>0/4</strong></td>
+                            <td><strong>0/4</strong></td>
+                            <td><strong>0/4</strong></td>
+                            <td><strong style="color: var(--danger);">脱落</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>資料入手</strong></td>
+                            <td><span class="badge badge-waiting">なし</span></td>
+                            <td style="background: #eff6ff;"><span class="badge badge-ok">PDF</span></td>
+                            <td><span class="badge badge-pending">DLリンクあり</span></td>
+                            <td><span class="badge badge-waiting">なし</span></td>
+                            <td><span class="badge badge-pending">DLリンクあり</span></td>
+                            <td><span class="badge badge-waiting">なし</span></td>
+                            <td><span class="badge badge-info">-</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>見積条件</strong></td>
+                            <td>-</td>
+                            <td style="background: #eff6ff;">扉数+扉写真</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>利用人数+扉数<br>+扉写真+寸法</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>初期費用</strong></td>
+                            <td>不明</td>
+                            <td style="background: #eff6ff;">要問合せ<br><small>(扉数で見積)</small></td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>月額費用</strong></td>
+                            <td>不明</td>
+                            <td style="background: #eff6ff;"><strong>18,000円/扉</strong><br><small>(税抜・Lock Pro)<br>13,000円/扉(Lock)</small></td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>課金単位</strong></td>
+                            <td>不明</td>
+                            <td style="background: #eff6ff;"><strong>扉数課金</strong><br><small>(人数で変動しない)</small></td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>導入期間</strong></td>
+                            <td>不明</td>
+                            <td style="background: #eff6ff;">既存カード: 約1ヶ月<br><small>新規カード: 1〜2週間<br>+設置工事日程調整</small></td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>通信方式</strong></td>
+                            <td>不明</td>
+                            <td style="background: #eff6ff;"><strong>LTE(SIM内蔵)</strong><br><small>WiFiフォールバック</small></td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>障害時動作</strong></td>
+                            <td>不明</td>
+                            <td style="background: #eff6ff;"><span class="badge badge-ok">スタンドアロン</span><br><small>解錠施錠に影響なし</small></td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>設置方式</strong></td>
+                            <td>不明</td>
+                            <td style="background: #eff6ff;">専門作業員設置<br><small>既設入替時: 電源・配線・<br>電気錠流用可</small></td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>サムターン後付型<br><small>(寸法確認必要)</small></td>
+                            <td>不明</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>認証方式</strong></td>
+                            <td>不明</td>
+                            <td style="background: #eff6ff;">ICカード(FeliCa/MIFARE)<br>スマホNFC・スマホアプリ(BLE)<br>テンキー・顔認証(opt)<br>物理鍵・遠隔解錠</td>
+                            <td>スマホ/ICカード/暗証番号</td>
+                            <td>不明</td>
+                            <td>スマホ/ICカード/暗証番号/顔</td>
+                            <td>顔認証</td>
+                            <td>スマホ/暗証番号</td>
+                        </tr>
+                        <tr>
+                            <td><strong>最大ID数/装置</strong></td>
+                            <td>不明</td>
+                            <td style="background: #eff6ff;">Lock Pro: 40,000<br>Lock: 12,000</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>API連携</strong></td>
+                            <td>不明</td>
+                            <td style="background: #eff6ff;"><span class="badge badge-ok">Web API公開</span><br><small>自社システム連携可</small></td>
+                            <td>API+CSV</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>勤怠連携</strong></td>
+                            <td>不明</td>
+                            <td style="background: #eff6ff;">TeamSpirit/KING OF TIME<br>ジョブカン/e就業ASP<br><small>+CSV出力+API</small></td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>防犯カメラ連携</strong></td>
+                            <td>不明</td>
+                            <td style="background: #eff6ff;"><span class="badge badge-ok">Safie連携</span></td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>設備連携</strong></td>
+                            <td>不明</td>
+                            <td style="background: #eff6ff;">警備連動・火報連動<br>自動ドア・フラッパーゲート<br>電動シャッター・インターフォン</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>アンチパスバック</strong></td>
+                            <td>不明</td>
+                            <td style="background: #eff6ff;"><span class="badge badge-ok">対応</span><br><small>Lock Pro: 最大8扉<br>Lock: 1扉</small></td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>保守・保証</strong></td>
+                            <td>不明</td>
+                            <td style="background: #eff6ff;">月額に含む<br><small>24/365保守+無償機器交換<br>SLA: 99.75%稼働率</small></td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>契約形態</strong></td>
+                            <td>不明</td>
+                            <td style="background: #eff6ff;">月額レンタル制<br><small>(購入ではなくレンタル)</small></td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>管理者ログイン</strong></td>
+                            <td>不明</td>
+                            <td style="background: #eff6ff;">SSO(Google/Apple/OneLogin)<br>2FA(SMS)・IP制限(opt)</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>停電時動作</strong></td>
+                            <td>不明</td>
+                            <td style="background: #eff6ff;">電気錠仕様依存<br><small>(施錠/解錠/保持の3種)</small></td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>既存データ移行</strong></td>
+                            <td>不明</td>
+                            <td style="background: #eff6ff;">Excel/CSV一括登録<br><small>(1日で完了可能)</small></td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>不明</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>担当者</strong></td>
+                            <td>神山 直己</td>
+                            <td style="background: #eff6ff;">丸亀 麻綾</td>
+                            <td>江口 (Photosynth)</td>
+                            <td>担当者未定<br><small>(クマヒラ)</small></td>
+                            <td>チーム<br><small>(ビットキー)</small></td>
+                            <td>担当者未定<br><small>(DXYZ)</small></td>
+                            <td>サポート<br><small>(Qrio)</small></td>
+                        </tr>
+                        <tr>
+                            <td><strong>備考</strong></td>
+                            <td>同一メーカー。<br>既存カード継続の可能性最大</td>
+                            <td style="background: #eff6ff;">4要件クリア。<br>Lock Pro推奨(18,000円/扉/月)。<br>扉数課金(人数不問)。<br>既設入替は電源流用可。<br>スタンドアロン動作。<br>API公開済み。</td>
+                            <td>導入実績豊富。<br>FeliCa要確認。<br>資料DLリンクあり。<br>WEB MTG予約可</td>
+                            <td>YE DIGITAL<br>(上場企業)。<br>担当者から後日連絡</td>
+                            <td>サムターン後付型。<br>製品資料DLリンクあり。<br>見積テンプレートあり。<br>設置可否資料あり</td>
+                            <td>顔認証特化。<br>担当者から後日連絡</td>
+                            <td>FeliCa非対応<br>で脱落。<br>回答に時間かかる旨</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- sec-detail-alligate: ALLIGATE詳細 -->
+        <section id="sec-detail-alligate" class="section-card">
+            <div class="section-title">ALLIGATE 回答詳細（2026-02-18受信 + PDF資料解析）</div>
+
+            <!-- 回答サマリ + 会社概要 -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h4 style="margin: 0 0 12px 0; color: var(--primary);">回答サマリ（メール 2/18）</h4>
+                    <table>
+                        <tr><td style="width: 40%;"><strong>確認事項1〜4</strong></td><td><span class="badge badge-ok">すべて対応可能</span></td></tr>
+                        <tr><td><strong>費用見積</strong></td><td>8拠点の扉数 + 扉写真を共有すれば概算見積</td></tr>
+                        <tr><td><strong>納期</strong></td><td>既存カード利用: 約1ヶ月 / 新規カード: 1〜2週間</td></tr>
+                        <tr><td><strong>次ステップ</strong></td><td>オンライン打合せ（日程候補を返す）</td></tr>
+                    </table>
+                </div>
+                <div>
+                    <h4 style="margin: 0 0 12px 0; color: var(--primary);">会社概要（PDF p.5-6）</h4>
+                    <table>
+                        <tr><td><strong>社名</strong></td><td>株式会社アート（ISBグループ）</td></tr>
+                        <tr><td><strong>設立</strong></td><td>1976年（入退室管理50年）</td></tr>
+                        <tr><td><strong>従業員</strong></td><td>169名</td></tr>
+                        <tr><td><strong>導入実績</strong></td><td>13,000ゲート超</td></tr>
+                        <tr><td><strong>解約率</strong></td><td>0.29%</td></tr>
+                        <tr><td><strong>稼働率SLA</strong></td><td>99.75%</td></tr>
+                        <tr><td><strong>競合からの乗換</strong></td><td>53.55%</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 製品ラインナップ -->
+            <div style="margin-top: 24px;">
+                <h4 style="margin: 0 0 12px 0; color: var(--primary);">製品ラインナップ（PDF p.21-36）</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>製品</th>
+                            <th>タイプ</th>
+                            <th>月額/扉(税抜)</th>
+                            <th>最大ID数</th>
+                            <th>テンキー</th>
+                            <th>顔認証</th>
+                            <th>スケジュール管理</th>
+                            <th>備考</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #eff6ff; font-weight: 600;">
+                            <td>Lock Pro</td>
+                            <td>電気錠(電源式)</td>
+                            <td><strong>18,000円</strong></td>
+                            <td>40,000</td>
+                            <td><span class="badge badge-ok">OK</span></td>
+                            <td><span class="badge badge-ok">opt</span></td>
+                            <td><span class="badge badge-ok">OK</span></td>
+                            <td>推奨。フル機能</td>
+                        </tr>
+                        <tr>
+                            <td>Lock</td>
+                            <td>電気錠(電源式)</td>
+                            <td>13,000円</td>
+                            <td>12,000</td>
+                            <td><span class="badge badge-ng">-</span></td>
+                            <td><span class="badge badge-ng">-</span></td>
+                            <td><span class="badge badge-ng">-</span></td>
+                            <td>コンパクト版</td>
+                        </tr>
+                        <tr>
+                            <td>eSumLock</td>
+                            <td>スマートロック(電池)</td>
+                            <td>要問合せ</td>
+                            <td>-</td>
+                            <td><span class="badge badge-ok">OK</span></td>
+                            <td><span class="badge badge-ng">-</span></td>
+                            <td><span class="badge badge-ng">-</span></td>
+                            <td>後付け型</td>
+                        </tr>
+                        <tr>
+                            <td>CylinderLock</td>
+                            <td>シリンダー錠(電池)</td>
+                            <td>要問合せ</td>
+                            <td>-</td>
+                            <td><span class="badge badge-ng">-</span></td>
+                            <td><span class="badge badge-ng">-</span></td>
+                            <td><span class="badge badge-ng">-</span></td>
+                            <td>ローコスト</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 主要機能 -->
+            <div style="margin-top: 24px;">
+                <h4 style="margin: 0 0 12px 0; color: var(--primary);">Lock Pro 主要機能（PDF p.23, 33-35）</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; font-size: 0.85rem;">
+                    <div style="padding: 12px; background: #f0fdf4; border-radius: 8px; border: 1px solid #bbf7d0;">
+                        <strong style="color: #166534;">解錠方式</strong><br>
+                        ICカード(FeliCa/MIFARE) / スマホNFC / スマホアプリ(BLE) / テンキー / 顔認証(opt) / 物理鍵 / 遠隔解錠
+                    </div>
+                    <div style="padding: 12px; background: #f0fdf4; border-radius: 8px; border: 1px solid #bbf7d0;">
+                        <strong style="color: #166534;">管理機能</strong><br>
+                        通行権限(曜日・時間帯) / オートロック / アンチパスバック(最大8扉) / 在室確認 / カスタマイズ権限
+                    </div>
+                    <div style="padding: 12px; background: #f0fdf4; border-radius: 8px; border: 1px solid #bbf7d0;">
+                        <strong style="color: #166534;">連携</strong><br>
+                        Web API公開 / Safie(防犯カメラ) / TeamSpirit / KING OF TIME / ジョブカン / e就業ASP / SmartHR
+                    </div>
+                    <div style="padding: 12px; background: #eff6ff; border-radius: 8px; border: 1px solid #bfdbfe;">
+                        <strong style="color: #1e40af;">設備連動</strong><br>
+                        警備連動(最終退出) / 火報連動(パニックオープン) / 自動ドア / フラッパーゲート / 電動シャッター / インターフォン
+                    </div>
+                    <div style="padding: 12px; background: #eff6ff; border-radius: 8px; border: 1px solid #bfdbfe;">
+                        <strong style="color: #1e40af;">セキュリティ</strong><br>
+                        SSO(Google/Apple/OneLogin) / 2FA(SMS) / IP制限(5,000円/月opt) / 防水・屋外対応 / スタンドアロン動作(障害時)
+                    </div>
+                    <div style="padding: 12px; background: #eff6ff; border-radius: 8px; border: 1px solid #bfdbfe;">
+                        <strong style="color: #1e40af;">データ出力</strong><br>
+                        各種CSVインポート・エクスポート / 動態タイムカード作成 / メール通知(ログ+イベント) / 操作ログ(監査)
+                    </div>
+                </div>
+            </div>
+
+            <!-- 構成機器 -->
+            <div style="margin-top: 24px;">
+                <h4 style="margin: 0 0 12px 0; color: var(--primary);">構成機器・設置（PDF p.25-26）</h4>
+                <table>
+                    <tr><td style="width:30%;"><strong>カードリーダー</strong></td><td>118×117×26mm（扉内外両方に設置）</td></tr>
+                    <tr><td><strong>制御盤</strong></td><td>W300×H400×D80mm（電気錠コントローラー+ゲートウェイ+コンセントBOX）</td></tr>
+                    <tr><td><strong>ゲートウェイ(nextDrive)</strong></td><td>131×48mm（LTE SIM内蔵）</td></tr>
+                    <tr><td><strong>電源</strong></td><td>AC100V必要</td></tr>
+                    <tr><td><strong>既設入替え時</strong></td><td>電源・配線・電気錠は流用可能（カードリーダーと制御盤のみ入替）</td></tr>
+                </table>
+            </div>
+
+            <!-- FAQ重要ポイント -->
+            <div style="margin-top: 24px;">
+                <h4 style="margin: 0 0 12px 0; color: var(--primary);">FAQ重要ポイント（PDF p.48）</h4>
+                <table>
+                    <tr><td style="width:35%;"><strong>ネットワーク障害時</strong></td><td><span class="badge badge-ok">スタンドアロン動作</span> 解錠施錠に影響なし。ログ閲覧・権限変更・遠隔解錠のみ停止</td></tr>
+                    <tr><td><strong>複数拠点同一カード</strong></td><td><span class="badge badge-ok">可能</span> クラウドで一元管理。本社カードで別拠点の扉も解錠可</td></tr>
+                    <tr><td><strong>利用人数で価格変動</strong></td><td><span class="badge badge-ok">しない</span> 扉数または台数で月額決定</td></tr>
+                    <tr><td><strong>初回登録</strong></td><td>Excel/CSVで一括登録、1日で完了可能</td></tr>
+                    <tr><td><strong>停電時</strong></td><td>電気錠仕様依存（施錠/解錠/保持の3パターン）</td></tr>
+                    <tr><td><strong>設置可否確認</strong></td><td>扉写真で判断。現地訪問調査も可能</td></tr>
+                </table>
+            </div>
+
+            <!-- 見積に必要な情報 -->
+            <div style="margin-top: 24px;">
+                <h4 style="margin: 0 0 12px 0; color: var(--danger);">見積に必要な情報</h4>
+                <div style="display: flex; gap: 16px;">
+                    <div class="action-item urgent" style="flex: 1;">
+                        <span class="action-priority priority-high">必須</span>
+                        <div>8拠点それぞれの<strong>扉数</strong>を伝える</div>
+                    </div>
+                    <div class="action-item urgent" style="flex: 1;">
+                        <span class="action-priority priority-high">必須</span>
+                        <div>設置予定の<strong>扉の写真</strong>を送る（設置可否判断に使用）</div>
+                    </div>
+                    <div class="action-item normal" style="flex: 1;">
+                        <span class="action-priority priority-mid">推奨</span>
+                        <div>オンライン打合せ<strong>日程候補</strong>を返信</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 問い合わせ先 -->
+            <div style="margin-top: 16px; padding: 12px; background: #f8fafc; border-radius: 8px; border: 1px solid var(--border); font-size: 0.85rem;">
+                <strong>問い合わせ先:</strong> 担当: 丸亀 麻綾 (m.marugame@art-japan.co.jp / 080-7202-6304) |
+                一般: alligate_sales@art-japan.co.jp / 044-430-5321 (9:00〜17:30) |
+                資料管理番号: AL01-018-251125
+            </div>
+        </section>
+
+        <!-- sec-detail-akerun: Akerun詳細 -->
+        <section id="sec-detail-akerun" class="section-card">
+            <div class="section-title">Akerun 自動返信詳細（2026-02-17受信）</div>
+            <div style="font-size: 0.9rem;">
+                <p>自動返信のみ（担当者からの本回答は未着）。以下の情報が提供された:</p>
+                <table>
+                    <tr><td style="width: 30%;"><strong>サービス資料</strong></td><td>DLリンク送付済み（トラッキングURL、要手動DL）</td></tr>
+                    <tr><td><strong>WEB MTG</strong></td><td>予約可能（45分程度）。管理画面・実機デモあり。カレンダーから日程選択</td></tr>
+                    <tr><td><strong>電話相談</strong></td><td>即時対応可能（ボタンクリックで電話リクエスト）</td></tr>
+                    <tr><td><strong>取付診断</strong></td><td>扉写真を送ると事前に設置可否を診断</td></tr>
+                    <tr><td><strong>住所</strong></td><td>東京都港区芝5-29-11 G-BASE 田町15階</td></tr>
+                </table>
+                <p style="color: var(--warning); margin-top: 12px;"><strong>要件回答は未着。担当者からの連絡を待つ。</strong></p>
+            </div>
+        </section>
+
+        <!-- sec-detail-bitlock: bitlock PRO詳細 -->
+        <section id="sec-detail-bitlock" class="section-card">
+            <div class="section-title">bitlock PRO 自動返信詳細（2026-02-17受信）</div>
+            <div style="font-size: 0.9rem;">
+                <p>自動返信で以下の情報が提供された（要件への個別回答は未着）:</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <h4 style="margin: 0 0 12px 0; color: var(--primary);">提供資料</h4>
+                        <table>
+                            <tr><td><strong>製品資料</strong></td><td><a href="https://drive.google.com/file/d/1SHJA6f2s2LSTSDrn_UQpUFUp_iW4VMUP/view" target="_blank">Google Drive</a> <span class="badge badge-pending">未DL</span></td></tr>
+                            <tr><td><strong>設置可否資料</strong></td><td><a href="https://drive.google.com/file/d/1pntjgEnIIoiblqRtW8DQLZgbGG_6cZZY/view" target="_blank">Google Drive</a> <span class="badge badge-pending">未DL</span></td></tr>
+                        </table>
+                    </div>
+                    <div>
+                        <h4 style="margin: 0 0 12px 0; color: var(--primary);">概算見積に必要な情報</h4>
+                        <ol style="margin: 0; padding-left: 20px; color: var(--text-muted);">
+                            <li>1日あたりの利用人数</li>
+                            <li>入退室管理したい扉の情報と数</li>
+                            <li>導入希望時期</li>
+                        </ol>
+                    </div>
+                </div>
+                <div style="margin-top: 16px;">
+                    <h4 style="margin: 0 0 12px 0; color: var(--danger);">設置可否確認に必要な情報</h4>
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <div class="action-item urgent" style="flex: 1; min-width: 250px;">
+                            <span class="action-priority priority-high">必須</span>
+                            <div>4パターンの<strong>扉写真</strong></div>
+                        </div>
+                        <div class="action-item urgent" style="flex: 1; min-width: 250px;">
+                            <span class="action-priority priority-high">必須</span>
+                            <div><strong>サムターン寸法</strong>（つまみ長さ・厚さ・台座直径・ドア枠距離・高さ・ドアからの高さ）</div>
+                        </div>
+                        <div class="action-item normal" style="flex: 1; min-width: 250px;">
+                            <span class="action-priority priority-mid">確認</span>
+                            <div>コンセント: 扉内側<strong>3m以内</strong>の有無</div>
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top: 12px; font-size: 0.85rem; color: var(--text-muted);">
+                    住所: 東京都中央区京橋3-1-1 東京スクエアガーデン9F | Mail: team_inside_sales@bitkey.jp
+                </p>
+            </div>
+        </section>
+
+        <!-- sec-detail-secom: SECOM問い合わせ詳細 -->
+        <section id="sec-detail-secom" class="section-card">
+            <div class="section-title">SECOM 問い合わせ詳細（2026-02-17送信、回答待ち）</div>
+            <div style="font-size: 0.9rem;">
+                <p>神山直己氏（セコム築地支社）へ3項目の確認メールを送信済み。</p>
+                <table>
+                    <tr>
+                        <td style="width: 5%;"><strong>1</strong></td>
+                        <td style="width: 25%;"><strong>インターフェース機器の通信要件</strong></td>
+                        <td>VPN以外（インターネット経由セキュア通信等）でも動作可能か。再確認。</td>
+                        <td style="width: 15%;"><span class="badge badge-waiting">回答待ち</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>2</strong></td>
+                        <td><strong>クラウド型サービスへの移行</strong></td>
+                        <td>FeliCa継続 / e-works連携 / 複数拠点管理 / 既存履歴データ移行</td>
+                        <td><span class="badge badge-waiting">回答待ち</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>3</strong></td>
+                        <td><strong>現行費用の全体像</strong></td>
+                        <td>全拠点・全費目一覧（月額利用料・保守料・カード発行費・監視費・その他）</td>
+                        <td><span class="badge badge-waiting">回答待ち</span></td>
+                    </tr>
+                </table>
+                <div style="margin-top: 16px; padding: 16px; background: #f8fafc; border-radius: 8px; border: 1px solid var(--border);">
+                    <strong>SECOM台帳ベースの拠点情報（1/8 神山回答より）:</strong><br>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">
+                        11拠点: サーバー機, 東京本社, 大阪, 橋本, 福岡, 和歌山(3F), 和歌山(4F), 町田, 京橋, 多摩センター, 名古屋<br>
+                        ※和歌山: インターフェース2台 + 静脈認証機4台
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- sec-timeline: コミュニケーション履歴 -->
+        <section id="sec-timeline" class="section-card">
+            <div class="section-title">コミュニケーション履歴</div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2026-02-18 09:27 <span class="timeline-tag tag-recv">受信</span></div>
+                    <div class="timeline-content">
+                        <strong>ALLIGATE 丸亀麻綾</strong> → 丹治<br>
+                        4要件（VPN不要・FeliCa・CSV・複数拠点）すべて対応可能と回答。資料PDF送付。見積には扉数と写真が必要。オンライン打合せを提案。
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2026-02-17 20:49 <span class="timeline-tag tag-recv">自動返信</span></div>
+                    <div class="timeline-content">
+                        <strong>FreeiD (DXYZ)</strong> → 丹治<br>
+                        受付確認。担当者から後日連絡予定。
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2026-02-17 20:46 <span class="timeline-tag tag-recv">自動返信</span></div>
+                    <div class="timeline-content">
+                        <strong>bitlock PRO (ビットキー)</strong> → 丹治<br>
+                        受付確認。<strong>製品資料DLリンク</strong>と<strong>設置可否資料DLリンク</strong>送付。概算見積テンプレート（利用人数・扉数・導入時期・扉写真・サムターン寸法）提示。
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2026-02-17 20:43 <span class="timeline-tag tag-recv">自動返信</span></div>
+                    <div class="timeline-content">
+                        <strong>SPLATS (クマヒラ)</strong> → 丹治<br>
+                        受付確認。担当者から後日連絡予定。
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2026-02-17 20:40 <span class="timeline-tag tag-recv">自動返信</span></div>
+                    <div class="timeline-content">
+                        <strong>ALLIGATE (アート)</strong> → 丹治<br>
+                        受付確認。ALLIGATE総合資料PDFリンク送付。
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2026-02-17 20:37 <span class="timeline-tag tag-recv">自動返信</span></div>
+                    <div class="timeline-content">
+                        <strong>Akerun (Photosynth) 江口</strong> → 丹治<br>
+                        受付確認。<strong>サービス資料DLリンク</strong>送付。WEB MTG予約リンク（45分デモ）、電話相談、取付診断フォーム案内。
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2026-02-17 <span class="timeline-tag tag-recv">自動返信</span></div>
+                    <div class="timeline-content">
+                        <strong>カギカン (Qrio)</strong> → 丹治<br>
+                        受付確認（ID:66393）。回答に時間がかかる旨メッセージ。
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2026-02-17 20:30頃 <span class="timeline-tag tag-send">送信</span></div>
+                    <div class="timeline-content">
+                        <strong>丹治</strong> → 6社（Akerun, ALLIGATE, SPLATS, bitlock PRO, FreeiD, カギカン）<br>
+                        Webフォーム経由で一斉資料請求。共通要件: 8拠点、FeliCa、CSV、VPN不要、費用、導入期間。
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2026-02-17 18:28 <span class="timeline-tag tag-send">送信</span></div>
+                    <div class="timeline-content">
+                        <strong>丹治</strong> → SECOM 神山直己<br>
+                        3項目確認: (1)インターフェース機器のVPN以外通信可否 (2)クラウド型移行（FeliCa・e-works・複数拠点・履歴データ移行） (3)現行費用の全体像（全拠点・全費目一覧）
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- sec-evidence: エビデンス -->
+        <section id="sec-evidence" class="section-card">
+            <div class="section-title">エビデンス・資料</div>
+            <div class="evidence-card">
+                <div class="evidence-icon">📄</div>
+                <div>
+                    <strong>ALLIGATE 総合資料PDF</strong>
+                    <div class="evidence-meta">2026-02-18 | 丸亀麻綾より送付 | <a href="https://alligate.me/assets/pdf/alligate-all.pdf" target="_blank">ダウンロード</a></div>
+                </div>
+            </div>
+            <div class="evidence-card">
+                <div class="evidence-icon">📧</div>
+                <div>
+                    <strong>ALLIGATE 回答メール</strong>
+                    <div class="evidence-meta">2026-02-18 09:27 | m.marugame@art-japan.co.jp | 4要件すべて対応可能</div>
+                </div>
+            </div>
+            <div class="evidence-card">
+                <div class="evidence-icon">📄</div>
+                <div>
+                    <strong>Akerun サービス資料</strong>
+                    <div class="evidence-meta">2026-02-17 | 江口(Photosynth)より送付 | <span style="color: var(--danger); font-weight: 600;">未ダウンロード（要手動DL）</span></div>
+                </div>
+            </div>
+            <div class="evidence-card">
+                <div class="evidence-icon">📄</div>
+                <div>
+                    <strong>bitlock PRO 製品資料</strong>
+                    <div class="evidence-meta">2026-02-17 | ビットキーより送付 | <a href="https://drive.google.com/file/d/1SHJA6f2s2LSTSDrn_UQpUFUp_iW4VMUP/view?usp=sharing/" target="_blank">Google Drive</a> | <span style="color: var(--danger); font-weight: 600;">未ダウンロード</span></div>
+                </div>
+            </div>
+            <div class="evidence-card">
+                <div class="evidence-icon">📄</div>
+                <div>
+                    <strong>bitlock PRO 設置可否資料</strong>
+                    <div class="evidence-meta">2026-02-17 | ビットキーより送付 | <a href="https://drive.google.com/file/d/1pntjgEnIIoiblqRtW8DQLZgbGG_6cZZY/view?usp=drive_link" target="_blank">Google Drive</a> | <span style="color: var(--danger); font-weight: 600;">未ダウンロード</span></div>
+                </div>
+            </div>
+            <div class="evidence-card">
+                <div class="evidence-icon">📧</div>
+                <div>
+                    <strong>丹治 → 6社 資料請求（Webフォーム）</strong>
+                    <div class="evidence-meta">2026-02-17 20:30頃 | 各社自動返信受領済み（全6社確認）</div>
+                </div>
+            </div>
+            <div class="evidence-card">
+                <div class="evidence-icon">📧</div>
+                <div>
+                    <strong>丹治 → SECOM 神山 クラウド型確認メール</strong>
+                    <div class="evidence-meta">2026-02-17 18:28 | n-kamiyama@secom.co.jp | 3項目: 通信方式・クラウド移行・現行費用</div>
+                </div>
+            </div>
+            <div class="evidence-card">
+                <div class="evidence-icon">📝</div>
+                <div>
+                    <strong>e-works API非対応の確認（何子鵬 回答）</strong>
+                    <div class="evidence-meta">2025-11-11 | 「APIの提供は対応しておりません」→ フォルダベースのファイル取込方式</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- sec-context: 調査の背景・経緯 -->
+        <section id="sec-context" class="section-card">
+            <div class="section-title">調査の背景</div>
+            <div style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.8;">
+                <p>ネットワーク刷新（VPN→Cato SASE）の検討過程で、SECOM セサモTRII の入退室管理機器がVPN通信に依存していることが判明。Cato導入にはこのVPN依存の解消が前提条件となる。</p>
+                <p>当初は「サーバー移設型」（TRIISVRをクラウドに移設、IIJ/USEN/LAJで見積済み）のみ検討していたが、どうせ投資するなら入退室管理システム自体の見直しも選択肢に含めるべきと判断。2026-02-17より「フルクラウド型」（システム自体をクラウドネイティブに切替）の調査を並行開始。</p>
+                <p><strong>重要な発見:</strong> e-works（勤怠管理）との連携はAPIではなくフォルダベースのファイル取込方式であることが判明（2025-11-11 何子鵬回答）。これにより、CSVエクスポート可能なサービスであれば連携が再現可能であり、ベンダー選択の自由度が大幅に向上した。</p>
+            </div>
+        </section>
+
+        <!-- sec-actions: Next Actions -->
+        <section id="sec-actions" class="section-card">
+            <div class="section-title">Next Actions</div>
+
+            <!-- 共通準備（最優先） -->
+            <h4 style="color: var(--danger); margin: 0 0 12px 0;">0. 共通準備（複数ベンダーに必要・最優先）</h4>
+            <div class="action-item urgent">
+                <span class="action-priority priority-high">HIGH</span>
+                <div><strong>8拠点の扉数を精査</strong>（ALLIGATE見積 + bitlock PRO見積 + 予算概算 すべてに必須）<br>
+                <small style="color: var(--text-muted);">※ALLIGATEは扉数課金。扉数が分かれば 18,000円×扉数 で月額概算が即算出可能</small></div>
+            </div>
+            <div class="action-item urgent">
+                <span class="action-priority priority-high">HIGH</span>
+                <div><strong>主要な扉の写真を撮影</strong>（ALLIGATE設置可否判断 + bitlock PRO設置可否・寸法確認 両方に必要）<br>
+                <small style="color: var(--text-muted);">※ALLIGATE: 写真で判断、現地訪問調査も可。bitlock PRO: 4パターンの写真+サムターン寸法</small></div>
+            </div>
+
+            <!-- ALLIGATE返信 -->
+            <h4 style="color: var(--accent); margin: 20px 0 12px 0;">1. ALLIGATE丸亀氏へ返信 <span class="badge badge-ok">要件クリア済</span></h4>
+            <div class="action-item urgent">
+                <span class="action-priority priority-high">返信</span>
+                <div>丸亀氏 (m.marugame@art-japan.co.jp) へ返信。内容:<br>
+                <strong>(a)</strong> 8拠点の扉数一覧<br>
+                <strong>(b)</strong> 主要な扉の写真（設置可否判断用）<br>
+                <strong>(c)</strong> オンライン打合せの日程候補（2〜3候補）<br>
+                <small style="color: var(--text-muted);">※丸亀氏から「お打合せのご都合のよろしい日程候補をいくつかいただけますでしょうか」と依頼あり</small></div>
+            </div>
+
+            <!-- bitlock PRO返信 -->
+            <h4 style="color: var(--info); margin: 20px 0 12px 0;">2. bitlock PRO へ返信</h4>
+            <div class="action-item normal">
+                <span class="action-priority priority-mid">返信</span>
+                <div>team_inside_sales@bitkey.jp へ返信（見積テンプレート記入）。内容:<br>
+                <strong>(a)</strong> 1日あたりの利用人数<br>
+                <strong>(b)</strong> 入退室管理したい扉の情報と数<br>
+                <strong>(c)</strong> 導入希望時期<br>
+                <strong>(d)</strong> 扉写真（4パターン）<br>
+                <strong>(e)</strong> サムターン寸法（つまみ長さ/厚さ/台座直径/ドア枠距離/高さ/ドアからの高さ）<br>
+                <strong>(f)</strong> コンセント: 扉内側3m以内の有無<br>
+                <small style="color: var(--text-muted);">※自動返信メールに見積テンプレートあり。(d)(e)(f)は設置可否確認用</small></div>
+            </div>
+
+            <!-- Akerun対応 -->
+            <h4 style="color: var(--warning); margin: 20px 0 12px 0;">3. Akerun 対応</h4>
+            <div class="action-item normal">
+                <span class="action-priority priority-mid">DL</span>
+                <div><strong>サービス資料をダウンロード</strong>（メール内のトラッキングURLから要手動DL）</div>
+            </div>
+            <div class="action-item normal">
+                <span class="action-priority priority-low">任意</span>
+                <div>WEB MTG予約（45分デモ）or 電話相談 or 取付診断フォーム送信<br>
+                <small style="color: var(--text-muted);">※担当者からの本回答を待ってからでもOK</small></div>
+            </div>
+
+            <!-- 資料DL -->
+            <h4 style="color: var(--warning); margin: 20px 0 12px 0;">4. 資料ダウンロード（手動）</h4>
+            <div class="action-item normal">
+                <span class="action-priority priority-mid">DL</span>
+                <div><strong>bitlock PRO 製品資料</strong>（<a href="https://drive.google.com/file/d/1SHJA6f2s2LSTSDrn_UQpUFUp_iW4VMUP/view" target="_blank">Google Drive</a>）</div>
+            </div>
+            <div class="action-item normal">
+                <span class="action-priority priority-mid">DL</span>
+                <div><strong>bitlock PRO 設置可否資料</strong>（<a href="https://drive.google.com/file/d/1pntjgEnIIoiblqRtW8DQLZgbGG_6cZZY/view" target="_blank">Google Drive</a>）</div>
+            </div>
+
+            <!-- 回答待ち -->
+            <h4 style="color: var(--primary); margin: 20px 0 12px 0;">5. 回答待ち（こちらからのアクション不要）</h4>
+            <div class="action-item" style="border-left: 4px solid #94a3b8;">
+                <span class="action-priority" style="background: #f1f5f9; color: #475569;">待ち</span>
+                <div>
+                    <strong>SECOM 神山</strong>: クラウド型・FeliCa・e-works・現行費用の回答（2/17送信）<br>
+                    <strong>Akerun</strong>: 担当者からの本回答（自動返信のみ受領）<br>
+                    <strong>SPLATS</strong>: 担当者からの連絡（自動返信のみ受領）<br>
+                    <strong>FreeiD</strong>: 担当者からの連絡（自動返信のみ受領）<br>
+                    <strong>カギカン</strong>: <span style="color: var(--danger);">FeliCa非対応で脱落確定</span>
+                </div>
+            </div>
+
+            <!-- 全体・予算 -->
+            <h4 style="color: #0f172a; margin: 20px 0 12px 0;">6. 予算申請準備（2/24期限）</h4>
+            <div class="action-item normal">
+                <span class="action-priority priority-mid">MID</span>
+                <div>e-worksに現行ファイル取込フォーマット仕様を確認（CSV互換設計用）</div>
+            </div>
+            <div class="action-item normal">
+                <span class="action-priority priority-mid">MID</span>
+                <div>ALLIGATE概算見積取得後、サーバー移設型(LAJ ¥756万/5年) vs フルクラウド型(ALLIGATE) のTCO比較表を作成</div>
+            </div>
+            <div class="action-item normal">
+                <span class="action-priority priority-high">HIGH</span>
+                <div><strong>2/24 予算申請資料</strong>に入退室管理の方向性・推薦案を反映</div>
+            </div>
+
+            <!-- 完了 -->
+            <h4 style="color: var(--text-muted); margin: 20px 0 12px 0;">完了</h4>
+            <div style="font-size: 0.85rem; color: var(--text-muted); padding: 8px 16px;">
+                <s>ALLIGATE総合資料PDF(50ページ)のダウンロードと解析</s> (2/18完了)<br>
+                <s>ALLIGATE回答メールの確認・比較表反映</s> (2/18完了)<br>
+                <s>6社一斉資料請求 + SECOM問い合わせ</s> (2/17完了)
+            </div>
+        </section>
+
+        <!-- sec-sites: 拠点情報 -->
+        <section id="sec-sites" class="section-card">
+            <div class="section-title">対象拠点（8拠点）</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>拠点名</th>
+                        <th>扉数</th>
+                        <th>リーダー数</th>
+                        <th>写真</th>
+                        <th>備考</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>東京本社</td><td style="color: var(--danger);">要確認</td><td style="color: var(--danger);">要確認</td><td><span class="badge badge-pending">未撮影</span></td><td></td></tr>
+                    <tr><td>2</td><td>大阪</td><td style="color: var(--danger);">要確認</td><td style="color: var(--danger);">要確認</td><td><span class="badge badge-pending">未撮影</span></td><td></td></tr>
+                    <tr><td>3</td><td>福岡</td><td style="color: var(--danger);">要確認</td><td style="color: var(--danger);">要確認</td><td><span class="badge badge-pending">未撮影</span></td><td></td></tr>
+                    <tr><td>4</td><td>名古屋</td><td style="color: var(--danger);">要確認</td><td style="color: var(--danger);">要確認</td><td><span class="badge badge-pending">未撮影</span></td><td></td></tr>
+                    <tr><td>5</td><td>京橋</td><td style="color: var(--danger);">要確認</td><td style="color: var(--danger);">要確認</td><td><span class="badge badge-pending">未撮影</span></td><td></td></tr>
+                    <tr><td>6</td><td>和歌山</td><td style="color: var(--danger);">要確認</td><td style="color: var(--danger);">要確認</td><td><span class="badge badge-pending">未撮影</span></td><td></td></tr>
+                    <tr><td>7</td><td>多摩</td><td style="color: var(--danger);">要確認</td><td style="color: var(--danger);">要確認</td><td><span class="badge badge-pending">未撮影</span></td><td></td></tr>
+                    <tr><td>8</td><td>橋本</td><td style="color: var(--danger);">要確認</td><td style="color: var(--danger);">要確認</td><td><span class="badge badge-pending">未撮影</span></td><td></td></tr>
+                </tbody>
+            </table>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 12px;">
+                ※ 扉数・リーダー数は現在精査中。ALLIGATE見積に必要。
+            </p>
+        </section>
+
+    </div>
+</body>
+
+</html>
