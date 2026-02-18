@@ -202,6 +202,18 @@
             font-size: 0.7rem;
             color: #475569;
         }
+        .needs-socket {
+            display: inline-block;
+            background: #7b1fa2;
+            color: #fff;
+            font-size: 0.5rem;
+            font-weight: 800;
+            padding: 1px 4px;
+            border-radius: 3px;
+            margin-left: 4px;
+            vertical-align: middle;
+            letter-spacing: 0.02em;
+        }
         .equip-detail {
             font-size: 0.62rem;
             color: #94a3b8;
@@ -451,15 +463,15 @@
                             <div class="equip-detail">PDCSVR 192.168.1.6</div>
                             <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">AD Secondary</span></div>
                             <div class="equip-detail">BDCSVR 192.168.1.7</div>
-                            <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">ファイルサーバー</span></div>
+                            <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">ファイルサーバー<span class="needs-socket">Socket</span></span></div>
                             <div class="equip-detail">ADSHARESVR 192.168.1.15</div>
-                            <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">TENSUITE (勤怠)</span></div>
+                            <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">TENSUITE (勤怠)<span class="needs-socket">Socket</span></span></div>
                             <div class="equip-detail">AP .1.12 / DB .1.14</div>
                         </div>
                         <div>
-                            <div class="equip-item"><span class="equip-icon equip-secom">T</span><span class="equip-label">SECOM Server</span></div>
+                            <div class="equip-item"><span class="equip-icon equip-secom">T</span><span class="equip-label">SECOM Server<span class="needs-socket">Socket</span></span></div>
                             <div class="equip-detail">TRIISVR 192.168.1.30</div>
-                            <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器</span></div>
+                            <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器<span class="needs-socket">Socket</span></span></div>
                             <div class="equip-item"><span class="equip-icon equip-pc">P</span><span class="equip-label">業務PC (57名)</span></div>
                             <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機</span></div>
                             <div class="equip-detail">RICOH IM C4500 .1.55</div>
@@ -486,7 +498,7 @@
                         <div class="equip-detail">LBO用に機種変更済</div>
                         <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">BN用ルーター</span></div>
                         <div class="equip-detail">Hub で分岐</div>
-                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-item"><span class="equip-icon equip-pc">P</span><span class="equip-label">業務PC (4名)</span></div>
                         <div style="margin-top: 4px; padding: 3px 6px; background: #ecfdf5; border-radius: 4px; font-size: 0.62rem; color: #065f46; line-height: 1.4;">
                             GWS のみ直接 Internet へ<br>
@@ -503,9 +515,9 @@
                     </div>
                     <div class="site-body">
                         <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR400</span></div>
-                        <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">CRBファイルサーバー</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">CRBファイルサーバー<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-detail">CRB八王子用 .60.7</div>
-                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-item"><span class="equip-icon equip-pc">P</span><span class="equip-label">業務PC</span></div>
                         <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機 x2</span></div>
                         <div style="margin-top: 4px; padding: 3px 6px; background: #fef3c7; border-radius: 4px; font-size: 0.62rem; color: #92400e; line-height: 1.4;">
@@ -523,13 +535,13 @@
                     <div class="site-body">
                         <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR400</span></div>
                         <div class="equip-detail">R&Dセンターと同一サブネット</div>
-                        <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">IoTファイルサーバー</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">IoTファイルサーバー<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-detail">IOTSVR .30.15 / BMC .30.16</div>
-                        <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">QNAP NAS</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">QNAP NAS<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-detail">TS-431U .30.10 ENG用</div>
-                        <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">OrCADサーバー x2</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">OrCADサーバー x2<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-detail">旧.30.12 / 新.30.13</div>
-                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-item"><span class="equip-icon equip-pc">P</span><span class="equip-label">業務PC</span></div>
                         <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機</span></div>
                         <div style="margin-top: 4px; padding: 3px 6px; background: #fef3c7; border-radius: 4px; font-size: 0.62rem; color: #92400e; line-height: 1.4;">
@@ -546,7 +558,7 @@
                     </div>
                     <div class="site-body">
                         <div class="equip-detail" style="margin-left: 0; color: #94a3b8; margin-bottom: 4px;">BN管理（同一ビル内）</div>
-                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-detail">本社ルーター経由で接続</div>
                     </div>
                 </div>
@@ -561,7 +573,7 @@
                     </div>
                     <div class="site-body">
                         <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR402J</span></div>
-                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-detail">ONU→Hub→Router→Secom</div>
                         <div class="equip-detail" style="color: #94a3b8;">BN管理 / Secom通信のみ</div>
                     </div>
@@ -575,7 +587,7 @@
                     </div>
                     <div class="site-body">
                         <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR402J</span></div>
-                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-detail">ONU→Hub→Router→Secom</div>
                         <div class="equip-detail" style="color: #94a3b8;">BN管理 / Secom通信のみ</div>
                     </div>
@@ -589,7 +601,7 @@
                     </div>
                     <div class="site-body">
                         <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR402J</span></div>
-                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-detail">ONU→Hub→Router→Secom</div>
                         <div class="equip-detail" style="color: #94a3b8;">BN管理 / Secom通信のみ</div>
                     </div>
@@ -603,7 +615,7 @@
                     </div>
                     <div class="site-body">
                         <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR402J</span></div>
-                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-detail">ONU→Hub→Router→Secom</div>
                         <div class="equip-detail" style="color: #94a3b8;">BN管理 / Secom通信のみ</div>
                     </div>
@@ -636,6 +648,10 @@
                         <div class="legend-item">
                             <div style="width: 14px; height: 10px; border-left: 4px solid #94a3b8; background: #f8fafc; border-radius: 2px;"></div>
                             <span>Type B: BN管理 / Secomのみ</span>
+                        </div>
+                        <div class="legend-item" style="margin-top: 4px;">
+                            <span class="needs-socket" style="margin-left: 0;">Socket</span>
+                            <span>Cato Client不可 → Socket必須</span>
                         </div>
                     </div>
                 </div>
