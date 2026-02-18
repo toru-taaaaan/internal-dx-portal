@@ -384,6 +384,17 @@
             color: #9f1239;
         }
 
+        /* --- Cost Comparison Table --- */
+        .socket-sim.cost-sim { border-color: #0369a1; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); }
+        .socket-sim.cost-sim h3::before { background: #0369a1; }
+        .socket-sim.cost-sim th { background: #dbeafe; color: #1e3a5f; border-bottom-color: #93c5fd; }
+        .socket-sim.cost-sim .progress-matrix td { width: auto; min-width: 90px; font-size: 0.78rem; }
+        .socket-sim.cost-sim .progress-matrix tfoot td { border-top-color: #0369a1; }
+        .cost-sim .c-high { background: #fecaca; color: #991b1b; }
+        .cost-sim .c-low { background: #dcfce7; color: #166534; }
+        .cost-sim .c-unknown { background: #fef3c7; color: #92400e; }
+        .cost-sim .c-mid { background: #f8fafc; color: #94a3b8; font-size: 0.72rem; }
+
         /* --- Internet Cloud --- */
         .cloud-node {
             position: absolute;
@@ -537,7 +548,7 @@
             <div class="section-title">現行ネットワーク構成（VarioSecure VPN）</div>
             <p class="section-lead">
                 全拠点がVarioSecure社のVPNルーターでハブ&amp;スポーク接続されている。
-                インターネット通信は原則として築地本社を経由。大阪のみGoogle Workspace向けの部分的LBO（ローカルブレイクアウト）を実施中。
+                インターネット通信は原則として築地本社を経由。大阪のみインターネット通信を直接接続（ローカルブレイクアウト）。
                 <strong>Secom入退室管理機器</strong>が各拠点に設置されており、Cato導入時のSocket/Client判断に影響する。
             </p>
 
@@ -566,7 +577,7 @@
 
                     <!-- 本社 → 大阪 (VPN) -->
                     <path d="M 545 310 Q 350 400 240 435" stroke="#2563eb" stroke-width="2.5" fill="none" marker-end="url(#arrow-blue)" />
-                    <!-- 大阪 → Internet (GWS LBO) -->
+                    <!-- 大阪 → Internet (LBO: 全インターネット通信) -->
                     <path d="M 190 435 Q 120 250 580 55" stroke="#10b981" stroke-width="2" fill="none" stroke-dasharray="6,4" marker-end="url(#arrow-green)" />
 
                     <!-- 本社 → 多摩 (VPN) -->
@@ -606,7 +617,7 @@
 
                 <!-- GWS LBO Label -->
                 <div class="gws-label" style="left: 260px; top: 230px;">
-                    GWS のみ LBO
+                    LBO（直接接続）
                 </div>
 
                 <!-- ====== 本社（築地 6F/7F）====== -->
@@ -627,8 +638,9 @@
                             <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">ファイルサーバー<span class="needs-socket">Socket</span></span></div>
                             <div class="equip-detail">ADSHARESVR 192.168.1.15</div>
                             <div class="cloud-migrate-hint">→ クラウド統合でSocket不要化</div>
-                            <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">TENSUITE (勤怠)<span class="needs-socket">Socket</span></span></div>
+                            <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">TENSUITE (旧販売管理)</span></div>
                             <div class="equip-detail">AP .1.12 / DB .1.14</div>
+                            <div class="equip-detail" style="color: #94a3b8;">電源OFF・NW未接続（稼働停止済）</div>
                         </div>
                         <div>
                             <div class="equip-item"><span class="equip-icon equip-secom">T</span><span class="equip-label">SECOM Server<span class="needs-socket">Socket</span></span></div>
@@ -662,11 +674,13 @@
                         <div class="equip-detail">LBO用に機種変更済</div>
                         <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">BN用ルーター</span></div>
                         <div class="equip-detail">Hub で分岐</div>
+                        <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">ファイルサーバー参照<span class="needs-socket">Socket</span></span></div>
+                        <div class="equip-detail">アドテックのみ本社FSを利用</div>
                         <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-item"><span class="equip-icon equip-pc">P</span><span class="equip-label">業務PC (4名)</span></div>
                         <div style="margin-top: 4px; padding: 3px 6px; background: #ecfdf5; border-radius: 4px; font-size: 0.62rem; color: #065f46; line-height: 1.4;">
-                            GWS のみ直接 Internet へ<br>
-                            他は本社 VPN 経由
+                            インターネット通信は直接接続<br>
+                            （LBO: 本社VPN経由せず）
                         </div>
                     </div>
                 </div>
@@ -679,9 +693,6 @@
                     </div>
                     <div class="site-body">
                         <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR400</span></div>
-                        <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">CRBファイルサーバー<span class="needs-socket">Socket</span></span></div>
-                        <div class="equip-detail">CRB八王子用 .60.7</div>
-                        <div class="cloud-migrate-hint">→ クラウド統合でSocket不要化</div>
                         <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-item"><span class="equip-icon equip-pc">P</span><span class="equip-label">業務PC</span></div>
                         <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機 x2<span class="needs-socket investigating">要否調査中</span></span></div>
@@ -706,8 +717,8 @@
                         <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">QNAP NAS<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-detail">TS-431U .30.10 ENG用</div>
                         <div class="cloud-migrate-hint">→ クラウド統合でSocket不要化</div>
-                        <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">OrCADサーバー x2<span class="needs-socket">Socket</span></span></div>
-                        <div class="equip-detail">旧.30.12 / 新.30.13</div>
+                        <div class="equip-item"><span class="equip-icon equip-pc">P</span><span class="equip-label">OrCAD PC x1<span class="needs-socket">Socket</span></span></div>
+                        <div class="equip-detail">.30.13（単なるPC）</div>
                         <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-item"><span class="equip-icon equip-pc">P</span><span class="equip-label">業務PC</span></div>
                         <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機<span class="needs-socket investigating">要否調査中</span></span></div>
@@ -789,7 +800,7 @@
                     </div>
                     <div class="legend-item">
                         <div class="legend-line" style="background: repeating-linear-gradient(90deg, #10b981 0, #10b981 4px, transparent 4px, transparent 7px);"></div>
-                        <span>GWS ローカルブレイクアウト</span>
+                        <span>ローカルブレイクアウト（大阪）</span>
                     </div>
                     <div class="legend-item">
                         <div class="legend-line" style="background: repeating-linear-gradient(90deg, #059669 0, #059669 3px, transparent 3px, transparent 6px);"></div>
@@ -862,8 +873,8 @@
                         <tr>
                             <td><strong>② ファイルサーバー</strong><br><span style="font-size:0.68rem; color:#64748b;">→ クラウド統合 (SharePoint等)</span></td>
                             <td class="s-need">✗</td>
-                            <td class="s-ok">—</td>
                             <td class="s-need">✗</td>
+                            <td class="s-ok">—</td>
                             <td class="s-need">✗</td>
                             <td class="s-ok">—</td>
                             <td class="s-ok">—</td>
@@ -882,18 +893,7 @@
                             <td class="s-ok">—</td>
                         </tr>
                         <tr>
-                            <td><strong>④ TENSUITE (勤怠)</strong><br><span style="font-size:0.68rem; color:#64748b;">→ クラウド版に移行</span></td>
-                            <td class="s-need">✗</td>
-                            <td class="s-ok">—</td>
-                            <td class="s-ok">—</td>
-                            <td class="s-ok">—</td>
-                            <td class="s-ok">—</td>
-                            <td class="s-ok">—</td>
-                            <td class="s-ok">—</td>
-                            <td class="s-ok">—</td>
-                        </tr>
-                        <tr>
-                            <td><strong>⑤ OrCADサーバー</strong><br><span style="font-size:0.68rem; color:#64748b;">→ 移行 or 廃止</span></td>
+                            <td><strong>④ OrCAD PC</strong><br><span style="font-size:0.68rem; color:#64748b;">→ 移行 or 廃止（単なるPC）</span></td>
                             <td class="s-ok">—</td>
                             <td class="s-ok">—</td>
                             <td class="s-ok">—</td>
@@ -918,10 +918,10 @@
                         </tr>
                         <tr>
                             <td style="font-weight:700; color:#475569; font-size:0.72rem;">解消に必要な対策</td>
-                            <td class="ft-hard">①②③④</td>
-                            <td class="ft-easy">①のみ</td>
                             <td class="ft-mid">①②③</td>
-                            <td class="ft-hard">①②③⑤</td>
+                            <td class="ft-mid">①②</td>
+                            <td class="ft-mid">①③</td>
+                            <td class="ft-hard">①②③④</td>
                             <td class="ft-easy">①のみ</td>
                             <td class="ft-easy">①のみ</td>
                             <td class="ft-easy">①のみ</td>
@@ -932,9 +932,119 @@
                 <div style="margin-top: 1rem; padding: 10px 14px; background: rgba(123,31,162,0.06); border-radius: 8px; font-size: 0.78rem; color: #475569; line-height: 1.7;">
                     <strong style="color: #7b1fa2;">読み方:</strong>
                     各列を縦に見て、<span style="background:#fecaca; padding:1px 4px; border-radius:3px;">✗</span> が1つだけなら、その対策だけでSocket不要に。
-                    <strong>大阪・福岡・和歌山・京橋・名古屋</strong>は①だけで解消（緑セル＝①のみ）。
-                    <strong>多摩</strong>は✗が3つ → ①②③の3対策が必要。
-                    <strong>本社・橋本</strong>は✗が4つ → 最も多くの対策が必要。
+                    <strong>福岡・和歌山・京橋・名古屋</strong>は①だけで解消（緑セル＝①のみ）。
+                    <strong>大阪</strong>は①②の2対策、<strong>多摩</strong>は①③の2対策が必要。
+                    <strong>本社</strong>は①②③、<strong>橋本</strong>は①②③④ → 最も多くの対策が必要。
+                    <br><span style="font-size:0.72rem; color:#94a3b8;">※ TENSUITE（旧販売管理）は電源OFF・NW未接続のため阻害要因から除外。CRBファイルサーバー（多摩）は撤去済み。</span>
+                </div>
+            </div>
+
+            <!-- ====== コスト比較シミュレーション ====== -->
+            <div class="socket-sim cost-sim" style="margin-top: 2rem;">
+                <h3>IT基盤刷新 5年間コスト比較</h3>
+                <p class="sim-lead">
+                    上記の対策を実施するほど Cato Socket数が減り、ネットワーク費用が下がります。<br>
+                    <strong>対策範囲を広げた場合の5年間TCO（税抜）を比較します。</strong>
+                </p>
+
+                <p style="font-size: 0.78rem; font-weight: 700; color: #0c4a6e; margin: 0 0 0.3rem;">シナリオ別 5年間コスト比較（税抜・万円）</p>
+                <p style="font-size: 0.75rem; color: #64748b; margin: 0 0 0.75rem; line-height: 1.6;">
+                    <span style="display:inline-block; width:14px; height:14px; background:#dcfce7; border-radius:3px; vertical-align:middle; margin-right:2px;"></span> = 最安圏 &nbsp;
+                    <span style="display:inline-block; width:14px; height:14px; background:#fecaca; border-radius:3px; vertical-align:middle; margin-right:2px;"></span> = 最も高い &nbsp;
+                    <span style="display:inline-block; width:14px; height:14px; background:#fef3c7; border-radius:3px; vertical-align:middle; margin-right:2px;"></span> = 未確定 &nbsp;
+                    <strong>列ごとに合計を比較して、最もコスト効率の良いシナリオを判断できます。</strong>
+                </p>
+
+                <table class="progress-matrix">
+                    <thead>
+                        <tr>
+                            <th style="text-align:left; min-width:160px;">費目<br><span style="font-weight:400; font-size:0.62rem; color:#64748b;">5年間合計（税抜）</span></th>
+                            <th>A: 現行維持<br><span style="font-weight:400; font-size:0.58rem;">VPN+SECOM<br>何も変えない</span></th>
+                            <th>B: Cato導入<br><span style="font-weight:400; font-size:0.58rem;">入退室はLAJ移設<br>Socket 8拠点</span></th>
+                            <th>C: Cato+入退室入替<br><span style="font-weight:400; font-size:0.58rem;">SPLATS ベーシック<br>Socket 4拠点</span></th>
+                            <th>D: Cato+全対策<br><span style="font-weight:400; font-size:0.58rem;">入退室+FS+MFP+OrCAD<br>Socket 0拠点</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>対策範囲</strong><br><span style="font-size:0.65rem; color:#64748b;">上の阻害要因マップ参照</span></td>
+                            <td class="c-mid">なし</td>
+                            <td class="c-mid">SECOM移設のみ</td>
+                            <td class="c-mid">①</td>
+                            <td class="c-mid">①②③④</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cato Socket数</strong><br><span style="font-size:0.65rem; color:#64748b;">1台 = ¥80万/年</span></td>
+                            <td style="text-align:center;">—<br><span style="font-size:0.6rem; color:#94a3b8;">(VPN継続)</span></td>
+                            <td class="c-high" style="text-align:center; font-size:1rem; font-weight:800;">8台</td>
+                            <td class="c-unknown" style="text-align:center; font-size:1rem; font-weight:800;">4台</td>
+                            <td class="c-low" style="text-align:center; font-size:1rem; font-weight:800;">0台</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ネットワーク</strong><br><span style="font-size:0.65rem; color:#64748b;">VPN or Cato (lic+mgd+init)</span></td>
+                            <td style="text-align:right;">¥420万<br><span style="font-size:0.6rem; color:#94a3b8;">VPN ¥7万/月×60</span></td>
+                            <td class="c-high" style="text-align:right; font-weight:700;">¥5,650万<br><span style="font-size:0.6rem;">Socket8台+Mobile</span></td>
+                            <td style="text-align:right;">¥4,050万<br><span style="font-size:0.6rem;">Socket4台+Mobile</span></td>
+                            <td class="c-low" style="text-align:right; font-weight:700;">¥2,450万<br><span style="font-size:0.6rem;">Mobile のみ</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>入退室管理</strong><br><span style="font-size:0.65rem; color:#64748b;">月額+初期 (5年合計)</span></td>
+                            <td class="c-unknown" style="text-align:right;">¥150万+α<br><span style="font-size:0.6rem;">SECOM保守不明<br>+SVR更新¥150万</span></td>
+                            <td style="text-align:right;">¥756万<br><span style="font-size:0.6rem;">LAJ Azure移設</span></td>
+                            <td style="text-align:right;">¥1,596万<br><span style="font-size:0.6rem;">SPLATS ¥1万/扉/月<br>×21扉+工事¥336万</span></td>
+                            <td style="text-align:right;">¥1,596万<br><span style="font-size:0.6rem;">同左</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>FS/MFP/OrCAD</strong><br><span style="font-size:0.65rem; color:#64748b;">②③④の対策費用</span></td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td style="text-align:center; color:#cbd5e1;">—</td>
+                            <td class="c-unknown" style="text-align:center;">要見積</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td style="font-weight:800; color:#0369a1;">5年合計</td>
+                            <td class="c-unknown" style="text-align:right; font-weight:800; font-size:0.9rem;">¥570万+α</td>
+                            <td class="c-high" style="text-align:right; font-weight:800; font-size:0.9rem;">¥6,406万</td>
+                            <td style="text-align:right; font-weight:800; font-size:0.9rem; background:#fef9c3; color:#854d0e;">¥5,646万</td>
+                            <td class="c-low" style="text-align:right; font-weight:800; font-size:0.9rem;">¥4,046万+α</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:700; color:#475569; font-size:0.72rem;">年額換算</td>
+                            <td style="text-align:right; font-size:0.72rem;">¥114万+α</td>
+                            <td style="text-align:right; font-size:0.72rem; background:#ffe4e6; color:#9f1239;">¥1,281万/年</td>
+                            <td style="text-align:right; font-size:0.72rem;">¥1,129万/年</td>
+                            <td style="text-align:right; font-size:0.72rem; background:#dcfce7; color:#166534;">¥809万/年+α</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:700; color:#475569; font-size:0.72rem;">B との差額<br>(5年)</td>
+                            <td style="text-align:center; font-size:0.72rem; color:#94a3b8;">—</td>
+                            <td style="text-align:center; font-size:0.72rem; color:#94a3b8;">基準</td>
+                            <td style="text-align:right; font-size:0.72rem; background:#dcfce7; color:#166534; font-weight:600;">-¥760万</td>
+                            <td style="text-align:right; font-size:0.72rem; background:#bbf7d0; color:#14532d; font-weight:800;">-¥2,360万</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <div style="margin-top: 1rem; padding: 10px 14px; background: rgba(3,105,161,0.06); border-radius: 8px; font-size: 0.78rem; color: #475569; line-height: 1.7;">
+                    <strong style="color: #0369a1;">読み方:</strong>
+                    B（Catoのみ導入）を基準として、入退室管理をSPLATSに入れ替える（C）と<strong>5年で¥760万削減</strong>。
+                    さらにFS移行等の全対策を実施する（D）と<strong>5年で¥2,360万以上削減</strong>。
+                    入退室管理の月額はLAJ移設より高くなるが、Socket削減によるCato費用の圧縮がそれを大きく上回る。
+                    <br><span style="font-size:0.72rem; color:#94a3b8;">
+                    Cato内訳: ライセンス ¥500万/年(Socket1台+Mobile込) + Socket追加 ¥80万/台/年 + マネージド ¥60万/年 + 初期¥50万
+                    </span>
+                </div>
+
+                <div style="margin-top: 0.75rem; padding: 10px 14px; background: rgba(245,158,11,0.08); border-left: 3px solid #f59e0b; border-radius: 0 8px 8px 0; font-size: 0.72rem; color: #78716c; line-height: 1.7;">
+                    <strong style="color: #92400e;">注意事項:</strong><br>
+                    ・ 本表はネットワーク＋入退室管理の直接コストのみを比較しています<br>
+                    ・ <strong>システム入替に伴う間接費用（FS移行費、カード再発行、教育、工事立会い等）は含んでいません</strong><br>
+                    ・ SECOM現行費用（保守料・月額利用料）は神山氏の回答待ちのため「α」表記<br>
+                    ・ Cato費用: SCSK角田氏見積ベース / 入退室: メーカー公表価格ベース（正式見積ではない）<br>
+                    ・ SPLATS: ベーシック ¥10,000/扉/月×21扉×60ヶ月 + 工事費¥336万（参考: 1扉¥16万）<br>
+                    ・ ALLIGATE参考: Lock Pro ¥18,000/扉/月×21扉の場合、入退室5年で¥2,268万+初期費 → C案より約¥672万増
                 </div>
             </div>
 
@@ -950,24 +1060,25 @@
                     </ul>
                 </div>
                 <div class="info-box">
-                    <h4>大阪の部分的LBO</h4>
+                    <h4>大阪のLBO（ローカルブレイクアウト）</h4>
                     <ul>
-                        <li>ルーターを VSR601J に変更し、GWS 向けの LBO を実現</li>
-                        <li>Google Workspace のトラフィックのみ大阪から直接 Internet へ</li>
-                        <li>業務通信のメインは依然として本社 VPN 経由</li>
+                        <li>ルーターを VSR601J に変更し、LBO を実現</li>
+                        <li>インターネット通信は大阪から直接接続（本社経由せず）</li>
+                        <li>VPN経由の通信: ファイルサーバー（アドテック）、SECOM等の社内リソースのみ</li>
                         <li>他拠点への LBO 展開は「1台ずつ個別設定」が必要（USEN回答）</li>
                     </ul>
                 </div>
                 <div class="info-box warn">
                     <h4>VPN依存システム一覧（セコム以外も多数）</h4>
                     <ul>
-                        <li><strong>SECOM入退室管理</strong>: TRIISRV（本社）↔ 全9拠点TRIIインターフェース</li>
+                        <li><strong>SECOM入退室管理</strong>: TRIISRV（本社）↔ 全拠点TRIIインターフェース</li>
                         <li><strong>Active Directory</strong>: PDCSVR/BDCSVR（本社）↔ 全拠点PC認証・GPO</li>
-                        <li><strong>ファイルサーバー</strong>: ADSHARESVR（本社 .1.15）↔ 各Type A拠点からアクセス</li>
+                        <li><strong>ファイルサーバー</strong>: ADSHARESVR（本社 .1.15）↔ 本社・大阪(アドテック)・橋本からアクセス</li>
                         <li><strong>IoTファイルサーバー</strong>: IOTSVR（橋本 .30.15/.16）＋ QNAP (.30.10)</li>
-                        <li><strong>CRBファイルサーバー</strong>: 多摩 (.60.7) CRB八王子用</li>
-                        <li><strong>TENSUITE</strong>: 勤怠管理（本社 .1.12/.14）↔ 全拠点から参照</li>
+                        <li><strong>OrCAD PC</strong>: 橋本 (.30.13) ※単なるPC</li>
                         <li><strong>複合機</strong>: RICOH IM C4500等 → AD参照（SMTP/LDAP/SMB）</li>
+                        <li><del>TENSUITE（旧販売管理）</del>: 電源OFF・NW未接続（稼働停止済）</li>
+                        <li><del>CRBファイルサーバー（多摩）</del>: 撤去済み</li>
                     </ul>
                 </div>
                 <div class="info-box warn">
@@ -975,7 +1086,7 @@
                     <ul>
                         <li><strong>Socket が必要な条件</strong>: Client をインストールできない機器が Cato NW経由の通信を必要とする場合</li>
                         <li><strong>Secom入退室機器</strong>: Client不可 → VPN or Socket 必須（フルクラウド化で解消可能）</li>
-                        <li><strong>ファイルサーバー</strong>: クラウド統合（SharePoint/Azure Files等）で Socket不要化可能 → ユーザーは Cato Client経由でアクセス</li>
+                        <li><strong>ファイルサーバー</strong>: 本社・大阪(アドテック)・橋本が利用 → クラウド統合（SharePoint/Azure Files等）で Socket不要化可能</li>
                         <li><strong>複合機</strong>: <span style="color: #f59e0b; font-weight: 600;">要否調査中</span> — そもそもVPNを通す必要がない可能性あり（通信パターン確認中）</li>
                         <li>業務PC: Client インストール可 → Socket 不要</li>
                     </ul>
@@ -983,12 +1094,12 @@
                 <div class="info-box">
                     <h4>VPN全廃に向けたロードマップ</h4>
                     <ul>
-                        <li><strong>① Secom入退室</strong>: フルクラウド型に移行 → <strong>5拠点のSocket不要化</strong>（最大効果）</li>
-                        <li><strong>② ファイルサーバー</strong>: クラウド統合（SharePoint/Azure Files等）→ 本社/橋本/多摩の依存解消</li>
-                        <li><strong>③ 複合機</strong>: VPN不要の可能性あり（調査中）→ ②と合わせて多摩のSocket不要化</li>
-                        <li><strong>④ TENSUITE</strong>: クラウド版移行 → 本社のSocket不要化</li>
-                        <li><strong>⑤ OrCAD</strong>: 移行/廃止 → 橋本のSocket不要化（全拠点Socket完全ゼロ）</li>
+                        <li><strong>① Secom入退室</strong>: フルクラウド型に移行 → <strong>4拠点のSocket不要化</strong>（最大効果）</li>
+                        <li><strong>② ファイルサーバー</strong>: クラウド統合（SharePoint/Azure Files等）→ 本社/大阪/橋本の依存解消</li>
+                        <li><strong>③ 複合機</strong>: VPN不要の可能性あり（調査中）→ ①と合わせて多摩のSocket不要化</li>
+                        <li><strong>④ OrCAD PC</strong>: 移行/廃止（単なるPC）→ 橋本のSocket不要化（全拠点Socket完全ゼロ）</li>
                         <li>AD: Entra ID（旧Azure AD）移行で拠点間VPN不要に（Socket削減とは別軸）</li>
+                        <li><span style="color: #94a3b8;">※ TENSUITE（旧販売管理）は電源OFF・NW未接続のため対策不要。CRBファイルサーバー（多摩）は撤去済み。</span></li>
                     </ul>
                 </div>
             </div>
