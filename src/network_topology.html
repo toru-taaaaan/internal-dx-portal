@@ -290,6 +290,9 @@
             gap: 1rem;
             margin-top: 1.5rem;
         }
+        .info-grid > .info-box:last-child:nth-child(odd) {
+            grid-column: 1 / -1;
+        }
         .info-box {
             background: #f8fafc;
             border-left: 4px solid var(--accent);
@@ -448,6 +451,10 @@
                             <div class="equip-detail">PDCSVR 192.168.1.6</div>
                             <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">AD Secondary</span></div>
                             <div class="equip-detail">BDCSVR 192.168.1.7</div>
+                            <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">ファイルサーバー</span></div>
+                            <div class="equip-detail">ADSHARESVR 192.168.1.15</div>
+                            <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">TENSUITE (勤怠)</span></div>
+                            <div class="equip-detail">AP .1.12 / DB .1.14</div>
                         </div>
                         <div>
                             <div class="equip-item"><span class="equip-icon equip-secom">T</span><span class="equip-label">SECOM Server</span></div>
@@ -455,6 +462,7 @@
                             <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器</span></div>
                             <div class="equip-item"><span class="equip-icon equip-pc">P</span><span class="equip-label">業務PC (57名)</span></div>
                             <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機</span></div>
+                            <div class="equip-detail">RICOH IM C4500 .1.55</div>
                         </div>
                     </div>
                 </div>
@@ -506,13 +514,20 @@
                 </div>
 
                 <!-- ====== 橋本 (IoT Lab) ====== -->
-                <div class="site-node type-a" style="left: 700px; top: 435px; width: 180px;">
+                <div class="site-node type-a" style="left: 670px; top: 435px; width: 220px;">
                     <div class="site-header">
                         <span class="site-name">橋本 (IoT Lab)</span>
                         <span class="site-badge badge-type-a">A</span>
                     </div>
                     <div class="site-body">
-                        <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR402J</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR400</span></div>
+                        <div class="equip-detail">R&Dセンターと同一サブネット</div>
+                        <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">IoTファイルサーバー</span></div>
+                        <div class="equip-detail">IOTSVR .30.15 / BMC .30.16</div>
+                        <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">QNAP NAS</span></div>
+                        <div class="equip-detail">TS-431U .30.10 ENG用</div>
+                        <div class="equip-item"><span class="equip-icon equip-server">S</span><span class="equip-label">OrCADサーバー</span></div>
+                        <div class="equip-detail">Relex2017 .30.12</div>
                         <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器</span></div>
                         <div class="equip-item"><span class="equip-icon equip-pc">P</span><span class="equip-label">業務PC</span></div>
                         <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機</span></div>
@@ -648,21 +663,34 @@
                     </ul>
                 </div>
                 <div class="info-box warn">
-                    <h4>Cato Socket/Client 判断のポイント</h4>
+                    <h4>VPN依存システム一覧（セコム以外も多数）</h4>
                     <ul>
-                        <li><strong>Socket が必要な条件</strong>: Cato Client をインストールできない機器が、Cato ネットワーク経由の通信を必要とする場合</li>
-                        <li><strong>Secom 入退室機器</strong>: Client インストール不可 → VPN or Socket が必要</li>
-                        <li>複合機: ローカル LAN で完結 → Socket 不要</li>
-                        <li>業務 PC: Client インストール可 → Socket 不要</li>
+                        <li><strong>SECOM入退室管理</strong>: TRIISRV（本社）↔ 全9拠点TRIIインターフェース</li>
+                        <li><strong>Active Directory</strong>: PDCSVR/BDCSVR（本社）↔ 全拠点PC認証・GPO</li>
+                        <li><strong>ファイルサーバー</strong>: ADSHARESVR（本社 .1.15）↔ 各Type A拠点からアクセス</li>
+                        <li><strong>IoTファイルサーバー</strong>: IOTSVR（橋本 .30.15/.16）＋ QNAP (.30.10)</li>
+                        <li><strong>TENSUITE</strong>: 勤怠管理（本社 .1.12/.14）↔ 全拠点から参照</li>
+                        <li><strong>複合機</strong>: RICOH IM C4500等 → AD参照（SMTP/LDAP/SMB）</li>
                     </ul>
                 </div>
                 <div class="info-box warn">
-                    <h4>SECOM クラウド化とのセット提案</h4>
+                    <h4>Cato Socket/Client 判断のポイント</h4>
                     <ul>
-                        <li>Secom 機器が Socket 要件の唯一のドライバー</li>
-                        <li><strong>セサモ TR2Web</strong>（クラウド版）に移行すれば VPN 全廃が可能</li>
-                        <li>VPN 全廃 → Socket 最小化（本社 1台 + Azure のみ）</li>
-                        <li>VPN 残存なら年間 ¥2.4M の二重投資が発生</li>
+                        <li><strong>Socket が必要な条件</strong>: Client をインストールできない機器が Cato NW経由の通信を必要とする場合</li>
+                        <li><strong>Secom入退室機器</strong>: Client不可 → VPN or Socket 必須</li>
+                        <li><strong>ファイルサーバー/TENSUITE</strong>: サーバーOS → Socket または クラウド移行が必要</li>
+                        <li>業務PC: Client インストール可 → Socket 不要</li>
+                        <li>複合機: ローカルLAN完結なら Socket 不要（ただしAD参照がVPN経由の場合は要検討）</li>
+                    </ul>
+                </div>
+                <div class="info-box">
+                    <h4>VPN全廃に向けたロードマップ</h4>
+                    <ul>
+                        <li>Secom入退室: <strong>フルクラウド型</strong>に移行すればVPN不要（別途検討中）</li>
+                        <li>AD: Entra ID（旧Azure AD）移行で拠点間VPN不要に</li>
+                        <li>ファイルサーバー: SharePoint / Azure Files 等への集約でVPN不要に</li>
+                        <li>TENSUITE: クラウド版への移行 or VPN経由の維持を判断</li>
+                        <li><strong>全て移行完了まではVPN残存</strong> → Cato導入時にSocket台数に影響</li>
                     </ul>
                 </div>
             </div>
