@@ -328,6 +328,61 @@
             text-align: center;
             color: #cbd5e1;
         }
+        .socket-sim .progress-matrix th {
+            text-align: center;
+            padding: 8px 6px;
+        }
+        .socket-sim .progress-matrix th:first-child {
+            text-align: left;
+            min-width: 180px;
+        }
+        .socket-sim .progress-matrix td {
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 8px 6px;
+            width: 48px;
+        }
+        .socket-sim .progress-matrix td:first-child {
+            text-align: left;
+            font-size: 0.78rem;
+            width: auto;
+        }
+        .socket-sim .s-need {
+            background: #fecaca;
+            color: #991b1b;
+        }
+        .socket-sim .s-inv {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .socket-sim .s-ok {
+            background: #f8fafc;
+            color: #cbd5e1;
+        }
+        .socket-sim .s-free {
+            background: #dcfce7;
+            color: #166534;
+        }
+        .socket-sim .progress-matrix tfoot td {
+            border-top: 3px solid #7b1fa2;
+            font-size: 0.68rem;
+            font-weight: 600;
+            padding: 10px 4px;
+            line-height: 1.3;
+        }
+        .socket-sim .progress-matrix tfoot td.ft-easy {
+            background: #dcfce7;
+            color: #166534;
+        }
+        .socket-sim .progress-matrix tfoot td.ft-mid {
+            background: #fef9c3;
+            color: #854d0e;
+        }
+        .socket-sim .progress-matrix tfoot td.ft-hard {
+            background: #ffe4e6;
+            color: #9f1239;
+        }
 
         /* --- Internet Cloud --- */
         .cloud-node {
@@ -770,165 +825,116 @@
                     <strong>現状: 全8拠点にSocket必要</strong>（Cato Clientをインストールできない機器が各拠点に存在するため）
                 </p>
 
-                <!-- 拠点別Socket依存マトリクス -->
-                <p style="font-size: 0.78rem; font-weight: 700; color: #4c1d95; margin: 0 0 0.5rem;">拠点別 Socket依存マトリクス</p>
-                <table class="dep-table">
-                    <thead>
-                        <tr>
-                            <th>拠点</th>
-                            <th style="text-align:center;">SECOM<br>入退室</th>
-                            <th style="text-align:center;">ファイル<br>サーバー</th>
-                            <th style="text-align:center;">複合機</th>
-                            <th style="text-align:center;">TENSUITE<br>勤怠</th>
-                            <th style="text-align:center;">OrCAD<br>サーバー</th>
-                            <th style="text-align:center;">Socket<br>依存数</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>本社（築地）</td>
-                            <td class="dep-yes">●</td>
-                            <td class="dep-yes">●</td>
-                            <td class="dep-inv">▲</td>
-                            <td class="dep-yes">●</td>
-                            <td class="dep-no">-</td>
-                            <td style="text-align:center; font-weight:700;">3〜4</td>
-                        </tr>
-                        <tr>
-                            <td>大阪</td>
-                            <td class="dep-yes">●</td>
-                            <td class="dep-no">-</td>
-                            <td class="dep-no">-</td>
-                            <td class="dep-no">-</td>
-                            <td class="dep-no">-</td>
-                            <td style="text-align:center; font-weight:700;">1</td>
-                        </tr>
-                        <tr>
-                            <td>多摩（R&D）</td>
-                            <td class="dep-yes">●</td>
-                            <td class="dep-yes">●</td>
-                            <td class="dep-inv">▲</td>
-                            <td class="dep-no">-</td>
-                            <td class="dep-no">-</td>
-                            <td style="text-align:center; font-weight:700;">2〜3</td>
-                        </tr>
-                        <tr>
-                            <td>橋本（IoT Lab）</td>
-                            <td class="dep-yes">●</td>
-                            <td class="dep-yes">●</td>
-                            <td class="dep-inv">▲</td>
-                            <td class="dep-no">-</td>
-                            <td class="dep-yes">●</td>
-                            <td style="text-align:center; font-weight:700;">3〜4</td>
-                        </tr>
-                        <tr style="color: #64748b;">
-                            <td>福岡 / 和歌山 / 京橋 / 名古屋</td>
-                            <td class="dep-yes">●</td>
-                            <td class="dep-no">-</td>
-                            <td class="dep-no">-</td>
-                            <td class="dep-no">-</td>
-                            <td class="dep-no">-</td>
-                            <td style="text-align:center; font-weight:700;">各1</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p style="font-size: 0.7rem; color: #64748b; margin: 0 0 1.25rem;">
-                    ● = Socket必須 &nbsp; <span style="color: #f59e0b; font-weight:700;">▲ = 要否調査中</span> &nbsp; - = 該当なし
+                <!-- Socket阻害要因マップ -->
+                <p style="font-size: 0.78rem; font-weight: 700; color: #4c1d95; margin: 0 0 0.3rem;">拠点別 Socket阻害要因マップ</p>
+                <p style="font-size: 0.75rem; color: #64748b; margin: 0 0 0.75rem; line-height: 1.6;">
+                    <span style="display:inline-block; width:14px; height:14px; background:#fecaca; border-radius:3px; vertical-align:middle; margin-right:2px;"></span> = この要因のせいでSocket必要 &nbsp;
+                    <span style="display:inline-block; width:14px; height:14px; background:#fef3c7; border-radius:3px; vertical-align:middle; margin-right:2px;"></span> = 調査中 &nbsp;
+                    <span style="display:inline-block; width:14px; height:14px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:3px; vertical-align:middle; margin-right:2px;"></span> = 該当なし<br>
+                    <strong>縦に見て、全ての印が消えればその拠点はSocket不要。</strong>
                 </p>
-
-                <!-- 対策別Socket削減シナリオ -->
-                <p style="font-size: 0.78rem; font-weight: 700; color: #4c1d95; margin: 0 0 0.5rem;">対策別 Socket削減シナリオ（累積効果）</p>
-                <table>
+                <table class="progress-matrix">
                     <thead>
                         <tr>
-                            <th style="width: 30px;">#</th>
-                            <th>対策</th>
-                            <th>解消されるSocket依存</th>
-                            <th>Socket不要になる拠点</th>
-                            <th style="text-align:center; width: 160px;">Socket必要な<br>拠点数（/8拠点）</th>
+                            <th style="text-align:left;">Socket阻害要因<br><span style="font-weight:400; font-size:0.65rem; color:#64748b;">（=対策すべき項目）</span></th>
+                            <th>本社</th>
+                            <th>大阪</th>
+                            <th>多摩</th>
+                            <th>橋本</th>
+                            <th>福岡</th>
+                            <th>和歌山</th>
+                            <th>京橋</th>
+                            <th>名古屋</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr style="background: #faf5ff;">
-                            <td style="font-weight:800; color:#7b1fa2;">①</td>
-                            <td><strong>SECOMフルクラウド化</strong></td>
-                            <td>全拠点のSecom入退室機器</td>
-                            <td>
-                                <span class="site-freed">大阪</span>
-                                <span class="site-freed">福岡</span>
-                                <span class="site-freed">和歌山</span>
-                                <span class="site-freed">京橋</span>
-                                <span class="site-freed">名古屋</span>
-                            </td>
-                            <td style="text-align:center;">
-                                <span class="count-badge count-before">8拠点</span>
-                                →
-                                <span class="count-badge count-after">3拠点</span>
-                                <div style="font-size:0.68rem; color:#166534; font-weight:700; margin-top:2px;">-5拠点</div>
-                            </td>
+                        <tr>
+                            <td><strong>① SECOM入退室機器</strong><br><span style="font-size:0.68rem; color:#64748b;">→ フルクラウド型に移行</span></td>
+                            <td class="s-need">✗</td>
+                            <td class="s-need">✗</td>
+                            <td class="s-need">✗</td>
+                            <td class="s-need">✗</td>
+                            <td class="s-need">✗</td>
+                            <td class="s-need">✗</td>
+                            <td class="s-need">✗</td>
+                            <td class="s-need">✗</td>
                         </tr>
                         <tr>
-                            <td style="font-weight:800; color:#7b1fa2;">②</td>
-                            <td><strong>ファイルサーバー<br>クラウド統合</strong></td>
-                            <td>ADSHARESVR（本社）<br>IOTSVR/QNAP（橋本）<br>CRBファイルサーバー（多摩）<br><span style="font-size:0.72rem; color:#2563eb;">→ SharePoint / Azure Files等</span></td>
-                            <td style="color: #94a3b8; font-size: 0.75rem;">
-                                （単独では0 — 各拠点に他の依存が残る）
-                            </td>
-                            <td style="text-align:center;">
-                                <span class="count-badge count-after">3拠点</span>
-                                <div style="font-size:0.68rem; color:#94a3b8; margin-top:2px;">変化なし</div>
-                            </td>
+                            <td><strong>② ファイルサーバー</strong><br><span style="font-size:0.68rem; color:#64748b;">→ クラウド統合 (SharePoint等)</span></td>
+                            <td class="s-need">✗</td>
+                            <td class="s-ok">—</td>
+                            <td class="s-need">✗</td>
+                            <td class="s-need">✗</td>
+                            <td class="s-ok">—</td>
+                            <td class="s-ok">—</td>
+                            <td class="s-ok">—</td>
+                            <td class="s-ok">—</td>
                         </tr>
                         <tr>
-                            <td style="font-weight:800; color:#7b1fa2;">③</td>
-                            <td><strong>複合機 VPN不要化</strong><br><span style="font-size:0.7rem; color:#f59e0b;">※調査中</span></td>
-                            <td>本社/多摩/橋本の複合機<br><span style="font-size:0.72rem; color:#64748b;">②と合わせて多摩の全依存が解消</span></td>
-                            <td>
-                                <span class="site-freed">多摩</span>
-                                <span style="font-size:0.72rem; color:#64748b;">（②+③の合わせ技）</span>
-                            </td>
-                            <td style="text-align:center;">
-                                <span class="count-badge count-before">3拠点</span>
-                                →
-                                <span class="count-badge count-after">2拠点</span>
-                                <div style="font-size:0.68rem; color:#166534; font-weight:700; margin-top:2px;">-1拠点</div>
-                            </td>
+                            <td><strong>③ 複合機</strong><br><span style="font-size:0.68rem; color:#b45309;">→ VPN不要の可能性あり（調査中）</span></td>
+                            <td class="s-inv">▲</td>
+                            <td class="s-ok">—</td>
+                            <td class="s-inv">▲</td>
+                            <td class="s-inv">▲</td>
+                            <td class="s-ok">—</td>
+                            <td class="s-ok">—</td>
+                            <td class="s-ok">—</td>
+                            <td class="s-ok">—</td>
                         </tr>
                         <tr>
-                            <td style="font-weight:800; color:#7b1fa2;">④</td>
-                            <td><strong>TENSUITEクラウド化</strong></td>
-                            <td>勤怠管理 AP/DB（本社 .1.12/.14）</td>
-                            <td>
-                                <span class="site-freed">本社</span>
-                            </td>
-                            <td style="text-align:center;">
-                                <span class="count-badge count-before">2拠点</span>
-                                →
-                                <span class="count-badge count-after">1拠点</span>
-                                <div style="font-size:0.68rem; color:#166534; font-weight:700; margin-top:2px;">-1拠点</div>
-                            </td>
+                            <td><strong>④ TENSUITE (勤怠)</strong><br><span style="font-size:0.68rem; color:#64748b;">→ クラウド版に移行</span></td>
+                            <td class="s-need">✗</td>
+                            <td class="s-ok">—</td>
+                            <td class="s-ok">—</td>
+                            <td class="s-ok">—</td>
+                            <td class="s-ok">—</td>
+                            <td class="s-ok">—</td>
+                            <td class="s-ok">—</td>
+                            <td class="s-ok">—</td>
                         </tr>
                         <tr>
-                            <td style="font-weight:800; color:#7b1fa2;">⑤</td>
-                            <td><strong>OrCAD移行/廃止</strong></td>
-                            <td>OrCADサーバー x2（橋本 .30.12/.13）</td>
-                            <td>
-                                <span class="site-freed">橋本</span>
-                            </td>
-                            <td style="text-align:center;">
-                                <span class="count-badge count-before">1拠点</span>
-                                →
-                                <span class="count-badge count-after" style="background:#bbf7d0; font-size:1rem;">0</span>
-                                <div style="font-size:0.68rem; color:#166534; font-weight:700; margin-top:2px;">全拠点Socket不要!</div>
-                            </td>
+                            <td><strong>⑤ OrCADサーバー</strong><br><span style="font-size:0.68rem; color:#64748b;">→ 移行 or 廃止</span></td>
+                            <td class="s-ok">—</td>
+                            <td class="s-ok">—</td>
+                            <td class="s-ok">—</td>
+                            <td class="s-need">✗</td>
+                            <td class="s-ok">—</td>
+                            <td class="s-ok">—</td>
+                            <td class="s-ok">—</td>
+                            <td class="s-ok">—</td>
                         </tr>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td style="font-weight:800; color:#4c1d95;">全対策後<br>Socket不要?</td>
+                            <td class="s-free">✓</td>
+                            <td class="s-free">✓</td>
+                            <td class="s-free">✓</td>
+                            <td class="s-free">✓</td>
+                            <td class="s-free">✓</td>
+                            <td class="s-free">✓</td>
+                            <td class="s-free">✓</td>
+                            <td class="s-free">✓</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:700; color:#475569; font-size:0.72rem;">解消に必要な対策</td>
+                            <td class="ft-hard">①②③④</td>
+                            <td class="ft-easy">①のみ</td>
+                            <td class="ft-mid">①②③</td>
+                            <td class="ft-hard">①②③⑤</td>
+                            <td class="ft-easy">①のみ</td>
+                            <td class="ft-easy">①のみ</td>
+                            <td class="ft-easy">①のみ</td>
+                            <td class="ft-easy">①のみ</td>
+                        </tr>
+                    </tfoot>
                 </table>
                 <div style="margin-top: 1rem; padding: 10px 14px; background: rgba(123,31,162,0.06); border-radius: 8px; font-size: 0.78rem; color: #475569; line-height: 1.7;">
-                    <strong style="color: #7b1fa2;">結論:</strong>
-                    ①SECOMフルクラウド化だけで <strong>5拠点</strong>（Type B全4拠点 + 大阪）のSocketが不要に。
-                    ①〜③を実施すれば<strong>6拠点</strong>まで削減可能。
-                    全5対策で<strong>Socket完全ゼロ</strong>（= VPN全廃）を達成できる。
+                    <strong style="color: #7b1fa2;">読み方:</strong>
+                    各列を縦に見て、<span style="background:#fecaca; padding:1px 4px; border-radius:3px;">✗</span> が1つだけなら、その対策だけでSocket不要に。
+                    <strong>大阪・福岡・和歌山・京橋・名古屋</strong>は①だけで解消（緑セル＝①のみ）。
+                    <strong>多摩</strong>は✗が3つ → ①②③の3対策が必要。
+                    <strong>本社・橋本</strong>は✗が4つ → 最も多くの対策が必要。
                 </div>
             </div>
 
