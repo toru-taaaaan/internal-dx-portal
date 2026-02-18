@@ -410,7 +410,7 @@
         <!-- Version Header -->
         <div class="version-header">
             <span>入退室管理 フルクラウド型 ベンダー調査 | プロジェクト 15.02b</span>
-            <span id="version-date">ver 2026-02-18</span>
+            <span id="version-date">ver 2026-02-18 SPLATS資料解析完了・3社回答済</span>
         </div>
 
         <!-- Header -->
@@ -431,6 +431,7 @@
             <a href="#sec-comparison" class="nav-pill">ベンダー比較</a>
             <a href="#sec-detail-alligate" class="nav-pill">ALLIGATE</a>
             <a href="#sec-detail-akerun" class="nav-pill">Akerun</a>
+            <a href="#sec-detail-splats" class="nav-pill">SPLATS</a>
             <a href="#sec-detail-bitlock" class="nav-pill">bitlock PRO</a>
             <a href="#sec-detail-secom" class="nav-pill">SECOM</a>
             <a href="#sec-timeline" class="nav-pill">コミュニケーション履歴</a>
@@ -446,11 +447,11 @@
                     <div class="kpi-label">調査ベンダー数</div>
                 </div>
                 <div class="kpi-card">
-                    <div class="kpi-value" style="color: var(--accent);">1</div>
+                    <div class="kpi-value" style="color: var(--accent);">3</div>
                     <div class="kpi-label">回答済み</div>
                 </div>
                 <div class="kpi-card">
-                    <div class="kpi-value" style="color: var(--warning);">6</div>
+                    <div class="kpi-value" style="color: var(--warning);">4</div>
                     <div class="kpi-label">回答待ち</div>
                 </div>
                 <div class="kpi-card">
@@ -460,6 +461,14 @@
                 <div class="kpi-card">
                     <div class="kpi-value" style="color: var(--info);">4/4</div>
                     <div class="kpi-label">ALLIGATE 要件充足</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" style="color: var(--info);">4/4</div>
+                    <div class="kpi-label">SPLATS 要件充足</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" style="color: var(--info);">4/4</div>
+                    <div class="kpi-label">Akerun 要件充足</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-value" style="color: var(--accent);">21</div>
@@ -502,7 +511,7 @@
                             <th>SECOM<br><small>セサモクラウド</small></th>
                             <th style="background: #eff6ff;">ALLIGATE<br><small>アート</small></th>
                             <th>Akerun<br><small>Photosynth</small></th>
-                            <th>SPLATS<br><small>YE DIGITAL</small></th>
+                            <th>SPLATS<br><small>クマヒラ</small></th>
                             <th>bitlock PRO<br><small>ビットキー</small></th>
                             <th>FreeiD<br><small>DXYZ</small></th>
                             <th>カギカン<br><small>Qrio</small></th>
@@ -513,8 +522,8 @@
                             <td><strong>回答状態</strong></td>
                             <td><span class="badge badge-waiting">回答待ち</span></td>
                             <td style="background: #eff6ff;"><span class="badge badge-ok">回答済 2/18</span></td>
-                            <td><span class="badge badge-waiting">回答待ち</span></td>
-                            <td><span class="badge badge-waiting">回答待ち</span></td>
+                            <td><span class="badge badge-ok">回答済 2/18</span></td>
+                            <td><span class="badge badge-ok">回答済 2/18</span></td>
                             <td><span class="badge badge-waiting">回答待ち</span></td>
                             <td><span class="badge badge-waiting">回答待ち</span></td>
                             <td><span class="badge badge-ng">FeliCa非対応</span></td>
@@ -523,8 +532,8 @@
                             <td><strong>1. VPN不要</strong></td>
                             <td><span class="badge badge-pending">要確認</span></td>
                             <td style="background: #eff6ff;"><span class="badge badge-ok">OK</span></td>
-                            <td><span class="badge badge-pending">要確認</span></td>
-                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td><span class="badge badge-ok">OK</span></td>
+                            <td><span class="badge badge-ok">OK(LTE内蔵)</span></td>
                             <td><span class="badge badge-pending">要確認</span></td>
                             <td><span class="badge badge-pending">要確認</span></td>
                             <td><span class="badge badge-info">-</span></td>
@@ -533,8 +542,8 @@
                             <td><strong>2. FeliCa</strong></td>
                             <td><span class="badge badge-pending">要確認</span></td>
                             <td style="background: #eff6ff;"><span class="badge badge-ok">OK</span></td>
-                            <td><span class="badge badge-pending">要確認</span></td>
-                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td><span class="badge badge-ok">OK(全種)</span></td>
+                            <td><span class="badge badge-ok">OK(FeliCa/MIFARE)</span></td>
                             <td><span class="badge badge-pending">要確認</span></td>
                             <td><span class="badge badge-pending">要確認</span></td>
                             <td><span class="badge badge-ng">非対応</span></td>
@@ -543,8 +552,8 @@
                             <td><strong>3. CSV出力</strong></td>
                             <td><span class="badge badge-pending">要確認</span></td>
                             <td style="background: #eff6ff;"><span class="badge badge-ok">OK</span></td>
-                            <td><span class="badge badge-pending">API+CSV</span></td>
-                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td><span class="badge badge-ok">CSV+タイムカード</span></td>
+                            <td><span class="badge badge-ok">月次CSV(5年分)</span></td>
                             <td><span class="badge badge-pending">CSV</span></td>
                             <td><span class="badge badge-pending">要確認</span></td>
                             <td><span class="badge badge-info">CSV</span></td>
@@ -553,8 +562,8 @@
                             <td><strong>4. 複数拠点</strong></td>
                             <td><span class="badge badge-pending">要確認</span></td>
                             <td style="background: #eff6ff;"><span class="badge badge-ok">OK</span></td>
-                            <td><span class="badge badge-pending">要確認</span></td>
-                            <td><span class="badge badge-pending">要確認</span></td>
+                            <td><span class="badge badge-ok">OK</span></td>
+                            <td><span class="badge badge-ok">OK</span></td>
                             <td><span class="badge badge-pending">要確認</span></td>
                             <td><span class="badge badge-pending">要確認</span></td>
                             <td><span class="badge badge-info">-</span></td>
@@ -563,8 +572,8 @@
                             <td><strong>要件充足</strong></td>
                             <td><strong>0/4</strong></td>
                             <td style="background: #eff6ff;"><strong style="color: var(--accent);">4/4</strong></td>
-                            <td><strong>0/4</strong></td>
-                            <td><strong>0/4</strong></td>
+                            <td><strong style="color: var(--accent);">4/4</strong></td>
+                            <td><strong style="color: var(--accent);">4/4</strong></td>
                             <td><strong>0/4</strong></td>
                             <td><strong>0/4</strong></td>
                             <td><strong style="color: var(--danger);">脱落</strong></td>
@@ -574,7 +583,7 @@
                             <td><span class="badge badge-waiting">なし</span></td>
                             <td style="background: #eff6ff;"><span class="badge badge-ok">PDF(50p)解析済</span></td>
                             <td><span class="badge badge-pending">DLリンクあり</span></td>
-                            <td><span class="badge badge-waiting">なし</span></td>
+                            <td><span class="badge badge-ok">PDF(34p)解析済</span></td>
                             <td><span class="badge badge-pending">DLリンクあり</span></td>
                             <td><span class="badge badge-waiting">なし</span></td>
                             <td><span class="badge badge-info">-</span></td>
@@ -583,8 +592,8 @@
                             <td><strong>見積条件</strong></td>
                             <td>-</td>
                             <td style="background: #eff6ff;">扉数+扉写真</td>
-                            <td>-</td>
-                            <td>-</td>
+                            <td>扉数+扉写真<br><small>(配線式は現地調査必須)</small></td>
+                            <td>拠点住所+扉数<br>+電気錠型式<br><small>+導入時期+プラン選択</small></td>
                             <td>利用人数+扉数<br>+扉写真+寸法</td>
                             <td>-</td>
                             <td>-</td>
@@ -593,8 +602,8 @@
                             <td><strong>初期費用</strong></td>
                             <td>不明</td>
                             <td style="background: #eff6ff;">要問合せ<br><small>(扉数で見積)</small></td>
-                            <td>不明</td>
-                            <td>不明</td>
+                            <td>Pro: 0円(工事なし)<br>6-8万(工事あり)<br><small>CTL: 10-15万/扉</small></td>
+                            <td>工事費のみ<br><small>(参考: 1扉16万前後<br>電気錠化含む)</small></td>
                             <td>不明</td>
                             <td>不明</td>
                             <td>-</td>
@@ -603,8 +612,8 @@
                             <td><strong>月額費用</strong></td>
                             <td>不明</td>
                             <td style="background: #eff6ff;"><strong>18,000円/扉</strong><br><small>(税抜・Lock Pro)<br>13,000円/扉(Lock)</small></td>
-                            <td>不明</td>
-                            <td>不明</td>
+                            <td><strong>Pro: 19,800円/扉</strong><br><strong>CTL: 27,800円/扉</strong><br><small>(税抜)</small></td>
+                            <td><strong>ライト: 9,000円/扉</strong><br><strong>ベーシック: 10,000円/扉</strong><br><small>(税抜・機器レンタル込)</small></td>
                             <td>不明</td>
                             <td>不明</td>
                             <td>-</td>
@@ -613,8 +622,8 @@
                             <td><strong>課金単位</strong></td>
                             <td>不明</td>
                             <td style="background: #eff6ff;"><strong>扉数課金</strong><br><small>(人数で変動しない)</small></td>
-                            <td>不明</td>
-                            <td>不明</td>
+                            <td><strong>扉数課金</strong><br><small>長期契約(最大5年)で<br>月額調整可能</small></td>
+                            <td><strong>扉数課金</strong><br><small>月額に機器費・通信費<br>・保守費含む</small></td>
                             <td>不明</td>
                             <td>不明</td>
                             <td>-</td>
@@ -623,8 +632,8 @@
                             <td><strong>導入期間</strong></td>
                             <td>不明</td>
                             <td style="background: #eff6ff;">既存カード: 約1ヶ月<br><small>新規カード: 1〜2週間<br>+設置工事日程調整</small></td>
-                            <td>不明</td>
-                            <td>不明</td>
+                            <td>Pro: 最短3営業日<br><small>CTL: 現地調査後</small></td>
+                            <td>最短1ヶ月<br><small>(契約~機器到着<br>+設置工事)</small></td>
                             <td>不明</td>
                             <td>不明</td>
                             <td>-</td>
@@ -634,7 +643,7 @@
                             <td>不明</td>
                             <td style="background: #eff6ff;"><strong>LTE(SIM内蔵)</strong><br><small>WiFiフォールバック</small></td>
                             <td>不明</td>
-                            <td>不明</td>
+                            <td><strong>LTE(SIM内蔵)</strong><br><small>IoTルーター(opt)<br>電波悪い場所用</small></td>
                             <td>不明</td>
                             <td>不明</td>
                             <td>-</td>
@@ -644,7 +653,7 @@
                             <td>不明</td>
                             <td style="background: #eff6ff;"><span class="badge badge-ok">スタンドアロン</span><br><small>解錠施錠に影響なし</small></td>
                             <td>不明</td>
-                            <td>不明</td>
+                            <td><span class="badge badge-ok">ローカル認証</span><br><small>通信障害→直前情報で認証<br>停電→バッテリー10分</small></td>
                             <td>不明</td>
                             <td>不明</td>
                             <td>-</td>
@@ -653,8 +662,8 @@
                             <td><strong>設置方式</strong></td>
                             <td>不明</td>
                             <td style="background: #eff6ff;">専門作業員設置<br><small>既設入替時: 電源・配線・<br>電気錠流用可</small></td>
-                            <td>不明</td>
-                            <td>不明</td>
+                            <td>Pro: 後付(電池式)<br>CTL: 配線式<br><small>(既設電気錠流用)</small></td>
+                            <td>専門作業員設置<br><small>電気錠/電磁錠/モーター錠<br>/自動ドア対応</small></td>
                             <td>サムターン後付型<br><small>(寸法確認必要)</small></td>
                             <td>不明</td>
                             <td>-</td>
@@ -663,8 +672,8 @@
                             <td><strong>認証方式</strong></td>
                             <td>不明</td>
                             <td style="background: #eff6ff;">ICカード(FeliCa/MIFARE)<br>スマホNFC・スマホアプリ(BLE)<br>テンキー・顔認証(opt)<br>物理鍵・遠隔解錠</td>
-                            <td>スマホ/ICカード/暗証番号</td>
-                            <td>不明</td>
+                            <td>ICカード(FeliCa全種)<br>スマホNFC・スマホアプリ<br>暗証番号</td>
+                            <td>ICカード(FeliCa/MIFARE)<br>QRコード(opt)<br>スマホアプリ(BLE/opt)<br>顔認証(opt)</td>
                             <td>スマホ/ICカード/暗証番号/顔</td>
                             <td>顔認証</td>
                             <td>スマホ/暗証番号</td>
@@ -684,7 +693,7 @@
                             <td>不明</td>
                             <td style="background: #eff6ff;"><span class="badge badge-ok">Web API公開</span><br><small>自社システム連携可</small></td>
                             <td>API+CSV</td>
-                            <td>不明</td>
+                            <td>なし<br><small>(CSV出力のみ)</small></td>
                             <td>不明</td>
                             <td>不明</td>
                             <td>-</td>
@@ -693,8 +702,8 @@
                             <td><strong>勤怠連携</strong></td>
                             <td>不明</td>
                             <td style="background: #eff6ff;">TeamSpirit/KING OF TIME<br>ジョブカン/e就業ASP<br><small>+CSV出力+API</small></td>
-                            <td>不明</td>
-                            <td>不明</td>
+                            <td>CSV+タイムカード機能<br><small>(始業/終業抽出)</small></td>
+                            <td>KING OF TIME<br>SmartHR<br><small>+CSV出力</small></td>
                             <td>不明</td>
                             <td>不明</td>
                             <td>-</td>
@@ -783,8 +792,8 @@
                             <td><strong>担当者</strong></td>
                             <td>神山 直己</td>
                             <td style="background: #eff6ff;">丸亀 麻綾</td>
-                            <td>江口 (Photosynth)</td>
-                            <td>担当者未定<br><small>(クマヒラ)</small></td>
+                            <td>小林 純大<br><small>(Photosynth)</small></td>
+                            <td>吉岡 俊瑛<br><small>(クマヒラ)</small></td>
                             <td>チーム<br><small>(ビットキー)</small></td>
                             <td>担当者未定<br><small>(DXYZ)</small></td>
                             <td>サポート<br><small>(Qrio)</small></td>
@@ -793,8 +802,8 @@
                             <td><strong>備考</strong></td>
                             <td>同一メーカー。<br>既存カード継続の可能性最大</td>
                             <td style="background: #eff6ff;">4要件クリア。<br>Lock Pro推奨(18,000円/扉/月)。<br>扉数課金(人数不問)。<br>既設入替は電源流用可。<br>スタンドアロン動作。<br>API公開済み。</td>
-                            <td>導入実績豊富。<br>FeliCa要確認。<br>資料DLリンクあり。<br>WEB MTG予約可</td>
-                            <td>YE DIGITAL<br>(上場企業)。<br>担当者から後日連絡</td>
+                            <td>4要件クリア。<br>Pro 19,800円/CTL 27,800円/扉/月。<br>扉数課金。長期割引あり。<br>Pro: 後付(電池式)最短3営業日。</td>
+                            <td>4要件クリア。<br>ベーシック10,000円/扉/月。<br>機器レンタル込。LTE内蔵。<br>全国53拠点サポート。<br>299社導入実績。</td>
                             <td>サムターン後付型。<br>製品資料DLリンクあり。<br>見積テンプレートあり。<br>設置可否資料あり</td>
                             <td>顔認証特化。<br>担当者から後日連絡</td>
                             <td>FeliCa非対応<br>で脱落。<br>回答に時間かかる旨</td>
@@ -1028,18 +1037,69 @@
 
         <!-- sec-detail-akerun: Akerun詳細 -->
         <section id="sec-detail-akerun" class="section-card">
-            <div class="section-title">Akerun 自動返信詳細（2026-02-17受信）</div>
-            <div style="font-size: 0.9rem;">
-                <p>自動返信のみ（担当者からの本回答は未着）。以下の情報が提供された:</p>
-                <table>
-                    <tr><td style="width: 30%;"><strong>サービス資料</strong></td><td>DLリンク送付済み（トラッキングURL、要手動DL）</td></tr>
-                    <tr><td><strong>WEB MTG</strong></td><td>予約可能（45分程度）。管理画面・実機デモあり。カレンダーから日程選択</td></tr>
-                    <tr><td><strong>電話相談</strong></td><td>即時対応可能（ボタンクリックで電話リクエスト）</td></tr>
-                    <tr><td><strong>取付診断</strong></td><td>扉写真を送ると事前に設置可否を診断</td></tr>
-                    <tr><td><strong>住所</strong></td><td>東京都港区芝5-29-11 G-BASE 田町15階</td></tr>
-                </table>
-                <p style="color: var(--warning); margin-top: 12px;"><strong>要件回答は未着。担当者からの連絡を待つ。</strong></p>
-            </div>
+            <div class="section-title">Akerun 詳細情報（2026-02-18 小林回答 + 資料解析）</div>
+            <table>
+                <tr><th style="width: 20%;">提供元</th><td>株式会社Photosynth</td></tr>
+                <tr><th>担当</th><td>小林 純大 (junta.kobayashi@photosynth.co.jp / 080-4418-2855)</td></tr>
+                <tr><th>4要件</th><td><span class="badge badge-ok">VPN不要</span> <span class="badge badge-ok">FeliCa全種</span> <span class="badge badge-ok">CSV+タイムカード</span> <span class="badge badge-ok">複数拠点OK</span></td></tr>
+                <tr><th>製品ラインナップ</th><td>
+                    <strong>Akerun Pro（電池式・後付）</strong>: 月額19,800円/扉(税抜)、初期0円(工事なし)/6-8万(工事あり)、最短3営業日納品<br>
+                    <strong>Akerun CTL（配線式）</strong>: 月額27,800円/扉(税抜)、初期10-15万、既設電気錠流用はこちら
+                </td></tr>
+                <tr><th>FeliCa対応</th><td>全種認証可能</td></tr>
+                <tr><th>CSV出力</th><td>入退室ログ + タイムカード(始業/終業のみ抽出)機能あり</td></tr>
+                <tr><th>長期契約割引</th><td>契約期間の長期化(最大5年)で月額調整可能</td></tr>
+                <tr><th>配線式(CTL)注意</th><td>現地調査必須</td></tr>
+                <tr><th>21扉での月額試算</th><td>
+                    Pro: 19,800円 × 21 = <strong>月額415,800円</strong>（年額4,989,600円）<br>
+                    CTL: 27,800円 × 21 = <strong>月額583,800円</strong>（年額7,005,600円）
+                </td></tr>
+                <tr><th>次のステップ</th><td>
+                    扉写真送付先: 取付診断フォーム<br>
+                    WEB会議予約: 日程調整URL提供済
+                </td></tr>
+            </table>
+        </section>
+
+        <!-- sec-detail-splats: SPLATS PASS詳細 -->
+        <section id="sec-detail-splats" class="section-card">
+            <div class="section-title">SPLATS PASS 詳細情報（2026-02-18 吉岡回答 + PDF全34p解析）</div>
+            <table>
+                <tr><th style="width: 20%;">提供元</th><td>株式会社クマヒラ（1898年創業、社員763名、入退室管理シェア7位、鍵管理シェア2位）<br><small>全国53拠点でサポート体制。SPLATS: 2024/10末 299社1251プラン契約</small></td></tr>
+                <tr><th>担当</th><td>吉岡 俊瑛 (toshiaki_yoshioka_kh@kumahira.co.jp / 03-3270-4388)<br>Cc: service_splats@kumahira.co.jp</td></tr>
+                <tr><th>4要件</th><td><span class="badge badge-ok">VPN不要(LTE内蔵)</span> <span class="badge badge-ok">FeliCa/MIFARE</span> <span class="badge badge-ok">月次CSV(5年分)</span> <span class="badge badge-ok">複数拠点OK</span></td></tr>
+                <tr><th>料金体系(税抜)</th><td>
+                    <table style="margin: 0; font-size: 0.85rem;">
+                        <tr><th>プラン</th><th>月額/扉</th><th>リーダー</th><th>在室管理</th><th>備考</th></tr>
+                        <tr><td><strong>ライト</strong></td><td><strong>&yen;9,000</strong></td><td>1台</td><td>なし</td><td>入室のみ管理</td></tr>
+                        <tr style="background:#eff6ff;"><td><strong>ベーシック</strong></td><td><strong>&yen;10,000</strong></td><td>2台</td><td>あり</td><td>入退室管理（推奨）</td></tr>
+                        <tr><td>ゲートライト</td><td>&yen;14,000</td><td>1台</td><td>なし</td><td>セキュリティゲート連動</td></tr>
+                        <tr><td>ゲートベーシック</td><td>&yen;15,000</td><td>2台</td><td>あり</td><td>セキュリティゲート連動</td></tr>
+                    </table>
+                    <small>※月額に機器費・通信費・保守費含む（レンタル）。初期費用は工事費のみ。</small>
+                </td></tr>
+                <tr><th>21扉での月額試算</th><td>
+                    ライト: 9,000円 × 21 = <strong>月額189,000円</strong>（年額2,268,000円）<br>
+                    ベーシック: 10,000円 × 21 = <strong>月額210,000円</strong>（年額2,520,000円）<br>
+                    <small>※初期工事費別途（参考: 1扉16万前後 → 21扉で約336万）</small>
+                </td></tr>
+                <tr><th>主なオプション(税抜)</th><td>
+                    QR認証: +&yen;3,000/月/リーダー ｜ スマート認証(BLE): 10名無料、11-100名+&yen;1,000/月<br>
+                    顔認証: タブレット1台+&yen;16,000/月 ｜ 屋内カメラ: +&yen;5,000/月/台<br>
+                    IoTルーター: +&yen;3,000/月(電波悪い場所用) ｜ アカウントカスタム: +&yen;10,000/月
+                </td></tr>
+                <tr><th>通信方式</th><td>LTE通信(SIM内蔵) ※ネットワーク工事不要。電波が悪い場所はIoTルーター(有線LAN)オプション</td></tr>
+                <tr><th>障害対応</th><td>通信障害→障害直前の利用者情報でローカル認証継続<br>停電→バックアップバッテリー最大10分<br>複数DCで分散バックアップ</td></tr>
+                <tr><th>デバイス仕様</th><td>
+                    パスコントローラー: W120×H300×D60mm, 約1.2kg, AC100V<br>
+                    SPLATSリーダー: W90×H90×D24mm, DC24V, FeliCa/MIFARE対応
+                </td></tr>
+                <tr><th>対応錠種</th><td>通電時解錠型/施錠型電気錠、ストライク錠、モーター錠、電磁錠、自動ドア等</td></tr>
+                <tr><th>セキュリティ</th><td>SSL暗号化・国内サーバー・2段階認証(Google Authenticator)・IPアドレス制限</td></tr>
+                <tr><th>外部連携</th><td>KING OF TIME(勤怠) ｜ SmartHR(人事) ｜ RECEPTIONIST(来訪者) ｜ Slack/LINE WORKS(通知)</td></tr>
+                <tr><th>認証方式</th><td>ICカード(FeliCa/MIFARE)・QRコード(opt)・スマホアプリBLE(opt)・顔認証(opt)・遠隔解錠・解錠予約</td></tr>
+                <tr><th>次のステップ</th><td>WEB打合せ希望（候補日を依頼中）<br>見積に必要: (1)8拠点住所 (2)導入希望時期 (3)プラン選択 (4)扉数 (5)電気錠有無と型式</td></tr>
+            </table>
         </section>
 
         <!-- sec-detail-bitlock: bitlock PRO詳細 -->
@@ -1126,6 +1186,35 @@
         <section id="sec-timeline" class="section-card">
             <div class="section-title">コミュニケーション履歴</div>
             <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2026-02-18 <span class="timeline-tag tag-doc">資料解析</span></div>
+                    <div class="timeline-content">
+                        <strong>SPLATS PASS 提案資料PDF(34ページ)</strong>解析完了<br>
+                        ベーシックプラン 10,000円/扉/月（機器レンタル込）、ライト 9,000円/扉/月<br>
+                        <small>KING OF TIME/SmartHR連携、全国53拠点サポート、299社導入実績</small>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2026-02-18 12:49 <span class="timeline-tag tag-send">送信</span></div>
+                    <div class="timeline-content">
+                        <strong>丹治</strong> → ALLIGATE 丸亀氏（全員返信）<br>
+                        8拠点21扉一覧、FeliCaカード/リーダー流用可否質問、写真追送、打合せ候補日依頼
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2026-02-18 11:06 <span class="timeline-tag tag-recv">受信</span></div>
+                    <div class="timeline-content">
+                        <strong>SPLATS (クマヒラ) 吉岡俊瑛</strong> → 丹治<br>
+                        4要件すべてOK回答。SIM内蔵LTE、資料ZIP添付。WEB打合せ希望。
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2026-02-18 10:54 <span class="timeline-tag tag-recv">受信</span></div>
+                    <div class="timeline-content">
+                        <strong>Akerun (Photosynth) 小林純大</strong> → 丹治<br>
+                        4要件すべてOK回答。Pro 19,800円/CTL 27,800円/扉/月。WEB会議URL・取付診断フォーム提供。
+                    </div>
+                </div>
                 <div class="timeline-item">
                     <div class="timeline-date">2026-02-18 11:37 <span class="timeline-tag tag-doc">調査</span></div>
                     <div class="timeline-content">
@@ -1313,19 +1402,29 @@
             </div>
 
             <!-- Akerun対応 -->
-            <h4 style="color: var(--warning); margin: 20px 0 12px 0;">3. Akerun 対応</h4>
-            <div class="action-item normal">
-                <span class="action-priority priority-mid">DL</span>
-                <div><strong>サービス資料をダウンロード</strong>（メール内のトラッキングURLから要手動DL）</div>
+            <h4 style="color: var(--accent); margin: 20px 0 12px 0;">3. Akerun 小林氏へ返信 <span class="badge badge-ok">要件クリア済</span></h4>
+            <div class="action-item urgent">
+                <span class="action-priority priority-high">返信</span>
+                <div>小林氏 (junta.kobayashi@photosynth.co.jp) へ返信。内容:<br>
+                <strong>(a)</strong> 扉写真送付（取付診断フォーム経由）<br>
+                <strong>(b)</strong> WEB会議の日程調整<br>
+                <small style="color: var(--text-muted);">※Pro(後付)とCTL(配線式)の使い分けを確認</small></div>
             </div>
-            <div class="action-item normal">
-                <span class="action-priority priority-low">任意</span>
-                <div>WEB MTG予約（45分デモ）or 電話相談 or 取付診断フォーム送信<br>
-                <small style="color: var(--text-muted);">※担当者からの本回答を待ってからでもOK</small></div>
+
+            <!-- SPLATS対応 -->
+            <h4 style="color: var(--accent); margin: 20px 0 12px 0;">4. SPLATS 吉岡氏へ返信 <span class="badge badge-ok">要件クリア済</span></h4>
+            <div class="action-item urgent">
+                <span class="action-priority priority-high">返信</span>
+                <div>吉岡氏 (toshiaki_yoshioka_kh@kumahira.co.jp) へ返信。内容:<br>
+                <strong>(a)</strong> WEB打合せの候補日提示<br>
+                <strong>(b)</strong> 8拠点住所・扉数一覧<br>
+                <strong>(c)</strong> 導入希望時期・プラン選択（ベーシック想定）<br>
+                <strong>(d)</strong> 電気錠の有無と型式<br>
+                <small style="color: var(--text-muted);">※見積に必要な5項目を揃える</small></div>
             </div>
 
             <!-- 資料DL -->
-            <h4 style="color: var(--warning); margin: 20px 0 12px 0;">4. 資料ダウンロード（手動）</h4>
+            <h4 style="color: var(--warning); margin: 20px 0 12px 0;">5. 資料ダウンロード（手動）</h4>
             <div class="action-item normal">
                 <span class="action-priority priority-mid">DL</span>
                 <div><strong>bitlock PRO 製品資料</strong>（<a href="https://drive.google.com/file/d/1SHJA6f2s2LSTSDrn_UQpUFUp_iW4VMUP/view" target="_blank">Google Drive</a>）</div>
@@ -1336,20 +1435,18 @@
             </div>
 
             <!-- 回答待ち -->
-            <h4 style="color: var(--primary); margin: 20px 0 12px 0;">5. 回答待ち（こちらからのアクション不要）</h4>
+            <h4 style="color: var(--primary); margin: 20px 0 12px 0;">6. 回答待ち（こちらからのアクション不要）</h4>
             <div class="action-item" style="border-left: 4px solid #94a3b8;">
                 <span class="action-priority" style="background: #f1f5f9; color: #475569;">待ち</span>
                 <div>
                     <strong>SECOM 神山</strong>: クラウド型・FeliCa・e-works・現行費用の回答（2/17送信）<br>
-                    <strong>Akerun</strong>: 担当者からの本回答（自動返信のみ受領）<br>
-                    <strong>SPLATS</strong>: 担当者からの連絡（自動返信のみ受領）<br>
                     <strong>FreeiD</strong>: 担当者からの連絡（自動返信のみ受領）<br>
                     <strong>カギカン</strong>: <span style="color: var(--danger);">FeliCa非対応で脱落確定</span>
                 </div>
             </div>
 
             <!-- 全体・予算 -->
-            <h4 style="color: #0f172a; margin: 20px 0 12px 0;">6. 予算申請準備（2/24期限）</h4>
+            <h4 style="color: #0f172a; margin: 20px 0 12px 0;">7. 予算申請準備（2/24期限）</h4>
             <div class="action-item normal">
                 <span class="action-priority priority-mid">MID</span>
                 <div>e-worksに現行ファイル取込フォーマット仕様を確認（CSV互換設計用）</div>
@@ -1366,6 +1463,9 @@
             <!-- 完了 -->
             <h4 style="color: var(--text-muted); margin: 20px 0 12px 0;">完了</h4>
             <div style="font-size: 0.85rem; color: var(--text-muted); padding: 8px 16px;">
+                <s>SPLATS PASS 提案資料PDF(34p)解析・比較表反映</s> (2/18完了)<br>
+                <s>Akerun 小林回答の確認・比較表反映</s> (2/18完了)<br>
+                <s>SPLATS 吉岡回答の確認・比較表反映</s> (2/18完了)<br>
                 <s>ALLIGATE総合資料PDF(50ページ)のダウンロードと解析</s> (2/18完了)<br>
                 <s>ALLIGATE回答メールの確認・比較表反映</s> (2/18完了)<br>
                 <s>6社一斉資料請求 + SECOM問い合わせ</s> (2/17完了)
