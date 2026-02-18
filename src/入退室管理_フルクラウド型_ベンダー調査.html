@@ -1375,36 +1375,138 @@
         <!-- sec-sites: 拠点情報 -->
         <section id="sec-sites" class="section-card">
             <div class="section-title">対象拠点（8拠点・全21扉確定）</div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>SECOM番号</th>
-                        <th>拠点名</th>
-                        <th>扉数</th>
-                        <th>扉名称</th>
-                        <th>在室者</th>
-                        <th>写真</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>1</td><td>01</td><td>東京本社<br><small>陽光築地ビル</small></td><td><strong>7</strong></td><td><small>3F事務入口, 4F事務入口, 4F事務室手前, 5F事務入口, 6Fサーバー, 6F事務入口, 7F事務入口</small></td><td>114</td><td><span class="badge badge-pending">未撮影</span></td></tr>
-                    <tr><td>2</td><td>02</td><td>大阪<br><small>朝日生命道修町ビル</small></td><td><strong>2</strong></td><td><small>AD大阪事務入口, BN大阪事務入口</small></td><td>8</td><td><span class="badge badge-pending">未撮影</span></td></tr>
-                    <tr><td>3</td><td>03</td><td>和歌山<br><small>京橋ビル</small></td><td><strong>2</strong></td><td><small>和歌山3階, 和歌山京橋ビル4F</small></td><td>44</td><td><span class="badge badge-pending">未撮影</span></td></tr>
-                    <tr><td>4</td><td>04</td><td>福岡<br><small>第13泰平ビル</small></td><td><strong>1</strong></td><td><small>福岡事務入口</small></td><td>10</td><td><span class="badge badge-pending">未撮影</span></td></tr>
-                    <tr><td>5</td><td>05</td><td>名古屋<br><small>IT名駅ビル</small></td><td><strong>1</strong></td><td><small>名古屋事務入口</small></td><td>4</td><td><span class="badge badge-pending">未撮影</span></td></tr>
-                    <tr><td>6</td><td>06</td><td>橋本<br><small>MNビル</small></td><td><strong>1</strong></td><td><small>橋本MNビル入口</small></td><td>7</td><td><span class="badge badge-pending">未撮影</span></td></tr>
-                    <tr><td>7</td><td>07</td><td>京橋<br><small>住友不動産京橋ビル</small></td><td><strong>2</strong></td><td><small>3階事務室(正面), 3階事務室(階段)</small></td><td>64</td><td><span class="badge badge-pending">未撮影</span></td></tr>
-                    <tr><td>8</td><td>08</td><td>多摩センター</td><td><strong>5</strong></td><td><small>1F×3扉, 2F×1扉, 3F×1扉</small></td><td>14</td><td><span class="badge badge-pending">未撮影</span></td></tr>
-                    <tr style="background: #f0fdf4; font-weight: 700;">
-                        <td colspan="3">合計</td><td>21</td><td></td><td>265</td><td></td>
-                    </tr>
-                </tbody>
-            </table>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 12px;">
-                調査方法: SECOM AccessGaze入退室監視画面 (2026-02-18 11:37-11:38)<br>
-                ※ 扉写真はALLIGATE/bitlock PRO見積に必要（主要な扉のみでもOK）
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0 0 20px 0;">
+                調査方法: SECOM AccessGaze入退室監視画面 (2026-02-18 11:37-11:38) + PlanGaze図面監視画面<br>
+                画像クリックで拡大表示
             </p>
+
+            <!-- 01 本社 -->
+            <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div><strong>01 東京本社</strong>（陽光築地ビル）</div>
+                    <div><span class="badge badge-ok">7扉</span> <span class="badge badge-info">在室114名</span></div>
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+                    3F事務入口, 4F事務入口, 4F事務室手前, 5F事務入口, 6Fサーバー, 6F事務入口, 7F事務入口
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <a href="images/secom-floorplans/AG_01_本社.png" target="_blank"><img src="images/secom-floorplans/AG_01_本社.png" style="height: 120px; border-radius: 6px; border: 1px solid var(--border);" title="AccessGaze 本社"></a>
+                    <a href="images/secom-floorplans/本社3F.png" target="_blank"><img src="images/secom-floorplans/本社3F.png" style="height: 120px; border-radius: 6px; border: 1px solid var(--border);" title="PlanGaze 本社3F"></a>
+                    <a href="images/secom-floorplans/本社4F.png" target="_blank"><img src="images/secom-floorplans/本社4F.png" style="height: 120px; border-radius: 6px; border: 1px solid var(--border);" title="PlanGaze 本社4F"></a>
+                    <a href="images/secom-floorplans/本社5F.png" target="_blank"><img src="images/secom-floorplans/本社5F.png" style="height: 120px; border-radius: 6px; border: 1px solid var(--border);" title="PlanGaze 本社5F"></a>
+                    <a href="images/secom-floorplans/本社6F.png" target="_blank"><img src="images/secom-floorplans/本社6F.png" style="height: 120px; border-radius: 6px; border: 1px solid var(--border);" title="PlanGaze 本社6F"></a>
+                    <a href="images/secom-floorplans/本社7F.png" target="_blank"><img src="images/secom-floorplans/本社7F.png" style="height: 120px; border-radius: 6px; border: 1px solid var(--border);" title="PlanGaze 本社7F"></a>
+                </div>
+            </div>
+
+            <!-- 02 大阪 -->
+            <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div><strong>02 大阪</strong>（朝日生命道修町ビル）</div>
+                    <div><span class="badge badge-ok">2扉</span> <span class="badge badge-info">在室8名</span></div>
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+                    AD大阪事務入口, BN大阪事務入口（AD=アドテック, BN=バディネット）
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <a href="images/secom-floorplans/AG_02_大阪.png" target="_blank"><img src="images/secom-floorplans/AG_02_大阪.png" style="height: 120px; border-radius: 6px; border: 1px solid var(--border);" title="AccessGaze 大阪"></a>
+                    <a href="images/secom-floorplans/大阪.png" target="_blank"><img src="images/secom-floorplans/大阪.png" style="height: 120px; border-radius: 6px; border: 1px solid var(--border);" title="PlanGaze 大阪"></a>
+                </div>
+            </div>
+
+            <!-- 03 和歌山 -->
+            <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div><strong>03 和歌山</strong>（京橋ビル）</div>
+                    <div><span class="badge badge-ok">2扉</span> <span class="badge badge-info">在室44名</span></div>
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+                    和歌山3階, 和歌山京橋ビル4F
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <a href="images/secom-floorplans/AG_03_和歌山.png" target="_blank"><img src="images/secom-floorplans/AG_03_和歌山.png" style="height: 120px; border-radius: 6px; border: 1px solid var(--border);" title="AccessGaze 和歌山"></a>
+                    <a href="images/secom-floorplans/和歌山3F.png" target="_blank"><img src="images/secom-floorplans/和歌山3F.png" style="height: 120px; border-radius: 6px; border: 1px solid var(--border);" title="PlanGaze 和歌山3F"></a>
+                    <a href="images/secom-floorplans/和歌山4F.png" target="_blank"><img src="images/secom-floorplans/和歌山4F.png" style="height: 120px; border-radius: 6px; border: 1px solid var(--border);" title="PlanGaze 和歌山4F"></a>
+                </div>
+            </div>
+
+            <!-- 04 福岡 -->
+            <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div><strong>04 福岡</strong>（第13泰平ビル）</div>
+                    <div><span class="badge badge-ok">1扉</span> <span class="badge badge-info">在室10名</span></div>
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+                    福岡事務入口
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <a href="images/secom-floorplans/AG_04_福岡.png" target="_blank"><img src="images/secom-floorplans/AG_04_福岡.png" style="height: 120px; border-radius: 6px; border: 1px solid var(--border);" title="AccessGaze 福岡"></a>
+                    <a href="images/secom-floorplans/福岡.png" target="_blank"><img src="images/secom-floorplans/福岡.png" style="height: 120px; border-radius: 6px; border: 1px solid var(--border);" title="PlanGaze 福岡"></a>
+                </div>
+            </div>
+
+            <!-- 05 名古屋 -->
+            <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div><strong>05 名古屋</strong>（IT名駅ビル）</div>
+                    <div><span class="badge badge-ok">1扉</span> <span class="badge badge-info">在室4名</span></div>
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+                    名古屋事務入口 <span class="badge badge-pending">PlanGazeでは「町田7F 機器0」と登録ミスあり</span>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <a href="images/secom-floorplans/AG_05_名古屋.png" target="_blank"><img src="images/secom-floorplans/AG_05_名古屋.png" style="height: 120px; border-radius: 6px; border: 1px solid var(--border);" title="AccessGaze 名古屋"></a>
+                    <a href="images/secom-floorplans/町田7F.png" target="_blank"><img src="images/secom-floorplans/町田7F.png" style="height: 120px; border-radius: 6px; border: 1px solid var(--border);" title="PlanGaze 町田7F(=名古屋)"></a>
+                </div>
+            </div>
+
+            <!-- 06 橋本 -->
+            <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div><strong>06 橋本</strong>（MNビル）</div>
+                    <div><span class="badge badge-ok">1扉</span> <span class="badge badge-info">在室7名</span></div>
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+                    橋本MNビル入口 <span class="badge badge-pending">PlanGaze図面未登録 AccessGazeで判明</span>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <a href="images/secom-floorplans/AG_06_橋本.png" target="_blank"><img src="images/secom-floorplans/AG_06_橋本.png" style="height: 120px; border-radius: 6px; border: 1px solid var(--border);" title="AccessGaze 橋本"></a>
+                </div>
+            </div>
+
+            <!-- 07 京橋 -->
+            <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div><strong>07 京橋</strong>（住友不動産京橋ビル）</div>
+                    <div><span class="badge badge-ok">2扉</span> <span class="badge badge-info">在室64名</span></div>
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+                    3階事務室(正面), 3階事務室(階段) <span class="badge badge-pending">PlanGaze図面未登録 AccessGazeで判明</span>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <a href="images/secom-floorplans/AG_07_京橋.png" target="_blank"><img src="images/secom-floorplans/AG_07_京橋.png" style="height: 120px; border-radius: 6px; border: 1px solid var(--border);" title="AccessGaze 京橋"></a>
+                </div>
+            </div>
+
+            <!-- 08 多摩 -->
+            <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div><strong>08 多摩センター</strong></div>
+                    <div><span class="badge badge-ok">5扉</span> <span class="badge badge-info">在室14名</span></div>
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+                    1F×3扉, 2F×1扉(施錠禁止), 3F×1扉
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <a href="images/secom-floorplans/AG_08_多摩.png" target="_blank"><img src="images/secom-floorplans/AG_08_多摩.png" style="height: 120px; border-radius: 6px; border: 1px solid var(--border);" title="AccessGaze 多摩"></a>
+                </div>
+            </div>
+
+            <!-- 合計 -->
+            <div style="background: #f0fdf4; border-radius: var(--radius-md); padding: 20px; text-align: center;">
+                <span style="font-size: 1.5rem; font-weight: 800;">全8拠点 合計21扉</span>
+                <span style="font-size: 0.9rem; color: var(--text-muted); margin-left: 16px;">在室者合計 265名</span>
+            </div>
         </section>
 
     </div>
