@@ -471,7 +471,7 @@
                             <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器<span class="needs-socket">Socket</span></span></div>
                             <div class="equip-detail">6-7F + 3-5F(BN管理)</div>
                             <div class="equip-item"><span class="equip-icon equip-pc">P</span><span class="equip-label">業務PC (57名)</span></div>
-                            <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機</span></div>
+                            <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機<span class="needs-socket">Socket</span></span></div>
                             <div class="equip-detail">RICOH IM C4500 .1.55</div>
                         </div>
                     </div>
@@ -517,7 +517,7 @@
                         <div class="equip-detail">CRB八王子用 .60.7</div>
                         <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-item"><span class="equip-icon equip-pc">P</span><span class="equip-label">業務PC</span></div>
-                        <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機 x2</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機 x2<span class="needs-socket">Socket</span></span></div>
                         <div style="margin-top: 4px; padding: 3px 6px; background: #fef3c7; border-radius: 4px; font-size: 0.62rem; color: #92400e; line-height: 1.4;">
                             全通信が本社経由
                         </div>
@@ -541,7 +541,7 @@
                         <div class="equip-detail">旧.30.12 / 新.30.13</div>
                         <div class="equip-item"><span class="equip-icon equip-secom">S</span><span class="equip-label">Secom入退室機器<span class="needs-socket">Socket</span></span></div>
                         <div class="equip-item"><span class="equip-icon equip-pc">P</span><span class="equip-label">業務PC</span></div>
-                        <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機</span></div>
+                        <div class="equip-item"><span class="equip-icon equip-printer">M</span><span class="equip-label">複合機<span class="needs-socket">Socket</span></span></div>
                         <div style="margin-top: 4px; padding: 3px 6px; background: #fef3c7; border-radius: 4px; font-size: 0.62rem; color: #92400e; line-height: 1.4;">
                             全通信が本社経由
                         </div>
@@ -683,7 +683,7 @@
                         <li><strong>Secom入退室機器</strong>: Client不可 → VPN or Socket 必須</li>
                         <li><strong>ファイルサーバー/TENSUITE</strong>: サーバーOS → Socket または クラウド移行が必要</li>
                         <li>業務PC: Client インストール可 → Socket 不要</li>
-                        <li>複合機: ローカルLAN完結なら Socket 不要（ただしAD参照がVPN経由の場合は要検討）</li>
+                        <li><strong>複合機</strong>: Client不可 → AD参照（LDAP/SMB）がVPN経由のため Socket必要</li>
                     </ul>
                 </div>
                 <div class="info-box">
