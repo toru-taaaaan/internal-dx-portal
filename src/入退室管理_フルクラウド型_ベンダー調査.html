@@ -483,6 +483,10 @@
                 <div class="req-card">
                     <h4>2. FeliCaカード継続利用</h4>
                     <p>既存のFeliCaカード（全従業員配布済み）をそのまま利用できること。カード再発行コストの回避。</p>
+                    <p style="margin-top: 8px; padding: 8px 12px; background: #fff7ed; border-left: 3px solid #f59e0b; font-size: 0.85rem;">
+                        <strong>※例外: 和歌山コールセンター</strong><br>
+                        パート従業員の入替わりが多くカード紛失リスクがあるため、現行SECOMでは静脈認証を採用（IF2台 + 静脈認証機4台）。移行先でも静脈認証、または同等のカード不要認証（暗証番号・顔認証等）への対応が必要。
+                    </p>
                 </div>
                 <div class="req-card">
                     <h4>3. CSVファイル出力</h4>
@@ -672,6 +676,16 @@
                             <td>ICカード(FeliCa via bitreader+)<br>スマホアプリ(BLE)<br>テンキー(bitreader+)<br>顔認証対応</td>
                             <td>顔認証</td>
                             <td>スマホ/暗証番号</td>
+                        </tr>
+                        <tr>
+                            <td><strong>静脈認証対応</strong><br><small style="color: #f59e0b;">※和歌山要件</small></td>
+                            <td>不明<br><small>（現行は対応）</small></td>
+                            <td style="background: #eff6ff;">不明<br><small>要確認</small></td>
+                            <td>不明<br><small>要確認</small></td>
+                            <td>不明<br><small>要確認</small></td>
+                            <td>不明<br><small>要確認</small></td>
+                            <td>×<br><small>顔認証のみ</small></td>
+                            <td>-</td>
                         </tr>
                         <tr>
                             <td><strong>最大ID数/装置</strong></td>
@@ -1066,7 +1080,7 @@
                 <tr><th>設置要件(CTL)</th><td>有線LAN(DHCP) + AC100V×1口。ICカードリーダーはバッテリー駆動+無線通信のため配線不要<br><small>電磁式電気錠: DC24V対応、通電時施錠タイプ、信号線(4芯)+施解錠動作(2芯)+施錠信号(2芯)で制御</small></td></tr>
                 <tr><th>認証方式</th><td>交通系IC（Suica/PASMO/ICOCA等）、社員証（FeliCa）、スマートフォン（iOS/Android）、Apple Watch/おサイフケータイ、URL合カギ（ゲスト用ワンタイムパス）、生体認証（外部連携で顔認証対応）</td></tr>
                 <tr><th>アクセス制御</th><td>ドア×人×曜日×時間帯の組み合わせで権限設定可能。正社員/外部委託/パートタイム等の区分管理</td></tr>
-                <tr><th>ログ・監査</th><td>入退室ログ: リアルタイム可視化、<strong>件数無制限・半永久保存</strong>、CSV抽出可。タイムカード機能あり</td></tr>
+                <tr><th>ログ・監査</th><td>入退室ログ: リアルタイム表示、<strong>件数無制限・半永久保存</strong>、CSV抽出可。タイムカード機能あり</td></tr>
                 <tr><th>勤怠連携</th><td>KING of TIME, freee人事労務, チームスピリット, HRMOS勤怠, ジョブカン勤怠管理</td></tr>
                 <tr><th>API</th><td>外部システム連携用API提供あり（会員管理、予約管理、決済連携等）</td></tr>
                 <tr><th>長期契約割引</th><td>契約期間の長期化(最大5年)で月額調整可能</td></tr>
@@ -1196,7 +1210,7 @@
                     <tr><td><strong>故障対応</strong></td><td>経年劣化・製品不具合は<strong>無償交換</strong></td></tr>
                     <tr><td><strong>21扉での試算</strong></td><td>
                         税込5,000円 × 21 = <strong>月額105,000円</strong>（年額1,260,000円）<br>
-                        <small>※5年TCO(月額のみ): <strong>約630万円</strong> ← 圧倒的に安価だが設置方式が課題</small>
+                        <small>※5年TCO(月額のみ): <strong>約630万円</strong> ← 最安だが設置方式が課題</small>
                     </td></tr>
                 </table>
             </div>
@@ -1272,7 +1286,8 @@
                     <strong>SECOM台帳ベースの拠点情報（1/8 神山回答より）:</strong><br>
                     <span style="font-size: 0.85rem; color: var(--text-muted);">
                         11拠点: サーバー機, 東京本社, 大阪, 橋本, 福岡, 和歌山(3F), 和歌山(4F), 町田, 京橋, 多摩センター, 名古屋<br>
-                        ※和歌山: インターフェース2台 + 静脈認証機4台
+                        ※和歌山: IF2台 + 静脈認証機4台（3F: IF1台+認証機2台, 4F: IF1台+認証機2台）<br>
+                        ※和歌山のみ静脈認証を採用。他拠点はすべてFeliCaカード認証。
                     </span>
                 </div>
             </div>
@@ -1282,6 +1297,21 @@
         <section id="sec-timeline" class="section-card">
             <div class="section-title">コミュニケーション履歴</div>
             <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2026-02-19 <span class="timeline-tag tag-send">送信</span></div>
+                    <div class="timeline-content">
+                        <strong>丹治</strong> → SECOM 神山氏（追加質問）<br>
+                        和歌山3F・4F各2台の静脈認証機の配置確認: (A) 同一扉の入室側・退室側に1台ずつ、(B) 別々の扉に1台ずつ、のどちらか。<br>
+                        <small>冨山理布（総務部）指摘: 和歌山の静脈認証をベンダー各社に伝えていない。扉数・認証方式の確定が必要。</small>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2026-02-19 <span class="timeline-tag tag-doc">資料更新</span></div>
+                    <div class="timeline-content">
+                        <strong>和歌山 静脈認証要件を資料に反映</strong><br>
+                        冨山理布（総務部）の指摘を受け、必須要件・比較マトリクス・拠点情報に和歌山の静脈認証情報を追記。各ベンダーの静脈認証対応状況は今後確認予定。
+                    </div>
+                </div>
                 <div class="timeline-item">
                     <div class="timeline-date">2026-02-18 <span class="timeline-tag tag-doc">資料解析</span></div>
                     <div class="timeline-content">
@@ -1508,6 +1538,12 @@
                 <div><strong>主要な扉の写真を撮影</strong>（ALLIGATE設置可否判断 + bitlock PRO設置可否・寸法確認 両方に必要）<br>
                 <small style="color: var(--text-muted);">※ALLIGATE: 写真で判断、現地訪問調査も可。bitlock PRO: 4パターンの写真+サムターン寸法</small></div>
             </div>
+            <div class="action-item urgent">
+                <span class="action-priority" style="background: #fff7ed; color: #92400e;">要確認</span>
+                <div><strong>和歌山の静脈認証対応を各ベンダーに確認</strong><br>
+                和歌山コールセンターは静脈認証（FeliCaカード不使用）。各ベンダーの静脈認証対応、または代替認証（暗証番号・顔認証等）の可否を打合せで確認。<br>
+                <small style="color: var(--text-muted);">※神山氏への扉構成確認（2/19送信）の回答後、正確な扉数と認証方式を各社に伝達</small></div>
+            </div>
 
             <!-- ALLIGATE返信 -->
             <h4 style="color: var(--accent); margin: 20px 0 12px 0;">1. ALLIGATE丸亀氏 <span class="badge badge-ok">打合せ確定</span></h4>
@@ -1559,6 +1595,7 @@
                 <span class="action-priority" style="background: #f1f5f9; color: #475569;">待ち</span>
                 <div>
                     <strong>SECOM 神山</strong>: クラウド型・FeliCa・e-works・現行費用の回答（2/17送信）<br>
+                    <strong>SECOM 神山</strong>: 和歌山 静脈認証機の配置確認（同一扉の入退室用 or 別扉）（2/19送信）<br>
                     <strong>FreeiD</strong>: 担当者からの連絡（自動返信のみ受領）<br>
                     <strong>カギカン (Qrio)</strong>: <span style="color: var(--danger);">2025年12月 サービス終了・後継品なし → 脱落確定</span>
                 </div>
@@ -1640,13 +1677,20 @@
             </div>
 
             <!-- 03 和歌山 -->
-            <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; margin-bottom: 16px;">
+            <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; margin-bottom: 16px; border-left: 3px solid #f59e0b;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <div><strong>03 和歌山</strong>（京橋ビル）</div>
+                    <div><strong>03 和歌山</strong>（京橋ビル）<span class="badge" style="background: #fff7ed; color: #92400e; margin-left: 8px;">静脈認証</span></div>
                     <div><span class="badge badge-ok">2扉</span> <span class="badge badge-info">在室44名</span></div>
                 </div>
                 <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
                     和歌山3階, 和歌山京橋ビル4F
+                </div>
+                <div style="font-size: 0.85rem; padding: 10px 12px; background: #fff7ed; border-radius: 6px; margin-bottom: 12px;">
+                    <strong>現行認証方式: 静脈認証</strong>（他拠点はFeliCaカード）<br>
+                    3F: IF 1台(192.168.50.34) + 静脈認証機2台(192.168.50.35, .36)<br>
+                    4F: IF 1台(192.168.50.31) + 静脈認証機2台(192.168.50.32, .33)<br>
+                    <small>理由: パート従業員の入替わりが多く、カード紛失リスク回避のため<br>
+                    ※各階の静脈認証機2台が同一扉の入退室用か別扉かはSECOM神山氏に確認中（2/19送信）</small>
                 </div>
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                     <a href="images/secom-floorplans/AG_03_和歌山.png" target="_blank"><img src="images/secom-floorplans/AG_03_和歌山.png" style="height: 120px; border-radius: 6px; border: 1px solid var(--border);" title="AccessGaze 和歌山"></a>
