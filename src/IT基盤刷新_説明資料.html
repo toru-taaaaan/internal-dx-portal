@@ -627,7 +627,7 @@
                 <a href="#sec4" class="toc-item"><span class="toc-num">04</span>ADクラウド移行 3社比較</a>
                 <a href="#sec5" class="toc-item"><span class="toc-num">05</span>3社の管理体制比較</a>
                 <a href="#sec5b" class="toc-item"><span class="toc-num">05b</span>ベンダー別：日常運用でできること</a>
-                <a href="#sec6" class="toc-item"><span class="toc-num">06</span>Entra IDについて</a>
+                <a href="#sec6" class="toc-item"><span class="toc-num">06</span>Entra ID: なぜ必要で、なぜすぐには入れられないのか</a>
                 <a href="#sec7" class="toc-item"><span class="toc-num">07</span>SECOM入退室管理</a>
                 <a href="#sec8" class="toc-item"><span class="toc-num">08</span>ネットワーク刷新</a>
                 <a href="#sec9" class="toc-item"><span class="toc-num">09</span>費用の全体像</a>
@@ -1725,81 +1725,88 @@
         <!-- Section 6: Entra IDについて -->
         <!-- ========================================= -->
         <section id="sec6" class="modern-card">
-            <div class="section-title">10. Entra IDについて</div>
+            <div class="section-title">10. Entra ID: なぜ必要で、なぜすぐには入れられないのか</div>
 
+            <div id="sp-entra-role"></div>
             <p class="section-lead">
-                ADの移行を検討するにあたり、MicrosoftのクラウドID管理サービス「Entra ID（旧Azure AD）」について調査しました。
-                AKIBAホールディングスでも、Office 365の認証にはすでにEntra IDが使われています。
-                今後の基盤を考えるうえで、ADとEntra IDの関係を整理します。
+                ADの後継として、MicrosoftはクラウドベースのID管理「Entra ID」を推進しています。
+                AKIBAホールディングスでもOffice 365の認証ですでにEntra IDは動いています。
+                Entra IDの導入で何が得られるのか、入れないとどうなるのか、そしてなぜ段階的に進める必要があるのかを整理します。
             </p>
 
-            <div class="fact-box" style="border-left-color: #8b5cf6;">
+            <!-- Entra IDで得られるもの -->
+            <div id="sp-entra-features"></div>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 1rem;">Entra IDを導入すると得られるもの</h3>
+
+            <p class="section-lead">
+                Entra IDには、AD単体では利用できないセキュリティ機能があります。いずれも現在のAKIBAホールディングスの環境では使えていない機能です。
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0;">
+                <div id="sp-entra-mfa" style="background: #f0fdf4; border-radius: 0.75rem; padding: 1.25rem; border: 1px solid #bbf7d0;">
+                    <div style="font-size: 0.85rem; font-weight: 700; color: #166534; margin-bottom: 0.5rem;">多要素認証（MFA）</div>
+                    <p style="font-size: 0.8rem; color: #475569; margin: 0; line-height: 1.6;">
+                        パスワード＋スマホ認証の二重チェック。パスワードが漏れても不正ログインを防止する。<strong>ADにはこの機能がない</strong>
+                    </p>
+                </div>
+                <div id="sp-entra-ca" style="background: #f0fdf4; border-radius: 0.75rem; padding: 1.25rem; border: 1px solid #bbf7d0;">
+                    <div style="font-size: 0.85rem; font-weight: 700; color: #166534; margin-bottom: 0.5rem;">条件付きアクセス</div>
+                    <p style="font-size: 0.8rem; color: #475569; margin: 0; line-height: 1.6;">
+                        「会社PCからのみ許可」「海外ログインは拒否」「私物スマホはメール閲覧のみ」など状況に応じた制御。<strong>ADにはこの機能がない</strong>
+                    </p>
+                </div>
+                <div id="sp-entra-ai" style="background: #f0fdf4; border-radius: 0.75rem; padding: 1.25rem; border: 1px solid #bbf7d0;">
+                    <div style="font-size: 0.85rem; font-weight: 700; color: #166534; margin-bottom: 0.5rem;">不正ログインのAI検知</div>
+                    <p style="font-size: 0.8rem; color: #475569; margin: 0; line-height: 1.6;">
+                        普段と異なる場所・時間・端末からのログインをAIが自動検知し、追加認証を要求する。<strong>ADにはこの機能がない</strong>
+                    </p>
+                </div>
+                <div id="sp-entra-pwless" style="background: #f0fdf4; border-radius: 0.75rem; padding: 1.25rem; border: 1px solid #bbf7d0;">
+                    <div style="font-size: 0.85rem; font-weight: 700; color: #166534; margin-bottom: 0.5rem;">パスワードレス認証</div>
+                    <p style="font-size: 0.8rem; color: #475569; margin: 0; line-height: 1.6;">
+                        顔認証・指紋認証でログイン。パスワード自体が存在しないため、漏洩リスクがなくなる。<strong>ADにはこの機能がない</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="fact-box" style="border-left-color: #10b981;">
                 <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
-                    <strong>Office 365とEntra IDの関係:</strong>
-                    Office 365（Microsoft 365）を契約した時点で、Entra IDのテナント（認証基盤）は自動的に作成されています。
-                    社員がOutlookやTeamsにログインするたびに、裏側ではEntra IDが認証を処理しています。
-                    Office 365の管理者アカウントで <code style="background: #f1f5f9; padding: 0.1rem 0.3rem; border-radius: 0.25rem;">https://entra.microsoft.com</code> にアクセスすると、登録されている全ユーザーを確認できます。
+                    これらの機能はMicrosoft 365 Business Premiumに含まれており、追加ライセンス費用は発生しません（現在のライセンスプランによる）。
                 </p>
             </div>
 
-            <div id="sp-entra-role"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 1rem;">ADとEntra IDの役割の違い</h3>
+            <!-- 入れないとどうなるか -->
+            <div id="sp-entra-future"></div>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">Entra IDを入れないとどうなるか</h3>
 
-            <p class="section-lead">
-                ADとEntra IDは、名前は似ていますが役割が異なります。
-            </p>
-
-            <!-- AD vs Entra comparison -->
-            <div class="versus-grid">
-                <div class="versus-card" style="border-top: 3px solid #3b82f6;">
-                    <div style="font-size: 0.7rem; font-weight: 700; color: #3b82f6; text-transform: uppercase; letter-spacing: 0.1em;">Active Directory</div>
-                    <div style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 0.5rem 0;">社内ネットワークの管理</div>
-                    <ul style="font-size: 0.85rem; color: #64748b; line-height: 1.8; padding-left: 1.25rem; margin: 0;">
-                        <li>社員のPCログイン認証</li>
-                        <li>ファイルサーバーへのアクセス権管理</li>
-                        <li>PCの設定を一括で制御（グループポリシー）</li>
-                        <li>インターネットがなくてもログイン可能</li>
-                    </ul>
+            <div style="display: grid; gap: 1rem; margin: 1rem 0 1.5rem;">
+                <div id="sp-entra-f1" class="fact-box" style="border-left-color: #dc2626;">
+                    <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
+                        <strong>ADの新機能開発は停止している</strong>: MicrosoftはID管理の新機能を全てEntra IDに集中させており、ADには今後新しい機能は追加されない。サポートは2034年まで継続するが、それ以降は不明
+                    </p>
                 </div>
-                <div class="versus-divider">≠</div>
-                <div class="versus-card" style="border-top: 3px solid #8b5cf6;">
-                    <div style="font-size: 0.7rem; font-weight: 700; color: #8b5cf6; text-transform: uppercase; letter-spacing: 0.1em;">Microsoft Entra ID</div>
-                    <div style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 0.5rem 0;">クラウドサービスのID管理</div>
-                    <ul style="font-size: 0.85rem; color: #64748b; line-height: 1.8; padding-left: 1.25rem; margin: 0;">
-                        <li>Office 365等へのログイン管理</li>
-                        <li>多要素認証（なりすまし防止）</li>
-                        <li>条件付きアクセス（場所・端末による制限）</li>
-                        <li>インターネット接続が必要</li>
-                    </ul>
+                <div id="sp-entra-f2" class="fact-box" style="border-left-color: #f59e0b;">
+                    <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
+                        <strong>セキュリティが時代遅れになる</strong>: 多要素認証、条件付きアクセス、AI検知などの最新セキュリティ機能はEntra IDにしか追加されない。ADだけの環境では、今後のセキュリティ要件に対応できなくなる
+                    </p>
+                </div>
+                <div id="sp-entra-f3" class="fact-box" style="border-left-color: #3b82f6;">
+                    <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
+                        <strong>後になるほど移行が大変になる</strong>: ADへの依存が深まるほど移行コストが増大する。準備なしでADサポートが終了した場合、大規模かつ高リスクな移行を強いられる
+                    </p>
                 </div>
             </div>
 
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 1rem;">Entra IDだけでは対応できないこと</h3>
-
-            <p class="section-lead">
-                現時点では、Entra IDだけでADの全機能を代替することはできません。以下の機能はADに依存しています。
-            </p>
-
-            <ul style="font-size: 0.9rem; color: #475569; line-height: 2; padding-left: 1.25rem;">
-                <li>ファイルサーバーへの自動ログイン（Kerberos認証）</li>
-                <li>PCの詳細な設定制御（グループポリシー）</li>
-                <li>インターネット未接続時のPCログイン</li>
-            </ul>
-
-            <p class="section-lead">
-                これらを補うには、Microsoft Intuneという別のサービスの契約が必要であり、さらに社内の全アプリケーションがクラウドに対応している必要があります。
-            </p>
-
-            <!-- AKIBA固有のEntra ID移行ボトルネック -->
+            <!-- AKIBA固有の障壁 -->
             <div id="sp-entra-bottleneck"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">AKIBAホールディングス固有の移行ボトルネック</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">ではなぜすぐに入れられないのか: AKIBAホールディングス固有の障壁</h3>
 
             <p class="section-lead">
-                GPO管理台帳とアクセス制御管理台帳を分析した結果、AKIBAホールディングスがEntra IDに移行する際の具体的な障壁が明らかになりました。
+                GPO管理台帳とアクセス制御管理台帳（情報システム部 篠部長共有）を分析した結果、うちの環境に固有の障壁が2つあります。
             </p>
 
             <div style="background: #fef2f2; border: 2px solid #fecaca; border-radius: 1rem; padding: 1.5rem 2rem; margin: 1.5rem 0;">
-                <h4 style="font-size: 0.95rem; font-weight: 700; color: #991b1b; margin: 0 0 1rem;">ボトルネック①: ファイルサーバーのドライブマッピング（最大の障壁）</h4>
+                <h4 style="font-size: 0.95rem; font-weight: 700; color: #991b1b; margin: 0 0 1rem;">壁①: ファイルサーバーのドライブマッピング（最大の障壁）</h4>
                 <p style="font-size: 0.85rem; color: #475569; line-height: 1.7; margin: 0 0 0.75rem;">
                     現在のGPOで以下のネットワークドライブが全社員のPCに自動割り当てされています。
                 </p>
@@ -1822,7 +1829,7 @@
             <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">出典: <a href="https://docs.google.com/spreadsheets/d/11EP_PiFq8p7hDQDxKRqlhJcvYN1BJ9dfJHEnPTvtsGM" target="_blank" style="color: #94a3b8;">GPO管理台帳</a>・<a href="https://docs.google.com/spreadsheets/d/1NUsOaK1igmyR_RLjJ6uJTSmmpDxXxG2WrZmsuipf2MY" target="_blank" style="color: #94a3b8;">アクセス制御管理台帳</a>（情報システム部 篠部長共有）に基づく</p>
 
             <div style="background: #fffbeb; border: 2px solid #fde68a; border-radius: 1rem; padding: 1.5rem 2rem; margin: 1.5rem 0;">
-                <h4 style="font-size: 0.95rem; font-weight: 700; color: #92400e; margin: 0 0 1rem;">ボトルネック②: GPOの移行（段階的に対応可能）</h4>
+                <h4 style="font-size: 0.95rem; font-weight: 700; color: #92400e; margin: 0 0 1rem;">壁②: GPOの移行（段階的に対応可能）</h4>
                 <p style="font-size: 0.85rem; color: #475569; line-height: 1.7; margin: 0 0 0.75rem;">
                     現行のGPO設定を分析した結果、大部分はIntuneで代替可能ですが、一部に対応策の検討が必要なものがあります。
                 </p>
@@ -1849,102 +1856,26 @@
             </div>
             <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">出典: <a href="https://docs.google.com/spreadsheets/d/11EP_PiFq8p7hDQDxKRqlhJcvYN1BJ9dfJHEnPTvtsGM" target="_blank" style="color: #94a3b8;">GPO管理台帳</a>（情報システム部 篠部長共有）の設定項目を分析。Intune互換性の判定はMicrosoft公式ドキュメントに基づく</p>
 
-            <div style="background: #f0f9ff; border: 2px solid #bae6fd; border-radius: 1rem; padding: 1.5rem 2rem; margin: 1.5rem 0;">
-                <h4 style="font-size: 0.95rem; font-weight: 700; color: #0369a1; margin: 0 0 0.75rem;">Entra IDに移行しない場合のリスク</h4>
-                <ul style="font-size: 0.85rem; color: #475569; line-height: 2; padding-left: 1.25rem; margin: 0;">
-                    <li>MicrosoftはADの新機能開発を停止しており、今後のセキュリティ機能（MFA、条件付きアクセス等）はEntra IDにのみ追加される</li>
-                    <li>ADサーバーのWindows Serverサポート期限後、パッチ提供が終了し脆弱性が放置されるリスクがある</li>
-                    <li>クラウドサービス（Microsoft 365、SaaS）との認証統合がAD単体では実現できず、パスワード管理の二重化が続く</li>
-                    <li>将来的にADサポートが完全終了した際の移行が、準備なしでは大規模かつ高リスクになる</li>
-                </ul>
-            </div>
-
-            <div id="sp-entra-features"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">11. ADにはできず、Entra IDで初めて使える機能</h3>
+            <div id="sp-entra-vendor"></div>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">ベンダー3社の見解</h3>
 
             <p class="section-lead">
-                ADとEntra IDは同じMicrosoftの製品ですが、Entra IDにはAD単体では実現できないセキュリティ機能があります。
-                ハイブリッド構成にする最大の理由は、これらの機能を使えるようにするためです。
+                上記の障壁について、提案を受けた3社とも同様の認識です。
             </p>
 
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0;">
-                <div id="sp-entra-mfa" style="background: #f0fdf4; border-radius: 0.75rem; padding: 1.25rem; border: 1px solid #bbf7d0;">
-                    <div style="font-size: 0.85rem; font-weight: 700; color: #166534; margin-bottom: 0.5rem;">11-1. 多要素認証（MFA）</div>
-                    <p style="font-size: 0.8rem; color: #475569; margin: 0; line-height: 1.6;">
-                        パスワードに加え、スマートフォンの認証アプリや生体認証を要求する。
-                        パスワードが漏洩しても、第三者はログインできない。
-                        <strong>ADにはこの機能がない。</strong>
-                    </p>
-                </div>
-                <div id="sp-entra-ca" style="background: #f0fdf4; border-radius: 0.75rem; padding: 1.25rem; border: 1px solid #bbf7d0;">
-                    <div style="font-size: 0.85rem; font-weight: 700; color: #166534; margin-bottom: 0.5rem;">11-2. 条件付きアクセス</div>
-                    <p style="font-size: 0.8rem; color: #475569; margin: 0; line-height: 1.6;">
-                        「会社のPCからのみ許可」「海外からのログインは拒否」「私物スマホからはメール閲覧のみ」など、
-                        状況に応じたアクセス制御ができる。
-                        <strong>ADにはこの機能がない。</strong>
-                    </p>
-                </div>
-                <div id="sp-entra-ai" style="background: #f0fdf4; border-radius: 0.75rem; padding: 1.25rem; border: 1px solid #bbf7d0;">
-                    <div style="font-size: 0.85rem; font-weight: 700; color: #166534; margin-bottom: 0.5rem;">11-3. 不正ログインのAI検知</div>
-                    <p style="font-size: 0.8rem; color: #475569; margin: 0; line-height: 1.6;">
-                        普段と異なる場所・時間・端末からのログインをAIが自動検知し、追加認証を要求する。
-                        不正アクセスの兆候を人手に頼らず検出できる。
-                        <strong>ADにはこの機能がない。</strong>
-                    </p>
-                </div>
-                <div id="sp-entra-pwless" style="background: #f0fdf4; border-radius: 0.75rem; padding: 1.25rem; border: 1px solid #bbf7d0;">
-                    <div style="font-size: 0.85rem; font-weight: 700; color: #166534; margin-bottom: 0.5rem;">11-4. パスワードレス認証</div>
-                    <p style="font-size: 0.8rem; color: #475569; margin: 0; line-height: 1.6;">
-                        PCに顔認証カメラや指紋認証リーダーが搭載されている場合、Windows Helloと連携してパスワード入力を不要にできる。
-                        パスワードが存在しないため、漏洩リスクそのものがなくなる。
-                        <strong>AD単体ではこの仕組みは利用できず、Entra IDの導入が必要。</strong>
-                    </p>
-                </div>
-            </div>
-
-            <div class="fact-box" style="border-left-color: #10b981;">
+            <div class="fact-box" style="border-left-color: #8b5cf6;">
                 <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
-                    <strong>つまり、ハイブリッド構成にする目的は「ADを捨てる」ことではなく、「ADの管理機能を維持したまま、Entra IDのセキュリティ機能を追加で使えるようにする」ことです。</strong>
-                    なお、多要素認証や条件付きアクセスはMicrosoft 365 Business Premiumに含まれており、追加ライセンス費用は発生しません（現在のライセンスプランによる）。
+                    IIJは「Entra IDへの完全移行に該当するサービスはない」と回答（2026/1/29）。USENは「ドメイン参加している環境ではEntra IDへの移管は難しい」と回答（2026/1/26）。
+                    いずれのベンダーも、まずADのクラウド移行を行い、ハイブリッド構成で運用を安定させた後に段階的にEntra IDの機能を拡張する方法を推奨しています。
                 </p>
             </div>
+            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">出典: IIJ 2026/1/29 提案資料、USEN 2026/1/26 メール回答に基づく</p>
 
-            <div id="sp-entra-future"></div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">12. 将来像: Entra IDへの集約は目指すべきか</h3>
-
-            <p class="section-lead">
-                Microsoftが目指す方向を理解するために、3つのポイントを整理します。
-            </p>
-
-            <div style="display: grid; gap: 1rem; margin: 1rem 0 1.5rem;">
-                <div id="sp-entra-f1" class="fact-box" style="border-left-color: #dc2626;">
-                    <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
-                        <strong>12-1. ADの新機能開発は事実上停止している</strong><br>
-                        MicrosoftはID管理に関する新機能の開発を全てEntra IDに集中させています。ADは今ある機能の維持とセキュリティ修正のみで、新しい機能が追加されることはありません。サポートは2034年まで継続しますが、それ以降は不明です。
-                    </p>
-                </div>
-                <div id="sp-entra-f2" class="fact-box" style="border-left-color: #f59e0b;">
-                    <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
-                        <strong>12-2. ADの全機能をそのままEntra IDに移すわけではない</strong><br>
-                        ADが担ってきた機能のうち、クラウド時代に不要になるものは新しい仕組みに置き換えます。例えば、グループポリシー（GPO）はIntuneへ、ファイルサーバーはSharePointへ、プリンター管理はUniversal Printへ。ADの機能を丸ごとコピーするのではなく、クラウド時代の新しい基準で再設計する方針です。
-                    </p>
-                </div>
-                <div id="sp-entra-f3" class="fact-box" style="border-left-color: #3b82f6;">
-                    <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
-                        <strong>12-3. ただし、今すぐADをやめることはできない</strong><br>
-                        現時点ではEntra IDだけではADの全機能を代替できません。Intuneはグループポリシーと完全互換ではなく、初回ログイン時にインターネット接続が必須になるなど制限があります。多くの企業がADとEntra IDを併用する「ハイブリッド構成」を採用しており、一気にADを廃止する方法は推奨されていません。
-                    </p>
-                </div>
-            </div>
+            <div id="sp-entra-plan"></div>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">現実的な進め方</h3>
 
             <p class="section-lead">
-                Microsoftが目指す未来に合わせるのであれば、今のうちからハイブリッド構成を検討しておくことは、一つの考え方として合理的です。ADが使えなくなるわけではありませんが、新しいセキュリティ機能（多要素認証、条件付きアクセス等）はEntra ID側にしか追加されないため、ADだけでは今後のセキュリティ要件に対応しにくくなる可能性があります。
-            </p>
-
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">AKIBAホールディングスにとっての現実的な進め方</h3>
-
-            <p class="section-lead">
-                以下の3段階で進めることが現実的です。
+                以上を踏まえ、以下の3段階で進めることが現実的です。
             </p>
 
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0;">
@@ -1970,30 +1901,6 @@
                     </p>
                 </div>
             </div>
-
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">参考: Entra IDに完全移行する場合に必要な作業</h3>
-
-            <p class="section-lead">
-                将来的にEntra IDへ完全移行する場合、以下の作業が必要になります。現時点で着手する必要はありませんが、長期計画の参考として記載します。
-            </p>
-
-            <ol style="font-size: 0.9rem; color: #475569; line-height: 2.2; padding-left: 1.25rem;">
-                <li>全クライアントPC（約200台）をEntra ID Join（旧Azure AD Join）に切り替え（ドメイン離脱→再参加）</li>
-                <li>Microsoft Intuneの導入・設定（現在のグループポリシーの代替）</li>
-                <li>ファイルサーバーのクラウド移行（SharePoint Online または Azure Files）</li>
-                <li>Kerberos認証に依存する社内アプリケーションの改修 or 代替手段の検討</li>
-                <li>プリンター・複合機の認証方式の変更</li>
-                <li>VPN構成の見直し（条件付きアクセスへの移行）</li>
-                <li>全社員への操作手順の周知・教育</li>
-            </ol>
-
-            <div class="fact-box" style="border-left-color: #8b5cf6; margin-top: 1.5rem;">
-                <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
-                    IIJは「Entra IDへの完全移行に該当するサービスはない」と回答しており（2026/1/29）、USENは「Windows Serverがドメイン参加されている場合、Entra IDへの移管は難しい」と回答しています（2026/1/26）。
-                    いずれのベンダーも、まずADのクラウド移行を行い、ハイブリッド構成で運用を安定させた後に、段階的にEntra IDの機能を拡張する方法を推奨しています。
-                </p>
-            </div>
-            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">出典: IIJ 2026/1/29 提案資料、USEN 2026/1/26 メール回答に基づく</p>
 
             <p class="transition-text">
                 次に、同じサーバー室に設置されているSECOMの入退室管理サーバーについて説明します。
@@ -3327,65 +3234,47 @@
             title: '9. 管理権限のリスク',
             text: '9番、管理権限のリスクについてです。サーバーに自由にアクセスできることは柔軟性が高い一方、権限の漏洩・誤操作・属人化といったリスクも引き受けることになります。ADサーバーは全社員のPC認証を担う基盤であり、障害が起きると全拠点の業務が停止します。IIJは3社の中で最も高額ですが、契約に基づくSLAと専門家の体制でこの基盤を守るという意味では、最も安心できる選択肢ともいえます。'
         },
-        // ── 10. Entra ID：役割の違い ──
+        // ── 10. Entra ID：なぜ必要で、なぜすぐには入れられないのか ──
         {
             id: 'sec6',
-            title: '10. Entra IDとは',
-            text: '10番、Entra IDについてです。ADの移行を検討するにあたり、MicrosoftのクラウドID管理サービス「Entra ID」を調査しました。AKIBAホールディングスでも、Office 365の認証にはすでにEntra IDが使われています。画面の2枚のカードをご覧ください。左がAD、右がEntra IDです。ADは社内ネットワークの管理、PCログインやファイルサーバーのアクセス権を制御するものです。Entra IDはクラウドサービスのログインを管理するものです。名前は似ていますが、役割が異なります。'
+            title: '10. Entra IDについて',
+            text: '10番、Entra IDについてです。ADの移行を検討するにあたり、MicrosoftのクラウドID管理サービス「Entra ID」を調査しました。AKIBAホールディングスでもOffice 365の認証にはすでにEntra IDが使われています。ADは社内ネットワーク上のPC認証やファイルサーバーのアクセス権を管理するもの、Entra IDはクラウドサービスへのログインを管理するもので、名前は似ていますが役割が異なります。'
         },
-        // ── 11. Entra ID：ADにはない機能（導入） ──
+        // ── Entra IDで使えるセキュリティ機能 ──
         {
             id: 'sp-entra-features',
-            title: '11. Entra IDのセキュリティ機能',
-            text: '11番、ADにはできず、Entra IDで初めて使える機能です。ADとEntra IDは同じMicrosoftの製品ですが、Entra IDにはAD単体では実現できないセキュリティ機能があります。ハイブリッド構成にする最大の理由は、これらの機能を使えるようにするためです。画面に4つのカードが表示されています。順番に説明します。'
+            title: 'Entra IDのセキュリティ機能',
+            text: 'Entra IDを導入すると使えるようになるセキュリティ機能です。画面に4つのカードがあります。多要素認証はパスワードに加えてスマートフォンの認証を要求し、漏洩しても第三者はログインできません。条件付きアクセスは、会社PCからのみ許可、海外からは拒否、といった制御ができます。不正ログインのAI検知は、普段と異なる場所や端末からのアクセスを自動検出します。パスワードレス認証は、顔認証や指紋でログインでき、パスワード自体が不要になります。いずれもAD単体では利用できません。'
         },
-        // ── 11-1. 多要素認証 ──
+        // ── Entra IDを入れないとどうなるか ──
         {
-            id: 'sp-entra-mfa',
-            title: '11-1. 多要素認証（MFA）',
-            text: '11の1、多要素認証です。画面左上のカードをご覧ください。パスワードに加えて、スマートフォンの認証アプリや生体認証を要求します。パスワードが漏洩しても、第三者はログインできません。ADにはこの機能がありません。'
+            id: 'sp-entra-risk',
+            title: 'Entra IDを入れないリスク',
+            text: 'Entra IDを入れないとどうなるか、3つのリスクです。1つ目、ADの新機能開発は事実上停止しています。Microsoftは新機能を全てEntra IDに集中させており、ADのサポートは2034年までですがそれ以降は不明です。2つ目、ADだけではセキュリティが時代遅れになります。多要素認証や条件付きアクセスが使えないまま運用を続けることになります。3つ目、先送りするほど移行が難しくなります。AD依存の設定が増えるほど、将来の移行コストが膨らみます。'
         },
-        // ── 11-2. 条件付きアクセス ──
+        // ── AKIBA固有の障壁：ファイルサーバー ──
         {
-            id: 'sp-entra-ca',
-            title: '11-2. 条件付きアクセス',
-            text: '11の2、条件付きアクセスです。画面右上のカードをご覧ください。会社のPCからのみ許可する、海外からのログインは拒否する、私物スマホからはメール閲覧のみ、など状況に応じたアクセス制御ができます。ADにはこの機能がありません。'
+            id: 'sp-entra-blocker1',
+            title: '壁① ファイルサーバーのドライブマッピング',
+            text: '壁の1つ目、ファイルサーバーのドライブマッピングです。現在、社員PCにはSドライブとUドライブが自動接続されており、この仕組みはADのKerberos認証に依存しています。ADSHARESVRには40以上の部門フォルダ、IOTSVRには機密性の高い6フォルダがあり、これらの権限設定をクラウドに移す必要があります。Entra IDだけではこのドライブ接続の仕組みを代替できないため、ファイルサーバー自体のクラウド化を先に進める必要があります。'
         },
-        // ── 11-3. AI検知 ──
+        // ── AKIBA固有の障壁：GPO ──
         {
-            id: 'sp-entra-ai',
-            title: '11-3. 不正ログインのAI検知',
-            text: '11の3、不正ログインのAI検知です。画面左下のカードをご覧ください。普段と異なる場所、時間、端末からのログインをAIが自動検知し、追加認証を要求します。人手に頼らず不正アクセスの兆候を検出できます。ADにはこの機能がありません。'
+            id: 'sp-entra-blocker2',
+            title: '壁② グループポリシーの移行',
+            text: '壁の2つ目、グループポリシーの移行です。現在ADで管理しているグループポリシーは約200件あり、篠部長から共有された台帳を分析した結果、44件が移行対象と判定されました。大半はIntuneで代替可能ですが、Sドライブ・Uドライブの自動接続とLANSCOPEの連携設定は個別の検証が必要です。'
         },
-        // ── 11-4. パスワードレス認証 ──
+        // ── ベンダー3社の見解 ──
         {
-            id: 'sp-entra-pwless',
-            title: '11-4. パスワードレス認証',
-            text: '11の4、パスワードレス認証です。画面右下のカードをご覧ください。PCに顔認証カメラや指紋認証リーダーが搭載されていれば、Windows Helloと連携してパスワード入力なしでログインできます。パスワードが存在しないため、漏洩リスクそのものがなくなります。AD単体ではこの仕組みは利用できず、Entra IDの導入が必要です。'
+            id: 'sp-entra-vendor',
+            title: 'ベンダー3社の見解',
+            text: 'ベンダー3社の見解です。IIJは「Entra IDへの完全移行に該当するサービスはない」と回答しています。USENは「ドメイン参加している環境ではEntra IDへの移管は難しい」と回答しています。いずれのベンダーも、まずADのクラウド移行を行い、ハイブリッド構成で運用を安定させた後に段階的にEntra IDの機能を拡張する方法を推奨しています。'
         },
-        // ── 12. Entra ID：将来像（導入） ──
+        // ── 現実的な進め方 ──
         {
-            id: 'sp-entra-future',
-            title: '12. Entra IDの将来像',
-            text: '12番、将来像と進め方です。Microsoftが目指す方向を理解するために、3つのポイントを整理します。画面に3つの枠が表示されています。上から順に説明します。'
-        },
-        // ── 12-1. AD開発停止 ──
-        {
-            id: 'sp-entra-f1',
-            title: '12-1. ADの新機能開発は停止',
-            text: '12の1、ADの新機能開発は事実上停止しています。画面の赤い枠をご覧ください。Microsoftは、新しい機能を全てEntra IDに集中させており、ADには今後新しい機能は追加されません。サポートは2034年まで継続しますが、それ以降は不明です。これは非常に重要なポイントです。'
-        },
-        // ── 12-2. 置換方針 ──
-        {
-            id: 'sp-entra-f2',
-            title: '12-2. 新しい仕組みで置き換え',
-            text: '12の2、ADの機能をそのままEntra IDに移すのではなく、クラウド時代の新しい仕組みで置き換える方針です。画面の黄色い枠をご覧ください。例えばグループポリシーはIntuneへ、ファイルサーバーはSharePointへ、プリンター管理はUniversal Printへ、といった形です。'
-        },
-        // ── 12-3. ハイブリッド構成の現実 ──
-        {
-            id: 'sp-entra-f3',
-            title: '12-3. 今すぐADはやめられない',
-            text: '12の3、ただし今すぐADをやめることはできません。画面の青い枠をご覧ください。Entra IDだけではまだADの全機能を代替できないため、大手企業の約80パーセントがハイブリッド構成を採用しています。Microsoftが目指す未来に合わせるのであれば、今のうちからハイブリッド構成を検討しておくことは、一つの考え方として合理的です。画面の下に3段階の進め方が示されています。Step 1が今回のADクラウド移行、Step 2が1から2年後のハイブリッド構成導入、Step 3が3から5年後のEntra ID集約の再評価です。'
+            id: 'sp-entra-plan',
+            title: '現実的な進め方',
+            text: '以上を踏まえた現実的な進め方です。画面に3つのステップが表示されています。Step 1は今回のADサーバーのクラウド移行で、災害リスクと保守切れの問題を解消します。Step 2は1から2年後にハイブリッド構成を導入し、多要素認証や条件付きアクセスなどのセキュリティ機能を段階的に追加します。Step 3は3から5年後に、社内アプリのクラウド対応が進んだ段階でADサーバーの廃止とEntra IDへの一本化を再評価します。'
         },
         // ── 13. SECOM ──
         {
