@@ -37,12 +37,12 @@
     <!-- Sidebar Navigation -->
     <aside class="sidebar">
       <header class="sidebar-header">
-        <h1>統合指揮センター HUB</h1>
-        <p>MASTER COMMAND CENTER V2.3</p>
+        <h1>IT基盤刷新 完了実績</h1>
+        <p>AKIBAホールディングス 情報システム部</p>
       </header>
       <nav>
         <div class="nav-label-small">トップ・ナビゲーション</div>
-        <a href="landing.html" class="nav-link">
+        <a href="index.html" class="nav-link">
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
           </svg>
@@ -66,9 +66,9 @@
           </svg>
           IT基盤刷新 説明資料
         </a>
-        <a href="契約管理台帳.html" class="nav-link">
+        <a href="SD-WAN刷新_3社4シナリオ比較検討資料.html" class="nav-link">
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
-          契約管理台帳
+          SD-WAN 3社4シナリオ比較
         </a>
       </nav>
       <footer class="sidebar-footer">
@@ -156,13 +156,13 @@
                   <tr>
                     <td style="font-weight: 900; color: #3b82f6;">P2</td>
                     <td>
-                      <div class="text-base font-black text-slate-700">Entra ID移行のAKIBA固有ボトルネック</div>
+                      <div class="text-base font-black text-slate-700">Entra ID移行のAKIBA固有の障壁</div>
                       <div style="font-size: 14px; color: #64748b; margin-top: 6px; line-height: 1.8; background: #f8fafc; padding: 10px 14px; border-radius: 8px; border-left: 3px solid #94a3b8;">
                         <strong style="color: #475569;">篠部長: 一般論ではなくAKIBAの具体的な障壁を示せ</strong><br>
                         元のsec6はEntra IDの一般的な説明（MFA・条件付きアクセス等の機能紹介）に留まっており、「AKIBAが移行しようとしたら具体的に何が壊れるのか」が書かれていなかった。実際にはS:ドライブ（\\adsharesvr\public）やU:ドライブ（\\iotsvr\share）の自動接続がAD依存で動いており、40+部門フォルダの個人名ACLをクラウドで再現する膨大な工数が発生する。こうした<strong>AKIBA固有の地雷</strong>を明示しないと、「Entra IDに変えましょう」が簡単に聞こえすぎる。
                       </div>
                     </td>
-                    <td style="font-size: 14px; color: #475569; line-height: 1.7;">sec6に「AKIBA固有の移行ボトルネック」を新設。①ドライブマッピングS:/U:のAD依存が最大障壁 ②ADSHARESVRの40+部門・個人名ACLのクラウド再現工数 ③GPOのIntune代替可否判定表 ④移行しない場合のリスク4点を追加</td>
+                    <td style="font-size: 14px; color: #475569; line-height: 1.7;">sec6に「AKIBA固有の移行障壁」を新設。①ドライブマッピングS:/U:のAD依存が最大障壁 ②ADSHARESVRの40+部門・個人名ACLのクラウド再現工数 ③GPOのIntune代替可否判定表 ④移行しない場合のリスク4点を追加</td>
                     <td><a href="IT基盤刷新_説明資料.html#sec6" style="background: #dbeafe; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #1d4ed8; text-decoration: none;">sec6 →</a></td>
                     <td><span class="status-badge" style="background: #dcfce7; color: #166534;">反映済</span></td>
                   </tr>
@@ -170,8 +170,8 @@
                     <td colspan="5" style="background: #f8fafc; padding: 16px 24px 20px; border-bottom: 2px solid #e2e8f0;">
                       <div style="font-size: 15px; color: #334155; line-height: 1.9;">
                         <strong style="color: #1d4ed8;">対応内容:</strong>
-                        <a href="IT基盤刷新_説明資料.html#sec6" style="color: #2563eb; text-decoration: underline; font-weight: 700;">sec6「Entra ID 移行検討」</a>に「AKIBA固有の移行ボトルネック」セクションを新設した。<br><br>
-                        <strong>追加① ボトルネック分析 — ドライブマッピング（最大の障壁）:</strong><br>
+                        <a href="IT基盤刷新_説明資料.html#sec6" style="color: #2563eb; text-decoration: underline; font-weight: 700;">sec6「Entra ID 移行検討」</a>に「AKIBA固有の移行障壁」セクションを新設した。<br><br>
+                        <strong>追加① 障壁分析 — ドライブマッピング:</strong><br>
                         現行GPOで自動割当されている S:ドライブ（\\adsharesvr\public → 全社員利用）と U:ドライブ（\\iotsvr\share → IoT部門利用）はAD（Kerberos認証）に依存。Entra ID完全移行でこの自動接続が動作しなくなる。Azure FilesやSharePoint Onlineへの移行が必要だが、ADSHARESVRには<strong style="color: #991b1b;">40以上の部門別フォルダに個人名ベースACL</strong>が細かく設定されており、クラウド再現が移行プロジェクト最大の工数になる。<br><br>
                         <strong>追加② GPO移行のIntune代替可否:</strong><br>
                         ドライブマップ以外のGPO（WinUpdate, スクリーンセーバー, IEモード, RDP, Defender等）はIntuneで代替可能。ドライブマップとLANSCOPEのみ要検討。<br><br>
@@ -222,7 +222,7 @@
                         ファイルサーバー移行の工数を「大変そう」と曖昧に書いていたが、実際のフォルダ数・権限構造を確認していなかった。篠部長からアクセス制御管理台帳（Googleスプレッドシート）が共有され、<strong>「どれだけの部門フォルダがあり、どれだけ細かいACL（個人名ベースの権限）が設定されているか具体的に把握せよ」</strong>という指示。移行工数の見積もりには実データが不可欠。
                       </div>
                     </td>
-                    <td style="font-size: 14px; color: #475569; line-height: 1.7;">アクセス制御管理台帳を全件読込。ADSHARESVR（40+部門フォルダ・深いネスト・個人名ACL多数）とIOTSVR（6フォルダ・IoTG+情シスのみ）の権限構造を分析。Azure Files移行工数の根拠としてsec6ボトルネック分析に反映</td>
+                    <td style="font-size: 14px; color: #475569; line-height: 1.7;">アクセス制御管理台帳を全件読込。ADSHARESVR（40+部門フォルダ・深いネスト・個人名ACL多数）とIOTSVR（6フォルダ・IoTG+情シスのみ）の権限構造を分析。Azure Files移行工数の根拠としてsec6障壁分析に反映</td>
                     <td><a href="IT基盤刷新_説明資料.html#sec6" style="background: #dbeafe; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #1d4ed8; text-decoration: none;">sec6 →</a></td>
                     <td><span class="status-badge" style="background: #dcfce7; color: #166534;">反映済</span></td>
                   </tr>
@@ -230,7 +230,7 @@
                     <td colspan="5" style="background: #f8fafc; padding: 16px 24px 20px; border-bottom: 2px solid #e2e8f0;">
                       <div style="font-size: 15px; color: #334155; line-height: 1.9;">
                         <strong style="color: #1d4ed8;">対応内容:</strong>
-                        篠部長から共有されたアクセス制御管理台帳（<a href="https://docs.google.com/spreadsheets/d/1NUsOaK1igmyR_RLjJ6uJTSmmpDxXxG2WrZmsuipf2MY" style="color: #2563eb; text-decoration: underline; font-weight: 700;" target="_blank">Googleスプレッドシート</a>）を読込。分析結果を<a href="IT基盤刷新_説明資料.html#sec6" style="color: #2563eb; text-decoration: underline; font-weight: 700;">sec6</a>のボトルネック分析に反映した。<br><br>
+                        篠部長から共有されたアクセス制御管理台帳（<a href="https://docs.google.com/spreadsheets/d/1NUsOaK1igmyR_RLjJ6uJTSmmpDxXxG2WrZmsuipf2MY" style="color: #2563eb; text-decoration: underline; font-weight: 700;" target="_blank">Googleスプレッドシート</a>）を読込。分析結果を<a href="IT基盤刷新_説明資料.html#sec6" style="color: #2563eb; text-decoration: underline; font-weight: 700;">sec6</a>の障壁分析に反映した。<br><br>
                         <strong>ADSHARESVR（全社共有ファイルサーバー）の分析結果:</strong><br>
                         ・40+部門フォルダが存在。HD直下にグループ監査室・コンプライアンス・経営企画室・人事部・総務部等<br>
                         ・深いネスト構造あり（例: 総務専用→取締役会→資料→グループ経営会議）<br>
@@ -275,23 +275,23 @@
                         元のsec8ではIIJ OmnibusとCato SASEを同等の選択肢として並列比較していたが、篠部長が方針を決定。IIJ Omnibusは国内専用バックボーン・各拠点にルーター設置が必要・IIJ AD契約との密結合などの制約があり、<strong>Catoのグローバル90+ PoP・Socket1台で完結・ゼロトラスト標準搭載の方が柔軟性が高い</strong>と判断。IIJ Omnibus単独シナリオの深掘りに工数を割くのは無駄であり、Cato前提で資料を再構成する指示。
                       </div>
                     </td>
-                    <td style="font-size: 14px; color: #475569; line-height: 1.7;">①sec8のSD-WAN比較をCato前提に再構成（IIJ Omnibus単独シナリオを縮小） ②sec9の3パターンをCato統一: LAJ+Cato / USEN+Cato / IIJ AD+Cato ③IIJ一括は参考比較として残すが推奨から外す</td>
+                    <td style="font-size: 14px; color: #475569; line-height: 1.7;">SD-WAN刷新_3社4シナリオ比較検討資料を新規作成し、Cato中心に4シナリオ（Cato単独/IIJ単独/Cato+IIJ併用/段階移行）で比較。費用比較資料も別途作成済み。統合資料sec8/sec9への反映は次フェーズ</td>
                     <td>
-                      <a href="IT基盤刷新_説明資料.html#sec8" style="background: #fef3c7; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #92400e; text-decoration: none;">sec8 →</a>
-                      <a href="IT基盤刷新_説明資料.html#sec9" style="background: #fef3c7; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #92400e; text-decoration: none; margin-left: 4px;">sec9 →</a>
+                      <a href="SD-WAN刷新_3社4シナリオ比較検討資料.html" style="background: #dbeafe; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 900; color: #1d4ed8; text-decoration: none;">資料 →</a>
                     </td>
-                    <td><span class="status-badge wip">未着手</span></td>
+                    <td><span class="status-badge" style="background: #dcfce7; color: #166534;">反映済</span></td>
                   </tr>
                   <tr>
-                    <td colspan="5" style="background: #fffbeb; padding: 16px 24px 20px; border-bottom: 2px solid #fde68a;">
-                      <div style="font-size: 15px; color: #78350f; line-height: 1.9;">
-                        <strong style="color: #92400e;">やること:</strong><br>
-                        篠部長の方針決定 — ネットワーク刷新はIIJ Omnibus（IIJ独自SD-WAN）の深掘りは不要。<strong>Cato SASE Cloudを中心に検討を進める</strong>。<br><br>
-                        <strong>現状の問題:</strong> <a href="IT基盤刷新_説明資料.html#sec8" style="color: #92400e; text-decoration: underline; font-weight: 700;">sec8（SD-WAN比較）</a>にはIIJ Omnibus単独シナリオがまだ含まれている。これをCato＋各ADベンダーの組み合わせパターンに整理し直す必要がある。<br><br>
-                        <strong>具体的な作業:</strong><br>
-                        ① sec8のSD-WAN比較表をCato前提に再構成<br>
-                        ② <a href="IT基盤刷新_説明資料.html#sec9" style="color: #92400e; text-decoration: underline; font-weight: 700;">sec9（費用全体像）</a>の3パターン比較もCato前提で統一: パターン1（LAJ + Cato）、パターン2（USEN + Cato）、パターン3（IIJ AD + Cato）<br>
-                        ③ IIJ一括パターンは「ADもネットワークもIIJ」の参考比較として残すが、推奨からは外す
+                    <td colspan="5" style="background: #f8fafc; padding: 16px 24px 20px; border-bottom: 2px solid #e2e8f0;">
+                      <div style="font-size: 15px; color: #334155; line-height: 1.9;">
+                        <strong style="color: #1d4ed8;">対応内容:</strong>
+                        篠部長の方針（Cato中心）に基づき、<a href="SD-WAN刷新_3社4シナリオ比較検討資料.html" style="color: #2563eb; text-decoration: underline; font-weight: 700;">SD-WAN刷新_3社4シナリオ比較検討資料</a>を新規作成した。<br><br>
+                        <strong>作成した比較シナリオ（4パターン）:</strong><br>
+                        ① Cato SASE 単独導入（推奨）<br>
+                        ② IIJ Omnibus 単独導入<br>
+                        ③ Cato + IIJ 併用<br>
+                        ④ 段階移行（IIJ → Cato）<br><br>
+                        <strong>費用比較:</strong> 別途費用比較資料も作成済み。統合資料（sec8/sec9）への反映は次フェーズで対応予定。
                       </div>
                     </td>
                   </tr>
@@ -394,7 +394,7 @@
                     <td colspan="5" style="background: #f0fdf4; padding: 16px 24px 20px; border-bottom: 2px solid #bbf7d0;">
                       <div style="font-size: 15px; color: #334155; line-height: 1.9;">
                         <strong style="color: #059669;">対応内容:</strong>
-                        P2（篠部長）の対応と統合し、<a href="IT基盤刷新_説明資料.html#sec6" style="color: #059669; text-decoration: underline; font-weight: 700;">sec6「Entra ID 移行検討」</a>に「Entra IDに移行しない場合のリスク」を追加した。「移行の障壁」（P2のボトルネック分析）と「移行しないリスク」を同じセクションで対比させている。<br><br>
+                        P2（篠部長）の対応と統合し、<a href="IT基盤刷新_説明資料.html#sec6" style="color: #059669; text-decoration: underline; font-weight: 700;">sec6「Entra ID 移行検討」</a>に「Entra IDに移行しない場合のリスク」を追加した。「移行の障壁」（P2の障壁分析）と「移行しないリスク」を同じセクションで対比させている。<br><br>
                         <strong>追加したリスク分析（4点）:</strong><br>
                         ① MicrosoftはオンプレADの新機能開発を停止済み。MFA・条件付きアクセス等の最新セキュリティ機能はEntra IDにのみ追加される<br>
                         ② Windows Serverサポート期限後、パッチ提供が終了し脆弱性が放置されるリスク<br>
@@ -523,6 +523,7 @@
                 <div>
                   <h3 class="text-lg font-black text-slate-800" style="margin: 0;">光回線・ISP契約の見直し（QUICK WIN）</h3>
                   <p style="font-size: 13px; color: #64748b; font-weight: 700; margin: 2px 0 0;">影響範囲小・すぐ着手可能 → 最初の成果として提案</p>
+                  <p style="font-size: 13px; font-weight: 900; color: #dc2626; margin: 6px 0 0; background: #fef2f2; display: inline-block; padding: 2px 10px; border-radius: 8px;">進捗: USENへメール送信済み（2/14）・返信待ち</p>
                 </div>
               </div>
 
@@ -565,6 +566,7 @@
                 <div>
                   <h3 class="text-lg font-black text-slate-800" style="margin: 0;">Cato SASE + Linkat Japan を軸に詳細化</h3>
                   <p style="font-size: 13px; color: #64748b; font-weight: 700; margin: 2px 0 0;">塩田部長・丹治ともに Cato+LAJ が最適と判断 → IIJ・USENの深掘りは不要</p>
+                  <p style="font-size: 13px; font-weight: 900; color: #ea580c; margin: 6px 0 0; background: #fff7ed; display: inline-block; padding: 2px 10px; border-radius: 8px;">進捗: Linkat Japanへメール送信済み（2/14）・返信待ち</p>
                 </div>
               </div>
 
@@ -583,7 +585,7 @@
                   <ul style="font-size: 14px; color: #334155; line-height: 2; padding-left: 16px; margin: 0;">
                     <li>sec4: 3社比較 → LAJ推薦の根拠を強化</li>
                     <li>sec9: 費用全体像 → LAJ+Catoパターンを主軸に再構成</li>
-                    <li>P6（未着手）: Cato中心のネットワーク再構成を具体化</li>
+                    <li>P6（反映済）: Cato中心に3社4シナリオ比較資料を作成</li>
                   </ul>
                 </div>
               </div>
@@ -649,7 +651,7 @@
               <div style="margin-top: 20px; background: #1e293b; border-radius: 12px; padding: 20px;">
                 <div style="font-size: 12px; font-weight: 900; color: #93c5fd; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;">提案資料に盛り込むべき内容</div>
                 <ol style="font-size: 14px; color: #e2e8f0; line-height: 2.2; padding-left: 20px; margin: 0;">
-                  <li>現状の工数内訳（何にどれだけ時間を使っているか）の可視化</li>
+                  <li>現状の工数内訳（何にどれだけ時間を使っているか）の把握</li>
                   <li>刷新により削減される運用工数の試算</li>
                   <li>削減工数の振り向け先 — AI時代の「攻めの情シス」ロードマップ</li>
                   <li>AI活用の具体例（手作業の自動化・エンジニア不要でプログラミング可能な時代）</li>
