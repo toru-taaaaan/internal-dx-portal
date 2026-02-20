@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📋</text></svg>">
+    <title>入退室管理 エビデンス集</title>
+    <link rel="stylesheet" href="assets/toru_custom_design.css">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --accent: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #6366f1;
+            --bg-body: #f8fafc;
+            --surface: #ffffff;
+            --bg-secondary: #f1f5f9;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        /* ヘッダー */
+        .page-header {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border);
+            padding: 0 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .page-header-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        .back-link:hover { color: #2563eb; }
+        .page-title {
+            font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        .page-meta {
+            font-size: 0.72rem;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        /* ナビ */
+        .evidence-nav {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            margin-bottom: 32px;
+        }
+        .evidence-nav-title {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: #94a3b8;
+            letter-spacing: 0.15em;
+            margin-bottom: 12px;
+        }
+        .evidence-nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .evidence-nav-list a {
+            display: block;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-main);
+            text-decoration: none;
+            transition: all 0.15s;
+        }
+        .evidence-nav-list a:hover {
+            background: var(--bg-secondary);
+            color: var(--primary);
+        }
+        .evidence-nav-list .nav-vendor {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            font-weight: 700;
+            padding: 4px 12px;
+            margin-top: 8px;
+            letter-spacing: 0.1em;
+        }
+
+        /* エビデンスエントリ */
+        .evidence-entry {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            margin-bottom: 32px;
+            scroll-margin-top: 72px;
+        }
+        .evidence-entry:target {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+        .entry-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border);
+        }
+        .entry-title {
+            font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 0;
+        }
+        .entry-id {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #94a3b8;
+            background: var(--bg-secondary);
+            padding: 4px 10px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        /* セクション */
+        .entry-section {
+            margin-bottom: 24px;
+        }
+        .entry-section:last-child {
+            margin-bottom: 0;
+        }
+        .section-label {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: 0.12em;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .section-label::before {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 14px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* メール表示 */
+        .email-block {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 12px;
+            font-size: 0.88rem;
+            line-height: 1.75;
+        }
+        .email-block:last-child {
+            margin-bottom: 0;
+        }
+        .email-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+        .email-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .email-meta-label {
+            font-weight: 700;
+            color: #94a3b8;
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
+        }
+        .email-direction {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.05em;
+        }
+        .dir-incoming {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .dir-outgoing {
+            background: #dcfce7;
+            color: #166534;
+        }
+        .email-body {
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .email-body .highlight {
+            background: #fef3c7;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        /* 算出根拠 */
+        .calc-box {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 20px;
+            font-size: 0.88rem;
+            line-height: 1.8;
+        }
+        .calc-formula {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.85rem;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 6px;
+            border: 1px solid #bfdbfe;
+            margin: 8px 0;
+        }
+        .calc-result {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-top: 8px;
+        }
+
+        /* 文脈 */
+        .context-text {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        /* フッター */
+        .page-footer {
+            text-align: center;
+            padding: 32px 0;
+            color: #94a3b8;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            .evidence-entry { padding: 20px; }
+            .email-block { padding: 14px; }
+            .entry-header { flex-direction: column; gap: 8px; }
+        }
+
+        @media print {
+            .page-header { position: static; }
+            .evidence-entry { break-inside: avoid; }
+            .evidence-entry:target { border-color: var(--border); box-shadow: none; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ヘッダー -->
+    <div class="page-header">
+        <div class="page-header-inner">
+            <a href="/入退室管理_フルクラウド型_ベンダー調査.html" class="back-link">← ベンダー調査に戻る</a>
+            <span class="page-title">エビデンス集</span>
+            <span class="page-meta">入退室管理</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- ページタイトル -->
+        <header style="margin-bottom: 32px;">
+            <h1 style="font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin: 24px 0 8px;">
+                入退室管理 エビデンス集
+            </h1>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">
+                各数字の根拠となるメールやりとり・算出過程を収録。本資料内の費用・仕様はすべてベンダーからの直接回答に基づく。
+            </p>
+        </header>
+
+        <!-- 目次 -->
+        <nav class="evidence-nav">
+            <div class="evidence-nav-title">目次</div>
+            <ul class="evidence-nav-list">
+                <li class="nav-vendor">AKERUN（Photosynth）</li>
+                <li><a href="#akerun-cost-20260219">Akerun CTL 概算費用（月額13,000円/扉）</a></li>
+                <li><a href="#akerun-specs-20260218">Akerun 仕様回答（通信・FeliCa・CSV・複数拠点）</a></li>
+            </ul>
+        </nav>
+
+        <!-- ========================================
+             AKERUN エビデンス
+             ======================================== -->
+
+        <!-- E-001: Akerun CTL 概算費用 -->
+        <article class="evidence-entry" id="akerun-cost-20260219">
+            <div class="entry-header">
+                <h2 class="entry-title">Akerun CTL 概算費用（月額13,000円/扉）</h2>
+                <span class="entry-id">E-001</span>
+            </div>
+
+            <!-- 文脈 -->
+            <div class="entry-section">
+                <div class="section-label">文脈</div>
+                <div class="context-text">
+                    <p style="margin-top: 0;">SECOM入退室管理のクラウド移行を検討中、フルクラウド型サービスとして6社に資料請求（2/17）。Photosynth（Akerun）から翌日に提案資料と定価ベースの費用回答を受領。</p>
+                    <p>Akerun CTLの定価は月額27,800円/扉だが、弊社は8拠点21扉・5年契約という条件のため、大口値引の概算を依頼。翌日、定価から53%引の概算回答を受領。</p>
+                </div>
+            </div>
+
+            <!-- やりとり全文 -->
+            <div class="entry-section">
+                <div class="section-label">やりとり全文（時系列）</div>
+
+                <!-- Mail 1: 小林→丹治 定価回答 -->
+                <div class="email-block">
+                    <div class="email-meta">
+                        <div class="email-meta-item">
+                            <span class="email-direction dir-incoming">受信</span>
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">日時</span> 2026-02-18 10:54
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">差出人</span> 小林純大（Photosynth）
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">宛先</span> 丹治
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">件名</span> 【資料請求のお礼】Akerun入退室管理システム / フォトシンス小林
+                        </div>
+                    </div>
+                    <div class="email-body">【費用に関する回答部分を抜粋】
+
+5. 費用: 初期費用・月額費用の料金体系
+→レンタル製品となりますので、月額費用が発生いたします。
+また、初期費用の有無はご案内する製品と設置先の扉状態によって判断可能です。
+
+<span class="highlight">◼︎Akerun CTL (配線式製品)
+・初期設置費：100,000円〜150,000円
+・通常月額プラン (利用期間１年)：年一括333,600円/扉
+└月額換算27,800円/扉</span>
+※ 機器レンタル・システム利用料金・保守サービス費用(代替の電池代込) が含まれております。
+※上記は全て税抜き価格です。
+
+7. お見積にあたり事前に必要な情報があればご教示ください
+→<span class="highlight">扉の総数や契約期間の長期化(最大5年)によって月額が調整可能です。</span>
+扉の状態を正確に把握した上でお見積りを提出させていただきたく存じます。</div>
+                </div>
+
+                <!-- Mail 2: 丹治→小林 見積依頼 -->
+                <div class="email-block">
+                    <div class="email-meta">
+                        <div class="email-meta-item">
+                            <span class="email-direction dir-outgoing">送信</span>
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">日時</span> 2026-02-18 20:39
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">差出人</span> 丹治
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">宛先</span> 小林純大（Photosynth）, CC: system@akiba-holdings.co.jp
+                        </div>
+                    </div>
+                    <div class="email-body">弊社の入退室管理対象は既設の電気錠を使用しているため、
+Akerun CTL（配線式）が対象になると理解しております。
+
+つきましては、以下の情報をお伝えいたします。
+
+<span class="highlight">【対象拠点・扉数】
+・全8拠点・合計21扉
+・契約期間: 5年間での概算をお願いしたく存じます</span>
+
+【扉写真について】
+取付診断フォームへの写真送付は、各拠点で撮影のうえ順次対応いたします。
+
+【WEB会議について】
+いただいた日程調整URLより予約させていただきます。
+CTLの設置要件や、既設電気錠の流用可否について詳しくお聞きしたいと考えております。</div>
+                </div>
+
+                <!-- Mail 3: 小林→丹治 概算回答 -->
+                <div class="email-block" style="border-left: 3px solid var(--primary);">
+                    <div class="email-meta">
+                        <div class="email-meta-item">
+                            <span class="email-direction dir-incoming">受信</span>
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">日時</span> 2026-02-19 18:29
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">差出人</span> 小林純大（Photosynth）
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">宛先</span> 丹治
+                        </div>
+                    </div>
+                    <div class="email-body">概算費用は下記となります。
+<span class="highlight">初期費用：100,000円〜150,000円/扉(Akerun設置工事、動作確認など)</span>
+※電源と有線LANが必要になるため、配線工事の要否について現地調査にて確認させていただきます。
+<span class="highlight">ランニング費用：月額13,000円/扉×21扉×60ヶ月</span></div>
+                </div>
+            </div>
+
+            <!-- 算出根拠 -->
+            <div class="entry-section">
+                <div class="section-label">算出根拠</div>
+                <div class="calc-box">
+                    <p style="margin-top: 0;"><strong>前提条件</strong>: Akerun CTL（配線式）、8拠点21扉、5年（60ヶ月）契約</p>
+                    <p><strong>定価</strong>: 月額 27,800円/扉（税抜）</p>
+                    <p><strong>概算単価</strong>: 月額 13,000円/扉（税抜）← 21扉×5年の大口値引で <strong>53%引</strong></p>
+
+                    <div class="calc-formula">
+<strong>月額ランニング:</strong>
+13,000円 × 21扉 = 273,000円/月
+
+<strong>5年間ランニング:</strong>
+273,000円 × 60ヶ月 = <strong>16,380,000円</strong>
+
+<strong>初期費用（21扉分）:</strong>
+100,000〜150,000円 × 21扉 = <strong>2,100,000〜3,150,000円</strong>
+
+<strong>5年総額（税抜）:</strong>
+16,380,000 + 2,100,000〜3,150,000 = <strong>約1,848〜1,953万円</strong>
+                    </div>
+                    <div class="calc-result">
+                        5年総額（税抜）: 約1,848〜1,953万円
+                    </div>
+                    <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0;">
+                        ※ 配線工事費用は現地調査後に確定のため、上記には含まない<br>
+                        ※ 正式見積は現地調査後に提出予定（WEB会議 2/27 16:00）
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <!-- E-002: Akerun 仕様回答 -->
+        <article class="evidence-entry" id="akerun-specs-20260218">
+            <div class="entry-header">
+                <h2 class="entry-title">Akerun 仕様回答（通信・FeliCa・CSV・複数拠点）</h2>
+                <span class="entry-id">E-002</span>
+            </div>
+
+            <!-- 文脈 -->
+            <div class="entry-section">
+                <div class="section-label">文脈</div>
+                <div class="context-text">
+                    <p style="margin-top: 0;">2/17の資料請求時に7項目の質問を送付。翌日、Photosynth小林氏からすべての項目に対する回答を受領。弊社要件（VPN不要化・FeliCa継続・CSV勤怠連携・複数拠点一元管理）すべてに対応可能であることを確認。</p>
+                </div>
+            </div>
+
+            <!-- やりとり全文 -->
+            <div class="entry-section">
+                <div class="section-label">やりとり全文</div>
+
+                <div class="email-block">
+                    <div class="email-meta">
+                        <div class="email-meta-item">
+                            <span class="email-direction dir-incoming">受信</span>
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">日時</span> 2026-02-18 10:54
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">差出人</span> 小林純大（Photosynth）
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">宛先</span> 丹治
+                        </div>
+                    </div>
+                    <div class="email-body">【いただいたご質問について】
+
+1. 通信方式: リーダー/機器からクラウドへの通信はLTE・WiFi等で完結し、VPNや拠点側サーバーが不要か
+<span class="highlight">→不要です。クラウドへの通信はLTEやWifiで完結します。</span>
+
+2. FeliCaカード: 既存FeliCaカードの継続利用可否
+<span class="highlight">→可能です。Felicaタイプのカードは全て認証可能です。</span>
+
+3. 勤怠連携: 入退室ログのCSVファイル出力（勤怠管理システムへのファイル取込に使用）
+<span class="highlight">→可能です。</span>また、管理画面からタイムカード(その日の最初と最後のみ抽出したデータ)としてCSVダウンロードすることも可能です。
+
+4. 複数拠点の一元管理が可能か
+<span class="highlight">→可能です。</span>
+
+5. 費用: （E-001 に詳細記載）
+
+6. 導入スケジュール: 最短での導入期間
+→工事なしでAkerunProを設置できる場合は発注から3営業日で納品可能です。
+施工などある場合は、<span class="highlight">発注から2週間ほどです。</span>
+
+7. お見積にあたり事前に必要な情報があればご教示ください
+→扉の総数や契約期間の長期化(最大5年)によって月額が調整可能です。
+現在の電気錠をそのまま流用する場合配線式製品のご案内になるため、
+必ず現地調査にて設置環境を確認させていただきたく存じます。</div>
+                </div>
+            </div>
+        </article>
+
+        <!-- フッター -->
+        <footer class="page-footer">
+            AKIBAホールディングス 情報システム部
+        </footer>
+    </div>
+
+</body>
+
+</html>
