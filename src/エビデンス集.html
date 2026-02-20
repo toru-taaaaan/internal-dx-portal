@@ -9,7 +9,7 @@
         rel="stylesheet">
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📋</text></svg>">
-    <title>入退室管理 エビデンス集</title>
+    <title>エビデンス集 | AKIBAホールディングス</title>
     <link rel="stylesheet" href="assets/toru_custom_design.css">
     <style>
         :root {
@@ -292,6 +292,37 @@
             line-height: 1.8;
         }
 
+        /* 反映先 */
+        .ref-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .ref-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 12px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--primary);
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.15s;
+        }
+        .ref-links a:hover {
+            background: #dbeafe;
+            border-color: var(--primary);
+        }
+        .ref-links a::before {
+            content: '→';
+            font-size: 0.7rem;
+            color: #93c5fd;
+        }
+
         /* フッター */
         .page-footer {
             text-align: center;
@@ -321,9 +352,9 @@
     <!-- ヘッダー -->
     <div class="page-header">
         <div class="page-header-inner">
-            <a href="/入退室管理_フルクラウド型_ベンダー調査.html" class="back-link">← ベンダー調査に戻る</a>
+            <a href="/index.html" class="back-link">← メインページ</a>
             <span class="page-title">エビデンス集</span>
-            <span class="page-meta">入退室管理</span>
+            <span class="page-meta">IT基盤刷新</span>
         </div>
     </div>
 
@@ -331,10 +362,10 @@
         <!-- ページタイトル -->
         <header style="margin-bottom: 32px;">
             <h1 style="font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin: 24px 0 8px;">
-                入退室管理 エビデンス集
+                エビデンス集
             </h1>
             <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">
-                各数字の根拠となるメールやりとり・算出過程を収録。本資料内の費用・仕様はすべてベンダーからの直接回答に基づく。
+                各資料に記載した費用・仕様の根拠（メールやりとり・算出過程）を一元管理する。出典はすべてベンダーからの直接回答。
             </p>
         </header>
 
@@ -342,6 +373,7 @@
         <nav class="evidence-nav">
             <div class="evidence-nav-title">目次</div>
             <ul class="evidence-nav-list">
+                <li class="nav-vendor" style="margin-top: 0; color: #1e40af; font-weight: 800;">入退室管理</li>
                 <li class="nav-vendor">AKERUN（Photosynth）</li>
                 <li><a href="#akerun-cost-20260219">Akerun CTL 概算費用（月額13,000円/扉）</a></li>
                 <li><a href="#akerun-specs-20260218">Akerun 仕様回答（通信・FeliCa・CSV・複数拠点）</a></li>
@@ -495,6 +527,17 @@ CTLの設置要件や、既設電気錠の流用可否について詳しくお�
                     </p>
                 </div>
             </div>
+
+            <!-- 反映先 -->
+            <div class="entry-section">
+                <div class="section-label">反映先</div>
+                <div class="ref-links">
+                    <a href="/入退室管理_フルクラウド型_ベンダー調査.html#sec-cost">ベンダー調査 / TCO比較表</a>
+                    <a href="/入退室管理_フルクラウド型_ベンダー調査.html#sec-detail-akerun">ベンダー調査 / Akerun詳細 - 製品ラインナップ</a>
+                    <a href="/入退室管理_フルクラウド型_ベンダー調査.html#sec-detail-akerun">ベンダー調査 / Akerun詳細 - 長期契約割引</a>
+                    <a href="/入退室管理_フルクラウド型_ベンダー調査.html#sec-detail-akerun">ベンダー調査 / Akerun詳細 - 21扉費用試算</a>
+                </div>
+            </div>
         </article>
 
         <!-- E-002: Akerun 仕様回答 -->
@@ -555,6 +598,15 @@ CTLの設置要件や、既設電気錠の流用可否について詳しくお�
 →扉の総数や契約期間の長期化(最大5年)によって月額が調整可能です。
 現在の電気錠をそのまま流用する場合配線式製品のご案内になるため、
 必ず現地調査にて設置環境を確認させていただきたく存じます。</div>
+                </div>
+            </div>
+
+            <!-- 反映先 -->
+            <div class="entry-section">
+                <div class="section-label">反映先</div>
+                <div class="ref-links">
+                    <a href="/入退室管理_フルクラウド型_ベンダー調査.html#sec-detail-akerun">ベンダー調査 / Akerun詳細 - 4要件判定</a>
+                    <a href="/入退室管理_フルクラウド型_ベンダー調査.html#sec-detail-akerun">ベンダー調査 / Akerun詳細 - 認証方式・勤怠連携</a>
                 </div>
             </div>
         </article>
