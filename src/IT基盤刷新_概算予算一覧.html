@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT基盤刷新 概算予算一覧 | AKIBAホールディングス</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/assets/unified_design_system.css">
+    <style>
+        body {
+            background-color: #f8fafc;
+            color: #334155;
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            line-height: 1.8;
+        }
+
+        .modern-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1.25rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+            padding: 2rem 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0 0 1.5rem 0;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title::before {
+            content: "";
+            width: 6px;
+            height: 24px;
+            background: #3b82f6;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        .section-lead {
+            font-size: 1rem;
+            color: #475569;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .fact-box {
+            background: #f8fafc;
+            border-left: 4px solid #3b82f6;
+            padding: 1.25rem 1.5rem;
+            border-radius: 0 0.75rem 0.75rem 0;
+            margin: 1.5rem 0;
+        }
+
+        .fact-box dt {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .fact-box dd {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin: 0 0 0.75rem 0;
+        }
+
+        .risk-note {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1.25rem 1.5rem;
+            border-radius: 0 0.75rem 0.75rem 0;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+            color: #78350f;
+        }
+
+        .evidence-warning {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 4px solid #f59e0b;
+            border-radius: 0.75rem;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .evidence-warning-title {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: #92400e;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .evidence-warning-text {
+            font-size: 0.875rem;
+            color: #78350f;
+            line-height: 1.6;
+        }
+
+        /* Comparison Table */
+        .compare-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 0.9rem;
+        }
+
+        .compare-table th {
+            background: #f1f5f9;
+            color: #64748b;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        .compare-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: top;
+        }
+
+        .compare-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .compare-table .col-iij {
+            border-top: 3px solid #3b82f6;
+        }
+
+        .compare-table .col-usen {
+            border-top: 3px solid #10b981;
+        }
+
+        .compare-table .col-laj {
+            border-top: 3px solid #f59e0b;
+        }
+
+        .compare-table .col-current {
+            border-top: 3px solid #94a3b8;
+        }
+
+        .summary-row-highlight {
+            background: #f0f9ff;
+            font-weight: 600;
+        }
+
+        .vendor-badge {
+            display: inline-block;
+            padding: 0.125rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-iij { background: #dbeafe; color: #1e40af; }
+        .badge-usen { background: #d1fae5; color: #065f46; }
+        .badge-laj { background: #fef3c7; color: #92400e; }
+        .badge-pending { background: #fef3c7; color: #92400e; }
+
+        /* Evidence section */
+        .evidence-list {
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: #475569;
+        }
+
+        .evidence-list dt {
+            font-weight: 700;
+            color: #1e293b;
+            margin-top: 1rem;
+        }
+
+        .evidence-list dd {
+            margin-left: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .evidence-ref {
+            color: #3b82f6;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: help;
+        }
+
+        .note-text {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 0.5rem;
+        }
+
+        /* Savings highlight */
+        .savings-note {
+            background: #ecfdf5;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.25rem;
+            border-radius: 0 0.75rem 0.75rem 0;
+            margin: 1.5rem 0;
+            font-size: 0.85rem;
+            color: #065f46;
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            padding: 2rem 0 1rem;
+        }
+
+        .page-header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .page-header .subtitle {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-top: 0.5rem;
+        }
+
+        .tax-note {
+            display: inline-block;
+            background: #f1f5f9;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #64748b;
+            margin-top: 0.75rem;
+        }
+
+        @media print {
+            body { background: #fff; }
+            .modern-card { box-shadow: none; border: 1px solid #ddd; page-break-inside: avoid; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="max-w-5xl mx-auto px-4 py-8">
+
+        <!-- ========================================= -->
+        <!-- Header -->
+        <!-- ========================================= -->
+        <div class="page-header">
+            <h1>IT基盤刷新 概算予算一覧</h1>
+            <div class="subtitle">AKIBAホールディングス</div>
+            <div class="subtitle">作成日: 2026年2月20日</div>
+            <div class="tax-note">金額は全て税抜表示</div>
+        </div>
+
+        <!-- ========================================= -->
+        <!-- Section 1: AD単体 -->
+        <!-- ========================================= -->
+        <section id="sec-ad" class="modern-card">
+            <div class="section-title">1. ADサーバー クラウド移行（3社比較）</div>
+            <p class="section-lead">
+                Active Directory（AD）サーバー2台をクラウドへ移行する費用。現在は築地サーバー室でオンプレミス運用中。
+            </p>
+
+            <div style="overflow-x: auto;">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 16%;">費目</th>
+                            <th class="col-iij" style="width: 18%;">IIJ<br><span style="font-size: 0.65rem; font-weight: 400; text-transform: none;">PaaS型 / IIJ独自基盤</span></th>
+                            <th class="col-usen" style="width: 18%;">USEN<br><span style="font-size: 0.65rem; font-weight: 400; text-transform: none;">IaaS型 / AWS</span></th>
+                            <th class="col-laj" style="width: 18%;">Link-At-Japan<br><span style="font-size: 0.65rem; font-weight: 400; text-transform: none;">IaaS型 / Azure</span></th>
+                            <th style="width: 30%;">備考</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 600;">初期費用</td>
+                            <td>¥1,422,750 <sup class="evidence-ref"><a href="#ev1">[1]</a></sup></td>
+                            <td>¥860,000 <sup class="evidence-ref"><a href="#ev2">[2]</a></sup></td>
+                            <td>¥1,555,000 <sup class="evidence-ref"><a href="#ev3">[3]</a></sup></td>
+                            <td style="font-size: 0.8rem; color: #64748b;">
+                                IIJ: 構築費(PI)¥325,000含む<br>
+                                USEN: AD移行+旧AD降格費含む<br>
+                                LAJ: SI費¥1,305,000含む(詳細設計書・試験計画書納品)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">月額費用</td>
+                            <td>¥174,750 <sup class="evidence-ref"><a href="#ev1">[1]</a></sup></td>
+                            <td>¥124,300 <sup class="evidence-ref"><a href="#ev2">[2]</a></sup></td>
+                            <td>¥102,051 <sup class="evidence-ref"><a href="#ev3">[3]</a><a href="#ev4">[4]</a></sup></td>
+                            <td style="font-size: 0.8rem; color: #64748b;">
+                                LAJ内訳: Azure基盤¥52,051 + アシストプラン¥50,000<br>
+                                IIJ: SLA 99.99%保証<br>
+                                USEN: SLAなし（ベストエフォート）<br>
+                                LAJ: SLOベース運用（SLAなし、Azure基盤はMS SLA適用）
+                            </td>
+                        </tr>
+                        <tr class="summary-row-highlight">
+                            <td style="font-weight: 700;">年額（月額×12）</td>
+                            <td style="font-weight: 700;">¥2,097,000</td>
+                            <td style="font-weight: 700;">¥1,491,600</td>
+                            <td style="font-weight: 700;">¥1,224,612</td>
+                            <td style="font-size: 0.8rem; color: #64748b;">
+                                月額最安: LAJ（¥102,051/月）
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="note-text">
+                詳細比較: <a href="/IT基盤刷新_説明資料.html#sec5" style="color: #3b82f6;">IT基盤刷新_説明資料.html</a> /
+                <a href="/ADクラウド移行_3社比較・導入計画.html" style="color: #3b82f6;">ADクラウド移行_3社比較・導入計画.html</a>
+            </p>
+        </section>
+
+        <!-- ========================================= -->
+        <!-- Section 2: SECOM単体 -->
+        <!-- ========================================= -->
+        <section id="sec-secom" class="modern-card">
+            <div class="section-title">2. SECOM入退室管理 クラウド移行（3社比較）</div>
+            <p class="section-lead">
+                SECOM SESAMO-TRIIサーバーをクラウドへ移行する費用。ベンダー費用に加え、SECOM社への直接費用（環境開放・アプリ設定・SQL Server Express）が発生する。
+            </p>
+
+            <div style="overflow-x: auto;">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 16%;">費目</th>
+                            <th class="col-iij" style="width: 18%;">IIJ</th>
+                            <th class="col-usen" style="width: 18%;">USEN</th>
+                            <th class="col-laj" style="width: 18%;">Link-At-Japan</th>
+                            <th style="width: 30%;">備考</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 600;">初期費用<br><span style="font-size: 0.75rem; color: #64748b;">（ベンダー提示額）</span></td>
+                            <td>¥762,750 <sup class="evidence-ref"><a href="#ev5">[5]</a></sup></td>
+                            <td>¥438,000 <sup class="evidence-ref"><a href="#ev6">[6]</a></sup></td>
+                            <td>¥388,000 <sup class="evidence-ref"><a href="#ev7">[7]</a></sup></td>
+                            <td style="font-size: 0.8rem; color: #64748b;">
+                                SECOM用サーバー構築・移行費用
+                            </td>
+                        </tr>
+                        <tr style="background-color: #fefce8;">
+                            <td style="font-weight: 600; color: #854d0e;">＋ SECOM社直接費用</td>
+                            <td style="color: #854d0e; font-weight: 600;">¥198,000 <sup class="evidence-ref"><a href="#ev8">[8]</a></sup></td>
+                            <td style="color: #854d0e; font-weight: 600;">¥198,000 <sup class="evidence-ref"><a href="#ev8">[8]</a></sup></td>
+                            <td style="color: #854d0e; font-weight: 600;">¥198,000 <sup class="evidence-ref"><a href="#ev8">[8]</a></sup></td>
+                            <td style="font-size: 0.8rem; color: #854d0e;">
+                                環境開放・アプリ設定・SQL Server Express。どのベンダーでも同額
+                            </td>
+                        </tr>
+                        <tr class="summary-row-highlight">
+                            <td style="font-weight: 700;">初期費用合計</td>
+                            <td style="font-weight: 700;">¥960,750</td>
+                            <td style="font-weight: 700;">¥636,000</td>
+                            <td style="font-weight: 700;">¥586,000</td>
+                            <td style="font-size: 0.8rem; color: #64748b;">
+                                初期最安: LAJ（¥586,000）
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">月額費用</td>
+                            <td>¥133,290 <sup class="evidence-ref"><a href="#ev5">[5]</a></sup></td>
+                            <td>¥133,000 <sup class="evidence-ref"><a href="#ev6">[6]</a></sup></td>
+                            <td>¥116,376 <sup class="evidence-ref"><a href="#ev7">[7]</a></sup></td>
+                            <td style="font-size: 0.8rem; color: #64748b;">
+                                LAJ内訳: SECOM基盤¥66,376 + アシストプラン¥50,000
+                            </td>
+                        </tr>
+                        <tr class="summary-row-highlight">
+                            <td style="font-weight: 700;">年額（月額×12）</td>
+                            <td style="font-weight: 700;">¥1,599,480</td>
+                            <td style="font-weight: 700;">¥1,596,000</td>
+                            <td style="font-weight: 700;">¥1,396,512</td>
+                            <td style="font-size: 0.8rem; color: #64748b;">
+                                月額最安: LAJ（¥116,376/月）
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="fact-box" style="border-left-color: #94a3b8; margin-top: 1.5rem;">
+                <dt>現状コスト（参考）</dt>
+                <dd style="margin-top: 0.5rem;">
+                    現行SECOM設備費: <strong>約¥120,000/月/拠点</strong> <sup class="evidence-ref"><a href="#ev19">[19]</a></sup>
+                </dd>
+                <dd style="font-size: 0.85rem; color: #64748b; margin-top: 0.5rem;">
+                    クラウド移行後の月額（¥116,376〜¥133,290）は全拠点一括のサーバー運用費。<br>
+                    現状は拠点ごとに約¥120,000/月が発生しているため、拠点数に応じて現行総額が変動する。<br>
+                    拠点数の確認後、現行総額との比較を追記予定。
+                </dd>
+            </div>
+
+            <p class="note-text">
+                詳細比較: <a href="/SECOM入退室クラウド化_導入検討資料.html" style="color: #3b82f6;">SECOM入退室クラウド化_導入検討資料.html</a>
+            </p>
+        </section>
+
+        <!-- ========================================= -->
+        <!-- Section 3: AD+SECOM同時 -->
+        <!-- ========================================= -->
+        <section id="sec-adsec" class="modern-card">
+            <div class="section-title">3. AD + SECOM 同時移行（3社比較・セット割引適用）</div>
+            <p class="section-lead">
+                AD・SECOMを同一ベンダーに同時依頼した場合の費用。単独発注に比べ、初期費用・月額の両方で割引が適用される。
+            </p>
+
+            <div style="overflow-x: auto;">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 16%;">費目</th>
+                            <th class="col-iij" style="width: 18%;">IIJ</th>
+                            <th class="col-usen" style="width: 18%;">USEN</th>
+                            <th class="col-laj" style="width: 18%;">Link-At-Japan</th>
+                            <th style="width: 30%;">備考</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #1e293b;">
+                            <td colspan="5" style="font-weight: 700; font-size: 0.85rem; color: #ffffff; padding: 0.6rem 1rem;">初期費用</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">AD初期費用</td>
+                            <td>¥1,422,750 <sup class="evidence-ref"><a href="#ev1">[1]</a></sup></td>
+                            <td>¥860,000 <sup class="evidence-ref"><a href="#ev2">[2]</a></sup></td>
+                            <td>¥1,555,000 <sup class="evidence-ref"><a href="#ev3">[3]</a></sup></td>
+                            <td style="font-size: 0.8rem; color: #64748b;">AD単体と同額</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">SECOM初期費用<br><span style="font-size: 0.7rem; color: #10b981;">（同時割引適用）</span></td>
+                            <td>¥475,000 <sup class="evidence-ref"><a href="#ev9">[9]</a></sup></td>
+                            <td>¥220,000 <sup class="evidence-ref"><a href="#ev10">[10]</a></sup></td>
+                            <td>¥190,000 <sup class="evidence-ref"><a href="#ev11">[11]</a></sup></td>
+                            <td style="font-size: 0.8rem; color: #64748b;">
+                                単体比: IIJ ▲¥287,750 / USEN ▲¥218,000 / LAJ ▲¥198,000
+                            </td>
+                        </tr>
+                        <tr style="background-color: #fefce8;">
+                            <td style="font-weight: 600; color: #854d0e;">SECOM社直接費用</td>
+                            <td style="color: #854d0e; font-weight: 600;">¥198,000 <sup class="evidence-ref"><a href="#ev8">[8]</a></sup></td>
+                            <td style="color: #854d0e; font-weight: 600;">¥198,000</td>
+                            <td style="color: #854d0e; font-weight: 600;">¥198,000</td>
+                            <td style="font-size: 0.8rem; color: #854d0e;">割引対象外（SECOM社への直接支払い）</td>
+                        </tr>
+                        <tr class="summary-row-highlight">
+                            <td style="font-weight: 700;">初期費用合計</td>
+                            <td style="font-weight: 700;">¥2,095,750 <sup class="evidence-ref"><a href="#ev9">[9]</a></sup></td>
+                            <td style="font-weight: 700;">¥1,278,000 <sup class="evidence-ref"><a href="#ev10">[10]</a></sup></td>
+                            <td style="font-weight: 700;">¥1,943,000 <sup class="evidence-ref"><a href="#ev11">[11]</a></sup></td>
+                            <td style="font-size: 0.8rem; color: #64748b;">初期最安: USEN（¥1,278,000）</td>
+                        </tr>
+
+                        <tr style="background: #1e293b;">
+                            <td colspan="5" style="font-weight: 700; font-size: 0.85rem; color: #ffffff; padding: 0.6rem 1rem;">月額費用</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">AD月額</td>
+                            <td>¥174,750</td>
+                            <td>¥124,300</td>
+                            <td>¥102,051</td>
+                            <td style="font-size: 0.8rem; color: #64748b;">AD単体と同額</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">SECOM月額<br><span style="font-size: 0.7rem; color: #10b981;">（同時割引適用）</span></td>
+                            <td>¥84,540 <sup class="evidence-ref"><a href="#ev9">[9]</a></sup></td>
+                            <td>¥114,900 <sup class="evidence-ref"><a href="#ev10">[10]</a></sup></td>
+                            <td>¥66,376 <sup class="evidence-ref"><a href="#ev11">[11]</a><a href="#ev12">[12]</a></sup></td>
+                            <td style="font-size: 0.8rem; color: #64748b;">
+                                単体比: IIJ ▲¥48,750 / USEN ▲¥18,100 / LAJ ▲¥50,000<br>
+                                <span style="color: #10b981; font-weight: 600;">LAJ: アシストプラン¥50,000をADと共有（1回のみ課金）</span>
+                            </td>
+                        </tr>
+                        <tr class="summary-row-highlight">
+                            <td style="font-weight: 700;">月額合計</td>
+                            <td style="font-weight: 700;">¥259,290</td>
+                            <td style="font-weight: 700;">¥239,200</td>
+                            <td style="font-weight: 700;">¥168,427</td>
+                            <td style="font-size: 0.8rem; color: #64748b;">月額最安: LAJ（¥168,427/月）</td>
+                        </tr>
+                        <tr class="summary-row-highlight">
+                            <td style="font-weight: 700;">年額（月額×12）</td>
+                            <td style="font-weight: 700;">¥3,111,480</td>
+                            <td style="font-weight: 700;">¥2,870,400</td>
+                            <td style="font-weight: 700;">¥2,021,124</td>
+                            <td style="font-size: 0.8rem; color: #64748b;">年額最安: LAJ（¥2,021,124）</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="savings-note">
+                <p style="margin: 0 0 0.5rem; font-weight: 700;">同時依頼による年額の削減効果（単独発注との比較）</p>
+                <ul style="margin: 0; padding-left: 1.25rem; line-height: 1.8;">
+                    <li><strong>IIJ</strong>: 年額▲¥585,000（単独合計¥3,696,480 → 同時¥3,111,480）</li>
+                    <li><strong>USEN</strong>: 年額▲¥217,200（単独合計¥3,087,600 → 同時¥2,870,400）</li>
+                    <li><strong>LAJ</strong>: 年額▲¥600,000（単独合計¥2,621,124 → 同時¥2,021,124）</li>
+                </ul>
+            </div>
+
+            <p class="note-text">
+                詳細比較: <a href="/AD・SECOM同時依頼_コスト最適化分析.html" style="color: #3b82f6;">AD・SECOM同時依頼_コスト最適化分析.html</a> /
+                <a href="/IT基盤刷新_説明資料.html#sp-total-a" style="color: #3b82f6;">IT基盤刷新_説明資料.html テーブルA</a>
+            </p>
+        </section>
+
+        <!-- ========================================= -->
+        <!-- Section 4: SD-WAN -->
+        <!-- ========================================= -->
+        <section id="sec-sdwan" class="modern-card">
+            <div class="section-title">4. SD-WAN / ネットワーク刷新（4シナリオ比較）</div>
+            <p class="section-lead">
+                現行VarioSecureの維持から次世代SASEへの刷新まで、4つのシナリオを比較。全シナリオは択一型（併用なし）。
+            </p>
+
+            <div style="overflow-x: auto;">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 13%;">費目</th>
+                            <th class="col-current" style="width: 16%;">①現状維持<br><span style="font-size: 0.65rem; font-weight: 400; text-transform: none;">VarioSecure</span></th>
+                            <th style="width: 16%; border-top: 3px solid #ef4444;">②オプション追加<br><span style="font-size: 0.65rem; font-weight: 400; text-transform: none;">Vario n-series + SD-WAN</span></th>
+                            <th class="col-iij" style="width: 16%;">③IIJ Omnibus<br><span style="font-size: 0.65rem; font-weight: 400; text-transform: none;">SD-WAN 8拠点</span></th>
+                            <th style="width: 16%; border-top: 3px solid #8b5cf6;">④Cato SASE<br><span style="font-size: 0.65rem; font-weight: 400; text-transform: none;">100名</span></th>
+                            <th style="width: 23%;">備考</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 600;">初期費用</td>
+                            <td>¥0 <sup class="evidence-ref"><a href="#ev13">[13]</a></sup></td>
+                            <td>¥1,000,000 <sup class="evidence-ref"><a href="#ev14">[14]</a></sup></td>
+                            <td>¥2,764,850 <sup class="evidence-ref"><a href="#ev15">[15]</a></sup></td>
+                            <td>¥500,000 <sup class="evidence-ref"><a href="#ev17">[17]</a></sup></td>
+                            <td style="font-size: 0.8rem; color: #64748b;">
+                                IIJ: SEIL/X4設置・設定費含む<br>
+                                Cato: 初期導入費（SCSK経由）
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">月額費用</td>
+                            <td>¥170,400 <sup class="evidence-ref"><a href="#ev13">[13]</a></sup></td>
+                            <td>¥1,228,800 <sup class="evidence-ref"><a href="#ev14">[14]</a></sup></td>
+                            <td>¥722,150 <sup class="evidence-ref"><a href="#ev15">[15]</a><a href="#ev16">[16]</a></sup></td>
+                            <td>¥383,333 ※1 <sup class="evidence-ref"><a href="#ev17">[17]</a></sup></td>
+                            <td style="font-size: 0.8rem; color: #64748b;">
+                                ①: 2026/4値上げ後（¥142,000→¥170,400、20%増）<br>
+                                ④ ※1: 年額契約（¥4,600,000/年）を月額換算
+                            </td>
+                        </tr>
+                        <tr class="summary-row-highlight">
+                            <td style="font-weight: 700;">年額</td>
+                            <td style="font-weight: 700;">¥2,044,800</td>
+                            <td style="font-weight: 700;">¥14,745,600</td>
+                            <td style="font-weight: 700;">¥8,665,800</td>
+                            <td style="font-weight: 700;">¥4,600,000</td>
+                            <td style="font-size: 0.8rem; color: #64748b;">年額最安: ①現状維持（¥2,044,800）</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="fact-box" style="margin-top: 1.5rem;">
+                <dt>③ IIJ Omnibus 月額内訳</dt>
+                <dd style="margin-top: 0.5rem; font-size: 0.9rem;">
+                    <table style="font-size: 0.85rem; border-collapse: collapse; width: 100%;">
+                        <tr><td style="padding: 4px 0;">拠点間WAN（8拠点）</td><td style="text-align: right; padding: 4px 0;">¥325,950</td></tr>
+                        <tr><td style="padding: 4px 0;">インターネットGW（FW含む）</td><td style="text-align: right; padding: 4px 0;">¥227,000</td></tr>
+                        <tr><td style="padding: 4px 0;">リモートアクセス（50名）</td><td style="text-align: right; padding: 4px 0;">¥73,200</td></tr>
+                        <tr><td style="padding: 4px 0;">ブレイクアウト</td><td style="text-align: right; padding: 4px 0;">¥96,000</td></tr>
+                        <tr style="border-top: 1px solid #cbd5e1; font-weight: 700;"><td style="padding: 4px 0;">合計</td><td style="text-align: right; padding: 4px 0;">¥722,150</td></tr>
+                    </table>
+                </dd>
+            </div>
+
+            <div class="fact-box" style="border-left-color: #8b5cf6;">
+                <dt>④ Cato SASE 年額内訳（100名）</dt>
+                <dd style="margin-top: 0.5rem; font-size: 0.9rem;">
+                    <table style="font-size: 0.85rem; border-collapse: collapse; width: 100%;">
+                        <tr><td style="padding: 4px 0;">ライセンス費用（100名）</td><td style="text-align: right; padding: 4px 0;">¥4,000,000/年</td></tr>
+                        <tr><td style="padding: 4px 0;">マネージドサービス費用</td><td style="text-align: right; padding: 4px 0;">¥600,000/年</td></tr>
+                        <tr style="border-top: 1px solid #cbd5e1; font-weight: 700;"><td style="padding: 4px 0;">年額合計</td><td style="text-align: right; padding: 4px 0;">¥4,600,000/年</td></tr>
+                        <tr style="color: #64748b;"><td style="padding: 4px 0;">月額換算</td><td style="text-align: right; padding: 4px 0;">約¥383,333/月</td></tr>
+                    </table>
+                </dd>
+            </div>
+
+            <div class="risk-note" style="margin-top: 1.5rem;">
+                <p style="margin: 0; font-weight: 600;">依存関係</p>
+                <ul style="margin: 0.5rem 0 0; padding-left: 1.25rem; line-height: 1.8;">
+                    <li>ADのクラウド移行先にIIJを選んだ場合、ネットワークもIIJ Omnibusの利用が前提となる</li>
+                    <li>USEN経由でADをAWSに移行した場合、ネットワーク費用はVarioSecure利用時の金額が基準。他社SD-WANに切り替えると別途費用が発生する</li>
+                    <li>Cato SASEの正確な見積には、モバイルユーザー数の確定が必要（現在100名で試算）</li>
+                </ul>
+            </div>
+
+            <p class="note-text">
+                詳細比較: <a href="/SD-WAN刷新_3社4シナリオ比較検討資料.html" style="color: #3b82f6;">SD-WAN刷新_3社4シナリオ比較検討資料.html</a> /
+                <a href="/IT基盤刷新_説明資料.html#sp-total-b" style="color: #3b82f6;">IT基盤刷新_説明資料.html テーブルB</a>
+            </p>
+        </section>
+
+        <!-- ========================================= -->
+        <!-- Section 5: 入退室管理 -->
+        <!-- ========================================= -->
+        <section id="sec-entrance" class="modern-card">
+            <div class="section-title">5. 入退室管理 スマートロック</div>
+            <p class="section-lead">
+                現行SECOM SESAMO-TRIIの入退室管理機器を、クラウド型スマートロックへ切り替える検討。
+            </p>
+
+            <div class="fact-box">
+                <dt>検討対象</dt>
+                <dd>bitlock PRO（株式会社ビットキー）</dd>
+                <dt>対象規模</dt>
+                <dd>21扉 / 利用者524名・カード525枚 <sup class="evidence-ref"><a href="#ev18">[18]</a></sup></dd>
+            </div>
+
+            <div class="evidence-warning">
+                <div class="evidence-warning-title">見積待ち</div>
+                <div class="evidence-warning-text">
+                    2026/2/20にWEB打合せを実施済み。利用者数情報をbitlock PRO担当（川越氏）に送付し、見積を依頼中。<br>
+                    2026/2/27にAkerun（株式会社フォトシンス）との打合せを予定。比較検討後に費用を確定する。
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================= -->
+        <!-- Section 6: ISP回線 -->
+        <!-- ========================================= -->
+        <section id="sec-isp" class="modern-card">
+            <div class="section-title">6. ISP回線費用</div>
+            <p class="section-lead">
+                インターネット接続回線（ISP契約）に関する費用。現行はUSEN経由で契約中。
+            </p>
+
+            <div class="evidence-warning">
+                <div class="evidence-warning-title">回答待ち</div>
+                <div class="evidence-warning-text">
+                    USEN西川氏へ以下の情報を問い合わせ中（2026/2/9送信、2026/2/17催促済み）:
+                    <ul style="margin: 0.5rem 0 0; padding-left: 1.25rem;">
+                        <li>専有型回線の費用データ</li>
+                        <li>ISP契約内容の確認</li>
+                        <li>バンドル割引の有無</li>
+                    </ul>
+                    回答を受領次第、本セクションを更新する。
+                </div>
+            </div>
+
+            <div class="risk-note">
+                <p style="margin: 0; font-weight: 600;">関連する期限</p>
+                <ul style="margin: 0.5rem 0 0; padding-left: 1.25rem; line-height: 1.8;">
+                    <li>VarioSecure和歌山拠点: <strong>2026/2/28</strong> 更新期限（USEN確認中）</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ========================================= -->
+        <!-- Section 7: エビデンス一覧 -->
+        <!-- ========================================= -->
+        <section id="sec-evidence" class="modern-card">
+            <div class="section-title">エビデンス一覧</div>
+            <p class="section-lead">
+                本資料に記載の全費目は、ベンダーからの提供資料・会議の文字起こし・メールのやりとりに基づく。Web検索や業界一般論は使用していない。
+            </p>
+
+            <dl class="evidence-list">
+                <!-- AD費用 -->
+                <dt id="ev1">[1] IIJ AD費用</dt>
+                <dd><strong>原典</strong>: 「IIJ ディレクトリサービス for Microsoft ご提案資料」（2026/1/29）P.11-13</dd>
+                <dd><strong>資料保管</strong>: /Obsidian/SecondBrain_Final/02_SharedSpace/01_System/92_ダウンロード/【IIJ】20260129_AKIBAホールディングス_IAD ご提案資料.pdf</dd>
+                <dd><strong>ポータル参照</strong>: <a href="/IT基盤刷新_説明資料.html#sec5" style="color: #3b82f6;">IT基盤刷新_説明資料.html</a> AD 3社比較テーブル / <a href="/ADクラウド移行_3社比較・導入計画.html" style="color: #3b82f6;">ADクラウド移行_3社比較・導入計画.html</a></dd>
+
+                <dt id="ev2">[2] USEN AD費用</dt>
+                <dd><strong>原典</strong>: USEN ICT Solutions「Active Directory クラウド化のご提案」（2025/12/4）L60-67</dd>
+                <dd><strong>資料保管</strong>: /Obsidian/SecondBrain_Final/01_Workspace/11_プロジェクト/15.01_AD_Cloud_Migration/02_USEN/01_提案資料/2025-12-04_USEN_AD提案.md</dd>
+                <dd><strong>ポータル参照</strong>: <a href="/IT基盤刷新_説明資料.html#sec5" style="color: #3b82f6;">IT基盤刷新_説明資料.html</a> AD 3社比較テーブル</dd>
+
+                <dt id="ev3">[3] LAJ AD費用</dt>
+                <dd><strong>原典</strong>: Link-At-Japan 打合せ議事録（2025/12/3）L59-61</dd>
+                <dd><strong>資料保管</strong>: /Obsidian/SecondBrain_Final/01_Workspace/11_プロジェクト/15.01_AD_Cloud_Migration/03_LinkAtJapan/20251203_LinkAtJapan打ち合わせ議事録.md</dd>
+                <dd><strong>ポータル参照</strong>: <a href="/IT基盤刷新_説明資料.html#sec5" style="color: #3b82f6;">IT基盤刷新_説明資料.html</a> AD 3社比較テーブル</dd>
+
+                <dt id="ev4">[4] LAJ AD月額内訳（アシストプラン構造）</dt>
+                <dd><strong>原典</strong>: LAJ議事録 L59-61「アシストプラン（¥50,000/月）: 監視・障害対応」</dd>
+                <dd><strong>確認</strong>: <a href="/ADクラウド移行_3社比較・導入計画.html" style="color: #3b82f6;">ADクラウド移行_3社比較・導入計画.html</a> にてAzure基盤¥52,051 + アシストプラン¥50,000 = ¥102,051 を確認</dd>
+                <dd><strong>補足</strong>: アシストプラン（¥50,000/月）はLAJ管理下の全サーバーに対して1回のみ課金される運用費。アシストプラスプラン（¥68,000/月）はパッチ適用込み</dd>
+
+                <!-- SECOM費用 -->
+                <dt id="ev5">[5] IIJ SECOM費用</dt>
+                <dd><strong>原典</strong>: IIJ提案資料（SECOM SESAMO-TRIIサーバー向け見積）</dd>
+                <dd><strong>ポータル参照</strong>: <a href="/SECOM入退室クラウド化_導入検討資料.html" style="color: #3b82f6;">SECOM入退室クラウド化_導入検討資料.html</a> 費用比較テーブル</dd>
+
+                <dt id="ev6">[6] USEN SECOM費用</dt>
+                <dd><strong>原典</strong>: USEN ICT Solutions 提案資料（SECOM向け見積）</dd>
+                <dd><strong>ポータル参照</strong>: <a href="/SECOM入退室クラウド化_導入検討資料.html" style="color: #3b82f6;">SECOM入退室クラウド化_導入検討資料.html</a> 費用比較テーブル</dd>
+
+                <dt id="ev7">[7] LAJ SECOM費用</dt>
+                <dd><strong>原典</strong>: Link-At-Japan 打合せ議事録（2025/12/3）SECOM向け見積部分</dd>
+                <dd><strong>月額内訳</strong>: SECOM基盤¥66,376 + アシストプラン¥50,000 = ¥116,376（単体の場合）</dd>
+                <dd><strong>ポータル参照</strong>: <a href="/SECOM入退室クラウド化_導入検討資料.html" style="color: #3b82f6;">SECOM入退室クラウド化_導入検討資料.html</a> 費用比較テーブル</dd>
+
+                <dt id="ev8">[8] SECOM社直接費用</dt>
+                <dd><strong>原典</strong>: SECOM神山氏 電話確認（2026/2/20）</dd>
+                <dd><strong>内容</strong>: 環境開放・アプリ設定・SQL Server Express込みで¥198,000。どのベンダーを選んでも同額</dd>
+                <dd><strong>ポータル参照</strong>: <a href="/SECOM入退室クラウド化_導入検討資料.html" style="color: #3b82f6;">SECOM入退室クラウド化_導入検討資料.html</a></dd>
+
+                <!-- AD+SECOM同時 -->
+                <dt id="ev9">[9] IIJ AD+SECOM同時費用</dt>
+                <dd><strong>原典</strong>: IIJ提案資料（AD+SECOM同時依頼時の割引見積）</dd>
+                <dd><strong>ポータル参照</strong>: <a href="/AD・SECOM同時依頼_コスト最適化分析.html" style="color: #3b82f6;">AD・SECOM同時依頼_コスト最適化分析.html</a> / <a href="/IT基盤刷新_説明資料.html#sp-total-a" style="color: #3b82f6;">IT基盤刷新_説明資料.html テーブルA</a></dd>
+
+                <dt id="ev10">[10] USEN AD+SECOM同時費用</dt>
+                <dd><strong>原典</strong>: USEN ICT Solutions 提案資料（AD+SECOM同時依頼時の割引見積）</dd>
+                <dd><strong>ポータル参照</strong>: <a href="/AD・SECOM同時依頼_コスト最適化分析.html" style="color: #3b82f6;">AD・SECOM同時依頼_コスト最適化分析.html</a></dd>
+
+                <dt id="ev11">[11] LAJ AD+SECOM同時費用</dt>
+                <dd><strong>原典</strong>: Link-At-Japan 打合せ議事録（2025/12/3）同時依頼時の見積部分</dd>
+                <dd><strong>ポータル参照</strong>: <a href="/AD・SECOM同時依頼_コスト最適化分析.html" style="color: #3b82f6;">AD・SECOM同時依頼_コスト最適化分析.html</a></dd>
+
+                <dt id="ev12">[12] LAJ アシストプラン共有構造</dt>
+                <dd><strong>原典</strong>: LAJ議事録 L59-61「アシストプラン（¥50,000/月）: 監視・障害対応」</dd>
+                <dd><strong>構造</strong>: AD+SECOM同時の場合、アシストプラン¥50,000はAD側で計上済みのため、SECOM側は基盤費¥66,376のみ。月額合計 = AD¥102,051 + SECOM¥66,376 = ¥168,427。単独発注との差額¥50,000/月は、このアシストプラン共有による</dd>
+
+                <!-- SD-WAN -->
+                <dt id="ev13">[13] ①現状維持（VarioSecure）費用</dt>
+                <dd><strong>原典</strong>: USEN値上げ通知。現行¥142,000/月から2026年4月に20%値上げ予定</dd>
+                <dd><strong>計算</strong>: ¥142,000 × 1.20 = ¥170,400/月</dd>
+                <dd><strong>ポータル参照</strong>: <a href="/IT基盤刷新_説明資料.html#sp-total-b" style="color: #3b82f6;">IT基盤刷新_説明資料.html テーブルB</a></dd>
+
+                <dt id="ev14">[14] ②オプション追加（Vario n-series + SD-WAN）費用</dt>
+                <dd><strong>原典</strong>: USEN西川氏回答に基づく概算。IDS/ADS、URLフィルタ、AV全追加時</dd>
+                <dd><strong>ポータル参照</strong>: <a href="/SD-WAN刷新_3社4シナリオ比較検討資料.html" style="color: #3b82f6;">SD-WAN刷新_3社4シナリオ比較検討資料.html</a></dd>
+
+                <dt id="ev15">[15] ③IIJ Omnibus SD-WAN費用</dt>
+                <dd><strong>原典</strong>: IIJ提案資料（2026/1/13）概算費用。8拠点 + リモートアクセス50名</dd>
+                <dd><strong>ポータル参照</strong>: <a href="/IT基盤刷新_説明資料.html#sp-total-b" style="color: #3b82f6;">IT基盤刷新_説明資料.html テーブルB</a> / <a href="/SD-WAN刷新_3社4シナリオ比較検討資料.html" style="color: #3b82f6;">SD-WAN刷新_3社4シナリオ比較検討資料.html</a></dd>
+
+                <dt id="ev16">[16] ③IIJ Omnibus 月額内訳</dt>
+                <dd><strong>原典</strong>: IIJ提案資料（2026/1/13）</dd>
+                <dd><strong>内訳</strong>: 拠点間WAN ¥325,950 + インターネットGW(FW含む) ¥227,000 + リモートアクセス50名 ¥73,200 + ブレイクアウト ¥96,000 = ¥722,150</dd>
+
+                <dt id="ev17">[17] ④Cato SASE費用（100名）</dt>
+                <dd><strong>原典</strong>: SCSK角田氏 2026/2/19メール</dd>
+                <dd><strong>内訳</strong>: ライセンス¥4,000,000/年 + マネージド¥600,000/年 = ¥4,600,000/年（月額換算: 約¥383,333）</dd>
+                <dd><strong>初期費用</strong>: ¥500,000（初期導入費、SCSK経由）</dd>
+                <dd><strong>補足</strong>: 年額契約のため月額は存在せず、便宜上12分割で月額換算。正式見積は与信手続き完了後に提示予定</dd>
+
+                <!-- 入退室 -->
+                <dt id="ev18">[18] 入退室管理（bitlock PRO）</dt>
+                <dd><strong>原典</strong>: bitlock PRO WEB打合せ（2026/2/20 11:00〜）</dd>
+                <dd><strong>対象規模</strong>: 21扉 / 利用者524名・カード525枚（SESAMO-TRII管理画面 http://192.168.1.30/ にて確認）</dd>
+                <dd><strong>状態</strong>: 見積依頼中（川越氏宛に利用者数情報を送付済み）</dd>
+
+                <!-- 現状コスト -->
+                <dt id="ev19">[19] 現行SECOM設備費</dt>
+                <dd><strong>原典</strong>: 塩田部長 Google Chat（2026/2/20 16:00）</dd>
+                <dd><strong>内容</strong>: 「現状のセコムでの設備費ですが1拠点約12万です」</dd>
+                <dd><strong>補足</strong>: 月額か年額か、対象拠点数は確認中</dd>
+            </dl>
+        </section>
+
+        <!-- ========================================= -->
+        <!-- Footer -->
+        <!-- ========================================= -->
+        <footer style="text-align: center; padding: 2rem 0; font-size: 0.8rem; color: #94a3b8;">
+            <p>IT基盤刷新 概算予算一覧 | AKIBAホールディングス | 最終更新: 2026-02-20</p>
+        </footer>
+
+    </div>
+</body>
+
+</html>
