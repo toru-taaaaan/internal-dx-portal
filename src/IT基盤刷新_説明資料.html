@@ -1170,7 +1170,7 @@
                     <div style="background: white; border-radius: 0.75rem; padding: 1rem; border-top: 3px solid #3b82f6;">
                         <div style="font-size: 0.85rem; font-weight: 700; color: #3b82f6; margin-bottom: 0.5rem;">IIJ（お任せ型）</div>
                         <div style="font-size: 0.8rem; color: #166534; margin-bottom: 0.25rem; line-height: 1.6;">◎ SLA 99.99%、24時間全自動運用、パッチ適用もIIJ実施</div>
-                        <div style="font-size: 0.8rem; color: #991b1b; line-height: 1.6;">△ 月額最高（¥174,750）、サーバー直接操作不可</div>
+                        <div style="font-size: 0.8rem; color: #991b1b; line-height: 1.6;">△ 月額最高（¥158,864）、サーバー直接操作不可</div>
                     </div>
                     <div style="background: white; border-radius: 0.75rem; padding: 1rem; border-top: 3px solid #10b981;">
                         <div style="font-size: 0.85rem; font-weight: 700; color: #10b981; margin-bottom: 0.5rem;">USEN（分離型）</div>
@@ -1214,28 +1214,28 @@
                     <tbody>
                         <tr>
                             <td style="font-weight: 600;">初期費用</td>
-                            <td>¥1,422,750</td>
+                            <td>¥1,322,955</td>
                             <td>¥860,000</td>
                             <td>¥1,555,000</td>
                             <td>¥2,430,000 ※1</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">月額費用</td>
-                            <td>¥174,750</td>
+                            <td>¥158,864</td>
                             <td>¥124,300</td>
                             <td>¥102,051</td>
                             <td>¥6,500</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">初年度総額</td>
-                            <td>¥3,519,750</td>
+                            <td>¥3,229,323</td>
                             <td>¥2,351,600</td>
                             <td>¥2,779,612</td>
                             <td>¥2,508,000</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">年額（月額×12）</td>
-                            <td>¥2,097,000</td>
+                            <td>¥1,906,368</td>
                             <td>¥1,491,600</td>
                             <td>¥1,224,612</td>
                             <td>¥78,000</td>
@@ -1273,7 +1273,7 @@
             </div>
 
             <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">
-                ※1 2020年実績（¥1,880,000）に物価上昇を考慮し1.5倍で算出した予測値。金額は全て税抜
+                ※1 USEN: 2020年実績（¥1,880,000）に物価上昇を考慮し1.5倍で算出した予測値。金額は全て税抜（IIJ費用は税込提示額を÷1.1で換算。詳細はエビデンス集 E-003参照）
             </p>
 
             <div class="evidence-warning" style="margin-top: 1.5rem;">
@@ -1339,20 +1339,20 @@
                         <tr>
                             <td style="font-weight: 600;">OS管理者権限</td>
                             <td>IIJが保持</td>
-                            <td>確認中</td>
+                            <td>自社+ベンダー双方（Administrator付与）</td>
                             <td>自社+ベンダー双方</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">パッチ適用</td>
                             <td>全自動・月次（19時以降）</td>
-                            <td>四半期〜半年・事前調整</td>
+                            <td>自社Windows Update可（月次等も可）<br>USEN代行: 平日10-18時無料</td>
                             <td>Windows Updateのみ（¥68,000/月プラン）</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">緊急パッチ対応</td>
                             <td>IIJが自動実施</td>
-                            <td>確認中（2/14問合せ済）</td>
-                            <td>確認中</td>
+                            <td>自社実施可＋USEN代行（平日無料）</td>
+                            <td>ベンダー対応（24/365オンコール）</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">24時間監視</td>
@@ -1415,6 +1415,86 @@
             <div class="fact-box" style="margin-top: 1.5rem;">
                 <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
                     IIJは運用負荷が最も軽い反面、サーバーへの直接アクセスや自由な設定変更ができません。USENはサーバーにログインして操作できますが、AWS管理コンソールは非公開です。Link-At-Japanは自社名義の環境を持てるため自由度が最も高く、解約時のデータ取り出しも容易です。
+                </p>
+            </div>
+
+            <p class="transition-text">
+                上記の項目を「ネットワーク → サーバー → OS → AD」のレイヤーで整理し直すと、責任の分かれ目がより明確になります。
+            </p>
+        </section>
+
+        <!-- ========================================= -->
+        <!-- Section 5a: レイヤー別 責任分界 -->
+        <!-- ========================================= -->
+        <section id="sec5a" class="modern-card">
+            <div class="section-title">6-b. レイヤー別：誰が何を管理するか</div>
+
+            <p class="section-lead">
+                クラウド移行後の管理責任を「ネットワーク → サーバー基盤 → OS → AD」の4レイヤーに分けて整理します。<br>
+                現在のオンプレミスでは全レイヤーを情シスが管理していますが、クラウド移行後はベンダーとの分担になります。
+            </p>
+            <div style="margin-bottom: 0.75rem; font-size: 0.7rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                <span style="color: #94a3b8; font-weight: 700;">エビデンス:</span>
+                <a href="/エビデンス集.html#iij-ad-cost" style="color: #3b82f6; text-decoration: none; padding: 2px 8px; border: 1px solid #bfdbfe; border-radius: 4px; font-weight: 600;">[E-003] IIJ 管理体制</a>
+                <a href="/エビデンス集.html#usen-ad-cost" style="color: #3b82f6; text-decoration: none; padding: 2px 8px; border: 1px solid #bfdbfe; border-radius: 4px; font-weight: 600;">[E-004] USEN 管理体制</a>
+                <a href="/エビデンス集.html#laj-ad-cost" style="color: #3b82f6; text-decoration: none; padding: 2px 8px; border: 1px solid #bfdbfe; border-radius: 4px; font-weight: 600;">[E-005] LAJ 管理体制</a>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 14%;">レイヤー</th>
+                            <th style="width: 14%;">現在<br>（オンプレミス）</th>
+                            <th class="col-iij" style="width: 24%;">IIJ（お任せ型）</th>
+                            <th class="col-usen" style="width: 24%;">USEN（分離型）</th>
+                            <th class="col-laj" style="width: 24%;">Link-At-Japan（並走型）</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 600;">ネットワーク<br><small style="color:#64748b">VPN・回線</small></td>
+                            <td style="background:#fef2f2"><strong>自社</strong><br>VPN機器の設定・保守を自社で管理</td>
+                            <td><strong>IIJ</strong><br>閉域網接続をIIJが構築・管理<br><small>自社でのネットワーク設定変更不可</small></td>
+                            <td><strong>USEN</strong><br>AWS側VPN接続をUSENが管理<br><small>自社ではVPC・セキュリティグループの変更不可</small></td>
+                            <td><strong>ベンダー＋自社</strong><br>Azure VPN GWをLAJが構築<br><small>Azure Portalで自社も状態確認可</small></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">サーバー基盤<br><small style="color:#64748b">クラウド環境</small></td>
+                            <td style="background:#fef2f2"><strong>自社</strong><br>物理サーバーの維持・電源・空調を全て自社管理</td>
+                            <td><strong>IIJ</strong><br>独自PaaS基盤<br>管理コンソール非公開<br><small>自社からのアクセス不可</small></td>
+                            <td><strong>USEN</strong><br>AWS IaaS（USEN名義）<br>管理コンソール非公開<br><small>自社からのアクセス不可</small></td>
+                            <td><strong>ベンダー＋自社</strong><br>Azure IaaS（自社名義）<br>Azure Portal共同管理<br><small>自社でリソース状態を直接確認可</small></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">OS<br><small style="color:#64748b">監視・パッチ・障害</small></td>
+                            <td style="background:#fef2f2"><strong>自社</strong><br>パッチ適用・障害対応を全て自社で実施</td>
+                            <td><strong>IIJ</strong><br>24/365全自動<br>月次パッチ自動適用<br>緊急パッチも自動<br><small>自社でのOS操作不可（RDP不可）</small></td>
+                            <td><strong>USEN＋自社</strong><br>USEN: 24時間監視（死活・リソース）<br>自社: Administrator権限あり、Windows Update実施可<br>USEN代行: 平日10-18時無料<br><small>パッチ情報の収集は自社で実施</small></td>
+                            <td><strong>ベンダー＋自社</strong><br>LAJ: 24/365監視（Zabbix/Azure Monitor）<br>自社: 管理者権限あり、直接操作可<br>パッチ代行: ¥68,000/月オプション<br><small>夜間休日もオンコール対応</small></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">AD<br><small style="color:#64748b">ユーザー管理・GPO</small></td>
+                            <td style="background:#fef2f2"><strong>自社</strong><br>全操作を自社で実施</td>
+                            <td><strong>自社</strong><br>RSAT・専用ポータル経由<br>ユーザー追加/削除/PW変更/GPO/OU<br><small>ADスキーマ拡張は不可</small></td>
+                            <td><strong>自社</strong><br>RDP接続で直接操作<br>ユーザー追加/削除/PW変更/GPO/OU/DNS/DHCP<br><small>サーバー再起動はUSEN依頼</small></td>
+                            <td><strong>自社</strong><br>RDP接続で直接操作<br>全操作可（再起動含む）<br><small>Azure Portalからも管理可</small></td>
+                        </tr>
+                        <tr style="background: #f8fafc;">
+                            <td style="font-weight: 600;">障害検知・復旧</td>
+                            <td style="background:#fef2f2"><strong>自社</strong><br>夜間休日も情シスが対応</td>
+                            <td><strong>IIJ</strong><br>自動検知→自動切替<br>Active/Active構成<br>復旧: 瞬断〜分単位<br><small>情シスへは事後報告</small></td>
+                            <td><strong>USEN＋自社</strong><br>USEN検知→連絡<br>既知障害: 自動復旧<br>未知障害: 調整対応<br><small>SLAなし（ベストエフォート）</small></td>
+                            <td><strong>ベンダー＋自社</strong><br>LAJ検知→一次対応・復旧<br>SLO: 切分20分/復旧開始30分<br>Azure基盤SLA: VM 99.99%<br><small>緊急時は電話対応可</small></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="fact-box" style="margin-top: 1.5rem;">
+                <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
+                    <strong>オンプレミスとの最大の違い:</strong>
+                    現在は全レイヤーを情シスが管理しているため、夜間にADが停止した場合も自社で対応する必要がある。クラウド移行後は、3社いずれを選んでも「OS・ADの死活監視」と「障害の一次対応」はベンダーが担う。情シスの深夜・休日対応がなくなる点は共通のメリット。
                 </p>
             </div>
 
@@ -1493,7 +1573,7 @@
                         <li>AWS管理コンソールへのアクセス（Route53、VPC、IAM、CloudWatch等すべて不可）</li>
                         <li>サーバーの停止・再起動（USENへ依頼が必要）</li>
                         <li>ネットワーク構成の変更（VPC、セキュリティグループ等）</li>
-                        <li>OS管理者権限の有無 → <span class="status-badge status-sent">確認中（2/14問合せ済）</span></li>
+                        <li>OS管理者権限 → Administrator付与済み（自社+USEN双方で保持）</li>
                     </ul>
                 </div>
             </div>
@@ -1960,19 +2040,19 @@
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">月額費用</td>
-                            <td>¥133,290</td>
+                            <td>¥121,173</td>
                             <td>¥133,000</td>
                             <td>¥116,376</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">初年度総額</td>
-                            <td>¥2,560,230</td>
+                            <td>¥2,414,826</td>
                             <td>¥2,232,000</td>
                             <td>¥1,982,512</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">年額（月額×12）</td>
-                            <td>¥1,599,480</td>
+                            <td>¥1,454,076</td>
                             <td>¥1,596,000</td>
                             <td>¥1,396,512</td>
                         </tr>
@@ -1980,7 +2060,7 @@
                 </table>
             </div>
 
-            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">金額は全て税抜</p>
+            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">金額は全て税抜（IIJ月額: 税込提示額を÷1.1で換算。IIJ初期費用は税込/税抜の内訳不明のため原額記載。詳細はエビデンス集 E-003参照）</p>
 
             <div id="sp-secom-combo"></div>
             <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem;">AD + SECOM 同時移行による費用削減</h3>
@@ -2029,8 +2109,8 @@
             <div class="fact-box" style="border-left-color: #10b981; margin-top: 1.5rem;">
                 <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
                     <strong>AD + SECOM 同時移行の初年度総額（参考）</strong><br>
-                    IIJ: ¥5,207,230 ／ USEN: ¥4,148,400 ／ Link-At-Japan: ¥3,964,124（税抜）<br>
-                    <span style="font-size: 0.8rem; color: #64748b;">月額合計: IIJ ¥259,290 ／ USEN ¥239,200 ／ LAJ ¥168,427</span>
+                    IIJ: ¥4,824,583 ／ USEN: ¥4,148,400 ／ Link-At-Japan: ¥3,964,124（税抜）<br>
+                    <span style="font-size: 0.8rem; color: #64748b;">月額合計: IIJ ¥235,719 ／ USEN ¥239,200 ／ LAJ ¥168,427</span>
                 </p>
             </div>
 
@@ -2664,29 +2744,29 @@
                     <tbody>
                         <tr>
                             <td style="font-weight: 600;">月額費用</td>
-                            <td>¥170,400 ※2</td>
-                            <td>¥1,228,800</td>
+                            <td>¥154,909 ※2</td>
+                            <td>¥1,117,091</td>
                             <td>¥722,150 ※3</td>
                             <td>¥467,000 ※4</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">初期費用</td>
                             <td>¥0</td>
-                            <td>¥1,000,000</td>
+                            <td>¥909,091</td>
                             <td>¥2,764,850</td>
                             <td>¥500,000</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">年額（月額×12）</td>
-                            <td>¥2,044,800</td>
-                            <td>¥14,745,600</td>
+                            <td>¥1,858,908</td>
+                            <td>¥13,405,092</td>
                             <td>¥8,665,800</td>
                             <td>¥5,600,000</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">初年度総額（初期+年額）</td>
-                            <td>¥2,044,800</td>
-                            <td>¥15,745,600</td>
+                            <td>¥1,858,908</td>
+                            <td>¥14,314,183</td>
                             <td>¥11,430,650</td>
                             <td>¥6,100,000</td>
                         </tr>
@@ -2716,7 +2796,7 @@
             </div>
 
             <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">
-                ※2 現行¥142,000から2026年4月に20%値上げ予定。金額は全て税抜<br>
+                ※2 VarioSecure: 2026年4月の20%値上げ適用後の金額。税込提示額を÷1.1で税抜換算（詳細はエビデンス集 E-009参照）。金額は全て税抜<br>
                 ※3 IIJ Omnibus月額内訳: 拠点間WAN ¥325,950 + インターネットGW(FW含む) ¥227,000 + リモートアクセス50名 ¥73,200 + ブレイクアウト ¥96,000<br>
                 ※4 SCSK角田様 2/13メールによる概算値。ライセンス¥5,000,000/年 + マネージド¥600,000/年 + 初期導入¥500,000 の月割。正式見積は2月下旬提示予定（与信手続きのため）
             </p>
@@ -2773,7 +2853,7 @@
                     <tbody>
                         <tr>
                             <td style="font-weight: 600;">AD初期費用</td>
-                            <td>¥1,422,750</td>
+                            <td>¥1,322,955</td>
                             <td>¥860,000</td>
                             <td>¥1,555,000</td>
                         </tr>
@@ -2791,44 +2871,44 @@
                         </tr>
                         <tr class="summary-row-highlight">
                             <td style="font-weight: 700;">初期費用合計</td>
-                            <td style="font-weight: 700;">¥2,095,750</td>
+                            <td style="font-weight: 700;">¥1,995,955</td>
                             <td style="font-weight: 700;">¥1,278,000</td>
                             <td style="font-weight: 700;">¥1,943,000</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">AD月額</td>
-                            <td>¥174,750</td>
+                            <td>¥158,864</td>
                             <td>¥124,300</td>
                             <td>¥102,051</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">SECOM月額（同時割引）</td>
-                            <td>¥84,540</td>
+                            <td>¥76,855</td>
                             <td>¥114,900</td>
                             <td>¥66,376</td>
                         </tr>
                         <tr class="summary-row-highlight">
                             <td style="font-weight: 700;">月額合計</td>
-                            <td style="font-weight: 700;">¥259,290</td>
+                            <td style="font-weight: 700;">¥235,719</td>
                             <td style="font-weight: 700;">¥239,200</td>
                             <td style="font-weight: 700;">¥168,427</td>
                         </tr>
                         <tr class="summary-row-highlight">
                             <td style="font-weight: 700;">年額（月額×12）</td>
-                            <td style="font-weight: 700;">¥3,111,480</td>
+                            <td style="font-weight: 700;">¥2,828,628</td>
                             <td style="font-weight: 700;">¥2,870,400</td>
                             <td style="font-weight: 700;">¥2,021,124</td>
                         </tr>
                         <tr class="summary-row-highlight">
                             <td style="font-weight: 700;">初年度総額（初期+年額）</td>
-                            <td style="font-weight: 700;">¥5,207,230</td>
+                            <td style="font-weight: 700;">¥4,824,583</td>
                             <td style="font-weight: 700;">¥4,148,400</td>
                             <td style="font-weight: 700;">¥3,964,124</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">金額は全て税抜</p>
+            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">金額は全て税抜（IIJ: 税込提示額を÷1.1で換算。VarioSecure①②: 税込→税抜換算済み。詳細はエビデンス集 E-003, E-009参照）</p>
 
             <!-- テーブルB -->
             <div id="sp-total-b"></div>
@@ -2849,28 +2929,28 @@
                         <tr>
                             <td style="font-weight: 600;">初期費用</td>
                             <td>¥0</td>
-                            <td>¥1,000,000</td>
+                            <td>¥909,091</td>
                             <td>¥2,764,850</td>
                             <td>¥500,000</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">月額費用</td>
-                            <td>¥170,400</td>
-                            <td>¥1,228,800</td>
+                            <td>¥154,909</td>
+                            <td>¥1,117,091</td>
                             <td>¥722,150</td>
                             <td>¥467,000</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">年額</td>
-                            <td>¥2,044,800</td>
-                            <td>¥14,745,600</td>
+                            <td>¥1,858,908</td>
+                            <td>¥13,405,092</td>
                             <td>¥8,665,800</td>
                             <td>¥5,600,000</td>
                         </tr>
                         <tr class="summary-row-highlight">
                             <td style="font-weight: 700;">初年度総額</td>
-                            <td style="font-weight: 700;">¥2,044,800</td>
-                            <td style="font-weight: 700;">¥15,745,600</td>
+                            <td style="font-weight: 700;">¥1,858,908</td>
+                            <td style="font-weight: 700;">¥14,314,183</td>
                             <td style="font-weight: 700;">¥11,430,650</td>
                             <td style="font-weight: 700;">¥6,100,000</td>
                         </tr>
@@ -2878,8 +2958,8 @@
                 </table>
             </div>
             <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem;">
-                ①現状維持: 2026年4月の20%値上げ後の月額。VarioSecure利用料のみ<br>
-                ②オプション追加: USEN西川様回答に基づく概算。IDS/ADS、URLフィルタ、AV全追加時<br>
+                ①現状維持: 2026年4月の20%値上げ後の月額（税込→税抜換算済み）。VarioSecure利用料のみ<br>
+                ②オプション追加: USEN西川様回答に基づく概算（税込→税抜換算済み）。IDS/ADS、URLフィルタ、AV全追加時<br>
                 ③IIJ Omnibus: 2026/1/13提案資料の概算費用。8拠点+リモートアクセス50名<br>
                 ④Cato SASE: SCSK角田様 2/13メールの先行情報。正式見積は2/17頃
             </p>
@@ -2903,7 +2983,7 @@
                             <td style="font-weight: 600;">AD+SECOM初期</td>
                             <td>¥1,943,000</td>
                             <td>¥1,278,000</td>
-                            <td>¥2,095,750</td>
+                            <td>¥1,995,955</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">NW初期</td>
@@ -2915,13 +2995,13 @@
                             <td style="font-weight: 700;">初期費用合計</td>
                             <td style="font-weight: 700;">¥2,443,000</td>
                             <td style="font-weight: 700;">¥1,778,000</td>
-                            <td style="font-weight: 700;">¥4,860,600</td>
+                            <td style="font-weight: 700;">¥4,760,805</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">AD+SECOM月額</td>
                             <td>¥168,427</td>
                             <td>¥239,200</td>
-                            <td>¥259,290</td>
+                            <td>¥235,719</td>
                         </tr>
                         <tr>
                             <td style="font-weight: 600;">NW月額</td>
@@ -2933,19 +3013,19 @@
                             <td style="font-weight: 700;">月額合計</td>
                             <td style="font-weight: 700;">¥635,427</td>
                             <td style="font-weight: 700;">¥706,200</td>
-                            <td style="font-weight: 700;">¥981,440</td>
+                            <td style="font-weight: 700;">¥957,869</td>
                         </tr>
                         <tr class="summary-row-highlight">
                             <td style="font-weight: 700;">年額</td>
                             <td style="font-weight: 700;">¥7,625,124</td>
                             <td style="font-weight: 700;">¥8,474,400</td>
-                            <td style="font-weight: 700;">¥11,777,280</td>
+                            <td style="font-weight: 700;">¥11,494,428</td>
                         </tr>
                         <tr class="summary-row-highlight">
                             <td style="font-weight: 700;">初年度総額</td>
                             <td style="font-weight: 700;">¥10,068,124</td>
                             <td style="font-weight: 700;">¥10,252,400</td>
-                            <td style="font-weight: 700;">¥16,637,880</td>
+                            <td style="font-weight: 700;">¥16,255,233</td>
                         </tr>
                     </tbody>
                 </table>
@@ -2997,7 +3077,7 @@
                     <div style="background: white; border-radius: 1rem; padding: 1.25rem; border: 2px solid #e2e8f0; border-top: 4px solid #3b82f6;">
                         <div style="font-size: 0.75rem; font-weight: 700; color: #3b82f6; text-transform: uppercase; letter-spacing: 0.05em;">パターン3</div>
                         <div style="font-size: 0.95rem; font-weight: 700; color: #0f172a; margin: 0.25rem 0 0.75rem;">IIJ 一括</div>
-                        <div style="font-size: 0.75rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">月額: ¥981,440（最高額）</div>
+                        <div style="font-size: 0.75rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">月額: ¥957,869（最高額）</div>
                         <div style="font-size: 0.8rem; color: #166534; margin-bottom: 0.5rem; line-height: 1.6;">
                             <strong>メリット:</strong><br>
                             ・全サービスを1社に集約（窓口一本化）<br>
@@ -3017,7 +3097,7 @@
 
             <div class="fact-box" style="border-left-color: #64748b; margin-top: 1.5rem;">
                 <p style="font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.7;">
-                    現状維持の場合: サーバー更新費¥2,430,000（2020年実績の1.5倍予測）+ ネットワーク月額¥170,400（年額¥2,044,800）。初年度はサーバー更新費を含め¥4,474,800、2年目以降は年額¥2,044,800。ただし、地理的冗長化やセキュリティ強化は含まれない。
+                    現状維持の場合: サーバー更新費¥2,430,000（2020年実績の1.5倍予測）+ ネットワーク月額¥154,909（年額¥1,858,908）。初年度はサーバー更新費を含め¥4,288,908、2年目以降は年額¥1,858,908。ただし、地理的冗長化やセキュリティ強化は含まれない。
                 </p>
             </div>
 

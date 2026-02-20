@@ -946,7 +946,7 @@
             </div>
 
             <!-- ====== コスト比較シミュレーション ====== -->
-            <div class="socket-sim cost-sim" style="margin-top: 2rem;">
+            <div id="cost-compare" class="socket-sim cost-sim" style="margin-top: 2rem;">
                 <h3>IT基盤刷新 5年間コスト比較</h3>
                 <p class="sim-lead">
                     上記の対策を実施するほど Cato Socket数が減り、ネットワーク費用が下がります。<br>
@@ -989,36 +989,41 @@
 
                         <!-- ========== 1. ネットワーク基盤 ========== -->
                         <tr class="section-label"><td colspan="5">▼ 1. ネットワーク基盤</td></tr>
+                        <tr><td colspan="5" style="padding: 4px 12px; background: rgba(59,130,246,0.04); font-size: 0.7rem;">
+                            <span style="color: #94a3b8; font-weight: 700;">エビデンス:</span>
+                            <a href="/エビデンス集.html#variosecure-cost" style="color: #3b82f6; text-decoration: none; padding: 2px 8px; border: 1px solid #bfdbfe; border-radius: 4px; font-weight: 600;">[E-009] VarioSecure費用</a>
+                            <a href="/エビデンス集.html#cato-sase-cost" style="color: #3b82f6; text-decoration: none; padding: 2px 8px; border: 1px solid #bfdbfe; border-radius: 4px; font-weight: 600;">[E-007] Cato SASE費用</a>
+                        </td></tr>
                         <tr class="detail-row">
-                            <td>VPN月額（現行）<span class="calc">¥7万/月 × 60ヶ月</span></td>
-                            <td style="text-align:right;">¥420万</td>
+                            <td>VPN月額（現行）<span class="calc">¥15.5万/月（税抜）× 60ヶ月<br>※2026年4月値上げ後。税込¥170,400 → 税抜¥154,909<br>出典: <a href="/エビデンス集.html#variosecure-cost" style="color:#3b82f6;">[E-009]</a> 西川メール 2026-02-06</span></td>
+                            <td style="text-align:right;">¥929万</td>
                             <td style="text-align:center; color:#16a34a;">廃止 → ¥0</td>
                             <td style="text-align:center; color:#16a34a;">廃止 → ¥0</td>
                             <td style="text-align:center; color:#16a34a;">廃止 → ¥0</td>
                         </tr>
                         <tr class="detail-row">
-                            <td>Cato 基本契約<span class="calc">拠点機器1台＋社外接続（PC・スマホ）込</span></td>
+                            <td>Cato 基本契約<span class="calc">拠点機器1台＋社外接続（PC・スマホ）込<br>出典: <a href="/エビデンス集.html#cato-sase-cost" style="color:#3b82f6;">[E-007]</a> 角田メール 2026-02-19</span></td>
                             <td style="text-align:center; color:#cbd5e1;">—</td>
                             <td style="text-align:right;">¥2,500万<span class="calc">¥500万/年 × 5年</span></td>
                             <td style="text-align:right;">¥2,500万<span class="calc">¥500万/年 × 5年</span></td>
                             <td style="text-align:right;">¥2,100万<span class="calc">¥420万/年 × 5年<br>※拠点機器が不要になり減額想定</span></td>
                         </tr>
                         <tr class="detail-row">
-                            <td>Cato 拠点機器の追加<span class="calc">1台あたり ¥80万/年</span></td>
+                            <td>Cato 拠点機器の追加<span class="calc">1台あたり ¥80万/年<br>出典: <a href="/エビデンス集.html#cato-sase-cost" style="color:#3b82f6;">[E-007]</a> 角田メール 2026-02-19</span></td>
                             <td style="text-align:center; color:#cbd5e1;">—</td>
                             <td style="text-align:right; color:#dc2626; font-weight:600;">+¥2,800万<span class="calc">7台 × ¥80万 × 5年</span></td>
                             <td style="text-align:right; color:#ea580c; font-weight:600;">+¥1,200万<span class="calc">3台 × ¥80万 × 5年</span></td>
                             <td style="text-align:right; color:#16a34a;">¥0<span class="calc">追加不要</span></td>
                         </tr>
                         <tr class="detail-row">
-                            <td>Cato 運用管理の委託費<span class="calc">¥60万/年 × 5年</span></td>
+                            <td>Cato 運用管理の委託費<span class="calc">¥60万/年 × 5年<br>出典: <a href="/エビデンス集.html#cato-sase-cost" style="color:#3b82f6;">[E-007]</a> 角田メール 2026-02-19</span></td>
                             <td style="text-align:center; color:#cbd5e1;">—</td>
                             <td style="text-align:right;">¥300万</td>
                             <td style="text-align:right;">¥300万</td>
                             <td style="text-align:right;">¥300万</td>
                         </tr>
                         <tr class="detail-row">
-                            <td>Cato 初期導入費</td>
+                            <td>Cato 初期導入費<span class="calc">出典: <a href="/エビデンス集.html#cato-sase-cost" style="color:#3b82f6;">[E-007]</a> 角田メール 2026-02-19</span></td>
                             <td style="text-align:center; color:#cbd5e1;">—</td>
                             <td style="text-align:right;">¥50万</td>
                             <td style="text-align:right;">¥50万</td>
@@ -1026,7 +1031,7 @@
                         </tr>
                         <tr class="subtotal-row">
                             <td>ネットワーク小計</td>
-                            <td style="text-align:right;">¥420万</td>
+                            <td style="text-align:right;">¥929万</td>
                             <td class="c-high" style="text-align:right;">¥5,650万</td>
                             <td style="text-align:right;">¥4,050万</td>
                             <td class="c-low" style="text-align:right;">¥2,450万</td>
@@ -1034,8 +1039,14 @@
 
                         <!-- ========== 2. 入退室管理 ========== -->
                         <tr class="section-label"><td colspan="5">▼ 2. 入退室管理</td></tr>
+                        <tr><td colspan="5" style="padding: 4px 12px; background: rgba(59,130,246,0.04); font-size: 0.7rem;">
+                            <span style="color: #94a3b8; font-weight: 700;">エビデンス:</span>
+                            <a href="/エビデンス集.html#secom-current-cost" style="color: #3b82f6; text-decoration: none; padding: 2px 8px; border: 1px solid #bfdbfe; border-radius: 4px; font-weight: 600;">[E-010] SECOM現行費用</a>
+                            <a href="/エビデンス集.html#secom-3vendor-cost" style="color: #3b82f6; text-decoration: none; padding: 2px 8px; border: 1px solid #bfdbfe; border-radius: 4px; font-weight: 600;">[E-006] SECOM 3社費用</a>
+                            <a href="/エビデンス集.html#laj-ad-cost" style="color: #3b82f6; text-decoration: none; padding: 2px 8px; border: 1px solid #bfdbfe; border-radius: 4px; font-weight: 600;">[E-005] LAJ費用</a>
+                        </td></tr>
                         <tr class="detail-row">
-                            <td>SECOM保守料（現行月額）<span class="calc">神山氏の回答待ち</span></td>
+                            <td>SECOM保守料（現行月額）<span class="calc">出典: <a href="/エビデンス集.html#secom-current-cost" style="color:#3b82f6;">[E-010]</a> 塩田部長 Google Chat 2026-02-20<br>約¥1万/月/拠点（年額約¥12万/拠点）</span></td>
                             <td class="c-unknown" style="text-align:right; font-style:italic;">　</td>
                             <td style="text-align:center; color:#16a34a;">廃止 → ¥0</td>
                             <td style="text-align:center; color:#16a34a;">廃止 → ¥0</td>
@@ -1049,21 +1060,21 @@
                             <td style="text-align:center; color:#16a34a;">不要</td>
                         </tr>
                         <tr class="detail-row">
-                            <td>リンクアットジャパンによるクラウド移設<span class="calc">初期費¥39万 + 月額¥9.8万×60ヶ月 + クラウド基盤費</span></td>
+                            <td>リンクアットジャパンによるクラウド移設<span class="calc">初期費¥39万 + 月額¥9.8万×60ヶ月 + クラウド基盤費<br>出典: <a href="/エビデンス集.html#secom-3vendor-cost" style="color:#3b82f6;">[E-006]</a> SECOM 3社費用比較</span></td>
                             <td style="text-align:center; color:#cbd5e1;">—</td>
                             <td style="text-align:right;">¥756万<span class="calc">5年間の総費用</span></td>
                             <td style="text-align:center; color:#cbd5e1;">—</td>
                             <td style="text-align:center; color:#cbd5e1;">—</td>
                         </tr>
                         <tr class="detail-row">
-                            <td>SPLATS月額利用料<span class="calc">¥1万/扉/月 × 21扉</span></td>
+                            <td>SPLATS月額利用料<span class="calc">¥1万/扉/月 × 21扉<br>※エビデンス未登録（公式サイト参考値）</span></td>
                             <td style="text-align:center; color:#cbd5e1;">—</td>
                             <td style="text-align:center; color:#cbd5e1;">—</td>
                             <td style="text-align:right;">¥1,260万<span class="calc">¥21万/月 × 60ヶ月</span></td>
                             <td style="text-align:right;">¥1,260万</td>
                         </tr>
                         <tr class="detail-row">
-                            <td>SPLATS 導入工事費<span class="calc">カードリーダー交換・設置工事 ¥16万/扉</span></td>
+                            <td>SPLATS 導入工事費<span class="calc">カードリーダー交換・設置工事 ¥16万/扉<br>※エビデンス未登録（公式サイト参考値）</span></td>
                             <td style="text-align:center; color:#cbd5e1;">—</td>
                             <td style="text-align:center; color:#cbd5e1;">—</td>
                             <td style="text-align:right;">¥336万<span class="calc">¥16万 × 21扉</span></td>
@@ -1145,14 +1156,14 @@
                     <tfoot>
                         <tr>
                             <td style="font-weight:800; color:#0369a1;">5年合計</td>
-                            <td class="c-unknown" style="text-align:right; font-weight:800; font-size:0.9rem;">¥570万+α</td>
+                            <td class="c-unknown" style="text-align:right; font-weight:800; font-size:0.9rem;">¥1,172万+α</td>
                             <td class="c-high" style="text-align:right; font-weight:800; font-size:0.9rem;">¥6,406万</td>
                             <td style="text-align:right; font-weight:800; font-size:0.9rem; background:#fef9c3; color:#854d0e;">¥5,646万</td>
                             <td class="c-low" style="text-align:right; font-weight:800; font-size:0.9rem;">¥4,046万+α</td>
                         </tr>
                         <tr>
                             <td style="font-weight:700; color:#475569; font-size:0.72rem;">年額換算</td>
-                            <td style="text-align:right; font-size:0.72rem;">¥114万+α</td>
+                            <td style="text-align:right; font-size:0.72rem;">¥234万+α</td>
                             <td style="text-align:right; font-size:0.72rem; background:#ffe4e6; color:#9f1239;">¥1,281万/年</td>
                             <td style="text-align:right; font-size:0.72rem;">¥1,129万/年</td>
                             <td style="text-align:right; font-size:0.72rem; background:#dcfce7; color:#166534;">¥809万/年+α</td>
@@ -1178,11 +1189,12 @@
 
                 <div style="margin-top: 0.75rem; padding: 10px 14px; background: rgba(245,158,11,0.08); border-left: 3px solid #f59e0b; border-radius: 0 8px 8px 0; font-size: 0.72rem; color: #78716c; line-height: 1.7;">
                     <strong style="color: #92400e;">注意事項:</strong><br>
-                    ・ SECOM現行費用（保守料・月額利用料）はSECOM神山氏の回答待ちのため空欄<br>
-                    ・ Cato費用はSCSK角田氏の見積ベース（社外接続200名想定 → 実際は約100名のため再見積を依頼中）<br>
-                    ・ SPLATS: ベーシックプラン ¥10,000/扉/月 × 21扉 × 60ヶ月 + 導入工事費 ¥16万/扉 × 21扉<br>
+                    ・ A案VPN月額: VarioSecure ¥154,909/月（税抜。税込¥170,400÷1.1。2026年4月の20%値上げ後）→ <a href="/エビデンス集.html#variosecure-cost" style="color:#92400e; font-weight:600;">[E-009]</a><br>
+                    ・ SECOM現行費用: 約¥1万/月/拠点（年額約¥12万）→ <a href="/エビデンス集.html#secom-current-cost" style="color:#92400e; font-weight:600;">[E-010]</a><br>
+                    ・ Cato費用: SCSK角田氏の見積ベース（社外接続200名想定 → 実際は約100名のため再見積を依頼中）→ <a href="/エビデンス集.html#cato-sase-cost" style="color:#92400e; font-weight:600;">[E-007]</a><br>
+                    ・ SPLATS: ベーシックプラン ¥10,000/扉/月 × 21扉 × 60ヶ月 + 導入工事費 ¥16万/扉 × 21扉（エビデンス未登録）<br>
                     ・ ALLIGATE参考: Lock Proプラン ¥18,000/扉/月の場合 → 入退室5年で¥2,268万+初期費（C案より約¥672万増）<br>
-                    ・ リンクアットジャパン移設: SECOM比較資料の5年間総費用ベース（初期費¥39万+月額¥9.8万+クラウド基盤費含む）<br>
+                    ・ リンクアットジャパン移設: SECOM比較資料の5年間総費用ベース → <a href="/エビデンス集.html#secom-3vendor-cost" style="color:#92400e; font-weight:600;">[E-006]</a><br>
                     ・ カテゴリ3〜5は今後各業者から見積を取得して記入予定
                 </div>
             </div>
