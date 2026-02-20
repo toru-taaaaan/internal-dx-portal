@@ -377,6 +377,8 @@
                 <li class="nav-vendor">AKERUN（Photosynth）</li>
                 <li><a href="#akerun-cost-20260219">E-001: Akerun CTL 概算費用</a></li>
                 <li><a href="#akerun-specs-20260218">E-002: Akerun 仕様回答</a></li>
+                <li class="nav-vendor">ビットキー（bitlock PRO）</li>
+                <li><a href="#bitlock-mtg-20260220">E-010: bitlock PRO WEB打合せ 議事録</a></li>
                 <li class="nav-vendor" style="color: #1e40af; font-weight: 800;">AD移行（3社比較）</li>
                 <li class="nav-vendor">IIJ</li>
                 <li><a href="#iij-ad-cost">E-003: IIJ AD移行 費用・管理体制</a></li>
@@ -623,6 +625,119 @@ CTLの設置要件や、既設電気錠の流用可否について詳しくお�
                 <div class="ref-links">
                     <a href="/入退室管理_フルクラウド型_ベンダー調査.html#sec-detail-akerun">ベンダー調査 / Akerun詳細 - 4要件判定</a>
                     <a href="/入退室管理_フルクラウド型_ベンダー調査.html#sec-detail-akerun">ベンダー調査 / Akerun詳細 - 認証方式・勤怠連携</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- ========================================
+             ビットキー（bitlock PRO）エビデンス
+             ======================================== -->
+
+        <!-- E-010: bitlock PRO WEB打合せ 議事録 -->
+        <article class="evidence-entry" id="bitlock-mtg-20260220">
+            <div class="entry-header">
+                <h2 class="entry-title">bitlock PRO WEB打合せ 議事録（2026-02-20）</h2>
+                <span class="entry-id">E-010</span>
+            </div>
+
+            <!-- 文脈 -->
+            <div class="entry-section">
+                <div class="section-label">文脈</div>
+                <div class="context-text">
+                    <p style="margin-top: 0;">SECOM入退室管理のクラウド移行候補として、ビットキー社のbitlock PROについてWEB打合せを実施。塩田部長も同席。製品仕様・認証方式・SECOM連携・管理体制・Entra ID連携等を確認。</p>
+                    <p>打合せ後、丹治から川越氏に電話で見積・提案書の送付を依頼済み。</p>
+                </div>
+            </div>
+
+            <!-- やりとり全文 -->
+            <div class="entry-section">
+                <div class="section-label">やりとり全文（WEB会議 文字起こし要約）</div>
+
+                <div class="email-block">
+                    <div class="email-meta">
+                        <div class="email-meta-item">
+                            <span class="email-direction dir-incoming" style="background: #e0e7ff; color: #3730a3;">会議</span>
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">日時</span> 2026-02-20 11:00-12:00
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">参加者</span> 川越順平（ビットキー）、丹治、塩田部長
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">形式</span> Google Meet
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">録画</span> <a href="https://tldv.io/app/meetings/6997c0e9c8f2260013611f9d" target="_blank" style="color: var(--primary);">tl;dv録画リンク</a>
+                        </div>
+                    </div>
+                    <div class="email-body"><strong>【製品概要】</strong>
+スマートロック「bitlock PRO」+ クラウド管理プラットフォーム「workhub」
+入退室・受付・会議室予約を1つのプラットフォームで統合管理
+iOS端末（iPad）を各所に設置してUI提供
+
+<strong>【認証方式】</strong>
+・ICカード: 標準（NFC）
+・顔認証: オプション（iOS端末のTrueDepthカメラ、3D認証）
+・QRコード: ゲスト向け（自動メール送信）
+・指紋認証: <span class="highlight">非対応</span>
+・物理鍵: 既存の鍵穴はそのまま使える（バックアップ手段）
+・アンチパスバック: <span class="highlight">顔認証・QRコードのみ対応（カード非対応）</span>
+
+<strong>【スマートロック本体（bitlock PRO）】</strong>
+・電源: 電池式（工事不要）
+・電池寿命: 1日100回出入りで約6-8ヶ月
+・電池: 単価約300円×4本、半年に1回交換（アラート機能あり）
+・停電時: 電池があれば通信可能
+・内側プッシュボタン: 認証なしで開錠可（オフ設定可能）
+・遠隔介助: 管理者が遠隔から施解錠可能
+
+<strong>【電気錠（bitlock GATE） - セコム連携】</strong>
+・<span class="highlight">セコムが入っている場合は電気錠になる可能性が高い</span>
+・既存の制御盤に配線を接続する工事が発生
+・既存制御盤がそのまま使える場合と、レンタル品で返却→新設が必要な場合あり
+・工事区分: ビットキーは建築業法の資格なし → 機器購入と設置工事を分離
+  - B工事（ビル側施工会社）またはC工事（ビットキー紹介の業者で直接契約）
+  - ビットキーは下請けを取らない → 利益上乗せなし、原価で対応
+
+<strong>【顔認証の技術仕様】</strong>
+・顔の特徴点を数値化して保存（写真データは保存しない）
+・iOS端末が盗まれても情報漏洩・不正解錠リスクなし
+・認証度の調整: セキュリティレベルに応じて変更可能
+  - 高セキュリティ: 3D認証（3秒間見つめる）
+  - 一般エリア: 80%まで下げて歩きながら認証可能
+・写真では認証不可（赤外線カメラによる3D判定）
+・マスク・メガネで精度低下の可能性あり
+
+<strong>【サブスクリプションモデル】</strong>
+・iOS端末・顔認証・会議室/受付システムは全てサブスク提供
+・MDMで遠隔管理
+・iOS端末は経年劣化で無償交換
+・段階的導入可能（まず入退室 → 後から顔認証/予約を追加）
+
+<strong>【管理システム】</strong>
+・Web管理画面: メールアドレス+パスワード認証
+・SSO対応: Microsoft / Okta
+・ログ保持: 2年間、上限なし、<span class="highlight">CSV出力可能</span>
+・プロビジョニング: <span class="highlight">Entra ID（Azure AD）対応</span>
+
+<strong>【AKIBAホールディングス固有の論点】</strong>
+・和歌山拠点（コールセンター）: アルバイトが多くカード紛失リスク。現在は指紋認証。
+  スマホ持込NG → <span class="highlight">顔認証に寄せる必要あり（オプション費用発生）</span>
+・セコムとの関係: 現在セコム使用中 → 電気錠（bitlock GATE）構成になる可能性
+  既存制御盤の所有形態（自社所有 or レンタル）要確認
+・AD/Entra ID連携: 現在オンプレAD → Entra ID移行計画中
+  bitlockはEntra IDプロビジョニングに対応。AD移行後に連携すれば人事異動の運用が自動化</div>
+                </div>
+            </div>
+
+            <!-- 反映先 -->
+            <div class="entry-section">
+                <div class="section-label">反映先</div>
+                <div class="ref-links">
+                    <a href="/入退室管理_フルクラウド型_ベンダー調査.html#sec-detail-bitlock">ベンダー調査 / bitlock PRO詳細</a>
+                    <a href="/ヒアリング管理.html">ヒアリング管理 / bitlock PRO ステータス</a>
+                    <a href="/SECOM入退室クラウド化_導入検討資料.html">SECOM入退室クラウド化 導入検討資料</a>
                 </div>
             </div>
         </article>
