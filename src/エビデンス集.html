@@ -375,8 +375,24 @@
             <ul class="evidence-nav-list">
                 <li class="nav-vendor" style="margin-top: 0; color: #1e40af; font-weight: 800;">入退室管理</li>
                 <li class="nav-vendor">AKERUN（Photosynth）</li>
-                <li><a href="#akerun-cost-20260219">Akerun CTL 概算費用（月額13,000円/扉）</a></li>
-                <li><a href="#akerun-specs-20260218">Akerun 仕様回答（通信・FeliCa・CSV・複数拠点）</a></li>
+                <li><a href="#akerun-cost-20260219">E-001: Akerun CTL 概算費用</a></li>
+                <li><a href="#akerun-specs-20260218">E-002: Akerun 仕様回答</a></li>
+                <li class="nav-vendor" style="color: #1e40af; font-weight: 800;">AD移行（3社比較）</li>
+                <li class="nav-vendor">IIJ</li>
+                <li><a href="#iij-ad-cost">E-003: IIJ AD移行 費用・管理体制</a></li>
+                <li class="nav-vendor">USEN</li>
+                <li><a href="#usen-ad-cost">E-004: USEN AD移行 費用・管理体制</a></li>
+                <li class="nav-vendor">Link-At-Japan</li>
+                <li><a href="#laj-ad-cost">E-005: LAJ AD移行 費用・管理体制</a></li>
+                <li class="nav-vendor" style="color: #1e40af; font-weight: 800;">SECOM入退室管理</li>
+                <li><a href="#secom-3vendor-cost">E-006: SECOM 3社費用・同時割引</a></li>
+                <li class="nav-vendor" style="color: #1e40af; font-weight: 800;">ネットワーク刷新</li>
+                <li class="nav-vendor">Cato SASE（SCSK）</li>
+                <li><a href="#cato-sase-cost">E-007: Cato SASE 費用</a></li>
+                <li class="nav-vendor">IIJ Omnibus</li>
+                <li><a href="#iij-omnibus-cost">E-008: IIJ Omnibus 費用内訳</a></li>
+                <li class="nav-vendor">VarioSecure（USEN）</li>
+                <li><a href="#variosecure-cost">E-009: VarioSecure 費用・オプション</a></li>
             </ul>
         </nav>
 
@@ -607,6 +623,782 @@ CTLの設置要件や、既設電気錠の流用可否について詳しくお�
                 <div class="ref-links">
                     <a href="/入退室管理_フルクラウド型_ベンダー調査.html#sec-detail-akerun">ベンダー調査 / Akerun詳細 - 4要件判定</a>
                     <a href="/入退室管理_フルクラウド型_ベンダー調査.html#sec-detail-akerun">ベンダー調査 / Akerun詳細 - 認証方式・勤怠連携</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- ========================================
+             AD移行 エビデンス
+             ======================================== -->
+
+        <!-- E-003: IIJ AD移行 費用・管理体制 -->
+        <article class="evidence-entry" id="iij-ad-cost">
+            <div class="entry-header">
+                <h2 class="entry-title">IIJ AD移行 費用・管理体制</h2>
+                <span class="entry-id">E-003</span>
+            </div>
+
+            <!-- 文脈 -->
+            <div class="entry-section">
+                <div class="section-label">文脈</div>
+                <div class="context-text">
+                    <p style="margin-top: 0;">Active Directory クラウド移行の3社比較にあたり、IIJ（営業担当: 梅原氏）から費用・管理体制の詳細回答を受領。IIJはIaaSベース（IIJ GIO）でAD 2台をAct/Act構成で提供。</p>
+                </div>
+            </div>
+
+            <!-- やりとり全文 -->
+            <div class="entry-section">
+                <div class="section-label">やりとり全文（時系列）</div>
+
+                <!-- Mail 1: 梅原→丹治 費用回答 -->
+                <div class="email-block" style="border-left: 3px solid var(--primary);">
+                    <div class="email-meta">
+                        <div class="email-meta-item">
+                            <span class="email-direction dir-incoming">受信</span>
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">日時</span> 2026-01-29
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">差出人</span> 梅原（IIJ）
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">宛先</span> 丹治
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">件名</span> AD移行費用のご連絡
+                        </div>
+                    </div>
+                    <div class="email-body">【費用部分を抜粋】
+
+<span class="highlight">■ IADサービス初期費用: ¥1,097,750（税込）
+■ IADサービス月額費用: ¥174,750（税込）</span>
+
+■ AD 2台構成（Act/Act）
+■ 移行期間: 2〜3ヶ月
+
+<span class="highlight">■ SECOM SESAMO II GIO接続 月額: ¥84,540（税込）</span></div>
+                </div>
+
+                <!-- Mail 2: 梅原→丹治 管理体制回答 -->
+                <div class="email-block">
+                    <div class="email-meta">
+                        <div class="email-meta-item">
+                            <span class="email-direction dir-incoming">受信</span>
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">日時</span> 2026-02-02
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">差出人</span> 梅原（IIJ）
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">宛先</span> 丹治
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">件名</span> AD管理体制に関するご回答
+                        </div>
+                    </div>
+                    <div class="email-body">【管理体制部分を抜粋】
+
+<span class="highlight">■ パッチ適用: 月次で全自動適用</span>
+■ 障害対応: 24時間365日
+■ バックアップ: 日次バックアップ 30日保持
+<span class="highlight">■ データ可搬性: PowerShellによるエクスポート可</span>
+■ SLA: 99.99%</div>
+                </div>
+
+                <!-- Mail 3: 梅原→丹治 拠点デバイス -->
+                <div class="email-block">
+                    <div class="email-meta">
+                        <div class="email-meta-item">
+                            <span class="email-direction dir-incoming">受信</span>
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">日時</span> 2026-02-13
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">差出人</span> 梅原（IIJ）
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">宛先</span> 丹治
+                        </div>
+                    </div>
+                    <div class="email-body">【拠点端末管理に関する回答】
+
+<span class="highlight">■ 拠点端末調査: 管理画面からの直接調査は不可</span>
+（ステータス・ログ取得は可能）</div>
+                </div>
+            </div>
+
+            <!-- 算出根拠 -->
+            <div class="entry-section">
+                <div class="section-label">算出根拠</div>
+                <div class="calc-box">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <tr style="border-bottom: 2px solid #64748b;">
+                            <th style="text-align: left; padding: 6px 8px;">項目</th>
+                            <th style="text-align: right; padding: 6px 8px;">金額</th>
+                            <th style="text-align: left; padding: 6px 8px;">出典</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">IADサービス初期費用</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥1,097,750</td>
+                            <td style="padding: 6px 8px;">梅原メール 2026-01-29</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">SI費用（移行作業）</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥325,000</td>
+                            <td style="padding: 6px 8px;">IIJ提案書</td>
+                        </tr>
+                        <tr style="border-top: 1px solid #cbd5e1; font-weight: 700;">
+                            <td style="padding: 6px 8px;">初期費用 合計</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥1,422,750</td>
+                            <td style="padding: 6px 8px;"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">月額費用</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥174,750</td>
+                            <td style="padding: 6px 8px;">梅原メール 2026-01-29</td>
+                        </tr>
+                        <tr style="border-top: 2px solid #1e40af; font-weight: 700; color: #1e40af;">
+                            <td style="padding: 6px 8px;">5年間総額</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥11,907,750</td>
+                            <td style="padding: 6px 8px;">¥1,422,750 + ¥174,750 × 60ヶ月</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 反映先 -->
+            <div class="entry-section">
+                <div class="section-label">反映先</div>
+                <div class="ref-links">
+                    <a href="/IT基盤刷新_説明資料.html#sp-ad-cost">IT基盤刷新 説明資料 / AD 3社 費用比較</a>
+                    <a href="/IT基盤刷新_説明資料.html#sec5">IT基盤刷新 説明資料 / 管理体制比較</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- E-004: USEN AD移行 費用・管理体制 -->
+        <article class="evidence-entry" id="usen-ad-cost">
+            <div class="entry-header">
+                <h2 class="entry-title">USEN AD移行 費用・管理体制</h2>
+                <span class="entry-id">E-004</span>
+            </div>
+
+            <!-- 文脈 -->
+            <div class="entry-section">
+                <div class="section-label">文脈</div>
+                <div class="context-text">
+                    <p style="margin-top: 0;">USEN（営業担当: 内田氏、技術: 西川氏）からAD移行の費用・管理体制の詳細回答を受領。USENはAWS共有テナント上でマネージドADを提供。</p>
+                </div>
+            </div>
+
+            <!-- やりとり全文 -->
+            <div class="entry-section">
+                <div class="section-label">やりとり全文（時系列）</div>
+
+                <!-- Mail 1: 西川→丹治 管理体制 -->
+                <div class="email-block">
+                    <div class="email-meta">
+                        <div class="email-meta-item">
+                            <span class="email-direction dir-incoming">受信</span>
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">日時</span> 2026-02-06
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">差出人</span> 西川（USEN）
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">宛先</span> 丹治
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">件名</span> AD管理体制・オプションに関するご回答
+                        </div>
+                    </div>
+                    <div class="email-body">【管理体制部分を抜粋】
+
+<span class="highlight">■ クラウド基盤: AWS共有テナント
+■ 管理コンソール: 弊社専用画面は非公開</span>
+■ 24時間監視: 対応
+■ VSR（VarioSecure）オプション詳細あり</div>
+                </div>
+
+                <!-- Mail 2: 内田→丹治 権限・パッチ -->
+                <div class="email-block" style="border-left: 3px solid var(--primary);">
+                    <div class="email-meta">
+                        <div class="email-meta-item">
+                            <span class="email-direction dir-incoming">受信</span>
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">日時</span> 2026-02-20
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">差出人</span> 内田（USEN）
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">宛先</span> 丹治
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">件名</span> AD権限・パッチに関するご回答
+                        </div>
+                    </div>
+                    <div class="email-body">【権限・パッチ部分を抜粋】
+
+<span class="highlight">■ OS権限: Administrator権限を付与する
+■ 緊急パッチ: 追加費用なし（営業時間内対応）
+■ パッチ適用頻度: 四半期〜半年</span></div>
+                </div>
+            </div>
+
+            <!-- 算出根拠 -->
+            <div class="entry-section">
+                <div class="section-label">算出根拠</div>
+                <div class="calc-box">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <tr style="border-bottom: 2px solid #64748b;">
+                            <th style="text-align: left; padding: 6px 8px;">項目</th>
+                            <th style="text-align: right; padding: 6px 8px;">金額</th>
+                            <th style="text-align: left; padding: 6px 8px;">出典</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">初期費用</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥860,000</td>
+                            <td style="padding: 6px 8px;">USEN提案書</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">月額費用</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥124,300</td>
+                            <td style="padding: 6px 8px;">USEN提案書</td>
+                        </tr>
+                        <tr style="border-top: 2px solid #1e40af; font-weight: 700; color: #1e40af;">
+                            <td style="padding: 6px 8px;">5年間総額</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥8,318,000</td>
+                            <td style="padding: 6px 8px;">¥860,000 + ¥124,300 × 60ヶ月</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 反映先 -->
+            <div class="entry-section">
+                <div class="section-label">反映先</div>
+                <div class="ref-links">
+                    <a href="/IT基盤刷新_説明資料.html#sp-ad-cost">IT基盤刷新 説明資料 / AD 3社 費用比較</a>
+                    <a href="/IT基盤刷新_説明資料.html#sec5">IT基盤刷新 説明資料 / 管理体制比較</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- E-005: LAJ AD移行 費用・管理体制 -->
+        <article class="evidence-entry" id="laj-ad-cost">
+            <div class="entry-header">
+                <h2 class="entry-title">LAJ AD移行 費用・管理体制</h2>
+                <span class="entry-id">E-005</span>
+            </div>
+
+            <!-- 文脈 -->
+            <div class="entry-section">
+                <div class="section-label">文脈</div>
+                <div class="context-text">
+                    <p style="margin-top: 0;">Link-At-Japan（営業担当: 澤口氏）からAD移行の提案書をBox経由で受領。LAJはAzure上でIaaS型ADを提供。パッチ適用・監視はオプション扱い。</p>
+                </div>
+            </div>
+
+            <!-- やりとり全文 -->
+            <div class="entry-section">
+                <div class="section-label">やりとり全文（時系列）</div>
+
+                <!-- Mail 1: 澤口→丹治 提案書送付 -->
+                <div class="email-block" style="border-left: 3px solid var(--primary);">
+                    <div class="email-meta">
+                        <div class="email-meta-item">
+                            <span class="email-direction dir-incoming">受信</span>
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">日時</span> 2026-02-02
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">差出人</span> 澤口（Link-At-Japan）
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">宛先</span> 丹治
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">件名</span> AD移行提案書送付
+                        </div>
+                    </div>
+                    <div class="email-body">【提案書送付の連絡】
+
+提案書をBoxにて共有いたしました。
+<span class="highlight">費用・管理体制の詳細は添付の提案書に記載。</span>
+
+※費用の数値はすべてLAJ提案書（Box共有 2026/2/2）より引用</div>
+                </div>
+            </div>
+
+            <!-- 算出根拠 -->
+            <div class="entry-section">
+                <div class="section-label">算出根拠</div>
+                <div class="calc-box">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <tr style="border-bottom: 2px solid #64748b;">
+                            <th style="text-align: left; padding: 6px 8px;">項目</th>
+                            <th style="text-align: right; padding: 6px 8px;">金額</th>
+                            <th style="text-align: left; padding: 6px 8px;">出典</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">初期費用</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥1,555,000</td>
+                            <td style="padding: 6px 8px;">LAJ提案書（Box共有 2026/2/2）</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">月額費用（基本）</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥102,051</td>
+                            <td style="padding: 6px 8px;">LAJ提案書</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">パッチ適用（オプション）</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥68,000/月</td>
+                            <td style="padding: 6px 8px;">LAJ提案書</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">監視（オプション）</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥50,000/月</td>
+                            <td style="padding: 6px 8px;">LAJ提案書</td>
+                        </tr>
+                        <tr style="border-top: 1px solid #cbd5e1;">
+                            <td style="padding: 6px 8px;">オンプレミス（参考）</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥2,430,000 初期 / ¥6,500/月</td>
+                            <td style="padding: 6px 8px;">LAJ提案書 ※1</td>
+                        </tr>
+                        <tr style="border-top: 2px solid #1e40af; font-weight: 700; color: #1e40af;">
+                            <td style="padding: 6px 8px;">5年間総額（クラウド）</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥7,678,060</td>
+                            <td style="padding: 6px 8px;">¥1,555,000 + ¥102,051 × 60ヶ月</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 反映先 -->
+            <div class="entry-section">
+                <div class="section-label">反映先</div>
+                <div class="ref-links">
+                    <a href="/IT基盤刷新_説明資料.html#sp-ad-cost">IT基盤刷新 説明資料 / AD 3社 費用比較</a>
+                    <a href="/IT基盤刷新_説明資料.html#sec5">IT基盤刷新 説明資料 / 管理体制比較</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- ========================================
+             SECOM エビデンス
+             ======================================== -->
+
+        <!-- E-006: SECOM 3社費用・同時割引 -->
+        <article class="evidence-entry" id="secom-3vendor-cost">
+            <div class="entry-header">
+                <h2 class="entry-title">SECOM入退室管理 3社費用・同時割引</h2>
+                <span class="entry-id">E-006</span>
+            </div>
+
+            <!-- 文脈 -->
+            <div class="entry-section">
+                <div class="section-label">文脈</div>
+                <div class="context-text">
+                    <p style="margin-top: 0;">SECOM SESAMO IIのクラウド接続（GIO経由）にかかる費用を3社それぞれの提案書から比較。AD移行と同時発注した場合の割引額も算出。SECOM社への直接費用（¥198,000）は3社共通。</p>
+                </div>
+            </div>
+
+            <!-- やりとり全文 -->
+            <div class="entry-section">
+                <div class="section-label">やりとり全文（時系列）</div>
+
+                <!-- Mail 1: IIJ梅原 SECOM費用 -->
+                <div class="email-block" style="border-left: 3px solid var(--primary);">
+                    <div class="email-meta">
+                        <div class="email-meta-item">
+                            <span class="email-direction dir-incoming">受信</span>
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">日時</span> 2026-01-29
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">差出人</span> 梅原（IIJ）
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">宛先</span> 丹治
+                        </div>
+                    </div>
+                    <div class="email-body">【SECOM GIO接続費用】
+
+<span class="highlight">■ SECOM SESAMO II GIO接続 月額: ¥84,540（税込）</span>
+
+※AD移行費用と同一メールで提示</div>
+                </div>
+            </div>
+
+            <!-- 算出根拠 -->
+            <div class="entry-section">
+                <div class="section-label">算出根拠</div>
+                <div class="calc-box">
+                    <p style="font-weight: 700; margin-bottom: 8px;">SECOM費用 3社比較</p>
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <tr style="border-bottom: 2px solid #64748b;">
+                            <th style="text-align: left; padding: 6px 8px;">項目</th>
+                            <th style="text-align: right; padding: 6px 8px;">IIJ</th>
+                            <th style="text-align: right; padding: 6px 8px;">USEN</th>
+                            <th style="text-align: right; padding: 6px 8px;">LAJ</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">初期費用（ベンダー）</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥762,750</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥438,000</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥388,000</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">SECOM直接費用（共通）</td>
+                            <td style="text-align: right; padding: 6px 8px;" colspan="3">¥198,000</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">月額費用</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥133,290</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥133,000</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥116,376</td>
+                        </tr>
+                        <tr style="border-top: 2px solid #1e40af; font-weight: 700; color: #1e40af;">
+                            <td style="padding: 6px 8px;">5年間総額</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥8,958,150</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥8,616,000</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥7,568,560</td>
+                        </tr>
+                    </table>
+
+                    <p style="font-weight: 700; margin: 16px 0 8px;">同時発注割引（AD + SECOM）</p>
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <tr style="border-bottom: 2px solid #64748b;">
+                            <th style="text-align: left; padding: 6px 8px;">項目</th>
+                            <th style="text-align: right; padding: 6px 8px;">IIJ</th>
+                            <th style="text-align: right; padding: 6px 8px;">USEN</th>
+                            <th style="text-align: right; padding: 6px 8px;">LAJ</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">同時発注時の削減額</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥475,000</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥220,000</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥190,000</td>
+                        </tr>
+                        <tr style="border-top: 2px solid #1e40af; font-weight: 700; color: #1e40af;">
+                            <td style="padding: 6px 8px;">AD+SECOM 5年合計</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥17,653,150</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥15,630,000</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥12,048,620</td>
+                        </tr>
+                    </table>
+                    <p style="font-size: 11px; color: #64748b; margin-top: 8px;">出典: 各社提案書。IIJ SECOM月額は梅原メール(2026-01-29)。SECOM直接費用¥198,000は各社提案書記載の共通費用。</p>
+                </div>
+            </div>
+
+            <!-- 反映先 -->
+            <div class="entry-section">
+                <div class="section-label">反映先</div>
+                <div class="ref-links">
+                    <a href="/IT基盤刷新_説明資料.html#sp-secom-cost">IT基盤刷新 説明資料 / SECOM 3社費用比較</a>
+                    <a href="/IT基盤刷新_説明資料.html#sp-secom-combo">IT基盤刷新 説明資料 / AD+SECOM 同時発注割引</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- ========================================
+             ネットワーク刷新 エビデンス
+             ======================================== -->
+
+        <!-- E-007: Cato SASE 費用 -->
+        <article class="evidence-entry" id="cato-sase-cost">
+            <div class="entry-header">
+                <h2 class="entry-title">Cato SASE 費用（SCSK）</h2>
+                <span class="entry-id">E-007</span>
+            </div>
+
+            <!-- 文脈 -->
+            <div class="entry-section">
+                <div class="section-label">文脈</div>
+                <div class="context-text">
+                    <p style="margin-top: 0;">ネットワーク刷新の選択肢としてCato SASEをSCSK（営業担当: 角田氏）経由で検討。ライセンス費用・マネージドサービス費用の概算見積を受領。</p>
+                </div>
+            </div>
+
+            <!-- やりとり全文 -->
+            <div class="entry-section">
+                <div class="section-label">やりとり全文（時系列）</div>
+
+                <!-- Mail 1: 角田→丹治 費用概算 -->
+                <div class="email-block" style="border-left: 3px solid var(--primary);">
+                    <div class="email-meta">
+                        <div class="email-meta-item">
+                            <span class="email-direction dir-incoming">受信</span>
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">日時</span> 2026-02-19
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">差出人</span> 角田（SCSK）
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">宛先</span> 丹治
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">件名</span> Cato SASE 費用概算のご連絡
+                        </div>
+                    </div>
+                    <div class="email-body">【Cato SASE 費用概算】
+
+<span class="highlight">■ ライセンス費用: ¥5,000,000/年（200名規模）
+　※100名規模の場合: ¥4,000,000/年
+■ マネージドサービス: ¥600,000/年
+■ 初期導入費用: ¥500,000
+■ Socket追加（オプション）: ¥800,000/年</span></div>
+                </div>
+            </div>
+
+            <!-- 算出根拠 -->
+            <div class="entry-section">
+                <div class="section-label">算出根拠</div>
+                <div class="calc-box">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <tr style="border-bottom: 2px solid #64748b;">
+                            <th style="text-align: left; padding: 6px 8px;">項目</th>
+                            <th style="text-align: right; padding: 6px 8px;">金額</th>
+                            <th style="text-align: left; padding: 6px 8px;">出典</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">ライセンス（200名）</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥5,000,000/年</td>
+                            <td style="padding: 6px 8px;">角田メール 2026-02-19</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">マネージドサービス</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥600,000/年</td>
+                            <td style="padding: 6px 8px;">角田メール 2026-02-19</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">月額換算</td>
+                            <td style="text-align: right; padding: 6px 8px;">≈ ¥467,000/月</td>
+                            <td style="padding: 6px 8px;">(¥5,600,000 ÷ 12)</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">初期導入費用</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥500,000</td>
+                            <td style="padding: 6px 8px;">角田メール 2026-02-19</td>
+                        </tr>
+                        <tr style="border-top: 2px solid #1e40af; font-weight: 700; color: #1e40af;">
+                            <td style="padding: 6px 8px;">5年間総額</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥28,500,000</td>
+                            <td style="padding: 6px 8px;">¥500,000 + ¥5,600,000 × 5年</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 反映先 -->
+            <div class="entry-section">
+                <div class="section-label">反映先</div>
+                <div class="ref-links">
+                    <a href="/IT基盤刷新_説明資料.html#sp-nw-cost">IT基盤刷新 説明資料 / ネットワーク 4シナリオ費用比較</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- E-008: IIJ Omnibus 費用内訳 -->
+        <article class="evidence-entry" id="iij-omnibus-cost">
+            <div class="entry-header">
+                <h2 class="entry-title">IIJ Omnibus 費用内訳</h2>
+                <span class="entry-id">E-008</span>
+            </div>
+
+            <!-- 文脈 -->
+            <div class="entry-section">
+                <div class="section-label">文脈</div>
+                <div class="context-text">
+                    <p style="margin-top: 0;">ネットワーク刷新の選択肢としてIIJ Omnibusを検討。IIJ提案資料（2026/1/13提出）に記載の費用内訳を整理。WAN回線・ゲートウェイ・リモートアクセス・LBOの4項目で構成。</p>
+                </div>
+            </div>
+
+            <!-- 算出根拠 -->
+            <div class="entry-section">
+                <div class="section-label">算出根拠</div>
+                <div class="calc-box">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <tr style="border-bottom: 2px solid #64748b;">
+                            <th style="text-align: left; padding: 6px 8px;">項目</th>
+                            <th style="text-align: right; padding: 6px 8px;">月額</th>
+                            <th style="text-align: left; padding: 6px 8px;">出典</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">WAN回線</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥325,950</td>
+                            <td style="padding: 6px 8px;">IIJ提案資料（2026/1/13）</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">ゲートウェイ</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥227,000</td>
+                            <td style="padding: 6px 8px;">IIJ提案資料</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">リモートアクセス</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥73,200</td>
+                            <td style="padding: 6px 8px;">IIJ提案資料</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">LBO（ローカルブレイクアウト）</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥96,000</td>
+                            <td style="padding: 6px 8px;">IIJ提案資料</td>
+                        </tr>
+                        <tr style="border-top: 1px solid #cbd5e1; font-weight: 700;">
+                            <td style="padding: 6px 8px;">月額合計</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥722,150</td>
+                            <td style="padding: 6px 8px;"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">初期費用</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥2,764,850</td>
+                            <td style="padding: 6px 8px;">IIJ提案資料</td>
+                        </tr>
+                        <tr style="border-top: 2px solid #1e40af; font-weight: 700; color: #1e40af;">
+                            <td style="padding: 6px 8px;">5年間総額</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥46,093,850</td>
+                            <td style="padding: 6px 8px;">¥2,764,850 + ¥722,150 × 60ヶ月</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 反映先 -->
+            <div class="entry-section">
+                <div class="section-label">反映先</div>
+                <div class="ref-links">
+                    <a href="/IT基盤刷新_説明資料.html#sp-nw-cost">IT基盤刷新 説明資料 / ネットワーク 4シナリオ費用比較</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- E-009: VarioSecure 費用・オプション -->
+        <article class="evidence-entry" id="variosecure-cost">
+            <div class="entry-header">
+                <h2 class="entry-title">VarioSecure 費用・オプション（USEN）</h2>
+                <span class="entry-id">E-009</span>
+            </div>
+
+            <!-- 文脈 -->
+            <div class="entry-section">
+                <div class="section-label">文脈</div>
+                <div class="context-text">
+                    <p style="margin-top: 0;">現行ネットワーク（VarioSecure/USEN）の契約更新に伴う値上げと、オプション全追加時の費用を整理。USEN西川氏からオプション詳細と契約期限の通知を受領。</p>
+                </div>
+            </div>
+
+            <!-- やりとり全文 -->
+            <div class="entry-section">
+                <div class="section-label">やりとり全文（時系列）</div>
+
+                <!-- Mail 1: 西川→丹治 オプション詳細 -->
+                <div class="email-block">
+                    <div class="email-meta">
+                        <div class="email-meta-item">
+                            <span class="email-direction dir-incoming">受信</span>
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">日時</span> 2026-02-06
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">差出人</span> 西川（USEN）
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">宛先</span> 丹治
+                        </div>
+                    </div>
+                    <div class="email-body">【VarioSecure オプション詳細】
+
+<span class="highlight">■ 現行月額: ¥142,000（税込）
+■ 値上げ後月額: ¥170,400（税込）※約20%値上げ
+■ オプション全追加時月額: ¥1,228,800（税込）</span>
+
+※VSRオプション（IPS/IDS等）の詳細内訳あり</div>
+                </div>
+
+                <!-- Mail 2: 西川→丹治 契約期限 -->
+                <div class="email-block" style="border-left: 3px solid var(--primary);">
+                    <div class="email-meta">
+                        <div class="email-meta-item">
+                            <span class="email-direction dir-incoming">受信</span>
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">日時</span> 2026-02-17
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">差出人</span> 西川（USEN）
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">宛先</span> 丹治
+                        </div>
+                        <div class="email-meta-item">
+                            <span class="email-meta-label">件名</span> VarioSecure契約期限のご連絡
+                        </div>
+                    </div>
+                    <div class="email-body">【契約期限に関する通知】
+
+<span class="highlight">■ 和歌山拠点: 2026年2月28日 契約満了
+■ 築地拠点: 2026年3月11日 契約満了</span></div>
+                </div>
+            </div>
+
+            <!-- 算出根拠 -->
+            <div class="entry-section">
+                <div class="section-label">算出根拠</div>
+                <div class="calc-box">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <tr style="border-bottom: 2px solid #64748b;">
+                            <th style="text-align: left; padding: 6px 8px;">項目</th>
+                            <th style="text-align: right; padding: 6px 8px;">月額</th>
+                            <th style="text-align: left; padding: 6px 8px;">出典</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">現行契約（値上げ前）</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥142,000</td>
+                            <td style="padding: 6px 8px;">契約書</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">値上げ後（現行継続）</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥170,400</td>
+                            <td style="padding: 6px 8px;">西川メール 2026-02-06</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">オプション全追加時</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥1,228,800</td>
+                            <td style="padding: 6px 8px;">西川メール 2026-02-06</td>
+                        </tr>
+                        <tr style="border-top: 1px solid #cbd5e1;">
+                            <td style="padding: 6px 8px;">5年間総額（値上げ後現行継続）</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥10,224,000</td>
+                            <td style="padding: 6px 8px;">¥170,400 × 60ヶ月</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">5年間総額（オプション全追加）</td>
+                            <td style="text-align: right; padding: 6px 8px;">¥74,728,000</td>
+                            <td style="padding: 6px 8px;">¥1,000,000 + ¥1,228,800 × 60ヶ月</td>
+                        </tr>
+                    </table>
+                    <p style="font-size: 11px; color: #64748b; margin-top: 8px;">契約期限: 和歌山 2/28、築地 3/11（西川メール 2026-02-17）</p>
+                </div>
+            </div>
+
+            <!-- 反映先 -->
+            <div class="entry-section">
+                <div class="section-label">反映先</div>
+                <div class="ref-links">
+                    <a href="/IT基盤刷新_説明資料.html#sp-nw-cost">IT基盤刷新 説明資料 / ネットワーク 4シナリオ費用比較</a>
                 </div>
             </div>
         </article>
