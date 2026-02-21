@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VarioSecure 費用分解 | 整理ノート</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/portal_nexus.css">
+  <style>
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+    }
+
+    .main-scroll {
+      padding: 48px;
+    }
+
+    .page-title {
+      font-size: 22px;
+      font-weight: 900;
+      margin: 0 0 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .page-title::before {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 28px;
+      background: #1e3a8a;
+      border-radius: 2px;
+    }
+
+    .page-sub {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 40px;
+    }
+
+    /* ── 全体サマリ ── */
+    .summary-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .summary-card {
+      flex: 1;
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px 24px;
+      text-align: center;
+    }
+
+    .summary-card.highlight {
+      border-color: #dc2626;
+      background: #fef2f2;
+    }
+
+    .summary-card.ok {
+      border-color: #16a34a;
+      background: #f0fdf4;
+    }
+
+    .summary-label {
+      font-size: 10px;
+      font-weight: 900;
+      color: #64748b;
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+    }
+
+    .summary-value {
+      font-size: 28px;
+      font-weight: 900;
+      color: #0f172a;
+      font-family: 'Courier New', monospace;
+    }
+
+    .summary-card.highlight .summary-value {
+      color: #dc2626;
+    }
+
+    .summary-card.ok .summary-value {
+      color: #16a34a;
+    }
+
+    .summary-note {
+      font-size: 10px;
+      color: #94a3b8;
+      margin-top: 4px;
+      font-weight: 700;
+    }
+
+    /* ── セクション ── */
+    .section {
+      margin-bottom: 48px;
+    }
+
+    .section-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: #1e3a8a;
+      color: white;
+      font-size: 13px;
+      font-weight: 900;
+      border-radius: 50%;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #1e3a8a;
+    }
+
+    .section-desc {
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 16px;
+      line-height: 1.8;
+      font-weight: 500;
+    }
+
+    /* ── テーブル ── */
+    .clean-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    .clean-table th {
+      background: #f1f5f9;
+      font-weight: 900;
+      font-size: 10px;
+      letter-spacing: 0.05em;
+      color: #475569;
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 2px solid #cbd5e1;
+    }
+
+    .clean-table th.right,
+    .clean-table td.right {
+      text-align: right;
+    }
+
+    .clean-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: top;
+    }
+
+    .clean-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .clean-table .total-row td {
+      background: #f8fafc;
+      font-weight: 900;
+      border-top: 2px solid #cbd5e1;
+    }
+
+    .clean-table .sub-row td {
+      background: #fafbfc;
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .money {
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .money.big {
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    /* ── ステータスバッジ ── */
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 900;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.03em;
+    }
+
+    .badge-ok {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .badge-warn {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .badge-unknown {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .badge-info {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    /* ── 拠点マップ ── */
+    .location-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .location-card {
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 14px;
+      position: relative;
+    }
+
+    .location-card.confirmed {
+      border-color: #86efac;
+    }
+
+    .location-card.main {
+      border-color: #1e3a8a;
+      border-width: 3px;
+      grid-column: span 2;
+    }
+
+    .location-card.unknown {
+      border-color: #fca5a5;
+      border-style: dashed;
+      background: #fef2f2;
+    }
+
+    .location-name {
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .location-model {
+      font-size: 11px;
+      font-weight: 700;
+      color: #3b82f6;
+      font-family: monospace;
+    }
+
+    .location-price {
+      font-size: 16px;
+      font-weight: 900;
+      font-family: 'Courier New', monospace;
+      margin-top: 6px;
+    }
+
+    .location-meta {
+      font-size: 10px;
+      color: #94a3b8;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .location-badge {
+      position: absolute;
+      top: -8px;
+      right: 10px;
+    }
+
+    /* ── 突き合わせ図 ── */
+    .match-box {
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+      margin: 16px 0;
+    }
+
+    .match-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .match-row:last-child {
+      border-bottom: none;
+    }
+
+    .match-label {
+      width: 200px;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .match-bar {
+      flex: 1;
+      height: 32px;
+      background: #f1f5f9;
+      border-radius: 6px;
+      position: relative;
+      overflow: visible;
+    }
+
+    .match-fill {
+      height: 100%;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 10px;
+      font-size: 12px;
+      font-weight: 900;
+      color: white;
+      font-family: 'Courier New', monospace;
+      white-space: nowrap;
+    }
+
+    .match-amount {
+      width: 120px;
+      text-align: right;
+      font-size: 14px;
+      font-weight: 900;
+      font-family: 'Courier New', monospace;
+      flex-shrink: 0;
+    }
+
+    /* ── 計算式ボックス ── */
+    .calc-block {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 2.2;
+    }
+
+    .calc-block .eq {
+      color: #64748b;
+      font-weight: 400;
+    }
+
+    .calc-block .num {
+      font-weight: 900;
+      color: #0f172a;
+    }
+
+    .calc-block .result {
+      font-weight: 900;
+      color: #dc2626;
+      font-size: 16px;
+    }
+
+    .calc-block .ok-result {
+      font-weight: 900;
+      color: #16a34a;
+      font-size: 16px;
+    }
+
+    /* ── 疑問リスト ── */
+    .question-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .question-item {
+      background: white;
+      border: 2px solid #fbbf24;
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      gap: 14px;
+    }
+
+    .question-num {
+      font-size: 18px;
+      font-weight: 900;
+      color: #d97706;
+      flex-shrink: 0;
+    }
+
+    .question-text {
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    .question-detail {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* ── 凡例 ── */
+    .legend {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 24px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+
+    /* ── 出典ボックス ── */
+    .source-box {
+      background: #f8fafc;
+      border-left: 3px solid #94a3b8;
+      padding: 10px 16px;
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 8px;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .source-box strong {
+      color: #475569;
+    }
+
+    /* ── arrow connector ── */
+    .arrow-down {
+      text-align: center;
+      padding: 8px 0;
+      font-size: 20px;
+      color: #cbd5e1;
+    }
+
+    /* flow diagram */
+    .flow-container {
+      display: flex;
+      gap: 12px;
+      align-items: stretch;
+      margin: 16px 0;
+    }
+
+    .flow-box {
+      flex: 1;
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .flow-box.source-a {
+      border-color: #3b82f6;
+      background: #eff6ff;
+    }
+
+    .flow-box.source-b {
+      border-color: #8b5cf6;
+      background: #f5f3ff;
+    }
+
+    .flow-arrow {
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+      color: #cbd5e1;
+      flex-shrink: 0;
+    }
+
+    .flow-box .flow-title {
+      font-size: 10px;
+      font-weight: 900;
+      color: #64748b;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    .flow-box .flow-value {
+      font-size: 22px;
+      font-weight: 900;
+      font-family: 'Courier New', monospace;
+    }
+
+    .flow-box .flow-note {
+      font-size: 10px;
+      color: #94a3b8;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    /* gap highlight */
+    .gap-highlight {
+      background: #fef2f2;
+      border: 2px dashed #f87171;
+      border-radius: 10px;
+      padding: 16px 20px;
+      text-align: center;
+      margin: 16px 0;
+    }
+
+    .gap-highlight .gap-label {
+      font-size: 10px;
+      font-weight: 900;
+      color: #dc2626;
+      letter-spacing: 0.1em;
+    }
+
+    .gap-highlight .gap-value {
+      font-size: 24px;
+      font-weight: 900;
+      color: #dc2626;
+      font-family: 'Courier New', monospace;
+    }
+
+    .gap-highlight .gap-note {
+      font-size: 11px;
+      color: #64748b;
+      font-weight: 500;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layout-wrapper">
+    <!-- サイドバー -->
+    <aside class="sidebar">
+      <header class="sidebar-header">
+        <h1>IT基盤刷新</h1>
+        <p>AKIBAホールディングス 情報システム部</p>
+      </header>
+      <nav>
+        <div class="nav-label-small">メニュー</div>
+        <a href="/index.html" class="nav-link">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+          メインページ
+        </a>
+      </nav>
+      <footer class="sidebar-footer">
+        <p>情報システム部 丹治</p>
+      </footer>
+    </aside>
+
+    <!-- メイン -->
+    <main class="main-scroll">
+      <h1 class="page-title">VarioSecure 費用分解</h1>
+      <p class="page-sub">作業用整理ノート｜全金額の出典と突き合わせ｜2026-02-21</p>
+
+      <!-- ========== 全体サマリ ========== -->
+      <div class="summary-row">
+        <div class="summary-card">
+          <div class="summary-label">値上げ前（税込）</div>
+          <div class="summary-value">¥118,000</div>
+          <div class="summary-note">SD-WAN比較資料「旧:11.8万円」</div>
+        </div>
+        <div class="summary-card" style="position:relative;">
+          <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);">
+            <span class="badge badge-warn">+20%値上げ</span>
+          </div>
+          <div class="summary-label">値上げ後・現行（税込）</div>
+          <div class="summary-value highlight" style="color:#dc2626;">¥142,000</div>
+          <div class="summary-note">西川メール 2026-02-06</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">検算</div>
+          <div class="summary-value" style="font-size:18px;">¥118,000 × 1.2</div>
+          <div class="summary-value" style="font-size:22px;margin-top:2px;">= ¥141,600</div>
+          <div class="summary-note" style="color:#dc2626;">¥400 のずれあり</div>
+        </div>
+      </div>
+
+      <!-- ========== 1. 拠点ごとの機器構成 ========== -->
+      <div class="section">
+        <div class="section-title">
+          <span class="section-num">1</span>
+          拠点ごとの機器と定価
+        </div>
+
+        <div class="legend">
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#86efac;border:2px solid #16a34a;"></div>
+            台帳で確認済み
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#fca5a5;border:2px dashed #dc2626;"></div>
+            台帳に記載なし（存在未確認）
+          </div>
+        </div>
+
+        <div class="location-grid">
+          <!-- 本社 -->
+          <div class="location-card main confirmed">
+            <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
+            <div class="location-name">本社（築地）</div>
+            <div class="location-model">VSR601J + VPN 100user</div>
+            <div class="location-price">¥40,000<span style="font-size:11px;color:#64748b;">/月</span></div>
+            <div class="location-meta">
+              契約: アドテック ｜ 満了: 2026/3/11<br>
+              管理ID: AM11715
+            </div>
+            <div class="source-box" style="margin-top:8px;">
+              VSR600系 ¥20,000 + リモートVPN100user ¥20,000（PDF定価・税抜）
+            </div>
+          </div>
+
+          <!-- R&D -->
+          <div class="location-card confirmed">
+            <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
+            <div class="location-name">R&D</div>
+            <div class="location-model">VSR402J</div>
+            <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
+            <div class="location-meta">
+              契約: アドテック（本社同一）<br>
+              ID: AM11714
+            </div>
+          </div>
+
+          <!-- 大阪 -->
+          <div class="location-card confirmed">
+            <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
+            <div class="location-name">大阪</div>
+            <div class="location-model">VSR402J</div>
+            <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
+            <div class="location-meta">
+              契約: アドテック（本社同一）<br>
+              ID: AM11716
+            </div>
+          </div>
+
+          <!-- 福岡 -->
+          <div class="location-card confirmed">
+            <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
+            <div class="location-name">福岡</div>
+            <div class="location-model">VSR402J</div>
+            <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
+            <div class="location-meta">
+              契約: AKIBA ｜ 満了: 2026/9/30<br>
+              ID: AM16268
+            </div>
+          </div>
+
+          <!-- 京橋 -->
+          <div class="location-card confirmed">
+            <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
+            <div class="location-name">京橋ビル</div>
+            <div class="location-model">VSR402J</div>
+            <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
+            <div class="location-meta">
+              契約: AKIBA ｜ 満了: 2026/5/31<br>
+              ID: AM17636
+            </div>
+          </div>
+
+          <!-- 和歌山 -->
+          <div class="location-card confirmed">
+            <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
+            <div class="location-name">和歌山</div>
+            <div class="location-model">VSR402J</div>
+            <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
+            <div class="location-meta">
+              契約: AKIBA ｜ 満了: 2026/2/28<br>
+              ID: AM16623
+            </div>
+          </div>
+
+          <!-- 橋本 -->
+          <div class="location-card unknown">
+            <div class="location-badge"><span class="badge badge-unknown">未確認</span></div>
+            <div class="location-name">橋本</div>
+            <div class="location-model">VSR402J ?</div>
+            <div class="location-price" style="color:#94a3b8;">¥10,400 ?</div>
+            <div class="location-meta">台帳・按分ともに記載なし</div>
+          </div>
+
+          <!-- 名古屋 -->
+          <div class="location-card unknown">
+            <div class="location-badge"><span class="badge badge-unknown">未確認</span></div>
+            <div class="location-name">名古屋</div>
+            <div class="location-model">VSR402J ?</div>
+            <div class="location-price" style="color:#94a3b8;">¥10,400 ?</div>
+            <div class="location-meta">台帳・按分ともに記載なし</div>
+          </div>
+        </div>
+
+        <div class="source-box">
+          <strong>出典:</strong> 契約管理台帳（ハードウェアレンタル契約セクション）、USEN GATE O2 ビジネスVPN(VSR) 提供料金表 P.15
+        </div>
+
+        <!-- 定価合計 -->
+        <div class="calc-block" style="margin-top:20px;">
+          <div style="font-size:11px;font-weight:900;color:#64748b;letter-spacing:0.08em;margin-bottom:8px;font-family:'Noto Sans JP';">PDF定価の積み上げ（税抜・24H保守の場合）</div>
+          <span class="eq">VSR601J</span> <span class="num">¥20,000</span>
+          <span class="eq"> + VPN100user</span> <span class="num">¥20,000</span>
+          <span class="eq"> + VSR402J×5</span> <span class="num">¥52,000</span>
+          <span class="eq"> = </span><span class="ok-result">¥92,000</span><span class="eq" style="font-size:11px;"> （確認済み6拠点）</span><br>
+          <span class="eq">VSR601J</span> <span class="num">¥20,000</span>
+          <span class="eq"> + VPN100user</span> <span class="num">¥20,000</span>
+          <span class="eq"> + VSR402J×7</span> <span class="num">¥72,800</span>
+          <span class="eq"> = </span><span class="result">¥112,800</span><span class="eq" style="font-size:11px;"> （橋本・名古屋込み8拠点の場合）</span>
+        </div>
+      </div>
+
+      <!-- ========== 2. 費用按分の中身 ========== -->
+      <div class="section">
+        <div class="section-title">
+          <span class="section-num">2</span>
+          費用按分シートの中身
+        </div>
+        <p class="section-desc">契約管理台帳「費用按分」シート（23年度Q4）。グループ会社間の経営指導料として四半期ごとに精算する金額。</p>
+
+        <div style="display:flex;gap:24px;margin-bottom:20px;">
+          <!-- USEN→AKIBA -->
+          <div style="flex:1;">
+            <div style="font-size:10px;font-weight:900;color:#64748b;letter-spacing:0.08em;margin-bottom:8px;">
+              USEN → AKIBA 直接請求
+            </div>
+            <table class="clean-table">
+              <thead>
+                <tr>
+                  <th>拠点</th>
+                  <th class="right">単価/月</th>
+                  <th>按分先</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>築地分</td>
+                  <td class="right"><span class="money">¥1,000</span></td>
+                  <td><span class="badge badge-info">AH</span></td>
+                </tr>
+                <tr>
+                  <td>BN京橋分</td>
+                  <td class="right"><span class="money">¥8,800</span></td>
+                  <td><span class="badge" style="background:#f3e8ff;color:#6b21a8;">BN</span></td>
+                </tr>
+                <tr>
+                  <td>BN和歌山分</td>
+                  <td class="right"><span class="money">¥8,800</span></td>
+                  <td><span class="badge" style="background:#f3e8ff;color:#6b21a8;">BN</span></td>
+                </tr>
+                <tr>
+                  <td>BN福岡分</td>
+                  <td class="right"><span class="money">¥10,000</span></td>
+                  <td><span class="badge" style="background:#f3e8ff;color:#6b21a8;">BN</span></td>
+                </tr>
+                <tr class="total-row">
+                  <td>小計</td>
+                  <td class="right"><span class="money big">¥28,600</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- USEN→アドテック -->
+          <div style="flex:1;">
+            <div style="font-size:10px;font-weight:900;color:#64748b;letter-spacing:0.08em;margin-bottom:8px;">
+              USEN → アドテック 直接請求
+            </div>
+            <table class="clean-table">
+              <thead>
+                <tr>
+                  <th>拠点</th>
+                  <th class="right">単価/月</th>
+                  <th>按分先</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>築地分<br><span style="font-size:10px;color:#94a3b8;">（本社+R&D+大阪の3拠点一括と推定）</span></td>
+                  <td class="right"><span class="money big">¥59,800</span></td>
+                  <td>
+                    <span class="badge badge-info">AH 30%</span><br>
+                    <span class="badge" style="background:#fef3c7;color:#92400e;margin-top:2px;">AD 70%</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="margin-top:12px;padding:12px;background:#f0fdf4;border:2px solid #86efac;border-radius:8px;font-size:12px;">
+              <div style="font-weight:900;color:#166534;margin-bottom:4px;">按分AH分: ¥59,800 × 30% = ¥17,940</div>
+              <div style="font-weight:900;color:#166534;">按分AD分: ¥59,800 × 70% = ¥41,860</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align:center;padding:16px;background:#f1f5f9;border-radius:10px;margin-bottom:16px;">
+          <div style="font-size:10px;font-weight:900;color:#64748b;letter-spacing:0.1em;">按分シート合計</div>
+          <div style="font-size:32px;font-weight:900;font-family:'Courier New',monospace;">¥88,400<span style="font-size:14px;color:#64748b;">/月（税抜と推定）</span></div>
+          <div style="font-size:11px;color:#64748b;font-weight:700;">= ¥28,600（AKIBA契約分） + ¥59,800（アドテック契約分）</div>
+        </div>
+
+        <div class="source-box">
+          <strong>出典:</strong> 6.契約管理台帳「費用按分」シート > 経営指導料 按分請求 23年度Q4 > ISP+VSR行
+        </div>
+      </div>
+
+      <!-- ========== 3. キーとなる突き合わせ ========== -->
+      <div class="section">
+        <div class="section-title">
+          <span class="section-num">3</span>
+          突き合わせ: 按分の数字はPDF定価と一致するか？
+        </div>
+
+        <!-- アドテック築地分の検証 -->
+        <div class="match-box">
+          <div style="font-size:12px;font-weight:900;color:#1e3a8a;margin-bottom:12px;">アドテック「築地分」¥59,800 の分解</div>
+
+          <table class="clean-table" style="margin-bottom:12px;">
+            <thead>
+              <tr>
+                <th>内訳</th>
+                <th class="right">PDF定価（税抜）</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>VSR601J 本社</td>
+                <td class="right"><span class="money">¥20,000</span></td>
+              </tr>
+              <tr>
+                <td>リモートVPN 100user</td>
+                <td class="right"><span class="money">¥20,000</span></td>
+              </tr>
+              <tr>
+                <td>VSR402J R&D</td>
+                <td class="right"><span class="money">¥10,400</span></td>
+              </tr>
+              <tr>
+                <td>VSR402J 大阪</td>
+                <td class="right"><span class="money">¥10,400</span></td>
+              </tr>
+              <tr class="total-row">
+                <td>PDF定価合計</td>
+                <td class="right"><span class="money big">¥60,800</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="calc-block">
+            <span class="eq">アドテック築地分</span> <span class="num">¥59,800</span>
+            <span class="eq"> + AKIBA築地分</span> <span class="num">¥1,000</span>
+            <span class="eq"> = </span><span class="ok-result">¥60,800</span><br>
+            <span class="eq">PDF定価合計（本社+R&D+大阪）= </span><span class="ok-result">¥60,800</span><br>
+            <span style="font-family:'Noto Sans JP';font-size:13px;font-weight:900;color:#16a34a;">→ 完全一致。按分の金額は税抜。</span>
+          </div>
+        </div>
+
+        <!-- BN拠点の検証 -->
+        <div class="match-box">
+          <div style="font-size:12px;font-weight:900;color:#1e3a8a;margin-bottom:12px;">BN拠点の按分単価 vs PDF定価</div>
+
+          <table class="clean-table">
+            <thead>
+              <tr>
+                <th>拠点</th>
+                <th class="right">按分単価</th>
+                <th class="right">PDF 24H</th>
+                <th class="right">PDF 平日</th>
+                <th>備考</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>京橋</td>
+                <td class="right"><span class="money">¥8,800</span></td>
+                <td class="right"><span class="money">¥10,400</span></td>
+                <td class="right"><span class="money">¥9,000</span></td>
+                <td><span class="badge badge-warn">どちらとも不一致</span></td>
+              </tr>
+              <tr>
+                <td>和歌山</td>
+                <td class="right"><span class="money">¥8,800</span></td>
+                <td class="right"><span class="money">¥10,400</span></td>
+                <td class="right"><span class="money">¥9,000</span></td>
+                <td><span class="badge badge-warn">どちらとも不一致</span></td>
+              </tr>
+              <tr>
+                <td>福岡</td>
+                <td class="right"><span class="money">¥10,000</span></td>
+                <td class="right"><span class="money">¥10,400</span></td>
+                <td class="right"><span class="money">¥9,000</span></td>
+                <td><span class="badge badge-warn">どちらとも不一致</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="padding:12px;background:#fffbeb;border:2px solid #fbbf24;border-radius:8px;margin-top:12px;font-size:12px;line-height:1.8;">
+            <strong style="color:#92400e;">考えられる理由:</strong><br>
+            1. 按分は「ISP+VSR」一括表記 → ISP費用を差し引くとVSR単体はさらに安い<br>
+            2. 個別契約で定価と異なる（値引き・旧料金体系の可能性）<br>
+            3. BN拠点は平日保守（¥9,000）で、ISP分¥200が足りない<br>
+            <strong style="color:#92400e;">→ いずれにせよ、BN拠点は「ISP込みで¥8,800〜¥10,000」という実績値</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== 4. 全体の突き合わせ ========== -->
+      <div class="section">
+        <div class="section-title">
+          <span class="section-num">4</span>
+          全体の突き合わせ
+        </div>
+
+        <div style="margin-bottom:24px;">
+          <!-- 棒グラフ風の比較 -->
+          <div class="match-box">
+            <div class="match-row">
+              <div class="match-label">按分合計（税抜）</div>
+              <div class="match-bar">
+                <div class="match-fill" style="width:82%;background:linear-gradient(90deg,#3b82f6,#60a5fa);">¥88,400</div>
+              </div>
+              <div class="match-amount" style="color:#3b82f6;">¥88,400</div>
+            </div>
+            <div class="match-row">
+              <div class="match-label">値上げ前÷1.1（税抜換算）</div>
+              <div class="match-bar">
+                <div class="match-fill" style="width:100%;background:linear-gradient(90deg,#f59e0b,#fbbf24);">¥107,273</div>
+              </div>
+              <div class="match-amount" style="color:#f59e0b;">¥107,273</div>
+            </div>
+            <div class="match-row">
+              <div class="match-label">PDF定価 6拠点（税抜）</div>
+              <div class="match-bar">
+                <div class="match-fill" style="width:86%;background:linear-gradient(90deg,#8b5cf6,#a78bfa);">¥92,000</div>
+              </div>
+              <div class="match-amount" style="color:#8b5cf6;">¥92,000</div>
+            </div>
+            <div class="match-row">
+              <div class="match-label">PDF定価 8拠点（税抜）</div>
+              <div class="match-bar">
+                <div class="match-fill" style="width:105%;background:linear-gradient(90deg,#10b981,#34d399);">¥112,800</div>
+              </div>
+              <div class="match-amount" style="color:#10b981;">¥112,800</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 差額の分析 -->
+        <div class="gap-highlight">
+          <div class="gap-label">按分に載っていない差額</div>
+          <div class="gap-value">¥18,873/月</div>
+          <div class="gap-note">= 値上げ前税抜 ¥107,273 - 按分合計 ¥88,400</div>
+        </div>
+
+        <div class="calc-block">
+          <div style="font-size:11px;font-weight:900;color:#64748b;letter-spacing:0.08em;margin-bottom:8px;font-family:'Noto Sans JP';">差額¥18,873は何に相当するか？</div>
+          <span class="eq">VSR402J × 2台（24H）= </span><span class="num">¥20,800</span><span class="eq"> → ¥1,927 超過</span><br>
+          <span class="eq">VSR402J × 2台（平日）= </span><span class="num">¥18,000</span><span class="eq"> → ¥873 不足</span><br>
+          <span class="eq">VSR402J 1台(24H) + 1台(平日) = </span><span class="num">¥19,400</span><span class="eq"> → ¥527 超過</span><br>
+          <span style="font-family:'Noto Sans JP';font-size:12px;font-weight:700;color:#64748b;">
+            → いずれも完全一致しない。ISP費用の按分方法か端数処理の影響と推定
+          </span>
+        </div>
+
+        <!-- フロー図: 値上げの計算 -->
+        <div style="margin-top:24px;">
+          <div style="font-size:12px;font-weight:900;color:#1e3a8a;margin-bottom:12px;">値上げ前→後の検算</div>
+          <div class="flow-container">
+            <div class="flow-box source-a">
+              <div class="flow-title">値上げ前（税込）</div>
+              <div class="flow-value" style="color:#3b82f6;">¥118,000</div>
+              <div class="flow-note">SD-WAN比較資料</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box" style="border-color:#f59e0b;background:#fffbeb;">
+              <div class="flow-title">× 1.2</div>
+              <div class="flow-value" style="color:#f59e0b;">¥141,600</div>
+              <div class="flow-note">計算上の値上げ後</div>
+            </div>
+            <div class="flow-arrow">≠</div>
+            <div class="flow-box" style="border-color:#dc2626;background:#fef2f2;">
+              <div class="flow-title">実際の値上げ後（税込）</div>
+              <div class="flow-value" style="color:#dc2626;">¥142,000</div>
+              <div class="flow-note">西川メール</div>
+            </div>
+          </div>
+          <div style="text-align:center;font-size:12px;color:#64748b;font-weight:700;margin-top:8px;">
+            差額 ¥400 → 端数丸め or 拠点ごとの値上げ率が微妙に異なる可能性
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== 5. 確認が必要なこと ========== -->
+      <div class="section">
+        <div class="section-title">
+          <span class="section-num">5</span>
+          確認が必要なこと
+        </div>
+
+        <div class="question-list">
+          <div class="question-item">
+            <div class="question-num">Q1</div>
+            <div>
+              <div class="question-text">橋本・名古屋にVSR機器は本当にあるのか？</div>
+              <div class="question-detail">
+                契約管理台帳に記載なし。費用按分にも記載なし。<br>
+                IIJ提案では「ルーター8台」に橋本・名古屋が含まれるが、VarioSecureの契約先が異なる可能性もある。<br>
+                → 西川（USEN）に直接確認するのが確実。
+              </div>
+            </div>
+          </div>
+
+          <div class="question-item">
+            <div class="question-num">Q2</div>
+            <div>
+              <div class="question-text">BN拠点の保守体制は24Hか平日か？</div>
+              <div class="question-detail">
+                按分単価（¥8,800〜¥10,000）はPDF定価のどちらとも一致しない。<br>
+                「ISP+VSR」一括表記のためVSR単体の保守料金が切り分けできない。
+              </div>
+            </div>
+          </div>
+
+          <div class="question-item">
+            <div class="question-num">Q3</div>
+            <div>
+              <div class="question-text">ISP費用とVSR費用の正確な内訳は？</div>
+              <div class="question-detail">
+                按分シートでは「ISP+VSR」として合算記載されている。<br>
+                USENからの請求書を確認すれば分離できる可能性がある。
+              </div>
+            </div>
+          </div>
+
+          <div class="question-item">
+            <div class="question-num">Q4</div>
+            <div>
+              <div class="question-text">¥118,000は税込で確定か？</div>
+              <div class="question-detail">
+                SD-WAN比較資料の「旧:11.8万円」の税区分が不明確。<br>
+                値上げ後¥142,000は西川メールで「税込」と明記されている。<br>
+                もし¥118,000が税抜なら: ¥118,000 × 1.1 = ¥129,800 → 値上げ後 ¥129,800 × 1.2 = ¥155,760（¥142,000と不一致）<br>
+                → ¥118,000は税込と考えるのが整合性がある。
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== 6. ここまでで確定していること ========== -->
+      <div class="section">
+        <div class="section-title">
+          <span class="section-num">6</span>
+          確定事項まとめ
+        </div>
+
+        <table class="clean-table">
+          <thead>
+            <tr>
+              <th>項目</th>
+              <th>内容</th>
+              <th>確度</th>
+              <th>出典</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>現行月額</td>
+              <td><span class="money">¥142,000（税込）</span></td>
+              <td><span class="badge badge-ok">確定</span></td>
+              <td>西川メール 2026-02-06</td>
+            </tr>
+            <tr>
+              <td>値上げ前月額</td>
+              <td><span class="money">¥118,000（税込）</span></td>
+              <td><span class="badge badge-warn">推定</span></td>
+              <td>SD-WAN比較資料「旧:11.8万円」</td>
+            </tr>
+            <tr>
+              <td>値上げ率</td>
+              <td>20%（2025年4月実施）</td>
+              <td><span class="badge badge-ok">確定</span></td>
+              <td>西川メール、概算予算一覧</td>
+            </tr>
+            <tr>
+              <td>確認済み拠点</td>
+              <td>6拠点（築地・R&D・大阪・福岡・和歌山・京橋）</td>
+              <td><span class="badge badge-ok">確定</span></td>
+              <td>契約管理台帳</td>
+            </tr>
+            <tr>
+              <td>本社機器</td>
+              <td>VSR601J + リモートVPN 100user</td>
+              <td><span class="badge badge-ok">確定</span></td>
+              <td>契約管理台帳</td>
+            </tr>
+            <tr>
+              <td>他拠点機器</td>
+              <td>VSR402J × 5台</td>
+              <td><span class="badge badge-ok">確定</span></td>
+              <td>契約管理台帳</td>
+            </tr>
+            <tr>
+              <td>按分シートの税区分</td>
+              <td>税抜（PDF定価との突き合わせで確認）</td>
+              <td><span class="badge badge-ok">確定</span></td>
+              <td>按分¥60,800 = PDF定価¥60,800</td>
+            </tr>
+            <tr>
+              <td>5年間総額（現行継続）</td>
+              <td><span class="money">¥8,520,000（税込）</span></td>
+              <td><span class="badge badge-ok">確定</span></td>
+              <td>¥142,000 × 60ヶ月</td>
+            </tr>
+            <tr>
+              <td>橋本・名古屋</td>
+              <td>VSR機器の有無不明</td>
+              <td><span class="badge badge-unknown">未確認</span></td>
+              <td>台帳・按分に記載なし</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <footer style="margin-top:64px;padding-top:24px;border-top:2px solid #e2e8f0;text-align:center;color:#94a3b8;font-size:10px;font-weight:700;">
+        作業用整理ノート｜AKIBAホールディングス 情報システム部
+      </footer>
+    </main>
+  </div>
+</body>
+
+</html>
