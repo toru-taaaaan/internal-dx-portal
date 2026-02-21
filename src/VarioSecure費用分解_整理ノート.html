@@ -655,14 +655,19 @@
           </div>
 
           <!-- 大阪 -->
-          <div class="location-card confirmed">
-            <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
+          <div class="location-card confirmed" style="border-color:#f59e0b;border-width:3px;">
+            <div class="location-badge"><span class="badge badge-warn">機器入替済</span></div>
             <div class="location-name">大阪</div>
-            <div class="location-model">VSR402J</div>
-            <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
+            <div class="location-model">VSR601J（LBO対応で入替）</div>
+            <div class="location-price">¥20,000<span style="font-size:11px;color:#64748b;">/月</span></div>
             <div class="location-meta">
               契約: アドテック（本社同一）<br>
-              ID: AM11716
+              ID: AM11716<br>
+              <span style="color:#d97706;">※台帳はVSR402Jのまま未更新</span>
+            </div>
+            <div class="source-box" style="margin-top:8px;">
+              LBOにはVSR600以上+FWオプションが必須（西川メール 2026-02-06）<br>
+              大阪はLBO構成（丹治メール 2026-01-21で言及）
             </div>
           </div>
 
@@ -727,15 +732,18 @@
 
         <!-- 定価合計 -->
         <div class="calc-block" style="margin-top:20px;">
-          <div style="font-size:11px;font-weight:900;color:#64748b;letter-spacing:0.08em;margin-bottom:8px;font-family:'Noto Sans JP';">PDF定価の積み上げ（税抜・24H保守の場合）</div>
-          <span class="eq">VSR601J</span> <span class="num">¥20,000</span>
+          <div style="font-size:11px;font-weight:900;color:#64748b;letter-spacing:0.08em;margin-bottom:8px;font-family:'Noto Sans JP';">PDF定価の積み上げ（税抜・24H保守・現行構成）</div>
+          <span class="eq">VSR601J×2（本社+大阪）</span> <span class="num">¥40,000</span>
           <span class="eq"> + VPN100user</span> <span class="num">¥20,000</span>
-          <span class="eq"> + VSR402J×5</span> <span class="num">¥52,000</span>
-          <span class="eq"> = </span><span class="ok-result">¥92,000</span><span class="eq" style="font-size:11px;"> （確認済み6拠点）</span><br>
-          <span class="eq">VSR601J</span> <span class="num">¥20,000</span>
+          <span class="eq"> + VSR402J×4</span> <span class="num">¥41,600</span>
+          <span class="eq"> = </span><span class="ok-result">¥101,600</span><span class="eq" style="font-size:11px;"> （確認済み6拠点）</span><br>
+          <span class="eq">VSR601J×2（本社+大阪）</span> <span class="num">¥40,000</span>
           <span class="eq"> + VPN100user</span> <span class="num">¥20,000</span>
-          <span class="eq"> + VSR402J×7</span> <span class="num">¥72,800</span>
-          <span class="eq"> = </span><span class="result">¥112,800</span><span class="eq" style="font-size:11px;"> （橋本・名古屋込み8拠点の場合）</span>
+          <span class="eq"> + VSR402J×6</span> <span class="num">¥62,400</span>
+          <span class="eq"> = </span><span class="result">¥122,400</span><span class="eq" style="font-size:11px;"> （橋本・名古屋込み8拠点の場合）</span>
+          <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-top:8px;font-family:'Noto Sans JP';">
+            ※大阪はLBO対応のためVSR402J→VSR601Jに入替済み。台帳は旧品番のまま。
+          </div>
         </div>
       </div>
 
@@ -844,6 +852,8 @@
         <div class="match-box">
           <div style="font-size:12px;font-weight:900;color:#1e3a8a;margin-bottom:12px;">アドテック「築地分」¥59,800 の分解</div>
 
+          <!-- 旧構成（按分作成時） -->
+          <div style="font-size:10px;font-weight:900;color:#64748b;letter-spacing:0.08em;margin-bottom:6px;">按分作成時の構成（大阪=VSR402J）</div>
           <table class="clean-table" style="margin-bottom:12px;">
             <thead>
               <tr>
@@ -865,11 +875,11 @@
                 <td class="right"><span class="money">¥10,400</span></td>
               </tr>
               <tr>
-                <td>VSR402J 大阪</td>
-                <td class="right"><span class="money">¥10,400</span></td>
+                <td><span style="text-decoration:line-through;color:#94a3b8;">VSR402J 大阪</span></td>
+                <td class="right"><span class="money" style="text-decoration:line-through;color:#94a3b8;">¥10,400</span></td>
               </tr>
               <tr class="total-row">
-                <td>PDF定価合計</td>
+                <td>旧構成合計</td>
                 <td class="right"><span class="money big">¥60,800</span></td>
               </tr>
             </tbody>
@@ -879,8 +889,47 @@
             <span class="eq">アドテック築地分</span> <span class="num">¥59,800</span>
             <span class="eq"> + AKIBA築地分</span> <span class="num">¥1,000</span>
             <span class="eq"> = </span><span class="ok-result">¥60,800</span><br>
-            <span class="eq">PDF定価合計（本社+R&D+大阪）= </span><span class="ok-result">¥60,800</span><br>
-            <span style="font-family:'Noto Sans JP';font-size:13px;font-weight:900;color:#16a34a;">→ 完全一致。按分の金額は税抜。</span>
+            <span class="eq">旧構成PDF定価合計（本社+R&D+大阪VSR402J）= </span><span class="ok-result">¥60,800</span><br>
+            <span style="font-family:'Noto Sans JP';font-size:13px;font-weight:900;color:#16a34a;">→ 完全一致。按分は旧構成（大阪=VSR402J）時点のデータ。</span>
+          </div>
+
+          <!-- 現行構成 -->
+          <div style="margin-top:20px;padding:16px;background:#fffbeb;border:2px solid #f59e0b;border-radius:8px;">
+            <div style="font-size:10px;font-weight:900;color:#92400e;letter-spacing:0.08em;margin-bottom:8px;">現行構成（大阪=VSR601J入替後）</div>
+            <table class="clean-table" style="margin-bottom:8px;">
+              <thead>
+                <tr>
+                  <th>内訳</th>
+                  <th class="right">PDF定価（税抜）</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>VSR601J 本社</td>
+                  <td class="right"><span class="money">¥20,000</span></td>
+                </tr>
+                <tr>
+                  <td>リモートVPN 100user</td>
+                  <td class="right"><span class="money">¥20,000</span></td>
+                </tr>
+                <tr>
+                  <td>VSR402J R&D</td>
+                  <td class="right"><span class="money">¥10,400</span></td>
+                </tr>
+                <tr style="background:#fef3c7;">
+                  <td><strong>VSR601J 大阪（LBO対応）</strong></td>
+                  <td class="right"><span class="money" style="color:#d97706;">¥20,000</span></td>
+                </tr>
+                <tr class="total-row">
+                  <td>現行構成合計</td>
+                  <td class="right"><span class="money big" style="color:#d97706;">¥70,400</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="font-size:12px;font-weight:700;color:#92400e;line-height:1.8;">
+              按分との差額: ¥70,400 - ¥60,800 = <strong>¥9,600/月</strong>（大阪の機器グレードアップ分）<br>
+              → 按分シートは機器入替前のまま未更新と推定
+            </div>
           </div>
         </div>
 
@@ -958,18 +1007,18 @@
               <div class="match-amount" style="color:#f59e0b;">¥107,273</div>
             </div>
             <div class="match-row">
-              <div class="match-label">PDF定価 6拠点（税抜）</div>
+              <div class="match-label">PDF定価 6拠点・現行（税抜）</div>
               <div class="match-bar">
-                <div class="match-fill" style="width:86%;background:linear-gradient(90deg,#8b5cf6,#a78bfa);">¥92,000</div>
+                <div class="match-fill" style="width:95%;background:linear-gradient(90deg,#8b5cf6,#a78bfa);">¥101,600</div>
               </div>
-              <div class="match-amount" style="color:#8b5cf6;">¥92,000</div>
+              <div class="match-amount" style="color:#8b5cf6;">¥101,600</div>
             </div>
             <div class="match-row">
-              <div class="match-label">PDF定価 8拠点（税抜）</div>
+              <div class="match-label">PDF定価 8拠点・現行（税抜）</div>
               <div class="match-bar">
-                <div class="match-fill" style="width:105%;background:linear-gradient(90deg,#10b981,#34d399);">¥112,800</div>
+                <div class="match-fill" style="width:114%;background:linear-gradient(90deg,#10b981,#34d399);">¥122,400</div>
               </div>
-              <div class="match-amount" style="color:#10b981;">¥112,800</div>
+              <div class="match-amount" style="color:#10b981;">¥122,400</div>
             </div>
           </div>
         </div>
@@ -982,12 +1031,22 @@
         </div>
 
         <div class="calc-block">
-          <div style="font-size:11px;font-weight:900;color:#64748b;letter-spacing:0.08em;margin-bottom:8px;font-family:'Noto Sans JP';">差額¥18,873は何に相当するか？</div>
-          <span class="eq">VSR402J × 2台（24H）= </span><span class="num">¥20,800</span><span class="eq"> → ¥1,927 超過</span><br>
-          <span class="eq">VSR402J × 2台（平日）= </span><span class="num">¥18,000</span><span class="eq"> → ¥873 不足</span><br>
-          <span class="eq">VSR402J 1台(24H) + 1台(平日) = </span><span class="num">¥19,400</span><span class="eq"> → ¥527 超過</span><br>
+          <div style="font-size:11px;font-weight:900;color:#64748b;letter-spacing:0.08em;margin-bottom:8px;font-family:'Noto Sans JP';">差額の構造</div>
+          <span class="eq">値上げ前税抜</span> <span class="num">¥107,273</span>
+          <span class="eq"> − 按分合計</span> <span class="num">¥88,400</span>
+          <span class="eq"> = </span><span class="result">¥18,873</span><br>
+          <span class="eq">PDF定価6拠点（現行）</span> <span class="num">¥101,600</span>
+          <span class="eq"> − 按分合計</span> <span class="num">¥88,400</span>
+          <span class="eq"> = </span><span class="result">¥13,200</span><br><br>
+          <div style="font-size:11px;font-weight:900;color:#64748b;letter-spacing:0.08em;margin-bottom:4px;font-family:'Noto Sans JP';">差額¥13,200の内訳推定</div>
+          <span class="eq">大阪 入替差額（按分未反映分）= </span><span class="num">¥9,600</span><br>
+          <span class="eq">残り ¥13,200 − ¥9,600 = </span><span class="num">¥3,600</span><span class="eq"> → ISP費用 or 端数処理</span><br><br>
+          <div style="font-size:11px;font-weight:900;color:#64748b;letter-spacing:0.08em;margin-bottom:4px;font-family:'Noto Sans JP';">残り¥5,673（値上げ前税抜 − PDF定価6拠点）</div>
+          <span class="eq">¥107,273 − ¥101,600 = </span><span class="num">¥5,673</span><br>
+          <span class="eq">→ 橋本・名古屋のVSR費用（¥5,673÷2 ≈ ¥2,837/拠点）</span><br>
+          <span class="eq">  or ISP費用込みの合計からVSR分を差し引いた残余</span><br>
           <span style="font-family:'Noto Sans JP';font-size:12px;font-weight:700;color:#64748b;">
-            → いずれも完全一致しない。ISP費用の按分方法か端数処理の影響と推定
+            → 按分は大阪入替前のデータ。橋本・名古屋の費用は按分外で処理されている可能性
           </span>
         </div>
 
@@ -1124,16 +1183,28 @@
               <td>契約管理台帳</td>
             </tr>
             <tr>
+              <td>大阪機器</td>
+              <td>VSR601J（LBO対応で入替済）</td>
+              <td><span class="badge badge-ok">確定</span></td>
+              <td>丹治メール 2026-01-21、西川メール 2026-02-06（LBOはVSR600以上必須）</td>
+            </tr>
+            <tr>
               <td>他拠点機器</td>
-              <td>VSR402J × 5台</td>
+              <td>VSR402J × 4台（R&D・福岡・和歌山・京橋）</td>
               <td><span class="badge badge-ok">確定</span></td>
               <td>契約管理台帳</td>
             </tr>
             <tr>
               <td>按分シートの税区分</td>
-              <td>税抜（PDF定価との突き合わせで確認）</td>
+              <td>税抜（旧構成時のPDF定価との突き合わせで確認）</td>
               <td><span class="badge badge-ok">確定</span></td>
-              <td>按分¥60,800 = PDF定価¥60,800</td>
+              <td>按分¥60,800 = 旧構成PDF定価¥60,800（大阪VSR402J時点）</td>
+            </tr>
+            <tr>
+              <td>按分シートの更新状況</td>
+              <td>大阪の機器入替（VSR402J→VSR601J）が未反映</td>
+              <td><span class="badge badge-warn">推定</span></td>
+              <td>按分¥60,800は旧構成と一致、現行構成¥70,400とは不一致</td>
             </tr>
             <tr>
               <td>5年間総額（現行継続）</td>
