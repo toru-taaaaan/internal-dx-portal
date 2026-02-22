@@ -499,60 +499,77 @@
         <div style="font-size:14px;font-weight:700;color:#fff;background:#7c3aed;display:inline-block;padding:5px 14px;border-radius:4px;margin-bottom:18px;">② この費用で</div>
         <div style="font-size:18px;color:#374151;margin-bottom:4px;">全国 <span style="font-size:60px;font-weight:800;color:#7c3aed;line-height:1.1;vertical-align:middle;">8</span> 拠点をカバーしている</div>
 
-        <!-- 業務NW + SECOM -->
-        <div style="margin-top:20px;">
-          <div style="font-size:11px;font-weight:900;color:#1d4ed8;letter-spacing:0.08em;margin-bottom:8px;">業務ネットワーク + SECOM</div>
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;">
-            <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:18px;text-align:center;color:#1e40af;">
-              <div style="font-size:17px;font-weight:600;">築地（本社）</div>
-              <div style="font-size:20px;font-weight:800;margin-top:6px;">¥40,000</div>
-              <div style="font-size:11px;color:#3b82f6;margin-top:2px;">VSR601J + VPN 100u</div>
-            </div>
-            <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:18px;text-align:center;color:#1e40af;">
-              <div style="font-size:17px;font-weight:600;">大阪</div>
-              <div style="font-size:20px;font-weight:800;margin-top:6px;">¥20,000</div>
-              <div style="font-size:11px;color:#3b82f6;margin-top:2px;">VSR601J</div>
-            </div>
-            <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:18px;text-align:center;color:#1e40af;">
-              <div style="font-size:17px;font-weight:600;">多摩</div>
-              <div style="font-size:20px;font-weight:800;margin-top:6px;">¥10,400</div>
-              <div style="font-size:11px;color:#3b82f6;margin-top:2px;">VSR402J</div>
-            </div>
-            <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:18px;text-align:center;color:#1e40af;">
-              <div style="font-size:17px;font-weight:600;">橋本</div>
-              <div style="font-size:20px;font-weight:800;margin-top:6px;">¥10,400</div>
-              <div style="font-size:11px;color:#3b82f6;margin-top:2px;">VSR402J</div>
-            </div>
-          </div>
-        </div>
+        <!-- 3カラム: Catoグループ | 築地（中心） | VarioSecureグループ -->
+        <div style="display:grid;grid-template-columns:1fr 160px 1fr;gap:24px;margin-top:20px;align-items:start;">
 
-        <!-- SECOM専用 -->
-        <div>
-          <div style="font-size:11px;font-weight:900;color:#dc2626;letter-spacing:0.08em;margin-bottom:8px;">SECOM通信専用</div>
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;">
-            <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:18px;text-align:center;color:#991b1b;">
-              <div style="font-size:17px;font-weight:600;">福岡</div>
-              <div style="font-size:20px;font-weight:800;margin-top:6px;">¥10,400</div>
-              <div style="font-size:11px;color:#dc2626;margin-top:2px;">VSR402J</div>
+          <!-- LEFT: Catoに入れ替えるグループ -->
+          <div>
+            <div style="text-align:center;font-size:11px;font-weight:900;letter-spacing:0.08em;color:#5b21b6;background:#f5f3ff;border:2px solid #7c3aed;border-radius:8px;padding:8px 12px;margin-bottom:12px;">
+              Catoに入れ替え
             </div>
-            <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:18px;text-align:center;color:#991b1b;">
-              <div style="font-size:17px;font-weight:600;">和歌山</div>
-              <div style="font-size:20px;font-weight:800;margin-top:6px;">¥10,400</div>
-              <div style="font-size:11px;color:#dc2626;margin-top:2px;">VSR402J</div>
+            <div style="display:grid;gap:10px;">
+              <div style="background:#f5f3ff;border:1px solid #c4b5fd;border-radius:8px;padding:14px 16px;color:#5b21b6;">
+                <div style="font-size:16px;font-weight:700;">大阪</div>
+                <div style="font-size:20px;font-weight:900;margin-top:4px;font-family:'Courier New';">¥20,000</div>
+                <div style="font-size:10px;color:#7c3aed;margin-top:2px;">VSR601J → Cato</div>
+              </div>
+              <div style="background:#f5f3ff;border:1px solid #c4b5fd;border-radius:8px;padding:14px 16px;color:#5b21b6;">
+                <div style="font-size:16px;font-weight:700;">多摩</div>
+                <div style="font-size:20px;font-weight:900;margin-top:4px;font-family:'Courier New';">¥10,400</div>
+                <div style="font-size:10px;color:#7c3aed;margin-top:2px;">VSR402J → Cato</div>
+              </div>
+              <div style="background:#f5f3ff;border:1px solid #c4b5fd;border-radius:8px;padding:14px 16px;color:#5b21b6;">
+                <div style="font-size:16px;font-weight:700;">橋本</div>
+                <div style="font-size:20px;font-weight:900;margin-top:4px;font-family:'Courier New';">¥10,400</div>
+                <div style="font-size:10px;color:#7c3aed;margin-top:2px;">VSR402J → Cato</div>
+              </div>
             </div>
-            <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:18px;text-align:center;color:#991b1b;">
-              <div style="font-size:17px;font-weight:600;">京橋</div>
-              <div style="font-size:20px;font-weight:800;margin-top:6px;">¥10,400</div>
-              <div style="font-size:11px;color:#dc2626;margin-top:2px;">VSR402J</div>
+          </div>
+
+          <!-- CENTER: 築地本社（両グループ中心） -->
+          <div style="display:flex;flex-direction:column;align-items:center;">
+            <div style="background:#0f172a;border-radius:12px;padding:20px 14px;color:white;text-align:center;width:100%;">
+              <div style="font-size:9px;font-weight:900;letter-spacing:0.12em;color:#64748b;margin-bottom:8px;">両グループ中心</div>
+              <div style="font-size:17px;font-weight:900;">築地</div>
+              <div style="font-size:11px;color:#94a3b8;">本社</div>
+              <div style="font-size:21px;font-weight:900;margin-top:10px;font-family:'Courier New';color:#e2e8f0;">¥40,000</div>
+              <div style="font-size:10px;color:#64748b;margin-top:4px;">VSR601J + VPN 100u</div>
+              <div style="margin-top:12px;border-top:1px solid #334155;padding-top:10px;font-size:9px;color:#64748b;line-height:1.9;">
+                ← Catoグループ<br>VarioSecureグループ →
+              </div>
             </div>
-            <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:18px;text-align:center;color:#991b1b;">
-              <div style="font-size:17px;font-weight:600;">名古屋</div>
-              <div style="font-size:20px;font-weight:800;margin-top:6px;">¥10,400</div>
-              <div style="font-size:11px;color:#dc2626;margin-top:2px;">VSR402J</div>
+          </div>
+
+          <!-- RIGHT: VarioSecureを残すグループ -->
+          <div>
+            <div style="text-align:center;font-size:11px;font-weight:900;letter-spacing:0.08em;color:#991b1b;background:#fef2f2;border:2px solid #dc2626;border-radius:8px;padding:8px 12px;margin-bottom:12px;">
+              VarioSecureを残す
+            </div>
+            <div style="display:grid;gap:10px;">
+              <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:14px 16px;color:#991b1b;">
+                <div style="font-size:16px;font-weight:700;">福岡</div>
+                <div style="font-size:20px;font-weight:900;margin-top:4px;font-family:'Courier New';">¥10,400</div>
+                <div style="font-size:10px;color:#dc2626;margin-top:2px;">SECOM通信専用</div>
+              </div>
+              <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:14px 16px;color:#991b1b;">
+                <div style="font-size:16px;font-weight:700;">和歌山</div>
+                <div style="font-size:20px;font-weight:900;margin-top:4px;font-family:'Courier New';">¥10,400</div>
+                <div style="font-size:10px;color:#dc2626;margin-top:2px;">SECOM通信専用</div>
+              </div>
+              <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:14px 16px;color:#991b1b;">
+                <div style="font-size:16px;font-weight:700;">京橋</div>
+                <div style="font-size:20px;font-weight:900;margin-top:4px;font-family:'Courier New';">¥10,400</div>
+                <div style="font-size:10px;color:#dc2626;margin-top:2px;">SECOM通信専用</div>
+              </div>
+              <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:14px 16px;color:#991b1b;">
+                <div style="font-size:16px;font-weight:700;">名古屋</div>
+                <div style="font-size:20px;font-weight:900;margin-top:4px;font-family:'Courier New';">¥10,400</div>
+                <div style="font-size:10px;color:#dc2626;margin-top:2px;">SECOM通信専用</div>
+              </div>
             </div>
           </div>
         </div>
-        <div style="font-size:14px;color:#9ca3af;">拠点ごとの機器・定価の詳細はセクション1を参照</div>
+        <div style="font-size:13px;color:#9ca3af;margin-top:16px;">拠点ごとの機器・契約詳細はセクション1を参照</div>
       </div>
 
     </div>
@@ -575,109 +592,123 @@
         </div>
       </div>
 
-      <div class="location-grid">
-        <!-- 本社 -->
-        <div class="location-card main confirmed">
-          <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
-          <div class="location-name">本社（築地）</div>
-          <div class="location-model">VSR601J + VPN 100user</div>
-          <div class="location-price">¥40,000<span style="font-size:11px;color:#64748b;">/月</span></div>
-          <div class="location-meta">
-            契約: アドテック ｜ 満了: 2026/3/11<br>
-            管理ID: AM11715
+      <!-- 3カラム: Catoグループ | 築地（中心） | VarioSecureグループ -->
+      <div style="display:grid;grid-template-columns:1fr 210px 1fr;gap:20px;align-items:start;">
+
+        <!-- LEFT: Catoに入れ替えるグループ -->
+        <div>
+          <div style="text-align:center;font-size:11px;font-weight:900;letter-spacing:0.08em;color:#5b21b6;background:#f5f3ff;border:2px solid #7c3aed;border-radius:8px;padding:8px 12px;margin-bottom:12px;">
+            Catoに入れ替えるグループ
           </div>
-          <div class="source-box" style="margin-top:8px;">
-            VSR600系 ¥20,000 + リモートVPN100user ¥20,000（PDF定価・税抜）
+          <!-- 大阪 -->
+          <div class="location-card confirmed" style="border-color:#f59e0b;border-width:3px;margin-bottom:12px;">
+            <div class="location-badge"><span class="badge badge-warn">機器入替済</span></div>
+            <div class="location-name">大阪</div>
+            <div class="location-model">VSR601J（LBO対応で入替）</div>
+            <div class="location-price">¥20,000<span style="font-size:11px;color:#64748b;">/月</span></div>
+            <div class="location-meta">
+              契約: アドテック（本社同一）<br>
+              ID: AM11716<br>
+              <span style="color:#d97706;">※台帳はVSR402Jのまま未更新</span>
+            </div>
+            <div class="source-box" style="margin-top:8px;">
+              LBOにはVSR600以上+FWオプションが必須（西川メール 2026-02-06）<br>
+              大阪はLBO構成（丹治メール 2026-01-21で言及）
+            </div>
+          </div>
+          <!-- 多摩 -->
+          <div class="location-card confirmed" style="margin-bottom:12px;">
+            <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
+            <div class="location-name">多摩（R&D・物流センター）</div>
+            <div class="location-model">VSR402J</div>
+            <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
+            <div class="location-meta">
+              契約: アドテック（本社同一）<br>
+              ID: AM11714
+            </div>
+          </div>
+          <!-- 橋本 -->
+          <div class="location-card" style="border-color:#fbbf24;border-width:2px;">
+            <div class="location-badge"><span class="badge badge-warn">按分なし</span></div>
+            <div class="location-name">橋本</div>
+            <div class="location-model">VSR402J</div>
+            <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
+            <div class="location-meta">
+              台帳に記載あり（契約日等は空欄）<br>
+              <span style="color:#d97706;">※按分シートには記載なし</span>
+            </div>
           </div>
         </div>
 
-        <!-- 多摩 -->
-        <div class="location-card confirmed">
-          <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
-          <div class="location-name">多摩（R&D・物流センター）</div>
-          <div class="location-model">VSR402J</div>
-          <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
-          <div class="location-meta">
-            契約: アドテック（本社同一）<br>
-            ID: AM11714
+        <!-- CENTER: 築地本社（両グループ中心） -->
+        <div>
+          <div style="text-align:center;font-size:11px;font-weight:900;letter-spacing:0.08em;color:#0f172a;background:#f1f5f9;border:2px solid #0f172a;border-radius:8px;padding:8px 12px;margin-bottom:12px;">
+            両グループ中心
+          </div>
+          <div class="location-card confirmed" style="border-color:#1e3a8a;border-width:3px;">
+            <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
+            <div class="location-name">本社（築地）</div>
+            <div class="location-model">VSR601J + VPN 100user</div>
+            <div class="location-price">¥40,000<span style="font-size:11px;color:#64748b;">/月</span></div>
+            <div class="location-meta">
+              契約: アドテック ｜ 満了: 2026/3/11<br>
+              管理ID: AM11715
+            </div>
+            <div class="source-box" style="margin-top:8px;">
+              VSR600系 ¥20,000 + リモートVPN100user ¥20,000（PDF定価・税抜）
+            </div>
           </div>
         </div>
 
-        <!-- 大阪 -->
-        <div class="location-card confirmed" style="border-color:#f59e0b;border-width:3px;">
-          <div class="location-badge"><span class="badge badge-warn">機器入替済</span></div>
-          <div class="location-name">大阪</div>
-          <div class="location-model">VSR601J（LBO対応で入替）</div>
-          <div class="location-price">¥20,000<span style="font-size:11px;color:#64748b;">/月</span></div>
-          <div class="location-meta">
-            契約: アドテック（本社同一）<br>
-            ID: AM11716<br>
-            <span style="color:#d97706;">※台帳はVSR402Jのまま未更新</span>
+        <!-- RIGHT: VarioSecureを残すグループ -->
+        <div>
+          <div style="text-align:center;font-size:11px;font-weight:900;letter-spacing:0.08em;color:#991b1b;background:#fef2f2;border:2px solid #dc2626;border-radius:8px;padding:8px 12px;margin-bottom:12px;">
+            VarioSecureを残すグループ
           </div>
-          <div class="source-box" style="margin-top:8px;">
-            LBOにはVSR600以上+FWオプションが必須（西川メール 2026-02-06）<br>
-            大阪はLBO構成（丹治メール 2026-01-21で言及）
+          <!-- 福岡 -->
+          <div class="location-card confirmed" style="margin-bottom:12px;">
+            <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
+            <div class="location-name">福岡</div>
+            <div class="location-model">VSR402J</div>
+            <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
+            <div class="location-meta">
+              契約: AKIBA ｜ 満了: 2026/9/30<br>
+              ID: AM16268
+            </div>
           </div>
-        </div>
-
-        <!-- 福岡 -->
-        <div class="location-card confirmed">
-          <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
-          <div class="location-name">福岡</div>
-          <div class="location-model">VSR402J</div>
-          <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
-          <div class="location-meta">
-            契約: AKIBA ｜ 満了: 2026/9/30<br>
-            ID: AM16268
+          <!-- 和歌山 -->
+          <div class="location-card confirmed" style="margin-bottom:12px;">
+            <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
+            <div class="location-name">和歌山</div>
+            <div class="location-model">VSR402J</div>
+            <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
+            <div class="location-meta">
+              契約: AKIBA ｜ 満了: 2026/2/28<br>
+              ID: AM16623
+            </div>
           </div>
-        </div>
-
-        <!-- 京橋 -->
-        <div class="location-card confirmed">
-          <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
-          <div class="location-name">京橋ビル</div>
-          <div class="location-model">VSR402J</div>
-          <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
-          <div class="location-meta">
-            契約: AKIBA ｜ 満了: 2026/5/31<br>
-            ID: AM17636
+          <!-- 京橋 -->
+          <div class="location-card confirmed" style="margin-bottom:12px;">
+            <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
+            <div class="location-name">京橋ビル</div>
+            <div class="location-model">VSR402J</div>
+            <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
+            <div class="location-meta">
+              契約: AKIBA ｜ 満了: 2026/5/31<br>
+              ID: AM17636
+            </div>
           </div>
-        </div>
-
-        <!-- 和歌山 -->
-        <div class="location-card confirmed">
-          <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
-          <div class="location-name">和歌山</div>
-          <div class="location-model">VSR402J</div>
-          <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
-          <div class="location-meta">
-            契約: AKIBA ｜ 満了: 2026/2/28<br>
-            ID: AM16623
-          </div>
-        </div>
-
-        <!-- 橋本 -->
-        <div class="location-card" style="border-color:#fbbf24;border-width:2px;">
-          <div class="location-badge"><span class="badge badge-warn">按分なし</span></div>
-          <div class="location-name">橋本</div>
-          <div class="location-model">VSR402J</div>
-          <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
-          <div class="location-meta">
-            台帳に記載あり（契約日等は空欄）<br>
-            <span style="color:#d97706;">※按分シートには記載なし</span>
-          </div>
-        </div>
-
-        <!-- 名古屋 -->
-        <div class="location-card" style="border-color:#fbbf24;border-width:2px;">
-          <div class="location-badge"><span class="badge badge-warn">按分なし</span></div>
-          <div class="location-name">名古屋</div>
-          <div class="location-model">VSR402J</div>
-          <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
-          <div class="location-meta">
-            台帳に記載あり ｜ 満了: 2026/8/22<br>
-            開始: 2024/8/22（1年5ヶ月）<br>
-            <span style="color:#d97706;">※按分シートには記載なし</span>
+          <!-- 名古屋 -->
+          <div class="location-card" style="border-color:#fbbf24;border-width:2px;">
+            <div class="location-badge"><span class="badge badge-warn">按分なし</span></div>
+            <div class="location-name">名古屋</div>
+            <div class="location-model">VSR402J</div>
+            <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
+            <div class="location-meta">
+              台帳に記載あり ｜ 満了: 2026/8/22<br>
+              開始: 2024/8/22（1年5ヶ月）<br>
+              <span style="color:#d97706;">※按分シートには記載なし</span>
+            </div>
           </div>
         </div>
       </div>
