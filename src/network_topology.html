@@ -945,162 +945,69 @@
                 </div>
             </div>
 
-            <!-- ====== 月額ランニングコスト統合表 ====== -->
-            <div id="monthly-total" class="socket-sim cost-sim" style="margin-top: 2rem;">
-                <h3>移行後 月額ランニングコスト統合表</h3>
-                <p class="sim-lead">
-                    SECOM通信が必要な5拠点はVarioSecure継続、残り3拠点はCato移行でVarioSecure解約。<br>
-                    <strong>VarioSecure残存費用とCato新規費用を合算した月額ランニングコスト（税抜）。</strong>
+            <!-- ====== 月額コスト構成 ====== -->
+            <div id="monthly-total" class="socket-sim" style="margin-top: 2rem; border-color: #0369a1; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);">
+                <h3 style="margin-bottom: 0.6rem;"><span style="display:inline-block; width:6px; height:22px; background:#0369a1; border-radius:3px; margin-right:10px; vertical-align:middle;"></span>移行後の月額コスト構成</h3>
+                <p style="font-size: 0.85rem; color: #334155; margin: 0 0 1.5rem; line-height: 1.6;">
+                    SECOM通信用に VarioSecure を5拠点で残し、全社ネットワークとして Cato SASE を新規導入する。
                 </p>
 
-                <!-- Summary cards -->
-                <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:10px; margin-bottom:1.25rem;">
-                    <div style="background:#fef2f2; border:2px solid #dc2626; border-radius:10px; padding:12px 10px; text-align:center;">
-                        <div style="font-size:0.6rem; font-weight:800; color:#991b1b; letter-spacing:0.08em; margin-bottom:4px;">現行 VarioSecure</div>
-                        <div style="font-size:1.3rem; font-weight:900; color:#dc2626; font-family:'Courier New',monospace;">¥122,400</div>
-                        <div style="font-size:0.58rem; color:#991b1b; margin-top:2px;">全8拠点/月</div>
+                <!-- 2カラム: 残すもの ＋ 入れるもの -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+
+                    <!-- 左: VarioSecure -->
+                    <div style="background: #fff; border: 2px solid #16a34a; border-radius: 14px; padding: 20px 24px;">
+                        <div style="font-size: 0.7rem; font-weight: 800; color: #166534; letter-spacing: 0.1em; margin-bottom: 12px;">VarioSecure（SECOM用に残す）</div>
+
+                        <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #e2e8f0; font-size: 0.82rem;">
+                            <span style="color: #334155;">本社（VPNハブ）</span>
+                            <span style="font-weight: 700; font-family: 'Courier New', monospace;">¥40,000</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #e2e8f0; font-size: 0.82rem;">
+                            <span style="color: #334155;">福岡・和歌山・京橋・名古屋</span>
+                            <span style="font-weight: 700; font-family: 'Courier New', monospace;">¥41,600</span>
+                        </div>
+                        <div style="font-size: 0.68rem; color: #64748b; padding: 4px 0 0; margin-bottom: 8px;">各¥10,400 × 4拠点</div>
+
+                        <div style="display: flex; justify-content: space-between; padding: 10px 0 0; border-top: 2px solid #16a34a; font-size: 0.95rem; font-weight: 900; color: #166534;">
+                            <span>小計（5拠点）</span>
+                            <span style="font-family: 'Courier New', monospace; font-size: 1.1rem;">¥81,600</span>
+                        </div>
                     </div>
-                    <div style="background:#f0fdf4; border:2px solid #16a34a; border-radius:10px; padding:12px 10px; text-align:center;">
-                        <div style="font-size:0.6rem; font-weight:800; color:#166534; letter-spacing:0.08em; margin-bottom:4px;">移行後 VarioSecure</div>
-                        <div style="font-size:1.3rem; font-weight:900; color:#16a34a; font-family:'Courier New',monospace;">¥81,600</div>
-                        <div style="font-size:0.58rem; color:#166534; margin-top:2px;">5拠点継続/月</div>
-                    </div>
-                    <div style="background:#faf5ff; border:2px solid #7b1fa2; border-radius:10px; padding:12px 10px; text-align:center;">
-                        <div style="font-size:0.6rem; font-weight:800; color:#5b21b6; letter-spacing:0.08em; margin-bottom:4px;">Cato SASE（新規）</div>
-                        <div style="font-size:1.3rem; font-weight:900; color:#7b1fa2; font-family:'Courier New',monospace;">¥466,667</div>
-                        <div style="font-size:0.58rem; color:#5b21b6; margin-top:2px;">Socket1台構成/月</div>
-                    </div>
-                    <div style="background:#eff6ff; border:2px solid #2563eb; border-radius:10px; padding:12px 10px; text-align:center;">
-                        <div style="font-size:0.6rem; font-weight:800; color:#1e40af; letter-spacing:0.08em; margin-bottom:4px;">移行後 合計</div>
-                        <div style="font-size:1.3rem; font-weight:900; color:#2563eb; font-family:'Courier New',monospace;">¥548,267</div>
-                        <div style="font-size:0.58rem; color:#1e40af; margin-top:2px;">VarioSecure + Cato/月</div>
+
+                    <!-- 右: Cato -->
+                    <div style="background: #fff; border: 2px solid #7b1fa2; border-radius: 14px; padding: 20px 24px;">
+                        <div style="font-size: 0.7rem; font-weight: 800; color: #5b21b6; letter-spacing: 0.1em; margin-bottom: 12px;">Cato SASE（新規導入）</div>
+
+                        <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #e2e8f0; font-size: 0.82rem;">
+                            <span style="color: #334155;">基本契約（Socket1台＋200名）</span>
+                            <span style="font-weight: 700; font-family: 'Courier New', monospace;">¥416,667</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #e2e8f0; font-size: 0.82rem;">
+                            <span style="color: #334155;">運用委託（SCSK）</span>
+                            <span style="font-weight: 700; font-family: 'Courier New', monospace;">¥50,000</span>
+                        </div>
+                        <div style="font-size: 0.68rem; color: #64748b; padding: 4px 0 0; margin-bottom: 8px;">¥500万/年 + ¥60万/年 の月額換算</div>
+
+                        <div style="display: flex; justify-content: space-between; padding: 10px 0 0; border-top: 2px solid #7b1fa2; font-size: 0.95rem; font-weight: 900; color: #5b21b6;">
+                            <span>小計</span>
+                            <span style="font-family: 'Courier New', monospace; font-size: 1.1rem;">¥466,667</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Detail table -->
-                <table class="progress-matrix">
-                    <thead>
-                        <tr>
-                            <th style="text-align:left; min-width:180px;">拠点 / 項目</th>
-                            <th style="text-align:left; min-width:120px;">内容</th>
-                            <th style="text-align:right;">現行月額</th>
-                            <th style="text-align:right;">移行後月額</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- VarioSecure 継続 -->
-                        <tr class="section-label"><td colspan="4">▼ VarioSecure 継続（SECOM通信＋VPNハブ）</td></tr>
-                        <tr class="detail-row">
-                            <td><strong>築地（本社）</strong><span class="calc">VPNハブ ＋ Cato Socket設置</span></td>
-                            <td>VSR601J + VPN100u</td>
-                            <td style="text-align:right;">¥40,000</td>
-                            <td style="text-align:right;">¥40,000</td>
-                        </tr>
-                        <tr class="detail-row">
-                            <td><strong>福岡 BN</strong><span class="calc">SECOM通信用</span></td>
-                            <td>VSR402J</td>
-                            <td style="text-align:right;">¥10,400</td>
-                            <td style="text-align:right;">¥10,400</td>
-                        </tr>
-                        <tr class="detail-row">
-                            <td><strong>和歌山 BN</strong><span class="calc">SECOM通信用</span></td>
-                            <td>VSR402J</td>
-                            <td style="text-align:right;">¥10,400</td>
-                            <td style="text-align:right;">¥10,400</td>
-                        </tr>
-                        <tr class="detail-row">
-                            <td><strong>京橋 BN</strong><span class="calc">SECOM通信用</span></td>
-                            <td>VSR402J</td>
-                            <td style="text-align:right;">¥10,400</td>
-                            <td style="text-align:right;">¥10,400</td>
-                        </tr>
-                        <tr class="detail-row">
-                            <td><strong>名古屋 BN</strong><span class="calc">SECOM通信用</span></td>
-                            <td>VSR402J</td>
-                            <td style="text-align:right;">¥10,400</td>
-                            <td style="text-align:right;">¥10,400</td>
-                        </tr>
-                        <tr class="subtotal-row">
-                            <td colspan="2">VarioSecure継続 小計（5拠点）</td>
-                            <td style="text-align:right;">¥81,600</td>
-                            <td style="text-align:right; color:#166534;">¥81,600</td>
-                        </tr>
+                <!-- 合計バー -->
+                <div style="background: #0369a1; border-radius: 10px; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: #fff; font-size: 0.95rem; font-weight: 800;">月額合計（税抜）</span>
+                    <span style="color: #fff; font-size: 1.6rem; font-weight: 900; font-family: 'Courier New', monospace;">¥548,267<span style="font-size: 0.7rem; font-weight: 600; margin-left: 8px;">/月</span></span>
+                </div>
 
-                        <!-- VarioSecure 解約 -->
-                        <tr class="section-label"><td colspan="4">▼ VarioSecure 解約（Cato移行 → 解約）</td></tr>
-                        <tr class="detail-row">
-                            <td><strong>大阪</strong><span class="calc">現行LBO → Catoモバイルに移行</span></td>
-                            <td>VSR601J（LBO）</td>
-                            <td style="text-align:right;">¥20,000</td>
-                            <td style="text-align:right; color:#16a34a; font-weight:600;">¥0</td>
-                        </tr>
-                        <tr class="detail-row">
-                            <td><strong>多摩</strong><span class="calc">Catoモバイルに移行</span></td>
-                            <td>VSR402J</td>
-                            <td style="text-align:right;">¥10,400</td>
-                            <td style="text-align:right; color:#16a34a; font-weight:600;">¥0</td>
-                        </tr>
-                        <tr class="detail-row">
-                            <td><strong>橋本</strong><span class="calc">Catoモバイルに移行</span></td>
-                            <td>VSR402J</td>
-                            <td style="text-align:right;">¥10,400</td>
-                            <td style="text-align:right; color:#16a34a; font-weight:600;">¥0</td>
-                        </tr>
-                        <tr class="subtotal-row">
-                            <td colspan="2">VarioSecure解約 小計（3拠点）</td>
-                            <td style="text-align:right;">¥40,800</td>
-                            <td style="text-align:right; color:#16a34a; font-weight:700;">▲¥40,800</td>
-                        </tr>
-
-                        <!-- Cato SASE 新規 -->
-                        <tr class="section-label"><td colspan="4">▼ Cato SASE（新規導入）</td></tr>
-                        <tr><td colspan="4" style="padding: 4px 12px; background: rgba(59,130,246,0.04); font-size: 0.7rem;">
-                            <span style="color: #94a3b8; font-weight: 700;">エビデンス:</span>
-                            <a href="/エビデンス集.html#cato-sase-cost" style="color: #3b82f6; text-decoration: none; padding: 2px 8px; border: 1px solid #bfdbfe; border-radius: 4px; font-weight: 600;">[E-007] Cato SASE費用</a>
-                        </td></tr>
-                        <tr class="detail-row">
-                            <td><strong>基本契約</strong><span class="calc">Socket1台（築地）＋リモートアクセス200名込<br>¥500万/年 ÷ 12ヶ月</span></td>
-                            <td>SASE ライセンス</td>
-                            <td style="text-align:center; color:#cbd5e1;">—</td>
-                            <td style="text-align:right; color:#7b1fa2; font-weight:600;">¥416,667</td>
-                        </tr>
-                        <tr class="detail-row">
-                            <td><strong>運用管理委託</strong><span class="calc">SCSK マネージドサービス<br>¥60万/年 ÷ 12ヶ月</span></td>
-                            <td>マネージドサービス</td>
-                            <td style="text-align:center; color:#cbd5e1;">—</td>
-                            <td style="text-align:right; color:#7b1fa2;">¥50,000</td>
-                        </tr>
-                        <tr class="subtotal-row">
-                            <td colspan="2">Cato SASE 小計</td>
-                            <td style="text-align:center; color:#cbd5e1;">—</td>
-                            <td style="text-align:right; color:#7b1fa2; font-weight:700;">¥466,667</td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="2" style="font-weight:800; color:#0369a1;">月額合計</td>
-                            <td style="text-align:right; font-weight:800; font-size:0.9rem;">¥122,400</td>
-                            <td style="text-align:right; font-weight:800; font-size:0.9rem; color:#2563eb;">¥548,267</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="font-weight:700; color:#475569; font-size:0.72rem;">年額換算</td>
-                            <td style="text-align:right; font-size:0.72rem;">¥146.9万/年</td>
-                            <td style="text-align:right; font-size:0.72rem; color:#2563eb;">¥657.9万/年</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="font-weight:700; color:#475569; font-size:0.72rem;">内訳</td>
-                            <td style="text-align:center; font-size:0.65rem; color:#94a3b8;">VarioSecureのみ</td>
-                            <td style="text-align:center; font-size:0.65rem; color:#475569;">VarioSecure ¥81,600<br>＋ Cato ¥466,667</td>
-                        </tr>
-                    </tfoot>
-                </table>
-
-                <div style="margin-top: 1rem; padding: 10px 14px; background: rgba(3,105,161,0.06); border-radius: 8px; font-size: 0.78rem; color: #475569; line-height: 1.7;">
-                    <strong style="color: #0369a1;">補足:</strong>
-                    現行VarioSecure月額はPDF定価（税抜・24H保守）ベース。実請求額¥142,000（税込）との差額はISP費用等の合算と推定。
-                    Cato費用は200名規模の見積ベース（実際は約100名のため再見積を依頼中）。
-                    初期導入費¥50万は月額に含まず。
-                    <br><span style="font-size:0.72rem; color:#94a3b8;">出典: VarioSecure → <a href="/エビデンス集.html#variosecure-cost" style="color:#94a3b8;">[E-009]</a> 西川メール / Cato → <a href="/エビデンス集.html#cato-sase-cost" style="color:#94a3b8;">[E-007]</a> SCSK角田メール</span>
+                <!-- 注記 -->
+                <div style="margin-top: 12px; font-size: 0.72rem; color: #64748b; line-height: 1.8;">
+                    大阪・多摩・橋本の3拠点はVarioSecure解約（現行比 ▲¥40,800/月）<br>
+                    Cato: 200名規模の見積ベース。実際は約100名のため再見積中
+                    &nbsp;<a href="/エビデンス集.html#cato-sase-cost" style="color: #93c5fd; font-weight:600;">[E-007]</a>
+                    &nbsp;<a href="/エビデンス集.html#variosecure-cost" style="color: #93c5fd; font-weight:600;">[E-009]</a>
                 </div>
             </div>
 
