@@ -5,30 +5,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VarioSecure 費用分解 | 整理ノート</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/portal_nexus.css">
   <style>
-    :root {
-      --primary: #0f172a;
-      --accent: #2563eb;
-      --secondary: #64748b;
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --border: #e2e8f0;
-    }
-
     body {
-      font-family: 'Inter', 'Noto Sans JP', sans-serif;
-      background: var(--bg);
-      color: #334155;
-      line-height: 1.6;
-      margin: 0;
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
     }
 
-    /* ── Layout ── */
+    /* ── Page Header (sticky) ── */
     .page-header {
-      background: var(--card-bg);
-      border-bottom: 1px solid var(--border);
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
       padding: 0 40px;
       position: sticky;
       top: 0;
@@ -55,138 +44,166 @@
       letter-spacing: 0.05em;
     }
 
-    .back-link:hover { color: var(--accent); }
+    .back-link:hover { color: #2563eb; }
 
     .header-title {
-      font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 0.95rem;
       font-weight: 600;
-      color: var(--primary);
+      color: #0f172a;
     }
 
-    .page-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 32px 40px 64px;
+    /* ── Main content ── */
+    .main-scroll {
+      padding: 48px;
     }
 
-    .page-lead-title {
-      font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--primary);
-      margin: 0 0 4px;
+    .page-title {
+      font-size: 22px;
+      font-weight: 900;
+      margin: 0 0 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .page-title::before {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 28px;
+      background: #1e3a8a;
+      border-radius: 2px;
     }
 
     .page-sub {
-      font-size: 0.78rem;
+      font-size: 11px;
       color: #94a3b8;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      margin-bottom: 28px;
-    }
-
-    /* ── Modern card ── */
-    .modern-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 1.25rem;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
-      padding: 2rem 2.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    /* ── Section titles ── */
-    .section-title {
-      font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
-      font-size: 1.05rem;
       font-weight: 700;
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 0 0 1.25rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 40px;
     }
 
-    .section-title::before {
-      content: "";
-      width: 6px;
-      height: 22px;
-      background: var(--accent);
-      border-radius: 3px;
-      flex-shrink: 0;
-    }
-
-    /* ── Summary row ── */
+    /* ── 全体サマリ ── */
     .summary-row {
       display: flex;
       gap: 16px;
-      margin-bottom: 1.5rem;
+      margin-bottom: 40px;
     }
 
     .summary-card {
       flex: 1;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 1.25rem;
-      padding: 1.5rem;
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px 24px;
       text-align: center;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
     }
 
     .summary-card.highlight {
-      border-color: #fca5a5;
+      border-color: #dc2626;
       background: #fef2f2;
     }
 
+    .summary-card.ok {
+      border-color: #16a34a;
+      background: #f0fdf4;
+    }
+
     .summary-label {
-      font-size: 0.68rem;
-      font-weight: 700;
+      font-size: 10px;
+      font-weight: 900;
       color: #64748b;
       letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .summary-value {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--primary);
+      font-size: 28px;
+      font-weight: 900;
+      color: #0f172a;
+      font-family: 'Courier New', monospace;
     }
 
-    .summary-card.highlight .summary-value { color: #dc2626; }
+    .summary-card.highlight .summary-value {
+      color: #dc2626;
+    }
+
+    .summary-card.ok .summary-value {
+      color: #16a34a;
+    }
 
     .summary-note {
-      font-size: 0.7rem;
+      font-size: 10px;
       color: #94a3b8;
-      margin-top: 6px;
+      margin-top: 4px;
+      font-weight: 700;
+    }
+
+    /* ── セクション ── */
+    .section {
+      margin-bottom: 48px;
+    }
+
+    .section-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: #1e3a8a;
+      color: white;
+      font-size: 13px;
+      font-weight: 900;
+      border-radius: 50%;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #1e3a8a;
+    }
+
+    .section-desc {
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 16px;
+      line-height: 1.8;
       font-weight: 500;
     }
 
-    /* ── Tables ── */
+    /* ── テーブル ── */
     .clean-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.85rem;
-      background: var(--card-bg);
-      border-radius: 0.75rem;
+      font-size: 13px;
+      background: white;
+      border-radius: 8px;
       overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
     }
 
     .clean-table th {
       background: #f1f5f9;
-      font-weight: 600;
-      font-size: 0.68rem;
+      font-weight: 900;
+      font-size: 10px;
       letter-spacing: 0.05em;
       color: #475569;
       padding: 10px 14px;
       text-align: left;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 2px solid #cbd5e1;
     }
 
     .clean-table th.right,
-    .clean-table td.right { text-align: right; }
+    .clean-table td.right {
+      text-align: right;
+    }
 
     .clean-table td {
       padding: 10px 14px;
@@ -194,58 +211,86 @@
       vertical-align: top;
     }
 
-    .clean-table tr:last-child td { border-bottom: none; }
+    .clean-table tr:last-child td {
+      border-bottom: none;
+    }
 
     .clean-table .total-row td {
       background: #f8fafc;
-      font-weight: 700;
-      border-top: 1px solid var(--border);
+      font-weight: 900;
+      border-top: 2px solid #cbd5e1;
+    }
+
+    .clean-table .sub-row td {
+      background: #fafbfc;
+      font-size: 12px;
+      color: #64748b;
     }
 
     .money {
-      font-family: 'Space Grotesk', monospace;
-      font-weight: 600;
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
       white-space: nowrap;
     }
 
-    .money.big { font-size: 1rem; font-weight: 700; }
+    .money.big {
+      font-size: 15px;
+      font-weight: 900;
+    }
 
-    /* ── Badges ── */
+    /* ── ステータスバッジ ── */
     .badge {
       display: inline-block;
-      font-size: 0.65rem;
-      font-weight: 700;
+      font-size: 10px;
+      font-weight: 900;
       padding: 2px 8px;
-      border-radius: 9999px;
+      border-radius: 4px;
       letter-spacing: 0.03em;
     }
 
-    .badge-ok { background: #dcfce7; color: #166534; }
-    .badge-warn { background: #fef3c7; color: #92400e; }
-    .badge-unknown { background: #fee2e2; color: #991b1b; }
-    .badge-info { background: #dbeafe; color: #1e40af; }
+    .badge-ok {
+      background: #dcfce7;
+      color: #166534;
+    }
 
-    /* ── Location grid ── */
+    .badge-warn {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .badge-unknown {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .badge-info {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    /* ── 拠点マップ ── */
     .location-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 12px;
-      margin: 12px 0;
+      margin: 16px 0;
     }
 
     .location-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 0.75rem;
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
       padding: 14px;
       position: relative;
     }
 
-    .location-card.confirmed { border-color: #86efac; }
+    .location-card.confirmed {
+      border-color: #86efac;
+    }
 
     .location-card.main {
-      border-color: var(--accent);
-      border-width: 2px;
+      border-color: #1e3a8a;
+      border-width: 3px;
       grid-column: span 2;
     }
 
@@ -255,92 +300,151 @@
       background: #fef2f2;
     }
 
-    .location-name { font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; color: var(--primary); }
+    .location-name {
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
 
     .location-model {
-      font-family: 'Space Grotesk', monospace;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      color: #3b82f6;
+      font-family: monospace;
     }
 
     .location-price {
-      font-family: 'Space Grotesk', monospace;
-      font-size: 1.1rem;
-      font-weight: 700;
+      font-size: 16px;
+      font-weight: 900;
+      font-family: 'Courier New', monospace;
       margin-top: 6px;
-      color: var(--primary);
     }
 
-    .location-meta { font-size: 0.68rem; color: #94a3b8; font-weight: 400; margin-top: 4px; }
-
-    .location-badge { position: absolute; top: -8px; right: 10px; }
-
-    /* ── Source box ── */
-    .source-box {
-      background: #f8fafc;
-      border-left: 3px solid #cbd5e1;
-      padding: 10px 16px;
-      font-size: 0.75rem;
-      color: #64748b;
-      margin-top: 8px;
-      border-radius: 0 6px 6px 0;
+    .location-meta {
+      font-size: 10px;
+      color: #94a3b8;
+      font-weight: 700;
+      margin-top: 4px;
     }
 
-    .source-box strong { color: #475569; }
+    .location-badge {
+      position: absolute;
+      top: -8px;
+      right: 10px;
+    }
 
-    /* ── Calc block ── */
+    /* ── 計算式ボックス ── */
     .calc-block {
       background: #f8fafc;
-      border: 1px solid var(--border);
-      border-radius: 0.75rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
       padding: 20px;
       margin: 16px 0;
-      font-family: 'Space Grotesk', monospace;
-      font-size: 0.875rem;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
       line-height: 2.2;
     }
 
-    .calc-block .eq { color: #64748b; font-weight: 400; }
-    .calc-block .num { font-weight: 700; color: var(--primary); }
-    .calc-block .result { font-weight: 700; color: #dc2626; font-size: 1rem; }
-    .calc-block .ok-result { font-weight: 700; color: #16a34a; font-size: 1rem; }
+    .calc-block .eq {
+      color: #64748b;
+      font-weight: 400;
+    }
 
-    /* ── Questions ── */
-    .question-list { display: flex; flex-direction: column; gap: 12px; }
+    .calc-block .num {
+      font-weight: 900;
+      color: #0f172a;
+    }
+
+    .calc-block .result {
+      font-weight: 900;
+      color: #dc2626;
+      font-size: 16px;
+    }
+
+    .calc-block .ok-result {
+      font-weight: 900;
+      color: #16a34a;
+      font-size: 16px;
+    }
+
+    /* ── 疑問リスト ── */
+    .question-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
     .question-item {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-left: 4px solid #f59e0b;
-      border-radius: 0.75rem;
+      background: white;
+      border: 2px solid #fbbf24;
+      border-radius: 10px;
       padding: 16px 20px;
       display: flex;
       gap: 14px;
     }
 
     .question-num {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: 900;
       color: #d97706;
       flex-shrink: 0;
     }
 
-    .question-text { font-size: 0.875rem; font-weight: 600; line-height: 1.7; color: var(--primary); }
+    .question-text {
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.7;
+    }
 
-    .question-detail { font-size: 0.75rem; color: #64748b; margin-top: 4px; font-weight: 400; line-height: 1.7; }
+    .question-detail {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 4px;
+      font-weight: 500;
+    }
 
-    /* ── Legend ── */
-    .legend { display: flex; gap: 20px; margin-bottom: 20px; font-size: 0.75rem; font-weight: 500; color: #64748b; }
-    .legend-item { display: flex; align-items: center; gap: 6px; }
-    .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+    /* ── 凡例 ── */
+    .legend {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 24px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+
+    /* ── 出典ボックス ── */
+    .source-box {
+      background: #f8fafc;
+      border-left: 3px solid #94a3b8;
+      padding: 10px 16px;
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 8px;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .source-box strong {
+      color: #475569;
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- Page Header -->
+  <!-- Page Header (sticky) -->
   <div class="page-header">
     <div class="page-header-inner">
       <a href="/index.html" class="back-link">
@@ -354,11 +458,11 @@
     </div>
   </div>
 
-  <div class="page-content">
-    <h1 class="page-lead-title">VarioSecure 費用分解</h1>
+  <div class="main-scroll">
+    <h1 class="page-title">VarioSecure 費用分解</h1>
     <p class="page-sub">作業用整理ノート｜全金額の出典と突き合わせ｜2026-02-21</p>
 
-    <!-- ========== サマリ ========== -->
+    <!-- ========== 全体サマリ ========== -->
     <div class="summary-row">
       <div class="summary-card highlight">
         <div class="summary-label">現行月額</div>
@@ -373,85 +477,92 @@
     </div>
 
     <!-- ========== 0. 現状整理 ========== -->
-    <div class="modern-card">
-      <div class="section-title">現状整理 — 今、いくらかかっているか</div>
-
-      <!-- シーン① -->
-      <div style="border:1px solid #bfdbfe;border-radius:0.75rem;padding:28px;background:#eff6ff;margin-bottom:8px;">
-        <div style="font-size:0.68rem;font-weight:700;color:#1d4ed8;letter-spacing:0.08em;margin-bottom:12px;">① まず</div>
-        <div style="font-size:0.95rem;color:#374151;margin-bottom:10px;">VarioSecure（USEN）に毎月払っている金額</div>
-        <div style="font-family:'Space Grotesk',sans-serif;font-size:4rem;font-weight:700;color:#dc2626;line-height:1.1;">¥142,000</div>
-        <div style="font-size:0.95rem;color:#6b7280;margin-top:6px;">/ 月</div>
-        <div style="font-size:0.78rem;color:#9ca3af;margin-top:8px;">出典: 西川メール 2026-02-06</div>
+    <div class="section">
+      <div class="section-title">
+        <span class="section-num" style="background:#0f766e;">0</span>
+        現状整理 — 今、いくらかかっているか
       </div>
 
-      <div style="text-align:center;font-size:1.5rem;color:#cbd5e1;line-height:2.5;">↓</div>
+      <!-- シーン① -->
+      <div style="border:2px solid #1d4ed8;border-radius:12px;padding:32px;background:#fff;margin-bottom:8px;">
+        <div style="font-size:14px;font-weight:700;color:#fff;background:#1d4ed8;display:inline-block;padding:5px 14px;border-radius:4px;margin-bottom:18px;">① まず</div>
+        <div style="font-size:18px;color:#374151;margin-bottom:12px;">VarioSecure（USEN）に毎月払っている金額</div>
+        <div style="font-size:72px;font-weight:800;color:#dc2626;line-height:1.1;">¥142,000</div>
+        <div style="font-size:18px;color:#6b7280;margin-top:6px;">/ 月</div>
+        <div style="font-size:14px;color:#9ca3af;margin-top:10px;">出典: 西川メール 2026-02-06</div>
+      </div>
+
+      <div style="text-align:center;font-size:32px;color:#cbd5e1;line-height:1.6;">↓</div>
 
       <!-- シーン② -->
-      <div style="border:1px solid #d8b4fe;border-radius:0.75rem;padding:28px;background:#faf5ff;">
-        <div style="font-size:0.68rem;font-weight:700;color:#7c3aed;letter-spacing:0.08em;margin-bottom:12px;">② この費用で</div>
-        <div style="font-size:0.95rem;color:#374151;margin-bottom:4px;">全国 <span style="font-family:'Space Grotesk',sans-serif;font-size:3rem;font-weight:700;color:#7c3aed;line-height:1.1;vertical-align:middle;">8</span> 拠点をカバーしている</div>
+      <div style="border:2px solid #7c3aed;border-radius:12px;padding:32px;background:#fff;margin-bottom:8px;">
+        <div style="font-size:14px;font-weight:700;color:#fff;background:#7c3aed;display:inline-block;padding:5px 14px;border-radius:4px;margin-bottom:18px;">② この費用で</div>
+        <div style="font-size:18px;color:#374151;margin-bottom:4px;">全国 <span style="font-size:60px;font-weight:800;color:#7c3aed;line-height:1.1;vertical-align:middle;">8</span> 拠点をカバーしている</div>
 
         <!-- 業務NW + SECOM -->
         <div style="margin-top:20px;">
-          <div style="font-size:0.68rem;font-weight:700;color:#1d4ed8;letter-spacing:0.08em;margin-bottom:8px;">業務ネットワーク + SECOM</div>
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;">
-            <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:16px;text-align:center;color:#1e40af;">
-              <div style="font-size:0.9rem;font-weight:600;">築地（本社）</div>
-              <div style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;margin-top:6px;">¥40,000</div>
-              <div style="font-size:0.68rem;color:#3b82f6;margin-top:2px;">VSR601J + VPN 100u</div>
+          <div style="font-size:11px;font-weight:900;color:#1d4ed8;letter-spacing:0.08em;margin-bottom:8px;">業務ネットワーク + SECOM</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;">
+            <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:18px;text-align:center;color:#1e40af;">
+              <div style="font-size:17px;font-weight:600;">築地（本社）</div>
+              <div style="font-size:20px;font-weight:800;margin-top:6px;">¥40,000</div>
+              <div style="font-size:11px;color:#3b82f6;margin-top:2px;">VSR601J + VPN 100u</div>
             </div>
-            <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:16px;text-align:center;color:#1e40af;">
-              <div style="font-size:0.9rem;font-weight:600;">大阪</div>
-              <div style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;margin-top:6px;">¥20,000</div>
-              <div style="font-size:0.68rem;color:#3b82f6;margin-top:2px;">VSR601J</div>
+            <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:18px;text-align:center;color:#1e40af;">
+              <div style="font-size:17px;font-weight:600;">大阪</div>
+              <div style="font-size:20px;font-weight:800;margin-top:6px;">¥20,000</div>
+              <div style="font-size:11px;color:#3b82f6;margin-top:2px;">VSR601J</div>
             </div>
-            <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:16px;text-align:center;color:#1e40af;">
-              <div style="font-size:0.9rem;font-weight:600;">多摩</div>
-              <div style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;margin-top:6px;">¥10,400</div>
-              <div style="font-size:0.68rem;color:#3b82f6;margin-top:2px;">VSR402J</div>
+            <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:18px;text-align:center;color:#1e40af;">
+              <div style="font-size:17px;font-weight:600;">多摩</div>
+              <div style="font-size:20px;font-weight:800;margin-top:6px;">¥10,400</div>
+              <div style="font-size:11px;color:#3b82f6;margin-top:2px;">VSR402J</div>
             </div>
-            <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:16px;text-align:center;color:#1e40af;">
-              <div style="font-size:0.9rem;font-weight:600;">橋本</div>
-              <div style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;margin-top:6px;">¥10,400</div>
-              <div style="font-size:0.68rem;color:#3b82f6;margin-top:2px;">VSR402J</div>
+            <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:18px;text-align:center;color:#1e40af;">
+              <div style="font-size:17px;font-weight:600;">橋本</div>
+              <div style="font-size:20px;font-weight:800;margin-top:6px;">¥10,400</div>
+              <div style="font-size:11px;color:#3b82f6;margin-top:2px;">VSR402J</div>
             </div>
           </div>
         </div>
 
         <!-- SECOM専用 -->
         <div>
-          <div style="font-size:0.68rem;font-weight:700;color:#dc2626;letter-spacing:0.08em;margin-bottom:8px;">SECOM通信専用</div>
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;">
-            <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:16px;text-align:center;color:#991b1b;">
-              <div style="font-size:0.9rem;font-weight:600;">福岡</div>
-              <div style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;margin-top:6px;">¥10,400</div>
-              <div style="font-size:0.68rem;color:#dc2626;margin-top:2px;">VSR402J</div>
+          <div style="font-size:11px;font-weight:900;color:#dc2626;letter-spacing:0.08em;margin-bottom:8px;">SECOM通信専用</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;">
+            <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:18px;text-align:center;color:#991b1b;">
+              <div style="font-size:17px;font-weight:600;">福岡</div>
+              <div style="font-size:20px;font-weight:800;margin-top:6px;">¥10,400</div>
+              <div style="font-size:11px;color:#dc2626;margin-top:2px;">VSR402J</div>
             </div>
-            <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:16px;text-align:center;color:#991b1b;">
-              <div style="font-size:0.9rem;font-weight:600;">和歌山</div>
-              <div style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;margin-top:6px;">¥10,400</div>
-              <div style="font-size:0.68rem;color:#dc2626;margin-top:2px;">VSR402J</div>
+            <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:18px;text-align:center;color:#991b1b;">
+              <div style="font-size:17px;font-weight:600;">和歌山</div>
+              <div style="font-size:20px;font-weight:800;margin-top:6px;">¥10,400</div>
+              <div style="font-size:11px;color:#dc2626;margin-top:2px;">VSR402J</div>
             </div>
-            <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:16px;text-align:center;color:#991b1b;">
-              <div style="font-size:0.9rem;font-weight:600;">京橋</div>
-              <div style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;margin-top:6px;">¥10,400</div>
-              <div style="font-size:0.68rem;color:#dc2626;margin-top:2px;">VSR402J</div>
+            <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:18px;text-align:center;color:#991b1b;">
+              <div style="font-size:17px;font-weight:600;">京橋</div>
+              <div style="font-size:20px;font-weight:800;margin-top:6px;">¥10,400</div>
+              <div style="font-size:11px;color:#dc2626;margin-top:2px;">VSR402J</div>
             </div>
-            <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:16px;text-align:center;color:#991b1b;">
-              <div style="font-size:0.9rem;font-weight:600;">名古屋</div>
-              <div style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;margin-top:6px;">¥10,400</div>
-              <div style="font-size:0.68rem;color:#dc2626;margin-top:2px;">VSR402J</div>
+            <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:18px;text-align:center;color:#991b1b;">
+              <div style="font-size:17px;font-weight:600;">名古屋</div>
+              <div style="font-size:20px;font-weight:800;margin-top:6px;">¥10,400</div>
+              <div style="font-size:11px;color:#dc2626;margin-top:2px;">VSR402J</div>
             </div>
           </div>
         </div>
-        <div style="font-size:0.78rem;color:#9ca3af;">拠点ごとの機器・定価の詳細はセクション1を参照</div>
+        <div style="font-size:14px;color:#9ca3af;">拠点ごとの機器・定価の詳細はセクション1を参照</div>
       </div>
+
     </div>
 
     <!-- ========== 1. 拠点ごとの機器と定価 ========== -->
-    <div class="modern-card">
-      <div class="section-title">拠点ごとの機器と定価</div>
+    <div class="section">
+      <div class="section-title">
+        <span class="section-num">1</span>
+        拠点ごとの機器と定価
+      </div>
 
       <div class="legend">
         <div class="legend-item">
@@ -470,7 +581,7 @@
           <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
           <div class="location-name">本社（築地）</div>
           <div class="location-model">VSR601J + VPN 100user</div>
-          <div class="location-price">¥40,000<span style="font-size:0.7rem;color:#64748b;">/月</span></div>
+          <div class="location-price">¥40,000<span style="font-size:11px;color:#64748b;">/月</span></div>
           <div class="location-meta">
             契約: アドテック ｜ 満了: 2026/3/11<br>
             管理ID: AM11715
@@ -485,7 +596,7 @@
           <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
           <div class="location-name">多摩（R&D・物流センター）</div>
           <div class="location-model">VSR402J</div>
-          <div class="location-price">¥10,400<span style="font-size:0.7rem;color:#64748b;">/月</span></div>
+          <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
           <div class="location-meta">
             契約: アドテック（本社同一）<br>
             ID: AM11714
@@ -493,13 +604,14 @@
         </div>
 
         <!-- 大阪 -->
-        <div class="location-card confirmed" style="border-color:#f59e0b;border-width:2px;">
+        <div class="location-card confirmed" style="border-color:#f59e0b;border-width:3px;">
           <div class="location-badge"><span class="badge badge-warn">機器入替済</span></div>
           <div class="location-name">大阪</div>
           <div class="location-model">VSR601J（LBO対応で入替）</div>
-          <div class="location-price">¥20,000<span style="font-size:0.7rem;color:#64748b;">/月</span></div>
+          <div class="location-price">¥20,000<span style="font-size:11px;color:#64748b;">/月</span></div>
           <div class="location-meta">
-            契約: アドテック（本社同一）｜ ID: AM11716<br>
+            契約: アドテック（本社同一）<br>
+            ID: AM11716<br>
             <span style="color:#d97706;">※台帳はVSR402Jのまま未更新</span>
           </div>
           <div class="source-box" style="margin-top:8px;">
@@ -513,7 +625,7 @@
           <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
           <div class="location-name">福岡</div>
           <div class="location-model">VSR402J</div>
-          <div class="location-price">¥10,400<span style="font-size:0.7rem;color:#64748b;">/月</span></div>
+          <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
           <div class="location-meta">
             契約: AKIBA ｜ 満了: 2026/9/30<br>
             ID: AM16268
@@ -525,7 +637,7 @@
           <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
           <div class="location-name">京橋ビル</div>
           <div class="location-model">VSR402J</div>
-          <div class="location-price">¥10,400<span style="font-size:0.7rem;color:#64748b;">/月</span></div>
+          <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
           <div class="location-meta">
             契約: AKIBA ｜ 満了: 2026/5/31<br>
             ID: AM17636
@@ -537,7 +649,7 @@
           <div class="location-badge"><span class="badge badge-ok">確認済</span></div>
           <div class="location-name">和歌山</div>
           <div class="location-model">VSR402J</div>
-          <div class="location-price">¥10,400<span style="font-size:0.7rem;color:#64748b;">/月</span></div>
+          <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
           <div class="location-meta">
             契約: AKIBA ｜ 満了: 2026/2/28<br>
             ID: AM16623
@@ -549,7 +661,7 @@
           <div class="location-badge"><span class="badge badge-warn">按分なし</span></div>
           <div class="location-name">橋本</div>
           <div class="location-model">VSR402J</div>
-          <div class="location-price">¥10,400<span style="font-size:0.7rem;color:#64748b;">/月</span></div>
+          <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
           <div class="location-meta">
             台帳に記載あり（契約日等は空欄）<br>
             <span style="color:#d97706;">※按分シートには記載なし</span>
@@ -561,7 +673,7 @@
           <div class="location-badge"><span class="badge badge-warn">按分なし</span></div>
           <div class="location-name">名古屋</div>
           <div class="location-model">VSR402J</div>
-          <div class="location-price">¥10,400<span style="font-size:0.7rem;color:#64748b;">/月</span></div>
+          <div class="location-price">¥10,400<span style="font-size:11px;color:#64748b;">/月</span></div>
           <div class="location-meta">
             台帳に記載あり ｜ 満了: 2026/8/22<br>
             開始: 2024/8/22（1年5ヶ月）<br>
@@ -576,24 +688,27 @@
 
       <!-- 定価合計 -->
       <div class="calc-block" style="margin-top:20px;">
-        <div style="font-family:'Noto Sans JP',sans-serif;font-size:0.68rem;font-weight:700;color:#64748b;letter-spacing:0.08em;margin-bottom:8px;">PDF定価の積み上げ（税抜・24H保守・現行構成）</div>
+        <div style="font-size:11px;font-weight:900;color:#64748b;letter-spacing:0.08em;margin-bottom:8px;font-family:'Noto Sans JP';">PDF定価の積み上げ（税抜・24H保守・現行構成）</div>
         <span class="eq">VSR601J×2（本社+大阪）</span> <span class="num">¥40,000</span>
         <span class="eq"> + VPN100user</span> <span class="num">¥20,000</span>
         <span class="eq"> + VSR402J×4</span> <span class="num">¥41,600</span>
-        <span class="eq"> = </span><span class="ok-result">¥101,600</span><span class="eq" style="font-size:0.75rem;"> （按分対象6拠点）</span><br>
+        <span class="eq"> = </span><span class="ok-result">¥101,600</span><span class="eq" style="font-size:11px;"> （按分対象6拠点）</span><br>
         <span class="eq">VSR601J×2（本社+大阪）</span> <span class="num">¥40,000</span>
         <span class="eq"> + VPN100user</span> <span class="num">¥20,000</span>
         <span class="eq"> + VSR402J×6</span> <span class="num">¥62,400</span>
-        <span class="eq"> = </span><span class="result">¥122,400</span><span class="eq" style="font-size:0.75rem;"> （橋本・名古屋含む全8拠点）</span>
-        <div style="font-family:'Noto Sans JP',sans-serif;font-size:0.72rem;font-weight:400;color:#94a3b8;margin-top:8px;">
+        <span class="eq"> = </span><span class="result">¥122,400</span><span class="eq" style="font-size:11px;"> （橋本・名古屋含む全8拠点）</span>
+        <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-top:8px;font-family:'Noto Sans JP';">
           ※大阪はLBO対応のためVSR402J→VSR601Jに入替済み。台帳は旧品番のまま。
         </div>
       </div>
     </div>
 
     <!-- ========== 2. 確認が必要なこと ========== -->
-    <div class="modern-card">
-      <div class="section-title">確認が必要なこと</div>
+    <div class="section">
+      <div class="section-title">
+        <span class="section-num">2</span>
+        確認が必要なこと
+      </div>
 
       <div class="question-list">
         <div class="question-item">
@@ -621,8 +736,11 @@
     </div>
 
     <!-- ========== 3. 確定事項まとめ ========== -->
-    <div class="modern-card">
-      <div class="section-title">確定事項まとめ</div>
+    <div class="section">
+      <div class="section-title">
+        <span class="section-num">3</span>
+        確定事項まとめ
+      </div>
 
       <table class="clean-table">
         <thead>
@@ -674,7 +792,7 @@
       </table>
     </div>
 
-    <footer style="margin-top:48px;padding-top:24px;border-top:1px solid var(--border);text-align:center;color:#94a3b8;font-size:0.72rem;font-weight:500;">
+    <footer style="margin-top:64px;padding-top:24px;border-top:2px solid #e2e8f0;text-align:center;color:#94a3b8;font-size:10px;font-weight:700;">
       作業用整理ノート｜AKIBAホールディングス 情報システム部
     </footer>
   </div>
