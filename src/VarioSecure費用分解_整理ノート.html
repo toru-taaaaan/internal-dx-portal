@@ -56,7 +56,7 @@
     /* ── Main content ── */
     .main-scroll {
       margin-left: 0;
-      max-width: 960px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 48px;
     }
@@ -863,7 +863,9 @@
             <th>拠点</th>
             <th>機器</th>
             <th class="right">現行月額</th>
-            <th class="right">移行後</th>
+            <th class="right">移行後<br><span style="font-weight:400;font-size:9px;letter-spacing:0;">VarioSecure</span></th>
+            <th class="right" style="color:#5b21b6;">Cato</th>
+            <th class="right" style="color:#0369a1;">合計</th>
           </tr>
         </thead>
         <tbody>
@@ -876,11 +878,15 @@
             <td style="font-family:monospace;font-size:12px;">VSR601J + VPN100u</td>
             <td class="right"><span class="money">¥40,000</span></td>
             <td class="right"><span class="money">¥40,000</span></td>
+            <td class="right"><span style="color:#94a3b8;font-size:12px;">—</span></td>
+            <td class="right"><span class="money">¥40,000</span></td>
           </tr>
           <tr class="total-row" style="background:#e0f2fe;">
             <td colspan="2" style="text-align:right;font-size:12px;">小計</td>
             <td class="right"><span class="money big">¥40,000</span></td>
             <td class="right"><span class="money big" style="color:#0c4a6e;">¥40,000</span></td>
+            <td class="right"><span style="color:#94a3b8;font-size:12px;">—</span></td>
+            <td class="right"><span class="money big">¥40,000</span></td>
           </tr>
 
           <!-- SECOM専用拠点（VarioSecureのみ） -->
@@ -892,11 +898,15 @@
             <td style="font-family:monospace;font-size:12px;">VSR402J</td>
             <td class="right"><span class="money">¥10,400</span></td>
             <td class="right"><span class="money">¥10,400</span></td>
+            <td class="right"><span style="color:#94a3b8;font-size:12px;">—</span></td>
+            <td class="right"><span class="money">¥10,400</span></td>
           </tr>
           <tr style="background:#fef2f2;">
             <td>和歌山</td>
             <td style="font-family:monospace;font-size:12px;">VSR402J</td>
             <td class="right"><span class="money">¥10,400</span></td>
+            <td class="right"><span class="money">¥10,400</span></td>
+            <td class="right"><span style="color:#94a3b8;font-size:12px;">—</span></td>
             <td class="right"><span class="money">¥10,400</span></td>
           </tr>
           <tr style="background:#fef2f2;">
@@ -904,17 +914,23 @@
             <td style="font-family:monospace;font-size:12px;">VSR402J</td>
             <td class="right"><span class="money">¥10,400</span></td>
             <td class="right"><span class="money">¥10,400</span></td>
+            <td class="right"><span style="color:#94a3b8;font-size:12px;">—</span></td>
+            <td class="right"><span class="money">¥10,400</span></td>
           </tr>
           <tr style="background:#fef2f2;">
             <td>名古屋</td>
             <td style="font-family:monospace;font-size:12px;">VSR402J</td>
             <td class="right"><span class="money">¥10,400</span></td>
             <td class="right"><span class="money">¥10,400</span></td>
+            <td class="right"><span style="color:#94a3b8;font-size:12px;">—</span></td>
+            <td class="right"><span class="money">¥10,400</span></td>
           </tr>
           <tr class="total-row" style="background:#fef2f2;">
             <td colspan="2" style="text-align:right;font-size:12px;">小計（4拠点）</td>
             <td class="right"><span class="money big">¥41,600</span></td>
             <td class="right"><span class="money big" style="color:#991b1b;">¥41,600</span></td>
+            <td class="right"><span style="color:#94a3b8;font-size:12px;">—</span></td>
+            <td class="right"><span class="money big">¥41,600</span></td>
           </tr>
 
           <!-- Cato再構築グループ -->
@@ -926,11 +942,15 @@
             <td style="font-family:monospace;font-size:12px;">VSR601J（LBO）</td>
             <td class="right"><span class="money">¥20,000</span></td>
             <td class="right"><span class="money" style="color:#16a34a;">¥0</span></td>
+            <td class="right"><span style="color:#94a3b8;font-size:12px;">—</span></td>
+            <td class="right"><span class="money" style="color:#16a34a;">¥0</span></td>
           </tr>
           <tr style="background:#f5f3ff;">
             <td>多摩</td>
             <td style="font-family:monospace;font-size:12px;">VSR402J</td>
             <td class="right"><span class="money">¥10,400</span></td>
+            <td class="right"><span class="money" style="color:#16a34a;">¥0</span></td>
+            <td class="right"><span style="color:#94a3b8;font-size:12px;">—</span></td>
             <td class="right"><span class="money" style="color:#16a34a;">¥0</span></td>
           </tr>
           <tr style="background:#f5f3ff;">
@@ -938,19 +958,25 @@
             <td style="font-family:monospace;font-size:12px;">VSR402J</td>
             <td class="right"><span class="money">¥10,400</span></td>
             <td class="right"><span class="money" style="color:#16a34a;">¥0</span></td>
+            <td class="right"><span style="color:#94a3b8;font-size:12px;">—</span></td>
+            <td class="right"><span class="money" style="color:#16a34a;">¥0</span></td>
           </tr>
           <tr class="total-row" style="background:#f5f3ff;">
             <td colspan="2" style="text-align:right;font-size:12px;">小計（3拠点）</td>
             <td class="right"><span class="money big">¥40,800</span></td>
+            <td class="right"><span class="money big" style="color:#16a34a;">¥0</span></td>
+            <td class="right"><span style="color:#94a3b8;font-size:12px;">—</span></td>
             <td class="right"><span class="money big" style="color:#16a34a;">¥0</span></td>
           </tr>
 
           <!-- 合計 -->
           <tr class="total-row" style="background:#f1f5f9;">
             <td style="text-align:center;font-weight:900;">—</td>
-            <td colspan="2" style="text-align:right;font-weight:900;">VarioSecure 合計</td>
+            <td colspan="2" style="text-align:right;font-weight:900;">月額合計</td>
             <td class="right"><span class="money big">¥122,400</span></td>
             <td class="right"><span class="money big" style="color:#16a34a;">¥81,600</span></td>
+            <td class="right"><span class="money big" style="color:#5b21b6;">¥383,333</span></td>
+            <td class="right"><span class="money big" style="color:#0369a1;">¥464,933</span></td>
           </tr>
         </tbody>
       </table>
