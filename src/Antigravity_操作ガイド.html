@@ -980,6 +980,30 @@
       </div>
       <p class="slide-lead">Chrome 拡張をインストールすると、AI に Web ブラウジング能力を付与できる。調査やデータ収集を自動化する。</p>
 
+      <div class="step-list" style="margin-bottom:28px;">
+        <div class="step-item">
+          <div class="step-item-num" style="background:var(--g-blue);">1</div>
+          <div class="step-item-body">
+            <div class="step-item-title">ブラウザタスクを依頼する</div>
+            <div class="step-item-desc">Agent パネルで「go to antigravity.google」などブラウザ操作が必要な指示を入力する。初回のみセットアップ画面が表示される</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-item-num" style="background:var(--g-blue);">2</div>
+          <div class="step-item-body">
+            <div class="step-item-title">Setup ボタンをクリック</div>
+            <div class="step-item-desc">エージェントが「ブラウザ拡張が必要」と案内する。<strong style="color:var(--dark);">「Setup」ボタン</strong>をクリックすると Chrome ウェブストアが自動で開く（直接検索では表示されない）</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-item-num" style="background:var(--g-blue);">3</div>
+          <div class="step-item-body">
+            <div class="step-item-title">拡張機能を追加・権限を付与</div>
+            <div class="step-item-desc">「Chrome に追加」をクリックしてインストール。完了後、Antigravity に戻り「Allow」で権限を付与する</div>
+          </div>
+        </div>
+      </div>
+
       <div class="point-grid" style="grid-template-columns: repeat(3, 1fr);">
         <div class="point-card">
           <div class="point-card-icon">🔍</div>
@@ -1897,7 +1921,7 @@
     {
       id: 's-step4',
       title: 'Step 4: Browser',
-      text: 'Step 4、Browserです。Chrome拡張をインストールすると、AIにWebブラウジング能力を付与できます。6つの機能があります。自動検索・操作は、Web検索、クリック、スクロール、入力、フォーム送信を代行します。スクリーンショットは、画面をキャプチャして記録・分析します。動画記録は、操作の様子を動画で記録します。DOMキャプチャは、ページの構造を直接取得します。Markdown変換は、Webページの内容をMarkdown形式で取得・整理します。コンソールログは、ブラウザの開発者ツール相当のログを読み取ります。ブラウザ機能は専用のサブエージェントが担当し、メインのAIエージェントとは別のモデルが動作します。'
+      text: 'Step 4、Browserです。Chrome拡張をインストールすると、AIにWebブラウジング能力を付与できます。インストール手順は3ステップです。まず、Agentパネルで「go to antigravity.google」などブラウザ操作が必要な指示を入力します。初回のみセットアップ画面が表示されます。次に、エージェントが案内するSetupボタンをクリックします。Chromeウェブストアが自動で開きます。直接検索では表示されないため、必ずこの手順で開いてください。最後に、「Chromeに追加」でインストールし、Antigravityに戻ってAllowで権限を付与します。インストール後は6つの機能が使えます。自動検索・操作、スクリーンショット、動画記録、DOMキャプチャ、Markdown変換、コンソールログです。ブラウザ機能は専用のサブエージェントが担当します。'
     },
     {
       id: 's-step5',
