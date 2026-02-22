@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Champion カリキュラム | AKIBAホールディングス</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/unified_design_system.css">
+  <style>
+    :root {
+      --primary: #0f172a;
+      --accent: #2563eb;
+      --secondary: #64748b;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --purple: #7c3aed;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      font-size: 16px;
+      padding: 0 24px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background-color: var(--card-bg);
+      padding: 50px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      margin-top: 40px;
+      margin-bottom: 60px;
+    }
+
+    /* ── Header ── */
+    .page-header {
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .page-header h1 {
+      font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .page-header h1::before {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 28px;
+      background: var(--primary);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .page-meta {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 8px;
+      margin-left: 16px;
+    }
+
+    .page-lead {
+      font-size: 15px;
+      color: #475569;
+      line-height: 1.9;
+      margin-top: 12px;
+      margin-left: 16px;
+    }
+
+    /* ── Section ── */
+    .section {
+      margin-top: 48px;
+      scroll-margin-top: 24px;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title::before {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 22px;
+      background: #3b82f6;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .section-lead {
+      font-size: 15px;
+      color: #475569;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .card-body {
+      font-size: 15px;
+      color: #475569;
+      line-height: 1.8;
+    }
+
+    .card-body ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .card-body li {
+      padding: 6px 0;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .card-body li::before {
+      content: '―';
+      position: absolute;
+      left: 0;
+      color: var(--secondary);
+    }
+
+    /* ── Badges ── */
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-green { background: #d1fae5; color: #065f46; }
+    .badge-purple { background: #ede9fe; color: #5b21b6; }
+    .badge-amber { background: #fef3c7; color: #92400e; }
+    .badge-gray { background: #f1f5f9; color: #475569; }
+
+    /* ── Week Cards ── */
+    .week-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      border-left: 5px solid var(--accent);
+    }
+
+    .week-card.week-1 { border-left-color: #2563eb; }
+    .week-card.week-2 { border-left-color: #7c3aed; }
+    .week-card.week-3 { border-left-color: #059669; }
+    .week-card.week-4 { border-left-color: #d97706; }
+
+    .week-number {
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--secondary);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .week-title {
+      font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 14px;
+    }
+
+    .week-content {
+      font-size: 15px;
+      color: #475569;
+      line-height: 1.9;
+    }
+
+    .week-steps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .step-tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid var(--border);
+    }
+
+    .goal-tag {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── Tables ── */
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+
+    thead th {
+      background: #f8fafc;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 14px 18px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    tbody td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      font-size: 15px;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background: #f8fafc;
+    }
+
+    /* ── Info Box ── */
+    .info-box {
+      background: #f0f9ff;
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      padding: 18px 22px;
+      margin: 16px 0;
+      font-size: 15px;
+      color: #1e40af;
+      line-height: 1.9;
+    }
+
+    .warn-box {
+      background: #fffbeb;
+      border-left: 4px solid var(--warning);
+      border-radius: 0 8px 8px 0;
+      padding: 18px 22px;
+      margin: 16px 0;
+      font-size: 15px;
+      color: #92400e;
+      line-height: 1.9;
+    }
+
+    /* ── Setup Steps ── */
+    .setup-step {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .step-number {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step-content {
+      flex: 1;
+    }
+
+    .step-content h4 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .step-content p {
+      font-size: 15px;
+      color: #475569;
+      line-height: 1.9;
+    }
+
+    .step-content code {
+      background: #f1f5f9;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-family: 'Consolas', 'Noto Sans JP', monospace;
+      color: #334155;
+    }
+
+    .step-content a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .step-content a:hover {
+      text-decoration: underline;
+    }
+
+    /* ── Member Grid ── */
+    .member-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }
+
+    .member-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .member-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .member-detail {
+      font-size: 14px;
+      color: var(--secondary);
+      line-height: 1.8;
+    }
+
+    /* ── Achievement ── */
+    .achievement-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .achievement-row:last-child {
+      border-bottom: none;
+    }
+
+    .achievement-date {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--secondary);
+      flex-shrink: 0;
+      width: 80px;
+    }
+
+    .achievement-text {
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    /* ── TOC ── */
+    .toc {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-top: 24px;
+    }
+
+    .toc-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+
+    .toc a {
+      display: block;
+      padding: 7px 0;
+      font-size: 15px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .toc a:hover {
+      text-decoration: underline;
+    }
+
+    /* ── Links ── */
+    .resource-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .resource-list li {
+      padding: 10px 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .resource-list a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .resource-list a:hover {
+      text-decoration: underline;
+    }
+
+    .resource-tag {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--secondary);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Print ── */
+    @media print {
+      body { font-size: 12px; padding: 0; }
+      .container { max-width: 100%; padding: 20px; box-shadow: none; border-radius: 0; margin: 0; }
+      .card, .week-card { break-inside: avoid; }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen font-sans antialiased text-slate-700" style="font-family: 'Inter', 'Noto Sans JP', sans-serif;">
+
+  <!-- ═══ Sticky Nav Header ═══ -->
+  <header class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a href="/index.html"
+          class="flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium">
+          <svg style="width: 12px; height: 12px; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          ポータルへ戻る
+        </a>
+        <div style="width: 1px; height: 16px; background-color: #cbd5e1;"></div>
+        <span class="text-base font-bold text-slate-700">AI Champion カリキュラム</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto p-4 md:p-8">
+  <div class="container">
+
+    <!-- ═══ Header ═══ -->
+    <header class="page-header">
+      <h1>AI Champion カリキュラム</h1>
+      <div class="page-meta">AKIBAホールディングス 情報システム部 ｜ 2026年3月期 Goal 4・5</div>
+      <p class="page-lead">
+        各部門にAI Championを配置し、Google Antigravity を活用した自律的な業務改善力を育成する。
+        本カリキュラムは Google 公式 Codelabs のガイドに準拠し、4週間で段階的に習得する構成とした。
+      </p>
+
+      <div class="toc">
+        <div class="toc-title">目次</div>
+        <a href="#overview">1. プログラム概要</a>
+        <a href="#members">2. メンバー</a>
+        <a href="#curriculum">3. 4週間カリキュラム</a>
+        <a href="#setup">4. セットアップ手順</a>
+        <a href="#learning">5. 各ステップ学習ガイド</a>
+        <a href="#achievements">6. 成果記録</a>
+        <a href="#resources">7. 参考リソース</a>
+      </div>
+    </header>
+
+    <!-- ═══ 1. Overview ═══ -->
+    <section class="section" id="overview">
+      <h2 class="section-title">プログラム概要</h2>
+
+      <div class="card">
+        <div class="card-body">
+          <table>
+            <tbody>
+              <tr><td style="width:140px; font-weight:600;">目的</td><td>各部門の自律的なAI活用力を構築する。情シスを「実装者」から「支援者」へ転換</td></tr>
+              <tr><td style="font-weight:600;">対象ツール</td><td>Google Antigravity（AI駆動型開発環境、VSCodeベース）</td></tr>
+              <tr><td style="font-weight:600;">期間</td><td>2026年3月（4週間）</td></tr>
+              <tr><td style="font-weight:600;">頻度</td><td>週1回のチェックイン + 各自の実践</td></tr>
+              <tr><td style="font-weight:600;">年度目標との対応</td><td>Goal 4（AIツール・ノーコードツール導入）、Goal 5（AI Champion組織構築）</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <strong>カリキュラムの方針</strong><br>
+        Google公式の <a href="https://codelabs.developers.google.com/getting-started-google-antigravity" target="_blank" style="color:#1d4ed8; font-weight:600;">Getting Started with Google Antigravity（Codelabs）</a> を教材として使用する。
+        全12ステップを4週に分割し、各週に社内業務での実践課題を設定する。
+      </div>
+    </section>
+
+    <!-- ═══ 2. Members ═══ -->
+    <section class="section" id="members">
+      <h2 class="section-title">メンバー</h2>
+
+      <div class="member-grid">
+        <div class="member-card">
+          <div class="member-name">中野さん</div>
+          <div class="member-detail">
+            <span class="badge badge-green">活動中</span><br>
+            Antigravity導入済み・業務で使用開始
+          </div>
+        </div>
+        <div class="member-card">
+          <div class="member-name">石井さん</div>
+          <div class="member-detail">
+            <span class="badge badge-green">活動中</span><br>
+            Antigravity導入済み・業務で使用開始
+          </div>
+        </div>
+        <div class="member-card">
+          <div class="member-name">高橋さん</div>
+          <div class="member-detail">
+            <span class="badge badge-amber">準備中</span><br>
+            新規参加予定・遠隔対応のためセットアップ資料で導入
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 3. Curriculum ═══ -->
+    <section class="section" id="curriculum">
+      <h2 class="section-title">4週間カリキュラム</h2>
+      <p class="section-lead">
+        Google Codelabs の12ステップを4週に配分。各週に「学習」と「実践課題」を設定する。
+      </p>
+
+      <!-- Week 1 -->
+      <div class="week-card week-1">
+        <div class="week-number">Week 1 ― 3/3〜3/7</div>
+        <div class="week-title">インストールと基本操作</div>
+        <div class="week-content">
+          <p><strong>学習内容</strong>: Antigravityのインストール、初期設定、Agent Manager の基本操作、ブラウザ連携</p>
+          <p style="margin-top:8px;"><strong>実践課題</strong>: Antigravity を使って「自分の業務に関する簡単な質問」を1つ投げてみる。結果をチャット等で共有</p>
+          <p style="margin-top:8px;"><strong>高橋さん</strong>: <a href="#setup">セットアップ手順</a>に沿ってインストールを完了する</p>
+          <div class="week-steps">
+            <span class="step-tag">Step 1 イントロ</span>
+            <span class="step-tag">Step 2 インストール</span>
+            <span class="step-tag">Step 3 Agent Manager</span>
+            <span class="step-tag">Step 4 Browser</span>
+          </div>
+        </div>
+        <div class="goal-tag">Goal 4: Championによる部門内展開</div>
+      </div>
+
+      <!-- Week 2 -->
+      <div class="week-card week-2">
+        <div class="week-number">Week 2 ― 3/10〜3/14</div>
+        <div class="week-title">成果物の確認とエディタ操作</div>
+        <div class="week-content">
+          <p><strong>学習内容</strong>: Artifacts（エージェントの成果物管理）、Inbox、Editor の操作、インラインコマンド</p>
+          <p style="margin-top:8px;"><strong>実践課題</strong>: 自分の業務で「困っていること」を1つ選び、Antigravity に解決させてみる。作業の前後を記録</p>
+          <div class="week-steps">
+            <span class="step-tag">Step 5 Artifacts</span>
+            <span class="step-tag">Step 6 Inbox</span>
+            <span class="step-tag">Step 7 Editor</span>
+            <span class="step-tag">Step 8 フィードバック</span>
+          </div>
+        </div>
+        <div class="goal-tag">Goal 4: 困りごとを持ち寄りAIで解決</div>
+      </div>
+
+      <!-- Week 3 -->
+      <div class="week-card week-3">
+        <div class="week-number">Week 3 ― 3/17〜3/21</div>
+        <div class="week-title">ルール設定と自律運用</div>
+        <div class="week-content">
+          <p><strong>学習内容</strong>: Rules & Workflows（繰り返し作業の自動化）、Skills（知識パッケージ）、セキュリティ設定</p>
+          <p style="margin-top:8px;"><strong>実践課題</strong>: 自部署の業務ルール（書式規定、チェックリスト等）を1つ Rules として設定してみる</p>
+          <p style="margin-top:8px;"><strong>目標</strong>: 情シスの支援なしで、Champion自身がルール設定まで完結できること</p>
+          <div class="week-steps">
+            <span class="step-tag">Step 9 Rules & Workflows</span>
+            <span class="step-tag">Step 10 Skills</span>
+            <span class="step-tag">Step 11 セキュリティ</span>
+          </div>
+        </div>
+        <div class="goal-tag">Goal 5: 情シスなしで完結する事例を増やす</div>
+      </div>
+
+      <!-- Week 4 -->
+      <div class="week-card week-4">
+        <div class="week-number">Week 4 ― 3/24〜3/28</div>
+        <div class="week-title">成果まとめと次年度展開</div>
+        <div class="week-content">
+          <p><strong>学習内容</strong>: Step 12 まとめ、応用Codelabs の紹介</p>
+          <p style="margin-top:8px;"><strong>実践課題</strong>: 3週間の活動を振り返り、「何ができるようになったか」「次にやりたいこと」を整理</p>
+          <p style="margin-top:8px;"><strong>成果物</strong>: Champion活動報告（成功事例・課題・次年度提言）</p>
+          <div class="week-steps">
+            <span class="step-tag">Step 12 まとめ</span>
+            <span class="step-tag">振り返り</span>
+            <span class="step-tag">成果報告</span>
+          </div>
+        </div>
+        <div class="goal-tag">Goal 4: 成果の整理と次期展開の判断 ／ Goal 5: 組織全体の問題解決力を評価</div>
+      </div>
+    </section>
+
+    <!-- ═══ 4. Setup ═══ -->
+    <section class="section" id="setup">
+      <h2 class="section-title">セットアップ手順</h2>
+      <p class="section-lead">
+        遠隔からでも一人で完了できる手順。所要時間は約15分。
+      </p>
+
+      <div class="card">
+        <div class="card-body">
+
+          <div class="setup-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>ダウンロード</h4>
+              <p><a href="https://antigravity.google/download" target="_blank">antigravity.google/download</a> にアクセスし、自分のOS（Windows / Mac）に合ったインストーラーを取得する。</p>
+            </div>
+          </div>
+
+          <div class="setup-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>インストール・初期設定</h4>
+              <p>インストーラーを実行。初回起動時に以下を設定する。</p>
+              <ul style="margin-top:8px; list-style:none; padding:0;">
+                <li style="padding:4px 0; padding-left:16px; position:relative;"><span style="position:absolute; left:0; color:#64748b;">―</span> セットアップ: 「Start fresh」を選択（VSCode設定のインポートも可）</li>
+                <li style="padding:4px 0; padding-left:16px; position:relative;"><span style="position:absolute; left:0; color:#64748b;">―</span> テーマ: ダーク or ライト（好みで選択）</li>
+                <li style="padding:4px 0; padding-left:16px; position:relative;"><span style="position:absolute; left:0; color:#64748b;">―</span> 実行ポリシー: <strong>「Review-driven development」を推奨</strong>（エージェントの操作を確認してから実行）</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="setup-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>Googleアカウントでサインイン</h4>
+              <p>個人のGmailアカウントでサインインする。プレビュー期間中は無料で利用可能。</p>
+            </div>
+          </div>
+
+          <div class="setup-step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h4>コマンドラインツールの導入</h4>
+              <p>コマンドパレット（<code>Ctrl+Shift+P</code> / <code>Cmd+Shift+P</code>）を開き、<code>Install 'agy' command</code> を実行する。ターミナルから <code>agy</code> コマンドで起動できるようになる。</p>
+            </div>
+          </div>
+
+          <div class="setup-step">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <h4>動作確認</h4>
+              <p>Agent Manager で新しい会話を開始し、「今日の日付を教えてください」と入力。応答が返れば完了。</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="warn-box">
+        <strong>社内ネットワークで接続できない場合</strong><br>
+        プロキシやファイアウォールの制限で接続できない場合は情シス（丹治）まで連絡すること。
+        接続先: antigravity.google 関連ドメイン
+      </div>
+    </section>
+
+    <!-- ═══ 5. Learning Guide ═══ -->
+    <section class="section" id="learning">
+      <h2 class="section-title">各ステップ学習ガイド</h2>
+      <p class="section-lead">
+        Google Codelabs の各ステップの要点を日本語で整理した。詳細は原文リンクを参照。
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width:50px;">Step</th>
+            <th style="width:180px;">テーマ</th>
+            <th>学習のポイント</th>
+            <th style="width:60px;">週</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>イントロダクション</td>
+            <td>Antigravityの全体像を理解する。従来のコード補完ツールとは異なり、AIエージェントが自律的に作業を進めるプラットフォーム</td>
+            <td><span class="badge badge-blue">W1</span></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>インストール</td>
+            <td>ダウンロード→インストール→初期設定。セキュリティポリシーは「Review-driven」推奨。Googleアカウントでサインイン</td>
+            <td><span class="badge badge-blue">W1</span></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Agent Manager</td>
+            <td>エージェントの指揮管理画面。「ミッションコントロール」として複数のエージェントを並行管理する。Planningモード（複雑なタスク）とFastモード（単純なタスク）の使い分け</td>
+            <td><span class="badge badge-blue">W1</span></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Browser</td>
+            <td>Chrome拡張を導入し、エージェントにWebブラウジング能力を付与する。クリック、入力、スクリーンショット取得が自動で可能に</td>
+            <td><span class="badge badge-blue">W1</span></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Artifacts</td>
+            <td>エージェントの作業成果物（計画書、コード差分、スクリーンショット等）の確認方法。「AIが何をしたか」を証拠として記録する仕組み</td>
+            <td><span class="badge badge-purple">W2</span></td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>Inbox</td>
+            <td>過去の会話履歴と進行中タスクの管理。中断した作業の再開方法</td>
+            <td><span class="badge badge-purple">W2</span></td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>Editor</td>
+            <td>VSCodeベースのエディタ操作。Auto-complete（Tab確定）、インラインコマンド（Cmd+I）、エージェントパネル（Cmd+L）</td>
+            <td><span class="badge badge-purple">W2</span></td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>フィードバック</td>
+            <td>エージェントの計画・コード・成果物に対してコメントで修正指示を出す。Google Docs風のコメント機能。Undo で各ステップの取り消しも可能</td>
+            <td><span class="badge badge-purple">W2</span></td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>Rules & Workflows</td>
+            <td>繰り返し使うルール（コーディング規約等）とワークフロー（定型プロンプト）の設定。グローバル設定とワークスペース設定の2種類</td>
+            <td><span class="badge badge-green">W3</span></td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>Skills</td>
+            <td>特化した知識パッケージの作成。コードレビュー、ライセンスヘッダー追加など、プロジェクト固有のAI機能を定義できる</td>
+            <td><span class="badge badge-green">W3</span></td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>セキュリティ</td>
+            <td>ターミナル実行ポリシー（Off / Auto / Turbo）、コマンドのホワイトリスト・ブラックリスト、ブラウザのURLアクセス制限</td>
+            <td><span class="badge badge-green">W3</span></td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td>まとめ</td>
+            <td>全体の振り返りと次のステップ。応用Codelabs（アプリ構築、Google Cloudデプロイ）への導線</td>
+            <td><span class="badge badge-amber">W4</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="info-box">
+        <strong>原文（英語）</strong>:
+        <a href="https://codelabs.developers.google.com/getting-started-google-antigravity" target="_blank" style="color:#1d4ed8; font-weight:600;">
+          Getting Started with Google Antigravity ― Google Codelabs
+        </a><br>
+        ブラウザの翻訳機能で日本語表示可能。各ステップにハンズオン手順が記載されている。
+      </div>
+    </section>
+
+    <!-- ═══ 6. Achievements ═══ -->
+    <section class="section" id="achievements">
+      <h2 class="section-title">成果記録</h2>
+      <p class="section-lead">
+        各Championの活動実績と成果を記録する。年度評価（Goal 4・5）のエビデンスとして使用。
+      </p>
+
+      <!-- 2月（これまで） -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">2026年2月（準備期間）</div>
+          <span class="badge badge-gray">実績</span>
+        </div>
+        <div class="card-body">
+          <div class="achievement-row">
+            <div class="achievement-date">2月</div>
+            <div class="achievement-text">中野さん・石井さんにAntigravityの使い方を説明。両名とも導入済み、業務での使用を開始</div>
+          </div>
+          <div class="achievement-row">
+            <div class="achievement-date">2月</div>
+            <div class="achievement-text">高橋さんの参加が決定。遠隔のためセットアップ資料による導入を計画</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3月 Week 1 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Week 1（3/3〜3/7）</div>
+          <span class="badge badge-blue">予定</span>
+        </div>
+        <div class="card-body">
+          <div class="achievement-row">
+            <div class="achievement-date">―</div>
+            <div class="achievement-text" style="color:#94a3b8;">（記録予定）</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3月 Week 2 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Week 2（3/10〜3/14）</div>
+          <span class="badge badge-purple">予定</span>
+        </div>
+        <div class="card-body">
+          <div class="achievement-row">
+            <div class="achievement-date">―</div>
+            <div class="achievement-text" style="color:#94a3b8;">（記録予定）</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3月 Week 3 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Week 3（3/17〜3/21）</div>
+          <span class="badge badge-green">予定</span>
+        </div>
+        <div class="card-body">
+          <div class="achievement-row">
+            <div class="achievement-date">―</div>
+            <div class="achievement-text" style="color:#94a3b8;">（記録予定）</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3月 Week 4 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Week 4（3/24〜3/28）成果まとめ</div>
+          <span class="badge badge-amber">予定</span>
+        </div>
+        <div class="card-body">
+          <div class="achievement-row">
+            <div class="achievement-date">―</div>
+            <div class="achievement-text" style="color:#94a3b8;">（記録予定）</div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ═══ 7. Resources ═══ -->
+    <section class="section" id="resources">
+      <h2 class="section-title">参考リソース</h2>
+
+      <ul class="resource-list">
+        <li>
+          <a href="https://codelabs.developers.google.com/getting-started-google-antigravity" target="_blank">Getting Started with Google Antigravity</a>
+          <span class="resource-tag">GOOGLE 公式</span>
+        </li>
+        <li>
+          <a href="https://antigravity.google/" target="_blank">Google Antigravity 公式サイト</a>
+          <span class="resource-tag">GOOGLE 公式</span>
+        </li>
+        <li>
+          <a href="https://antigravity.google/docs" target="_blank">Antigravity ドキュメント</a>
+          <span class="resource-tag">GOOGLE 公式</span>
+        </li>
+        <li>
+          <a href="https://antigravity.google/download" target="_blank">ダウンロードページ</a>
+          <span class="resource-tag">GOOGLE 公式</span>
+        </li>
+        <li>
+          <a href="https://www.codecademy.com/article/how-to-set-up-and-use-google-antigravity" target="_blank">How to Set Up and Use Google Antigravity</a>
+          <span class="resource-tag">CODECADEMY</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ═══ Footer ═══ -->
+    <footer style="margin-top:64px; padding-top:24px; border-top:1px solid #e2e8f0; font-size:13px; color:#94a3b8; text-align:center;">
+      AI Champion カリキュラム v1.0 ｜ AKIBAホールディングス 情報システム部 ｜ 作成: 2026-02-22
+    </footer>
+
+  </div>
+  </main>
+</body>
+
+</html>
