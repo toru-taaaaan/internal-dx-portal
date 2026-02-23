@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Champion ハンドブック | AKIBAホールディングス</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/portal_nexus.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --primary: #0f172a;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --bg: #f1f5f9;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    /* ── Nav ── */
+    .top-nav {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .top-nav-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .top-nav a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #64748b;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: color 0.15s;
+    }
+
+    .top-nav a:hover { color: #0f172a; }
+
+    .top-nav-sep {
+      width: 1px;
+      height: 16px;
+      background: #e2e8f0;
+    }
+
+    .top-nav-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    /* ── Wrap ── */
+    .wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      background: white;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 48px 56px;
+      margin-bottom: 32px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .hero-tagline {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #2563eb;
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-size: 36px;
+      font-weight: 900;
+      line-height: 1.25;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .hero-subtitle {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    .hero-lead {
+      font-size: 15px;
+      color: #475569;
+      line-height: 1.9;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* ── Section ── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    /* ── Steps ── */
+    .steps-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .step-card {
+      background: white;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 32px 36px;
+      display: flex;
+      gap: 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+
+    .step-num-wrap {
+      flex-shrink: 0;
+    }
+
+    .step-num {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 900;
+      color: white;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .step-num-1 { background: #2563eb; }
+    .step-num-2 { background: #7c3aed; }
+    .step-num-3 { background: #059669; }
+
+    .step-body { flex: 1; }
+
+    .step-label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .step-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .step-desc {
+      font-size: 14px;
+      color: #475569;
+      line-height: 1.85;
+      margin-bottom: 14px;
+    }
+
+    /* ── 具体例リスト ── */
+    .example-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .example-list li {
+      display: flex;
+      gap: 10px;
+      font-size: 13px;
+      color: #334155;
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 10px 14px;
+    }
+
+    .example-list li::before {
+      content: '▶';
+      font-size: 10px;
+      color: #94a3b8;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ── 魔法の呪文 ── */
+    .spell-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1d4ed8;
+    }
+
+    /* ── AI憲法 ── */
+    .rules-card {
+      background: #0f172a;
+      border-radius: 16px;
+      padding: 36px 40px;
+      margin-bottom: 16px;
+      color: white;
+    }
+
+    .rules-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .rule-item {
+      display: flex;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .rule-item:last-child { border-bottom: none; }
+
+    .rule-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.8);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .rule-body { flex: 1; }
+
+    .rule-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 4px;
+    }
+
+    .rule-desc {
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.75;
+    }
+
+    /* ── サポートカード ── */
+    .support-card {
+      background: white;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+
+    .support-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #eff6ff;
+      border: 2px solid #bfdbfe;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: #2563eb;
+      font-family: 'Inter', sans-serif;
+      flex-shrink: 0;
+    }
+
+    .support-body { flex: 1; }
+
+    .support-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .support-desc {
+      font-size: 14px;
+      color: #475569;
+      line-height: 1.75;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Nav -->
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <a href="/index.html">
+        <svg style="width:12px;height:12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+        </svg>
+        ポータルへ戻る
+      </a>
+      <div class="top-nav-sep"></div>
+      <span class="top-nav-title">AI Champion ハンドブック</span>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+
+      <!-- Hero -->
+      <div class="hero">
+        <div class="hero-tagline">AI Champion Handbook — Lite</div>
+        <h1 class="hero-title">AIと共創する、<br>新しい働き方の第一歩</h1>
+        <p class="hero-subtitle">AKIBAホールディングス 情報システム部</p>
+        <p class="hero-lead">AI Championとは、単に「AIに詳しい人」ではありません。<br><strong>「自分自身の困りごとを、AIを相棒にして解決できる人」</strong>のことです。<br>プログラミングができなくても大丈夫。「違和感」さえあれば、あなたはすでに候補生です。</p>
+      </div>
+
+      <!-- 3ステップ -->
+      <div class="section-label">3つのステップで始める</div>
+      <div class="steps-container">
+
+        <!-- Step 1 -->
+        <div class="step-card">
+          <div class="step-num-wrap">
+            <div class="step-num step-num-1">1</div>
+          </div>
+          <div class="step-body">
+            <div class="step-label">Step 1</div>
+            <div class="step-title">「喋って」終わらせる（AquaVoice）</div>
+            <div class="step-desc">キーボードを叩くよりも、AIに話しかけて片付けてしまいましょう。</div>
+            <ul class="example-list">
+              <li>メールの下書き：「〇〇の件で、△△さんにお礼のメールを書いて。内容は～」</li>
+              <li>モヤモヤの整理：「今、××の予算作成で悩んでるんだけど、整理したいから聞いて」</li>
+              <li>議事録メモ：会議中に要点だけをボソッと呟いておく</li>
+            </ul>
+            <div class="spell-box">魔法の呪文：「これ、喋ったほうが早くない？」</div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-card">
+          <div class="step-num-wrap">
+            <div class="step-num step-num-2">2</div>
+          </div>
+          <div class="step-body">
+            <div class="step-label">Step 2</div>
+            <div class="step-title">「丸投げ」してみる（Antigravity / GenAI）</div>
+            <div class="step-desc">複雑な表計算やデータの整理は、人間が頑張る必要はありません。</div>
+            <ul class="example-list">
+              <li>Excel関数：「この列の合計を出して、かつ条件Aの場合だけ色を変える数式を作って」</li>
+              <li>文章要約：「この長いPDF、3行で要点だけ教えて」</li>
+              <li>壁打ち：「この企画書のロジック、どこか変なところある？」</li>
+            </ul>
+            <div class="spell-box">魔法の呪文：「これ、AIにやらせたらどうなる？」</div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-card">
+          <div class="step-num-wrap">
+            <div class="step-num step-num-3">3</div>
+          </div>
+          <div class="step-body">
+            <div class="step-label">Step 3</div>
+            <div class="step-title">小さな「成功」をシェアする</div>
+            <div class="step-desc">「これを使ったら楽になった！」「こんな使い方が便利だった！」<br>そんな小さな発見を、隣の人に教えてあげてください。あなたのその一言が、チーム全体の働き方を変えるきっかけになります。</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- AI憲法 -->
+      <div class="section-label" style="margin-top: 40px;">大切なルール — AI憲法 Lite</div>
+      <div class="rules-card">
+        <div class="rules-title">守ってほしい3つのこと</div>
+        <div class="rule-item">
+          <div class="rule-num">1</div>
+          <div class="rule-body">
+            <div class="rule-title">機密情報は守る</div>
+            <div class="rule-desc">個人情報や極秘情報は、許可された環境以外では入力しない。</div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-num">2</div>
+          <div class="rule-body">
+            <div class="rule-title">最後は人が決める</div>
+            <div class="rule-desc">AIの提案はあくまで「案」。採用するかどうかは、あなたが決める。</div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-num">3</div>
+          <div class="rule-body">
+            <div class="rule-title">責任を持つ</div>
+            <div class="rule-desc">AIが作ったものの責任は、それを使う（指示した）人間にあります。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- サポート -->
+      <div class="section-label" style="margin-top: 32px;">困ったときは？</div>
+      <div class="support-card">
+        <div class="support-avatar">丹</div>
+        <div class="support-body">
+          <div class="support-title">情報システム部 丹治 までお気軽に</div>
+          <div class="support-desc">「こんなことできるかな？」「使い方がわからない」<br>そんな時は、いつでも声をかけてください。一緒に「楽をする方法」を考えます。</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+</body>
+
+</html>

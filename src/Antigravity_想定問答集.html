@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>想定問答集（対・管理職） | AKIBAホールディングス</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/portal_nexus.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --primary: #0f172a;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --blue: #1d4ed8;
+      --blue-light: #eff6ff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    /* ── Nav ── */
+    .top-nav {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .top-nav-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .top-nav a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #64748b;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: color 0.15s;
+    }
+
+    .top-nav a:hover { color: #0f172a; }
+
+    .top-nav-sep {
+      width: 1px;
+      height: 16px;
+      background: #e2e8f0;
+    }
+
+    .top-nav-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    /* ── Wrap ── */
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      background: #0f172a;
+      border-radius: 16px;
+      padding: 48px 56px;
+      color: white;
+      margin-bottom: 32px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 16px;
+    }
+
+    .hero-title {
+      font-size: 32px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .hero-desc {
+      font-size: 14px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.85;
+      max-width: 560px;
+    }
+
+    /* ── Section Label ── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    /* ── Q&A Card ── */
+    .qa-card {
+      background: white;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+
+    .qa-question {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 24px 28px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .qa-q-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #1d4ed8;
+      color: white;
+      font-size: 15px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .qa-q-text {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.5;
+      flex: 1;
+      padding-top: 4px;
+    }
+
+    .qa-body {
+      padding: 0 28px 28px 80px;
+      border-top: 1px solid var(--border);
+    }
+
+    .qa-answer {
+      background: #eff6ff;
+      border-left: 4px solid #1d4ed8;
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+      margin: 20px 0 16px;
+    }
+
+    .qa-answer-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #1d4ed8;
+      margin-bottom: 6px;
+    }
+
+    .qa-answer-text {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1e3a8a;
+      line-height: 1.7;
+    }
+
+    .qa-logic-label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .qa-logic-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .qa-logic-list li {
+      display: flex;
+      gap: 10px;
+      font-size: 14px;
+      color: #334155;
+      line-height: 1.75;
+    }
+
+    .qa-logic-list li::before {
+      content: '—';
+      color: #94a3b8;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── Special card (最終手段) ── */
+    .qa-card-final .qa-q-badge {
+      background: #475569;
+    }
+
+    .qa-card-final .qa-answer {
+      background: #f8fafc;
+      border-color: #475569;
+    }
+
+    .qa-card-final .qa-answer-label {
+      color: #475569;
+    }
+
+    .qa-card-final .qa-answer-text {
+      color: #1e293b;
+    }
+
+    .final-note {
+      margin-top: 16px;
+      font-size: 13px;
+      color: #64748b;
+      font-style: italic;
+      line-height: 1.75;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Nav -->
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <a href="/index.html">
+        <svg style="width:12px;height:12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+        </svg>
+        ポータルへ戻る
+      </a>
+      <div class="top-nav-sep"></div>
+      <span class="top-nav-title">想定問答集（対・管理職）</span>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+
+      <!-- Hero -->
+      <div class="hero">
+        <div class="hero-eyebrow">AKIBAホールディングス 情報システム部 ― AI Champion</div>
+        <h1 class="hero-title">想定問答集<br>対・管理職</h1>
+        <p class="hero-desc">Antigravity導入に関して管理職から反対・懸念を示された際の対応トーク集。会議前に確認しておくこと。</p>
+      </div>
+
+      <!-- Q&A List -->
+      <div class="section-label">全6問 — よくある懸念と対応策</div>
+
+      <!-- Q1 -->
+      <div class="qa-card">
+        <div class="qa-question">
+          <div class="qa-q-badge">Q1</div>
+          <div class="qa-q-text">「時期尚早ではないか？ / もっと慎重に検討すべきでは？」</div>
+        </div>
+        <div class="qa-body">
+          <div class="qa-answer">
+            <div class="qa-answer-label">回答</div>
+            <div class="qa-answer-text">「慎重に検討するために、まず私がこのPoC（実証実験）でデータを取っています。」</div>
+          </div>
+          <div class="qa-logic-label">ロジック</div>
+          <ul class="qa-logic-list">
+            <li>何もせずに机上で検討しても答えは出ない。</li>
+            <li>「検討材料を集めるための活動」を止めることは、「判断を先送りにする」ことと同義。</li>
+            <li>「競合他社も慎重にしてくれていると良いのですが、技術の進化は待ってくれません。」</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="qa-card">
+        <div class="qa-question">
+          <div class="qa-q-badge">Q2</div>
+          <div class="qa-q-text">「前例がない / ルールが決まっていない」</div>
+        </div>
+        <div class="qa-body">
+          <div class="qa-answer">
+            <div class="qa-answer-label">回答</div>
+            <div class="qa-answer-text">「ですから、今回の結果を基にルールを作ればいいのです。」</div>
+          </div>
+          <div class="qa-logic-label">ロジック</div>
+          <ul class="qa-logic-list">
+            <li>ルールがないから何もしないのではなく、「新しい現実に合わせてルールを更新する」のが管理職の役割。</li>
+            <li>既存のGoogle Workspaceのセキュリティ設定の範囲内で動作しており、新たな禁止ルールを設ける根拠が現時点で見当たらない。</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="qa-card">
+        <div class="qa-question">
+          <div class="qa-q-badge">Q3</div>
+          <div class="qa-q-text">「よくわからないから不安だ / 何かあったらどうする」</div>
+        </div>
+        <div class="qa-body">
+          <div class="qa-answer">
+            <div class="qa-answer-label">回答</div>
+            <div class="qa-answer-text">「具体的に『何』が不安ですか？ 技術的な懸念であれば私が全てクリアに説明できます。」</div>
+          </div>
+          <div class="qa-logic-label">ロジック</div>
+          <ul class="qa-logic-list">
+            <li>漠然とした不安（感情論）を、具体的な課題（論理）に引きずり下ろす。</li>
+            <li>「セキュリティならGoogle基準。コストならゼロ。品質なら私が保証します。他に懸念すべきリスクはありますか？」</li>
+            <li>「『何かあったら』のリスクよりも、『何もしなくてジリ貧になる』リスクの方が、今の弊社にとっては致命的ではないでしょうか。」</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="qa-card">
+        <div class="qa-question">
+          <div class="qa-q-badge">Q4</div>
+          <div class="qa-q-text">「他の社員への影響は？ / 不公平では？」</div>
+        </div>
+        <div class="qa-body">
+          <div class="qa-answer">
+            <div class="qa-answer-label">回答</div>
+            <div class="qa-answer-text">「全員に展開する前の『先行テスト』です。効果が確認できれば、手順化して全社に広げます。」</div>
+          </div>
+          <div class="qa-logic-label">ロジック</div>
+          <ul class="qa-logic-list">
+            <li>「私は『特権』を求めているのではなく、『毒見役』をやっている」というスタンスで伝える。</li>
+            <li>「むしろ、この便利なツールを使えない現状の方が、社員にとっては損失（不公平）。早く全社導入できるよう、まずは私に検証を続けさせてください。」</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="qa-card">
+        <div class="qa-question">
+          <div class="qa-q-badge">Q5</div>
+          <div class="qa-q-text">「それは君じゃなくても（他の誰かでも / AIだけでも）できる仕事だろう？」</div>
+        </div>
+        <div class="qa-body">
+          <div class="qa-answer">
+            <div class="qa-answer-label">回答</div>
+            <div class="qa-answer-text">「では、なぜ他の誰もこのスピードで成果を出せていないのですか？」</div>
+          </div>
+          <div class="qa-logic-label">ロジック</div>
+          <ul class="qa-logic-list">
+            <li>事実の提示：ツールは誰でも導入できるが、使いこなして業務課題を解決しているのは現時点では私だけ。</li>
+            <li>「F1マシンは誰でも買えますが、乗りこなしてタイムを出せるのはレーサーだけです。私はそのスキルを今、会社のために磨いています。」</li>
+            <li>「私以外にこれを任せられる人がいるなら、ぜひ紹介してください。喜んで引き継ぎます。」</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Q6 (最終手段) -->
+      <div class="qa-card qa-card-final">
+        <div class="qa-question">
+          <div class="qa-q-badge" style="background:#475569;">Q6</div>
+          <div class="qa-q-text">無言の圧力（理屈ではなく感情で反対している場合）</div>
+        </div>
+        <div class="qa-body">
+          <div class="qa-answer">
+            <div class="qa-answer-label">最終手段</div>
+            <div class="qa-answer-text">「わかりました。では、『旧来のやり方で時間をかけて作業する』という方針に戻します。その代わり、生産性は1/5に落ちますので、今後の納期遅延や残業増については、〇〇さんのご指示ということでよろしいですね？」</div>
+          </div>
+          <div class="qa-logic-label">補足</div>
+          <ul class="qa-logic-list">
+            <li>責任の所在を相手側に明確化することで、感情論での反対を止める。</li>
+            <li>最終手段のため、他の対応で解決できない場合にのみ使用すること。</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+</body>
+
+</html>
