@@ -548,21 +548,22 @@
         <!-- Section 4: SD-WAN -->
         <!-- ========================================= -->
         <section id="sec-sdwan" class="modern-card">
-            <div class="section-title">4. SD-WAN / ネットワーク刷新（4シナリオ比較）</div>
+            <div class="section-title">4. SD-WAN / ネットワーク刷新（5シナリオ比較）</div>
             <p class="section-lead">
-                現行VarioSecureの維持から次世代SASEへの刷新まで、4つのシナリオを比較。全シナリオは択一型（併用なし）。
+                現行VarioSecureの維持から次世代SASEへの刷新まで、5つのシナリオを比較。⑤は既存WANを残したMix案（併用型）。
             </p>
 
             <div style="overflow-x: auto;">
                 <table class="compare-table">
                     <thead>
                         <tr>
-                            <th style="width: 13%;">費目</th>
-                            <th class="col-current" style="width: 16%;">①現状維持<br><span style="font-size: 0.65rem; font-weight: 400; text-transform: none;">VarioSecure</span></th>
-                            <th style="width: 16%; border-top: 3px solid #ef4444;">②オプション追加<br><span style="font-size: 0.65rem; font-weight: 400; text-transform: none;">Vario n-series + SD-WAN</span></th>
-                            <th class="col-iij" style="width: 16%;">③IIJ Omnibus<br><span style="font-size: 0.65rem; font-weight: 400; text-transform: none;">SD-WAN 8拠点</span></th>
-                            <th style="width: 16%; border-top: 3px solid #8b5cf6;">④Cato SASE<br><span style="font-size: 0.65rem; font-weight: 400; text-transform: none;">100名</span></th>
-                            <th style="width: 23%;">備考</th>
+                            <th style="width: 11%;">費目</th>
+                            <th class="col-current" style="width: 13%;">①現状維持<br><span style="font-size: 0.65rem; font-weight: 400; text-transform: none;">VarioSecure</span></th>
+                            <th style="width: 13%; border-top: 3px solid #ef4444;">②オプション追加<br><span style="font-size: 0.65rem; font-weight: 400; text-transform: none;">Vario n-series + SD-WAN</span></th>
+                            <th class="col-iij" style="width: 13%;">③IIJ Omnibus<br><span style="font-size: 0.65rem; font-weight: 400; text-transform: none;">SD-WAN 8拠点</span></th>
+                            <th style="width: 13%; border-top: 3px solid #8b5cf6;">④Cato SASE<br><span style="font-size: 0.65rem; font-weight: 400; text-transform: none;">全拠点Socket＋50名</span></th>
+                            <th style="width: 13%; border-top: 3px solid #16a34a;">⑤Mix案<br><span style="font-size: 0.65rem; font-weight: 400; text-transform: none;">Vario WAN＋Cato</span></th>
+                            <th style="width: 24%;">備考</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -572,9 +573,10 @@
                             <td>¥909,091 <sup class="evidence-ref"><a href="#ev14">[14]</a></sup></td>
                             <td>¥2,764,850 <sup class="evidence-ref"><a href="#ev15">[15]</a></sup></td>
                             <td>¥500,000 <sup class="evidence-ref"><a href="#ev17">[17]</a></sup></td>
+                            <td>¥500,000 <sup class="evidence-ref"><a href="#ev17">[17]</a></sup></td>
                             <td style="font-size: 0.8rem; color: #64748b;">
                                 IIJ: SEIL/X4設置・設定費含む<br>
-                                Cato: 初期導入費（SCSK経由）
+                                ④⑤: Cato初期導入費（SCSK経由）
                             </td>
                         </tr>
                         <tr>
@@ -582,10 +584,12 @@
                             <td>¥129,091 <sup class="evidence-ref"><a href="#ev13">[13]</a></sup></td>
                             <td>¥1,117,091 <sup class="evidence-ref"><a href="#ev14">[14]</a></sup></td>
                             <td>¥722,150 <sup class="evidence-ref"><a href="#ev15">[15]</a><a href="#ev16">[16]</a></sup></td>
-                            <td>¥383,333 ※1 <sup class="evidence-ref"><a href="#ev17">[17]</a></sup></td>
+                            <td style="color: #7c3aed;">約¥750,000 ※推定 <sup class="evidence-ref"><a href="#ev17">[17]</a></sup></td>
+                            <td style="color: #16a34a;">約¥512,000 ※推定 <sup class="evidence-ref"><a href="#ev13">[13]</a><a href="#ev17">[17]</a></sup></td>
                             <td style="font-size: 0.8rem; color: #64748b;">
                                 ①: 現行価格（税込¥142,000÷1.1。2025/4に20%値上げ実施済み）<br>
-                                ④ ※1: 年額契約（¥4,600,000/年）を月額換算
+                                ④推定: 全Socket＋50名（SCSK確認中）<br>
+                                ⑤推定: ①¥129K＋Catoライセンス¥383K
                             </td>
                         </tr>
                         <tr class="summary-row-highlight">
@@ -593,8 +597,9 @@
                             <td style="font-weight: 700;">¥1,549,092</td>
                             <td style="font-weight: 700;">¥13,405,092</td>
                             <td style="font-weight: 700;">¥8,665,800</td>
-                            <td style="font-weight: 700;">¥4,600,000</td>
-                            <td style="font-size: 0.8rem; color: #64748b;">年額最安: ①現状維持（¥1,549,092）</td>
+                            <td style="font-weight: 700; color: #7c3aed;">約¥9,000,000 ※推定</td>
+                            <td style="font-weight: 700; color: #16a34a;">約¥6,144,000 ※推定</td>
+                            <td style="font-size: 0.8rem; color: #64748b;">年額最安: ①現状維持（¥1,549,092）<br>セキュリティ対応込みの実質比較は③④⑤</td>
                         </tr>
                     </tbody>
                 </table>
@@ -619,14 +624,27 @@
             </div>
 
             <div class="fact-box" style="border-left-color: #8b5cf6;">
-                <dt>④ Cato SASE 年額内訳（100名）</dt>
+                <dt>④ Cato SASE 月額内訳（全拠点Socket＋モバイル50名）推定値</dt>
                 <dd style="margin-top: 0.5rem; font-size: 0.9rem;">
                     <table style="font-size: 0.85rem; border-collapse: collapse; width: 100%;">
-                        <tr><td style="padding: 4px 0;">ライセンス費用（100名）</td><td style="text-align: right; padding: 4px 0;">¥4,000,000/年</td></tr>
-                        <tr><td style="padding: 4px 0;">マネージドサービス費用</td><td style="text-align: right; padding: 4px 0;">¥600,000/年</td></tr>
-                        <tr style="border-top: 1px solid #cbd5e1; font-weight: 700;"><td style="padding: 4px 0;">年額合計</td><td style="text-align: right; padding: 4px 0;">¥4,600,000/年</td></tr>
-                        <tr style="color: #64748b;"><td style="padding: 4px 0;">月額換算</td><td style="text-align: right; padding: 4px 0;">約¥383,333/月</td></tr>
+                        <tr><td style="padding: 4px 0;">Socket設置費用（8拠点 × ¥800,000/年 ÷ 12）</td><td style="text-align: right; padding: 4px 0;">約¥533,333/月 ※推定</td></tr>
+                        <tr><td style="padding: 4px 0;">ライセンス費用（モバイル50名 / 参考: 100名¥4M/年）</td><td style="text-align: right; padding: 4px 0;">約¥166,667/月 ※推定</td></tr>
+                        <tr><td style="padding: 4px 0;">マネージドサービス費用（¥600,000/年 ÷ 12）</td><td style="text-align: right; padding: 4px 0;">¥50,000/月</td></tr>
+                        <tr style="border-top: 1px solid #cbd5e1; font-weight: 700;"><td style="padding: 4px 0;">月額合計（推定）</td><td style="text-align: right; padding: 4px 0;">約¥750,000/月</td></tr>
                     </table>
+                    <p style="margin: 8px 0 0; font-size: 0.75rem; color: #d97706;">※ Socket単価（¥800,000/年が1台あたりかどうか）・50名ライセンス価格はSCSK確認中。</p>
+                </dd>
+            </div>
+
+            <div class="fact-box" style="border-left-color: #16a34a;">
+                <dt>⑤ Mix案 月額内訳（VarioSecure WAN ＋ Cato セキュリティ）推定値</dt>
+                <dd style="margin-top: 0.5rem; font-size: 0.9rem;">
+                    <table style="font-size: 0.85rem; border-collapse: collapse; width: 100%;">
+                        <tr><td style="padding: 4px 0;">VarioSecure（WAN回線のみ）</td><td style="text-align: right; padding: 4px 0;">¥129,091/月</td></tr>
+                        <tr><td style="padding: 4px 0;">Catoライセンス（100名）＋マネージド</td><td style="text-align: right; padding: 4px 0;">約¥383,333/月</td></tr>
+                        <tr style="border-top: 1px solid #cbd5e1; font-weight: 700;"><td style="padding: 4px 0;">月額合計（推定）</td><td style="text-align: right; padding: 4px 0;">約¥512,000/月</td></tr>
+                    </table>
+                    <p style="margin: 8px 0 0; font-size: 0.75rem; color: #d97706;">※ SECOMの制御信号がVarioSecure・Cato両経路になるため、本社での集約が可能かどうか技術確認が必要。</p>
                 </dd>
             </div>
 
@@ -635,13 +653,73 @@
                 <ul style="margin: 0.5rem 0 0; padding-left: 1.25rem; line-height: 1.8;">
                     <li>ADのクラウド移行先にIIJを選んだ場合、ネットワークもIIJ Omnibusの利用が前提となる</li>
                     <li>USEN経由でADをAWSに移行した場合、ネットワーク費用はVarioSecure利用時の金額が基準。他社SD-WANに切り替えると別途費用が発生する</li>
-                    <li>Cato SASEの正確な見積には、モバイルユーザー数の確定が必要（現在100名で試算）</li>
+                    <li>Cato SASEの正確な見積には、モバイルユーザー数およびSocket数の確定が必要</li>
                 </ul>
+            </div>
+
+            <!-- 読み解き -->
+            <div style="margin-top: 1.75rem;">
+                <div style="font-size: 0.75rem; font-weight: 700; color: #94a3b8; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px;">読み解き</div>
+
+                <div class="fact-box" style="border-left-color: #3b82f6; background: #f8fafc; margin-bottom: 10px;">
+                    <dt style="font-size: 0.7rem; font-weight: 700; color: #3b82f6; letter-spacing: 0.05em; margin-bottom: 4px;">01 — IIJ ≈ Cato（フルフル同士）</dt>
+                    <dd style="font-size: 0.95rem; font-weight: 600; color: #1e293b; margin-bottom: 4px;">IIJ（¥722,150/月）とCato全拠点Socket（約¥750,000/月）はほぼ同額。</dd>
+                    <dd style="font-size: 0.85rem; color: #64748b; margin: 0;">どちらを選んでも月額コストに大きな差はない。</dd>
+                </div>
+
+                <div class="fact-box" style="border-left-color: #16a34a; background: #f0fdf4; margin-bottom: 10px;">
+                    <dt style="font-size: 0.7rem; font-weight: 700; color: #16a34a; letter-spacing: 0.05em; margin-bottom: 4px;">02 — Mix案だと約29%安くなる</dt>
+                    <dd style="font-size: 0.95rem; font-weight: 600; color: #1e293b; margin-bottom: 4px;">VarioSecure WANを残しつつCatoをセキュリティ層として追加すると、約¥512,000/月。IIJより¥210,000/月安い（年間¥2,520,000の差）。</dd>
+                    <dd style="font-size: 0.85rem; color: #64748b; margin: 0;">SECOMの制御信号がVarioSecure・Cato両経路になる技術課題あり。本社での集約が可能かどうか確認が必要。</dd>
+                </div>
+
+                <div class="fact-box" style="border-left-color: #3b82f6; background: #f8fafc; margin-bottom: 0;">
+                    <dt style="font-size: 0.7rem; font-weight: 700; color: #3b82f6; letter-spacing: 0.05em; margin-bottom: 4px;">03 — IIJでも同様のMix案が可能かもしれない</dt>
+                    <dd style="font-size: 0.95rem; font-weight: 600; color: #1e293b; margin-bottom: 4px;">VarioSecureを残しつつIIJを部分導入するMix案も考えられる。</dd>
+                    <dd style="font-size: 0.85rem; color: #64748b; margin: 0;">IIJへの確認が必要。</dd>
+                </div>
+            </div>
+
+            <!-- 確認事項 -->
+            <div style="margin-top: 1.75rem;">
+                <div style="font-size: 0.75rem; font-weight: 700; color: #94a3b8; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px;">確認事項</div>
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                    <thead>
+                        <tr>
+                            <th style="text-align: left; padding: 8px 12px; border-bottom: 2px solid #e2e8f0; color: #64748b; font-size: 0.75rem; font-weight: 600; width: 52%;">確認事項</th>
+                            <th style="text-align: left; padding: 8px 12px; border-bottom: 2px solid #e2e8f0; color: #64748b; font-size: 0.75rem; font-weight: 600; width: 22%;">確認先</th>
+                            <th style="text-align: left; padding: 8px 12px; border-bottom: 2px solid #e2e8f0; color: #64748b; font-size: 0.75rem; font-weight: 600;">状況</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top;">CatoのSocket単価（¥800,000/年は1台あたりかどうか）</td>
+                            <td style="padding: 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top;">SCSK 角田氏</td>
+                            <td style="padding: 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top;"><span style="display: inline-block; font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; background: #fef3c7; color: #92400e;">確認中</span></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top;">Cato 50名ライセンス価格（現在は100名見積のみ）</td>
+                            <td style="padding: 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top;">SCSK 角田氏</td>
+                            <td style="padding: 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top;"><span style="display: inline-block; font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; background: #fef3c7; color: #92400e;">確認中</span></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top;">Mix案：SECOMの制御信号が2経路になった場合、本社での集約が可能か</td>
+                            <td style="padding: 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top;">SECOM / SCSK</td>
+                            <td style="padding: 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top;"><span style="display: inline-block; font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; background: #fef3c7; color: #92400e;">未確認</span></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border-bottom: none; vertical-align: top;">IIJでのMix案（VarioSecureを残しつつIIJを部分導入）が可能か</td>
+                            <td style="padding: 12px; border-bottom: none; vertical-align: top;">IIJ</td>
+                            <td style="padding: 12px; border-bottom: none; vertical-align: top;"><span style="display: inline-block; font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; background: #fef3c7; color: #92400e;">未確認</span></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <p class="note-text">
                 詳細比較: <a href="/SD-WAN刷新_3社4シナリオ比較検討資料.html" style="color: #3b82f6;">SD-WAN刷新_3社4シナリオ比較検討資料.html</a> /
-                <a href="/IT基盤刷新_説明資料.html#sp-total-b" style="color: #3b82f6;">IT基盤刷新_説明資料.html テーブルB</a>
+                <a href="/IT基盤刷新_説明資料.html#sp-total-b" style="color: #3b82f6;">IT基盤刷新_説明資料.html テーブルB</a> /
+                <a href="/NW刷新_費用比較スライド.html" style="color: #3b82f6;">NW刷新_費用比較スライド.html</a>
             </p>
         </section>
 
@@ -786,12 +864,14 @@
                 <dd><strong>エビデンス集</strong>: <a href="/エビデンス集.html#iij-omnibus-cost">エビデンス集 E-008 / IIJ Omnibus SD-WAN費用</a></dd>
                 <dd><strong>内訳</strong>: 拠点間WAN ¥325,950 + インターネットGW(FW含む) ¥227,000 + リモートアクセス50名 ¥73,200 + ブレイクアウト ¥96,000 = ¥722,150</dd>
 
-                <dt id="ev17">[17] ④Cato SASE費用（100名）</dt>
+                <dt id="ev17">[17] Cato SASE費用（SCSK提供データ）</dt>
                 <dd><strong>原典</strong>: SCSK角田氏 2026/2/19 メール（100名構成での更新見積）</dd>
                 <dd><strong>エビデンス集</strong>: <a href="/エビデンス集.html#cato-sase-cost">エビデンス集 E-007 / Cato SASE費用</a></dd>
-                <dd><strong>内訳</strong>: ライセンス¥4,000,000/年 + マネージド¥600,000/年 = ¥4,600,000/年（月額換算: 約¥383,333）</dd>
-                <dd><strong>初期費用</strong>: ¥500,000（初期導入費、SCSK経由）</dd>
-                <dd><strong>補足</strong>: 年額契約のため月額は存在せず、便宜上12分割で月額換算。正式見積は与信手続き完了後に提示予定。先行概算（2/13メール、旧構成）はライセンス約500万/年だったが、100名構成で再算定</dd>
+                <dd><strong>確定値（100名ライセンス）</strong>: ライセンス¥4,000,000/年 + マネージド¥600,000/年 = ¥4,600,000/年（月額換算: 約¥383,333）</dd>
+                <dd><strong>確定値（初期費用）</strong>: ¥500,000（初期導入費、SCSK経由）</dd>
+                <dd><strong>推定値（④全拠点Socket＋50名）</strong>: Socket8台×¥800,000/年÷12 ≒ ¥533,333/月 + 50名ライセンス約¥166,667/月 + マネージド¥50,000/月 = 約¥750,000/月。Socket単価（¥800,000/年が1台あたりか）・50名ライセンス価格はSCSK確認中</dd>
+                <dd><strong>推定値（⑤Mix案）</strong>: VarioSecure¥129,091/月 + Catoライセンス100名¥383,333/月 = 約¥512,000/月</dd>
+                <dd><strong>補足</strong>: 正式見積は与信手続き完了後に提示予定。先行概算（2/13メール）はライセンス約500万/年だったが、100名構成で再算定</dd>
 
                 <!-- 入退室 -->
                 <dt id="ev18">[18] 入退室管理（bitlock PRO）</dt>
