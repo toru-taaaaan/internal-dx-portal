@@ -1,1371 +1,356 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NW刷新 費用比較 | AKIBAホールディングス</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Noto Sans JP', sans-serif;
-      overflow: hidden;
-      background: #ffffff;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ─── Slide Engine ─── */
-    .slides-wrapper { width: 100vw; height: 100vh; overflow: hidden; }
-
-    .slides-track {
-      display: flex;
-      height: 100vh;
-      transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-    }
-
-    .slide {
-      min-width: 100vw;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 64px 80px 40px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* ─── Step Bar ─── */
-    .step-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 52px;
-      background: #ffffff;
-      border-bottom: 1px solid #e2e8f0;
-      display: flex;
-      align-items: center;
-      padding: 0 24px;
-      gap: 6px;
-      z-index: 300;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-
-    .step-title {
-      font-size: 12px;
-      font-weight: 900;
-      color: #0f172a;
-      letter-spacing: 0.04em;
-      white-space: nowrap;
-      margin-right: 8px;
-    }
-
-    .step-divider {
-      width: 1px;
-      height: 24px;
-      background: #e2e8f0;
-      margin: 0 8px;
-      flex-shrink: 0;
-    }
-
-    .step-item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 700;
-      color: #94a3b8;
-      cursor: pointer;
-      transition: all 0.25s;
-      white-space: nowrap;
-    }
-
-    .step-item:hover { color: #475569; background: #f1f5f9; }
-
-    .step-item.active {
-      background: #0f172a;
-      color: white;
-    }
-
-    .step-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      font-size: 10px;
-      font-weight: 900;
-      background: #e2e8f0;
-      color: #64748b;
-      flex-shrink: 0;
-    }
-
-    .step-item.active .step-num {
-      background: rgba(255,255,255,0.2);
-      color: white;
-    }
-
-    /* ─── Navigation Arrows ─── */
-    .nav-btn {
-      position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: 1px solid #e2e8f0;
-      background: white;
-      color: #64748b;
-      font-size: 20px;
-      cursor: pointer;
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-      line-height: 1;
-    }
-
-    .nav-btn:hover {
-      background: #f8fafc;
-      border-color: #cbd5e1;
-      color: #0f172a;
-    }
-
-    .nav-prev { left: 20px; }
-    .nav-next { right: 20px; }
-    .nav-btn.hidden { opacity: 0; pointer-events: none; }
-
-    /* ─── Common Atoms ─── */
-    .label {
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-      opacity: 0.55;
-    }
-
-    .h1 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 800;
-      line-height: 1.15;
-    }
-
-    .money { font-family: 'Courier New', monospace; font-weight: 700; }
-
-    /* ═══════════════════════════════════════
-       SLIDE 1 — 現状
-    ═══════════════════════════════════════ */
-    .s1 { background: #ffffff; color: #0f172a; }
-
-    .s1-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      width: 100%;
-      max-width: 1100px;
-      align-items: center;
-    }
-
-    .s1-left .h1 { font-size: 2.6rem; color: #0f172a; margin-bottom: 16px; }
-    .s1-left .sub { font-size: 14px; color: #475569; line-height: 1.9; }
-
-    .s1-right { display: flex; flex-direction: column; gap: 12px; }
-
-    .s1-card {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 14px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .s1-card-loc { font-size: 13px; font-weight: 700; color: #1e293b; }
-    .s1-card-model { font-size: 11px; color: #94a3b8; font-family: monospace; margin-top: 2px; }
-    .s1-card-price { font-size: 16px; font-weight: 900; color: #0369a1; font-family: 'Courier New', monospace; }
-
-    .s1-total {
-      background: #fef2f2;
-      border: 2px solid #fecaca;
-      border-radius: 12px;
-      padding: 16px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .s1-total-label { font-size: 12px; font-weight: 900; color: #dc2626; letter-spacing: 0.1em; }
-    .s1-total-price { font-size: 24px; font-weight: 900; color: #dc2626; font-family: 'Courier New', monospace; }
-
-    .s1-issue {
-      margin-top: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .s1-issue-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      color: #475569;
-    }
-
-    .s1-issue-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #f59e0b;
-      flex-shrink: 0;
-    }
-
-    /* ═══════════════════════════════════════
-       SLIDE 2 — 方針（3グループ分類）
-    ═══════════════════════════════════════ */
-    .s2 { background: #f8fafc; color: #1e293b; }
-
-    .s2-inner { width: 100%; max-width: 1000px; }
-
-    .s2-header { margin-bottom: 28px; }
-    .s2-header .label { color: #64748b; }
-    .s2-header .h1 { font-size: 2rem; color: #0f172a; }
-
-    .s2-groups { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
-
-    .s2-group {
-      border-radius: 16px;
-      padding: 24px;
-      position: relative;
-    }
-
-    .s2-group-a { background: #eff6ff; border: 2px solid #bfdbfe; }
-    .s2-group-b { background: #fff1f2; border: 2px solid #fecdd3; }
-    .s2-group-c { background: #f5f3ff; border: 2px solid #ddd6fe; }
-
-    .s2-group-num {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 36px;
-      font-weight: 800;
-      opacity: 0.15;
-      position: absolute;
-      top: 12px;
-      right: 16px;
-    }
-
-    .s2-group-tag {
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-      padding: 4px 10px;
-      border-radius: 20px;
-      display: inline-block;
-    }
-
-    .s2-group-a .s2-group-tag { background: #bfdbfe; color: #1d4ed8; }
-    .s2-group-b .s2-group-tag { background: #fecdd3; color: #be123c; }
-    .s2-group-c .s2-group-tag { background: #ddd6fe; color: #6d28d9; }
-
-    .s2-group-title { font-size: 16px; font-weight: 900; margin-bottom: 8px; }
-    .s2-group-a .s2-group-title { color: #1e40af; }
-    .s2-group-b .s2-group-title { color: #9f1239; }
-    .s2-group-c .s2-group-title { color: #5b21b6; }
-
-    .s2-group-sites { font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 12px; }
-
-    .s2-group-reason { font-size: 12px; color: #64748b; line-height: 1.8; }
-
-    .s2-group-vsr { font-size: 11px; font-weight: 700; margin-top: 12px; padding: 6px 10px; border-radius: 6px; }
-    .s2-group-a .s2-group-vsr { background: #dbeafe; color: #1d4ed8; }
-    .s2-group-b .s2-group-vsr { background: #ffe4e6; color: #be123c; }
-    .s2-group-c .s2-group-vsr { background: #ede9fe; color: #6d28d9; }
-
-    /* ═══════════════════════════════════════
-       SLIDE 3 — 費用内訳
-    ═══════════════════════════════════════ */
-    .s3 { background: white; color: #1e293b; }
-
-    .s3-inner { width: 100%; max-width: 960px; }
-
-    .s3-header { margin-bottom: 20px; }
-    .s3-header .label { color: #64748b; }
-    .s3-header .h1 { font-size: 1.8rem; color: #0f172a; }
-
-    .s3-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
-
-    .s3-tbl th {
-      background: #0f172a;
-      color: rgba(255,255,255,0.85);
-      padding: 10px 16px;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .s3-tbl th.right { text-align: right; }
-
-    .s3-tbl td { padding: 11px 16px; border-bottom: 1px solid #f1f5f9; }
-    .s3-tbl td.right { text-align: right; }
-
-    .s3-tbl tr:last-child td { border-bottom: none; }
-
-    .s3-group-a td:first-child { border-left: 4px solid #3b82f6; }
-    .s3-group-b td:first-child { border-left: 4px solid #ef4444; }
-    .s3-group-c td:first-child { border-left: 4px solid #8b5cf6; }
-
-    .s3-subtotal { background: #f8fafc; font-weight: 700; }
-    .s3-subtotal td { border-top: 1px solid #e2e8f0 !important; border-bottom: 2px solid #e2e8f0 !important; }
-
-    .s3-grand { background: #0f172a; color: white; }
-    .s3-grand td { color: white; font-weight: 900; padding: 14px 16px !important; border-bottom: none !important; }
-
-    .badge {
-      font-size: 10px;
-      padding: 2px 7px;
-      border-radius: 10px;
-      font-weight: 700;
-      display: inline-block;
-      margin-left: 6px;
-    }
-
-    /* ═══════════════════════════════════════
-       SLIDE 4 — 月額サマリー
-    ═══════════════════════════════════════ */
-    .s4 { background: #f8fafc; color: #0f172a; }
-
-    .s4-inner { width: 100%; max-width: 900px; text-align: center; }
-
-    .s4-inner .label { color: #64748b; margin-bottom: 16px; }
-    .s4-inner .h1 { font-size: 2.2rem; color: #0f172a; margin-bottom: 40px; }
-
-    .s4-comparison {
-      display: grid;
-      grid-template-columns: 1fr 60px 1fr;
-      gap: 0;
-      align-items: center;
-      margin-bottom: 40px;
-    }
-
-    .s4-box {
-      border-radius: 20px;
-      padding: 28px 32px;
-    }
-
-    .s4-before { background: #fef2f2; border: 2px solid #fecaca; }
-    .s4-after  { background: #eff6ff; border: 2px solid #bfdbfe; }
-
-    .s4-box-label { font-size: 10px; font-weight: 900; letter-spacing: 0.2em; text-transform: uppercase; color: #64748b; margin-bottom: 10px; }
-    .s4-box-price {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 800;
-      line-height: 1;
-    }
-
-    .s4-before .s4-box-price { font-size: 2.8rem; color: #dc2626; }
-    .s4-after  .s4-box-price { font-size: 2.8rem; color: #2563eb; }
-
-    .s4-box-sub { font-size: 11px; color: #64748b; margin-top: 8px; line-height: 1.6; }
-
-    .s4-arrow { text-align: center; font-size: 28px; color: #cbd5e1; }
-
-    .s4-breakdown {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 16px;
-    }
-
-    .s4-item {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 14px 18px;
-      text-align: left;
-    }
-
-    .s4-item-group { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #94a3b8; margin-bottom: 6px; }
-    .s4-item-desc  { font-size: 12px; color: #475569; margin-bottom: 8px; line-height: 1.5; }
-    .s4-item-price { font-family: 'Courier New', monospace; font-size: 17px; font-weight: 700; }
-
-    /* ═══════════════════════════════════════
-       SLIDE 5 — IIJ vs Cato
-    ═══════════════════════════════════════ */
-    .s5 { background: #f8fafc; color: #1e293b; }
-
-    .s5-inner { width: 100%; max-width: 1040px; }
-
-    .s5-header { margin-bottom: 20px; }
-    .s5-header .label { color: #64748b; }
-    .s5-header .h1 { font-size: 1.8rem; color: #0f172a; }
-
-    .s5-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
-
-    .s5-tbl thead th {
-      padding: 10px 16px;
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      text-align: center;
-    }
-
-    .s5-tbl thead th:first-child { text-align: left; background: #f1f5f9; color: #64748b; }
-    .s5-tbl thead th.col-iij  { background: #1a3a5c; color: white; border-radius: 8px 8px 0 0; }
-    .s5-tbl thead th.col-cato { background: #3b0764; color: white; border-radius: 8px 8px 0 0; }
-
-    .s5-tbl tbody td {
-      padding: 11px 16px;
-      border-bottom: 1px solid #e2e8f0;
-      vertical-align: middle;
-    }
-
-    .s5-tbl tbody td:first-child { font-size: 12px; color: #64748b; font-weight: 700; }
-    .s5-tbl tbody td.col-iij  { text-align: center; background: #f0f6ff; }
-    .s5-tbl tbody td.col-cato { text-align: center; background: #faf5ff; }
-
-    .s5-tbl tbody tr:last-child td { border-bottom: none; }
-
-    .s5-price-row td { background: none !important; border-top: 2px solid #e2e8f0 !important; }
-    .s5-price-row .col-iij  { background: #1a3a5c !important; color: white; border-radius: 0 0 0 0; }
-    .s5-price-row .col-cato { background: #3b0764 !important; color: white; }
-
-    .s5-note { margin-top: 12px; font-size: 11px; color: #94a3b8; line-height: 1.7; }
-
-    .chip {
-      display: inline-block;
-      padding: 3px 9px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 700;
-    }
-
-    .chip-green { background: #dcfce7; color: #15803d; }
-    .chip-blue  { background: #dbeafe; color: #1d4ed8; }
-    .chip-purple { background: #ede9fe; color: #6d28d9; }
-    .chip-gray  { background: #f1f5f9; color: #64748b; }
-    .chip-yellow { background: #fef9c3; color: #a16207; }
-
-
-    /* ═══════════════════════════════════════
-       SLIDE 6 — SECOMフルクラウド化
-    ═══════════════════════════════════════ */
-    .s6 { background: #ffffff; color: #0f172a; }
-
-    .s6-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.6fr;
-      gap: 44px;
-      width: 100%;
-      max-width: 1100px;
-      align-items: start;
-    }
-
-    .s6-story { display: flex; flex-direction: column; gap: 8px; }
-
-    .s6-step {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-left: 3px solid;
-      border-radius: 0 10px 10px 0;
-      padding: 11px 15px;
-    }
-    .s6-step-current  { border-left-color: #ef4444; }
-    .s6-step-problem  { border-left-color: #f59e0b; }
-    .s6-step-solution { border-left-color: #10b981; }
-    .s6-step-effect   { border-left-color: #60a5fa; }
-
-    .s6-step-tag { font-size: 9px; font-weight: 900; letter-spacing: 0.2em; text-transform: uppercase; color: #94a3b8; margin-bottom: 3px; }
-    .s6-step-title { font-size: 13px; font-weight: 900; color: #0f172a; margin-bottom: 3px; }
-    .s6-step-body { font-size: 11px; color: #64748b; line-height: 1.7; }
-    .s6-arrow-down { padding-left: 15px; font-size: 13px; color: #cbd5e1; }
-
-    .s6-tbl { width: 100%; border-collapse: collapse; font-size: 11.5px; }
-    .s6-tbl th { padding: 9px 12px; font-size: 10px; font-weight: 900; letter-spacing: 0.07em; text-align: center; }
-    .s6-tbl th:first-child { text-align: left; background: #f1f5f9; color: #64748b; }
-    .s6-tbl th.col-secom   { background: #475569; color: white; }
-    .s6-tbl th.col-bitlock { background: #2563eb; color: white; }
-    .s6-tbl th.col-akerun  { background: #dc2626; color: white; }
-
-    .s6-tbl td { padding: 9px 12px; border-bottom: 1px solid #f1f5f9; color: #334155; vertical-align: middle; }
-    .s6-tbl td:first-child  { font-size: 11px; color: #64748b; font-weight: 700; }
-    .s6-tbl td.col-secom   { text-align: center; background: #f8fafc; }
-    .s6-tbl td.col-bitlock { text-align: center; background: #eff6ff; }
-    .s6-tbl td.col-akerun  { text-align: center; background: #fef2f2; }
-    .s6-tbl tr:last-child td { border-bottom: none; }
-
-    .cell-empty { color: #cbd5e1; font-size: 18px; letter-spacing: 0.3em; }
-
-    /* ═══════════════════════════════════════
-       SLIDE 7 — ファイルサーバークラウド化
-    ═══════════════════════════════════════ */
-    .s7 { background: white; color: #1e293b; }
-    .s7-inner { width: 100%; max-width: 980px; }
-    .s7-header { margin-bottom: 14px; }
-    .s7-header .label { color: #64748b; }
-    .s7-header .h1 { font-size: 1.75rem; color: #0f172a; }
-    .s7-sub { font-size: 12.5px; color: #64748b; margin-top: 6px; line-height: 1.75; }
-
-    .s7-tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 18px; }
-    .s7-tbl th { padding: 10px 14px; font-size: 10.5px; font-weight: 900; letter-spacing: 0.07em; }
-    .s7-tbl th:first-child { text-align: left; background: #f1f5f9; color: #64748b; }
-    .s7-tbl th.col-current { text-align: center; background: #475569; color: white; }
-    .s7-tbl th.col-cloud   { text-align: center; background: #0369a1; color: white; }
-    .s7-tbl th.col-note    { text-align: center; background: #0f766e; color: white; }
-
-    .s7-tbl td { padding: 10px 14px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
-    .s7-tbl td:first-child { font-size: 11px; color: #64748b; font-weight: 700; }
-    .s7-tbl td.col-current { text-align: center; background: #f8fafc; }
-    .s7-tbl td.col-cloud   { text-align: center; background: #f0f9ff; }
-    .s7-tbl td.col-note    { text-align: left; background: #f0fdfa; font-size: 11px; color: #0f766e; }
-    .s7-tbl tr:last-child td { border-bottom: none; }
-
-    .cell-empty-light { color: #c8d8e4; font-size: 18px; }
-
-    /* ═══════════════════════════════════════
-       SLIDE 8 — 複合機VPN外出し
-    ═══════════════════════════════════════ */
-    .s8 { background: #f8fafc; color: #0f172a; }
-    .s8-inner { width: 100%; max-width: 980px; }
-    .s8-header { margin-bottom: 14px; }
-    .s8-header .label { color: #64748b; }
-    .s8-header .h1 { font-size: 1.75rem; color: #0f172a; }
-    .s8-sub { font-size: 12.5px; color: #64748b; margin-top: 6px; line-height: 1.75; margin-bottom: 20px; }
-
-    .s8-tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-    .s8-tbl th { padding: 10px 14px; font-size: 10.5px; font-weight: 900; letter-spacing: 0.07em; }
-    .s8-tbl th:first-child { text-align: left; background: #f1f5f9; color: #64748b; }
-    .s8-tbl th.col-vpn   { text-align: center; background: #475569; color: white; }
-    .s8-tbl th.col-novpn { text-align: center; background: #7c3aed; color: white; }
-    .s8-tbl th.col-note  { text-align: center; background: #059669; color: white; }
-
-    .s8-tbl td { padding: 10px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; vertical-align: middle; }
-    .s8-tbl td:first-child { font-size: 11px; color: #64748b; font-weight: 700; }
-    .s8-tbl td.col-vpn   { text-align: center; background: #f8fafc; }
-    .s8-tbl td.col-novpn { text-align: center; background: #faf5ff; }
-    .s8-tbl td.col-note  { text-align: left; background: #f0fdfa; font-size: 11px; color: #0f766e; }
-    .s8-tbl tr:last-child td { border-bottom: none; }
-
-
-    /* ─── Slides 6-8: 統一削減効果ボックス ─── */
-    .impact-box {
-      margin-top: 12px; background: #f0fdf4; border: 1px solid #86efac;
-      border-radius: 10px; padding: 10px 16px;
-      display: flex; align-items: center; gap: 20px;
-    }
-    .impact-badge {
-      background: #16a34a; color: white; border-radius: 8px; padding: 8px 12px;
-      font-size: 10px; font-weight: 900; letter-spacing: 0.08em; text-align: center; flex-shrink: 0; line-height: 1.5;
-    }
-    .impact-details { flex: 1; font-size: 11.5px; color: #166534; line-height: 1.7; }
-    .impact-total {
-      font-family: 'Courier New', monospace; font-size: 12px; font-weight: 700;
-      color: #0f172a; flex-shrink: 0; text-align: right; line-height: 1.6;
-    }
-
-    /* ═══════════════════════════════════════
-       SLIDE 9 — 対策ロードマップ
-    ═══════════════════════════════════════ */
-    .s9 { background: #ffffff; color: #0f172a; }
-    .s9-inner { width: 100%; max-width: 1100px; }
-    .s9-header { margin-bottom: 28px; }
-    .s9-header .label { color: #64748b; }
-    .s9-header .h1 { font-size: 1.9rem; color: #0f172a; }
-
-    .s9-steps {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 16px; position: relative;
-    }
-    .s9-step {
-      background: #f8fafc; border: 1px solid #e2e8f0;
-      border-radius: 16px; padding: 18px 16px; position: relative;
-    }
-    .s9-step-title {
-      font-size: 10px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;
-      margin-bottom: 10px; color: #94a3b8;
-    }
-    .s9-step-price {
-      font-family: 'Space Grotesk', sans-serif; font-weight: 800;
-      font-size: 2.2rem; line-height: 1; margin-bottom: 3px;
-    }
-    .s9-step-unit { font-size: 10px; color: #94a3b8; margin-bottom: 10px; }
-    .s9-step-delta {
-      font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 6px;
-      display: inline-block; margin-bottom: 10px;
-    }
-    .s9-step-detail { font-size: 10px; color: #94a3b8; line-height: 1.7; }
-
-    .s9-step-0 { border-color: #fecaca; }
-    .s9-step-0 .s9-step-price { color: #dc2626; }
-    .s9-step-0 .s9-step-delta { background: #fef2f2; color: #dc2626; }
-    .s9-step-1 .s9-step-price { color: #d97706; }
-    .s9-step-1 .s9-step-delta { background: #d1fae5; color: #059669; }
-    .s9-step-2 .s9-step-price { color: #2563eb; }
-    .s9-step-2 .s9-step-delta { background: #d1fae5; color: #059669; }
-    .s9-step-3 { border-color: #86efac; }
-    .s9-step-3 .s9-step-price { color: #059669; }
-    .s9-step-3 .s9-step-delta { background: #d1fae5; color: #059669; }
-
-    .s9-arrow-between {
-      position: absolute; top: 46%; right: -14px; transform: translateY(-50%);
-      color: #cbd5e1; font-size: 22px; z-index: 10;
-    }
-    .s9-summary {
-      margin-top: 22px; background: #f0fdf4;
-      border: 1px solid #86efac; border-radius: 12px;
-      padding: 14px 22px; display: flex; align-items: center; gap: 28px;
-    }
-    .s9-summary-item { text-align: left; }
-    .s9-summary-label { font-size: 10.5px; color: #64748b; margin-bottom: 4px; }
-    .s9-summary-num { font-family: 'Space Grotesk', sans-serif; font-size: 1.7rem; font-weight: 800; color: #059669; }
-    .s9-summary-sub { font-size: 10px; color: #94a3b8; margin-top: 2px; }
-    .s9-sep { width: 1px; height: 40px; background: #d1fae5; flex-shrink: 0; }
-    .s9-notes { margin-top: 12px; font-size: 10.5px; color: #94a3b8; line-height: 1.8; }
-
-  </style>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NW刷新 費用比較</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: #f1f5f9;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        /* ヘッダー */
+        .site-header {
+            background: #fff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 14px 32px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .back-link {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 13px;
+        }
+        .back-link:hover { color: #334155; }
+        .site-header h1 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        .header-status {
+            margin-left: auto;
+            font-size: 12px;
+            color: #d97706;
+            font-weight: 600;
+            background: #fef3c7;
+            padding: 3px 10px;
+            border-radius: 4px;
+        }
+
+        /* スライドコンテナ */
+        .slides {
+            max-width: 760px;
+            margin: 40px auto 60px;
+            padding: 0 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* 各スライド */
+        .slide {
+            background: #fff;
+            border-radius: 16px;
+            padding: 44px 48px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .slide-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #94a3b8;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .slide-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 28px;
+            line-height: 1.4;
+        }
+
+        /* 表紙 */
+        .slide-cover {
+            background: #0f172a;
+            color: #f8fafc;
+        }
+        .slide-cover .slide-label { color: #475569; }
+        .slide-cover .slide-title { color: #f8fafc; font-size: 28px; }
+        .slide-cover p { color: #94a3b8; font-size: 14px; }
+
+        /* 費用比較テーブル */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .compare-table th {
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+            padding: 8px 14px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .compare-table td {
+            padding: 16px 14px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+        .compare-table tr:last-child td { border-bottom: none; }
+
+        .plan-name { font-weight: 500; }
+        .plan-note { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+
+        .amount {
+            font-size: 20px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .amount-est {
+            font-size: 11px;
+            color: #d97706;
+            font-weight: 600;
+            display: block;
+        }
+        .amount-green { color: #16a34a; }
+
+        .badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .badge-confirmed { background: #dcfce7; color: #166534; }
+        .badge-pending   { background: #fef3c7; color: #92400e; }
+        .badge-caution   { background: #fee2e2; color: #991b1b; }
+
+        /* ハイライト行 */
+        .row-blue td { background: #eff6ff; }
+        .row-green td { background: #f0fdf4; }
+
+        /* 気づきボックス */
+        .finding {
+            padding: 18px 20px;
+            margin-bottom: 14px;
+            border-left: 4px solid #3b82f6;
+            background: #f8fafc;
+            border-radius: 0 8px 8px 0;
+        }
+        .finding:last-child { margin-bottom: 0; }
+        .finding-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #3b82f6;
+            letter-spacing: 0.08em;
+            margin-bottom: 4px;
+        }
+        .finding-text {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1e293b;
+            line-height: 1.5;
+        }
+        .finding-sub {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 4px;
+            line-height: 1.5;
+        }
+
+        /* 確認事項テーブル */
+        .confirm-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .confirm-table th {
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+            padding: 8px 14px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .confirm-table td {
+            padding: 14px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 13px;
+            vertical-align: top;
+            line-height: 1.5;
+        }
+        .confirm-table tr:last-child td { border-bottom: none; }
+
+        /* 脚注 */
+        .footnote {
+            margin-top: 16px;
+            font-size: 11px;
+            color: #94a3b8;
+            line-height: 1.7;
+            padding-top: 14px;
+            border-top: 1px solid #f1f5f9;
+        }
+        .footnote a { color: #3b82f6; text-decoration: none; }
+        .footnote a:hover { text-decoration: underline; }
+    </style>
 </head>
 <body>
 
-<div class="step-bar" id="stepBar">
-  <div class="step-title">NW刷新 費用比較</div>
-  <div class="step-divider"></div>
-  <div class="step-item active" data-slide="0"><span class="step-num">1</span>現行</div>
-  <div class="step-item" data-slide="1"><span class="step-num">2</span>3分類</div>
-  <div class="step-item" data-slide="2"><span class="step-num">3</span>内訳</div>
-  <div class="step-item" data-slide="3"><span class="step-num">4</span>月額</div>
-  <div class="step-item" data-slide="4"><span class="step-num">5</span>比較</div>
-  <div class="step-item" data-slide="5"><span class="step-num">6</span>SECOM</div>
-  <div class="step-item" data-slide="6"><span class="step-num">7</span>FS</div>
-  <div class="step-item" data-slide="7"><span class="step-num">8</span>複合機</div>
-  <div class="step-item" data-slide="8"><span class="step-num">9</span>総括</div>
-</div>
+    <header class="site-header">
+        <a href="/" class="back-link">← ポータルトップ</a>
+        <span style="color:#e2e8f0;">|</span>
+        <h1>NW刷新 費用比較</h1>
+        <span class="header-status">検討中・数字確認中</span>
+    </header>
 
-<div class="slides-wrapper">
-  <div class="slides-track" id="slidesTrack">
+    <div class="slides">
 
-    <!-- ══════════════════════════════
-         SLIDE 1 — 現状（¥122,400/月）
-    ══════════════════════════════ -->
-    <div class="slide s1">
-      <div class="s1-grid">
-        <div class="s1-left">
-          <div class="label" style="color:#94a3b8;">現状確認</div>
-          <div class="h1" style="font-size:2.4rem;color:#0f172a;margin-bottom:20px;">
-            VarioSecure<br>現行費用
-          </div>
-          <div class="sub">
-            全8拠点にVSRを設置。<br>
-            SECOMの拠点間VPN通信もVarioSecure経由。<br><br>
-            <span style="color:#94a3b8;font-size:12px;">
-              ※ 実請求額 ¥142,000（USEN西川メール）との差額 ¥19,600 はISP費用等の合算と推定
-            </span>
-          </div>
-          <div class="s1-issue">
-            <div class="s1-issue-item"><div class="s1-issue-dot"></div>VSRが単なるVPN装置であり、SD-WAN機能（通信最適化）なし</div>
-            <div class="s1-issue-item"><div class="s1-issue-dot"></div>強化案（n-series）は月額約¥126万（現行比9倍）で選択肢から外れる</div>
-            <div class="s1-issue-item"><div class="s1-issue-dot"></div>SECOM機器がVarioSecure依存のため、単純廃止が困難</div>
-          </div>
+        <!-- 表紙 -->
+        <div class="slide slide-cover">
+            <div class="slide-label">NW刷新 費用比較</div>
+            <div class="slide-title">ネットワーク刷新<br>費用比較</div>
+            <p>セキュリティ強化・通信速度改善のため、4つの選択肢を月額費用で比較する。<br>
+            一部の数字はSCSK・IIJへの確認待ち。</p>
+            <p style="margin-top: 16px; color: #475569; font-size: 12px;">2026年2月 現在 / AKIBAホールディングス 情報システム部</p>
         </div>
 
-        <div class="s1-right">
-          <div class="s1-card">
-            <div><div class="s1-card-loc">築地（本社）</div><div class="s1-card-model">VSR601J + VPN100u</div></div>
-            <div class="s1-card-price">¥40,000</div>
-          </div>
-          <div class="s1-card">
-            <div><div class="s1-card-loc">大阪</div><div class="s1-card-model">VSR601J（LBO）</div></div>
-            <div class="s1-card-price">¥20,000</div>
-          </div>
-          <div class="s1-card">
-            <div><div class="s1-card-loc">多摩 / 橋本 / 福岡 / 和歌山 / 京橋 / 名古屋</div><div class="s1-card-model">VSR402J × 6拠点</div></div>
-            <div class="s1-card-price">¥10,400 × 6</div>
-          </div>
-          <div class="s1-total">
-            <div class="s1-total-label">現行 TOTAL（税抜）</div>
-            <div class="s1-total-price">¥122,400 / 月</div>
-          </div>
-        </div>
-      </div>
-    </div>
+        <!-- スライド2: 費用比較表 -->
+        <div class="slide">
+            <div class="slide-label">比較</div>
+            <div class="slide-title">月額費用 比較</div>
 
-    <!-- ══════════════════════════════
-         SLIDE 2 — 3グループ分類方針
-    ══════════════════════════════ -->
-    <div class="slide s2">
-      <div class="s2-inner">
-        <div class="s2-header">
-          <div class="label">移行方針</div>
-          <div class="h1">全拠点を一律に移行しない理由</div>
-          <div style="font-size:13px;color:#64748b;margin-top:8px;">拠点の「役割」によって最適手段が異なる。3グループに分類して対応。</div>
-        </div>
+            <table class="compare-table">
+                <tr>
+                    <th style="width: 42%;">案</th>
+                    <th style="width: 28%; text-align: right;">月額</th>
+                    <th>状況</th>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="plan-name">① VarioSecure 現行維持</div>
+                        <div class="plan-note">WAN のみ。セキュリティ対策は含まない。</div>
+                    </td>
+                    <td style="text-align: right;">
+                        <div class="amount">¥129,091</div>
+                    </td>
+                    <td><span class="badge badge-caution">セキュリティ未対応</span></td>
+                </tr>
+                <tr class="row-blue">
+                    <td>
+                        <div class="plan-name">② IIJ Omnibus</div>
+                        <div class="plan-note">NW＋セキュリティ一体型（WAN・FW・リモートアクセス込み）</div>
+                    </td>
+                    <td style="text-align: right;">
+                        <div class="amount">¥722,150</div>
+                    </td>
+                    <td><span class="badge badge-confirmed">確定値</span></td>
+                </tr>
+                <tr class="row-blue">
+                    <td>
+                        <div class="plan-name">③ Cato SASE（全拠点Socket）</div>
+                        <div class="plan-note">全拠点Socket設置＋モバイル50名。NW＋セキュリティ一体型。</div>
+                    </td>
+                    <td style="text-align: right;">
+                        <div class="amount">約¥750,000</div>
+                        <span class="amount-est">推定値</span>
+                    </td>
+                    <td><span class="badge badge-pending">SCSK確認中</span></td>
+                </tr>
+                <tr class="row-green">
+                    <td>
+                        <div class="plan-name">④ Mix案</div>
+                        <div class="plan-note">VarioSecure（WAN）を残しつつ、Catoをセキュリティ層として追加。</div>
+                    </td>
+                    <td style="text-align: right;">
+                        <div class="amount amount-green">約¥512,000</div>
+                        <span class="amount-est">推定値</span>
+                    </td>
+                    <td><span class="badge badge-pending">技術確認が必要</span></td>
+                </tr>
+            </table>
 
-        <div class="s2-groups">
-
-          <div class="s2-group s2-group-a">
-            <div class="s2-group-num">①</div>
-            <div class="s2-group-tag">築地本社</div>
-            <div class="s2-group-title">VarioSecure継続<br>＋ Cato導入</div>
-            <div class="s2-group-sites">対象: 築地本社 / Azure（vSocket）</div>
-            <div class="s2-group-reason">
-              業務NWをCatoに刷新しつつ、SECOMのVPNハブとしてVarioSecureも継続。クラウド上にvSocketを設置し、Azure/AWSへの直結も確保する。
+            <div class="footnote">
+                ※①はセキュリティ強化コストを含まないため②③④との単純比較不可。<br>
+                ②IIJ確定値: <a href="/エビデンス集.html#iij-omnibus-cost">E-008 IIJ提案資料（2026/1/13）</a>。
+                ③推定値: <a href="/エビデンス集.html#cato-sase-cost">E-007 SCSK角田氏メール（2026/2/19）</a>よりSocket¥800K/年×8台＋ライセンス50名¥2M/年＋管理¥600K/年で試算。Socket単価・50名ライセンスはSCSK確認中。<br>
+                ④推定値: VarioSecure¥129,091＋Catoライセンス100名＋管理¥383,333の合計。
             </div>
-            <div class="s2-group-vsr">VarioSecure: 継続　Cato: 導入</div>
-          </div>
+        </div>
 
-          <div class="s2-group s2-group-b">
-            <div class="s2-group-num">②</div>
-            <div class="s2-group-tag">SECOM専用拠点</div>
-            <div class="s2-group-title">VarioSecureのみ<br>継続</div>
-            <div class="s2-group-sites">対象: 福岡・和歌山・京橋・名古屋（バディネット4拠点）</div>
-            <div class="s2-group-reason">
-              業務ネットワーク不要。SECOMのVPN通信だけが目的であり、Catoを導入するコスト根拠がない。VarioSecureが最安手段のため現状維持。
+        <!-- スライド3: 気づき -->
+        <div class="slide">
+            <div class="slide-label">読み解き</div>
+            <div class="slide-title">この比較から言えること</div>
+
+            <div class="finding">
+                <div class="finding-label">01 — IIJ ≈ Cato</div>
+                <div class="finding-text">フルフル同士で比べると、IIJ（¥722K）とCato（約¥750K）はほぼ同額。</div>
+                <div class="finding-sub">どちらを選んでも月額コストに大きな差はない。</div>
             </div>
-            <div class="s2-group-vsr">VarioSecure: 継続（¥10,400 × 4）　Cato: なし</div>
-          </div>
 
-          <div class="s2-group s2-group-c">
-            <div class="s2-group-num">③</div>
-            <div class="s2-group-tag">Cato 再構築</div>
-            <div class="s2-group-title">VarioSecure解約<br>Cato移行</div>
-            <div class="s2-group-sites">対象: 大阪・多摩・橋本（業務拠点3拠点）</div>
-            <div class="s2-group-reason">
-              業務拠点につきCato導入が必要。CatoのSocketを設置すれば、SECOM機器もSocket経由で通信可能なため、VarioSecureを解約できる。
+            <div class="finding">
+                <div class="finding-label">02 — Mix案だと約29%安くなる</div>
+                <div class="finding-text">VarioSecureのWANを残しつつCatoをセキュリティ層として追加すると、約¥512,000/月。IIJより¥210,000/月安い（年間¥2,520,000の差）。</div>
+                <div class="finding-sub">ただし、SECOMの制御信号がVarioSecureとCatoの2経路になる技術課題がある。本社での集約が可能かどうかの確認が必要。</div>
             </div>
-            <div class="s2-group-vsr">VarioSecure: 解約　Cato: Socket設置</div>
-          </div>
 
-        </div>
-
-        <div style="margin-top:20px;padding:12px 16px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;font-size:11px;color:#92400e;line-height:1.7;">
-          <strong>補足（多摩の扱い）:</strong> 多摩でSECOM機器のためSocketが必要でも、「業務拠点」である以上Catoを導入する。Catoを導入するならSECOM通信もSocketに包含できるため、VarioSecure解約が可能。SECOM専用拠点（②）とは業務通信の有無が異なる。
-        </div>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════════
-         SLIDE 3 — 費用内訳
-    ══════════════════════════════ -->
-    <div class="slide s3">
-      <div class="s3-inner">
-        <div class="s3-header">
-          <div class="label">費用内訳</div>
-          <div class="h1">VarioSecure ＋ Cato 併用案 月額内訳</div>
-        </div>
-
-        <table class="s3-tbl">
-          <thead>
-            <tr>
-              <th style="width:100px;">グループ</th>
-              <th>内訳</th>
-              <th class="right" style="width:130px;">移行後<br>VarioSecure</th>
-              <th class="right" style="width:130px;color:#a78bfa;">Cato</th>
-              <th class="right" style="width:110px;">小計</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="s3-group-a">
-              <td rowspan="3" style="font-weight:900;color:#1d4ed8;vertical-align:middle;font-size:12px;background:#eff6ff;">①<br>築地本社</td>
-              <td>VSR601J + VPN100u（本社）</td>
-              <td class="right"><span class="money">¥40,000</span></td>
-              <td class="right">—</td>
-              <td class="right"><span class="money">¥40,000</span></td>
-            </tr>
-            <tr class="s3-group-a" style="background:#f8fbff;">
-              <td>Socket 1台（本社）<span class="badge" style="background:#dbeafe;color:#1d4ed8;">逆算値</span></td>
-              <td class="right">—</td>
-              <td class="right"><span class="money" style="color:#7c3aed;">¥66,667</span></td>
-              <td class="right"><span class="money">¥66,667</span></td>
-            </tr>
-            <tr class="s3-group-a" style="background:#f8fbff;">
-              <td>vSocket 1台（Azure）<span class="badge" style="background:#fee2e2;color:#dc2626;">要確認</span></td>
-              <td class="right">—</td>
-              <td class="right"><span class="money" style="color:#dc2626;">¥183,333</span></td>
-              <td class="right"><span class="money" style="color:#dc2626;">¥183,333</span></td>
-            </tr>
-
-            <tr class="s3-group-b">
-              <td style="font-weight:900;color:#9f1239;vertical-align:middle;font-size:12px;background:#fff1f2;">②<br>SECOM<br>専用4拠点</td>
-              <td>VSR402J × 4拠点（福岡・和歌山・京橋・名古屋）</td>
-              <td class="right"><span class="money">¥41,600</span></td>
-              <td class="right">—</td>
-              <td class="right"><span class="money">¥41,600</span></td>
-            </tr>
-
-            <tr class="s3-group-c">
-              <td rowspan="3" style="font-weight:900;color:#5b21b6;vertical-align:middle;font-size:12px;background:#f5f3ff;">③<br>Cato<br>再構築<br>3拠点</td>
-              <td>Socket 3台（大阪・多摩・橋本）<span class="badge" style="background:#dbeafe;color:#1d4ed8;">逆算値</span></td>
-              <td class="right"><span class="money" style="color:#16a34a;">¥0</span><span style="font-size:10px;color:#64748b;">（解約）</span></td>
-              <td class="right"><span class="money" style="color:#7c3aed;">¥200,001</span></td>
-              <td class="right"><span class="money">¥200,001</span></td>
-            </tr>
-            <tr class="s3-group-c" style="background:#faf9ff;">
-              <td>モバイルアクセスライセンス 130名</td>
-              <td class="right">—</td>
-              <td class="right"><span class="money" style="color:#7c3aed;">¥108,333</span></td>
-              <td class="right"><span class="money">¥108,333</span></td>
-            </tr>
-            <tr class="s3-group-c" style="background:#faf9ff;">
-              <td>SCSKマネージドサービス（全拠点共通）</td>
-              <td class="right">—</td>
-              <td class="right"><span class="money" style="color:#7c3aed;">¥50,000</span></td>
-              <td class="right"><span class="money">¥50,000</span></td>
-            </tr>
-
-            <tr class="s3-grand">
-              <td colspan="2" style="font-weight:900;letter-spacing:0.05em;">月額合計</td>
-              <td class="right"><span class="money">¥81,600</span></td>
-              <td class="right"><span class="money" style="color:#c4b5fd;">¥608,334</span></td>
-              <td class="right"><span class="money" style="font-size:16px;color:#fbbf24;">¥689,934</span></td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div style="margin-top:12px;font-size:11px;color:#94a3b8;line-height:1.8;">
-          ※ Socket単価（¥66,667/月）はSCSK 角田メール（2/18）のSocket追加単価から流用。vSocket（¥183,333）は差引推定値。確定次第更新。
-        </div>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════════
-         SLIDE 4 — 月額サマリー
-    ══════════════════════════════ -->
-    <div class="slide s4">
-      <div class="s4-inner">
-        <div class="label">月額サマリー</div>
-        <div class="h1">移行後の費用構成</div>
-
-        <div class="s4-comparison">
-          <div class="s4-box s4-before">
-            <div class="s4-box-label">現行（VarioSecure 8拠点）</div>
-            <div class="s4-box-price">¥122,400</div>
-            <div class="s4-box-sub">/ 月<br>純粋なVPN費用のみ</div>
-          </div>
-
-          <div class="s4-arrow">→</div>
-
-          <div class="s4-box s4-after">
-            <div class="s4-box-label">Cato 併用案（移行後）</div>
-            <div class="s4-box-price">¥689,934</div>
-            <div class="s4-box-sub">/ 月<br>NW + SASE + 管理委託込み</div>
-          </div>
-        </div>
-
-        <div class="s4-breakdown">
-          <div class="s4-item">
-            <div class="s4-item-group">グループ①　築地本社</div>
-            <div class="s4-item-desc">VarioSecure継続 ＋<br>Cato Socket + vSocket</div>
-            <div class="s4-item-price" style="color:#2563eb;">¥290,000</div>
-          </div>
-          <div class="s4-item">
-            <div class="s4-item-group">グループ②　SECOM専用4拠点</div>
-            <div class="s4-item-desc">VarioSecure継続<br>（バディネット拠点）</div>
-            <div class="s4-item-price" style="color:#dc2626;">¥41,600</div>
-          </div>
-          <div class="s4-item">
-            <div class="s4-item-group">グループ③　Cato再構築3拠点</div>
-            <div class="s4-item-desc">Socket × 3 ＋ モバイル130名<br>＋ SCSK管理費</div>
-            <div class="s4-item-price" style="color:#7c3aed;">¥358,334</div>
-          </div>
-        </div>
-
-        <div style="margin-top:24px;padding:14px 20px;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;text-align:left;font-size:12px;color:#92400e;line-height:1.8;">
-          現行比 <span style="color:#d97706;font-weight:700;">+¥567,534/月</span> の増加。　ただしCatoはSD-WAN＋セキュリティ（FW/UTM/CASB/Threat Prevention）が一体型であり、IIJ案との比較は次ページで確認。
-        </div>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════════
-         SLIDE 5 — IIJ vs Cato 比較
-    ══════════════════════════════ -->
-    <div class="slide s5">
-      <div class="s5-inner">
-        <div class="s5-header">
-          <div class="label">最終比較</div>
-          <div class="h1">IIJ Omnibus SD-WAN &nbsp;vs&nbsp; Cato SASE 併用案</div>
-        </div>
-
-        <table class="s5-tbl">
-          <thead>
-            <tr>
-              <th style="width:180px;background:#f1f5f9;color:#475569;">比較項目</th>
-              <th class="col-iij">シナリオ③<br>IIJ Omnibus SD-WAN</th>
-              <th class="col-cato">シナリオ④<br>Cato SASE 併用案</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="s5-price-row">
-              <td style="font-weight:900;background:#f8fafc!important;">月額費用（8拠点）</td>
-              <td class="col-iij" style="font-size:22px;font-family:'Space Grotesk',sans-serif;font-weight:800;letter-spacing:-0.02em;">約¥390,000</td>
-              <td class="col-cato" style="font-size:22px;font-family:'Space Grotesk',sans-serif;font-weight:800;letter-spacing:-0.02em;">¥689,934</td>
-            </tr>
-            <tr>
-              <td>差額（月）</td>
-              <td class="col-iij"><span class="chip chip-green">基準</span></td>
-              <td class="col-cato"><span class="chip" style="background:#ede9fe;color:#6d28d9;">+約¥300,000</span></td>
-            </tr>
-            <tr>
-              <td>アーキテクチャ</td>
-              <td class="col-iij">SD-WAN（拠点間最適化）</td>
-              <td class="col-cato">SASE（NW ＋ セキュリティ統合）</td>
-            </tr>
-            <tr>
-              <td>セキュリティ機能</td>
-              <td class="col-iij"><span class="chip chip-yellow">別途必要</span><br><span style="font-size:11px;color:#64748b;">FW/UTMは別見積</span></td>
-              <td class="col-cato"><span class="chip chip-purple">込み</span><br><span style="font-size:11px;color:#64748b;">FW/UTM/CASB/Threat Prevention</span></td>
-            </tr>
-            <tr>
-              <td>モバイルアクセス</td>
-              <td class="col-iij">50名（前提）</td>
-              <td class="col-cato">130名（在宅・外出先含む）</td>
-            </tr>
-            <tr>
-              <td>クラウド最適化</td>
-              <td class="col-iij"><span class="chip chip-blue">○</span></td>
-              <td class="col-cato"><span class="chip chip-purple">◎ Azure直結（vSocket）</span></td>
-            </tr>
-            <tr>
-              <td>管理体制</td>
-              <td class="col-iij">IIJ依頼型（設定変更は都度依頼）</td>
-              <td class="col-cato">SCSK委託（定額¥50,000/月）</td>
-            </tr>
-            <tr>
-              <td>VarioSecure継続</td>
-              <td class="col-iij"><span class="chip chip-green">全廃可（IIJが代替）</span></td>
-              <td class="col-cato"><span class="chip chip-yellow">一部継続（¥81,600/月）</span></td>
-            </tr>
-            <tr>
-              <td>正式見積</td>
-              <td class="col-iij"><span class="chip chip-yellow">見積依頼中</span></td>
-              <td class="col-cato"><span class="chip chip-green">SCSK 角田メール済み</span><span style="font-size:10px;color:#64748b;">（一部逆算）</span></td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="s5-note">
-          ※ IIJ月額「約¥390,000」は正式見積前の概算（SD-WAN刷新_3社4シナリオ比較検討資料 シナリオ③）。セキュリティ機能（UTM等）を追加すると総額は増加する見込み。<br>
-          ※ Cato vSocket（¥183,333）は差引推定値。確定次第更新。　モバイル50名ベースで比較すると Cato ≒ ¥607,600 となり、差額は約¥218,000/月。
-        </div>
-      </div>
-    </div>
-
-
-    <!-- ══════════════════════════════
-         SLIDE 6 — SECOMフルクラウド化
-    ══════════════════════════════ -->
-    <div class="slide s6">
-      <div class="s6-grid">
-
-        <div>
-          <div class="label" style="color:#94a3b8;">検討シナリオ</div>
-          <div class="h1" style="font-size:1.65rem;color:#0f172a;margin-bottom:16px;">
-            SECOM入退室管理<br>フルクラウド化
-          </div>
-          <div class="s6-story">
-            <div class="s6-step s6-step-current">
-              <div class="s6-step-tag">現行</div>
-              <div class="s6-step-title">SESAMO II（IIJ GIO経由）</div>
-              <div class="s6-step-body">オンプレ型管理。カード認証の拠点間通信がVarioSecure VPN依存。BN4拠点のVSR継続の主因。</div>
+            <div class="finding">
+                <div class="finding-label">03 — IIJでも同じMix案ができる可能性</div>
+                <div class="finding-text">VarioSecureを残しつつIIJを部分導入するMix案も考えられる。</div>
+                <div class="finding-sub">IIJへの確認が必要。</div>
             </div>
-            <div class="s6-arrow-down">↓</div>
-            <div class="s6-step s6-step-problem">
-              <div class="s6-step-tag">課題</div>
-              <div class="s6-step-title">VPN依存がNW刷新の障壁</div>
-              <div class="s6-step-body">SECOM機器のVPN通信のためだけにVarioSecure②グループ（¥41,600/月）を継続中。</div>
-            </div>
-            <div class="s6-arrow-down">↓</div>
-            <div class="s6-step s6-step-solution">
-              <div class="s6-step-tag">フルクラウド化</div>
-              <div class="s6-step-title">認証管理をクラウドに移行</div>
-              <div class="s6-step-body">クラウド型サービスに切替えることで拠点VPN不要に。VarioSecure②グループの解約も視野に。</div>
-            </div>
-            <div class="s6-arrow-down">↓</div>
-            <div class="s6-step s6-step-effect">
-              <div class="s6-step-tag">期待効果</div>
-              <div class="s6-step-title">VarioSecure ¥41,600/月 削減の可能性</div>
-              <div class="s6-step-body">NW刷新費用との差引で実質負担を軽減。詳細費用は2/27打合せ後に確定。</div>
-            </div>
-          </div>
         </div>
 
-        <div>
-          <div style="font-size:10px;font-weight:900;letter-spacing:0.18em;color:#94a3b8;text-transform:uppercase;margin-bottom:12px;">ベンダー比較（費用確認中）</div>
-          <table class="s6-tbl">
-            <thead>
-              <tr>
-                <th style="width:130px;">比較項目</th>
-                <th class="col-secom">現行<br>SESAMO II</th>
-                <th class="col-bitlock">bitlock PRO<br><span style="font-size:9px;font-weight:400;opacity:0.8;">2/27打合せ予定</span></th>
-                <th class="col-akerun">Akerun<br><span style="font-size:9px;font-weight:400;opacity:0.8;">2/27打合せ予定</span></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>管理方式</td>
-                <td class="col-secom">IIJ GIO<br>（オンプレ型）</td>
-                <td class="col-bitlock">クラウド管理<br><span style="font-size:10px;color:#94a3b8;">Suica/FeliCa対応</span></td>
-                <td class="col-akerun">クラウド管理<br><span style="font-size:10px;color:#94a3b8;">スマートロック型</span></td>
-              </tr>
-              <tr>
-                <td>VPN依存</td>
-                <td class="col-secom"><span class="chip" style="background:#fee2e2;color:#dc2626;">あり</span></td>
-                <td class="col-bitlock"><span class="chip" style="background:#dcfce7;color:#15803d;">なし</span></td>
-                <td class="col-akerun"><span class="chip" style="background:#dcfce7;color:#15803d;">なし</span></td>
-              </tr>
-              <tr>
-                <td>既存リーダー流用</td>
-                <td class="col-secom">—</td>
-                <td class="col-bitlock">要確認</td>
-                <td class="col-akerun">要確認</td>
-              </tr>
-              <tr>
-                <td>対応拠点数</td>
-                <td class="col-secom">8拠点</td>
-                <td class="col-bitlock">確認中</td>
-                <td class="col-akerun">確認中</td>
-              </tr>
-              <tr>
-                <td>初期費用（税抜）</td>
-                <td class="col-secom">—</td>
-                <td class="col-bitlock"><span class="cell-empty">—</span></td>
-                <td class="col-akerun"><span class="cell-empty">—</span></td>
-              </tr>
-              <tr>
-                <td>月額費用（税抜）</td>
-                <td class="col-secom" style="color:#dc2626;font-weight:700;">¥121,173<br><span style="font-size:10px;color:#94a3b8;font-weight:400;">（IIJ GIO＋SESAMO）</span></td>
-                <td class="col-bitlock"><span class="cell-empty">—</span></td>
-                <td class="col-akerun"><span class="cell-empty">—</span></td>
-              </tr>
-              <tr>
-                <td>打合せ状況</td>
-                <td class="col-secom">稼働中</td>
-                <td class="col-bitlock"><span class="chip" style="background:#fef9c3;color:#a16207;">2/27予定</span></td>
-                <td class="col-akerun"><span class="chip" style="background:#fef9c3;color:#a16207;">2/27予定</span></td>
-              </tr>
-            </tbody>
-          </table>
-          <div style="margin-top:12px;font-size:11px;color:#94a3b8;line-height:1.7;">
-            ※ 現行月額¥121,173はIIJ GIO（¥44,318）＋SESAMO（¥76,855）の税抜合計<br>
-            ※ フルクラウド化によりVarioSecure②グループ（¥41,600/月）の解約が可能になる見込み
-          </div>
-          <div class="impact-box">
-            <div class="impact-badge">VarioSecure<br>全廃<br>▲¥81,600/月</div>
-            <div class="impact-details">
-              ②グループ（¥41,600）＋築地（¥40,000）を解約<br>
-              Socket: ±0台（FS・複合機が各拠点に残存）
-            </div>
-            <div class="impact-total">¥689,934<br>→ <span style="color:#059669;font-size:17px;font-weight:900;">¥608,334</span><br><span style="font-size:10px;color:#64748b;">/月</span></div>
-          </div>
+        <!-- スライド4: 確認事項 -->
+        <div class="slide">
+            <div class="slide-label">次のアクション</div>
+            <div class="slide-title">確認が必要なこと</div>
+
+            <table class="confirm-table">
+                <tr>
+                    <th style="width: 52%;">確認事項</th>
+                    <th style="width: 24%;">確認先</th>
+                    <th>状況</th>
+                </tr>
+                <tr>
+                    <td>CatoのSocket単価（¥800,000/年は1台あたりかどうか）</td>
+                    <td>SCSK 角田氏</td>
+                    <td><span class="badge badge-pending">確認中</span></td>
+                </tr>
+                <tr>
+                    <td>Cato 50名ライセンス価格（現在は100名見積のみ）</td>
+                    <td>SCSK 角田氏</td>
+                    <td><span class="badge badge-pending">確認中</span></td>
+                </tr>
+                <tr>
+                    <td>Mix案：SECOMの制御信号が2経路になった場合、本社での集約が可能か</td>
+                    <td>SECOM / SCSK</td>
+                    <td><span class="badge badge-pending">未確認</span></td>
+                </tr>
+                <tr>
+                    <td>IIJでのMix案（VarioSecureを残しつつIIJを部分導入）が可能か</td>
+                    <td>IIJ</td>
+                    <td><span class="badge badge-pending">未確認</span></td>
+                </tr>
+            </table>
         </div>
 
-      </div>
     </div>
-
-    <!-- ══════════════════════════════
-         SLIDE 7 — ファイルサーバークラウド化
-    ══════════════════════════════ -->
-    <div class="slide s7">
-      <div class="s7-inner">
-        <div class="s7-header">
-          <div class="label">検討シナリオ</div>
-          <div class="h1">ファイルサーバー クラウド移行</div>
-          <div class="s7-sub">
-            各拠点に設置されたNAS・ファイルサーバーをクラウドストレージに移行し、拠点ごとの機器管理・バックアップ運用を廃止する。
-            拠点間のファイル共有もインターネット経由に切替え、NW設計をシンプル化する。
-          </div>
-        </div>
-
-        <table class="s7-tbl">
-          <thead>
-            <tr>
-              <th style="width:160px;">比較項目</th>
-              <th class="col-current">現行<br>（各拠点NAS・ファイルサーバー）</th>
-              <th class="col-cloud">移行後<br>（クラウドストレージ）</th>
-              <th class="col-note" style="width:200px;">備考・確認事項</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>設置場所</td>
-              <td class="col-current">各拠点のサーバールーム</td>
-              <td class="col-cloud">Microsoft 365 / SharePoint<br>OneDrive for Business 等</td>
-              <td class="col-note">既存M365ライセンスで対応可否を確認</td>
-            </tr>
-            <tr>
-              <td>拠点間アクセス</td>
-              <td class="col-current">VPN経由（NW負荷あり）</td>
-              <td class="col-cloud">インターネット直接（VPN不要）</td>
-              <td class="col-note">帯域・応答速度の実測が必要</td>
-            </tr>
-            <tr>
-              <td>外出先アクセス</td>
-              <td class="col-current">VPN接続必須</td>
-              <td class="col-cloud">ブラウザ・アプリ直接</td>
-              <td class="col-note">条件付きアクセス設定要検討</td>
-            </tr>
-            <tr>
-              <td>バックアップ</td>
-              <td class="col-current">手動（または独自スクリプト）</td>
-              <td class="col-cloud">自動（バージョン管理含む）</td>
-              <td class="col-note">保持期間・世代数を要確認</td>
-            </tr>
-            <tr>
-              <td>ストレージ容量</td>
-              <td class="col-current">各NAS容量に依存</td>
-              <td class="col-cloud">要確認</td>
-              <td class="col-note">現行使用量の棚卸しが先決</td>
-            </tr>
-            <tr>
-              <td>初期費用（税抜）</td>
-              <td class="col-current">—</td>
-              <td class="col-cloud"><span class="cell-empty-light">—</span></td>
-              <td class="col-note">データ移行・設定費を含む</td>
-            </tr>
-            <tr>
-              <td>月額費用（税抜）</td>
-              <td class="col-current">機器減価償却 ＋ 保守費</td>
-              <td class="col-cloud"><span class="cell-empty-light">—</span></td>
-              <td class="col-note">ライセンス体系確認後に試算</td>
-            </tr>
-            <tr>
-              <td>課題・懸念点</td>
-              <td class="col-current">機器老朽化、バックアップ属人化</td>
-              <td class="col-cloud">大容量ファイルの操作性、社内規程整備</td>
-              <td class="col-note">情シス・総務との調整が必要</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div style="margin-top:14px;font-size:11px;color:#94a3b8;line-height:1.7;">
-          ※ 費用は現行使用量・対象拠点・ライセンス形態の確認後に試算予定。現時点の数字はすべて未確定。
-        </div>
-        <div class="impact-box">
-          <div class="impact-badge">Socket<br>1台削減<br>▲¥66,667/月</div>
-          <div class="impact-details">
-            <strong style="color:#15803d;">大阪</strong>のSocket廃止（阻害要因①SECOM＋②FS がともに解消）<br>
-            ※①SECOMフルクラウド化の実施後に効果が発現
-          </div>
-          <div class="impact-total">¥608,334<br>→ <span style="color:#059669;font-size:17px;font-weight:900;">¥541,667</span><br><span style="font-size:10px;color:#64748b;">/月</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════════
-         SLIDE 8 — 複合機VPN外出し
-    ══════════════════════════════ -->
-    <div class="slide s8">
-      <div class="s8-inner">
-        <div class="s8-header">
-          <div class="label">検討シナリオ</div>
-          <div class="h1">複合機 VPN外出し</div>
-        </div>
-        <div class="s8-sub">
-          現行は複合機が社内VPN（VarioSecure/IIJ経由）内に位置し、スキャンデータの送信先・印刷ジョブの制御がVPN依存。<br>
-          クラウドプリントサービスに移行することで、VPN経由の通信を解消し、NWシンプル化と運用コスト削減を検討。
-        </div>
-
-        <table class="s8-tbl">
-          <thead>
-            <tr>
-              <th style="width:160px;">比較項目</th>
-              <th class="col-vpn">現行<br>（VPN内）</th>
-              <th class="col-novpn">移行後<br>（VPN外・クラウドプリント）</th>
-              <th class="col-note" style="width:200px;">備考・確認事項</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>スキャン送信先</td>
-              <td class="col-vpn">社内ファイルサーバー（VPN経由）</td>
-              <td class="col-novpn">クラウドストレージ<br><span style="font-size:10px;color:#94a3b8;">（SharePoint / Box 等）</span></td>
-              <td class="col-note">ファイルサーバー移行（スライド7）と連動</td>
-            </tr>
-            <tr>
-              <td>印刷方式</td>
-              <td class="col-vpn">社内NW直接接続</td>
-              <td class="col-novpn">クラウドプリント<br><span style="font-size:10px;color:#94a3b8;">（Universal Print / メーカークラウド等）</span></td>
-              <td class="col-note">対応機種・ドライバーの確認が必要</td>
-            </tr>
-            <tr>
-              <td>VPN依存</td>
-              <td class="col-vpn"><span class="chip" style="background:#fee2e2;color:#dc2626;">あり</span></td>
-              <td class="col-novpn"><span class="chip" style="background:#dcfce7;color:#15803d;">なし</span></td>
-              <td class="col-note">SECOMフルクラウド化と相互補完</td>
-            </tr>
-            <tr>
-              <td>テナント認証</td>
-              <td class="col-vpn">ActiveDirectory 連携</td>
-              <td class="col-novpn">Entra ID（クラウドAD）連携</td>
-              <td class="col-note">AD移行（IIJ/Link-At-Japan）と連動</td>
-            </tr>
-            <tr>
-              <td>対象複合機</td>
-              <td class="col-vpn">全拠点（台数未確認）</td>
-              <td class="col-novpn">確認中</td>
-              <td class="col-note">機種・型番・メーカーの棚卸しが先決</td>
-            </tr>
-            <tr>
-              <td>初期費用（税抜）</td>
-              <td class="col-vpn">—</td>
-              <td class="col-novpn"><span class="cell-empty">—</span></td>
-              <td class="col-note">設定・移行費を含む</td>
-            </tr>
-            <tr>
-              <td>月額費用（税抜）</td>
-              <td class="col-vpn">機器リース ＋ 保守（現行）</td>
-              <td class="col-novpn"><span class="cell-empty">—</span></td>
-              <td class="col-note">クラウドサービス費を追加で試算</td>
-            </tr>
-            <tr>
-              <td>課題・懸念点</td>
-              <td class="col-vpn">NW依存が高く、拠点増減時に設定変更が発生</td>
-              <td class="col-novpn">機種非対応リスク、通信品質への依存</td>
-              <td class="col-note">リース更新タイミングに合わせた段階移行を推奨</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div style="margin-top:14px;font-size:11px;color:#94a3b8;line-height:1.7;">
-          ※ 費用は複合機の棚卸し・対応クラウドサービスの選定後に試算予定。現時点の数字はすべて未確定。
-        </div>
-        <div class="impact-box">
-          <div class="impact-badge">Socket<br>2台削減<br>▲¥133,334/月</div>
-          <div class="impact-details">
-            <strong style="color:#15803d;">多摩</strong>: 阻害要因①SECOM＋③複合機が解消 → Socket廃止<br>
-            <strong style="color:#15803d;">築地</strong>: 阻害要因①②③が全て解消 → Socket廃止<br>
-            ※①SECOM＋②FSクラウド化の実施後に効果が発現
-          </div>
-          <div class="impact-total">¥541,667<br>→ <span style="color:#059669;font-size:17px;font-weight:900;">¥408,333</span><br><span style="font-size:10px;color:#64748b;">/月</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════════
-         SLIDE 9 — 対策ロードマップ（段階的コスト削減）
-    ══════════════════════════════ -->
-    <div class="slide s9">
-      <div class="s9-inner">
-        <div class="s9-header">
-          <div class="label">対策ロードマップ</div>
-          <div class="h1">Socketを減らすと費用はこう変わる</div>
-        </div>
-        <div class="s9-steps">
-          <div class="s9-step s9-step-0">
-            <div class="s9-step-title">現行 Cato 併用案</div>
-            <div class="s9-step-price">¥690K</div>
-            <div class="s9-step-unit">/月（¥689,934）</div>
-            <div class="s9-step-delta">基準</div>
-            <div class="s9-step-detail">VarioSecure ¥81,600<br>Socket 4台 ¥266,668<br>vSocket ¥183,333<br>モバイル・管理 ¥158,333</div>
-            <div class="s9-arrow-between">→</div>
-          </div>
-          <div class="s9-step s9-step-1">
-            <div class="s9-step-title">①SECOM フルクラウド化後</div>
-            <div class="s9-step-price">¥608K</div>
-            <div class="s9-step-unit">/月（¥608,334）</div>
-            <div class="s9-step-delta">▲ ¥81,600</div>
-            <div class="s9-step-detail">VarioSecure 解約 → ¥0<br>Socket: 4台（変わらず）<br>FS・複合機がまだSocket阻害要因</div>
-            <div class="s9-arrow-between">→</div>
-          </div>
-          <div class="s9-step s9-step-2">
-            <div class="s9-step-title">①+②FSクラウド化後</div>
-            <div class="s9-step-price">¥542K</div>
-            <div class="s9-step-unit">/月（¥541,667）</div>
-            <div class="s9-step-delta">▲ ¥66,667</div>
-            <div class="s9-step-detail">大阪 Socket廃止 → -1台<br>阻害要因①②がともに解消<br>残り: 築地・多摩・橋本 3台</div>
-            <div class="s9-arrow-between">→</div>
-          </div>
-          <div class="s9-step s9-step-3">
-            <div class="s9-step-title">①+②+③複合機VPN外後</div>
-            <div class="s9-step-price">¥408K</div>
-            <div class="s9-step-unit">/月（¥408,333）</div>
-            <div class="s9-step-delta">▲ ¥133,334</div>
-            <div class="s9-step-detail">多摩 Socket廃止（①③解消）<br>築地 Socket廃止（①②③解消）<br>残り: vSocket + 橋本 2台</div>
-          </div>
-        </div>
-        <div class="s9-summary">
-          <div class="s9-summary-item">
-            <div class="s9-summary-label">3対策の合計削減額（月額）</div>
-            <div class="s9-summary-num">▲ ¥281,601</div>
-            <div class="s9-summary-sub">/月（現行Cato 併用案比）</div>
-          </div>
-          <div class="s9-sep"></div>
-          <div class="s9-summary-item">
-            <div class="s9-summary-label">5年間の削減効果</div>
-            <div class="s9-summary-num">▲ 約¥1,690万</div>
-            <div class="s9-summary-sub">¥281,601 × 60ヶ月</div>
-          </div>
-          <div class="s9-sep"></div>
-          <div class="s9-summary-item">
-            <div class="s9-summary-label">削減率</div>
-            <div class="s9-summary-num">約41%</div>
-            <div class="s9-summary-sub">¥690K → ¥408K</div>
-          </div>
-        </div>
-        <div class="s9-notes">
-          ※ 橋本はOrCAD PC廃止後にさらにSocket 1台削減可能（¥66,667/月・5年¥400万追加）<br>
-          ※ 複合機VPN外出しの要否は調査中。実施できない場合、多摩Socketは継続。<br>
-          ※ vSocketおよびSocket単価は逆算値。確定見積取得後に更新。
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /slides-track -->
-</div><!-- /slides-wrapper -->
-
-<!-- Navigation -->
-<button class="nav-btn nav-prev" id="prevBtn">&#8249;</button>
-<button class="nav-btn nav-next" id="nextBtn">&#8250;</button>
-
-<script>
-  const track    = document.getElementById('slidesTrack');
-  const stepBar  = document.getElementById('stepBar');
-  const steps    = stepBar.querySelectorAll('.step-item');
-  const prevBtn  = document.getElementById('prevBtn');
-  const nextBtn  = document.getElementById('nextBtn');
-  const TOTAL    = 9;
-  let cur = 0;
-
-  // Step bar click handlers
-  steps.forEach(s => {
-    s.addEventListener('click', () => goTo(parseInt(s.dataset.slide)));
-  });
-
-  function goTo(n) {
-    cur = Math.max(0, Math.min(TOTAL - 1, n));
-    track.style.transform = `translateX(-${cur * 100}vw)`;
-    steps.forEach((s, i) => s.classList.toggle('active', i === cur));
-    prevBtn.classList.toggle('hidden', cur === 0);
-    nextBtn.classList.toggle('hidden', cur === TOTAL - 1);
-  }
-
-  prevBtn.addEventListener('click', () => goTo(cur - 1));
-  nextBtn.addEventListener('click', () => goTo(cur + 1));
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown')  goTo(cur + 1);
-    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')    goTo(cur - 1);
-  });
-
-  // Touch/swipe support
-  let startX = 0;
-  document.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
-  document.addEventListener('touchend',   e => {
-    const dx = e.changedTouches[0].clientX - startX;
-    if (dx < -50) goTo(cur + 1);
-    if (dx >  50) goTo(cur - 1);
-  });
-
-  // Init
-  goTo(0);
-</script>
 
 </body>
 </html>
