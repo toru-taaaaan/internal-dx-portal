@@ -516,6 +516,117 @@
     .s8-tbl td.col-note  { text-align: left; background: rgba(5,150,105,0.06); font-size: 11px; color: rgba(255,255,255,0.5); }
     .s8-tbl tr:last-child td { border-bottom: none; }
 
+
+    /* ─── Slides 6-8: 削減効果ボックス ─── */
+    .s6-impact {
+      margin-top: 12px; background: rgba(16,185,129,0.08);
+      border: 1px solid rgba(16,185,129,0.25); border-radius: 10px; padding: 10px 14px;
+    }
+    .s6-impact-label {
+      font-size: 9px; font-weight: 900; letter-spacing: 0.2em; text-transform: uppercase;
+      color: #10b981; margin-bottom: 8px;
+    }
+    .s6-impact-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-size: 11px; margin-bottom: 4px;
+    }
+    .s6-impact-row-label { color: rgba(255,255,255,0.5); }
+    .s6-impact-save { color: #10b981; font-weight: 900; font-family: 'Courier New', monospace; }
+    .s6-impact-neutral { color: rgba(255,255,255,0.35); font-size: 10px; }
+    .s6-impact-total {
+      margin-top: 7px; padding-top: 7px; border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 11px; color: rgba(255,255,255,0.4); font-family: 'Courier New', monospace;
+    }
+
+    .s7-impact {
+      margin-top: 12px; background: #f0fdf4; border: 1px solid #86efac;
+      border-radius: 10px; padding: 10px 16px;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .s7-impact-badge {
+      background: #16a34a; color: white; border-radius: 8px; padding: 8px 12px;
+      font-size: 10px; font-weight: 900; letter-spacing: 0.08em; text-align: center; flex-shrink: 0; line-height: 1.5;
+    }
+    .s7-impact-details { flex: 1; font-size: 11.5px; color: #166534; line-height: 1.7; }
+    .s7-impact-total {
+      font-family: 'Courier New', monospace; font-size: 12px; font-weight: 700;
+      color: #0f172a; flex-shrink: 0; text-align: right; line-height: 1.6;
+    }
+
+    .s8-impact {
+      margin-top: 12px; background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.3);
+      border-radius: 10px; padding: 10px 16px;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .s8-impact-badge {
+      background: rgba(124,58,237,0.75); color: white; border-radius: 8px; padding: 8px 12px;
+      font-size: 10px; font-weight: 900; letter-spacing: 0.08em; text-align: center; flex-shrink: 0; line-height: 1.5;
+    }
+    .s8-impact-details { flex: 1; font-size: 11.5px; color: rgba(255,255,255,0.55); line-height: 1.7; }
+    .s8-impact-total {
+      font-family: 'Courier New', monospace; font-size: 12px; font-weight: 700;
+      color: rgba(255,255,255,0.75); flex-shrink: 0; text-align: right; line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════
+       SLIDE 9 — 対策ロードマップ
+    ═══════════════════════════════════════ */
+    .s9 { background: linear-gradient(140deg, #0f172a 0%, #192340 100%); color: white; }
+    .s9-inner { width: 100%; max-width: 1100px; }
+    .s9-header { margin-bottom: 28px; }
+    .s9-header .label { color: rgba(255,255,255,0.4); }
+    .s9-header .h1 { font-size: 1.9rem; }
+
+    .s9-steps {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 16px; position: relative;
+    }
+    .s9-step {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px; padding: 18px 16px; position: relative;
+    }
+    .s9-step-title {
+      font-size: 10px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 10px; color: rgba(255,255,255,0.45);
+    }
+    .s9-step-price {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 800;
+      font-size: 2.2rem; line-height: 1; margin-bottom: 3px;
+    }
+    .s9-step-unit { font-size: 10px; opacity: 0.4; margin-bottom: 10px; }
+    .s9-step-delta {
+      font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 6px;
+      display: inline-block; margin-bottom: 10px;
+    }
+    .s9-step-detail { font-size: 10px; color: rgba(255,255,255,0.38); line-height: 1.7; }
+
+    .s9-step-0 { border-color: rgba(239,68,68,0.35); }
+    .s9-step-0 .s9-step-price { color: #f87171; }
+    .s9-step-0 .s9-step-delta { background: rgba(239,68,68,0.15); color: #fca5a5; }
+    .s9-step-1 .s9-step-price { color: #fbbf24; }
+    .s9-step-1 .s9-step-delta { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+    .s9-step-2 .s9-step-price { color: #60a5fa; }
+    .s9-step-2 .s9-step-delta { background: rgba(16,185,129,0.2); color: #6ee7b7; }
+    .s9-step-3 { border-color: rgba(16,185,129,0.4); }
+    .s9-step-3 .s9-step-price { color: #34d399; }
+    .s9-step-3 .s9-step-delta { background: rgba(16,185,129,0.25); color: #6ee7b7; }
+
+    .s9-arrow-between {
+      position: absolute; top: 46%; right: -14px; transform: translateY(-50%);
+      color: rgba(255,255,255,0.2); font-size: 22px; z-index: 10;
+    }
+    .s9-summary {
+      margin-top: 22px; background: rgba(16,185,129,0.09);
+      border: 1px solid rgba(16,185,129,0.3); border-radius: 12px;
+      padding: 14px 22px; display: flex; align-items: center; gap: 28px;
+    }
+    .s9-summary-item { text-align: left; }
+    .s9-summary-label { font-size: 10.5px; color: rgba(255,255,255,0.45); margin-bottom: 4px; }
+    .s9-summary-num { font-family: 'Space Grotesk', sans-serif; font-size: 1.7rem; font-weight: 800; color: #34d399; }
+    .s9-summary-sub { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+    .s9-sep { width: 1px; height: 40px; background: rgba(255,255,255,0.12); flex-shrink: 0; }
+    .s9-notes { margin-top: 12px; font-size: 10.5px; color: rgba(255,255,255,0.28); line-height: 1.8; }
+
   </style>
 </head>
 <body>
@@ -927,6 +1038,18 @@
             ※ 現行月額¥121,173はIIJ GIO（¥44,318）＋SESAMO（¥76,855）の税抜合計<br>
             ※ フルクラウド化によりVarioSecure②グループ（¥41,600/月）の解約が可能になる見込み
           </div>
+          <div class="s6-impact">
+            <div class="s6-impact-label">この対策の効果</div>
+            <div class="s6-impact-row">
+              <div class="s6-impact-row-label">VarioSecure全廃（②グループ＋築地）</div>
+              <div class="s6-impact-save">▲ ¥81,600/月</div>
+            </div>
+            <div class="s6-impact-row">
+              <div class="s6-impact-row-label">Socket削減</div>
+              <div class="s6-impact-neutral">±0台（FS・複合機が各拠点に残存）</div>
+            </div>
+            <div class="s6-impact-total">月額: ¥689,934 → <span style="color:#10b981;font-weight:900;">¥608,334</span></div>
+          </div>
         </div>
 
       </div>
@@ -1010,6 +1133,14 @@
         <div style="margin-top:14px;font-size:11px;color:#94a3b8;line-height:1.7;">
           ※ 費用は現行使用量・対象拠点・ライセンス形態の確認後に試算予定。現時点の数字はすべて未確定。
         </div>
+        <div class="s7-impact">
+          <div class="s7-impact-badge">Socket<br>1台削減<br>▲¥66,667/月</div>
+          <div class="s7-impact-details">
+            <strong style="color:#15803d;">大阪</strong>のSocket廃止（阻害要因①SECOM＋②FS がともに解消）<br>
+            ※①SECOMフルクラウド化の実施後に効果が発現
+          </div>
+          <div class="s7-impact-total">¥608,334<br>→ <span style="color:#15803d;font-size:17px;font-weight:900;">¥541,667</span><br><span style="font-size:10px;color:#64748b;">/月</span></div>
+        </div>
       </div>
     </div>
 
@@ -1091,6 +1222,84 @@
         <div style="margin-top:14px;font-size:11px;color:rgba(255,255,255,0.35);line-height:1.7;">
           ※ 費用は複合機の棚卸し・対応クラウドサービスの選定後に試算予定。現時点の数字はすべて未確定。
         </div>
+        <div class="s8-impact">
+          <div class="s8-impact-badge">Socket<br>2台削減<br>▲¥133,334/月</div>
+          <div class="s8-impact-details">
+            <span style="color:#c4b5fd;">多摩</span>: 阻害要因①SECOM＋③複合機が解消 → Socket廃止<br>
+            <span style="color:#c4b5fd;">築地</span>: 阻害要因①②③が全て解消 → Socket廃止<br>
+            ※①SECOM＋②FSクラウド化の実施後に効果が発現
+          </div>
+          <div class="s8-impact-total">¥541,667<br>→ <span style="color:#a78bfa;font-size:17px;font-weight:900;">¥408,333</span><br><span style="font-size:10px;color:rgba(255,255,255,0.35);">/月</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         SLIDE 9 — 対策ロードマップ（段階的コスト削減）
+    ══════════════════════════════ -->
+    <div class="slide s9">
+      <div class="s9-inner">
+        <div class="s9-header">
+          <div class="label">対策ロードマップ</div>
+          <div class="h1">Socketを減らすと費用はこう変わる</div>
+        </div>
+        <div class="s9-steps">
+          <div class="s9-step s9-step-0">
+            <div class="s9-step-title">現行 Cato 併用案</div>
+            <div class="s9-step-price">¥690K</div>
+            <div class="s9-step-unit">/月（¥689,934）</div>
+            <div class="s9-step-delta">基準</div>
+            <div class="s9-step-detail">VarioSecure ¥81,600<br>Socket 4台 ¥266,668<br>vSocket ¥183,333<br>モバイル・管理 ¥158,333</div>
+            <div class="s9-arrow-between">→</div>
+          </div>
+          <div class="s9-step s9-step-1">
+            <div class="s9-step-title">①SECOM フルクラウド化後</div>
+            <div class="s9-step-price">¥608K</div>
+            <div class="s9-step-unit">/月（¥608,334）</div>
+            <div class="s9-step-delta">▲ ¥81,600</div>
+            <div class="s9-step-detail">VarioSecure 解約 → ¥0<br>Socket: 4台（変わらず）<br>FS・複合機がまだSocket阻害要因</div>
+            <div class="s9-arrow-between">→</div>
+          </div>
+          <div class="s9-step s9-step-2">
+            <div class="s9-step-title">①+②FSクラウド化後</div>
+            <div class="s9-step-price">¥542K</div>
+            <div class="s9-step-unit">/月（¥541,667）</div>
+            <div class="s9-step-delta">▲ ¥66,667</div>
+            <div class="s9-step-detail">大阪 Socket廃止 → -1台<br>阻害要因①②がともに解消<br>残り: 築地・多摩・橋本 3台</div>
+            <div class="s9-arrow-between">→</div>
+          </div>
+          <div class="s9-step s9-step-3">
+            <div class="s9-step-title">①+②+③複合機VPN外後</div>
+            <div class="s9-step-price">¥408K</div>
+            <div class="s9-step-unit">/月（¥408,333）</div>
+            <div class="s9-step-delta">▲ ¥133,334</div>
+            <div class="s9-step-detail">多摩 Socket廃止（①③解消）<br>築地 Socket廃止（①②③解消）<br>残り: vSocket + 橋本 2台</div>
+          </div>
+        </div>
+        <div class="s9-summary">
+          <div class="s9-summary-item">
+            <div class="s9-summary-label">3対策の合計削減額（月額）</div>
+            <div class="s9-summary-num">▲ ¥281,601</div>
+            <div class="s9-summary-sub">/月（現行Cato 併用案比）</div>
+          </div>
+          <div class="s9-sep"></div>
+          <div class="s9-summary-item">
+            <div class="s9-summary-label">5年間の削減効果</div>
+            <div class="s9-summary-num">▲ 約¥1,690万</div>
+            <div class="s9-summary-sub">¥281,601 × 60ヶ月</div>
+          </div>
+          <div class="s9-sep"></div>
+          <div class="s9-summary-item">
+            <div class="s9-summary-label">削減率</div>
+            <div class="s9-summary-num">約41%</div>
+            <div class="s9-summary-sub">¥690K → ¥408K</div>
+          </div>
+        </div>
+        <div class="s9-notes">
+          ※ 橋本はOrCAD PC廃止後にさらにSocket 1台削減可能（¥66,667/月・5年¥400万追加）<br>
+          ※ 複合機VPN外出しの要否は調査中。実施できない場合、多摩Socketは継続。<br>
+          ※ vSocketおよびSocket単価は逆算値。確定見積取得後に更新。
+        </div>
       </div>
     </div>
 
@@ -1101,7 +1310,7 @@
 <button class="nav-btn nav-prev" id="prevBtn">&#8249;</button>
 <button class="nav-btn nav-next" id="nextBtn">&#8250;</button>
 <div class="nav-dots" id="navDots"></div>
-<div class="slide-num" id="slideNum">1 / 8</div>
+<div class="slide-num" id="slideNum">1 / 9</div>
 
 <script>
   const track   = document.getElementById('slidesTrack');
@@ -1109,7 +1318,7 @@
   const numEl   = document.getElementById('slideNum');
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
-  const TOTAL   = 8;
+  const TOTAL   = 9;
   let cur = 0;
 
   // Build dots
