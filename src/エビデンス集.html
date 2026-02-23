@@ -395,6 +395,10 @@
                 <li><a href="#iij-omnibus-cost">E-008: IIJ Omnibus 費用内訳</a></li>
                 <li class="nav-vendor">VarioSecure（USEN）</li>
                 <li><a href="#variosecure-cost">E-009: VarioSecure 費用・オプション</a></li>
+                <li class="nav-vendor" style="color: #1e40af; font-weight: 800;">SECOM現行設備</li>
+                <li><a href="#secom-current-cost">E-010: 現行SECOM設備費</a></li>
+                <li class="nav-vendor" style="color: #1e40af; font-weight: 800;">基本情報</li>
+                <li><a href="#site-company-mapping">E-011: 拠点所属会社・SECOM設置状況</a></li>
             </ul>
         </nav>
 
@@ -1799,6 +1803,199 @@ iOS端末（iPad）を各所に設置してUI提供
                 <div class="ref-links">
                     <a href="/IT基盤刷新_概算予算一覧.html#sec-door">IT基盤刷新 概算予算一覧 / 入退室管理</a>
                     <a href="/network_topology.html#cost-compare">NWトポロジー / 5年間コスト比較（SECOM保守料）</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- ========================================
+             基本情報
+             ======================================== -->
+
+        <!-- E-011: 拠点所属会社・SECOM設置状況 -->
+        <article class="evidence-entry" id="site-company-mapping">
+            <div class="entry-header">
+                <h2 class="entry-title">拠点所属会社・SECOM設置状況</h2>
+                <span class="entry-id">E-011</span>
+            </div>
+
+            <!-- 文脈 -->
+            <div class="entry-section">
+                <div class="section-label">文脈</div>
+                <div class="context-text">
+                    <p style="margin-top: 0;">各拠点がどのグループ会社に所属するかは、SD-WAN構成・AD移行・SECOM移行の全検討で前提となる基本情報。ネットワーク管理台帳・組織図等の一次資料から整理した。</p>
+                </div>
+            </div>
+
+            <!-- 拠点所属会社 対応表 -->
+            <div class="entry-section">
+                <div class="section-label">拠点所属会社 対応表</div>
+                <div class="calc-box">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <tr style="border-bottom: 2px solid #64748b;">
+                            <th style="text-align: left; padding: 6px 8px;">拠点</th>
+                            <th style="text-align: left; padding: 6px 8px;">所属会社</th>
+                            <th style="text-align: left; padding: 6px 8px;">根拠</th>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 6px 8px;">東京本社（築地ADビル 6F）</td>
+                            <td style="padding: 6px 8px;">AKIBAホールディングス</td>
+                            <td style="padding: 6px 8px;">組織図: 持株会社本社</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 6px 8px;">東京本社（築地ADビル 7F）</td>
+                            <td style="padding: 6px 8px;">アドテック</td>
+                            <td style="padding: 6px 8px;">NW管理台帳: アドテック専用フロア</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 6px 8px;">R&D・物流センター（多摩）</td>
+                            <td style="padding: 6px 8px;">アドテック</td>
+                            <td style="padding: 6px 8px;">NW管理台帳: CRB八王子ファイルサーバ設置</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 6px 8px;">IoT開発Lab（橋本）</td>
+                            <td style="padding: 6px 8px;">アドテック</td>
+                            <td style="padding: 6px 8px;">NW管理台帳: IoT事業部設備（IOTSVR, OrCAD等）</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 6px 8px;">大阪営業所</td>
+                            <td style="padding: 6px 8px;">アドテック</td>
+                            <td style="padding: 6px 8px;">HANDOVER資料: アドテック大阪</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 6px 8px;">仙台事務所</td>
+                            <td style="padding: 6px 8px;">アドテック</td>
+                            <td style="padding: 6px 8px;">NW管理台帳: 「CRB事業部」と記載</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 6px 8px;">鬼怒川 絆（温泉旅館）</td>
+                            <td style="padding: 6px 8px;">ダイヤモンドペッツ&リゾーツ</td>
+                            <td style="padding: 6px 8px;">IT基盤刷新説明資料: 正社員13名</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 6px 8px;">京橋オフィス（プライム築地ビル 3-5F）</td>
+                            <td style="padding: 6px 8px;">バディネット</td>
+                            <td style="padding: 6px 8px;">NW管理台帳: 「プライム築地=バディネット」</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 6px 8px;">バディネット福岡事業所</td>
+                            <td style="padding: 6px 8px;">バディネット</td>
+                            <td style="padding: 6px 8px;">NW管理台帳: 「バディネット福岡事業所」と明記</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 6px 8px;">和歌山コールセンター（iconicStorage）</td>
+                            <td style="padding: 6px 8px;">バディネット</td>
+                            <td style="padding: 6px 8px;">NW管理台帳: 「iconicStorage」と記載</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">名古屋事業所</td>
+                            <td style="padding: 6px 8px;">ブランチテクノ</td>
+                            <td style="padding: 6px 8px;">組織図: ブランチテクノ分科会=堤誠治</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SECOM TRIIインターフェース設置状況 -->
+            <div class="entry-section">
+                <div class="section-label">SECOM TRIIインターフェース（親機）設置状況</div>
+                <div class="calc-box">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <tr style="border-bottom: 2px solid #64748b;">
+                            <th style="text-align: left; padding: 6px 8px;">拠点</th>
+                            <th style="text-align: left; padding: 6px 8px;">IPアドレス</th>
+                            <th style="text-align: left; padding: 6px 8px;">ホスト名</th>
+                            <th style="text-align: left; padding: 6px 8px;">備考</th>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 6px 8px; font-weight: 600;">本社（築地）</td>
+                            <td style="padding: 6px 8px; font-family: monospace;">192.168.1.30</td>
+                            <td style="padding: 6px 8px;">TRIISVR</td>
+                            <td style="padding: 6px 8px;">サーバー機（全拠点の統括）</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 6px 8px;"></td>
+                            <td style="padding: 6px 8px; font-family: monospace;">192.168.1.31</td>
+                            <td style="padding: 6px 8px;">TRIIインターフェース</td>
+                            <td style="padding: 6px 8px;">本社親機</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 6px 8px;">大阪</td>
+                            <td style="padding: 6px 8px; font-family: monospace;">192.168.20.31</td>
+                            <td style="padding: 6px 8px;">TRIIインターフェース</td>
+                            <td style="padding: 6px 8px;"></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 6px 8px;">橋本</td>
+                            <td style="padding: 6px 8px; font-family: monospace;">192.168.30.31</td>
+                            <td style="padding: 6px 8px;">TRIIインターフェース</td>
+                            <td style="padding: 6px 8px;"></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 6px 8px;">福岡</td>
+                            <td style="padding: 6px 8px; font-family: monospace;">192.168.40.31</td>
+                            <td style="padding: 6px 8px;">TRIIインターフェース</td>
+                            <td style="padding: 6px 8px;">BN拠点。RT配下はSECOMのみ</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 6px 8px;">和歌山</td>
+                            <td style="padding: 6px 8px; font-family: monospace;">192.168.50.31</td>
+                            <td style="padding: 6px 8px;">TRIIインターフェース</td>
+                            <td style="padding: 6px 8px;">BN拠点。3F/4F用に.50.34も存在</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 6px 8px;"></td>
+                            <td style="padding: 6px 8px; font-family: monospace;">192.168.50.34</td>
+                            <td style="padding: 6px 8px;">TRIIインターフェース</td>
+                            <td style="padding: 6px 8px;">3F/4F用（追加分）</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 6px 8px;">多摩</td>
+                            <td style="padding: 6px 8px; font-family: monospace;">192.168.60.31</td>
+                            <td style="padding: 6px 8px;">TRIIインターフェース</td>
+                            <td style="padding: 6px 8px;"></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 6px 8px;">京橋</td>
+                            <td style="padding: 6px 8px; font-family: monospace;">192.168.70.31</td>
+                            <td style="padding: 6px 8px;">TRIIインターフェース</td>
+                            <td style="padding: 6px 8px;">BN拠点。RT配下はSECOMのみ</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 6px 8px;">名古屋</td>
+                            <td style="padding: 6px 8px; font-family: monospace;">192.168.80.31</td>
+                            <td style="padding: 6px 8px;">TRIIインターフェース</td>
+                            <td style="padding: 6px 8px;">BT拠点</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px 8px;">仙台</td>
+                            <td style="padding: 6px 8px; font-family: monospace;">—</td>
+                            <td style="padding: 6px 8px;">—</td>
+                            <td style="padding: 6px 8px;">SECOM未設置（別系統NW: RT500KI）</td>
+                        </tr>
+                    </table>
+                    <p style="font-size: 11px; color: #64748b; margin-top: 8px;">和歌山には追加で静脈認証機器あり（192.168.50.32, 50.33）</p>
+                </div>
+            </div>
+
+            <!-- 出典 -->
+            <div class="entry-section">
+                <div class="section-label">出典</div>
+                <div class="ref-links">
+                    <span style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">ネットワーク管理台帳（Google Sheets: 3.ネットワーク管理台帳.xlsx のコピー）</span>
+                    <span style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">CLAUDECODE_TOTAL_HANDOVER.md（拠点略称: AH本社, AD多摩, AD橋本, AD大阪, DP&R鬼怒川）</span>
+                    <span style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">IT基盤刷新_説明資料.html（鬼怒川=DP&R, 正社員13名）</span>
+                    <span style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">AKIBAホールディングス 組織図（令和7年12月12日現在）</span>
+                </div>
+            </div>
+
+            <!-- 反映先 -->
+            <div class="entry-section">
+                <div class="section-label">反映先</div>
+                <div class="ref-links">
+                    <a href="/IT基盤刷新_概算予算一覧.html">IT基盤刷新 概算予算一覧</a>
+                    <a href="/network_topology.html">ネットワーク構成図</a>
+                    <a href="/sdwan_scope_definition.html">SD-WAN対象範囲定義</a>
+                    <a href="/SD-WAN刷新_3社4シナリオ比較検討資料.html">SD-WAN 3社4シナリオ比較</a>
                 </div>
             </div>
         </article>
