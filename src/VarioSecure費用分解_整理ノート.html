@@ -1006,8 +1006,9 @@
           ② 角田メール（最新）：100名プラン ¥4,000,000/年<br>
           ③ 差額（100名分）：¥1,000,000/年 → <strong>モバイル単価 ¥10,000/名/年（¥833/月/名）</strong><br>
           ④ 100名プラン ¥4,000,000 − モバイル100名分 ¥1,000,000 = <strong>拠点接続 ¥3,000,000/年（¥250,000/月）</strong>　※ Socket 1台（東京本社）+ Azure vSocket の2拠点ベース<br>
-          ⑤ 角田メール（2/18）：Socket追加1台 ¥800,000/年 → <strong>Socket追加単価 ¥66,667/月</strong>（初期費用なし）<br>
-          ⑥ マネージドサービス：¥600,000/年 → <strong>¥50,000/月</strong>（出典: 角田メール 2/13）
+          ⑤ 角田メール（2/18）：Socket追加1台 ¥800,000/年 → <strong>Socket 1台単価 ¥66,667/月</strong>（初期費用なし）<br>
+          ⑥ ④ − ⑤ = ¥3,000,000 − ¥800,000 = ¥2,200,000/年 → <strong>vSocket 1台単価 ¥183,333/月</strong>　<span style="color:#dc2626;">※仮定: Socket追加単価 = 1台目の単価　と同じと仮定した場合</span><br>
+          ⑦ マネージドサービス：¥600,000/年 → <strong>¥50,000/月</strong>（出典: 角田メール 2/13）
         </div>
 
         <!-- 単価一覧表 -->
@@ -1023,18 +1024,31 @@
           </thead>
           <tbody>
             <tr>
-              <td>拠点接続ライセンス（Socket 1台 + Azure vSocket）</td>
-              <td style="text-align:center;color:#64748b;">2拠点セット</td>
-              <td class="right"><span class="money">¥3,000,000</span></td>
-              <td class="right"><span class="money" style="color:#5b21b6;">¥250,000</span></td>
-              <td style="font-size:11px;color:#64748b;">100名プランからモバイル分を差し引いて逆算</td>
+              <td style="color:#64748b;font-size:11px;" colspan="5">── 拠点接続ライセンス（2拠点セット ¥3,000,000/年）の内訳 ──</td>
             </tr>
-            <tr style="background:#fafafa;">
-              <td>Socket 追加（1台）</td>
+            <tr>
+              <td>Socket 1台（物理設置）</td>
               <td style="text-align:center;color:#64748b;">1台</td>
               <td class="right"><span class="money">¥800,000</span></td>
               <td class="right"><span class="money" style="color:#5b21b6;">¥66,667</span></td>
-              <td style="font-size:11px;color:#64748b;">角田メール 2026/2/18　※初期費用なし</td>
+              <td style="font-size:11px;color:#64748b;">角田メール 2026/2/18　Socket追加単価と同じと仮定</td>
+            </tr>
+            <tr style="background:#fafafa;">
+              <td>vSocket 1台（Azure / AWS）<span style="color:#dc2626;font-size:10px;margin-left:4px;">※仮定</span></td>
+              <td style="text-align:center;color:#64748b;">1台</td>
+              <td class="right"><span class="money">¥2,200,000</span></td>
+              <td class="right"><span class="money" style="color:#5b21b6;">¥183,333</span></td>
+              <td style="font-size:11px;color:#64748b;">¥3,000,000 − Socket ¥800,000 で差引計算。確認要</td>
+            </tr>
+            <tr>
+              <td style="color:#64748b;font-size:11px;" colspan="5">── 参考：単体での追加価格 ──</td>
+            </tr>
+            <tr style="background:#fafafa;">
+              <td>Socket 追加（2台目以降）</td>
+              <td style="text-align:center;color:#64748b;">1台</td>
+              <td class="right"><span class="money">¥800,000</span></td>
+              <td class="right"><span class="money" style="color:#5b21b6;">¥66,667</span></td>
+              <td style="font-size:11px;color:#64748b;">角田メール 2026/2/18　直接記載あり。初期費用なし</td>
             </tr>
             <tr>
               <td>モバイルアクセスライセンス</td>
