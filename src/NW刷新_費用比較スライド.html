@@ -11,7 +11,7 @@
     body {
       font-family: 'Noto Sans JP', sans-serif;
       overflow: hidden;
-      background: #0f172a;
+      background: #ffffff;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -31,46 +31,96 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 40px 80px;
+      padding: 64px 80px 40px;
       position: relative;
       overflow: hidden;
     }
 
-    /* ─── Navigation ─── */
-    .nav-dots {
+    /* ─── Step Bar ─── */
+    .step-bar {
       position: fixed;
-      bottom: 28px;
-      left: 50%;
-      transform: translateX(-50%);
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 52px;
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
       display: flex;
-      gap: 10px;
-      z-index: 200;
+      align-items: center;
+      padding: 0 24px;
+      gap: 6px;
+      z-index: 300;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
 
-    .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.25);
+    .step-title {
+      font-size: 12px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      margin-right: 8px;
+    }
+
+    .step-divider {
+      width: 1px;
+      height: 24px;
+      background: #e2e8f0;
+      margin: 0 8px;
+      flex-shrink: 0;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #94a3b8;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all 0.25s;
+      white-space: nowrap;
     }
 
-    .dot.active {
-      background: white;
-      transform: scale(1.4);
+    .step-item:hover { color: #475569; background: #f1f5f9; }
+
+    .step-item.active {
+      background: #0f172a;
+      color: white;
     }
 
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      font-size: 10px;
+      font-weight: 900;
+      background: #e2e8f0;
+      color: #64748b;
+      flex-shrink: 0;
+    }
+
+    .step-item.active .step-num {
+      background: rgba(255,255,255,0.2);
+      color: white;
+    }
+
+    /* ─── Navigation Arrows ─── */
     .nav-btn {
       position: fixed;
       top: 50%;
       transform: translateY(-50%);
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.08);
-      color: rgba(255, 255, 255, 0.7);
+      border: 1px solid #e2e8f0;
+      background: white;
+      color: #64748b;
       font-size: 20px;
       cursor: pointer;
       z-index: 200;
@@ -78,30 +128,19 @@
       align-items: center;
       justify-content: center;
       transition: all 0.2s;
-      backdrop-filter: blur(8px);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
       line-height: 1;
     }
 
     .nav-btn:hover {
-      background: rgba(255, 255, 255, 0.18);
-      border-color: rgba(255, 255, 255, 0.5);
-      color: white;
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      color: #0f172a;
     }
 
     .nav-prev { left: 20px; }
     .nav-next { right: 20px; }
     .nav-btn.hidden { opacity: 0; pointer-events: none; }
-
-    .slide-num {
-      position: fixed;
-      top: 20px;
-      right: 28px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      color: rgba(255, 255, 255, 0.35);
-      z-index: 200;
-    }
 
     /* ─── Common Atoms ─── */
     .label {
@@ -124,7 +163,7 @@
     /* ═══════════════════════════════════════
        SLIDE 1 — 現状
     ═══════════════════════════════════════ */
-    .s1 { background: linear-gradient(140deg, #0f172a 0%, #1e3a5f 60%, #0f172a 100%); color: white; }
+    .s1 { background: #ffffff; color: #0f172a; }
 
     .s1-grid {
       display: grid;
@@ -135,14 +174,14 @@
       align-items: center;
     }
 
-    .s1-left .h1 { font-size: 2.6rem; margin-bottom: 16px; }
-    .s1-left .sub { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.9; }
+    .s1-left .h1 { font-size: 2.6rem; color: #0f172a; margin-bottom: 16px; }
+    .s1-left .sub { font-size: 14px; color: #475569; line-height: 1.9; }
 
     .s1-right { display: flex; flex-direction: column; gap: 12px; }
 
     .s1-card {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
       border-radius: 12px;
       padding: 14px 20px;
       display: flex;
@@ -150,13 +189,13 @@
       align-items: center;
     }
 
-    .s1-card-loc { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.85); }
-    .s1-card-model { font-size: 11px; color: rgba(255,255,255,0.4); font-family: monospace; margin-top: 2px; }
-    .s1-card-price { font-size: 16px; font-weight: 900; color: #7dd3fc; font-family: 'Courier New', monospace; }
+    .s1-card-loc { font-size: 13px; font-weight: 700; color: #1e293b; }
+    .s1-card-model { font-size: 11px; color: #94a3b8; font-family: monospace; margin-top: 2px; }
+    .s1-card-price { font-size: 16px; font-weight: 900; color: #0369a1; font-family: 'Courier New', monospace; }
 
     .s1-total {
-      background: rgba(239,68,68,0.15);
-      border: 2px solid rgba(239,68,68,0.4);
+      background: #fef2f2;
+      border: 2px solid #fecaca;
       border-radius: 12px;
       padding: 16px 20px;
       display: flex;
@@ -164,8 +203,8 @@
       align-items: center;
     }
 
-    .s1-total-label { font-size: 12px; font-weight: 900; color: #fca5a5; letter-spacing: 0.1em; }
-    .s1-total-price { font-size: 24px; font-weight: 900; color: #ef4444; font-family: 'Courier New', monospace; }
+    .s1-total-label { font-size: 12px; font-weight: 900; color: #dc2626; letter-spacing: 0.1em; }
+    .s1-total-price { font-size: 24px; font-weight: 900; color: #dc2626; font-family: 'Courier New', monospace; }
 
     .s1-issue {
       margin-top: 24px;
@@ -179,7 +218,7 @@
       align-items: center;
       gap: 10px;
       font-size: 13px;
-      color: rgba(255,255,255,0.7);
+      color: #475569;
     }
 
     .s1-issue-dot {
@@ -304,12 +343,12 @@
     /* ═══════════════════════════════════════
        SLIDE 4 — 月額サマリー
     ═══════════════════════════════════════ */
-    .s4 { background: linear-gradient(140deg, #0c0f1a 0%, #1a2744 50%, #0c0f1a 100%); color: white; }
+    .s4 { background: #f8fafc; color: #0f172a; }
 
     .s4-inner { width: 100%; max-width: 900px; text-align: center; }
 
-    .s4-inner .label { color: rgba(255,255,255,0.4); margin-bottom: 16px; }
-    .s4-inner .h1 { font-size: 2.2rem; margin-bottom: 40px; }
+    .s4-inner .label { color: #64748b; margin-bottom: 16px; }
+    .s4-inner .h1 { font-size: 2.2rem; color: #0f172a; margin-bottom: 40px; }
 
     .s4-comparison {
       display: grid;
@@ -324,22 +363,22 @@
       padding: 28px 32px;
     }
 
-    .s4-before { background: rgba(239,68,68,0.12); border: 2px solid rgba(239,68,68,0.3); }
-    .s4-after  { background: rgba(59,130,246,0.12); border: 2px solid rgba(59,130,246,0.3); }
+    .s4-before { background: #fef2f2; border: 2px solid #fecaca; }
+    .s4-after  { background: #eff6ff; border: 2px solid #bfdbfe; }
 
-    .s4-box-label { font-size: 10px; font-weight: 900; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.6; margin-bottom: 10px; }
+    .s4-box-label { font-size: 10px; font-weight: 900; letter-spacing: 0.2em; text-transform: uppercase; color: #64748b; margin-bottom: 10px; }
     .s4-box-price {
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 800;
       line-height: 1;
     }
 
-    .s4-before .s4-box-price { font-size: 2.8rem; color: #ef4444; }
-    .s4-after  .s4-box-price { font-size: 2.8rem; color: #60a5fa; }
+    .s4-before .s4-box-price { font-size: 2.8rem; color: #dc2626; }
+    .s4-after  .s4-box-price { font-size: 2.8rem; color: #2563eb; }
 
-    .s4-box-sub { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 8px; line-height: 1.6; }
+    .s4-box-sub { font-size: 11px; color: #64748b; margin-top: 8px; line-height: 1.6; }
 
-    .s4-arrow { text-align: center; font-size: 28px; color: rgba(255,255,255,0.3); }
+    .s4-arrow { text-align: center; font-size: 28px; color: #cbd5e1; }
 
     .s4-breakdown {
       display: grid;
@@ -348,15 +387,15 @@
     }
 
     .s4-item {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
       border-radius: 12px;
       padding: 14px 18px;
       text-align: left;
     }
 
-    .s4-item-group { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; opacity: 0.5; margin-bottom: 6px; }
-    .s4-item-desc  { font-size: 12px; color: rgba(255,255,255,0.75); margin-bottom: 8px; line-height: 1.5; }
+    .s4-item-group { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #94a3b8; margin-bottom: 6px; }
+    .s4-item-desc  { font-size: 12px; color: #475569; margin-bottom: 8px; line-height: 1.5; }
     .s4-item-price { font-family: 'Courier New', monospace; font-size: 17px; font-weight: 700; }
 
     /* ═══════════════════════════════════════
@@ -420,7 +459,7 @@
     /* ═══════════════════════════════════════
        SLIDE 6 — SECOMフルクラウド化
     ═══════════════════════════════════════ */
-    .s6 { background: linear-gradient(140deg, #0a1628 0%, #0f2440 60%, #0a1628 100%); color: white; }
+    .s6 { background: #ffffff; color: #0f172a; }
 
     .s6-grid {
       display: grid;
@@ -434,8 +473,8 @@
     .s6-story { display: flex; flex-direction: column; gap: 8px; }
 
     .s6-step {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.09);
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
       border-left: 3px solid;
       border-radius: 0 10px 10px 0;
       padding: 11px 15px;
@@ -445,26 +484,26 @@
     .s6-step-solution { border-left-color: #10b981; }
     .s6-step-effect   { border-left-color: #60a5fa; }
 
-    .s6-step-tag { font-size: 9px; font-weight: 900; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.5; margin-bottom: 3px; }
-    .s6-step-title { font-size: 13px; font-weight: 900; margin-bottom: 3px; }
-    .s6-step-body { font-size: 11px; color: rgba(255,255,255,0.6); line-height: 1.7; }
-    .s6-arrow-down { padding-left: 15px; font-size: 13px; color: rgba(255,255,255,0.2); }
+    .s6-step-tag { font-size: 9px; font-weight: 900; letter-spacing: 0.2em; text-transform: uppercase; color: #94a3b8; margin-bottom: 3px; }
+    .s6-step-title { font-size: 13px; font-weight: 900; color: #0f172a; margin-bottom: 3px; }
+    .s6-step-body { font-size: 11px; color: #64748b; line-height: 1.7; }
+    .s6-arrow-down { padding-left: 15px; font-size: 13px; color: #cbd5e1; }
 
     .s6-tbl { width: 100%; border-collapse: collapse; font-size: 11.5px; }
     .s6-tbl th { padding: 9px 12px; font-size: 10px; font-weight: 900; letter-spacing: 0.07em; text-align: center; }
-    .s6-tbl th:first-child { text-align: left; background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.4); }
-    .s6-tbl th.col-secom   { background: rgba(100,116,139,0.5); color: rgba(255,255,255,0.9); }
-    .s6-tbl th.col-bitlock { background: rgba(37,99,235,0.55); color: white; }
-    .s6-tbl th.col-akerun  { background: rgba(220,38,38,0.5); color: white; }
+    .s6-tbl th:first-child { text-align: left; background: #f1f5f9; color: #64748b; }
+    .s6-tbl th.col-secom   { background: #475569; color: white; }
+    .s6-tbl th.col-bitlock { background: #2563eb; color: white; }
+    .s6-tbl th.col-akerun  { background: #dc2626; color: white; }
 
-    .s6-tbl td { padding: 9px 12px; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.75); vertical-align: middle; }
-    .s6-tbl td:first-child  { font-size: 11px; color: rgba(255,255,255,0.45); font-weight: 700; }
-    .s6-tbl td.col-secom   { text-align: center; background: rgba(100,116,139,0.08); }
-    .s6-tbl td.col-bitlock { text-align: center; background: rgba(37,99,235,0.07); }
-    .s6-tbl td.col-akerun  { text-align: center; background: rgba(220,38,38,0.06); }
+    .s6-tbl td { padding: 9px 12px; border-bottom: 1px solid #f1f5f9; color: #334155; vertical-align: middle; }
+    .s6-tbl td:first-child  { font-size: 11px; color: #64748b; font-weight: 700; }
+    .s6-tbl td.col-secom   { text-align: center; background: #f8fafc; }
+    .s6-tbl td.col-bitlock { text-align: center; background: #eff6ff; }
+    .s6-tbl td.col-akerun  { text-align: center; background: #fef2f2; }
     .s6-tbl tr:last-child td { border-bottom: none; }
 
-    .cell-empty { color: rgba(255,255,255,0.2); font-size: 18px; letter-spacing: 0.3em; }
+    .cell-empty { color: #cbd5e1; font-size: 18px; letter-spacing: 0.3em; }
 
     /* ═══════════════════════════════════════
        SLIDE 7 — ファイルサーバークラウド化
@@ -495,141 +534,120 @@
     /* ═══════════════════════════════════════
        SLIDE 8 — 複合機VPN外出し
     ═══════════════════════════════════════ */
-    .s8 { background: linear-gradient(140deg, #0f0a1e 0%, #1a0f40 50%, #0f0a1e 100%); color: white; }
+    .s8 { background: #f8fafc; color: #0f172a; }
     .s8-inner { width: 100%; max-width: 980px; }
     .s8-header { margin-bottom: 14px; }
-    .s8-header .label { color: rgba(255,255,255,0.4); }
-    .s8-header .h1 { font-size: 1.75rem; }
-    .s8-sub { font-size: 12.5px; color: rgba(255,255,255,0.55); margin-top: 6px; line-height: 1.75; margin-bottom: 20px; }
+    .s8-header .label { color: #64748b; }
+    .s8-header .h1 { font-size: 1.75rem; color: #0f172a; }
+    .s8-sub { font-size: 12.5px; color: #64748b; margin-top: 6px; line-height: 1.75; margin-bottom: 20px; }
 
     .s8-tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; }
     .s8-tbl th { padding: 10px 14px; font-size: 10.5px; font-weight: 900; letter-spacing: 0.07em; }
-    .s8-tbl th:first-child { text-align: left; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.4); }
-    .s8-tbl th.col-vpn   { text-align: center; background: rgba(100,116,139,0.55); color: white; }
-    .s8-tbl th.col-novpn { text-align: center; background: rgba(124,58,237,0.6); color: white; }
-    .s8-tbl th.col-note  { text-align: center; background: rgba(5,150,105,0.5); color: white; }
+    .s8-tbl th:first-child { text-align: left; background: #f1f5f9; color: #64748b; }
+    .s8-tbl th.col-vpn   { text-align: center; background: #475569; color: white; }
+    .s8-tbl th.col-novpn { text-align: center; background: #7c3aed; color: white; }
+    .s8-tbl th.col-note  { text-align: center; background: #059669; color: white; }
 
-    .s8-tbl td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.07); color: rgba(255,255,255,0.75); vertical-align: middle; }
-    .s8-tbl td:first-child { font-size: 11px; color: rgba(255,255,255,0.45); font-weight: 700; }
-    .s8-tbl td.col-vpn   { text-align: center; background: rgba(100,116,139,0.1); }
-    .s8-tbl td.col-novpn { text-align: center; background: rgba(124,58,237,0.08); }
-    .s8-tbl td.col-note  { text-align: left; background: rgba(5,150,105,0.06); font-size: 11px; color: rgba(255,255,255,0.5); }
+    .s8-tbl td { padding: 10px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; vertical-align: middle; }
+    .s8-tbl td:first-child { font-size: 11px; color: #64748b; font-weight: 700; }
+    .s8-tbl td.col-vpn   { text-align: center; background: #f8fafc; }
+    .s8-tbl td.col-novpn { text-align: center; background: #faf5ff; }
+    .s8-tbl td.col-note  { text-align: left; background: #f0fdfa; font-size: 11px; color: #0f766e; }
     .s8-tbl tr:last-child td { border-bottom: none; }
 
 
-    /* ─── Slides 6-8: 削減効果ボックス ─── */
-    .s6-impact {
-      margin-top: 12px; background: rgba(16,185,129,0.08);
-      border: 1px solid rgba(16,185,129,0.25); border-radius: 10px; padding: 10px 14px;
-    }
-    .s6-impact-label {
-      font-size: 9px; font-weight: 900; letter-spacing: 0.2em; text-transform: uppercase;
-      color: #10b981; margin-bottom: 8px;
-    }
-    .s6-impact-row {
-      display: flex; justify-content: space-between; align-items: baseline;
-      font-size: 11px; margin-bottom: 4px;
-    }
-    .s6-impact-row-label { color: rgba(255,255,255,0.5); }
-    .s6-impact-save { color: #10b981; font-weight: 900; font-family: 'Courier New', monospace; }
-    .s6-impact-neutral { color: rgba(255,255,255,0.35); font-size: 10px; }
-    .s6-impact-total {
-      margin-top: 7px; padding-top: 7px; border-top: 1px solid rgba(255,255,255,0.1);
-      font-size: 11px; color: rgba(255,255,255,0.4); font-family: 'Courier New', monospace;
-    }
-
-    .s7-impact {
+    /* ─── Slides 6-8: 統一削減効果ボックス ─── */
+    .impact-box {
       margin-top: 12px; background: #f0fdf4; border: 1px solid #86efac;
       border-radius: 10px; padding: 10px 16px;
       display: flex; align-items: center; gap: 20px;
     }
-    .s7-impact-badge {
+    .impact-badge {
       background: #16a34a; color: white; border-radius: 8px; padding: 8px 12px;
       font-size: 10px; font-weight: 900; letter-spacing: 0.08em; text-align: center; flex-shrink: 0; line-height: 1.5;
     }
-    .s7-impact-details { flex: 1; font-size: 11.5px; color: #166534; line-height: 1.7; }
-    .s7-impact-total {
+    .impact-details { flex: 1; font-size: 11.5px; color: #166534; line-height: 1.7; }
+    .impact-total {
       font-family: 'Courier New', monospace; font-size: 12px; font-weight: 700;
       color: #0f172a; flex-shrink: 0; text-align: right; line-height: 1.6;
-    }
-
-    .s8-impact {
-      margin-top: 12px; background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.3);
-      border-radius: 10px; padding: 10px 16px;
-      display: flex; align-items: center; gap: 20px;
-    }
-    .s8-impact-badge {
-      background: rgba(124,58,237,0.75); color: white; border-radius: 8px; padding: 8px 12px;
-      font-size: 10px; font-weight: 900; letter-spacing: 0.08em; text-align: center; flex-shrink: 0; line-height: 1.5;
-    }
-    .s8-impact-details { flex: 1; font-size: 11.5px; color: rgba(255,255,255,0.55); line-height: 1.7; }
-    .s8-impact-total {
-      font-family: 'Courier New', monospace; font-size: 12px; font-weight: 700;
-      color: rgba(255,255,255,0.75); flex-shrink: 0; text-align: right; line-height: 1.6;
     }
 
     /* ═══════════════════════════════════════
        SLIDE 9 — 対策ロードマップ
     ═══════════════════════════════════════ */
-    .s9 { background: linear-gradient(140deg, #0f172a 0%, #192340 100%); color: white; }
+    .s9 { background: #ffffff; color: #0f172a; }
     .s9-inner { width: 100%; max-width: 1100px; }
     .s9-header { margin-bottom: 28px; }
-    .s9-header .label { color: rgba(255,255,255,0.4); }
-    .s9-header .h1 { font-size: 1.9rem; }
+    .s9-header .label { color: #64748b; }
+    .s9-header .h1 { font-size: 1.9rem; color: #0f172a; }
 
     .s9-steps {
       display: grid; grid-template-columns: repeat(4, 1fr);
       gap: 16px; position: relative;
     }
     .s9-step {
-      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      background: #f8fafc; border: 1px solid #e2e8f0;
       border-radius: 16px; padding: 18px 16px; position: relative;
     }
     .s9-step-title {
       font-size: 10px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;
-      margin-bottom: 10px; color: rgba(255,255,255,0.45);
+      margin-bottom: 10px; color: #94a3b8;
     }
     .s9-step-price {
       font-family: 'Space Grotesk', sans-serif; font-weight: 800;
       font-size: 2.2rem; line-height: 1; margin-bottom: 3px;
     }
-    .s9-step-unit { font-size: 10px; opacity: 0.4; margin-bottom: 10px; }
+    .s9-step-unit { font-size: 10px; color: #94a3b8; margin-bottom: 10px; }
     .s9-step-delta {
       font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 6px;
       display: inline-block; margin-bottom: 10px;
     }
-    .s9-step-detail { font-size: 10px; color: rgba(255,255,255,0.38); line-height: 1.7; }
+    .s9-step-detail { font-size: 10px; color: #94a3b8; line-height: 1.7; }
 
-    .s9-step-0 { border-color: rgba(239,68,68,0.35); }
-    .s9-step-0 .s9-step-price { color: #f87171; }
-    .s9-step-0 .s9-step-delta { background: rgba(239,68,68,0.15); color: #fca5a5; }
-    .s9-step-1 .s9-step-price { color: #fbbf24; }
-    .s9-step-1 .s9-step-delta { background: rgba(16,185,129,0.15); color: #6ee7b7; }
-    .s9-step-2 .s9-step-price { color: #60a5fa; }
-    .s9-step-2 .s9-step-delta { background: rgba(16,185,129,0.2); color: #6ee7b7; }
-    .s9-step-3 { border-color: rgba(16,185,129,0.4); }
-    .s9-step-3 .s9-step-price { color: #34d399; }
-    .s9-step-3 .s9-step-delta { background: rgba(16,185,129,0.25); color: #6ee7b7; }
+    .s9-step-0 { border-color: #fecaca; }
+    .s9-step-0 .s9-step-price { color: #dc2626; }
+    .s9-step-0 .s9-step-delta { background: #fef2f2; color: #dc2626; }
+    .s9-step-1 .s9-step-price { color: #d97706; }
+    .s9-step-1 .s9-step-delta { background: #d1fae5; color: #059669; }
+    .s9-step-2 .s9-step-price { color: #2563eb; }
+    .s9-step-2 .s9-step-delta { background: #d1fae5; color: #059669; }
+    .s9-step-3 { border-color: #86efac; }
+    .s9-step-3 .s9-step-price { color: #059669; }
+    .s9-step-3 .s9-step-delta { background: #d1fae5; color: #059669; }
 
     .s9-arrow-between {
       position: absolute; top: 46%; right: -14px; transform: translateY(-50%);
-      color: rgba(255,255,255,0.2); font-size: 22px; z-index: 10;
+      color: #cbd5e1; font-size: 22px; z-index: 10;
     }
     .s9-summary {
-      margin-top: 22px; background: rgba(16,185,129,0.09);
-      border: 1px solid rgba(16,185,129,0.3); border-radius: 12px;
+      margin-top: 22px; background: #f0fdf4;
+      border: 1px solid #86efac; border-radius: 12px;
       padding: 14px 22px; display: flex; align-items: center; gap: 28px;
     }
     .s9-summary-item { text-align: left; }
-    .s9-summary-label { font-size: 10.5px; color: rgba(255,255,255,0.45); margin-bottom: 4px; }
-    .s9-summary-num { font-family: 'Space Grotesk', sans-serif; font-size: 1.7rem; font-weight: 800; color: #34d399; }
-    .s9-summary-sub { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 2px; }
-    .s9-sep { width: 1px; height: 40px; background: rgba(255,255,255,0.12); flex-shrink: 0; }
-    .s9-notes { margin-top: 12px; font-size: 10.5px; color: rgba(255,255,255,0.28); line-height: 1.8; }
+    .s9-summary-label { font-size: 10.5px; color: #64748b; margin-bottom: 4px; }
+    .s9-summary-num { font-family: 'Space Grotesk', sans-serif; font-size: 1.7rem; font-weight: 800; color: #059669; }
+    .s9-summary-sub { font-size: 10px; color: #94a3b8; margin-top: 2px; }
+    .s9-sep { width: 1px; height: 40px; background: #d1fae5; flex-shrink: 0; }
+    .s9-notes { margin-top: 12px; font-size: 10.5px; color: #94a3b8; line-height: 1.8; }
 
   </style>
 </head>
 <body>
+
+<div class="step-bar" id="stepBar">
+  <div class="step-title">NW刷新 費用比較</div>
+  <div class="step-divider"></div>
+  <div class="step-item active" data-slide="0"><span class="step-num">1</span>現行</div>
+  <div class="step-item" data-slide="1"><span class="step-num">2</span>3分類</div>
+  <div class="step-item" data-slide="2"><span class="step-num">3</span>内訳</div>
+  <div class="step-item" data-slide="3"><span class="step-num">4</span>月額</div>
+  <div class="step-item" data-slide="4"><span class="step-num">5</span>比較</div>
+  <div class="step-item" data-slide="5"><span class="step-num">6</span>SECOM</div>
+  <div class="step-item" data-slide="6"><span class="step-num">7</span>FS</div>
+  <div class="step-item" data-slide="7"><span class="step-num">8</span>複合機</div>
+  <div class="step-item" data-slide="8"><span class="step-num">9</span>総括</div>
+</div>
 
 <div class="slides-wrapper">
   <div class="slides-track" id="slidesTrack">
@@ -640,14 +658,14 @@
     <div class="slide s1">
       <div class="s1-grid">
         <div class="s1-left">
-          <div class="label" style="color:rgba(255,255,255,0.4);">現状確認</div>
-          <div class="h1" style="font-size:2.4rem;color:white;margin-bottom:20px;">
+          <div class="label" style="color:#94a3b8;">現状確認</div>
+          <div class="h1" style="font-size:2.4rem;color:#0f172a;margin-bottom:20px;">
             VarioSecure<br>現行費用
           </div>
           <div class="sub">
             全8拠点にVSRを設置。<br>
             SECOMの拠点間VPN通信もVarioSecure経由。<br><br>
-            <span style="color:rgba(255,255,255,0.4);font-size:12px;">
+            <span style="color:#94a3b8;font-size:12px;">
               ※ 実請求額 ¥142,000（USEN西川メール）との差額 ¥19,600 はISP費用等の合算と推定
             </span>
           </div>
@@ -845,22 +863,22 @@
           <div class="s4-item">
             <div class="s4-item-group">グループ①　築地本社</div>
             <div class="s4-item-desc">VarioSecure継続 ＋<br>Cato Socket + vSocket</div>
-            <div class="s4-item-price" style="color:#60a5fa;">¥290,000</div>
+            <div class="s4-item-price" style="color:#2563eb;">¥290,000</div>
           </div>
           <div class="s4-item">
             <div class="s4-item-group">グループ②　SECOM専用4拠点</div>
             <div class="s4-item-desc">VarioSecure継続<br>（バディネット拠点）</div>
-            <div class="s4-item-price" style="color:#f87171;">¥41,600</div>
+            <div class="s4-item-price" style="color:#dc2626;">¥41,600</div>
           </div>
           <div class="s4-item">
             <div class="s4-item-group">グループ③　Cato再構築3拠点</div>
             <div class="s4-item-desc">Socket × 3 ＋ モバイル130名<br>＋ SCSK管理費</div>
-            <div class="s4-item-price" style="color:#c4b5fd;">¥358,334</div>
+            <div class="s4-item-price" style="color:#7c3aed;">¥358,334</div>
           </div>
         </div>
 
-        <div style="margin-top:24px;padding:14px 20px;background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.3);border-radius:10px;text-align:left;font-size:12px;color:rgba(255,255,255,0.65);line-height:1.8;">
-          現行比 <span style="color:#fbbf24;font-weight:700;">+¥567,534/月</span> の増加。　ただしCatoはSD-WAN＋セキュリティ（FW/UTM/CASB/Threat Prevention）が一体型であり、IIJ案との比較は次ページで確認。
+        <div style="margin-top:24px;padding:14px 20px;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;text-align:left;font-size:12px;color:#92400e;line-height:1.8;">
+          現行比 <span style="color:#d97706;font-weight:700;">+¥567,534/月</span> の増加。　ただしCatoはSD-WAN＋セキュリティ（FW/UTM/CASB/Threat Prevention）が一体型であり、IIJ案との比較は次ページで確認。
         </div>
       </div>
     </div>
@@ -947,8 +965,8 @@
       <div class="s6-grid">
 
         <div>
-          <div class="label" style="color:rgba(255,255,255,0.4);">検討シナリオ</div>
-          <div class="h1" style="font-size:1.65rem;color:white;margin-bottom:16px;">
+          <div class="label" style="color:#94a3b8;">検討シナリオ</div>
+          <div class="h1" style="font-size:1.65rem;color:#0f172a;margin-bottom:16px;">
             SECOM入退室管理<br>フルクラウド化
           </div>
           <div class="s6-story">
@@ -979,7 +997,7 @@
         </div>
 
         <div>
-          <div style="font-size:10px;font-weight:900;letter-spacing:0.18em;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:12px;">ベンダー比較（費用確認中）</div>
+          <div style="font-size:10px;font-weight:900;letter-spacing:0.18em;color:#94a3b8;text-transform:uppercase;margin-bottom:12px;">ベンダー比較（費用確認中）</div>
           <table class="s6-tbl">
             <thead>
               <tr>
@@ -993,14 +1011,14 @@
               <tr>
                 <td>管理方式</td>
                 <td class="col-secom">IIJ GIO<br>（オンプレ型）</td>
-                <td class="col-bitlock">クラウド管理<br><span style="font-size:10px;color:rgba(255,255,255,0.45);">Suica/FeliCa対応</span></td>
-                <td class="col-akerun">クラウド管理<br><span style="font-size:10px;color:rgba(255,255,255,0.45);">スマートロック型</span></td>
+                <td class="col-bitlock">クラウド管理<br><span style="font-size:10px;color:#94a3b8;">Suica/FeliCa対応</span></td>
+                <td class="col-akerun">クラウド管理<br><span style="font-size:10px;color:#94a3b8;">スマートロック型</span></td>
               </tr>
               <tr>
                 <td>VPN依存</td>
-                <td class="col-secom"><span class="chip" style="background:rgba(239,68,68,0.3);color:#fca5a5;">あり</span></td>
-                <td class="col-bitlock"><span class="chip" style="background:rgba(16,185,129,0.3);color:#6ee7b7;">なし</span></td>
-                <td class="col-akerun"><span class="chip" style="background:rgba(16,185,129,0.3);color:#6ee7b7;">なし</span></td>
+                <td class="col-secom"><span class="chip" style="background:#fee2e2;color:#dc2626;">あり</span></td>
+                <td class="col-bitlock"><span class="chip" style="background:#dcfce7;color:#15803d;">なし</span></td>
+                <td class="col-akerun"><span class="chip" style="background:#dcfce7;color:#15803d;">なし</span></td>
               </tr>
               <tr>
                 <td>既存リーダー流用</td>
@@ -1022,33 +1040,29 @@
               </tr>
               <tr>
                 <td>月額費用（税抜）</td>
-                <td class="col-secom" style="color:#f87171;font-weight:700;">¥121,173<br><span style="font-size:10px;color:rgba(255,255,255,0.35);font-weight:400;">（IIJ GIO＋SESAMO）</span></td>
+                <td class="col-secom" style="color:#dc2626;font-weight:700;">¥121,173<br><span style="font-size:10px;color:#94a3b8;font-weight:400;">（IIJ GIO＋SESAMO）</span></td>
                 <td class="col-bitlock"><span class="cell-empty">—</span></td>
                 <td class="col-akerun"><span class="cell-empty">—</span></td>
               </tr>
               <tr>
                 <td>打合せ状況</td>
                 <td class="col-secom">稼働中</td>
-                <td class="col-bitlock"><span class="chip" style="background:rgba(251,191,36,0.3);color:#fbbf24;">2/27予定</span></td>
-                <td class="col-akerun"><span class="chip" style="background:rgba(251,191,36,0.3);color:#fbbf24;">2/27予定</span></td>
+                <td class="col-bitlock"><span class="chip" style="background:#fef9c3;color:#a16207;">2/27予定</span></td>
+                <td class="col-akerun"><span class="chip" style="background:#fef9c3;color:#a16207;">2/27予定</span></td>
               </tr>
             </tbody>
           </table>
-          <div style="margin-top:12px;font-size:11px;color:rgba(255,255,255,0.35);line-height:1.7;">
+          <div style="margin-top:12px;font-size:11px;color:#94a3b8;line-height:1.7;">
             ※ 現行月額¥121,173はIIJ GIO（¥44,318）＋SESAMO（¥76,855）の税抜合計<br>
             ※ フルクラウド化によりVarioSecure②グループ（¥41,600/月）の解約が可能になる見込み
           </div>
-          <div class="s6-impact">
-            <div class="s6-impact-label">この対策の効果</div>
-            <div class="s6-impact-row">
-              <div class="s6-impact-row-label">VarioSecure全廃（②グループ＋築地）</div>
-              <div class="s6-impact-save">▲ ¥81,600/月</div>
+          <div class="impact-box">
+            <div class="impact-badge">VarioSecure<br>全廃<br>▲¥81,600/月</div>
+            <div class="impact-details">
+              ②グループ（¥41,600）＋築地（¥40,000）を解約<br>
+              Socket: ±0台（FS・複合機が各拠点に残存）
             </div>
-            <div class="s6-impact-row">
-              <div class="s6-impact-row-label">Socket削減</div>
-              <div class="s6-impact-neutral">±0台（FS・複合機が各拠点に残存）</div>
-            </div>
-            <div class="s6-impact-total">月額: ¥689,934 → <span style="color:#10b981;font-weight:900;">¥608,334</span></div>
+            <div class="impact-total">¥689,934<br>→ <span style="color:#059669;font-size:17px;font-weight:900;">¥608,334</span><br><span style="font-size:10px;color:#64748b;">/月</span></div>
           </div>
         </div>
 
@@ -1133,13 +1147,13 @@
         <div style="margin-top:14px;font-size:11px;color:#94a3b8;line-height:1.7;">
           ※ 費用は現行使用量・対象拠点・ライセンス形態の確認後に試算予定。現時点の数字はすべて未確定。
         </div>
-        <div class="s7-impact">
-          <div class="s7-impact-badge">Socket<br>1台削減<br>▲¥66,667/月</div>
-          <div class="s7-impact-details">
+        <div class="impact-box">
+          <div class="impact-badge">Socket<br>1台削減<br>▲¥66,667/月</div>
+          <div class="impact-details">
             <strong style="color:#15803d;">大阪</strong>のSocket廃止（阻害要因①SECOM＋②FS がともに解消）<br>
             ※①SECOMフルクラウド化の実施後に効果が発現
           </div>
-          <div class="s7-impact-total">¥608,334<br>→ <span style="color:#15803d;font-size:17px;font-weight:900;">¥541,667</span><br><span style="font-size:10px;color:#64748b;">/月</span></div>
+          <div class="impact-total">¥608,334<br>→ <span style="color:#059669;font-size:17px;font-weight:900;">¥541,667</span><br><span style="font-size:10px;color:#64748b;">/月</span></div>
         </div>
       </div>
     </div>
@@ -1171,19 +1185,19 @@
             <tr>
               <td>スキャン送信先</td>
               <td class="col-vpn">社内ファイルサーバー（VPN経由）</td>
-              <td class="col-novpn">クラウドストレージ<br><span style="font-size:10px;opacity:0.6;">（SharePoint / Box 等）</span></td>
+              <td class="col-novpn">クラウドストレージ<br><span style="font-size:10px;color:#94a3b8;">（SharePoint / Box 等）</span></td>
               <td class="col-note">ファイルサーバー移行（スライド7）と連動</td>
             </tr>
             <tr>
               <td>印刷方式</td>
               <td class="col-vpn">社内NW直接接続</td>
-              <td class="col-novpn">クラウドプリント<br><span style="font-size:10px;opacity:0.6;">（Universal Print / メーカークラウド等）</span></td>
+              <td class="col-novpn">クラウドプリント<br><span style="font-size:10px;color:#94a3b8;">（Universal Print / メーカークラウド等）</span></td>
               <td class="col-note">対応機種・ドライバーの確認が必要</td>
             </tr>
             <tr>
               <td>VPN依存</td>
-              <td class="col-vpn"><span class="chip" style="background:rgba(239,68,68,0.25);color:#fca5a5;">あり</span></td>
-              <td class="col-novpn"><span class="chip" style="background:rgba(16,185,129,0.25);color:#6ee7b7;">なし</span></td>
+              <td class="col-vpn"><span class="chip" style="background:#fee2e2;color:#dc2626;">あり</span></td>
+              <td class="col-novpn"><span class="chip" style="background:#dcfce7;color:#15803d;">なし</span></td>
               <td class="col-note">SECOMフルクラウド化と相互補完</td>
             </tr>
             <tr>
@@ -1219,17 +1233,17 @@
           </tbody>
         </table>
 
-        <div style="margin-top:14px;font-size:11px;color:rgba(255,255,255,0.35);line-height:1.7;">
+        <div style="margin-top:14px;font-size:11px;color:#94a3b8;line-height:1.7;">
           ※ 費用は複合機の棚卸し・対応クラウドサービスの選定後に試算予定。現時点の数字はすべて未確定。
         </div>
-        <div class="s8-impact">
-          <div class="s8-impact-badge">Socket<br>2台削減<br>▲¥133,334/月</div>
-          <div class="s8-impact-details">
-            <span style="color:#c4b5fd;">多摩</span>: 阻害要因①SECOM＋③複合機が解消 → Socket廃止<br>
-            <span style="color:#c4b5fd;">築地</span>: 阻害要因①②③が全て解消 → Socket廃止<br>
+        <div class="impact-box">
+          <div class="impact-badge">Socket<br>2台削減<br>▲¥133,334/月</div>
+          <div class="impact-details">
+            <strong style="color:#15803d;">多摩</strong>: 阻害要因①SECOM＋③複合機が解消 → Socket廃止<br>
+            <strong style="color:#15803d;">築地</strong>: 阻害要因①②③が全て解消 → Socket廃止<br>
             ※①SECOM＋②FSクラウド化の実施後に効果が発現
           </div>
-          <div class="s8-impact-total">¥541,667<br>→ <span style="color:#a78bfa;font-size:17px;font-weight:900;">¥408,333</span><br><span style="font-size:10px;color:rgba(255,255,255,0.35);">/月</span></div>
+          <div class="impact-total">¥541,667<br>→ <span style="color:#059669;font-size:17px;font-weight:900;">¥408,333</span><br><span style="font-size:10px;color:#64748b;">/月</span></div>
         </div>
       </div>
     </div>
@@ -1309,31 +1323,25 @@
 <!-- Navigation -->
 <button class="nav-btn nav-prev" id="prevBtn">&#8249;</button>
 <button class="nav-btn nav-next" id="nextBtn">&#8250;</button>
-<div class="nav-dots" id="navDots"></div>
-<div class="slide-num" id="slideNum">1 / 9</div>
 
 <script>
-  const track   = document.getElementById('slidesTrack');
-  const dotsEl  = document.getElementById('navDots');
-  const numEl   = document.getElementById('slideNum');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  const TOTAL   = 9;
+  const track    = document.getElementById('slidesTrack');
+  const stepBar  = document.getElementById('stepBar');
+  const steps    = stepBar.querySelectorAll('.step-item');
+  const prevBtn  = document.getElementById('prevBtn');
+  const nextBtn  = document.getElementById('nextBtn');
+  const TOTAL    = 9;
   let cur = 0;
 
-  // Build dots
-  for (let i = 0; i < TOTAL; i++) {
-    const d = document.createElement('div');
-    d.className = 'dot' + (i === 0 ? ' active' : '');
-    d.addEventListener('click', () => goTo(i));
-    dotsEl.appendChild(d);
-  }
+  // Step bar click handlers
+  steps.forEach(s => {
+    s.addEventListener('click', () => goTo(parseInt(s.dataset.slide)));
+  });
 
   function goTo(n) {
     cur = Math.max(0, Math.min(TOTAL - 1, n));
     track.style.transform = `translateX(-${cur * 100}vw)`;
-    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === cur));
-    numEl.textContent = `${cur + 1} / ${TOTAL}`;
+    steps.forEach((s, i) => s.classList.toggle('active', i === cur));
     prevBtn.classList.toggle('hidden', cur === 0);
     nextBtn.classList.toggle('hidden', cur === TOTAL - 1);
   }
