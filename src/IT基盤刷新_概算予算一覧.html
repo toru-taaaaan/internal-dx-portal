@@ -258,7 +258,7 @@
 
 <body>
 <div class="layout-wrapper">
-    <button class="sidebar-toggle" onclick="toggleSidebar()" title="メニュー開閉">&#x25C0;</button>
+    <button class="sidebar-toggle" onclick="toggleSidebar()" title="メニュー開閉"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
     <aside class="sidebar">
   <header class="sidebar-header">
     <a href="/index.html" style="text-decoration:none;color:inherit;">
@@ -1017,15 +1017,15 @@ function toggleSidebar() {
   var w = document.querySelector('.layout-wrapper');
   var btn = document.querySelector('.sidebar-toggle');
   w.classList.toggle('sidebar-hidden');
-  btn.innerHTML = w.classList.contains('sidebar-hidden') ? '&#x25B6;' : '&#x25C0;';
+  btn.innerHTML = w.classList.contains('sidebar-hidden') ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>' : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
 
 }
 (function() {
   var isIndex = location.pathname === '/' || location.pathname.endsWith('/index.html') || location.pathname.endsWith('index.html');
-  if (\!isIndex) {
+  if (!isIndex) {
     document.querySelector('.layout-wrapper').classList.add('sidebar-hidden');
     var btn = document.querySelector('.sidebar-toggle');
-    if (btn) btn.innerHTML = '&#x25B6;';
+    if (btn) btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
   }
 })();
 function toggleCategory(header) {

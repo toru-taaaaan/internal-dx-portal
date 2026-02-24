@@ -32,27 +32,29 @@ body:has(.layout-wrapper) {
 /* === サイドバー開閉トグル === */
 .sidebar-toggle {
   position: fixed;
-  top: 12px;
-  left: 248px;
+  top: 16px;
+  left: 240px;
   z-index: 101;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.3);
-  background: #1e3a8a;
-  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,0.5);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  line-height: 1;
-  transition: left 0.25s ease, background 0.15s;
+  transition: left 0.25s ease, color 0.15s, background 0.15s;
   padding: 0;
 }
 .sidebar-toggle:hover {
-  background: #2563eb;
-  border-color: rgba(255,255,255,0.6);
+  color: white;
+  background: rgba(255,255,255,0.1);
+}
+.sidebar-toggle svg {
+  width: 18px;
+  height: 18px;
 }
 .layout-wrapper.sidebar-hidden .sidebar {
   transform: translateX(-280px);
@@ -61,12 +63,15 @@ body:has(.layout-wrapper) {
   margin-left: 0;
 }
 .layout-wrapper.sidebar-hidden .sidebar-toggle {
-  left: 12px;
-  background: #334155;
-  border-color: #64748b;
+  left: 16px;
+  color: #94a3b8;
+  background: white;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 .layout-wrapper.sidebar-hidden .sidebar-toggle:hover {
-  background: #475569;
+  color: #334155;
+  border-color: #cbd5e1;
 }
 
 .sidebar-header {
