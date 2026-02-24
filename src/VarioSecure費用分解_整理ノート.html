@@ -1079,7 +1079,7 @@
       </svg>
 
       <!-- Internet Cloud -->
-      <div class="cloud-node" style="left: 560px; top: 16px;">
+      <div class="cloud-node" style="left: 660px; top: 16px; transform: translateX(-50%);">
         <div class="cloud-shape">Internet</div>
         <div class="cloud-sub">USEN GATE 02 / NTT光</div>
       </div>
@@ -1291,7 +1291,258 @@
           </div>
         </div>
       </div>
-    </div><!-- /diagram-container -->
+    </div><!-- /diagram-container (現行) -->
+
+    <!-- ========== 将来構成図（ミックス案） ========== -->
+    <div style="font-size:16px;font-weight:900;display:flex;align-items:center;margin:48px 0 16px;padding-bottom:10px;border-bottom:2px solid #5b21b6;">
+      <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:#5b21b6;color:white;font-size:13px;font-weight:900;border-radius:50%;margin-right:10px;flex-shrink:0;">5</span>
+      将来構成図（ミックス案）
+    </div>
+    <div style="font-size:12px;color:#64748b;margin-bottom:16px;line-height:1.8;">
+      方針: VarioSecure全8拠点継続 ＋ 業務拠点にCato SASE追加導入<br>
+      月額合計: VarioSecure ¥122,400 ＋ Cato ¥608,334 ＝ <strong style="color:#0f172a;">¥730,734/月</strong>（税抜）
+    </div>
+
+    <div class="diagram-container" id="topology-future" style="height:850px;">
+      <!-- SVG Connection Lines -->
+      <svg class="diagram-svg" viewBox="0 0 1320 850" preserveAspectRatio="xMinYMin meet">
+        <defs>
+          <marker id="arrow-purple-f" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#7c3aed"/>
+          </marker>
+          <marker id="arrow-blue-f" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+          </marker>
+          <marker id="arrow-gray-f" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8"/>
+          </marker>
+        </defs>
+
+        <!-- === Cato SASE トンネル（紫・太・実線） === -->
+        <!-- 本社 Socket → Cato Cloud -->
+        <path d="M 630 190 Q 750 110 920 55" stroke="#7c3aed" stroke-width="3" fill="none" marker-end="url(#arrow-purple-f)" />
+        <!-- 大阪 Socket → Cato Cloud -->
+        <path d="M 240 420 Q 550 200 920 50" stroke="#7c3aed" stroke-width="2.5" fill="none" marker-end="url(#arrow-purple-f)" />
+        <!-- 多摩 Socket → Cato Cloud -->
+        <path d="M 460 420 Q 680 220 920 50" stroke="#7c3aed" stroke-width="2.5" fill="none" marker-end="url(#arrow-purple-f)" />
+        <!-- 橋本 Socket → Cato Cloud -->
+        <path d="M 690 420 Q 790 240 920 50" stroke="#7c3aed" stroke-width="2.5" fill="none" marker-end="url(#arrow-purple-f)" />
+        <!-- Azure vSocket → Cato Cloud -->
+        <path d="M 1095 155 Q 1060 100 1010 55" stroke="#7c3aed" stroke-width="2" fill="none" stroke-dasharray="6,4" marker-end="url(#arrow-purple-f)" />
+        <!-- モバイルアクセス → Cato Cloud -->
+        <path d="M 880 110 Q 920 80 950 55" stroke="#7c3aed" stroke-width="1.5" fill="none" stroke-dasharray="3,3" />
+
+        <!-- === Internet → 本社（琥珀） === -->
+        <line x1="475" y1="60" x2="475" y2="150" stroke="#f59e0b" stroke-width="3" />
+
+        <!-- === VarioSecure VPN → Type A 業務拠点（青・破線・細） === -->
+        <path d="M 400 310 Q 290 370 200 420" stroke="#2563eb" stroke-width="1.5" fill="none" stroke-dasharray="4,3" opacity="0.6" marker-end="url(#arrow-blue-f)" />
+        <path d="M 440 310 Q 410 370 385 420" stroke="#2563eb" stroke-width="1.5" fill="none" stroke-dasharray="4,3" opacity="0.6" marker-end="url(#arrow-blue-f)" />
+        <path d="M 530 310 Q 560 370 580 420" stroke="#2563eb" stroke-width="1.5" fill="none" stroke-dasharray="4,3" opacity="0.6" marker-end="url(#arrow-blue-f)" />
+
+        <!-- === VarioSecure VPN → Type B SECOM拠点（灰・破線） === -->
+        <path d="M 380 310 Q 260 520 175 700" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#arrow-gray-f)" />
+        <path d="M 440 310 Q 420 520 405 700" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#arrow-gray-f)" />
+        <path d="M 530 310 Q 580 520 635 700" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#arrow-gray-f)" />
+        <path d="M 580 310 Q 720 520 865 700" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#arrow-gray-f)" />
+
+        <!-- SECOM Server ← 本社内接続 -->
+        <line x1="700" y1="205" x2="640" y2="205" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,3" />
+
+        <!-- 区分ラベル・区分線 -->
+        <text x="50" y="400" font-size="11" font-weight="700" fill="#5b21b6" font-family="'Noto Sans JP', sans-serif">Cato追加導入 + VarioSecure継続</text>
+        <text x="50" y="685" font-size="11" font-weight="700" fill="#64748b" font-family="'Noto Sans JP', sans-serif">SECOM専用: VarioSecureのみ（変更なし）</text>
+        <line x1="40" y1="665" x2="1280" y2="665" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="8,4" />
+      </svg>
+
+      <!-- === HTML要素 === -->
+
+      <!-- Internet Cloud -->
+      <div class="cloud-node" style="left:475px;top:10px;transform:translateX(-50%);">
+        <div class="cloud-shape">Internet</div>
+        <div class="cloud-sub">USEN GATE 02 / NTT光</div>
+      </div>
+
+      <!-- Cato Cloud -->
+      <div style="position:absolute;z-index:2;left:1000px;top:8px;transform:translateX(-50%);text-align:center;">
+        <div style="display:inline-block;background:linear-gradient(135deg,#f5f3ff 0%,#ede9fe 100%);border:3px solid #7c3aed;border-radius:50px;padding:10px 28px;font-weight:700;font-size:0.85rem;color:#5b21b6;box-shadow:0 2px 12px rgba(124,58,237,0.15);">Cato Cloud</div>
+        <div style="font-size:0.65rem;color:#7c3aed;margin-top:2px;">SASE PoP（東京）</div>
+      </div>
+
+      <!-- モバイルアクセス -->
+      <div style="position:absolute;z-index:2;left:820px;top:88px;text-align:center;">
+        <div style="display:inline-block;background:#faf5ff;border:1.5px dashed #c4b5fd;border-radius:8px;padding:5px 10px;">
+          <div style="font-size:0.62rem;font-weight:700;color:#5b21b6;">モバイル 130名</div>
+          <div style="font-size:0.55rem;color:#7c3aed;">Cato Client</div>
+        </div>
+      </div>
+
+      <!-- 本社（築地 6F/7F） -->
+      <div class="site-node hub" style="left:320px;top:155px;width:310px;">
+        <div class="site-header">
+          <span class="site-name">本社（築地 6F/7F）</span>
+          <span class="site-badge badge-hub">HUB</span>
+        </div>
+        <div class="site-body">
+          <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR601J — VarioSecure VPN ハブ</span></div>
+          <div style="margin-top:6px;padding:4px 8px;background:#f5f3ff;border:1px solid #c4b5fd;border-radius:4px;font-size:0.65rem;color:#5b21b6;line-height:1.5;">
+            <span style="font-weight:700;">+ Cato Socket 導入</span><br>
+            業務通信 → Cato経由に切替<br>
+            SECOM通信 → VarioSecure VPN継続
+          </div>
+        </div>
+      </div>
+
+      <!-- SECOM Server -->
+      <div class="secom-server-node" style="left:700px;top:180px;">
+        <div class="secom-server-label">Sesamo TRII</div>
+        <div class="secom-server-detail">入退室管理サーバー</div>
+      </div>
+
+      <!-- Azure vSocket -->
+      <div style="position:absolute;z-index:2;left:1020px;top:150px;background:linear-gradient(135deg,#f5f3ff 0%,#ede9fe 100%);border:2px solid #7c3aed;border-radius:10px;padding:10px 14px;text-align:center;">
+        <div style="font-size:0.72rem;font-weight:700;color:#5b21b6;">Azure vSocket</div>
+        <div style="font-size:0.6rem;color:#7c3aed;">クラウド拠点</div>
+        <div style="font-size:0.55rem;color:#94a3b8;margin-top:2px;">¥183,333/月</div>
+      </div>
+
+      <!-- === Cato追加導入グループ（業務拠点） === -->
+
+      <!-- 大阪営業所 -->
+      <div class="site-node type-a" style="left:60px;top:420px;width:180px;border-color:#7c3aed;border-width:2px;border-left:5px solid #5b21b6;">
+        <div class="site-header">
+          <span class="site-name">大阪営業所</span>
+          <span class="site-badge badge-type-a">A</span>
+        </div>
+        <div class="site-body">
+          <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR601J（LBO対応）</span></div>
+          <div style="margin-top:4px;padding:3px 6px;background:#f5f3ff;border:1px solid #c4b5fd;border-radius:4px;">
+            <div style="font-size:0.62rem;font-weight:700;color:#5b21b6;">+ Cato Socket</div>
+          </div>
+          <div style="font-size:0.58rem;color:#94a3b8;margin-top:2px;">VarioSecure VPN 継続</div>
+        </div>
+      </div>
+
+      <!-- 多摩 (R&D) -->
+      <div class="site-node type-a" style="left:290px;top:420px;width:170px;border-color:#7c3aed;border-width:2px;border-left:5px solid #5b21b6;">
+        <div class="site-header">
+          <span class="site-name">多摩 (R&amp;D)</span>
+          <span class="site-badge badge-type-a">A</span>
+        </div>
+        <div class="site-body">
+          <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR400</span></div>
+          <div style="margin-top:4px;padding:3px 6px;background:#f5f3ff;border:1px solid #c4b5fd;border-radius:4px;">
+            <div style="font-size:0.62rem;font-weight:700;color:#5b21b6;">+ Cato Socket</div>
+          </div>
+          <div style="font-size:0.58rem;color:#94a3b8;margin-top:2px;">VarioSecure VPN 継続</div>
+        </div>
+      </div>
+
+      <!-- 橋本 (IoT Lab) -->
+      <div class="site-node type-a" style="left:510px;top:420px;width:180px;border-color:#7c3aed;border-width:2px;border-left:5px solid #5b21b6;">
+        <div class="site-header">
+          <span class="site-name">橋本 (IoT Lab)</span>
+          <span class="site-badge badge-type-a">A</span>
+        </div>
+        <div class="site-body">
+          <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR400</span></div>
+          <div style="margin-top:4px;padding:3px 6px;background:#f5f3ff;border:1px solid #c4b5fd;border-radius:4px;">
+            <div style="font-size:0.62rem;font-weight:700;color:#5b21b6;">+ Cato Socket</div>
+          </div>
+          <div style="font-size:0.58rem;color:#94a3b8;margin-top:2px;">VarioSecure VPN 継続</div>
+        </div>
+      </div>
+
+      <!-- === SECOM専用グループ（変更なし） === -->
+
+      <!-- 福岡 -->
+      <div class="site-node type-b" style="left:100px;top:700px;width:150px;">
+        <div class="site-header">
+          <span class="site-name">福岡</span>
+          <span class="site-badge badge-type-b">B</span>
+        </div>
+        <div class="site-body">
+          <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR402J</span></div>
+          <div style="font-size:0.58rem;color:#991b1b;">SECOM専用 — 変更なし</div>
+        </div>
+      </div>
+
+      <!-- 和歌山 -->
+      <div class="site-node type-b" style="left:330px;top:700px;width:150px;">
+        <div class="site-header">
+          <span class="site-name">和歌山</span>
+          <span class="site-badge badge-type-b">B</span>
+        </div>
+        <div class="site-body">
+          <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR402J</span></div>
+          <div style="font-size:0.58rem;color:#991b1b;">SECOM専用 — 変更なし</div>
+        </div>
+      </div>
+
+      <!-- 京橋 -->
+      <div class="site-node type-b" style="left:560px;top:700px;width:150px;">
+        <div class="site-header">
+          <span class="site-name">京橋ビル</span>
+          <span class="site-badge badge-type-b">B</span>
+        </div>
+        <div class="site-body">
+          <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR402J</span></div>
+          <div style="font-size:0.58rem;color:#991b1b;">SECOM専用 — 変更なし</div>
+        </div>
+      </div>
+
+      <!-- 名古屋 -->
+      <div class="site-node type-b" style="left:790px;top:700px;width:150px;">
+        <div class="site-header">
+          <span class="site-name">名古屋</span>
+          <span class="site-badge badge-type-b">B</span>
+        </div>
+        <div class="site-body">
+          <div class="equip-item"><span class="equip-icon equip-router">R</span><span class="equip-label">VSR402J</span></div>
+          <div style="font-size:0.58rem;color:#991b1b;">SECOM専用 — 変更なし</div>
+        </div>
+      </div>
+
+      <!-- 月額コストサマリ -->
+      <div style="position:absolute;z-index:10;left:12px;bottom:12px;background:rgba(255,255,255,0.95);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.62rem;box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+        <div style="font-weight:700;color:#0f172a;margin-bottom:4px;font-size:0.68rem;">月額コスト（税抜）</div>
+        <div style="color:#dc2626;">VarioSecure: ¥122,400</div>
+        <div style="color:#5b21b6;">Cato SASE: ¥608,334</div>
+        <div style="margin-top:4px;padding-top:4px;border-top:1px solid #e2e8f0;font-weight:700;color:#0f172a;">合計: ¥730,734/月</div>
+      </div>
+
+      <!-- 凡例 -->
+      <div class="topo-legend">
+        <div class="topo-legend-title">凡例</div>
+        <div class="topo-legend-item">
+          <div class="topo-legend-line" style="background:#7c3aed;"></div>
+          <span>Cato SASE トンネル（業務通信）</span>
+        </div>
+        <div class="topo-legend-item">
+          <div class="topo-legend-line" style="background:repeating-linear-gradient(90deg,#7c3aed 0,#7c3aed 4px,transparent 4px,transparent 7px);"></div>
+          <span>Cato vSocket 接続</span>
+        </div>
+        <div class="topo-legend-item">
+          <div class="topo-legend-line" style="background:repeating-linear-gradient(90deg,#2563eb 0,#2563eb 4px,transparent 4px,transparent 7px);"></div>
+          <span>VarioSecure VPN（SECOM＋業務）</span>
+        </div>
+        <div class="topo-legend-item">
+          <div class="topo-legend-line" style="background:repeating-linear-gradient(90deg,#94a3b8 0,#94a3b8 4px,transparent 4px,transparent 7px);"></div>
+          <span>VarioSecure VPN（SECOMのみ）</span>
+        </div>
+        <div style="margin-top:6px;padding-top:6px;border-top:1px solid #e2e8f0;">
+          <div class="topo-legend-item">
+            <div style="width:14px;height:10px;border-left:4px solid #5b21b6;background:#f5f3ff;border-radius:2px;"></div>
+            <span>Cato導入拠点</span>
+          </div>
+          <div class="topo-legend-item">
+            <div style="width:14px;height:10px;border-left:4px solid #94a3b8;background:#f8fafc;border-radius:2px;"></div>
+            <span>VarioSecureのみ（変更なし）</span>
+          </div>
+        </div>
+      </div>
+    </div><!-- /diagram-container (将来) -->
+
   </div>
 
   <footer style="max-width:1100px;margin:64px auto 0;padding:0 48px 24px;border-top:2px solid #e2e8f0;padding-top:24px;text-align:center;color:#94a3b8;font-size:10px;font-weight:700;">
