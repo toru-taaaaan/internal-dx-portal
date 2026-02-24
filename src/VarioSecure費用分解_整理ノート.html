@@ -1328,23 +1328,23 @@
         <!-- 橋本 Socket → Cato Cloud -->
         <path d="M 690 420 Q 790 240 920 50" stroke="#7c3aed" stroke-width="2.5" fill="none" marker-end="url(#arrow-purple-f)" />
         <!-- Azure vSocket → Cato Cloud -->
-        <path d="M 1095 155 Q 1060 100 1010 55" stroke="#7c3aed" stroke-width="2" fill="none" stroke-dasharray="6,4" marker-end="url(#arrow-purple-f)" />
+        <path d="M 1095 155 Q 1060 100 1010 55" stroke="#7c3aed" stroke-width="2.5" fill="none" stroke-dasharray="8,4" marker-end="url(#arrow-purple-f)" />
         <!-- モバイルアクセス → Cato Cloud -->
         <path d="M 880 110 Q 920 80 950 55" stroke="#7c3aed" stroke-width="1.5" fill="none" stroke-dasharray="3,3" />
 
         <!-- === Internet → 本社（琥珀） === -->
         <line x1="475" y1="60" x2="475" y2="150" stroke="#f59e0b" stroke-width="3" />
 
-        <!-- === VarioSecure VPN → Type A 業務拠点（青・破線・細） === -->
-        <path d="M 400 310 Q 290 370 200 420" stroke="#2563eb" stroke-width="1.5" fill="none" stroke-dasharray="4,3" opacity="0.6" marker-end="url(#arrow-blue-f)" />
-        <path d="M 440 310 Q 410 370 385 420" stroke="#2563eb" stroke-width="1.5" fill="none" stroke-dasharray="4,3" opacity="0.6" marker-end="url(#arrow-blue-f)" />
-        <path d="M 530 310 Q 560 370 580 420" stroke="#2563eb" stroke-width="1.5" fill="none" stroke-dasharray="4,3" opacity="0.6" marker-end="url(#arrow-blue-f)" />
+        <!-- === VarioSecure VPN → Type A 業務拠点（青・実線・細） === -->
+        <path d="M 400 310 Q 290 370 200 420" stroke="#2563eb" stroke-width="1.5" fill="none" opacity="0.7" marker-end="url(#arrow-blue-f)" />
+        <path d="M 440 310 Q 410 370 385 420" stroke="#2563eb" stroke-width="1.5" fill="none" opacity="0.7" marker-end="url(#arrow-blue-f)" />
+        <path d="M 530 310 Q 560 370 580 420" stroke="#2563eb" stroke-width="1.5" fill="none" opacity="0.7" marker-end="url(#arrow-blue-f)" />
 
-        <!-- === VarioSecure VPN → Type B SECOM拠点（灰・破線） === -->
-        <path d="M 380 310 Q 260 520 175 700" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#arrow-gray-f)" />
-        <path d="M 440 310 Q 420 520 405 700" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#arrow-gray-f)" />
-        <path d="M 530 310 Q 580 520 635 700" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#arrow-gray-f)" />
-        <path d="M 580 310 Q 720 520 865 700" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#arrow-gray-f)" />
+        <!-- === VarioSecure VPN → Type B SECOM拠点（灰・点線） === -->
+        <path d="M 380 310 Q 260 520 175 700" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="2,4" marker-end="url(#arrow-gray-f)" />
+        <path d="M 440 310 Q 420 520 405 700" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="2,4" marker-end="url(#arrow-gray-f)" />
+        <path d="M 530 310 Q 580 520 635 700" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="2,4" marker-end="url(#arrow-gray-f)" />
+        <path d="M 580 310 Q 720 520 865 700" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="2,4" marker-end="url(#arrow-gray-f)" />
 
         <!-- SECOM Server ← 本社内接続 -->
         <line x1="700" y1="205" x2="640" y2="205" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,3" />
@@ -1519,15 +1519,15 @@
           <span>Cato SASE トンネル（業務通信）</span>
         </div>
         <div class="topo-legend-item">
-          <div class="topo-legend-line" style="background:repeating-linear-gradient(90deg,#7c3aed 0,#7c3aed 4px,transparent 4px,transparent 7px);"></div>
+          <div class="topo-legend-line" style="background:repeating-linear-gradient(90deg,#7c3aed 0,#7c3aed 6px,transparent 6px,transparent 10px);height:3px;"></div>
           <span>Cato vSocket 接続</span>
         </div>
         <div class="topo-legend-item">
-          <div class="topo-legend-line" style="background:repeating-linear-gradient(90deg,#2563eb 0,#2563eb 4px,transparent 4px,transparent 7px);"></div>
+          <div class="topo-legend-line" style="background:#2563eb;opacity:0.7;"></div>
           <span>VarioSecure VPN（SECOM＋業務）</span>
         </div>
         <div class="topo-legend-item">
-          <div class="topo-legend-line" style="background:repeating-linear-gradient(90deg,#94a3b8 0,#94a3b8 4px,transparent 4px,transparent 7px);"></div>
+          <div class="topo-legend-line" style="background:repeating-linear-gradient(90deg,#94a3b8 0,#94a3b8 2px,transparent 2px,transparent 6px);"></div>
           <span>VarioSecure VPN（SECOMのみ）</span>
         </div>
         <div style="margin-top:6px;padding-top:6px;border-top:1px solid #e2e8f0;">
