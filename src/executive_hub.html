@@ -187,6 +187,13 @@
             color: #2563eb;
             text-decoration: underline;
         }
+
+        .detail-row td p {
+            font-size: 13px;
+            color: #1e293b;
+            line-height: 1.7;
+            margin: 0;
+        }
     </style>
     <script>
         function toggleDetail(id) {
@@ -368,7 +375,7 @@
                                 <th width="110">成果物 (File)</th>
                             </tr>
                         </thead>
-                                                                                                                                                                                                                                                                        <tbody>
+                        <tbody>
                             <!-- INCOMPLETE TASKS (20 items) -->
 
                             <tr class="row-main-clickable" onclick="toggleDetail('EX-01')">
@@ -382,7 +389,7 @@
                             </tr>
                             <tr id="detail-EX-01" class="detail-row">
                                 <td colspan="7" class="p-4 bg-slate-50">
-                                    <p>2/13の提出期限に向けた全資料（稟議書、比較表、構成図等）の最終調整。</p>
+                                    <p>2/13の提出期限に向けた全提出書類の最終整備・確認タスク。対象は稟議書、3社比較表、ネットワーク構成図、費用試算シート等、篠部長・塩田部長への説明資料一式。各ドキュメントのレビューと誤記・抜け漏れ修正を完了させ、提出フォーマットに整えることが目的。</p>
                                 </td>
                             </tr>
                             <tr class="row-main-clickable bg-rose-50/20" onclick="toggleDetail('NW-01')">
@@ -396,7 +403,7 @@
                             </tr>
                             <tr id="detail-NW-01" class="detail-row">
                                 <td colspan="7" class="p-4 bg-slate-50">
-                                    <p>10Mbps以下を頻発する多摩回線の刷新。現行USENに対し現状詳細の確認と改善案を依頼。</p>
+                                    <p>多摩拠点において10Mbps以下の速度低下が頻発しており、業務への深刻な影響が生じている最優先課題。現行回線キャリアであるUSENに対し、現状の詳細ログ・帯域使用状況の調査依頼と、速度改善のための増速プランまたは回線切替の見積取得を実施する。丹治が窓口となり対応中。</p>
                                 </td>
                             </tr>
                             <tr class="row-main-clickable" onclick="toggleDetail('AD-02')">
@@ -466,7 +473,7 @@
                             </tr>
                             <tr id="detail-AD-01" class="detail-row">
                                 <td colspan="7" class="p-4 bg-slate-50">
-                                    <p>-</p>
+                                    <p>ADサーバーのクラウド移行における3社（IIJ・USEN・LAJ）のマネージド責任範囲を体系的に整理・比較した。IIJはドメインコントローラー以上をクラウド側で管理するが特権アクセスに制限あり。USENは既存環境との親和性が高く、LAJは伴走支援が充実している点が特徴。各社の責任分界点を明確化し、導入後の運用体制設計の基礎資料として完成済み。</p>
                                 </td>
                             </tr>
                             <tr class="row-main-clickable" onclick="toggleDetail('AD-03')">
@@ -480,7 +487,7 @@
                             </tr>
                             <tr id="detail-AD-03" class="detail-row">
                                 <td colspan="7" class="p-4 bg-slate-50">
-                                    <p>-</p>
+                                    <p>IIJ案では、マネージドサービス仕様上、情シス担当者のAD特権（Domain Admin等）が制限される。この制限が実務上どのような影響をもたらすか（AD操作の都度IIJへ申請が必要になるケース等）を調査し、業務フローへの支障有無・代替手段を評価する必要がある。調査結果は3社比較の評価軸に反映予定。</p>
                                 </td>
                             </tr>
                             <tr class="row-main-clickable" onclick="toggleDetail('AD-04')">
@@ -494,7 +501,7 @@
                             </tr>
                             <tr id="detail-AD-04" class="detail-row">
                                 <td colspan="7" class="p-4 bg-slate-50">
-                                    <p>-</p>
+                                    <p>クラウドAD移行時、IPアドレスが変わることで影響を受ける固定IP機器（プリンター・NAS・監視カメラ・セキュリティ機器等）を全拠点で洗い出す。各機器の設定変更コスト・管理担当を整理し、移行計画のリスク評価に反映する。現在は未着手のため、担当割り当てと調査期日の設定が必要。</p>
                                 </td>
                             </tr>
                             <tr class="row-main-clickable" onclick="toggleDetail('AD-05')">
@@ -536,7 +543,7 @@
                             </tr>
                             <tr id="detail-SC-01" class="detail-row">
                                 <td colspan="7" class="p-4 bg-slate-50">
-                                    <p>-</p>
+                                    <p>セコム入退室管理のクラウド移行にあたり、セコム側が請求する作業費（環境開通・アプリ設定等）として約20万円が見込まれている。この費用をクラウドサービス月額費用やAD移行費用と合算した「統合初年度総額」として算出・比較表に反映する必要がある。セコムへの見積依頼を実施中。回答受領次第、コスト最適化レポートを更新する。</p>
                                 </td>
                             </tr>
                             <tr class="row-main-clickable" onclick="toggleDetail('SC-02')">
@@ -550,7 +557,7 @@
                             </tr>
                             <tr id="detail-SC-02" class="detail-row">
                                 <td colspan="7" class="p-4 bg-slate-50">
-                                    <p>-</p>
+                                    <p>セコム入退室管理の移行において、移行期間中に生じる設定作業・動作確認・既存データ移行等の技術支援（伴走支援）の内容を具体化する。担当ベンダーの作業範囲・工数・スケジュールを明確にし、移行完了まで情シスが継続的にサポートを受けられる体制を整える。現在は内容未定につき、ベンダーとの協議が必要。</p>
                                 </td>
                             </tr>
                             <tr class="row-main-clickable" onclick="toggleDetail('SC-03')">
@@ -564,7 +571,7 @@
                             </tr>
                             <tr id="detail-SC-03" class="detail-row">
                                 <td colspan="7" class="p-4 bg-slate-50">
-                                    <p>-</p>
+                                    <p>セコム入退室管理の移行当日は、既存システムと新クラウドシステムの切り替えが発生するため、一時的に入退室管理が機能しないリスクがある。移行当日の作業手順・ロールバック手順・緊急時連絡体制・建物管理会社との調整事項を事前にアセスメントし、リスクを最小化した移行計画を策定する必要がある。</p>
                                 </td>
                             </tr>
                             <tr class="row-main-clickable" onclick="toggleDetail('SC-04')">
@@ -592,7 +599,7 @@
                             </tr>
                             <tr id="detail-NW-02" class="detail-row">
                                 <td colspan="7" class="p-4 bg-slate-50">
-                                    <p>-</p>
+                                    <p>VarioSecure（VSR）には接続拠点数10台制限があるとの情報があるが、契約プランや構成によって条件が異なる可能性がある。現行契約の仕様書を再確認し、制限の実態（ハード制限か、プランによる制限か）を明確化する。SD-WAN刷新の対象拠点が10拠点を超える場合、VarioSecureを候補から外すか追加費用を見積もる必要がある。</p>
                                 </td>
                             </tr>
                             <tr class="row-main-clickable" onclick="toggleDetail('NW-03')">
@@ -606,7 +613,7 @@
                             </tr>
                             <tr id="detail-NW-03" class="detail-row">
                                 <td colspan="7" class="p-4 bg-slate-50">
-                                    <p>-</p>
+                                    <p>SD-WAN（IIJ）を導入する場合、各拠点に設置するLBO（ローカルブレイクアウト）機器のハードウェア要件（対応機種・スペック・価格・設置スペース）を確定させる必要がある。特に老朽化した機器を利用している小規模拠点については、機器交換の必要性と追加コストを評価する。IIJへの確認事項をリストアップし、回答を得次第、費用比較表を更新する。</p>
                                 </td>
                             </tr>
                             <tr class="row-main-clickable" onclick="toggleDetail('NW-04')">
@@ -620,7 +627,7 @@
                             </tr>
                             <tr id="detail-NW-04" class="detail-row">
                                 <td colspan="7" class="p-4 bg-slate-50">
-                                    <p>-</p>
+                                    <p>楽天が提供する占有型回線（共有型と異なり帯域を専有できるプラン）について、家田氏が窓口となり状況確認を進めている。帯域保証・SLA・コストを他社案件と比較検討するための情報収集が目的。現在は保留中であり、楽天側の提案内容が揃い次第、NW費用比較シートに追加して評価を行う予定。</p>
                                 </td>
                             </tr>
                             <tr class="row-main-clickable" onclick="toggleDetail('NW-05')">
@@ -634,7 +641,7 @@
                             </tr>
                             <tr id="detail-NW-05" class="detail-row">
                                 <td colspan="7" class="p-4 bg-slate-50">
-                                    <p>-</p>
+                                    <p>VarioSecure社のルーター（VSR400）のトラフィックログを分析し、現行ルーターが性能ボトルネックとなっているか否かを判断するタスク。回線速度の問題がルーター起因か回線起因かを切り分けることで、ルーター換装の要否および費用対効果を評価する。塩田部長が確認窓口。ログデータの取得と分析を実施し、結論を次フェーズの計画に反映する。</p>
                                 </td>
                             </tr>
                             <tr class="row-main-clickable" onclick="toggleDetail('KZ-01')">
@@ -648,7 +655,7 @@
                             </tr>
                             <tr id="detail-KZ-01" class="detail-row">
                                 <td colspan="7" class="p-4 bg-slate-50">
-                                    <p>-</p>
+                                    <p>情シス部門内のナレッジ共有・技術力向上を目的として、本DXポータルの構築・運用に関する勉強会を企画・開催するタスク。Antigravityを活用したHTMLポータル作成の手法、GitHubによるバージョン管理、Cloudflareへのデプロイフローをメンバーがセルフサービスで実践できるようにすることが目標。現在は優先度低として計画段階にある。</p>
                                 </td>
                             </tr>
 
@@ -665,7 +672,7 @@
                             </tr>
                             <tr id="detail-CP-01" class="detail-row">
                                 <td colspan="7" class="p-4 bg-slate-50">
-                                    <p>-</p>
+                                    <p>クラウド移行案の費用対効果を示すため、オンプレミスでサーバーを新設・継続運用した場合の5年間コスト（ハードウェア購入費・保守費・電力・スペース・人件費等）を積算・比較用資料として作成した。クラウド化との比較においてコスト優位性・リスク差分を定量的に示す根拠資料として完成済み。</p>
                                 </td>
                             </tr>
                             <tr class="row-main-clickable opacity-50 bg-emerald-50/20" onclick="toggleDetail('CP-02')">
@@ -679,7 +686,7 @@
                             </tr>
                             <tr id="detail-CP-02" class="detail-row">
                                 <td colspan="7" class="p-4 bg-slate-50">
-                                    <p>-</p>
+                                    <p>AD移行・SECOM移行・SD-WAN刷新の各シナリオにおけるBCPリスク（業務継続影響）を一覧化したリスクマトリクスを作成・完成済み。各リスク項目について「発生確率×影響度」でスコアリングし、対応策・許容判断を整理した。経営層への提出資料の根拠データとして活用している。</p>
                                 </td>
                             </tr>
                             <tr class="row-main-clickable opacity-50 bg-emerald-50/20" onclick="toggleDetail('CP-03')">
@@ -693,7 +700,7 @@
                             </tr>
                             <tr id="detail-CP-03" class="detail-row">
                                 <td colspan="7" class="p-4 bg-slate-50">
-                                    <p>-</p>
+                                    <p>SCSKの宇佐美様との打ち合わせを経て、Cato SASEとIIJ・VarioSecureの詳細スペック比較を実施・完了済み。ゼロトラスト対応の有無・価格帯・サポート体制・移行難易度を含む総合評価をまとめ、SD-WAN刷新の意思決定資料として戦略レポートに収録した。</p>
                                 </td>
                             </tr>
                             <tr class="row-main-clickable opacity-50 bg-emerald-50/20" onclick="toggleDetail('CP-04')">
@@ -707,7 +714,7 @@
                             </tr>
                             <tr id="detail-CP-04" class="detail-row">
                                 <td colspan="7" class="p-4 bg-slate-50">
-                                    <p>-</p>
+                                    <p>各拠点の回線速度測定データ・障害履歴・コスト情報を集約した通信速度改善専用の比較シート（回線ボード）を作成・完成済み。拠点ごとに現行速度・契約帯域・キャリアを一覧化し、改善優先度を可視化。SD-WAN導入や回線切替の判断基準として参照できる状態になっている。</p>
                                 </td>
                             </tr>
                         </tbody>
