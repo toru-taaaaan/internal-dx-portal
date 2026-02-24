@@ -1445,12 +1445,15 @@ function toggleSidebar() {
   var btn = document.querySelector('.sidebar-toggle');
   w.classList.toggle('sidebar-hidden');
   btn.innerHTML = w.classList.contains('sidebar-hidden') ? '&#x25B6;' : '&#x25C0;';
-  try { localStorage.setItem('sidebar-hidden', w.classList.contains('sidebar-hidden') ? '1' : ''); } catch(e) {}
+
 }
 (function() {
-  try { if (localStorage.getItem('sidebar-hidden') === '1') {
+  var isIndex = location.pathname === '/' || location.pathname.endsWith('/index.html') || location.pathname.endsWith('index.html');
+  if (\!isIndex) {
     document.querySelector('.layout-wrapper').classList.add('sidebar-hidden');
-  }} catch(e) {}
+    var btn = document.querySelector('.sidebar-toggle');
+    if (btn) btn.innerHTML = '&#x25B6;';
+  }
 })();
 function toggleCategory(header) {
   header.parentElement.classList.toggle('collapsed');
