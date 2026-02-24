@@ -1318,19 +1318,19 @@
           </marker>
         </defs>
 
-        <!-- === Cato SASE トンネル（紫・太・実線） === -->
-        <!-- 本社 Socket → Cato Cloud -->
-        <path d="M 630 190 Q 750 110 920 55" stroke="#7c3aed" stroke-width="3" fill="none" marker-end="url(#arrow-purple-f)" />
-        <!-- 大阪 Socket → Cato Cloud -->
-        <path d="M 240 420 Q 550 200 920 50" stroke="#7c3aed" stroke-width="2.5" fill="none" marker-end="url(#arrow-purple-f)" />
+        <!-- === Cato SASE トンネル（紫・太・実線）到達点を分散 === -->
+        <!-- 大阪 Socket → Cato Cloud（左寄り到達） -->
+        <path d="M 240 420 Q 480 170 928 52" stroke="#7c3aed" stroke-width="2" fill="none" marker-end="url(#arrow-purple-f)" />
         <!-- 多摩 Socket → Cato Cloud -->
-        <path d="M 460 420 Q 680 220 920 50" stroke="#7c3aed" stroke-width="2.5" fill="none" marker-end="url(#arrow-purple-f)" />
-        <!-- 橋本 Socket → Cato Cloud -->
-        <path d="M 690 420 Q 790 240 920 50" stroke="#7c3aed" stroke-width="2.5" fill="none" marker-end="url(#arrow-purple-f)" />
+        <path d="M 460 420 Q 650 170 952 48" stroke="#7c3aed" stroke-width="2" fill="none" marker-end="url(#arrow-purple-f)" />
+        <!-- 本社 Socket → Cato Cloud（太線で強調） -->
+        <path d="M 630 190 Q 770 100 980 44" stroke="#7c3aed" stroke-width="3.5" fill="none" marker-end="url(#arrow-purple-f)" />
+        <!-- 橋本 Socket → Cato Cloud（右寄り到達） -->
+        <path d="M 690 420 Q 830 200 1010 44" stroke="#7c3aed" stroke-width="2" fill="none" marker-end="url(#arrow-purple-f)" />
         <!-- Azure vSocket → Cato Cloud -->
-        <path d="M 1095 155 Q 1060 100 1010 55" stroke="#7c3aed" stroke-width="2.5" fill="none" stroke-dasharray="8,4" marker-end="url(#arrow-purple-f)" />
+        <path d="M 1095 155 Q 1070 100 1050 52" stroke="#7c3aed" stroke-width="2" fill="none" stroke-dasharray="8,4" marker-end="url(#arrow-purple-f)" />
         <!-- モバイルアクセス → Cato Cloud -->
-        <path d="M 880 110 Q 920 80 950 55" stroke="#7c3aed" stroke-width="1.5" fill="none" stroke-dasharray="3,3" />
+        <path d="M 880 110 Q 910 80 940 55" stroke="#7c3aed" stroke-width="1.5" fill="none" stroke-dasharray="3,3" />
 
         <!-- === Internet → 本社（琥珀） === -->
         <line x1="475" y1="60" x2="475" y2="150" stroke="#f59e0b" stroke-width="3" />
