@@ -18,7 +18,7 @@ permalink: /compass.html
 |---|-------------|-----------|-------------|------|
 | 01 | **AD移行** | 3社比較検討中 | IIJ / USEN / LinkAtJapan | ポータル [AD-001](/ADクラウド移行_3社比較・導入計画.html) に比較資料あり |
 | 02 | **NW・セキュリティ刷新** | VarioSecure全拠点残存決定（2/24）| Cato(SCSK) / IIJ / VarioSecure | 太田部長の来期予算取り向け |
-| 03 | **入退室管理** | 2社比較・検討中 | ALLIGATE(アート) / BitKey(bitlock PRO) | [比較表](/project-03-access-control-comparison.html) |
+| 03 | **入退室管理** | 2社比較・検討中 | ALLIGATE(アート) / BitKey(bitlock PRO) | [比較表](https://docs.google.com/spreadsheets/d/1gFg8q2rGX3XnAzoO3daoQ7M-pEMjnJrELtVMlYwG1gc/edit) |
 | 04 | **勤怠管理** | 未着手 | — | 入退室管理と連携予定 |
 
 ---
