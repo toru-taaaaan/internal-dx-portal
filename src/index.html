@@ -4,97 +4,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IT基盤刷新 | AKIBAホールディングス</title>
+  <title>DXポータル | AKIBAホールディングス</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/portal_nexus.css">
-  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .directory-section {
-      margin-bottom: 48px;
-      padding-bottom: 32px;
-      border-bottom: 2px solid #cbd5e1;
+    body { margin: 0; padding: 0; font-family: 'Noto Sans JP', sans-serif; background: #fcfcfc; }
+    .dash-section { margin-bottom: 24px; }
+    .dash-cat-header {
+      font-size: 12px; font-weight: 900; color: #334155;
+      padding: 6px 0; margin-bottom: 0;
+      border-bottom: 2px solid #e2e8f0;
+      display: flex; align-items: center; gap: 8px;
+      letter-spacing: 0.03em;
     }
-
-    .directory-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 20px;
-      padding-bottom: 12px;
-      border-bottom: 2px solid #64748b;
+    .cat-badge {
+      font-size: 10px; font-weight: 900; color: white;
+      padding: 2px 8px; border-radius: 3px;
+      letter-spacing: 0.08em; font-family: monospace;
     }
-
-    .directory-header h2 {
-      font-size: 14px !important;
-      font-weight: 900 !important;
-      color: #0f172a !important;
-      margin: 0 !important;
+    .dash-items { display: flex; flex-direction: column; }
+    .dash-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 7px 12px; text-decoration: none;
+      border-radius: 6px; transition: background 0.15s;
     }
-
-    .directory-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    .dash-item:hover { background: #f1f5f9; }
+    .dash-id {
+      font-size: 10px; font-family: monospace; color: #94a3b8;
+      white-space: nowrap; padding-top: 3px; min-width: 56px;
     }
-
-    .directory-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 20px;
-      background: white;
-      border: 2px solid #cbd5e1;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    .dash-title {
+      font-size: 13px; font-weight: 700; color: #1e293b;
+      display: block; line-height: 1.4;
     }
-
-    .directory-item:hover {
-      border-color: #3b82f6;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.12);
-      background: #f8fafc;
+    .dash-desc {
+      font-size: 11px; color: #94a3b8;
+      display: block; margin-top: 1px; line-height: 1.3;
     }
-
-    .item-label {
-      font-size: 14px;
-      font-weight: 700;
-      color: #1e293b;
+    .quick-links {
+      display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;
     }
-
-    .item-meta {
-      font-size: 10px;
-      font-weight: 900;
-      color: #ffffff;
-      letter-spacing: 0.1em;
-      font-family: monospace;
-      padding: 4px 12px;
-      border-radius: 4px;
-      background: #94a3b8;
+    .quick-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; background: #f8fafc;
+      border: 1px solid #e2e8f0; border-radius: 6px;
+      text-decoration: none; font-size: 12px; font-weight: 700;
+      color: #334155; transition: all 0.15s;
     }
-
-    .completion-badge {
-      font-size: 10px;
-      font-weight: 900;
-      padding: 4px 10px;
-      border-radius: 4px;
-      margin-left: 6px;
-    }
-
-    .completion-100 {
-      background: #dcfce7;
-      color: #166534;
-    }
-
-    .completion-80 {
-      background: #fef3c7;
-      color: #92400e;
-    }
+    .quick-link:hover { background: #e2e8f0; border-color: #cbd5e1; }
   </style>
 </head>
 
-<body class="bg-[#fcfcfc]">
+<body>
 
   <div class="layout-wrapper">
     <!-- サイドバー -->
@@ -212,174 +173,316 @@
 
     <!-- メイン -->
     <main class="main-scroll">
-      <div class="p-12">
-        <header class="mb-8 mt-4">
-          <h1 class="text-2xl font-black text-slate-700 flex items-center gap-2">
-            <span class="w-2 h-6 bg-slate-700 rounded-sm"></span>
-            IT基盤刷新
+      <div style="padding: 32px 40px;">
+        <header style="margin-bottom: 20px;">
+          <h1 style="font-size: 18px; font-weight: 900; color: #334155; display: flex; align-items: center; gap: 8px; margin: 0;">
+            <span style="width: 3px; height: 20px; background: #1e3a8a; border-radius: 2px; display: inline-block;"></span>
+            DXポータル ダッシュボード
           </h1>
         </header>
 
-        <div class="space-y-8">
-          <!-- メインセクション -->
-          <div class="directory-section">
-            <div class="directory-header">
-              <span class="w-1.5 h-1.5 rounded-full bg-blue-500" style="width: 6px; height: 6px; border-radius: 50%;"></span>
-              <h2>IT基盤刷新</h2>
-            </div>
-            <div class="directory-list">
-              <!-- タスク管理表 -->
-              <a href="https://docs.google.com/spreadsheets/d/1_ehi9Ylc16KD3WfGNfktRzTtDQsvlXVsWo1_5x0L3c8/edit?gid=0#gid=0" class="directory-item" target="_blank" rel="noopener" style="background: linear-gradient(to right, #f5f3ff, #ffffff); border-left: 3px solid #7c3aed;">
-                <span class="item-label">[工程] タスク管理表（Googleスプレッドシート）</span>
-                <div style="display: flex; gap: 6px; align-items: center;">
-                  <span class="item-meta" style="background: #7c3aed;">工程</span>
-                </div>
-              </a>
-
-              <!-- IT基盤刷新 説明資料 -->
-              <a href="/IT基盤刷新_説明資料.html" class="directory-item" style="background: linear-gradient(to right, #fef3c7, #ffffff); border-left: 3px solid #d97706;">
-                <span class="item-label">[総合] IT基盤刷新 検討状況説明</span>
-                <div style="display: flex; gap: 6px; align-items: center;">
-                  <span class="completion-badge completion-100" style="background: #dbeafe; color: #1e40af;">NEW</span>
-                  <span class="item-meta" style="background: #d97706;">総合</span>
-                </div>
-              </a>
-
-              <!-- IT基盤刷新 概算予算一覧 -->
-              <a href="/IT基盤刷新_概算予算一覧.html" class="directory-item" style="background: linear-gradient(to right, #ecfdf5, #ffffff); border-left: 3px solid #059669;">
-                <span class="item-label">[予算] IT基盤刷新 概算予算一覧</span>
-                <div style="display: flex; gap: 6px; align-items: center;">
-                  <span class="completion-badge completion-100" style="background: #dbeafe; color: #1e40af;">NEW</span>
-                  <span class="item-meta" style="background: #059669;">予算</span>
-                </div>
-              </a>
-
-              <!-- VarioSecure費用分解 -->
-              <a href="/VarioSecure費用分解_整理ノート.html" class="directory-item" style="background: linear-gradient(to right, #fff7ed, #ffffff); border-left: 3px solid #ea580c;">
-                <span class="item-label">[費用] VarioSecure 費用分解 整理ノート</span>
-                <div style="display: flex; gap: 6px; align-items: center;">
-                  <span class="completion-badge" style="background: #dbeafe; color: #1e40af;">NEW</span>
-                  <span class="item-meta" style="background: #ea580c;">費用</span>
-                </div>
-              </a>
-
-              <!-- 入退室管理 サブグループ -->
-              <div class="mt-4 pt-4 border-t border-slate-100">
-                <div class="text-[10px] font-black text-slate-400 mb-2 tracking-widest">入退室管理（SECOM → クラウド移行）</div>
-                <div class="space-y-2">
-                  <a href="/SECOM入退室クラウド化_導入検討資料.html" class="directory-item !py-3 !px-4">
-                    <span class="item-label text-xs">[予算] SECOM入退室管理 クラウド移行 費用比較</span>
-                    <div style="display: flex; gap: 6px; align-items: center;">
-                      <span class="completion-badge completion-100">✓ 完成</span>
-                      <span class="item-meta" style="background: #2563eb;">予算</span>
-                    </div>
-                  </a>
-                  <a href="/入退室管理_フルクラウド型_ベンダー調査.html" class="directory-item !py-3 !px-4" style="border-left: 3px solid #f59e0b;">
-                    <span class="item-label text-xs">[調査] フルクラウド型 ベンダー調査（7社比較）</span>
-                    <div style="display: flex; gap: 6px; align-items: center;">
-                      <span class="completion-badge" style="background: #fef3c7; color: #92400e;">NEW</span>
-                      <span class="item-meta" style="background: #7c3aed;">調査</span>
-                    </div>
-                  </a>
-                  <a href="/判断フロー_SECOM問題.html" class="directory-item !py-3 !px-4">
-                    <span class="item-label text-xs">[判断] SECOM問題 意思決定フロー</span>
-                    <div style="display: flex; gap: 6px; align-items: center;">
-                      <span class="item-meta" style="background: #64748b;">判断</span>
-                    </div>
-                  </a>
-                  <a href="/ヒアリング管理.html" class="directory-item !py-3 !px-4">
-                    <span class="item-label text-xs">[管理] ベンダーヒアリング状況</span>
-                    <div style="display: flex; gap: 6px; align-items: center;">
-                      <span class="item-meta" style="background: #64748b;">管理</span>
-                    </div>
-                  </a>
-                  <a href="/file_server_cloud_migration.html" class="directory-item !py-3 !px-4">
-                    <span class="item-label text-xs">[検討] ファイルサーバー クラウド統合</span>
-                    <div style="display: flex; gap: 6px; align-items: center;">
-                      <span class="item-meta" style="background: #64748b;">検討</span>
-                    </div>
-                  </a>
-                  <a href="/network_topology.html" class="directory-item !py-3 !px-4">
-                    <span class="item-label text-xs">[構成図] 現行ネットワーク構成図</span>
-                    <div style="display: flex; gap: 6px; align-items: center;">
-                      <span class="item-meta" style="background: #64748b;">構成図</span>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+        <!-- クイックリンク -->
+        <div class="quick-links">
+          <a href="https://docs.google.com/spreadsheets/d/1_ehi9Ylc16KD3WfGNfktRzTtDQsvlXVsWo1_5x0L3c8/edit?gid=0#gid=0" class="quick-link" target="_blank" rel="noopener">
+            タスク管理表 ↗
+          </a>
+          <a href="/executive_hub.html" class="quick-link">
+            全体課題管理表
+          </a>
         </div>
 
-          <!-- AI Championセクション -->
-          <div class="directory-section">
-            <div class="directory-header">
-              <span style="width: 6px; height: 6px; border-radius: 50%; background: #1a73e8; flex-shrink: 0;"></span>
-              <h2>AI Champion</h2>
-            </div>
-            <div class="directory-list">
-              <a href="/AI_Champion_カリキュラム.html" class="directory-item" style="background: linear-gradient(to right, #e8f0fe, #ffffff); border-left: 3px solid #1a73e8;">
-                <span class="item-label">[研修] Google Antigravity カリキュラム</span>
-                <div style="display: flex; gap: 6px; align-items: center;">
-                  <span class="item-meta" style="background: #1a73e8;">研修</span>
-                </div>
-              </a>
-              <a href="/Antigravity_操作ガイド.html" class="directory-item" style="background: linear-gradient(to right, #e8f0fe, #ffffff); border-left: 3px solid #1557b0;">
-                <span class="item-label">[ガイド] Google Antigravity 操作ガイド（全12ステップ）</span>
-                <div style="display: flex; gap: 6px; align-items: center;">
-                  <span class="item-meta" style="background: #1557b0;">ガイド</span>
-                </div>
-              </a>
-              <a href="/Antigravity_想定問答集.html" class="directory-item" style="background: linear-gradient(to right, #e8f0fe, #ffffff); border-left: 3px solid #0f52ba;">
-                <span class="item-label">[準備] 想定問答集（対・管理職）</span>
-                <div style="display: flex; gap: 6px; align-items: center;">
-                  <span class="completion-badge" style="background: #dbeafe; color: #1e40af;">NEW</span>
-                  <span class="item-meta" style="background: #0f52ba;">準備</span>
-                </div>
-              </a>
-              <a href="/Antigravity_セキュリティガイドライン.html" class="directory-item" style="background: linear-gradient(to right, #e8f0fe, #ffffff); border-left: 3px solid #0f52ba;">
-                <span class="item-label">[規則] セキュリティガイドライン</span>
-                <div style="display: flex; gap: 6px; align-items: center;">
-                  <span class="completion-badge" style="background: #dbeafe; color: #1e40af;">NEW</span>
-                  <span class="item-meta" style="background: #0f52ba;">規則</span>
-                </div>
-              </a>
-              <a href="/AI_Champion_ハンドブック.html" class="directory-item" style="background: linear-gradient(to right, #e8f0fe, #ffffff); border-left: 3px solid #0f52ba;">
-                <span class="item-label">[入門] AI Champion ハンドブック（はじめの一歩）</span>
-                <div style="display: flex; gap: 6px; align-items: center;">
-                  <span class="completion-badge" style="background: #dbeafe; color: #1e40af;">NEW</span>
-                  <span class="item-meta" style="background: #0f52ba;">入門</span>
-                </div>
-              </a>
-              <!-- 孤立ファイル群（プロジェクト資料） -->
-              <div class="mt-4 pt-4 border-t border-slate-100">
-                <div class="text-[10px] font-black text-slate-400 mb-2 tracking-widest">プロジェクト資料</div>
-                <div class="space-y-2">
-                  <a href="/project_15_12.html" class="directory-item !py-3 !px-4" style="border-left: 3px solid #475569;">
-                    <span class="item-label text-xs">[概要] Project 15.12 概要・スケジュール・資料一覧</span>
-                    <div style="display: flex; gap: 6px; align-items: center;">
-                      <span class="item-meta" style="background: #475569;">概要</span>
-                    </div>
-                  </a>
-                  <a href="/project_15_12_antigravity.html" class="directory-item !py-3 !px-4" style="border-left: 3px solid #475569;">
-                    <span class="item-label text-xs">[案内] Antigravity 導入案内（既存Google Workspace向け）</span>
-                    <div style="display: flex; gap: 6px; align-items: center;">
-                      <span class="item-meta" style="background: #475569;">案内</span>
-                    </div>
-                  </a>
-                  <a href="/project_15_12_ishii.html" class="directory-item !py-3 !px-4" style="border-left: 3px solid #475569;">
-                    <span class="item-label text-xs">[相談] 石井様向け AI Champion 参加ご相談資料</span>
-                    <div style="display: flex; gap: 6px; align-items: center;">
-                      <span class="item-meta" style="background: #475569;">相談</span>
-                    </div>
-                  </a>
-                </div>
+        <!-- NW ネットワーク -->
+        <section class="dash-section">
+          <h2 class="dash-cat-header">
+            <span class="cat-badge" style="background: #2563eb;">NW</span>
+            ネットワーク
+          </h2>
+          <div class="dash-items">
+            <a href="/SD-WAN刷新_3社4シナリオ比較検討資料.html" class="dash-item">
+              <span class="dash-id">NW-001</span>
+              <div>
+                <span class="dash-title">SD-WAN 3社比較</span>
+                <span class="dash-desc">IIJ・Cato・VarioSecureの3社4シナリオ機能・費用比較</span>
               </div>
-            </div>
+            </a>
+            <a href="/ネットワーク・セキュリティ刷新_費用比較.html" class="dash-item">
+              <span class="dash-id">NW-002</span>
+              <div>
+                <span class="dash-title">NW刷新 費用比較</span>
+                <span class="dash-desc">ネットワーク・セキュリティ刷新の費用比較表</span>
+              </div>
+            </a>
+            <a href="/VarioSecure費用分解_整理ノート.html" class="dash-item">
+              <span class="dash-id">NW-003</span>
+              <div>
+                <span class="dash-title">VarioSecure費用分解</span>
+                <span class="dash-desc">現行VarioSecure契約の費用内訳と整理</span>
+              </div>
+            </a>
+            <a href="/network_topology.html" class="dash-item">
+              <span class="dash-id">NW-004</span>
+              <div>
+                <span class="dash-title">構成図</span>
+                <span class="dash-desc">現行ネットワーク構成のトポロジー図</span>
+              </div>
+            </a>
+            <a href="/sdwan_scope_definition.html" class="dash-item">
+              <span class="dash-id">NW-005</span>
+              <div>
+                <span class="dash-title">対象拠点定義</span>
+                <span class="dash-desc">SD-WAN導入対象の拠点一覧と定義</span>
+              </div>
+            </a>
+            <a href="/bcp_risk_matrix.html" class="dash-item">
+              <span class="dash-id">NW-006</span>
+              <div>
+                <span class="dash-title">BCP リスク評価</span>
+                <span class="dash-desc">事業継続計画のリスク評価マトリクス</span>
+              </div>
+            </a>
           </div>
+        </section>
 
-        <footer
-          class="mt-24 pt-8 border-t border-slate-200 text-center text-slate-400 text-[10px] font-bold">
+        <!-- AD 認証基盤 -->
+        <section class="dash-section">
+          <h2 class="dash-cat-header">
+            <span class="cat-badge" style="background: #7c3aed;">AD</span>
+            認証基盤
+          </h2>
+          <div class="dash-items">
+            <a href="/ADクラウド移行_3社比較・導入計画.html" class="dash-item">
+              <span class="dash-id">AD-001</span>
+              <div>
+                <span class="dash-title">3社比較・導入計画</span>
+                <span class="dash-desc">ADクラウド移行の3社比較と段階的導入計画</span>
+              </div>
+            </a>
+            <a href="/AD・EntraID刷新_移行シナリオ比較検討資料.html" class="dash-item">
+              <span class="dash-id">AD-002</span>
+              <div>
+                <span class="dash-title">EntraID移行シナリオ</span>
+                <span class="dash-desc">AD・EntraID刷新の移行シナリオ比較検討</span>
+              </div>
+            </a>
+            <a href="/AD・SECOM同時依頼_コスト最適化分析.html" class="dash-item">
+              <span class="dash-id">AD-003</span>
+              <div>
+                <span class="dash-title">AD+SECOMコスト最適化</span>
+                <span class="dash-desc">AD・SECOM同時依頼によるコスト最適化の分析</span>
+              </div>
+            </a>
+            <a href="/ADクラウド化_3社権限・責任分界点.html" class="dash-item">
+              <span class="dash-id">AD-004</span>
+              <div>
+                <span class="dash-title">3社 権限・分界点</span>
+                <span class="dash-desc">ADクラウド化における3社の権限・責任分界点の整理</span>
+              </div>
+            </a>
+            <a href="/project_15_01_entraid_proposal.html" class="dash-item">
+              <span class="dash-id">AD-005</span>
+              <div>
+                <span class="dash-title">EntraID移行提案</span>
+                <span class="dash-desc">EntraID移行の提案資料</span>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <!-- ACC 入退室 -->
+        <section class="dash-section">
+          <h2 class="dash-cat-header">
+            <span class="cat-badge" style="background: #059669;">ACC</span>
+            入退室
+          </h2>
+          <div class="dash-items">
+            <a href="/入退室管理_フルクラウド型_ベンダー調査.html" class="dash-item">
+              <span class="dash-id">ACC-001</span>
+              <div>
+                <span class="dash-title">ベンダー調査</span>
+                <span class="dash-desc">フルクラウド型入退室管理の7社ベンダー調査</span>
+              </div>
+            </a>
+            <a href="/SECOM入退室クラウド化_導入検討資料.html" class="dash-item">
+              <span class="dash-id">ACC-002</span>
+              <div>
+                <span class="dash-title">SECOMクラウド化検討</span>
+                <span class="dash-desc">SECOM入退室管理のクラウド化導入検討</span>
+              </div>
+            </a>
+            <a href="/判断フロー_SECOM問題.html" class="dash-item">
+              <span class="dash-id">ACC-003</span>
+              <div>
+                <span class="dash-title">SECOM判断フロー</span>
+                <span class="dash-desc">SECOM契約問題の意思決定フロー</span>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <!-- FIN 予算・契約 -->
+        <section class="dash-section">
+          <h2 class="dash-cat-header">
+            <span class="cat-badge" style="background: #d97706;">FIN</span>
+            予算・契約
+          </h2>
+          <div class="dash-items">
+            <a href="/IT基盤刷新_概算予算一覧.html" class="dash-item">
+              <span class="dash-id">FIN-001</span>
+              <div>
+                <span class="dash-title">概算予算一覧</span>
+                <span class="dash-desc">IT基盤刷新の全項目の概算予算一覧</span>
+              </div>
+            </a>
+            <a href="/IT基盤刷新_説明資料.html" class="dash-item">
+              <span class="dash-id">FIN-002</span>
+              <div>
+                <span class="dash-title">IT基盤刷新 説明資料</span>
+                <span class="dash-desc">IT基盤刷新の検討状況を説明する総合資料</span>
+              </div>
+            </a>
+            <a href="/契約管理台帳.html" class="dash-item">
+              <span class="dash-id">FIN-003</span>
+              <div>
+                <span class="dash-title">契約管理台帳</span>
+                <span class="dash-desc">現行ベンダー契約の一覧管理台帳</span>
+              </div>
+            </a>
+            <a href="/エビデンス集.html" class="dash-item">
+              <span class="dash-id">FIN-004</span>
+              <div>
+                <span class="dash-title">エビデンス集</span>
+                <span class="dash-desc">費用・仕様の出典エビデンス一覧</span>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <!-- AI Champion -->
+        <section class="dash-section">
+          <h2 class="dash-cat-header">
+            <span class="cat-badge" style="background: #1a73e8;">AI</span>
+            AI Champion
+          </h2>
+          <div class="dash-items">
+            <a href="/AI_Champion_カリキュラム.html" class="dash-item">
+              <span class="dash-id">AI-001</span>
+              <div>
+                <span class="dash-title">カリキュラム</span>
+                <span class="dash-desc">Google Antigravity研修のカリキュラム</span>
+              </div>
+            </a>
+            <a href="/AI_Champion_ハンドブック.html" class="dash-item">
+              <span class="dash-id">AI-002</span>
+              <div>
+                <span class="dash-title">ハンドブック</span>
+                <span class="dash-desc">AI Championの入門ハンドブック</span>
+              </div>
+            </a>
+            <a href="/Antigravity_操作ガイド.html" class="dash-item">
+              <span class="dash-id">AI-003</span>
+              <div>
+                <span class="dash-title">Antigravity操作ガイド</span>
+                <span class="dash-desc">Antigravityの操作手順ガイド（全12ステップ）</span>
+              </div>
+            </a>
+            <a href="/Antigravity_セキュリティガイドライン.html" class="dash-item">
+              <span class="dash-id">AI-004</span>
+              <div>
+                <span class="dash-title">セキュリティGL</span>
+                <span class="dash-desc">Antigravity利用のセキュリティガイドライン</span>
+              </div>
+            </a>
+            <a href="/Antigravity_想定問答集.html" class="dash-item">
+              <span class="dash-id">AI-005</span>
+              <div>
+                <span class="dash-title">想定問答集</span>
+                <span class="dash-desc">管理職向けの想定問答集</span>
+              </div>
+            </a>
+            <a href="/project_15_12.html" class="dash-item">
+              <span class="dash-id">AI-006</span>
+              <div>
+                <span class="dash-title">AI Champion Portal</span>
+                <span class="dash-desc">AI Championプロジェクト概要・スケジュール</span>
+              </div>
+            </a>
+            <a href="/project_15_12_antigravity.html" class="dash-item">
+              <span class="dash-id">AI-007</span>
+              <div>
+                <span class="dash-title">Antigravity導入案内</span>
+                <span class="dash-desc">既存Google Workspace向けの導入案内</span>
+              </div>
+            </a>
+            <a href="/project_15_12_ishii.html" class="dash-item">
+              <span class="dash-id">AI-008</span>
+              <div>
+                <span class="dash-title">相談資料（石井）</span>
+                <span class="dash-desc">石井様向けAI Champion参加のご相談資料</span>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <!-- OPS 運用・管理 -->
+        <section class="dash-section">
+          <h2 class="dash-cat-header">
+            <span class="cat-badge" style="background: #64748b;">OPS</span>
+            運用・管理
+          </h2>
+          <div class="dash-items">
+            <a href="/executive_hub.html" class="dash-item">
+              <span class="dash-id">OPS-001</span>
+              <div>
+                <span class="dash-title">全体課題管理表</span>
+                <span class="dash-desc">プロジェクト全体の課題・進捗管理</span>
+              </div>
+            </a>
+            <a href="/evaluation_sheet.html" class="dash-item">
+              <span class="dash-id">OPS-002</span>
+              <div>
+                <span class="dash-title">人事考課原本</span>
+                <span class="dash-desc">人事考課シート原本</span>
+              </div>
+            </a>
+            <a href="/daily_log.html" class="dash-item">
+              <span class="dash-id">OPS-003</span>
+              <div>
+                <span class="dash-title">活動ログ</span>
+                <span class="dash-desc">日次の活動記録</span>
+              </div>
+            </a>
+            <a href="/ヒアリング管理.html" class="dash-item">
+              <span class="dash-id">OPS-004</span>
+              <div>
+                <span class="dash-title">ヒアリング管理</span>
+                <span class="dash-desc">ベンダーヒアリングの進捗管理</span>
+              </div>
+            </a>
+            <a href="/file_server_cloud_migration.html" class="dash-item">
+              <span class="dash-id">OPS-005</span>
+              <div>
+                <span class="dash-title">ファイルサーバー統合</span>
+                <span class="dash-desc">ファイルサーバーのクラウド統合検討</span>
+              </div>
+            </a>
+            <a href="/project_15_14.html" class="dash-item">
+              <span class="dash-id">OPS-006</span>
+              <div>
+                <span class="dash-title">Infra Assessment</span>
+                <span class="dash-desc">インフラ現況の評価レポート</span>
+              </div>
+            </a>
+            <a href="/project_bn_report.html" class="dash-item">
+              <span class="dash-id">OPS-007</span>
+              <div>
+                <span class="dash-title">BuddyNetレポート</span>
+                <span class="dash-desc">BuddyNetの分析レポート</span>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <footer style="margin-top: 48px; padding-top: 16px; border-top: 1px solid #e2e8f0; text-align: center; color: #94a3b8; font-size: 10px; font-weight: 700;">
           AKIBAホールディングス 情報システム部
         </footer>
       </div>
