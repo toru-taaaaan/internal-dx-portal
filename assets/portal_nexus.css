@@ -7,8 +7,8 @@
   background-color: #fcfcfc;
 }
 
-/* layout-wrapper 内ではbodyのpadding/marginをリセット */
-body:has(.layout-wrapper) {
+/* layout-wrapper 内ではbodyのpadding/marginをリセット（サイドバー有りページのみ） */
+body:has(.layout-wrapper:not(.sidebar-hidden)) {
   padding: 0 !important;
   margin: 0 !important;
 }
@@ -29,49 +29,16 @@ body:has(.layout-wrapper) {
   transition: transform 0.25s ease;
 }
 
-/* === サイドバー開閉トグル === */
-.sidebar-toggle {
-  position: fixed;
-  top: 16px;
-  left: 240px;
-  z-index: 101;
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
-  border: none;
+/* サイドバー非表示状態（資料ページ用） */
+.layout-wrapper.sidebar-hidden {
+  display: block;
   background: transparent;
-  color: rgba(255,255,255,0.5);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: left 0.25s ease, color 0.15s, background 0.15s;
-  padding: 0;
 }
-.sidebar-toggle:hover {
-  color: white;
-  background: rgba(255,255,255,0.1);
-}
-.sidebar-toggle svg {
-  width: 18px;
-  height: 18px;
-}
-.layout-wrapper.sidebar-hidden .sidebar {
-  transform: translateX(-280px);
-}
+
 .layout-wrapper.sidebar-hidden .main-scroll {
   margin-left: 0;
-}
-.layout-wrapper.sidebar-hidden .sidebar-toggle {
-  left: 16px;
-  color: #94a3b8;
-  background: white;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-}
-.layout-wrapper.sidebar-hidden .sidebar-toggle:hover {
-  color: #334155;
-  border-color: #cbd5e1;
+  background: transparent;
+  min-height: auto;
 }
 
 .sidebar-header {
