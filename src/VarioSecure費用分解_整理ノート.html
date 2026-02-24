@@ -1314,7 +1314,7 @@
             <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
           </marker>
           <marker id="arrow-gray-f" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
-            <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8"/>
+            <polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/>
           </marker>
         </defs>
 
@@ -1335,16 +1335,21 @@
         <!-- === Internet → 本社（琥珀） === -->
         <line x1="475" y1="60" x2="475" y2="150" stroke="#f59e0b" stroke-width="3" />
 
-        <!-- === VarioSecure VPN → Type A 業務拠点（青・実線・細） === -->
-        <path d="M 400 310 Q 290 370 200 420" stroke="#2563eb" stroke-width="1.5" fill="none" opacity="0.7" marker-end="url(#arrow-blue-f)" />
-        <path d="M 440 310 Q 410 370 385 420" stroke="#2563eb" stroke-width="1.5" fill="none" opacity="0.7" marker-end="url(#arrow-blue-f)" />
-        <path d="M 530 310 Q 560 370 580 420" stroke="#2563eb" stroke-width="1.5" fill="none" opacity="0.7" marker-end="url(#arrow-blue-f)" />
-
-        <!-- === VarioSecure VPN → Type B SECOM拠点（灰・点線） === -->
-        <path d="M 380 310 Q 260 520 175 700" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="2,4" marker-end="url(#arrow-gray-f)" />
-        <path d="M 440 310 Q 420 520 405 700" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="2,4" marker-end="url(#arrow-gray-f)" />
-        <path d="M 530 310 Q 580 520 635 700" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="2,4" marker-end="url(#arrow-gray-f)" />
-        <path d="M 580 310 Q 720 520 865 700" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="2,4" marker-end="url(#arrow-gray-f)" />
+        <!-- === VarioSecure VPN（全拠点 SECOM専用）=== -->
+        <!-- → 大阪 -->
+        <path d="M 385 310 Q 280 370 200 420" stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="4,4" opacity="0.6" marker-end="url(#arrow-gray-f)" />
+        <!-- → 多摩 -->
+        <path d="M 425 310 Q 400 370 385 420" stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="4,4" opacity="0.6" marker-end="url(#arrow-gray-f)" />
+        <!-- → 橋本 -->
+        <path d="M 510 310 Q 545 370 580 420" stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="4,4" opacity="0.6" marker-end="url(#arrow-gray-f)" />
+        <!-- → 福岡 -->
+        <path d="M 400 320 Q 270 530 175 700" stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="4,4" opacity="0.6" marker-end="url(#arrow-gray-f)" />
+        <!-- → 和歌山 -->
+        <path d="M 445 320 Q 430 530 405 700" stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="4,4" opacity="0.6" marker-end="url(#arrow-gray-f)" />
+        <!-- → 京橋 -->
+        <path d="M 540 320 Q 585 530 635 700" stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="4,4" opacity="0.6" marker-end="url(#arrow-gray-f)" />
+        <!-- → 名古屋 -->
+        <path d="M 590 320 Q 725 530 865 700" stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="4,4" opacity="0.6" marker-end="url(#arrow-gray-f)" />
 
         <!-- SECOM Server ← 本社内接続 -->
         <line x1="700" y1="205" x2="640" y2="205" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,3" />
@@ -1523,12 +1528,8 @@
           <span>Cato vSocket 接続</span>
         </div>
         <div class="topo-legend-item">
-          <div class="topo-legend-line" style="background:#2563eb;opacity:0.7;"></div>
-          <span>VarioSecure VPN（SECOM＋業務）</span>
-        </div>
-        <div class="topo-legend-item">
-          <div class="topo-legend-line" style="background:repeating-linear-gradient(90deg,#94a3b8 0,#94a3b8 2px,transparent 2px,transparent 6px);"></div>
-          <span>VarioSecure VPN（SECOMのみ）</span>
+          <div class="topo-legend-line" style="background:repeating-linear-gradient(90deg,#64748b 0,#64748b 4px,transparent 4px,transparent 8px);"></div>
+          <span>VarioSecure VPN（SECOM専用）</span>
         </div>
         <div style="margin-top:6px;padding-top:6px;border-top:1px solid #e2e8f0;">
           <div class="topo-legend-item">
