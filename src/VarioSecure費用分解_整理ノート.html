@@ -645,19 +645,55 @@
         <strong>出典:</strong> 契約管理台帳（ハードウェアレンタル契約セクション）、USEN GATE O2 ビジネスVPN(VSR) 提供料金表 P.15
       </div>
 
-      <!-- 定価合計 -->
-      <div class="calc-block" style="margin-top:20px;">
-        <div style="font-size:13px;font-weight:900;color:#64748b;letter-spacing:0.08em;margin-bottom:8px;font-family:'Noto Sans JP';">PDF定価の積み上げ（税抜・24H保守・現行構成）</div>
-        <span class="eq">VSR601J×2（本社+大阪）</span> <span class="num">¥40,000</span>
-        <span class="eq"> + VPN100user</span> <span class="num">¥20,000</span>
-        <span class="eq"> + VSR402J×4</span> <span class="num">¥41,600</span>
-        <span class="eq"> = </span><span class="ok-result">¥101,600</span><span class="eq" style="font-size:13px;"> （按分対象6拠点）</span><br>
-        <span class="eq">VSR601J×2（本社+大阪）</span> <span class="num">¥40,000</span>
-        <span class="eq"> + VPN100user</span> <span class="num">¥20,000</span>
-        <span class="eq"> + VSR402J×6</span> <span class="num">¥62,400</span>
-        <span class="eq"> = </span><span class="result">¥122,400</span><span class="eq" style="font-size:13px;"> （橋本・名古屋含む全8拠点）</span>
-        <div style="font-size:13px;font-weight:700;color:#94a3b8;margin-top:8px;font-family:'Noto Sans JP';">
-          ※大阪はLBO対応のためVSR402J→VSR601Jに入替済み。台帳は旧品番のまま。
+      <!-- 定価積み上げ -->
+      <div style="margin-top:20px;background:#f8fafc;border:2px solid #e2e8f0;border-radius:12px;padding:24px;">
+        <div style="font-size:14px;font-weight:900;color:#334155;margin-bottom:16px;">PDF定価の積み上げ（税抜・24H保守・現行構成）</div>
+
+        <!-- 費目カード -->
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;">
+          <div style="flex:1;min-width:180px;background:white;border:1px solid #e2e8f0;border-radius:8px;padding:16px;text-align:center;">
+            <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:4px;">本社ルーター</div>
+            <div style="font-size:12px;color:#94a3b8;margin-bottom:8px;">VSR601J × 1台</div>
+            <div style="font-size:22px;font-weight:900;color:#0f172a;font-family:'Courier New',monospace;">¥20,000</div>
+          </div>
+          <div style="flex:1;min-width:180px;background:white;border:1px solid #e2e8f0;border-radius:8px;padding:16px;text-align:center;">
+            <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:4px;">大阪ルーター</div>
+            <div style="font-size:12px;color:#94a3b8;margin-bottom:8px;">VSR601J × 1台（LBO対応）</div>
+            <div style="font-size:22px;font-weight:900;color:#0f172a;font-family:'Courier New',monospace;">¥20,000</div>
+          </div>
+          <div style="flex:1;min-width:180px;background:white;border:1px solid #e2e8f0;border-radius:8px;padding:16px;text-align:center;">
+            <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:4px;">リモートVPN</div>
+            <div style="font-size:12px;color:#94a3b8;margin-bottom:8px;">100ユーザーライセンス</div>
+            <div style="font-size:22px;font-weight:900;color:#0f172a;font-family:'Courier New',monospace;">¥20,000</div>
+          </div>
+          <div style="flex:1;min-width:180px;background:white;border:1px solid #e2e8f0;border-radius:8px;padding:16px;text-align:center;">
+            <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:4px;">拠点ルーター</div>
+            <div style="font-size:12px;color:#94a3b8;margin-bottom:8px;">VSR402J × 6台</div>
+            <div style="font-size:22px;font-weight:900;color:#0f172a;font-family:'Courier New',monospace;">¥62,400</div>
+          </div>
+        </div>
+
+        <!-- 合計行 -->
+        <div style="display:flex;gap:12px;">
+          <div style="flex:1;background:#f0fdf4;border:2px solid #16a34a;border-radius:8px;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:13px;font-weight:900;color:#15803d;">按分対象 6拠点の合計</div>
+              <div style="font-size:11px;color:#6b7280;margin-top:2px;">橋本・名古屋を除く</div>
+            </div>
+            <div style="font-size:24px;font-weight:900;color:#15803d;font-family:'Courier New',monospace;">¥101,600</div>
+          </div>
+          <div style="flex:1;background:#fef2f2;border:2px solid #dc2626;border-radius:8px;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:13px;font-weight:900;color:#dc2626;">全 8拠点の合計</div>
+              <div style="font-size:11px;color:#6b7280;margin-top:2px;">橋本・名古屋含む</div>
+            </div>
+            <div style="font-size:24px;font-weight:900;color:#dc2626;font-family:'Courier New',monospace;">¥122,400</div>
+          </div>
+        </div>
+
+        <!-- 補足 -->
+        <div style="font-size:12px;color:#94a3b8;margin-top:12px;line-height:1.6;">
+          ※ 大阪は LBO 対応のため VSR402J → VSR601J に入替済み。台帳は旧品番のまま。
         </div>
       </div>
     </div>
