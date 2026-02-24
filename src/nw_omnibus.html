@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NW刷新オムニバス｜Cato・VarioSecure関連資料集</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Noto Sans JP', sans-serif; background: #f8fafc; color: #1e293b; }
+
+    /* ヘッダー */
+    .top-header {
+      position: sticky; top: 0; z-index: 100;
+      background: white; border-bottom: 2px solid #e2e8f0;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+    .top-header-inner {
+      max-width: 1400px; margin: 0 auto; padding: 0 32px;
+      height: 56px; display: flex; align-items: center;
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: #1e3a8a; text-decoration: none; font-size: 14px; font-weight: 700;
+    }
+    .back-link:hover { text-decoration: underline; }
+    .header-sep { width: 1px; height: 20px; background: #cbd5e1; margin: 0 16px; }
+    .header-title { font-size: 15px; font-weight: 700; color: #334155; }
+
+    /* 目次 */
+    .toc {
+      max-width: 1400px; margin: 0 auto; padding: 24px 32px 0;
+    }
+    .toc h2 {
+      font-size: 13px; font-weight: 900; color: #334155;
+      margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+    }
+    .toc-badge {
+      font-size: 10px; font-weight: 900; color: white; background: #2563eb;
+      padding: 2px 8px; border-radius: 3px; letter-spacing: 0.08em; font-family: monospace;
+    }
+    .toc-list {
+      display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin-bottom: 24px;
+    }
+    .toc-list a {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; background: white;
+      border: 1px solid #e2e8f0; border-radius: 6px;
+      text-decoration: none; font-size: 12px; font-weight: 700;
+      color: #334155; transition: all 0.15s;
+    }
+    .toc-list a:hover { background: #e2e8f0; border-color: #cbd5e1; }
+    .toc-id {
+      font-size: 10px; font-family: monospace; color: #94a3b8;
+    }
+
+    /* セクション */
+    .doc-section {
+      max-width: 1400px; margin: 0 auto; padding: 0 32px 32px;
+    }
+    .doc-section-bar {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 0; margin-bottom: 8px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .doc-section-bar .doc-id {
+      font-size: 10px; font-family: monospace; color: #94a3b8; white-space: nowrap;
+    }
+    .doc-section-bar h3 {
+      font-size: 14px; font-weight: 900; color: #1e293b;
+    }
+    .doc-section-bar .doc-open {
+      margin-left: auto;
+      font-size: 11px; font-weight: 700; color: #2563eb;
+      text-decoration: none; white-space: nowrap;
+    }
+    .doc-section-bar .doc-open:hover { text-decoration: underline; }
+    .doc-desc {
+      font-size: 12.5px; color: #64748b; line-height: 1.6; margin-bottom: 12px;
+    }
+    .doc-frame {
+      width: 100%; border: 1px solid #e2e8f0; border-radius: 8px;
+      background: white; overflow: hidden;
+    }
+    .doc-frame iframe {
+      width: 100%; border: none; display: block;
+    }
+
+    /* フッター */
+    .omnibus-footer {
+      max-width: 1400px; margin: 0 auto; padding: 32px;
+      text-align: center; color: #94a3b8; font-size: 10px; font-weight: 700;
+      border-top: 1px solid #e2e8f0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ヘッダー -->
+  <header class="top-header">
+    <div class="top-header-inner">
+      <a href="/index.html" class="back-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+        ポータルへ戻る
+      </a>
+      <div class="header-sep"></div>
+      <span class="header-title">NW刷新オムニバス｜Cato・VarioSecure関連資料集</span>
+    </div>
+  </header>
+
+  <!-- 目次 -->
+  <nav class="toc">
+    <h2><span class="toc-badge">NW</span> 掲載資料（6件）</h2>
+    <ul class="toc-list">
+      <li><a href="#nw001"><span class="toc-id">NW-001</span> SD-WAN 3社比較</a></li>
+      <li><a href="#nw002"><span class="toc-id">NW-002</span> NW刷新 費用比較</a></li>
+      <li><a href="#nw003"><span class="toc-id">NW-003</span> VarioSecure費用分解</a></li>
+      <li><a href="#nw004"><span class="toc-id">NW-004</span> 構成図</a></li>
+      <li><a href="#nw005"><span class="toc-id">NW-005</span> 対象拠点定義</a></li>
+      <li><a href="#nw006"><span class="toc-id">NW-006</span> BCP リスク評価</a></li>
+    </ul>
+  </nav>
+
+  <!-- NW-001 -->
+  <section class="doc-section" id="nw001">
+    <div class="doc-section-bar">
+      <span class="doc-id">NW-001</span>
+      <h3>SD-WAN刷新 3社4シナリオ比較検討資料</h3>
+      <a href="/SD-WAN刷新_3社4シナリオ比較検討資料.html" class="doc-open" target="_blank">単独で開く ↗</a>
+    </div>
+    <p class="doc-desc">IIJ・Cato・VarioSecure（現行）の3社4シナリオで機能・費用・運用負荷を比較。インタラクティブチャートで各シナリオの年額・初期費用を一覧表示</p>
+    <div class="doc-frame">
+      <iframe src="/SD-WAN刷新_3社4シナリオ比較検討資料.html" loading="lazy" style="height:800px;" onload="this.contentDocument&&(this.contentDocument.querySelector('header')||{}).style&&(this.contentDocument.querySelector('header').style.display='none')"></iframe>
+    </div>
+  </section>
+
+  <!-- NW-002 -->
+  <section class="doc-section" id="nw002">
+    <div class="doc-section-bar">
+      <span class="doc-id">NW-002</span>
+      <h3>ネットワーク・セキュリティ刷新 費用比較</h3>
+      <a href="/ネットワーク・セキュリティ刷新_費用比較.html" class="doc-open" target="_blank">単独で開く ↗</a>
+    </div>
+    <p class="doc-desc">SD-WAN・セキュリティ・回線を含むネットワーク刷新の全体費用を複数シナリオで比較。現行VarioSecure継続と乗り換え各案の5年TCOを並列表示</p>
+    <div class="doc-frame">
+      <iframe src="/ネットワーク・セキュリティ刷新_費用比較.html" loading="lazy" style="height:800px;"></iframe>
+    </div>
+  </section>
+
+  <!-- NW-003 -->
+  <section class="doc-section" id="nw003">
+    <div class="doc-section-bar">
+      <span class="doc-id">NW-003</span>
+      <h3>VarioSecure費用分解 整理ノート</h3>
+      <a href="/VarioSecure費用分解_整理ノート.html" class="doc-open" target="_blank">単独で開く ↗</a>
+    </div>
+    <p class="doc-desc">現行VarioSecure契約の月額・年額費用を項目別に分解整理。回線費・機器費・保守費の内訳を明示し、乗り換え判断の基礎データとして使用</p>
+    <div class="doc-frame">
+      <iframe src="/VarioSecure費用分解_整理ノート.html" loading="lazy" style="height:800px;"></iframe>
+    </div>
+  </section>
+
+  <!-- NW-004 -->
+  <section class="doc-section" id="nw004">
+    <div class="doc-section-bar">
+      <span class="doc-id">NW-004</span>
+      <h3>ネットワーク構成図</h3>
+      <a href="/network_topology.html" class="doc-open" target="_blank">単独で開く ↗</a>
+    </div>
+    <p class="doc-desc">本社・拠点間のVPN接続、LBO回線、SECOM連携、インターネット接続を色分けしたネットワークトポロジー図。現状把握と刷新計画の起点資料</p>
+    <div class="doc-frame">
+      <iframe src="/network_topology.html" loading="lazy" style="height:700px;"></iframe>
+    </div>
+  </section>
+
+  <!-- NW-005 -->
+  <section class="doc-section" id="nw005">
+    <div class="doc-section-bar">
+      <span class="doc-id">NW-005</span>
+      <h3>SD-WAN導入 対象拠点定義</h3>
+      <a href="/sdwan_scope_definition.html" class="doc-open" target="_blank">単独で開く ↗</a>
+    </div>
+    <p class="doc-desc">SD-WAN導入対象となる全拠点の一覧とルーター管理区分を定義。Cato導入を想定した拠点分類と段階的展開の範囲を整理</p>
+    <div class="doc-frame">
+      <iframe src="/sdwan_scope_definition.html" loading="lazy" style="height:800px;"></iframe>
+    </div>
+  </section>
+
+  <!-- NW-006 -->
+  <section class="doc-section" id="nw006">
+    <div class="doc-section-bar">
+      <span class="doc-id">NW-006</span>
+      <h3>BCP リスク評価マトリクス</h3>
+      <a href="/bcp_risk_matrix.html" class="doc-open" target="_blank">単独で開く ↗</a>
+    </div>
+    <p class="doc-desc">ネットワーク障害・災害時の事業継続リスクをベンダー別に評価。冗長構成・復旧時間・拠点切替の観点でIIJ・Cato・VarioSecureを比較</p>
+    <div class="doc-frame">
+      <iframe src="/bcp_risk_matrix.html" loading="lazy" style="height:800px;"></iframe>
+    </div>
+  </section>
+
+  <footer class="omnibus-footer">
+    AKIBAホールディングス 情報システム部
+  </footer>
+
+</body>
+</html>
