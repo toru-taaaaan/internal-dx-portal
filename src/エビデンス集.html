@@ -351,6 +351,7 @@
 
 <body>
 <div class="layout-wrapper">
+    <button class="sidebar-toggle" onclick="toggleSidebar()" title="メニュー開閉">&#x25C0;</button>
     <aside class="sidebar">
   <header class="sidebar-header">
     <a href="/index.html" style="text-decoration:none;color:inherit;">
@@ -2122,6 +2123,18 @@ iOS端末（iPad）を各所に設置してUI提供
 
     </main>
 <script>
+function toggleSidebar() {
+  var w = document.querySelector('.layout-wrapper');
+  var btn = document.querySelector('.sidebar-toggle');
+  w.classList.toggle('sidebar-hidden');
+  btn.innerHTML = w.classList.contains('sidebar-hidden') ? '&#x25B6;' : '&#x25C0;';
+  try { localStorage.setItem('sidebar-hidden', w.classList.contains('sidebar-hidden') ? '1' : ''); } catch(e) {}
+}
+(function() {
+  try { if (localStorage.getItem('sidebar-hidden') === '1') {
+    document.querySelector('.layout-wrapper').classList.add('sidebar-hidden');
+  }} catch(e) {}
+})();
 function toggleCategory(header) {
   header.parentElement.classList.toggle('collapsed');
 }

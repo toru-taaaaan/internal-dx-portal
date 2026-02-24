@@ -26,6 +26,47 @@ body:has(.layout-wrapper) {
   height: 100vh;
   overflow-y: auto;
   z-index: 100;
+  transition: transform 0.25s ease;
+}
+
+/* === サイドバー開閉トグル === */
+.sidebar-toggle {
+  position: fixed;
+  top: 12px;
+  left: 248px;
+  z-index: 101;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.3);
+  background: #1e3a8a;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
+  transition: left 0.25s ease, background 0.15s;
+  padding: 0;
+}
+.sidebar-toggle:hover {
+  background: #2563eb;
+  border-color: rgba(255,255,255,0.6);
+}
+.layout-wrapper.sidebar-hidden .sidebar {
+  transform: translateX(-280px);
+}
+.layout-wrapper.sidebar-hidden .main-scroll {
+  margin-left: 0;
+}
+.layout-wrapper.sidebar-hidden .sidebar-toggle {
+  left: 12px;
+  background: #334155;
+  border-color: #64748b;
+}
+.layout-wrapper.sidebar-hidden .sidebar-toggle:hover {
+  background: #475569;
 }
 
 .sidebar-header {
@@ -112,6 +153,7 @@ body:has(.layout-wrapper) {
   background-color: #fcfcfc;
   min-height: 100vh;
   overflow-y: auto;
+  transition: margin-left 0.25s ease;
 }
 
 /* Directory Sections */
