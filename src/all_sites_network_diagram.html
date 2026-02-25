@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>全拠点 ネットワーク構成図（VarioSecure＋Cato）</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; background-color: #f9f9f9; }
+        .container { background-color: white; padding: 20px 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; box-sizing: border-box; margin: 0 auto; }
+        h1 { font-size: 24px; color: #333; margin-bottom: 5px; }
+        h2 { font-size: 20px; color: #444; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 40px; }
+        p { color: #666; line-height: 1.6; }
+        .mermaid { margin-top: 30px; text-align: center; overflow: visible; }
+        .category-box { background-color: #f5f8fc; border-left: 4px solid #2980b9; padding: 15px; margin-bottom: 20px; border-radius: 0 4px 4px 0; }
+        .category-box h3 { margin-top: 0; color: #2980b9; font-size: 16px; margin-bottom: 10px; }
+        .category-box ul { margin-bottom: 0; padding-left: 20px; color: #555; }
+        .category-box li { margin-bottom: 5px; }
+    </style>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true, theme: 'default', flowchart: { padding: 30 } });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>全拠点 ネットワーク構成図（VarioSecure残存 ＋ Cato導入案）</h1>
+        <p>
+            SCSK角田様および社内確認用の、<strong>AKIBAホールディングス全拠点（計10拠点）</strong>を網羅したネットワーク構成案です。<br>
+            2/24の塩田部長判断（VarioSecure全拠点残存）を前提とし、各拠点の役割（Cato要否、SECOM通信の有無など）に応じて大きく4つのカテゴリに分類しています。
+        </p>
+
+        <div class="mermaid">
+        graph TD
+            %% 外部ネットワーク
+            subgraph インターネット_クラウド ["インターネット / クラウド"]
+                ISP_Existing[既存ISP: フレッツ等]
+                ISP_New[新規専用回線]
+                CatoCloud((Cato SASE Cloud))
+                VPN[閉域網: VarioSecure IP-VPN]
+            end
+
+            %% ==========================================
+            %% カテゴリ1: 本社（集約点・SECOMメイン）
+            %% ==========================================
+            subgraph カテゴリ1_本社_築地 ["カテゴリ1: 本社（築地）"]
+                HQ_VS[VSルーター]
+                HQ_Cato[Cato Socket]
+                HQ_SW[L2/L3 SW]
+
+                HQ_Secom[SECOMメイン]
+                HQ_Servers[本社サーバー等]
+
+                HQ_Servers --- HQ_SW
+                HQ_SW --- HQ_Cato
+
+                HQ_VS --- HQ_Secom
+
+                HQ_Cato --> ISP_New
+            end
+            VPN <-->|全拠点通信を集約| HQ_VS
+
+            %% ==========================================
+            %% カテゴリ2: Cato導入対象 主要業務拠点
+            %% ==========================================
+            subgraph カテゴリ2_主要業務拠点 ["カテゴリ2: 主要拠点（橋本/多摩/大阪）"]
+                VS_Main[VSルーター]
+                Cato_Main[Cato Socket<br>新規導入]
+
+                PC_Main[PC / NAS / ゲスト]
+                Secom_Main[SECOM機器]
+
+                PC_Main -->|社内・社外通信すべて| Cato_Main
+                Secom_Main -->|SECOM用閉域網| VS_Main
+
+                VS_Main -----> VPN
+                Cato_Main --> ISP_New
+                ISP_New --> CatoCloud
+            end
+
+            %% ==========================================
+            subgraph カテゴリ3_その他業務拠点 ["カテゴリ3: その他業務（京橋/鬼怒川）"]
+                VS_Sub[VSルーター]
+                Cato_Sub[Cato Socket検討]
+                PC_Sub[業務PC]
+                Secom_Sub[SECOM機器]
+
+                PC_Sub -->|※Cato導入時| Cato_Sub
+                Cato_Sub -.-> ISP_New
+
+                Secom_Sub -->|SECOM専用| VS_Sub
+                VS_Sub -----> VPN
+            end
+
+            %% ==========================================
+            %% カテゴリ4: 勤怠管理のみの拠点
+            %% ==========================================
+            subgraph カテゴリ4_勤怠限定拠点 ["カテゴリ4: 勤怠限定（名古屋/和歌山）"]
+                VS_Kintai[VSルーター]
+                Secom_Kintai[SECOM機器]
+                Term_Kintai[勤怠打刻端末等]
+                Router_Kintai[通常ルーター]
+
+                Term_Kintai -.-> Router_Kintai
+                Router_Kintai --> ISP_Existing
+
+                Secom_Kintai -->|SECOM専用| VS_Kintai
+                VS_Kintai -----> VPN
+            end
+
+            %% ==========================================
+            %% カテゴリ5: バディネット拠点
+            %% ==========================================
+            subgraph カテゴリ5_バディネット拠点 ["カテゴリ5: バディネット（福岡等）"]
+                Router_Buddy[ルーター]
+                SW_Buddy[ハブ]
+                NW_Buddy[社内NW]
+                VS_Buddy[VSルーター]
+                Secom_Buddy[SECOM機器]
+
+                Router_Buddy -->|インターネット| ISP_Existing
+                Router_Buddy --> SW_Buddy
+
+                SW_Buddy --> NW_Buddy
+                SW_Buddy --> VS_Buddy
+
+                VS_Buddy --- VPN
+                VS_Buddy --> Secom_Buddy
+            end
+
+            style Cato_Main stroke:#f66,stroke-width:2px
+            style Cato_Sub stroke:#f66,stroke-width:2px,stroke-dasharray: 5 5
+            style ISP_New stroke:#f66,stroke-width:2px
+        </div>
+
+        <hr style="margin-top: 50px; border: 0; border-top: 1px solid #ddd;">
+
+        <h2>拠点分類の定義と前提</h2>
+
+        <div class="category-box">
+            <h3>1. カテゴリ1: 本社（築地拠点）</h3>
+            <ul>
+                <li>全社VarioSecure VPN網の終端（HUB拠点）でありつつ、業務通信を集約するCato Socketも併設される中心拠点です。</li>
+                <li>「すべての拠点にVarioSecureを残すが、SECOMの入退室管理機器以外は一切つながない」という強力な原則を維持し、社内ネットワーク（Cato）とは完全に分離されます。</li>
+            </ul>
+        </div>
+
+        <div class="category-box">
+            <h3>2. カテゴリ2: 主要業務拠点（橋本 / 多摩 / 大阪）</h3>
+            <ul>
+                <li><strong>PCなどの業務通信（Cato Socket）と、SECOM通信（VarioSecure）をハブやスイッチで混在させず完全に分離</strong>している拠点です。</li>
+                <li>本社にもCatoが導入されているため、この構成で社内・社外のすべての通信がシンプルに成立します。</li>
+            </ul>
+        </div>
+
+        <div class="category-box">
+            <h3>3. カテゴリ3: その他業務拠点（京橋 / 鬼怒川）</h3>
+            <ul>
+                <li>カテゴリ2と同様に、業務PCのネットワークと、SECOMしか繋がっていないVarioSecureネットワークを分離しています。</li>
+            </ul>
+        </div>
+
+        <div class="category-box">
+            <h3>4. カテゴリ4: 勤怠限定拠点（名古屋 / 和歌山 等）</h3>
+            <ul>
+                <li>勤怠打刻端末等の通信と、SECOM通信（VarioSecure）を完全に分離しています。</li>
+                <li>VarioSecureには他拠点と同様にSECOM機器のみが接続されます。打刻端末は通常のインターネットルーター等を使用します。</li>
+            </ul>
+        </div>
+
+        <div class="category-box">
+            <h3>5. カテゴリ5: バディネット拠点（福岡 等）</h3>
+            <ul>
+                <li>インターネット回線からまずルーターやハブを経由し、そこから「バディネット独自の社内ネットワーク」と「VarioSecure」の2系統に分岐する特殊構成です。</li>
+                <li>VarioSecureの配下にはSECOM機器のみが存在しており、SECOM通信専用回線としてVarioSecureが機能しています。</li>
+            </ul>
+        </div>
+
+
+    <h2 style="margin-top: 60px; padding-bottom: 10px; border-bottom: 2px solid #eee;">各拠点 詳細ネットワーク構成図（全10拠点）</h2>
+    <p style="font-size:0.9rem; color:#666; margin-bottom:20px;">各拠点に設置されている全機器（ファイルサーバー、複合機、バディネット用ルーター等）を詳細化し、全10拠点を1つずつ網羅しています。Cato導入時の Socket/Client判定基準も含みます。</p>
+    <div style="display: grid; grid-template-columns: 1fr; gap: 30px;">
+
+        <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); page-break-inside: avoid;">
+            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type A</span>本社（築地 6F/7F）</h3>
+            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">VarioSecure VPNハブ。全拠点の業務NW・SECOMログ集約。AD/ファイルサーバー集約。</p>
+            <div class="mermaid" style="background:#fafafa; padding:15px; border-radius:6px; min-height: 350px;">
+            graph TD
+                subgraph 外部["外部ネットワーク"]
+                    ISP["新規専用回線<br/>(Cato用)"]
+                    CatoCloud[["Cato SASE Cloud"]]
+                    VPN["閉域網: VarioSecure"]
+                end
+
+                subgraph 拠点["本社（築地 6F/7F）HUB"]
+                    D0["VSR601J<br/>(ルーター)<br/>VarioSecure VPN ハブ"]
+                    D1["PDCSVR<br/>(AD Primary)<br/>192.168.1.6"]
+                    D2["BDCSVR<br/>(AD Secondary)<br/>192.168.1.7"]
+                    D3["ADSHARESVR<br/>(ファイルサーバー)<br/>192.168.1.15"]
+                    D4["TRIISVR<br/>(SECOM Server)<br/>192.168.1.30 全拠点ログ集約"]
+                    D5["Secom入退室機器<br/>(Secom TRII)<br/>6-7F + 3-5F"]
+                    D6["複合機<br/>(RICOH IM C4500)<br/>.1.55 (調査中)"]
+                    D7["業務PC<br/>(クライアント)<br/>57名"]
+                    D8["TENSUITE<br/>(レガシーAP)<br/>AP .1.12 / DB .1.14 (停止中)"]
+
+                    D0 --- D1
+                    D0 --- D2
+                    D0 --- D3
+                    D0 --- D4
+                    D0 --- D5
+                    D0 --- D6
+                    D0 --- D7
+                    D0 --- D8
+                end
+
+                D0 -->|HUB役割| VPN
+                D0 -->|新規接続| ISP
+                ISP -->|Cato接続| CatoCloud
+
+                style D0 stroke:#f59e0b,stroke-width:3px,fill:#fef3c7
+                style D4 stroke:#ef4444,stroke-width:2px,fill:#fee2e2
+                style D1 stroke:#3b82f6,stroke-width:2px,fill:#dbeafe
+                style D2 stroke:#3b82f6,stroke-width:2px,fill:#dbeafe
+            </div>
+            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (詳細):</strong><br/><span style='display:block; margin:4px 0;'>• <strong>VSR601J (Hub)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) VarioSecure VPN ハブ</span></span><span style='display:block; margin:4px 0;'>• <strong>PDCSVR</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(AD Server) Primary (192.168.1.6)</span></span><span style='display:block; margin:4px 0;'>• <strong>BDCSVR</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(AD Server) Secondary (192.168.1.7)</span></span><span style='display:block; margin:4px 0;'>• <strong>ADSHARESVR</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ファイルサーバー) 192.168.1.15 (大阪・橋本がアクセス)</span></span><span style='display:block; margin:4px 0;'>• <strong>TRIISVR</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(SECOM Server) 192.168.1.30 (全拠点ログ集約)</span></span><span style='display:block; margin:4px 0;'>• <strong>TENSUITE</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(レガシーシステム) AP .1.12 / DB .1.14 (電源OFF・NW未接続)</span></span><span style='display:block; margin:4px 0;'>• <strong>Secom入退室機器</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(Secom TRII) 6-7F + 3-5F(BN管理)</span></span><span style='display:block; margin:4px 0;'>• <strong>業務PC</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(クライアント) 57名</span></span><span style='display:block; margin:4px 0;'>• <strong>複合機</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(RICOH IM C4500) .1.55 (VPN不要の可能性あり・調査中)</span></span></div>
+        </div>
+        <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); page-break-inside: avoid;">
+            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type A</span>大阪営業所</h3>
+            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">ローカルブレイクアウト実現拠点。インターネット通信は直接接続。LBO用に機種変更済。</p>
+            <div class="mermaid" style="background:#fafafa; padding:15px; border-radius:6px; min-height: 350px;">
+            graph TD
+                subgraph 外部["外部ネットワーク / 本社"]
+                    HUB["本社VPN HUB<br/>(VSR601J)"]
+                end
+
+                subgraph 拠点["大阪営業所"]
+                    D0["VSR601J<br/>(ルーター)<br/>LBO用に機種変更済"]
+                    D1["BN用ルーター<br/>(ルーター)<br/>Hub で分岐（バディネット用）"]
+                    D2["ファイルサーバー参照<br/>(クライアント)<br/>アドテックのみ本社FSを利用（Socket要）"]
+                    D3["Secom入退室機器<br/>(Secom TRII)<br/>Socket要"]
+                    D4["業務PC<br/>(クライアント)<br/>4名"]
+                end
+
+                HUB <-->|VPN接続| D0
+
+                style D0 stroke:#f59e0b,stroke-width:2px,fill:#fef3c7
+            </div>
+            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (詳細):</strong><br/><span style='display:block; margin:4px 0;'>• <strong>VSR601J</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) LBO用に機種変更済</span></span><span style='display:block; margin:4px 0;'>• <strong>BN用ルーター</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) Hub で分岐（バディネット用）</span></span><span style='display:block; margin:4px 0;'>• <strong>ファイルサーバー参照</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(クライアント) アドテックのみ本社FSを利用（Socket要）</span></span><span style='display:block; margin:4px 0;'>• <strong>Secom入退室機器</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(Secom TRII) Socket要</span></span><span style='display:block; margin:4px 0;'>• <strong>業務PC</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(クライアント) 4名</span></span></div>
+        </div>
+        <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); page-break-inside: avoid;">
+            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type A</span>多摩 (R&D)</h3>
+            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">研究開発センター。全通信が本社経由。複合機2台の Socket要否は調査中。</p>
+            <div class="mermaid" style="background:#fafafa; padding:15px; border-radius:6px; min-height: 350px;">
+            graph TD
+                subgraph 外部["外部ネットワーク / 本社"]
+                    HUB["本社VPN HUB<br/>(VSR601J)"]
+                end
+
+                subgraph 拠点["多摩 (R&D)"]
+                    D0["VSR400<br/>(ルーター)<br/>R&Dセンター"]
+                    D1["Secom入退室機器<br/>(Secom TRII)<br/>Socket要"]
+                    D2["業務PC<br/>(クライアント)<br/>R&D業務"]
+                    D3["複合機<br/>(マルチファンクション)<br/>x2 (Socket要否調査中)"]
+                end
+
+                HUB <-->|VPN接続| D0
+
+                style D0 stroke:#f59e0b,stroke-width:2px,fill:#fef3c7
+            </div>
+            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (詳細):</strong><br/><span style='display:block; margin:4px 0;'>• <strong>VSR400</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) R&Dセンター</span></span><span style='display:block; margin:4px 0;'>• <strong>Secom入退室機器</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(Secom TRII) Socket要</span></span><span style='display:block; margin:4px 0;'>• <strong>業務PC</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(クライアント) R&D業務</span></span><span style='display:block; margin:4px 0;'>• <strong>複合機</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(マルチファンクション) x2 (Socket要否調査中)</span></span></div>
+        </div>
+        <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); page-break-inside: avoid;">
+            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type A</span>橋本 (IoT Lab)</h3>
+            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">IoT研究拠点。IOTSVR・QNAP NAS・OrCAD PCを集中管理。最も多くの対応が必要（①②③④）。</p>
+            <div class="mermaid" style="background:#fafafa; padding:15px; border-radius:6px; min-height: 350px;">
+            graph TD
+                subgraph 外部["外部ネットワーク / 本社"]
+                    HUB["本社VPN HUB<br/>(VSR601J)"]
+                end
+
+                subgraph 拠点["橋本 (IoT Lab)"]
+                    D0["VSR400<br/>(ルーター)<br/>R&Dセンターと同一サブネット"]
+                    D1["IOTSVR<br/>(IoTファイルサーバー)<br/>.30.15 / BMC .30.16 (Socket要)"]
+                    D2["QNAP NAS<br/>(ストレージ)<br/>TS-431U .30.10 ENG用 (Socket要)"]
+                    D3["OrCAD PC<br/>(ワークステーション)<br/>.30.13 単なるPC (Socket要)"]
+                    D4["Secom入退室機器<br/>(Secom TRII)<br/>Socket要"]
+                    D5["業務PC<br/>(クライアント)<br/>IoT運用"]
+                    D6["複合機<br/>(マルチファンクション)<br/>Socket要否調査中"]
+                end
+
+                HUB <-->|VPN接続| D0
+
+                style D0 stroke:#f59e0b,stroke-width:2px,fill:#fef3c7
+            </div>
+            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (詳細):</strong><br/><span style='display:block; margin:4px 0;'>• <strong>VSR400</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) R&Dセンターと同一サブネット</span></span><span style='display:block; margin:4px 0;'>• <strong>IOTSVR</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(IoTファイルサーバー) .30.15 / BMC .30.16 (Socket要)</span></span><span style='display:block; margin:4px 0;'>• <strong>QNAP NAS</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ストレージ) TS-431U .30.10 ENG用 (Socket要)</span></span><span style='display:block; margin:4px 0;'>• <strong>OrCAD PC</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ワークステーション) .30.13 単なるPC (Socket要)</span></span><span style='display:block; margin:4px 0;'>• <strong>Secom入退室機器</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(Secom TRII) Socket要</span></span><span style='display:block; margin:4px 0;'>• <strong>業務PC</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(クライアント) IoT運用</span></span><span style='display:block; margin:4px 0;'>• <strong>複合機</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(マルチファンクション) Socket要否調査中</span></span></div>
+        </div>
+        <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); page-break-inside: avoid;">
+            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type B</span>福岡</h3>
+            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">BN（バディネット）管理。SECOM通信のみ。型番VSR402J。ONU→Hub→Router→Secom構成。</p>
+            <div class="mermaid" style="background:#fafafa; padding:15px; border-radius:6px; min-height: 350px;">
+            graph TD
+                subgraph 外部["外部ネットワーク"]
+                    ISP["ISP / インターネット"]
+                    BN["バディネット管理"]
+                end
+
+                subgraph 拠点["福岡"]
+                    D0["ONU<br/>(ネットワーク終端装置)"]
+                    D1["Hub<br/>(ネットワークハブ)"]
+                    D2["ルーター<br/>(VSR402J)"]
+                    D3["VSR402J<br/>(ルーター)<br/>BN管理"]
+                    D4["ONU<br/>(ネットワーク終端装置)<br/>インターネット接続"]
+                    D5["Hub<br/>(ネットワークハブ)<br/>ルーター分岐"]
+                    D6["Secom入退室機器<br/>(Secom TRII)<br/>Socket要"]
+                    D7["勤怠打刻端末<br/>(クライアント)<br/>BN管理（限定機能）"]
+                end
+
+                ISP --> D0
+                D0 --> D1
+                D1 --> D2
+                    D2 --- D3
+                    D2 --- D4
+                    D2 --- D5
+                    D2 --- D6
+                    D2 --- D7
+                D2 ---|BN管理| BN
+
+                style D2 stroke:#94a3b8,stroke-width:2px,fill:#f1f5f9
+            </div>
+            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (詳細):</strong><br/><span style='display:block; margin:4px 0;'>• <strong>VSR402J</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) BN管理</span></span><span style='display:block; margin:4px 0;'>• <strong>ONU</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ネットワーク終端装置) インターネット接続</span></span><span style='display:block; margin:4px 0;'>• <strong>Hub</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ネットワークハブ) ルーター分岐</span></span><span style='display:block; margin:4px 0;'>• <strong>Secom入退室機器</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(Secom TRII) Socket要</span></span><span style='display:block; margin:4px 0;'>• <strong>勤怠打刻端末</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(クライアント) BN管理（限定機能）</span></span></div>
+        </div>
+        <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); page-break-inside: avoid;">
+            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type B</span>和歌山</h3>
+            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">BN（バディネット）管理。SECOM通信のみ。型番VSR402J。ONU→Hub→Router→Secom構成。</p>
+            <div class="mermaid" style="background:#fafafa; padding:15px; border-radius:6px; min-height: 350px;">
+            graph TD
+                subgraph 外部["外部ネットワーク"]
+                    ISP["ISP / インターネット"]
+                    BN["バディネット管理"]
+                end
+
+                subgraph 拠点["和歌山"]
+                    D0["ONU<br/>(ネットワーク終端装置)"]
+                    D1["Hub<br/>(ネットワークハブ)"]
+                    D2["ルーター<br/>(VSR402J)"]
+                    D3["VSR402J<br/>(ルーター)<br/>BN管理"]
+                    D4["ONU<br/>(ネットワーク終端装置)<br/>インターネット接続"]
+                    D5["Hub<br/>(ネットワークハブ)<br/>ルーター分岐"]
+                    D6["Secom入退室機器<br/>(Secom TRII)<br/>Socket要"]
+                    D7["勤怠打刻端末<br/>(クライアント)<br/>BN管理（限定機能）"]
+                end
+
+                ISP --> D0
+                D0 --> D1
+                D1 --> D2
+                    D2 --- D3
+                    D2 --- D4
+                    D2 --- D5
+                    D2 --- D6
+                    D2 --- D7
+                D2 ---|BN管理| BN
+
+                style D2 stroke:#94a3b8,stroke-width:2px,fill:#f1f5f9
+            </div>
+            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (詳細):</strong><br/><span style='display:block; margin:4px 0;'>• <strong>VSR402J</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) BN管理</span></span><span style='display:block; margin:4px 0;'>• <strong>ONU</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ネットワーク終端装置) インターネット接続</span></span><span style='display:block; margin:4px 0;'>• <strong>Hub</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ネットワークハブ) ルーター分岐</span></span><span style='display:block; margin:4px 0;'>• <strong>Secom入退室機器</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(Secom TRII) Socket要</span></span><span style='display:block; margin:4px 0;'>• <strong>勤怠打刻端末</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(クライアント) BN管理（限定機能）</span></span></div>
+        </div>
+        <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); page-break-inside: avoid;">
+            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type B</span>京橋ビル</h3>
+            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">BN（バディネット）管理。SECOM通信のみ。型番VSR402J。ONU→Hub→Router→Secom構成。</p>
+            <div class="mermaid" style="background:#fafafa; padding:15px; border-radius:6px; min-height: 350px;">
+            graph TD
+                subgraph 外部["外部ネットワーク"]
+                    ISP["ISP / インターネット"]
+                    BN["バディネット管理"]
+                end
+
+                subgraph 拠点["京橋ビル"]
+                    D0["ONU<br/>(ネットワーク終端装置)"]
+                    D1["Hub<br/>(ネットワークハブ)"]
+                    D2["ルーター<br/>(VSR402J)"]
+                    D3["VSR402J<br/>(ルーター)<br/>BN管理"]
+                    D4["ONU<br/>(ネットワーク終端装置)<br/>インターネット接続"]
+                    D5["Hub<br/>(ネットワークハブ)<br/>ルーター分岐"]
+                    D6["Secom入退室機器<br/>(Secom TRII)<br/>Socket要"]
+                    D7["勤怠打刻端末<br/>(クライアント)<br/>BN管理（限定機能）"]
+                end
+
+                ISP --> D0
+                D0 --> D1
+                D1 --> D2
+                    D2 --- D3
+                    D2 --- D4
+                    D2 --- D5
+                    D2 --- D6
+                    D2 --- D7
+                D2 ---|BN管理| BN
+
+                style D2 stroke:#94a3b8,stroke-width:2px,fill:#f1f5f9
+            </div>
+            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (詳細):</strong><br/><span style='display:block; margin:4px 0;'>• <strong>VSR402J</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) BN管理</span></span><span style='display:block; margin:4px 0;'>• <strong>ONU</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ネットワーク終端装置) インターネット接続</span></span><span style='display:block; margin:4px 0;'>• <strong>Hub</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ネットワークハブ) ルーター分岐</span></span><span style='display:block; margin:4px 0;'>• <strong>Secom入退室機器</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(Secom TRII) Socket要</span></span><span style='display:block; margin:4px 0;'>• <strong>勤怠打刻端末</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(クライアント) BN管理（限定機能）</span></span></div>
+        </div>
+        <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); page-break-inside: avoid;">
+            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type B</span>名古屋</h3>
+            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">BN（バディネット）管理。SECOM通信のみ。型番VSR402J。ONU→Hub→Router→Secom構成。</p>
+            <div class="mermaid" style="background:#fafafa; padding:15px; border-radius:6px; min-height: 350px;">
+            graph TD
+                subgraph 外部["外部ネットワーク"]
+                    ISP["ISP / インターネット"]
+                    BN["バディネット管理"]
+                end
+
+                subgraph 拠点["名古屋"]
+                    D0["ONU<br/>(ネットワーク終端装置)"]
+                    D1["Hub<br/>(ネットワークハブ)"]
+                    D2["ルーター<br/>(VSR402J)"]
+                    D3["VSR402J<br/>(ルーター)<br/>BN管理"]
+                    D4["ONU<br/>(ネットワーク終端装置)<br/>インターネット接続"]
+                    D5["Hub<br/>(ネットワークハブ)<br/>ルーター分岐"]
+                    D6["Secom入退室機器<br/>(Secom TRII)<br/>Socket要"]
+                    D7["勤怠打刻端末<br/>(クライアント)<br/>BN管理（限定機能）"]
+                end
+
+                ISP --> D0
+                D0 --> D1
+                D1 --> D2
+                    D2 --- D3
+                    D2 --- D4
+                    D2 --- D5
+                    D2 --- D6
+                    D2 --- D7
+                D2 ---|BN管理| BN
+
+                style D2 stroke:#94a3b8,stroke-width:2px,fill:#f1f5f9
+            </div>
+            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (詳細):</strong><br/><span style='display:block; margin:4px 0;'>• <strong>VSR402J</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) BN管理</span></span><span style='display:block; margin:4px 0;'>• <strong>ONU</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ネットワーク終端装置) インターネット接続</span></span><span style='display:block; margin:4px 0;'>• <strong>Hub</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ネットワークハブ) ルーター分岐</span></span><span style='display:block; margin:4px 0;'>• <strong>Secom入退室機器</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(Secom TRII) Socket要</span></span><span style='display:block; margin:4px 0;'>• <strong>勤怠打刻端末</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(クライアント) BN管理（限定機能）</span></span></div>
+        </div>
+    
+        <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); page-break-inside: avoid;">
+            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type A</span>鬼怒川</h3>
+            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">その他業務拠点。PC業務用のネットワークと、SECOM接続用のVarioSecureネットワークを分割する標準構成。</p>
+            <div class="mermaid" style="background:#fafafa; padding:15px; border-radius:6px; min-height: 350px;">
+            graph TD
+                subgraph 外部["外部ネットワーク / 本社"]
+                    HUB["本社VPN HUB<br/>(VSR601J)"]
+                    ISP["新規専用回線<br/>(Cato用)"]
+                end
+
+                subgraph 拠点["鬼怒川"]
+                    D0["VSルーター<br/>(VarioSecure)"]
+                    D1["Cato Socket<br/>(導入検討)"]
+                    D3["Secom入退室機器<br/>(Secom TRII)<br/>Socket要"]
+                    D4["業務PC<br/>(クライアント)"]
+                    D5["複合機・等<br/>(詳細調査中)"]
+                end
+
+                HUB <-->|VPN接続| D0
+                D1 -.->|インターネット接続| ISP
+                
+                D0 --- D3
+                D1 --- D4
+                D1 --- D5
+
+                style D0 stroke:#f59e0b,stroke-width:2px,fill:#fef3c7
+                style D1 stroke:#f66,stroke-width:2px,stroke-dasharray: 5 5
+            </div>
+            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (詳細):</strong><br/><span style='display:block; margin:4px 0;'>• <strong>VSルーター</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) SECOM通信専用</span></span><span style='display:block; margin:4px 0;'>• <strong>Cato Socket</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) 社内外通信用（導入検討）</span></span><span style='display:block; margin:4px 0;'>• <strong>Secom機器</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(Secom TRII) VS配下</span></span><span style='display:block; margin:4px 0;'>• <strong>業務PC</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(クライアント) 業務利用</span></span><span style='display:block; margin:4px 0;'>• <strong>複合機・他</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(マルチファンクション) 詳細構成は要確認</span></span></div>
+        </div>
+
+        <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); page-break-inside: avoid;">
+            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">限定拠点</span>勤怠限定拠点等（名称要確認）</h3>
+            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">全10拠点のうちの残る1拠点。打刻等のみを利用し、SECOM通信と物理的に分離する標準構成を想定。</p>
+            <div class="mermaid" style="background:#fafafa; padding:15px; border-radius:6px; min-height: 350px;">
+            graph TD
+                subgraph 外部["外部ネットワーク / 本社"]
+                    HUB["本社VPN HUB<br/>(VSR601J)"]
+                    ISP["既存ISP等<br/>(インターネット)"]
+                end
+
+                subgraph 拠点["勤怠限定拠点（仮）"]
+                    D0["VSルーター<br/>(VarioSecure)"]
+                    D1["一般ルーター<br/>(市販品等)"]
+                    D3["Secom入退室機器<br/>(Secom TRII)<br/>Socket要"]
+                    D4["勤怠打刻端末<br/>(クライアント)"]
+                end
+
+                HUB <-->|VPN接続| D0
+                D1 -->|インターネット接続| ISP
+                
+                D0 --- D3
+                D1 --- D4
+
+                style D0 stroke:#f59e0b,stroke-width:2px,fill:#fef3c7
+            </div>
+            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (詳細):</strong><br/><span style='display:block; margin:4px 0;'>• <strong>VSルーター</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) SECOM通信専用</span></span><span style='display:block; margin:4px 0;'>• <strong>一般ルーター</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) 勤怠等のインターネット用</span></span><span style='display:block; margin:4px 0;'>• <strong>Secom機器</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(Secom TRII) VS配下</span></span><span style='display:block; margin:4px 0;'>• <strong>勤怠打刻端末</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(クライアント)</span></span></div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>
