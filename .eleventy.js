@@ -4,6 +4,9 @@ module.exports = function (eleventyConfig) {
   // 既存HTMLファイルはテンプレート処理せず、そのまま _site/ にコピー
   eleventyConfig.addPassthroughCopy({ "src/*.html": "." });
 
+  // src/pages/ をそのまま _site/pages/ にコピー
+  eleventyConfig.addPassthroughCopy("src/pages");
+
   // assets/ をそのままコピー
   eleventyConfig.addPassthroughCopy("assets");
 
