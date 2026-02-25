@@ -2,7 +2,7 @@
 title: Compass ナレッジベース
 layout: report
 subtitle: ベンダー情報・プロジェクト状況の総合案内
-permalink: /compass.html
+permalink: /compass/
 ---
 
 > **運用原則: エビデンスはVendorsで保管、Projectsで調理**
