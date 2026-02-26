@@ -402,7 +402,7 @@
 
   <div style="max-width:1100px;margin:0 auto;padding:48px;">
     <h1 class="page-title">VarioSecure 費用分解</h1>
-    <p class="page-sub">作業用整理ノート｜全金額の出典と突き合わせ｜2026-02-21</p>
+    <p class="page-sub">作業用整理ノート｜全金額の出典と突き合わせ｜<span style="color:#dc2626;font-weight:900;">最終更新: 2026-02-26</span>（Cato モバイルライセンスを130名→50名に変更、2/25角田氏メール反映）</p>
 
     <!-- ========== 0. 現状整理 ========== -->
     <div class="section">
@@ -786,17 +786,17 @@
             <td class="right"><span class="money">¥50,000</span></td>
           </tr>
           <tr style="background:#f5f3ff;">
-            <td>モバイルアクセスライセンス<br><span style="font-size:11px;color:#7c3aed;">（全拠点共通・130名）</span></td>
-            <td style="font-family:monospace;font-size:12px;">Cato Client 130u</td>
+            <td>モバイルアクセスライセンス<br><span style="font-size:11px;color:#7c3aed;">（全拠点共通・50名）</span><span style="font-size:10px;color:#dc2626;margin-left:4px;">※2/25更新</span></td>
+            <td style="font-family:monospace;font-size:12px;">Cato Client 50u</td>
             <td class="right"><span style="color:#94a3b8;font-size:12px;">—</span></td>
-            <td class="right"><span class="money" style="color:#5b21b6;">¥108,333</span></td>
-            <td class="right"><span class="money">¥108,333</span></td>
+            <td class="right"><span class="money" style="color:#5b21b6;">¥41,667</span></td>
+            <td class="right"><span class="money">¥41,667</span></td>
           </tr>
           <tr class="total-row" style="background:#f5f3ff;">
             <td colspan="2" style="text-align:right;font-size:12px;">小計（3拠点Socket + モバイル + マネージド）</td>
             <td class="right"><span class="money big">¥40,800</span></td>
-            <td class="right"><span class="money big" style="color:#5b21b6;">¥358,334</span></td>
-            <td class="right"><span class="money big">¥399,134</span></td>
+            <td class="right"><span class="money big" style="color:#5b21b6;">¥291,668</span></td>
+            <td class="right"><span class="money big">¥332,468</span></td>
           </tr>
 
           <!-- 合計 -->
@@ -804,8 +804,8 @@
             <td style="text-align:center;font-weight:900;">—</td>
             <td colspan="2" style="text-align:right;font-weight:900;">月額合計</td>
             <td class="right"><span class="money big">¥122,400</span></td>
-            <td class="right"><span class="money big" style="color:#5b21b6;">¥608,334</span></td>
-            <td class="right"><span class="money big" style="color:#0369a1;">¥730,734</span></td>
+            <td class="right"><span class="money big" style="color:#5b21b6;">¥541,668</span></td>
+            <td class="right"><span class="money big" style="color:#0369a1;">¥664,068</span></td>
           </tr>
         </tbody>
       </table>
@@ -813,7 +813,7 @@
       <div class="source-box" style="margin-top:12px;">
         <strong>注1:</strong> VarioSecureは全8拠点で継続。SECOM通信およびVPNハブとして利用<br>
         <strong>注2:</strong> VarioSecure月額はPDF定価（税抜・24H保守）ベース。実請求額 ¥142,000（西川メール）との差額 ¥19,600 はISP費用等の合算と推定（→ Q2参照）<br>
-        <strong>注3:</strong> Cato月額¥608,334の内訳 ─ 本社Socket ¥66,667 ＋ Azure vSocket ¥183,333（¥250,000）／ 大阪・多摩・橋本 Socket 3台 ¥66,667×3（¥200,001）／ モバイルアクセス130名分 ¥108,333 ／ SCSKマネージドサービス ¥50,000（出典: SCSK 角田様メール 2026/2/13・2/18・最新版）
+        <strong>注3:</strong> Cato月額¥541,668の内訳 ─ 本社Socket ¥66,667 ＋ Azure vSocket ¥183,333（¥250,000）／ 大阪・多摩・橋本 Socket 3台 ¥66,667×3（¥200,001）／ モバイルアクセス<strong>50名分 ¥41,667</strong> ／ SCSKマネージドサービス ¥50,000（出典: SCSK 角田様メール 2026/2/13・2/18・<strong>2/25</strong>）
       </div>
 
       <!-- グループ分けのロジック -->
@@ -889,11 +889,12 @@
         <div style="background:#f5f3ff;border-radius:12px;padding:16px 20px;margin-bottom:16px;font-size:12px;line-height:1.8;color:#3b0764;">
           <strong>逆算の手順</strong><br>
           ① 角田様メール（2/13）：200名プラン ¥5,000,000/年<br>
-          ② 角田様メール（最新）：100名プラン ¥4,000,000/年<br>
+          ② 角田様メール（2/18）：100名プラン ¥4,000,000/年<br>
           ③ 差額（100名分）：¥1,000,000/年 → <strong>モバイル単価 ¥10,000/名/年（¥833/月/名）</strong><br>
           ④ 100名プラン ¥4,000,000 − モバイル100名分 ¥1,000,000 = <strong>拠点接続 ¥3,000,000/年（¥250,000/月）</strong>　※ Socket 1台（東京本社）+ Azure vSocket の2拠点ベース<br>
           ⑤ 角田様メール（2/18）：Socket追加1台 ¥800,000/年 → <strong>Socket追加単価 ¥66,667/月</strong>（初期費用なし）<br>
-          ⑥ マネージドサービス：¥600,000/年 → <strong>¥50,000/月</strong>（出典: 角田様メール 2/13）
+          ⑥ マネージドサービス：¥600,000/年 → <strong>¥50,000/月</strong>（出典: 角田様メール 2/13）<br>
+          <span style="color:#059669;font-weight:700;">⑦ 角田様メール（2/25）確認：50名プラン ¥3,500,000/年 → 逆算値が正確であることを確認（¥3,000,000拠点 + 50名×¥10,000 = ¥3,500,000 ✓）</span>
         </div>
 
         <!-- 単価一覧表 -->
@@ -923,7 +924,7 @@
               <td style="text-align:center;color:#64748b;">1台</td>
               <td class="right"><span class="money">¥2,200,000</span></td>
               <td class="right"><span class="money" style="color:#5b21b6;">¥183,333</span></td>
-              <td style="font-size:11px;color:#dc2626;">¥3,000,000 − Socket ¥800,000 の差引値。角田様確認中</td>
+              <td style="font-size:11px;color:#dc2626;">¥3,000,000 − Socket ¥800,000 の差引値。3/4打合せで確認予定</td>
             </tr>
             <tr>
               <td colspan="5" style="font-size:11px;color:#64748b;padding:6px 12px;">── 参考：単体追加価格 ──</td>
@@ -1377,7 +1378,7 @@
       <!-- モバイルアクセス -->
       <div style="position:absolute;z-index:2;left:820px;top:88px;text-align:center;">
         <div style="display:inline-block;background:#faf5ff;border:1.5px dashed #c4b5fd;border-radius:8px;padding:5px 10px;">
-          <div style="font-size:0.62rem;font-weight:700;color:#5b21b6;">モバイル 130名</div>
+          <div style="font-size:0.62rem;font-weight:700;color:#5b21b6;">モバイル 50名</div>
           <div style="font-size:0.55rem;color:#7c3aed;">Cato Client</div>
         </div>
       </div>
