@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>全拠点 ネットワーク構成図（VarioSecure＋Cato）</title>
     <style>
         body { font-family: sans-serif; margin: 20px; background-color: #f9f9f9; }
@@ -14,6 +15,51 @@
         .category-box h3 { margin-top: 0; color: #2980b9; font-size: 16px; margin-bottom: 10px; }
         .category-box ul { margin-bottom: 0; padding-left: 20px; color: #555; }
         .category-box li { margin-bottom: 5px; }
+
+        /* スマホ対応テーブル */
+        .location-section { margin-bottom: 40px; }
+        .location-header { display: flex; align-items: center; gap: 10px; margin: 20px 0 15px 0; }
+        .location-header h3 { margin: 0; font-size: 18px; color: #1e293b; }
+        .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; }
+        .badge-verified { background: #d1fae5; color: #065f46; }
+        .badge-documented { background: #f3f4f6; color: #374151; }
+
+        .device-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        .device-table th { background: #f3f4f6; padding: 10px 8px; text-align: left; font-weight: bold; border-bottom: 2px solid #e5e7eb; }
+        .device-table td { padding: 10px 8px; border-bottom: 1px solid #e5e7eb; }
+        .device-table tr:hover { background: #f9fafb; }
+
+        /* カテゴリ色分け（左ボーダー） */
+        .device-core { border-left: 3px solid #dc2626; }
+        .device-ad { border-left: 3px solid #3b82f6; }
+        .device-secom { border-left: 3px solid #10b981; }
+        .device-ap { border-left: 3px solid #f59e0b; }
+        .device-mfp { border-left: 3px solid #ec4899; }
+        .device-server { border-left: 3px solid #6b7280; }
+        .device-pc { border-left: 3px solid #94a3b8; }
+
+        /* モバイル対応 */
+        @media (max-width: 768px) {
+            body { margin: 12px; font-size: 14px; }
+            .container { padding: 15px; border-radius: 6px; }
+            h1 { font-size: 20px; margin-bottom: 10px; }
+            h2 { font-size: 18px; margin-top: 30px; }
+            h3 { font-size: 16px; }
+
+            .device-table { font-size: 13px; }
+            .device-table th, .device-table td { padding: 8px 6px; }
+
+            .location-header { flex-direction: column; align-items: flex-start; gap: 5px; }
+            .location-header h3 { font-size: 16px; }
+        }
+
+        @media (max-width: 480px) {
+            body { margin: 8px; }
+            h1 { font-size: 18px; }
+            h2 { font-size: 16px; }
+            .device-table { font-size: 12px; }
+            .device-table th, .device-table td { padding: 6px 4px; }
+        }
     </style>
     <script type="module">
       import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -651,6 +697,245 @@
             </div>
             <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (詳細):</strong><br/><span style='display:block; margin:4px 0;'>• <strong>VSルーター</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) SECOM通信専用</span></span><span style='display:block; margin:4px 0;'>• <strong>一般ルーター</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) 勤怠等のインターネット用</span></span><span style='display:block; margin:4px 0;'>• <strong>Secom機器</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(Secom TRII) VS配下</span></span><span style='display:block; margin:4px 0;'>• <strong>勤怠打刻端末</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(クライアント)</span></span></div>
         </div>
+
+        <!-- スマホ対応：全拠点機器一覧テーブル -->
+        <h2 style="margin-top: 60px;">📱 全拠点 機器一覧（スマホ対応）</h2>
+        <p style="font-size: 0.95rem; color: #666; margin-bottom: 20px;">各拠点の機器情報を一覧表示。スマホ縦スクロールで簡単確認。</p>
+
+        <!-- 拠点ナビゲーション -->
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 30px; padding-bottom: 15px; border-bottom: 1px solid #ddd;">
+            <a href="#loc-hq" style="padding: 6px 12px; background: #3b82f6; color: white; text-decoration: none; border-radius: 4px; font-size: 13px;">本社</a>
+            <a href="#loc-osaka" style="padding: 6px 12px; background: #3b82f6; color: white; text-decoration: none; border-radius: 4px; font-size: 13px;">大阪</a>
+            <a href="#loc-hashimoto" style="padding: 6px 12px; background: #3b82f6; color: white; text-decoration: none; border-radius: 4px; font-size: 13px;">橋本</a>
+            <a href="#loc-fukuoka" style="padding: 6px 12px; background: #3b82f6; color: white; text-decoration: none; border-radius: 4px; font-size: 13px;">福岡</a>
+            <a href="#loc-wakayama" style="padding: 6px 12px; background: #3b82f6; color: white; text-decoration: none; border-radius: 4px; font-size: 13px;">和歌山</a>
+            <a href="#loc-tama" style="padding: 6px 12px; background: #3b82f6; color: white; text-decoration: none; border-radius: 4px; font-size: 13px;">築地</a>
+            <a href="#loc-kyobashi" style="padding: 6px 12px; background: #3b82f6; color: white; text-decoration: none; border-radius: 4px; font-size: 13px;">京橋</a>
+            <a href="#loc-nagoya" style="padding: 6px 12px; background: #3b82f6; color: white; text-decoration: none; border-radius: 4px; font-size: 13px;">名古屋</a>
+        </div>
+
+        <!-- 本社（築地）-->
+        <div class="location-section" id="loc-hq">
+            <div class="location-header">
+                <h3>本社（築地）192.168.1.x</h3>
+                <span class="badge badge-verified">✅ 実機確認済</span>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="device-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">IP</th>
+                            <th style="width: 30%;">機器名</th>
+                            <th style="width: 45%;">用途</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="device-core"><td>.6</td><td>PDCSVR</td><td>新AD サーバ（プライマリ DC）</td></tr>
+                        <tr class="device-core"><td>.7</td><td>BDCSVR</td><td>新AD サーバ（バックアップ DC）</td></tr>
+                        <tr class="device-core"><td>.8</td><td>DGS-1210-28</td><td>基幹HUB（PW:ad-admin）</td></tr>
+                        <tr class="device-core"><td>.9</td><td>⚠️ Fortinet FG</td><td>VPN/FW （台帳記載: VSR601j）実機確認で異なる</td></tr>
+                        <tr class="device-server"><td>.12</td><td>TENAPSVR</td><td>TENSUITE アプリケーション</td></tr>
+                        <tr class="device-server"><td>.14</td><td>TENDBSVR</td><td>TENSUITE データベース</td></tr>
+                        <tr class="device-ad"><td>.15</td><td>ADSHARESVR</td><td>ファイルサーバ</td></tr>
+                        <tr class="device-server"><td>.26</td><td>DATARESTORE</td><td>データ復旧用（7F設置）</td></tr>
+                        <tr class="device-secom"><td>.30</td><td>TRIISVR</td><td>SESAMO-TRIIサーバ（セコム）</td></tr>
+                        <tr class="device-secom"><td>.31</td><td>TRIIインターフェース</td><td>セコム入退室システム</td></tr>
+                        <tr class="device-ap"><td>.40-.45</td><td>無線LAN AP（6台）</td><td>各階フロア対応</td></tr>
+                        <tr class="device-mfp"><td>.55</td><td>RICOH IM C4500</td><td>複合機（6F、2019年9月）</td></tr>
+                        <tr class="device-mfp"><td>.56</td><td>RICOH MP C4504</td><td>複合機（7F、2017年7月）</td></tr>
+                        <tr class="device-mfp"><td>.57</td><td>OpenBlocks AX3</td><td>複合機増設ボックス</td></tr>
+                        <tr class="device-server"><td>.77</td><td>TASKSVR</td><td>タスク管理</td></tr>
+                        <tr class="device-server"><td>.79</td><td>DATARESTORE2</td><td>データ復旧用（7F設置）</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 大阪営業所 -->
+        <div class="location-section" id="loc-osaka">
+            <div class="location-header">
+                <h3>大阪営業所 192.168.20.x</h3>
+                <span class="badge badge-documented">📋 台帳記載</span>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="device-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">IP</th>
+                            <th style="width: 30%;">機器名</th>
+                            <th style="width: 45%;">用途</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="device-core"><td>.1</td><td>VSR401j</td><td>VPNルータ（インターネット・拠点間通信）</td></tr>
+                        <tr class="device-ap"><td>.21</td><td>WAB-I1750PS</td><td>無線LAN親機（執務室）</td></tr>
+                        <tr class="device-ap"><td>.22</td><td>WAB-I1750PS</td><td>無線LAN親機（会議室）</td></tr>
+                        <tr class="device-mfp"><td>.50</td><td>RICOH IM C3010</td><td>複合機</td></tr>
+                        <tr class="device-secom"><td>.31</td><td>TRIIインターフェース</td><td>セコム入退室システム</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 橋本 R&D -->
+        <div class="location-section" id="loc-hashimoto">
+            <div class="location-header">
+                <h3>橋本 R&D 192.168.30.x</h3>
+                <span class="badge badge-documented">📋 台帳記載</span>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="device-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">IP</th>
+                            <th style="width: 30%;">機器名</th>
+                            <th style="width: 45%;">用途</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="device-core"><td>.1</td><td>VSR400</td><td>VPNルータ（インターネット・拠点間通信）</td></tr>
+                        <tr class="device-server"><td>.10</td><td>QNAP TS-431U</td><td>IoT ENG用 データ保管共有サーバ</td></tr>
+                        <tr class="device-server"><td>.12</td><td>Relex2017</td><td>OrCADサーバ（7F チャンバー内）</td></tr>
+                        <tr class="device-server"><td>.13</td><td>Relex2017（新）</td><td>OrCADサーバ（7F チャンバー内）</td></tr>
+                        <tr class="device-server"><td>.15</td><td>IOTSVR</td><td>IoT事業部専用ファイルサーバ</td></tr>
+                        <tr class="device-server"><td>.16</td><td>IOTSVR(BMC用)</td><td>IoT事業部専用ファイルサーバ BMC</td></tr>
+                        <tr class="device-ap"><td>.20</td><td>WAB-M1775-PS</td><td>無線LAN AP</td></tr>
+                        <tr class="device-mfp"><td>.55</td><td>Canon C5540Ⅱ</td><td>複合機（旧R&D 8F技術）</td></tr>
+                        <tr class="device-pc"><td>.61</td><td>M3200A005</td><td>CFカード検証用機器</td></tr>
+                        <tr class="device-secom"><td>.31</td><td>TRIIインターフェース</td><td>セコム入退室システム</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 福岡営業所 -->
+        <div class="location-section" id="loc-fukuoka">
+            <div class="location-header">
+                <h3>福岡営業所 192.168.40.x</h3>
+                <span class="badge badge-documented">📋 台帳記載</span>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="device-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">IP</th>
+                            <th style="width: 30%;">機器名</th>
+                            <th style="width: 45%;">用途</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="device-core"><td>.1</td><td>VSR401j</td><td>VPNルータ（インターネット・拠点間通信）</td></tr>
+                        <tr class="device-secom"><td>.31</td><td>TRIIインターフェース</td><td>セコム入退室システム</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 和歌山 -->
+        <div class="location-section" id="loc-wakayama">
+            <div class="location-header">
+                <h3>和歌山 192.168.50.x</h3>
+                <span class="badge badge-documented">📋 台帳記載</span>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="device-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">IP</th>
+                            <th style="width: 30%;">機器名</th>
+                            <th style="width: 45%;">用途</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="device-core"><td>.1</td><td>VSR401j</td><td>VPNルータ（インターネット・拠点間通信）</td></tr>
+                        <tr class="device-secom"><td>.31</td><td>TRIIインターフェース</td><td>セコム入退室（4F用）</td></tr>
+                        <tr class="device-secom"><td>.32</td><td>セサモIdf（静脈機器）</td><td>セコム入退室（内側IP）</td></tr>
+                        <tr class="device-secom"><td>.33</td><td>セサモIdf（静脈機器）</td><td>セコム入退室（外側IP）</td></tr>
+                        <tr class="device-secom"><td>.34</td><td>TRIIインターフェース</td><td>セコム入退室（3F用）</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- プライム築地 -->
+        <div class="location-section" id="loc-tama">
+            <div class="location-header">
+                <h3>プライム築地（多摩）192.168.60.x</h3>
+                <span class="badge badge-documented">📋 台帳記載</span>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="device-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">IP</th>
+                            <th style="width: 30%;">機器名</th>
+                            <th style="width: 45%;">用途</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="device-core"><td>.1</td><td>VSR400</td><td>VPNルータ（インターネット・拠点間通信）</td></tr>
+                        <tr class="device-server"><td>.7</td><td>サーバ</td><td>CRB八王子のファイルサーバ</td></tr>
+                        <tr class="device-ap"><td>.20</td><td>WAB-M1775-PS</td><td>無線AP（1F会議室）</td></tr>
+                        <tr class="device-ap"><td>.21</td><td>WAB-M1775-PS</td><td>無線AP（1F物流）</td></tr>
+                        <tr class="device-ap"><td>.22</td><td>WAB-M1775-PS</td><td>無線AP（2F検査室）</td></tr>
+                        <tr class="device-ap"><td>.23</td><td>WAB-M1775-PS</td><td>無線AP（2F執務室）</td></tr>
+                        <tr class="device-ap"><td>.24</td><td>WAB-M1775-PS</td><td>無線AP（3F物流）</td></tr>
+                        <tr class="device-ap"><td>.25</td><td>WAB-M1775-PS</td><td>無線AP（2F検査室階段）</td></tr>
+                        <tr class="device-ap"><td>.26</td><td>WAB-M1775-PS</td><td>無線AP（2F会議室）</td></tr>
+                        <tr class="device-mfp"><td>.54</td><td>SHARP BP-50C55</td><td>複合機（1F、2025年10月）</td></tr>
+                        <tr class="device-mfp"><td>.55</td><td>IR-ADVC3730F</td><td>複合機（2F、CRB八王子から移設）</td></tr>
+                        <tr class="device-secom"><td>.31</td><td>TRIIインターフェース</td><td>セコム入退室</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 京橋ビル -->
+        <div class="location-section" id="loc-kyobashi">
+            <div class="location-header">
+                <h3>京橋ビル 192.168.70.x</h3>
+                <span class="badge badge-documented">📋 台帳記載</span>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="device-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">IP</th>
+                            <th style="width: 30%;">機器名</th>
+                            <th style="width: 45%;">用途</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="device-core"><td>.1</td><td>VSR401j</td><td>VPNルータ（インターネット・拠点間通信）</td></tr>
+                        <tr class="device-secom"><td>.31</td><td>TRIIインターフェース</td><td>セコム入退室システム</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 名古屋 -->
+        <div class="location-section" id="loc-nagoya">
+            <div class="location-header">
+                <h3>名古屋 192.168.80.x</h3>
+                <span class="badge badge-documented">📋 台帳記載</span>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="device-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">IP</th>
+                            <th style="width: 30%;">機器名</th>
+                            <th style="width: 45%;">用途</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="device-core"><td>.1</td><td>VSR401j</td><td>VPNルータ（インターネット・拠点間通信）</td></tr>
+                        <tr class="device-secom"><td>.31</td><td>TRIIインターフェース</td><td>セコム入退室システム</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
     </div>
 </body>
