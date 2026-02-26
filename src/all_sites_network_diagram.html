@@ -296,12 +296,9 @@
                 PC6["192.168.1.215, .245-246"]
             end
 
-            FW --- AdGroup
-            FW --- NwGroup
-            FW --- SecomGroup
-            FW --- ApGroup
-            FW --- MfpGroup
-            FW --- ServerGroup
+            FW --- AdGroup & NwGroup
+            FW --- SecomGroup & ApGroup
+            FW --- MfpGroup & ServerGroup
             FW --- ClientGroup
 
             style FW stroke:#dc2626,stroke-width:4px,fill:#fee2e2
