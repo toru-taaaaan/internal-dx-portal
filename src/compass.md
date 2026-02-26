@@ -8,8 +8,7 @@ permalink: /compass/
 ## 📊 プロジェクト比較表
 
 ### USEN ネットワーク・AD移行 総合比較表
-- [USEN・ネットワーク改善 検討資料 (2026-02-25)](https://docs.google.com/spreadsheets/d/1AWAAQVo4jutnTS0jnZcv8QuuNAmoLwfmJThYxHr57pc)
-- [検査結果シート：ネットワーク実機調査 (2026-02-26)](https://docs.google.com/spreadsheets/d/1AWAAQVo4jutnTS0jnZcv8QuuNAmoLwfmJThYxHr57pc#gid=1929486641)
+[USEN・ネットワーク改善 検討資料 + 検査結果シート (2026-02-26)](https://docs.google.com/spreadsheets/d/1AWAAQVo4jutnTS0jnZcv8QuuNAmoLwfmJThYxHr57pc#gid=1929486641)
 
 ### 入退室管理 ベンダー比較表
 [入退室管理 - ALLIGATE vs BitKey 比較表](https://docs.google.com/spreadsheets/d/1gFg8q2rGX3XnAzoO3daoQ7M-pEMjnJrELtVMlYwG1gc/edit?gid=0#gid=0)
