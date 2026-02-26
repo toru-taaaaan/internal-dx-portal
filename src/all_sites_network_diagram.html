@@ -10,8 +10,11 @@
         h1 { font-size: 24px; color: #333; margin-bottom: 5px; }
         h2 { font-size: 20px; color: #444; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 40px; }
         p { color: #666; line-height: 1.6; }
-        .mermaid { margin-top: 30px; text-align: center; overflow: visible; width: 120vw; height: auto; display: flex; justify-content: center; align-items: center; margin-left: auto; margin-right: auto; }
-        .mermaid svg { transform: rotate(90deg); transform-origin: center; max-width: none; }
+        .mermaid { margin-top: 30px; text-align: center; overflow-x: auto; width: 100%; min-height: 800px; display: flex; justify-content: center; align-items: flex-start; }
+
+        /* 回転・拡大図用（最初の拠点ネットワーク図のみ） */
+        .mermaid-rotated { overflow: visible; width: 120vw; height: auto; display: flex; justify-content: center; align-items: center; margin-left: auto; margin-right: auto; }
+        .mermaid-rotated svg { transform: rotate(90deg); transform-origin: center; max-width: none; }
         .category-box { background-color: #f5f8fc; border-left: 4px solid #2980b9; padding: 15px; margin-bottom: 20px; border-radius: 0 4px 4px 0; }
         .category-box h3 { margin-top: 0; color: #2980b9; font-size: 16px; margin-bottom: 10px; }
         .category-box ul { margin-bottom: 0; padding-left: 20px; color: #555; }
@@ -87,7 +90,7 @@
             2/24の塩田部長判断（VarioSecure全拠点残存）を前提とし、各拠点の役割（Cato要否、SECOM通信の有無など）に応じて大きく4つのカテゴリに分類しています。
         </p>
 
-        <div class="mermaid">
+        <div class="mermaid mermaid-rotated">
         graph TD
             %%{init: {'fontFamily': 'sans-serif', 'fontSize': 28, 'theme': 'base', 'scale': 1.5}}%%
             %% 外部ネットワーク
