@@ -13,7 +13,7 @@ permalink: /compass/
 [USEN・ネットワーク改善 検討資料 + 検査結果シート (2026-02-26)](https://docs.google.com/spreadsheets/d/1AWAAQVo4jutnTS0jnZcv8QuuNAmoLwfmJThYxHr57pc#gid=1929486641)
 
 ### ネットワーク実機調査 × 台帳照合（2026-02-26）
-「Excel 台帳の IP アドレスが現実と合っているか怪しい」という疑問から、2026-02-26 に全拠点を ICMPスキャンで実機調査。台帳と一致しない機器 42 件を抽出し、情シス（篠氏）に正誤確認を依頼中。ネットワーク再設計の前提となる「現状の正確な把握」が目的。
+「Excel 台帳の IP アドレスが現実と合っているか怪しい」という疑問から、2026-02-26 に全拠点を ICMPスキャンで実機調査。台帳と一致しない機器 42 件を抽出し、情シス担当者に正誤確認を依頼中。ネットワーク再設計の前提となる「現状の正確な把握」が目的。
 
 [全拠点ネットワーク実機調査 × 台帳照合シート（情シス確認依頼 / 差分42件）](https://docs.google.com/spreadsheets/d/1_NCP76fRbrPC__ywHBC1yHFLQUzJMZ6Ip6Ak7aU6p-w/edit?gid=1918728386#gid=1918728386)
 
