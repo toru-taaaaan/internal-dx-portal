@@ -248,52 +248,38 @@
             end
 
             subgraph AdGroup["AD インフラ（認証基盤）"]
-                AD1["PDCSVR<br/>192.168.1.6<br/>Dell Inc<br/>Primary DC"]
-                AD2["BDCSVR<br/>192.168.1.7<br/>Dell Inc<br/>Backup DC"]
-                AD3["ADSHARESVR<br/>192.168.1.15<br/>ファイルサーバー"]
+                direction TB
+                AD1["PDCSVR<br/>192.168.1.6<br/>Dell Inc<br/>Primary DC"] --- AD2["BDCSVR<br/>192.168.1.7<br/>Dell Inc<br/>Backup DC"] --- AD3["ADSHARESVR<br/>192.168.1.15<br/>ファイルサーバー"]
             end
 
             subgraph NwGroup["ネットワーク機器"]
-                SW["DGS-1210-28<br/>192.168.1.8<br/>基幹HUB<br/>PW:ad-admin"]
-                JUNIPER["Juniper Networks<br/>192.168.1.31<br/>00-11-0e-00-61-64"]
-                CISCO["Cisco Systems<br/>192.168.1.40<br/>04-ab-18-13-ab-d2"]
-                UNK8["Unknown<br/>192.168.1.8<br/>Linux/Fortinet"]
+                direction TB
+                SW["DGS-1210-28<br/>192.168.1.8<br/>基幹HUB"] --- JUNIPER["Juniper Networks<br/>192.168.1.31<br/>00-11-0e-00-61-64"] --- CISCO["Cisco Systems<br/>192.168.1.40<br/>04-ab-18-13-ab-d2"] --- UNK8["Unknown<br/>192.168.1.8<br/>Linux/Fortinet"]
             end
 
             subgraph SecomGroup["SECOM システム"]
-                TRIISVR["TRIISVR<br/>192.168.1.30<br/>SESAMO-TRIIサーバー<br/>(入退室管理)"]
-                TRIIIF["TRIIインターフェース<br/>192.168.1.31<br/>SESAMO-TRII<br/>(物理的な読取機)"]
+                direction TB
+                TRIISVR["TRIISVR<br/>192.168.1.30<br/>SESAMO-TRIIサーバー"] --- TRIIIF["TRIIインターフェース<br/>192.168.1.31<br/>読取機"]
             end
 
             subgraph ApGroup["無線 AP (6台)"]
-                AP1["無線LAN AP<br/>192.168.1.40<br/>9F執務室"]
-                AP2["無線LAN AP<br/>192.168.1.41<br/>8F会議室"]
-                AP3["無線LAN AP<br/>192.168.1.42<br/>7F執務室"]
-                AP4["無線LAN AP<br/>192.168.1.43<br/>7F会議室"]
-                AP5["無線LAN AP<br/>192.168.1.44<br/>6F執務室"]
-                AP6["無線LAN AP<br/>192.168.1.45<br/>6F会議室"]
+                direction TB
+                AP1["AP 9F執務室<br/>192.168.1.40"] --- AP2["AP 8F会議室<br/>192.168.1.41"] --- AP3["AP 7F執務室<br/>192.168.1.42"] --- AP4["AP 7F会議室<br/>192.168.1.43"] --- AP5["AP 6F執務室<br/>192.168.1.44"] --- AP6["AP 6F会議室<br/>192.168.1.45"]
             end
 
-            subgraph MfpGroup["複合機（複写・FAX・スキャン）"]
-                MFP1["RICOH IM C4500<br/>192.168.1.55<br/>6F<br/>2019年9月導入"]
-                MFP2["RICOH MP C4504<br/>192.168.1.56<br/>7F<br/>2017年7月導入"]
-                MFP3["OpenBlocks AX3<br/>192.168.1.57<br/>複合機増設ボックス"]
+            subgraph MfpGroup["複合機"]
+                direction TB
+                MFP1["RICOH IM C4500<br/>192.168.1.55<br/>6F"] --- MFP2["RICOH MP C4504<br/>192.168.1.56<br/>7F"] --- MFP3["OpenBlocks AX3<br/>192.168.1.57"]
             end
 
             subgraph ServerGroup["その他サーバー"]
-                TS["TASKSVR<br/>192.168.1.77<br/>タスク管理"]
-                ADKANRI["ADKANRI4<br/>192.168.1.54<br/>経理関連"]
-                DR1["DATARESTORE<br/>192.168.1.26<br/>データ復旧用"]
-                DR2["DATARESTORE2<br/>192.168.1.79<br/>データ復旧用"]
+                direction TB
+                TS["TASKSVR<br/>192.168.1.77"] --- ADKANRI["ADKANRI4<br/>192.168.1.54"] --- DR1["DATARESTORE<br/>192.168.1.26"] --- DR2["DATARESTORE2<br/>192.168.1.79"]
             end
 
             subgraph ClientGroup["業務 PC / 端末（34台以上）"]
-                PC1["192.168.1.54, .77, .83, .85, .88"]
-                PC2["192.168.1.102-107, .117, .122"]
-                PC3["192.168.1.124, .127, .162-164"]
-                PC4["192.168.1.166, .173-174, .196"]
-                PC5["192.168.1.202-204, .207, .211-212"]
-                PC6["192.168.1.215, .245-246"]
+                direction TB
+                PC1["192.168.1.54, .77, .83, .85, .88"] --- PC2["192.168.1.102-107, .117, .122"] --- PC3["192.168.1.124, .127, .162-164"] --- PC4["192.168.1.166, .173-174, .196"] --- PC5["192.168.1.202-204, .207, .211-212"] --- PC6["192.168.1.215, .245-246"]
             end
 
             FW --- AdGroup & NwGroup
