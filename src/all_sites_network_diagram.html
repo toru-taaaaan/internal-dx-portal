@@ -10,8 +10,8 @@
         h1 { font-size: 24px; color: #333; margin-bottom: 5px; }
         h2 { font-size: 20px; color: #444; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 40px; }
         p { color: #666; line-height: 1.6; }
-        .mermaid { margin-top: 30px; text-align: center; overflow: visible; width: 100%; max-width: 90vh; min-height: 100vw; display: flex; justify-content: center; align-items: center; margin-left: auto; margin-right: auto; }
-        .mermaid svg { transform: rotate(90deg); transform-origin: center; }
+        .mermaid { margin-top: 30px; text-align: center; overflow: visible; width: 120vw; height: auto; display: flex; justify-content: center; align-items: center; margin-left: auto; margin-right: auto; }
+        .mermaid svg { transform: rotate(90deg); transform-origin: center; max-width: none; }
         .category-box { background-color: #f5f8fc; border-left: 4px solid #2980b9; padding: 15px; margin-bottom: 20px; border-radius: 0 4px 4px 0; }
         .category-box h3 { margin-top: 0; color: #2980b9; font-size: 16px; margin-bottom: 10px; }
         .category-box ul { margin-bottom: 0; padding-left: 20px; color: #555; }
@@ -89,7 +89,7 @@
 
         <div class="mermaid">
         graph TD
-            %%{init: {'fontFamily': 'sans-serif', 'fontSize': 18, 'theme': 'base'}}%%
+            %%{init: {'fontFamily': 'sans-serif', 'fontSize': 28, 'theme': 'base', 'scale': 1.5}}%%
             %% 外部ネットワーク
             subgraph インターネット_クラウド ["インターネット / クラウド"]
                 ISP_Existing[既存ISP: フレッツ等]
@@ -382,7 +382,7 @@
             <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">VPN HUB (Fortinet FortiGate)。全7リモート拠点への接続点。AD/ファイルサーバー集約。計45デバイス検出・検証済み。</p>
             <div class="mermaid" style="background:#fafafa; padding:15px; border-radius:6px; min-height: 800px; width: 100%;">
             graph TD
-                %%{init: {'fontFamily': 'sans-serif', 'fontSize': 18, 'theme': 'base'}}%%
+                %%{init: {'fontFamily': 'sans-serif', 'fontSize': 28, 'theme': 'base', 'scale': 1.5}}%%
                 subgraph 外部["外部ネットワーク"]
                     ISP["新規専用回線<br/>(Cato用)"]
                     CatoCloud[["Cato SASE Cloud"]]
