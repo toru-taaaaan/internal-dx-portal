@@ -30,15 +30,15 @@ permalink: /compass/
 
 ### Vendors（事実の倉庫）
 
-| ベンダー | ステータス | 着工前シート |
-|---|---|---|
-| 01_ALLIGATE_Art | 見積受領・SLA確認中 | [vendor_input.md](https://drive.google.com/file/d/1sK5lku9gf5_7eXppAe7jzJ6YEMvdsaXk/view) |
-| 02_Cato_SCSK | ライセンス費用確認中 | [vendor_input.md](https://drive.google.com/file/d/1Rh2W682jKG4akcvDwzmFR8hu-k_x0jlm/view) |
-| 03_IIJ | AD・NW提案済み・Mix案見直し中 | [vendor_input.md](https://drive.google.com/file/d/1JabKG1rU_ggRB7QloaXnDflQKcn0fmEj/view) |
-| 04_LinkAtJapan | 提案済み・比較検討中 | [vendor_input.md](https://drive.google.com/file/d/1IHFEj816GmMG_BfpPY6pstqu57fBIfFp/view) |
-| 05_USEN | 提案済み・比較検討中 | — |
-| 06_VarioSecure | 全拠点残存決定（2026/02/24） | — |
-| 07_SECOM | クラウド化検討中 | [vendor_input.md](https://drive.google.com/file/d/1HI9_mkIi6g7dSQbWfdMUko9flX5-UxzZ/view) |
+| ベンダー | ステータス | 着工前シート | 検査結果 |
+|---|---|---|---|
+| 01_ALLIGATE_Art | 見積受領・SLA確認中 | [vendor_input.md](https://drive.google.com/file/d/1sK5lku9gf5_7eXppAe7jzJ6YEMvdsaXk/view) | — |
+| 02_Cato_SCSK | ライセンス費用確認中 | [vendor_input.md](https://drive.google.com/file/d/1Rh2W682jKG4akcvDwzmFR8hu-k_x0jlm/view) | — |
+| 03_IIJ | AD・NW提案済み・Mix案見直し中 | [vendor_input.md](https://drive.google.com/file/d/1JabKG1rU_ggRB7QloaXnDflQKcn0fmEj/view) | — |
+| 04_LinkAtJapan | 提案済み・比較検討中 | [vendor_input.md](https://drive.google.com/file/d/1IHFEj816GmMG_BfpPY6pstqu57fBIfFp/view) | — |
+| 05_USEN | 提案済み・比較検討中 | — | [ネットワーク検査結果 (2026-02-26)](https://drive.google.com/drive/folders/1-H5C9PKgeLsmyfSy2VBw1wxtKNyRrxGg) |
+| 06_VarioSecure | 全拠点残存決定（2026/02/24） | — | — |
+| 07_SECOM | クラウド化検討中 | [vendor_input.md](https://drive.google.com/file/d/1HI9_mkIi6g7dSQbWfdMUko9flX5-UxzZ/view) | — |
 
 ### Reference（横断的固定情報）
 
