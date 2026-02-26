@@ -175,262 +175,407 @@
         </div>
 
 
+    <h2 style="margin-top: 60px; padding-bottom: 10px; border-bottom: 2px solid #eee;">📊 本社（築地）実機確認済み詳細構成</h2>
+    <p style="font-size:0.9rem; color:#666; margin-bottom:20px;">2026-02-26に ipconfig / arp -a / ping スキャンで実際に確認したデバイス構成。Fortinet FortiGate (192.168.1.9) 直下に接続されているすべての機器を実デバイスベースで可視化。</p>
+
+    <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 30px;">
+        <h3 style="margin-top:0; color:#1e293b; font-size: 18px;">本社 HQ - Fortinet FortiGate 配下デバイス構成</h3>
+        <div class="mermaid" style="background:#fafafa; padding:15px; border-radius:6px; min-height: 600px;">
+        graph TD
+            subgraph Core["🔴 HQ Core - Fortinet FortiGate 192.168.1.9<br/>(VPN HUB + Firewall)"]
+                FW["Fortinet FortiGate<br/>MAC: 00-0d-48-30-e8-57<br/>TTL: 64 (Linux/Fortinet)"]
+            end
+
+            subgraph AdGroup["AD インフラ（認証基盤）"]
+                AD1["PDCSVR<br/>192.168.1.6<br/>Dell Inc<br/>Primary DC"]
+                AD2["BDCSVR<br/>192.168.1.7<br/>Dell Inc<br/>Backup DC"]
+                AD3["ADSHARESVR<br/>192.168.1.15<br/>ファイルサーバー"]
+            end
+
+            subgraph NwGroup["ネットワーク機器"]
+                SW["DGS-1210-28<br/>192.168.1.8<br/>基幹HUB<br/>PW:ad-admin"]
+                JUNIPER["Juniper Networks<br/>192.168.1.31<br/>00-11-0e-00-61-64"]
+                CISCO["Cisco Systems<br/>192.168.1.40<br/>04-ab-18-13-ab-d2"]
+                UNK8["Unknown<br/>192.168.1.8<br/>Linux/Fortinet"]
+            end
+
+            subgraph SecomGroup["SECOM システム"]
+                TRIISVR["TRIISVR<br/>192.168.1.30<br/>SESAMO-TRIIサーバー<br/>(入退室管理)"]
+                TRIIIF["TRIIインターフェース<br/>192.168.1.31<br/>SESAMO-TRII<br/>(物理的な読取機)"]
+            end
+
+            subgraph ApGroup["無線 AP (6台)"]
+                AP1["無線LAN AP<br/>192.168.1.40<br/>9F執務室"]
+                AP2["無線LAN AP<br/>192.168.1.41<br/>8F会議室"]
+                AP3["無線LAN AP<br/>192.168.1.42<br/>7F執務室"]
+                AP4["無線LAN AP<br/>192.168.1.43<br/>7F会議室"]
+                AP5["無線LAN AP<br/>192.168.1.44<br/>6F執務室"]
+                AP6["無線LAN AP<br/>192.168.1.45<br/>6F会議室"]
+            end
+
+            subgraph MfpGroup["複合機（複写・FAX・スキャン）"]
+                MFP1["RICOH IM C4500<br/>192.168.1.55<br/>6F<br/>2019年9月導入"]
+                MFP2["RICOH MP C4504<br/>192.168.1.56<br/>7F<br/>2017年7月導入"]
+                MFP3["OpenBlocks AX3<br/>192.168.1.57<br/>複合機増設ボックス"]
+            end
+
+            subgraph ServerGroup["その他サーバー"]
+                TS["TASKSVR<br/>192.168.1.77<br/>タスク管理"]
+                ADKANRI["ADKANRI4<br/>192.168.1.54<br/>経理関連"]
+                DR1["DATARESTORE<br/>192.168.1.26<br/>データ復旧用"]
+                DR2["DATARESTORE2<br/>192.168.1.79<br/>データ復旧用"]
+            end
+
+            subgraph ClientGroup["業務 PC / 端末（34台以上）"]
+                PC1["192.168.1.54, .77, .83, .85, .88"]
+                PC2["192.168.1.102-107, .117, .122"]
+                PC3["192.168.1.124, .127, .162-164"]
+                PC4["192.168.1.166, .173-174, .196"]
+                PC5["192.168.1.202-204, .207, .211-212"]
+                PC6["192.168.1.215, .245-246"]
+            end
+
+            FW --- AdGroup
+            FW --- NwGroup
+            FW --- SecomGroup
+            FW --- ApGroup
+            FW --- MfpGroup
+            FW --- ServerGroup
+            FW --- ClientGroup
+
+            style FW stroke:#dc2626,stroke-width:4px,fill:#fee2e2
+            style AdGroup stroke:#3b82f6,stroke-width:2px,fill:#dbeafe
+            style NwGroup stroke:#8b5cf6,stroke-width:2px,fill:#ede9fe
+            style SecomGroup stroke:#10b981,stroke-width:2px,fill:#d1fae5
+            style ApGroup stroke:#f59e0b,stroke-width:2px,fill:#fef3c7
+            style MfpGroup stroke:#ec4899,stroke-width:2px,fill:#fce7f3
+            style ServerGroup stroke:#6b7280,stroke-width:2px,fill:#f3f4f6
+            style ClientGroup stroke:#14b8a6,stroke-width:2px,fill:#ccfbf1
+        </div>
+
+        <div style='font-size:0.85rem; margin-top:12px; padding:15px; background:#f8fafc; border-radius:6px; border-left:3px solid #dc2626;'>
+            <strong>📌 実機確認デバイス統計（2026-02-26）:</strong><br/>
+            <table style='width:100%; border-collapse: collapse; margin-top:10px;'>
+                <tr style='background:#f0f9ff; border-bottom: 1px solid #e0e7ff;'>
+                    <td style='padding:8px; font-weight:bold;'>カテゴリ</td>
+                    <td style='padding:8px; font-weight:bold;'>デバイス数</td>
+                    <td style='padding:8px; font-weight:bold;'>主な用途</td>
+                </tr>
+                <tr style='border-bottom: 1px solid #e5e7eb;'>
+                    <td style='padding:8px;'><span style='background:#dbeafe; padding:2px 6px; border-radius:3px;'>🔵 AD インフラ</span></td>
+                    <td style='padding:8px;'>3台</td>
+                    <td style='padding:8px;'>認証、ファイルサーバー（Core）</td>
+                </tr>
+                <tr style='border-bottom: 1px solid #e5e7eb;'>
+                    <td style='padding:8px;'><span style='background:#ede9fe; padding:2px 6px; border-radius:3px;'>🟣 ネットワーク機器</span></td>
+                    <td style='padding:8px;'>4台</td>
+                    <td style='padding:8px;'>HUB、ルーター、ネットワーク統制</td>
+                </tr>
+                <tr style='border-bottom: 1px solid #e5e7eb;'>
+                    <td style='padding:8px;'><span style='background:#d1fae5; padding:2px 6px; border-radius:3px;'>🟢 SECOM</span></td>
+                    <td style='padding:8px;'>2台</td>
+                    <td style='padding:8px;'>入退室管理（SESAMO-TRII）</td>
+                </tr>
+                <tr style='border-bottom: 1px solid #e5e7eb;'>
+                    <td style='padding:8px;'><span style='background:#fef3c7; padding:2px 6px; border-radius:3px;'>🟡 無線 AP</span></td>
+                    <td style='padding:8px;'>6台</td>
+                    <td style='padding:8px;'>Wi-Fi ネットワーク（各階)</td>
+                </tr>
+                <tr style='border-bottom: 1px solid #e5e7eb;'>
+                    <td style='padding:8px;'><span style='background:#fce7f3; padding:2px 6px; border-radius:3px;'>🔴 複合機</span></td>
+                    <td style='padding:8px;'>3台</td>
+                    <td style='padding:8px;'>複写・FAX・スキャン</td>
+                </tr>
+                <tr style='border-bottom: 1px solid #e5e7eb;'>
+                    <td style='padding:8px;'><span style='background:#f3f4f6; padding:2px 6px; border-radius:3px;'>⚫ その他サーバー</span></td>
+                    <td style='padding:8px;'>4台</td>
+                    <td style='padding:8px;'>タスク管理、データ復旧</td>
+                </tr>
+                <tr style='background:#ccfbf1;'>
+                    <td style='padding:8px; font-weight:bold;'><span style='background:#14b8a6; padding:2px 6px; border-radius:3px;'>💻 業務PC/端末</span></td>
+                    <td style='padding:8px; font-weight:bold;'>34+台</td>
+                    <td style='padding:8px;'>従業員PC、勤怠端末等</td>
+                </tr>
+                <tr style='background:#fee2e2; font-weight:bold;'>
+                    <td style='padding:8px;'>合計</td>
+                    <td style='padding:8px;'>~56台</td>
+                    <td style='padding:8px;'>VPN HUB 直下の全デバイス</td>
+                </tr>
+            </table>
+            <div style='margin-top:12px; padding:10px; background:#fef2f2; border-left:3px solid #dc2626; border-radius:4px;'>
+                <strong>⚠️ 重要な発見：</strong><br/>
+                • IP 192.168.1.9 = <strong>Fortinet FortiGate</strong> (実機確認)
+                <br/>• 従来の台帳記載「YAMAHA VSR601J」は <strong>誤り</strong>
+                <br/>• ネットワーク構成が大幅に変更された可能性あり
+                <br/>• IT部門（篠敦史）に確認予定：VSR601J はどこに？いつ入れ替わった？
+            </div>
+        </div>
+    </div>
+
     <h2 style="margin-top: 60px; padding-bottom: 10px; border-bottom: 2px solid #eee;">各拠点 詳細ネットワーク構成図（全10拠点）</h2>
     <p style="font-size:0.9rem; color:#666; margin-bottom:20px;">各拠点に設置されている全機器（ファイルサーバー、複合機、バディネット用ルーター等）を詳細化し、全10拠点を1つずつ網羅しています。Cato導入時の Socket/Client判定基準も含みます。</p>
     <div style="display: grid; grid-template-columns: 1fr; gap: 30px;">
 
         <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); page-break-inside: avoid;">
-            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type A</span>本社（築地 6F/7F）</h3>
-            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">VarioSecure VPNハブ。全拠点の業務NW・SECOMログ集約。AD/ファイルサーバー集約。</p>
-            <div class="mermaid" style="background:#fafafa; padding:15px; border-radius:6px; min-height: 350px;">
+            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type A</span>本社（築地 6F/7F）<span style="font-size:0.75em; background:#fecaca; padding:2px 6px; border-radius:3px; margin-left:8px;">実機確認済み 2026-02-26</span></h3>
+            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">VPN HUB (Fortinet FortiGate)。全7リモート拠点への接続点。AD/ファイルサーバー集約。計45デバイス検出・検証済み。</p>
+            <div class="mermaid" style="background:#fafafa; padding:15px; border-radius:6px; min-height: 500px;">
             graph TD
                 subgraph 外部["外部ネットワーク"]
                     ISP["新規専用回線<br/>(Cato用)"]
                     CatoCloud[["Cato SASE Cloud"]]
                     VPN["閉域網: VarioSecure"]
+                    RemoteHQ["リモート拠点7箇所<br/>192.168.20-80/24"]
                 end
 
-                subgraph 拠点["本社（築地 6F/7F）HUB"]
-                    D0["VSR601J<br/>(ルーター)<br/>VarioSecure VPN ハブ"]
-                    D1["PDCSVR<br/>(AD Primary)<br/>192.168.1.6"]
-                    D2["BDCSVR<br/>(AD Secondary)<br/>192.168.1.7"]
-                    D3["ADSHARESVR<br/>(ファイルサーバー)<br/>192.168.1.15"]
-                    D4["TRIISVR<br/>(SECOM Server)<br/>192.168.1.30 全拠点ログ集約"]
-                    D5["Secom入退室機器<br/>(Secom TRII)<br/>6-7F + 3-5F"]
-                    D6["複合機<br/>(RICOH IM C4500)<br/>.1.55 (調査中)"]
-                    D7["業務PC<br/>(クライアント)<br/>57名"]
-                    D8["TENSUITE<br/>(レガシーAP)<br/>AP .1.12 / DB .1.14 (停止中)"]
+                subgraph 拠点["本社（築地 6F/7F）HUB - 実機構成（2026-02-26発見）"]
+                    D0["🔴 Fortinet FortiGate<br/>192.168.1.9<br/>MAC: 00-0d-48-30-e8-57<br/>VPN HUB + Firewall<br/>※従来台帳ではVSR601J記載（誤り）"]
 
-                    D0 --- D1
-                    D0 --- D2
-                    D0 --- D3
-                    D0 --- D4
-                    D0 --- D5
-                    D0 --- D6
-                    D0 --- D7
-                    D0 --- D8
+                    subgraph Port_Group1["AD/認証インフラ（コアサーバー）"]
+                        D1["PDCSVR<br/>192.168.1.6<br/>Dell Inc"]
+                        D2["BDCSVR<br/>192.168.1.7<br/>Dell Inc"]
+                    end
+
+                    subgraph Port_Group2["ネットワーク機器"]
+                        D31["Juniper Networks<br/>192.168.1.31<br/>00-11-0e-00-61-64"]
+                        D40["Cisco Systems<br/>192.168.1.40<br/>04-ab-18-13-ab-d2"]
+                        D8["Unknown Device<br/>192.168.1.8<br/>Linux/Fortinet"]
+                    end
+
+                    subgraph Port_Group3["サーバー&統合機器"]
+                        D15["ファイルサーバー等<br/>192.168.1.15<br/>Cisco Systems"]
+                        D30["SECOM/その他<br/>192.168.1.30<br/>Unknown Device"]
+                        D42_45["複数サーバー<br/>.42, .43, .44, .45"]
+                    end
+
+                    subgraph Port_Group4["複合機 (RICOH MFP)"]
+                        D50["RICOH<br/>192.168.1.50<br/>80-1f-02-ea-3a-27"]
+                        D55["RICOH<br/>192.168.1.55<br/>58-38-79-2c-bd-7c"]
+                        D56["RICOH<br/>192.168.1.56<br/>58-38-79-a2-1c-45"]
+                    end
+
+                    subgraph Port_Group5["業務PC&その他（35台以上）"]
+                        PC1["業務PC等<br/>192.168.1.54, .77, .83, .85<br/>.88, .102, .103, .106"]
+                        PC2["業務PC等<br/>192.168.1.117, .122, .124<br/>.127, .162, .163, .164"]
+                        PC3["業務PC等<br/>192.168.1.166, .173, .174<br/>.196, .202, .203, .204"]
+                        PC4["業務PC等<br/>192.168.1.207, .211, .212<br/>.215, .245, .246"]
+                    end
+
+                    D0 --- Port_Group1
+                    D0 --- Port_Group2
+                    D0 --- Port_Group3
+                    D0 --- Port_Group4
+                    D0 --- Port_Group5
                 end
 
-                D0 -->|HUB役割| VPN
-                D0 -->|新規接続| ISP
-                ISP -->|Cato接続| CatoCloud
+                D0 -->|VPN HUB| VPN
+                VPN -->|リモート7拠点へ| RemoteHQ
+                D0 -->|新規接続予定| ISP
+                ISP -->|Cato統合| CatoCloud
 
-                style D0 stroke:#f59e0b,stroke-width:3px,fill:#fef3c7
-                style D4 stroke:#ef4444,stroke-width:2px,fill:#fee2e2
-                style D1 stroke:#3b82f6,stroke-width:2px,fill:#dbeafe
-                style D2 stroke:#3b82f6,stroke-width:2px,fill:#dbeafe
+                style D0 stroke:#dc2626,stroke-width:4px,fill:#fee2e2
+                style Port_Group1 stroke:#3b82f6,stroke-width:2px,fill:#dbeafe
+                style Port_Group2 stroke:#8b5cf6,stroke-width:2px,fill:#ede9fe
+                style Port_Group3 stroke:#ef4444,stroke-width:2px,fill:#fee2e2
+                style Port_Group4 stroke:#10b981,stroke-width:2px,fill:#d1fae5
+                style Port_Group5 stroke:#f59e0b,stroke-width:2px,fill:#fef3c7
             </div>
-            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (詳細):</strong><br/><span style='display:block; margin:4px 0;'>• <strong>VSR601J (Hub)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) VarioSecure VPN ハブ</span></span><span style='display:block; margin:4px 0;'>• <strong>PDCSVR</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(AD Server) Primary (192.168.1.6)</span></span><span style='display:block; margin:4px 0;'>• <strong>BDCSVR</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(AD Server) Secondary (192.168.1.7)</span></span><span style='display:block; margin:4px 0;'>• <strong>ADSHARESVR</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ファイルサーバー) 192.168.1.15 (大阪・橋本がアクセス)</span></span><span style='display:block; margin:4px 0;'>• <strong>TRIISVR</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(SECOM Server) 192.168.1.30 (全拠点ログ集約)</span></span><span style='display:block; margin:4px 0;'>• <strong>TENSUITE</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(レガシーシステム) AP .1.12 / DB .1.14 (電源OFF・NW未接続)</span></span><span style='display:block; margin:4px 0;'>• <strong>Secom入退室機器</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(Secom TRII) 6-7F + 3-5F(BN管理)</span></span><span style='display:block; margin:4px 0;'>• <strong>業務PC</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(クライアント) 57名</span></span><span style='display:block; margin:4px 0;'>• <strong>複合機</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(RICOH IM C4500) .1.55 (VPN不要の可能性あり・調査中)</span></span></div>
+            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #dc2626;'><strong>設置機器 (実機確認済み 2026-02-26):</strong><br/><span style='display:block; margin:6px 0; padding: 6px; background:#fee2e2; border-radius:4px;'>• <strong>🔴 Fortinet FortiGate (HUB)</strong><br/><span style='font-size:0.8em; color:#991b1b; margin-left:1em;'>(Firewall + VPN Controller) 192.168.1.9<br/>MAC: 00-0d-48-30-e8-57<br/>⚠️ 従来台帳では「YAMAHA VSR601J」と記載（誤り）<br/>→ ネットワーク構成が大幅変更された可能性あり<br/>→ IT部門（篠敦史）に確認予定</span></span><span style='display:block; margin:6px 0;'>• <strong>AD Primary Server (Dell)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>PDCSVR / 192.168.1.6 / MAC: 4c-52-62-47-32-c0</span></span><span style='display:block; margin:6px 0;'>• <strong>AD Secondary Server (Dell)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>BDCSVR / 192.168.1.7 / MAC: 4c-52-62-47-2f-09</span></span><span style='display:block; margin:6px 0;'>• <strong>ファイルサーバー等 (Cisco)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>192.168.1.15 / MAC: 5c-ed-8c-5e-8f-50</span></span><span style='display:block; margin:6px 0;'>• <strong>ネットワーク機器群</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>Juniper .31, Cisco .40, Unknown .8, .30</span></span><span style='display:block; margin:6px 0;'>• <strong>複合機 (RICOH MFP)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>3台: 192.168.1.50, .55, .56<br/>• 業務PC &amp; 端末 (35台以上)<br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>192.168.1.54, .77, .83, .85, .88, .102-.107, .117, .122, .124, .127<br/>.162-.164, .166, .173-.174, .196, .202-.204, .207, .211-.212, .215, .245-.246</span></span><span style='display:block; margin:8px 0; padding: 6px; background:#dbeafe; border-radius:4px; border-left: 3px solid #3b82f6;'><strong>📊 発見デバイス統計:</strong><br/>• <strong>総デバイス数</strong>: 45台<br/>• <strong>コア機器</strong>: Fortinet FortiGate, Juniper, Cisco (4台)<br/>• <strong>サーバー系</strong>: AD Primary, AD Secondary, File Server, SECOM/その他 (4台)<br/>• <strong>複合機</strong>: RICOH MFP (3台)<br/>• <strong>業務PC/端末</strong>: 34台<br/>→ Google Sheets 登録済み: <a href='https://docs.google.com/spreadsheets/d/1AWAAQVo4jutnTS0jnZcv8QuuNAmoLwfmJThYxHr57pc/edit#gid=0' target='_blank' style='color:#0369a1; text-decoration:underline;'>検査結果（本社 2026-02-26）</a></span></div>
         </div>
         <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); page-break-inside: avoid;">
-            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type A</span>大阪営業所</h3>
-            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">ローカルブレイクアウト実現拠点。インターネット通信は直接接続。LBO用に機種変更済。</p>
+            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type A</span>大阪営業所<span style="font-size:0.75em; background:#fecaca; padding:2px 6px; border-radius:3px; margin-left:8px;">Excel記載 2026-02-26</span></h3>
+            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">VPN接続拠点。VPN Route: 192.168.20.0/24 (GW: 192.168.20.1)。計5デバイス。</p>
             <div class="mermaid" style="background:#fafafa; padding:15px; border-radius:6px; min-height: 350px;">
             graph TD
                 subgraph 外部["外部ネットワーク / 本社"]
-                    HUB["本社VPN HUB<br/>(VSR601J)"]
+                    HUB["本社VPN HUB<br/>(Fortinet FortiGate)"]
                 end
 
-                subgraph 拠点["大阪営業所"]
-                    D0["VSR601J<br/>(ルーター)<br/>LBO用に機種変更済"]
-                    D1["BN用ルーター<br/>(ルーター)<br/>Hub で分岐（バディネット用）"]
-                    D2["ファイルサーバー参照<br/>(クライアント)<br/>アドテックのみ本社FSを利用（Socket要）"]
-                    D3["Secom入退室機器<br/>(Secom TRII)<br/>Socket要"]
-                    D4["業務PC<br/>(クライアント)<br/>4名"]
+                subgraph 拠点["大阪営業所 (192.168.20.0/24)"]
+                    D0["VSR401j<br/>192.168.20.1<br/>(VPN ルーター)"]
+                    D21["WAB-I1750PS<br/>192.168.20.21<br/>(無線LAN親機・執務室)"]
+                    D22["WAB-I1750PS<br/>192.168.20.22<br/>(無線LAN親機・会議室)"]
+                    D31["TRIIインターフェース<br/>192.168.20.31<br/>(SECOM入退室)"]
+                    D50["RICOH IM C3010<br/>192.168.20.50<br/>(複合機)"]
                 end
 
                 HUB <-->|VPN接続| D0
+                D0 --- D21
+                D0 --- D22
+                D0 --- D31
+                D0 --- D50
 
                 style D0 stroke:#f59e0b,stroke-width:2px,fill:#fef3c7
+                style D31 stroke:#10b981,stroke-width:2px
             </div>
-            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (詳細):</strong><br/><span style='display:block; margin:4px 0;'>• <strong>VSR601J</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) LBO用に機種変更済</span></span><span style='display:block; margin:4px 0;'>• <strong>BN用ルーター</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) Hub で分岐（バディネット用）</span></span><span style='display:block; margin:4px 0;'>• <strong>ファイルサーバー参照</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(クライアント) アドテックのみ本社FSを利用（Socket要）</span></span><span style='display:block; margin:4px 0;'>• <strong>Secom入退室機器</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(Secom TRII) Socket要</span></span><span style='display:block; margin:4px 0;'>• <strong>業務PC</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(クライアント) 4名</span></span></div>
+            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (Excel 記載):</strong><br/><span style='display:block; margin:6px 0; padding: 6px; background:#fef3c7; border-radius:4px;'>• <strong>VSR401j (192.168.20.1)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>VPNルータ（インターネット通信、拠点間通信）</span></span><span style='display:block; margin:6px 0;'>• <strong>WAB-I1750PS (192.168.20.21)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>無線LAN親機（執務室）管理画面 admin/ggs18zye</span></span><span style='display:block; margin:6px 0;'>• <strong>WAB-I1750PS (192.168.20.22)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>無線LAN親機（会議室）管理画面 admin/ggs18zye</span></span><span style='display:block; margin:6px 0; padding: 6px; background:#d1fae5; border-radius:4px;'>• <strong>TRIIインターフェース (192.168.20.31)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>SESAMO-TRIIインターフェース（セコム入退室システム）</span></span><span style='display:block; margin:6px 0;'>• <strong>RICOH IM C3010 (192.168.20.50)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>複合機 ブラウザID: admin</span></span></div>
         </div>
         <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); page-break-inside: avoid;">
-            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type A</span>多摩 (R&D)</h3>
-            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">研究開発センター。全通信が本社経由。複合機2台の Socket要否は調査中。</p>
+            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type A</span>プライム築地 (多摩)<span style="font-size:0.75em; background:#fecaca; padding:2px 6px; border-radius:3px; margin-left:8px;">Excel記載 2026-02-26</span></h3>
+            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">VPN接続拠点。VPN Route: 192.168.60.0/24 (GW: 192.168.60.1)。計12デバイス。</p>
             <div class="mermaid" style="background:#fafafa; padding:15px; border-radius:6px; min-height: 350px;">
             graph TD
                 subgraph 外部["外部ネットワーク / 本社"]
-                    HUB["本社VPN HUB<br/>(VSR601J)"]
+                    HUB["本社VPN HUB<br/>(Fortinet FortiGate)"]
                 end
 
-                subgraph 拠点["多摩 (R&D)"]
-                    D0["VSR400<br/>(ルーター)<br/>R&Dセンター"]
-                    D1["Secom入退室機器<br/>(Secom TRII)<br/>Socket要"]
-                    D2["業務PC<br/>(クライアント)<br/>R&D業務"]
-                    D3["複合機<br/>(マルチファンクション)<br/>x2 (Socket要否調査中)"]
+                subgraph 拠点["プライム築地 (192.168.60.0/24)"]
+                    D0["VSR400<br/>192.168.60.1<br/>(VPN ルーター)"]
+                    D7["サーバー<br/>192.168.60.7<br/>(ファイルサーバー)"]
+                    D20["WAB-M1775-PS<br/>192.168.60.20<br/>(無線AP・1F会議室)"]
+                    D23["WAB-M1775-PS<br/>192.168.60.23<br/>(無線AP・2F執務室)"]
+                    D31["TRIIインターフェース<br/>192.168.60.31<br/>(SECOM入退室)"]
+                    D54["SHARP BP-50C55<br/>192.168.60.54<br/>(複合機)"]
+                    D55["IR-ADV C3730F<br/>192.168.60.55<br/>(複合機)"]
+                    More["他5台の無線AP<br/>(1F物流、2F検査室等)"]
                 end
 
                 HUB <-->|VPN接続| D0
+                D0 --- D7
+                D0 --- D20
+                D0 --- D23
+                D0 --- D31
+                D0 --- D54
+                D0 --- D55
+                D0 --- More
 
                 style D0 stroke:#f59e0b,stroke-width:2px,fill:#fef3c7
+                style D31 stroke:#10b981,stroke-width:2px
             </div>
-            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (詳細):</strong><br/><span style='display:block; margin:4px 0;'>• <strong>VSR400</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) R&Dセンター</span></span><span style='display:block; margin:4px 0;'>• <strong>Secom入退室機器</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(Secom TRII) Socket要</span></span><span style='display:block; margin:4px 0;'>• <strong>業務PC</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(クライアント) R&D業務</span></span><span style='display:block; margin:4px 0;'>• <strong>複合機</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(マルチファンクション) x2 (Socket要否調査中)</span></span></div>
+            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (Excel 記載):</strong><br/><span style='display:block; margin:6px 0; padding: 6px; background:#fef3c7; border-radius:4px;'>• <strong>VSR400 (192.168.60.1)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>VPNルータ（インターネット通信、拠点間通信）</span></span><span style='display:block; margin:6px 0;'>• <strong>サーバー (192.168.60.7)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>CRB八王子のファイルサーバー</span></span><span style='display:block; margin:6px 0;'>• <strong>WAB-M1775-PS (192.168.60.20-26)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>無線AP × 7台（1F会議室、1F物流、2F検査室、2F執務室、3F物流、2F検査室階段、2F会議室）</span></span><span style='display:block; margin:6px 0; padding: 6px; background:#d1fae5; border-radius:4px;'>• <strong>TRIIインターフェース (192.168.60.31)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>SESAMO-TRIIインターフェース（セコム入退室システム）</span></span><span style='display:block; margin:6px 0;'>• <strong>SHARP BP-50C55 (192.168.60.54)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>複合機（1F）2025年10月導入 ID: admin</span></span><span style='display:block; margin:6px 0;'>• <strong>IR-ADV C3730F (192.168.60.55)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>複合機（2F）元CRB八王子の複合機</span></span></div>
         </div>
         <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); page-break-inside: avoid;">
-            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type A</span>橋本 (IoT Lab)</h3>
-            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">IoT研究拠点。IOTSVR・QNAP NAS・OrCAD PCを集中管理。最も多くの対応が必要（①②③④）。</p>
+            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type A</span>橋本 (R&D)<span style="font-size:0.75em; background:#fecaca; padding:2px 6px; border-radius:3px; margin-left:8px;">Excel記載 2026-02-26</span></h3>
+            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">IoT研究拠点。VPN Route: 192.168.30.0/24 (GW: 192.168.30.1)。IOTSVR・QNAP NAS・OrCAD PC集中管理。計10デバイス。</p>
             <div class="mermaid" style="background:#fafafa; padding:15px; border-radius:6px; min-height: 350px;">
             graph TD
                 subgraph 外部["外部ネットワーク / 本社"]
-                    HUB["本社VPN HUB<br/>(VSR601J)"]
+                    HUB["本社VPN HUB<br/>(Fortinet FortiGate)"]
                 end
 
-                subgraph 拠点["橋本 (IoT Lab)"]
-                    D0["VSR400<br/>(ルーター)<br/>R&Dセンターと同一サブネット"]
-                    D1["IOTSVR<br/>(IoTファイルサーバー)<br/>.30.15 / BMC .30.16 (Socket要)"]
-                    D2["QNAP NAS<br/>(ストレージ)<br/>TS-431U .30.10 ENG用 (Socket要)"]
-                    D3["OrCAD PC<br/>(ワークステーション)<br/>.30.13 単なるPC (Socket要)"]
-                    D4["Secom入退室機器<br/>(Secom TRII)<br/>Socket要"]
-                    D5["業務PC<br/>(クライアント)<br/>IoT運用"]
-                    D6["複合機<br/>(マルチファンクション)<br/>Socket要否調査中"]
+                subgraph 拠点["橋本 R&D (192.168.30.0/24)"]
+                    D0["VSR400<br/>192.168.30.1<br/>(VPN ルーター)"]
+                    D10["QNAP TS-431U<br/>192.168.30.10<br/>(NAS・ENG用)"]
+                    D12["Relex2017<br/>192.168.30.12<br/>(OrCADサーバ)"]
+                    D13["Relex2017<br/>192.168.30.13<br/>(OrCADサーバ)"]
+                    D15["IOTSVR<br/>192.168.30.15<br/>(ファイルサーバ)"]
+                    D16["IOTSVR BMC<br/>192.168.30.16<br/>(管理用)"]
+                    D20["WAB-M1775-PS<br/>192.168.30.20<br/>(無線AP)"]
+                    D31["TRIIインターフェース<br/>192.168.30.31<br/>(SECOM入退室)"]
+                    D55["Canon C5540II<br/>192.168.30.55<br/>(複合機)"]
+                    D61["M3200A005<br/>192.168.30.61<br/>(検証機器)"]
                 end
 
                 HUB <-->|VPN接続| D0
+                D0 --- D10
+                D0 --- D12
+                D0 --- D13
+                D0 --- D15
+                D0 --- D16
+                D0 --- D20
+                D0 --- D31
+                D0 --- D55
+                D0 --- D61
 
                 style D0 stroke:#f59e0b,stroke-width:2px,fill:#fef3c7
+                style D31 stroke:#10b981,stroke-width:2px
             </div>
-            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (詳細):</strong><br/><span style='display:block; margin:4px 0;'>• <strong>VSR400</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) R&Dセンターと同一サブネット</span></span><span style='display:block; margin:4px 0;'>• <strong>IOTSVR</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(IoTファイルサーバー) .30.15 / BMC .30.16 (Socket要)</span></span><span style='display:block; margin:4px 0;'>• <strong>QNAP NAS</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ストレージ) TS-431U .30.10 ENG用 (Socket要)</span></span><span style='display:block; margin:4px 0;'>• <strong>OrCAD PC</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ワークステーション) .30.13 単なるPC (Socket要)</span></span><span style='display:block; margin:4px 0;'>• <strong>Secom入退室機器</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(Secom TRII) Socket要</span></span><span style='display:block; margin:4px 0;'>• <strong>業務PC</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(クライアント) IoT運用</span></span><span style='display:block; margin:4px 0;'>• <strong>複合機</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(マルチファンクション) Socket要否調査中</span></span></div>
+            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (Excel 記載):</strong><br/><span style='display:block; margin:6px 0; padding: 6px; background:#fef3c7; border-radius:4px;'>• <strong>VSR400 (192.168.30.1)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>VPNルータ（インターネット通信、拠点間通信）</span></span><span style='display:block; margin:6px 0;'>• <strong>QNAP TS-431U (192.168.30.10)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>IoT ENG用 データ保管共有用サーバ ユーザー：admin PW：adtecno1</span></span><span style='display:block; margin:6px 0;'>• <strong>Relex2017 (192.168.30.12, .13)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>OrCADサーバ（2台・7Fチャンバールームのサーバラック内）</span></span><span style='display:block; margin:6px 0;'>• <strong>IOTSVR (192.168.30.15, .16)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>IoT事業部専用ファイルサーバ & BMC用</span></span><span style='display:block; margin:6px 0;'>• <strong>WAB-M1775-PS (192.168.30.20)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>無線AP (admin/ykd2AemGpC9A) SSID 2.4Ghz:HashimotoMN-G / 5Ghz:HashimotoMN PW:sP7jCc64</span></span><span style='display:block; margin:6px 0; padding: 6px; background:#d1fae5; border-radius:4px;'>• <strong>TRIIインターフェース (192.168.30.31)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>SESAMO-TRIIインターフェース（セコム入退室システム）</span></span><span style='display:block; margin:6px 0;'>• <strong>Canon C5540II (192.168.30.55)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>複合機（R&D8F技術・品証・IoT） ジョブカンID：4749</span></span><span style='display:block; margin:6px 0;'>• <strong>M3200A005 (192.168.30.61)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>CFカード、CFastカード検証用機器</span></span></div>
         </div>
         <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); page-break-inside: avoid;">
-            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type B</span>福岡</h3>
-            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">BN（バディネット）管理。SECOM通信のみ。型番VSR402J。ONU→Hub→Router→Secom構成。</p>
+            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type B</span>福岡営業所<span style="font-size:0.75em; background:#fecaca; padding:2px 6px; border-radius:3px; margin-left:8px;">Excel記載 2026-02-26</span></h3>
+            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">VPN接続拠点。VPN Route: 192.168.40.0/24 (GW: 192.168.40.1)。計2デバイス（ルーター＋SECOM機器）。</p>
             <div class="mermaid" style="background:#fafafa; padding:15px; border-radius:6px; min-height: 350px;">
             graph TD
-                subgraph 外部["外部ネットワーク"]
-                    ISP["ISP / インターネット"]
-                    BN["バディネット管理"]
+                subgraph 外部["外部ネットワーク / 本社"]
+                    HUB["本社VPN HUB<br/>(Fortinet FortiGate)"]
                 end
 
-                subgraph 拠点["福岡"]
-                    D0["ONU<br/>(ネットワーク終端装置)"]
-                    D1["Hub<br/>(ネットワークハブ)"]
-                    D2["ルーター<br/>(VSR402J)"]
-                    D3["VSR402J<br/>(ルーター)<br/>BN管理"]
-                    D4["ONU<br/>(ネットワーク終端装置)<br/>インターネット接続"]
-                    D5["Hub<br/>(ネットワークハブ)<br/>ルーター分岐"]
-                    D6["Secom入退室機器<br/>(Secom TRII)<br/>Socket要"]
-                    D7["勤怠打刻端末<br/>(クライアント)<br/>BN管理（限定機能）"]
+                subgraph 拠点["福岡営業所 (192.168.40.0/24)"]
+                    D0["VSR401j<br/>192.168.40.1<br/>(VPN ルーター)"]
+                    D31["TRIIインターフェース<br/>192.168.40.31<br/>(SECOM入退室)"]
                 end
 
-                ISP --> D0
-                D0 --> D1
-                D1 --> D2
-                    D2 --- D3
-                    D2 --- D4
-                    D2 --- D5
-                    D2 --- D6
-                    D2 --- D7
-                D2 ---|BN管理| BN
+                HUB <-->|VPN接続| D0
+                D0 --- D31
 
-                style D2 stroke:#94a3b8,stroke-width:2px,fill:#f1f5f9
+                style D0 stroke:#f59e0b,stroke-width:2px,fill:#fef3c7
+                style D31 stroke:#10b981,stroke-width:2px
             </div>
-            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (詳細):</strong><br/><span style='display:block; margin:4px 0;'>• <strong>VSR402J</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) BN管理</span></span><span style='display:block; margin:4px 0;'>• <strong>ONU</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ネットワーク終端装置) インターネット接続</span></span><span style='display:block; margin:4px 0;'>• <strong>Hub</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ネットワークハブ) ルーター分岐</span></span><span style='display:block; margin:4px 0;'>• <strong>Secom入退室機器</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(Secom TRII) Socket要</span></span><span style='display:block; margin:4px 0;'>• <strong>勤怠打刻端末</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(クライアント) BN管理（限定機能）</span></span></div>
+            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (Excel 記載):</strong><br/><span style='display:block; margin:6px 0; padding: 6px; background:#fef3c7; border-radius:4px;'>• <strong>VSR401j (192.168.40.1)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>VPNルータ（インターネット通信、拠点間通信）</span></span><span style='display:block; margin:6px 0; padding: 6px; background:#d1fae5; border-radius:4px;'>• <strong>TRIIインターフェース (192.168.40.31)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>SESAMO-TRIIインターフェース（セコム入退室システム）</span></span></div>
         </div>
         <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); page-break-inside: avoid;">
-            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type B</span>和歌山</h3>
-            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">BN（バディネット）管理。SECOM通信のみ。型番VSR402J。ONU→Hub→Router→Secom構成。</p>
+            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type B</span>和歌山<span style="font-size:0.75em; background:#fecaca; padding:2px 6px; border-radius:3px; margin-left:8px;">Excel記載 2026-02-26</span></h3>
+            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">VPN接続拠点。VPN Route: 192.168.50.0/24 (GW: 192.168.50.1)。計5デバイス（ルーター＋SECOM機器4台）。</p>
             <div class="mermaid" style="background:#fafafa; padding:15px; border-radius:6px; min-height: 350px;">
             graph TD
-                subgraph 外部["外部ネットワーク"]
-                    ISP["ISP / インターネット"]
-                    BN["バディネット管理"]
+                subgraph 外部["外部ネットワーク / 本社"]
+                    HUB["本社VPN HUB<br/>(Fortinet FortiGate)"]
                 end
 
-                subgraph 拠点["和歌山"]
-                    D0["ONU<br/>(ネットワーク終端装置)"]
-                    D1["Hub<br/>(ネットワークハブ)"]
-                    D2["ルーター<br/>(VSR402J)"]
-                    D3["VSR402J<br/>(ルーター)<br/>BN管理"]
-                    D4["ONU<br/>(ネットワーク終端装置)<br/>インターネット接続"]
-                    D5["Hub<br/>(ネットワークハブ)<br/>ルーター分岐"]
-                    D6["Secom入退室機器<br/>(Secom TRII)<br/>Socket要"]
-                    D7["勤怠打刻端末<br/>(クライアント)<br/>BN管理（限定機能）"]
+                subgraph 拠点["和歌山 (192.168.50.0/24)"]
+                    D0["VSR401j<br/>192.168.50.1<br/>(VPN ルーター)"]
+                    D31["TRIIインターフェース<br/>192.168.50.31<br/>(SECOM・4F用)"]
+                    D32["セサモIdf<br/>192.168.50.32<br/>(静脈機器・内側)"]
+                    D33["セサモIdf<br/>192.168.50.33<br/>(静脈機器・外側)"]
+                    D34["TRIIインターフェース<br/>192.168.50.34<br/>(SECOM・3F用)"]
                 end
 
-                ISP --> D0
-                D0 --> D1
-                D1 --> D2
-                    D2 --- D3
-                    D2 --- D4
-                    D2 --- D5
-                    D2 --- D6
-                    D2 --- D7
-                D2 ---|BN管理| BN
+                HUB <-->|VPN接続| D0
+                D0 --- D31
+                D0 --- D32
+                D0 --- D33
+                D0 --- D34
 
-                style D2 stroke:#94a3b8,stroke-width:2px,fill:#f1f5f9
+                style D0 stroke:#f59e0b,stroke-width:2px,fill:#fef3c7
+                style D31 stroke:#10b981,stroke-width:2px
+                style D34 stroke:#10b981,stroke-width:2px
             </div>
-            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (詳細):</strong><br/><span style='display:block; margin:4px 0;'>• <strong>VSR402J</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) BN管理</span></span><span style='display:block; margin:4px 0;'>• <strong>ONU</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ネットワーク終端装置) インターネット接続</span></span><span style='display:block; margin:4px 0;'>• <strong>Hub</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ネットワークハブ) ルーター分岐</span></span><span style='display:block; margin:4px 0;'>• <strong>Secom入退室機器</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(Secom TRII) Socket要</span></span><span style='display:block; margin:4px 0;'>• <strong>勤怠打刻端末</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(クライアント) BN管理（限定機能）</span></span></div>
+            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (Excel 記載):</strong><br/><span style='display:block; margin:6px 0; padding: 6px; background:#fef3c7; border-radius:4px;'>• <strong>VSR401j (192.168.50.1)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>VPNルータ（インターネット通信、拠点間通信）</span></span><span style='display:block; margin:6px 0; padding: 6px; background:#d1fae5; border-radius:4px;'>• <strong>TRIIインターフェース (192.168.50.31)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>SESAMO-TRIIインターフェース（セコム入退室システム・4F用）</span></span><span style='display:block; margin:6px 0; padding: 6px; background:#d1fae5; border-radius:4px;'>• <strong>セサモIdf (192.168.50.32, .33)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>セサモIdf（静脈機器・セコム入退室システム）内側と外側でIP 2つ使用</span></span><span style='display:block; margin:6px 0; padding: 6px; background:#d1fae5; border-radius:4px;'>• <strong>TRIIインターフェース (192.168.50.34)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>SESAMO-TRIIインターフェース（セコム入退室システム・3F用）</span></span></div>
         </div>
         <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); page-break-inside: avoid;">
-            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type B</span>京橋ビル</h3>
-            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">BN（バディネット）管理。SECOM通信のみ。型番VSR402J。ONU→Hub→Router→Secom構成。</p>
+            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type B</span>京橋ビル<span style="font-size:0.75em; background:#fecaca; padding:2px 6px; border-radius:3px; margin-left:8px;">Excel記載 2026-02-26</span></h3>
+            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">VPN接続拠点。VPN Route: 192.168.70.0/24 (GW: 192.168.70.1)。計2デバイス（ルーター＋SECOM機器）。</p>
             <div class="mermaid" style="background:#fafafa; padding:15px; border-radius:6px; min-height: 350px;">
             graph TD
-                subgraph 外部["外部ネットワーク"]
-                    ISP["ISP / インターネット"]
-                    BN["バディネット管理"]
+                subgraph 外部["外部ネットワーク / 本社"]
+                    HUB["本社VPN HUB<br/>(Fortinet FortiGate)"]
                 end
 
-                subgraph 拠点["京橋ビル"]
-                    D0["ONU<br/>(ネットワーク終端装置)"]
-                    D1["Hub<br/>(ネットワークハブ)"]
-                    D2["ルーター<br/>(VSR402J)"]
-                    D3["VSR402J<br/>(ルーター)<br/>BN管理"]
-                    D4["ONU<br/>(ネットワーク終端装置)<br/>インターネット接続"]
-                    D5["Hub<br/>(ネットワークハブ)<br/>ルーター分岐"]
-                    D6["Secom入退室機器<br/>(Secom TRII)<br/>Socket要"]
-                    D7["勤怠打刻端末<br/>(クライアント)<br/>BN管理（限定機能）"]
+                subgraph 拠点["京橋ビル (192.168.70.0/24)"]
+                    D0["VSR401j<br/>192.168.70.1<br/>(VPN ルーター)"]
+                    D31["TRIIインターフェース<br/>192.168.70.31<br/>(SECOM入退室)"]
                 end
 
-                ISP --> D0
-                D0 --> D1
-                D1 --> D2
-                    D2 --- D3
-                    D2 --- D4
-                    D2 --- D5
-                    D2 --- D6
-                    D2 --- D7
-                D2 ---|BN管理| BN
+                HUB <-->|VPN接続| D0
+                D0 --- D31
 
-                style D2 stroke:#94a3b8,stroke-width:2px,fill:#f1f5f9
+                style D0 stroke:#f59e0b,stroke-width:2px,fill:#fef3c7
+                style D31 stroke:#10b981,stroke-width:2px
             </div>
-            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (詳細):</strong><br/><span style='display:block; margin:4px 0;'>• <strong>VSR402J</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) BN管理</span></span><span style='display:block; margin:4px 0;'>• <strong>ONU</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ネットワーク終端装置) インターネット接続</span></span><span style='display:block; margin:4px 0;'>• <strong>Hub</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ネットワークハブ) ルーター分岐</span></span><span style='display:block; margin:4px 0;'>• <strong>Secom入退室機器</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(Secom TRII) Socket要</span></span><span style='display:block; margin:4px 0;'>• <strong>勤怠打刻端末</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(クライアント) BN管理（限定機能）</span></span></div>
+            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (Excel 記載):</strong><br/><span style='display:block; margin:6px 0; padding: 6px; background:#fef3c7; border-radius:4px;'>• <strong>VSR401j (192.168.70.1)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>VPNルータ（インターネット通信、拠点間通信）</span></span><span style='display:block; margin:6px 0; padding: 6px; background:#d1fae5; border-radius:4px;'>• <strong>TRIIインターフェース (192.168.70.31)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>SESAMO-TRIIインターフェース（セコム入退室システム）</span></span></div>
         </div>
         <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); page-break-inside: avoid;">
-            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type B</span>名古屋</h3>
-            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">BN（バディネット）管理。SECOM通信のみ。型番VSR402J。ONU→Hub→Router→Secom構成。</p>
+            <h3 style="margin-top:0; color:#1e293b; font-size: 17px;"><span style="background:#dbeafe; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-right:8px;">Type B</span>名古屋<span style="font-size:0.75em; background:#fecaca; padding:2px 6px; border-radius:3px; margin-left:8px;">Excel記載 2026-02-26</span></h3>
+            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px; line-height:1.5;">VPN接続拠点。VPN Route: 192.168.80.0/24 (GW: 192.168.80.1)。計2デバイス（ルーター＋SECOM機器）。</p>
             <div class="mermaid" style="background:#fafafa; padding:15px; border-radius:6px; min-height: 350px;">
             graph TD
-                subgraph 外部["外部ネットワーク"]
-                    ISP["ISP / インターネット"]
-                    BN["バディネット管理"]
+                subgraph 外部["外部ネットワーク / 本社"]
+                    HUB["本社VPN HUB<br/>(Fortinet FortiGate)"]
                 end
 
-                subgraph 拠点["名古屋"]
-                    D0["ONU<br/>(ネットワーク終端装置)"]
-                    D1["Hub<br/>(ネットワークハブ)"]
-                    D2["ルーター<br/>(VSR402J)"]
-                    D3["VSR402J<br/>(ルーター)<br/>BN管理"]
-                    D4["ONU<br/>(ネットワーク終端装置)<br/>インターネット接続"]
-                    D5["Hub<br/>(ネットワークハブ)<br/>ルーター分岐"]
-                    D6["Secom入退室機器<br/>(Secom TRII)<br/>Socket要"]
-                    D7["勤怠打刻端末<br/>(クライアント)<br/>BN管理（限定機能）"]
+                subgraph 拠点["名古屋 (192.168.80.0/24)"]
+                    D0["VSR401j<br/>192.168.80.1<br/>(VPN ルーター)"]
+                    D31["TRIIインターフェース<br/>192.168.80.31<br/>(SECOM入退室)"]
                 end
 
-                ISP --> D0
-                D0 --> D1
-                D1 --> D2
-                    D2 --- D3
-                    D2 --- D4
-                    D2 --- D5
-                    D2 --- D6
-                    D2 --- D7
-                D2 ---|BN管理| BN
+                HUB <-->|VPN接続| D0
+                D0 --- D31
 
-                style D2 stroke:#94a3b8,stroke-width:2px,fill:#f1f5f9
+                style D0 stroke:#f59e0b,stroke-width:2px,fill:#fef3c7
+                style D31 stroke:#10b981,stroke-width:2px
             </div>
-            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (詳細):</strong><br/><span style='display:block; margin:4px 0;'>• <strong>VSR402J</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ルーター) BN管理</span></span><span style='display:block; margin:4px 0;'>• <strong>ONU</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ネットワーク終端装置) インターネット接続</span></span><span style='display:block; margin:4px 0;'>• <strong>Hub</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(ネットワークハブ) ルーター分岐</span></span><span style='display:block; margin:4px 0;'>• <strong>Secom入退室機器</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(Secom TRII) Socket要</span></span><span style='display:block; margin:4px 0;'>• <strong>勤怠打刻端末</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>(クライアント) BN管理（限定機能）</span></span></div>
+            <div style='font-size:0.85rem; margin-top:12px; padding:10px; background:#f8fafc; border-radius:6px; border-left:3px solid #3b82f6;'><strong>設置機器 (Excel 記載):</strong><br/><span style='display:block; margin:6px 0; padding: 6px; background:#fef3c7; border-radius:4px;'>• <strong>VSR401j (192.168.80.1)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>VPNルータ（インターネット通信、拠点間通信）</span></span><span style='display:block; margin:6px 0; padding: 6px; background:#d1fae5; border-radius:4px;'>• <strong>TRIIインターフェース (192.168.80.31)</strong><br/><span style='font-size:0.8em; color:#666; margin-left:1em;'>SESAMO-TRIIインターフェース（セコム入退室システム）</span></span></div>
         </div>
     
         <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); page-break-inside: avoid;">
