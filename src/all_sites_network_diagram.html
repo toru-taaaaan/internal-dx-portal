@@ -297,9 +297,11 @@
             end
 
             FW --- AdGroup & NwGroup
-            FW --- SecomGroup & ApGroup
-            FW --- MfpGroup & ServerGroup
-            FW --- ClientGroup
+            AdGroup --- SecomGroup
+            SecomGroup --- MfpGroup
+            MfpGroup --- ClientGroup
+            NwGroup --- ApGroup
+            ApGroup --- ServerGroup
 
             style FW stroke:#dc2626,stroke-width:4px,fill:#fee2e2
             style AdGroup stroke:#3b82f6,stroke-width:2px,fill:#dbeafe
