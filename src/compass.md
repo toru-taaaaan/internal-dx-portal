@@ -8,12 +8,18 @@ permalink: /compass/
 ## 📊 プロジェクト比較表
 
 ### USEN ネットワーク・AD移行 総合比較表
+現行ネットワーク（VarioSecure / YAMAHA VPN）の老朽化と VPN 管理の煩雑化を受け、USEN・IIJ・SCSK（Cato SASE）等のベンダーを比較検討中。回線費用・AD移行シナリオ・Cato 導入可否を一枚で整理するために作成。
+
 [USEN・ネットワーク改善 検討資料 + 検査結果シート (2026-02-26)](https://docs.google.com/spreadsheets/d/1AWAAQVo4jutnTS0jnZcv8QuuNAmoLwfmJThYxHr57pc#gid=1929486641)
 
 ### ネットワーク実機調査 × 台帳照合（2026-02-26）
+「Excel 台帳の IP アドレスが現実と合っているか怪しい」という疑問から、2026-02-26 に全拠点を ICMPスキャンで実機調査。台帳と一致しない機器 42 件を抽出し、情シス（篠氏）に正誤確認を依頼中。ネットワーク再設計の前提となる「現状の正確な把握」が目的。
+
 [全拠点ネットワーク実機調査 × 台帳照合シート（情シス確認依頼 / 差分42件）](https://docs.google.com/spreadsheets/d/1_NCP76fRbrPC__ywHBC1yHFLQUzJMZ6Ip6Ak7aU6p-w/edit?gid=1918728386#gid=1918728386)
 
 ### 入退室管理 ベンダー比較表
+現行 SECOM セサモ TRⅡ（オンプレ）のサーバー保守期限が迫る中、クラウド型入退室管理への移行を検討。ALLIGATE・BitKey・Akerun・SPLATS を並行評価中。費用・FeliCa 継続可否・既設電気錠流用可否が主な判断軸。
+
 [入退室管理 - ALLIGATE vs BitKey 比較表](https://docs.google.com/spreadsheets/d/1gFg8q2rGX3XnAzoO3daoQ7M-pEMjnJrELtVMlYwG1gc/edit?gid=0#gid=0)
 
 ---
