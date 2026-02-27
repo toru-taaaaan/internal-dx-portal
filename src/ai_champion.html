@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Champion | AKIBAホールディングス</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/unified_design_system.css">
+  <style>
+    :root {
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --accent: #2563eb;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+    }
+
+    /* Hero */
+    .hero {
+      background: #0f172a;
+      border-radius: 16px;
+      padding: 56px 48px;
+      color: #fff;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: 'AI';
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 200px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.04);
+      position: absolute;
+      right: -8px;
+      bottom: -40px;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .hero-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: #94a3b8;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      color: #cbd5e1;
+      font-size: 14px;
+      max-width: 560px;
+      line-height: 1.8;
+    }
+
+    /* Section */
+    .section {
+      background: var(--card);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 28px 32px;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    /* Members */
+    .members {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .member-card {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 16px;
+      border: 1px solid var(--border);
+    }
+
+    .member-name {
+      font-weight: 600;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .member-dept {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .member-badge {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .badge-active {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .badge-pending {
+      background: #fef9c3;
+      color: #854d0e;
+    }
+
+    /* Progress link */
+    .progress-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      background: var(--bg);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.15s;
+    }
+
+    .progress-link:hover {
+      border-color: var(--accent);
+    }
+
+    .progress-link-icon {
+      width: 36px;
+      height: 36px;
+      background: #eff6ff;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .progress-link-text {
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .progress-link-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* Docs */
+    .doc-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .doc-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      background: var(--bg);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.15s;
+    }
+
+    .doc-item:hover {
+      border-color: var(--accent);
+    }
+
+    .doc-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .doc-label {
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .doc-desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    .arrow {
+      margin-left: auto;
+      color: var(--muted);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-label">AKIBAホールディングス 情報システム部</div>
+      <h1>AI Champion</h1>
+      <p>
+        Google Antigravity（AI）を活用した業務改善を社内で主導する担当者を育成する取り組み。<br>
+        業務に活用できるスキルの習得と、周囲への展開・定着を目的とする。
+      </p>
+    </div>
+
+    <!-- Members -->
+    <div class="section">
+      <div class="section-title">参加メンバー</div>
+      <div class="members">
+        <div class="member-card">
+          <div class="member-name">中野 雄樹</div>
+          <div class="member-dept">経営戦略本部<br>経営企画室</div>
+          <span class="member-badge badge-active">参加中</span>
+        </div>
+        <div class="member-card">
+          <div class="member-name">石井 優大</div>
+          <div class="member-dept">管理本部<br>財務・経理第二部</div>
+          <span class="member-badge badge-active">参加中</span>
+        </div>
+        <div class="member-card">
+          <div class="member-name">高橋 徹</div>
+          <div class="member-dept">管理本部<br>事業企画室</div>
+          <span class="member-badge badge-pending">参加予定</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div class="section">
+      <div class="section-title">カリキュラム進捗</div>
+      <a href="#" class="progress-link">
+        <div class="progress-link-icon">📊</div>
+        <div>
+          <div class="progress-link-text">進捗管理シート</div>
+          <div class="progress-link-sub">Google スプレッドシート</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <!-- Docs -->
+    <div class="section">
+      <div class="section-title">資料</div>
+      <div class="doc-list">
+        <a href="/Antigravity_操作ガイド.html" class="doc-item">
+          <span class="doc-icon">📖</span>
+          <div>
+            <div class="doc-label">Antigravity 操作ガイド</div>
+            <div class="doc-desc">基本操作・プロンプトの書き方</div>
+          </div>
+          <span class="arrow">→</span>
+        </a>
+        <a href="/AI_Champion_ハンドブック.html" class="doc-item">
+          <span class="doc-icon">📋</span>
+          <div>
+            <div class="doc-label">AI Champion ハンドブック</div>
+            <div class="doc-desc">活動方針・ロールの定義</div>
+          </div>
+          <span class="arrow">→</span>
+        </a>
+        <a href="/Antigravity_セキュリティガイドライン.html" class="doc-item">
+          <span class="doc-icon">🔒</span>
+          <div>
+            <div class="doc-label">セキュリティガイドライン</div>
+            <div class="doc-desc">利用上のルール・禁止事項</div>
+          </div>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
