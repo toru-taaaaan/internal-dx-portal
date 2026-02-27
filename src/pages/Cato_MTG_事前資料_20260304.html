@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>現行ネットワーク構成 事前資料 | AKIBAホールディングス</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #1a1a2e;
+    background: #f7f8fc;
+  }
+  .page {
+    max-width: 960px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    padding: 48px 56px;
+  }
+  .doc-header {
+    border-bottom: 3px solid #1a1a2e;
+    padding-bottom: 20px;
+    margin-bottom: 36px;
+  }
+  .doc-header .label {
+    font-size: 11px;
+    color: #666;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .doc-header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 8px;
+  }
+  .doc-header .meta {
+    font-size: 13px;
+    color: #555;
+  }
+  .doc-header .meta span { margin-right: 24px; }
+
+  h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a2e;
+    border-left: 4px solid #2563eb;
+    padding-left: 12px;
+    margin: 40px 0 16px;
+  }
+  h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+    margin: 24px 0 10px;
+  }
+
+  .summary-box {
+    background: #f0f4ff;
+    border: 1px solid #c7d7fd;
+    border-radius: 6px;
+    padding: 18px 24px;
+    margin-bottom: 32px;
+  }
+  .summary-box p { margin-bottom: 6px; }
+  .summary-box strong { color: #1d4ed8; }
+
+  /* Mermaid ラッパー */
+  .diagram-wrap {
+    background: #fafbff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 24px;
+    margin: 16px 0 32px;
+    overflow-x: auto;
+  }
+  .mermaid { text-align: center; }
+
+  /* テーブル */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 28px;
+    font-size: 13px;
+  }
+  th {
+    background: #1a1a2e;
+    color: #fff;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+  }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid #e8ecf0;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #f7f8fc; }
+  tr:hover td { background: #eef2ff; }
+  .hq { background: #fff7ed !important; font-weight: 600; }
+
+  /* 確認事項リスト */
+  .question-list { list-style: none; margin: 0; padding: 0; }
+  .question-list > li {
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    background: #fff;
+  }
+  .question-list > li:hover { border-color: #93b4fd; background: #fafbff; }
+  .q-num {
+    display: inline-block;
+    background: #1d4ed8;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 9px;
+    border-radius: 12px;
+    margin-right: 8px;
+  }
+  .q-title { font-weight: 700; font-size: 14px; }
+  .q-detail {
+    margin-top: 8px;
+    margin-left: 4px;
+    color: #444;
+    font-size: 13px;
+    padding-left: 12px;
+    border-left: 2px solid #c7d7fd;
+  }
+  .q-detail ul { margin: 4px 0 0 16px; }
+  .q-detail li { margin-bottom: 3px; }
+
+  .note {
+    background: #fffbea;
+    border: 1px solid #fde68a;
+    border-radius: 6px;
+    padding: 14px 18px;
+    font-size: 13px;
+    color: #78350f;
+    margin: 20px 0;
+  }
+
+  .footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 12px;
+    color: #888;
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; padding: 32px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="doc-header">
+    <div class="label">Confidential — 社外秘</div>
+    <h1>現行ネットワーク構成図 および 事前確認事項</h1>
+    <div class="meta">
+      <span>送付先: SCSK株式会社 角田様</span>
+      <span>作成: AKIBAホールディングス 情報システム部 丹治</span>
+      <span>作成日: 2026年3月3日</span>
+    </div>
+  </div>
+
+  <div class="summary-box">
+    <p>3月4日（水）の打合せに先立ち、弊社の現行ネットワーク構成をまとめました。</p>
+    <p>Cato Networks 導入を見据えた観点から、<strong>構成上の課題・改善点・ベストプラクティス</strong>についてご意見をいただけますと大変助かります。</p>
+    <p style="margin-top:10px; font-size:13px; color:#555;">なお、本資料は2026年2月26日時点での全拠点ICMPスキャンおよび情報システム部管理台帳の照合結果に基づきます。機器名・型番は台帳記載および実機スキャン結果によるものであり、一部は現在確認中の項目を含みます。</p>
+  </div>
+
+  <!-- ===================== 1. 全体構成 ===================== -->
+  <h2>1. 全体構成（論理トポロジー）</h2>
+
+  <p style="margin-bottom:12px; color:#444;">東京本社のFortiGateをVPNハブとして、7拠点がVarioSecure（現行SD-WAN）を介してスター型に接続しています。各拠点にはYAMAHA VSR が設置されており、VPNエンドポイントとして機能しています。</p>
+
+  <div class="diagram-wrap">
+    <div class="mermaid">
+graph TD
+    Internet["🌐 インターネット<br/>（ISP: VarioSecure / USEN）"]
+
+    subgraph HQ["🏢 東京本社（VPNハブ）"]
+      FG["FortiGate<br/>VPNハブ / 境界FW<br/>192.168.1.9"]
+      AD["Active Directory<br/>PDCSVR / BDCSVR"]
+      FS["ファイルサーバ<br/>ADSHARESVR"]
+      MFP_HQ["複合機×2<br/>RICOH IM C4500 / MP C4504"]
+      SECOM_HQ["SECOMサーバ<br/>TRIISVR / TRIIインターフェース"]
+      FG --- AD
+      FG --- FS
+      FG --- MFP_HQ
+      FG --- SECOM_HQ
+    end
+
+    Internet --> FG
+
+    FG -->|"VPN<br/>VarioSecure"| OS["大阪営業所<br/>YAMAHA VSR<br/>192.168.20.x<br/>─ 複合機 / SECOM / 無線AP"]
+    FG -->|"VPN<br/>VarioSecure"| HR["橋本 R&D<br/>YAMAHA VSR<br/>192.168.30.x<br/>─ IoTサーバ / 複合機 / SECOM"]
+    FG -->|"VPN<br/>VarioSecure"| FK["福岡営業所<br/>YAMAHA VSR<br/>192.168.40.x<br/>─ SECOM"]
+    FG -->|"VPN<br/>VarioSecure"| WK["和歌山<br/>YAMAHA VSR<br/>192.168.50.x<br/>─ SECOM（静脈認証）"]
+    FG -->|"VPN<br/>VarioSecure"| PT["プライム築地<br/>YAMAHA VSR<br/>192.168.60.x<br/>─ 複合機×2 / SECOM / 無線AP×6"]
+    FG -->|"VPN<br/>VarioSecure"| KB["京橋ビル<br/>YAMAHA VSR<br/>192.168.70.x<br/>─ SECOM"]
+    FG -->|"VPN<br/>VarioSecure"| NG["名古屋<br/>YAMAHA VSR<br/>192.168.80.x<br/>─ SECOM"]
+
+    style HQ fill:#fff7ed,stroke:#ea580c
+    style FG fill:#1a1a2e,color:#fff
+    style Internet fill:#e0f2fe,stroke:#0284c7
+    </div>
+  </div>
+
+  <div class="note">
+    現行SD-WAN（VarioSecure）は全8拠点をカバーしています。インターネット出口は東京本社のFortiGate経由（ヘアピン構成）です。Cato 導入後はこの構成が変わる見込みです。
+  </div>
+
+  <!-- ===================== 2. 拠点別サマリー ===================== -->
+  <h2>2. 拠点別サマリー</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>拠点</th>
+        <th>サブネット</th>
+        <th>ゲートウェイ</th>
+        <th>主要機器</th>
+        <th>備考</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="hq">
+        <td>東京本社（HQ）</td>
+        <td>192.168.1.x</td>
+        <td>FortiGate<br/>（VPNハブ兼境界FW）</td>
+        <td>Active Directory×2<br/>ファイルサーバ<br/>複合機×2<br/>SECOM入退室システム<br/>基幹HUB（D-Link DGS-1210-28）</td>
+        <td>VPNハブ集約拠点<br/>Cato導入時に構成変更が最も大きい</td>
+      </tr>
+      <tr>
+        <td>大阪営業所</td>
+        <td>192.168.20.x</td>
+        <td>YAMAHA VSR</td>
+        <td>複合機（RICOH IM C3010）<br/>SECOM端末<br/>無線AP×2</td>
+        <td>Socket設置候補</td>
+      </tr>
+      <tr>
+        <td>橋本 R&D</td>
+        <td>192.168.30.x</td>
+        <td>YAMAHA VSR</td>
+        <td>QNAP NAS（IoT用）<br/>IoTサーバ×2<br/>複合機（Canon C5540II）<br/>SECOM端末<br/>無線AP</td>
+        <td>Socket設置候補<br/>研究開発用機器が多数</td>
+      </tr>
+      <tr>
+        <td>福岡営業所</td>
+        <td>192.168.40.x</td>
+        <td>YAMAHA VSR</td>
+        <td>SECOM端末</td>
+        <td>小規模拠点<br/>vSocket検討対象</td>
+      </tr>
+      <tr>
+        <td>和歌山</td>
+        <td>192.168.50.x</td>
+        <td>YAMAHA VSR</td>
+        <td>SECOM端末（TRIIインターフェース）<br/>静脈認証端末（セサモIdf）×2</td>
+        <td>小規模拠点<br/>vSocket検討対象<br/>※VarioSecure更新期限: 2026年2月末</td>
+      </tr>
+      <tr>
+        <td>プライム築地</td>
+        <td>192.168.60.x</td>
+        <td>YAMAHA VSR</td>
+        <td>複合機×2（SHARP / Canon）<br/>SECOM端末<br/>無線AP×6</td>
+        <td>Socket設置候補<br/>製造・物流拠点、機器数が多い</td>
+      </tr>
+      <tr>
+        <td>京橋ビル</td>
+        <td>192.168.70.x</td>
+        <td>YAMAHA VSR</td>
+        <td>SECOM端末</td>
+        <td>小規模拠点<br/>vSocket検討対象</td>
+      </tr>
+      <tr>
+        <td>名古屋</td>
+        <td>192.168.80.x</td>
+        <td>YAMAHA VSR</td>
+        <td>SECOM端末</td>
+        <td>小規模拠点<br/>vSocket検討対象</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ===================== 3. 現行構成の課題認識 ===================== -->
+  <h2>3. 現行構成における課題認識</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:28%">課題</th>
+        <th>内容</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>インターネット出口の集中</td>
+        <td>全拠点のインターネットトラフィックが東京本社のFortiGate経由（ヘアピン）。帯域・遅延の課題あり。</td>
+      </tr>
+      <tr>
+        <td>SECOM入退室システムの<br/>VPN依存性</td>
+        <td>全拠点のSECOM端末が東京本社のTRIIサーバに接続。VPN断=入退室管理停止のリスク。Cato導入後の接続経路を確認する必要がある。</td>
+      </tr>
+      <tr>
+        <td>複合機のスキャン送信</td>
+        <td>各拠点の複合機がSMTP/LDAPをオンプレAD経由で利用。VPN廃止または経路変更の際に影響を受ける可能性がある。</td>
+      </tr>
+      <tr>
+        <td>拠点ごとの機器管理</td>
+        <td>YAMAHA VSRの管理が拠点分散。Cato Socketへの置き換えにより集中管理・可視化が期待できる。</td>
+      </tr>
+      <tr>
+        <td>台帳と実機の乖離</td>
+        <td>2026年2月26日の実機調査で、台帳登録済みだがICMP無応答の機器が複数確認された（廃棄済み・電源OFF等）。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ===================== 4. 事前確認事項 ===================== -->
+  <h2>4. 事前確認事項（MTGにてご回答いただきたい点）</h2>
+
+  <ul class="question-list">
+    <li>
+      <span class="q-num">①</span><span class="q-title">各拠点でのインターネット回線の新規要否</span>
+      <div class="q-detail">
+        現在は全拠点が東京本社FortiGate経由でインターネット接続（ヘアピン構成）。
+        <ul>
+          <li>Cato導入時、どの拠点に個別のインターネット回線が新規必要になりますか？</li>
+          <li>FortiGateを廃止した場合、東京本社のインターネット出口はどう変わりますか？</li>
+          <li>現行のISP回線（VarioSecure）はCato併用期間中も維持が必要ですか？</li>
+        </ul>
+      </div>
+    </li>
+    <li>
+      <span class="q-num">②</span><span class="q-title">帯域プラン変更時の費用インパクト</span>
+      <div class="q-detail">
+        現行見積は25Mbps Socketを想定（約80万円/拠点/年）。
+        <ul>
+          <li>50Mbps に増やした場合の費用は？</li>
+          <li>100Mbps に増やした場合の費用は？</li>
+          <li>拠点によって帯域を変えることは可能ですか？（例: 本社100Mbps、小規模拠点25Mbps）</li>
+        </ul>
+      </div>
+    </li>
+    <li>
+      <span class="q-num">③</span><span class="q-title">ライセンス構成の詳細確認</span>
+      <div class="q-detail">
+        50名モバイルライセンスの構成（年額約350万円）について。
+        <ul>
+          <li>モバイルライセンスのみの場合と、Socket + モバイル併用の場合の料金体系の違い</li>
+          <li>50名プランの内訳（ライセンス種別・機能スコープ）</li>
+          <li>将来的にユーザー数が増えた場合のティア変更は途中でも可能ですか？</li>
+        </ul>
+      </div>
+    </li>
+    <li>
+      <span class="q-num">④</span><span class="q-title">現行構成に対するベストプラクティスのご意見</span>
+      <div class="q-detail">
+        本資料の構成図をご覧いただき、以下の点についてプロの視点からご意見をお聞かせください。
+        <ul>
+          <li>FortiGate + YAMAHA VSR からCatoへの推奨移行アプローチ（段階的 vs 一括）</li>
+          <li>SECOMシステムの接続経路：VPN依存のまま移行できますか？</li>
+          <li>複合機のSMTP/LDAP接続への影響と推奨対応</li>
+          <li>小規模拠点（福岡・京橋・名古屋等）はvSocketで対応可能ですか？</li>
+          <li>橋本R&DのIoT機器（大量のLinux系デバイス）はCatoのポリシー管理に含められますか？</li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+
+  <!-- ===================== 5. 補足 ===================== -->
+  <h2>5. 補足情報</h2>
+
+  <h3>現在調査中の事項（MTG当日までに追加情報をお伝えできる可能性あり）</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>機器</th>
+        <th>確認内容</th>
+        <th>状況</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>FortiGate（192.168.1.9）</td>
+        <td>VPNポリシー・ルーティングテーブル・現行帯域</td>
+        <td>調査中</td>
+      </tr>
+      <tr>
+        <td>各拠点 YAMAHA VSR</td>
+        <td>VPNトンネル詳細・現行帯域使用率</td>
+        <td>調査中</td>
+      </tr>
+      <tr>
+        <td>RICOH 複合機（各拠点）</td>
+        <td>SMTP/LDAPサーバ設定（VPN依存性の確認）</td>
+        <td>調査中</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>VarioSecure 契約状況</h3>
+  <table>
+    <thead>
+      <tr><th>拠点</th><th>更新期限</th><th>備考</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>和歌山</td><td>2026年2月末</td><td>緊急。更新交渉中</td></tr>
+      <tr><td>その他拠点</td><td>順次</td><td>USEN西川氏と調整中</td></tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    <p>AKIBAホールディングス株式会社 情報システム部</p>
+    <p>丹治 統 / tanji@akiba-holdings.co.jp</p>
+    <p style="margin-top:6px; color:#aaa;">本資料に含まれる情報は機密情報です。SCSK株式会社との打合せ目的以外への使用・転送はご遠慮ください。</p>
+  </div>
+
+</div>
+
+<script>
+mermaid.initialize({
+  startOnLoad: true,
+  theme: 'default',
+  flowchart: { curve: 'basis', nodeSpacing: 50, rankSpacing: 60 },
+  themeVariables: {
+    primaryColor: '#1a1a2e',
+    primaryTextColor: '#fff',
+    primaryBorderColor: '#1a1a2e',
+    lineColor: '#94a3b8',
+    secondaryColor: '#f0f4ff',
+    tertiaryColor: '#fff7ed'
+  }
+});
+</script>
+</body>
+</html>
