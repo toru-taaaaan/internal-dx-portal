@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ネットワーク構成図（上下関係）— 2026-02-26 実機調査</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', 'Hiragino Sans', sans-serif;
+    font-size: 13px;
+    background: #f0f2f5;
+    color: #1a1a2e;
+    padding: 24px;
+  }
+  h1 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #0f3460;
+  }
+  .meta {
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.7;
+    border-left: 3px solid #aaa;
+    padding-left: 10px;
+  }
+
+  /* ===== LEGEND ===== */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+    background: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 11px;
+  }
+  .leg { display: flex; align-items: center; gap: 5px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .dot-ok    { background: #27ae60; }
+  .dot-ng    { background: #e74c3c; }
+  .dot-warn  { background: #f39c12; }
+  .dot-vpn   { background: #2980b9; }
+  .dot-inet  { background: #8e44ad; }
+
+  /* ===== TREE ===== */
+  .tree { list-style: none; padding-left: 0; }
+  .tree ul { list-style: none; padding-left: 22px; border-left: 1px dashed #ccc; margin-left: 8px; }
+  .tree li { margin: 2px 0; }
+
+  details > summary {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    line-height: 1.5;
+    list-style: none;
+    width: 100%;
+  }
+  details > summary::-webkit-details-marker { display: none; }
+  details > summary::before {
+    content: '▶';
+    font-size: 10px;
+    color: #888;
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: transform 0.15s;
+  }
+  details[open] > summary::before { transform: rotate(90deg); }
+
+  .node {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    line-height: 1.5;
+    width: 100%;
+  }
+  .node:hover, details > summary:hover { background: rgba(0,0,0,0.04); }
+
+  .status {
+    font-size: 15px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .info { flex: 1; }
+  .ip   { font-family: monospace; font-weight: 700; font-size: 12px; color: #0f3460; }
+  .hostname { font-weight: 600; color: #333; }
+  .desc { color: #666; font-size: 11px; margin-top: 1px; }
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .b-server   { background: #dbeafe; color: #1e40af; }
+  .b-switch   { background: #d1fae5; color: #065f46; }
+  .b-ap       { background: #fef3c7; color: #92400e; }
+  .b-mfp      { background: #ede9fe; color: #5b21b6; }
+  .b-vpn      { background: #cffafe; color: #164e63; }
+  .b-secom    { background: #fce7f3; color: #9d174d; }
+  .b-unknown  { background: #f3f4f6; color: #374151; }
+  .b-disposal { background: #fee2e2; color: #991b1b; }
+  .b-idc      { background: #e0e7ff; color: #3730a3; }
+
+  /* ===== カード（拠点ブロック）===== */
+  .site-block {
+    background: white;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .site-block > details > summary {
+    background: #1e3a5f;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 0;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .site-block > details > summary .ip { color: #7dd3fc; }
+  .site-block > details > summary .desc { color: #94a3b8; }
+  .site-block > details > summary::before { color: #94a3b8; }
+  .site-block > details[open] > summary { border-bottom: 1px solid #ccc; }
+  .site-block .tree { padding: 8px 12px 12px 12px; }
+
+  /* 東京本社は特別 */
+  .site-hq > details > summary {
+    background: linear-gradient(135deg, #0f3460, #16213e);
+  }
+
+  .vpn-label {
+    display: inline-block;
+    background: #2980b9;
+    color: white;
+    font-size: 10px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    margin-right: 4px;
+    font-weight: 700;
+  }
+
+  .internet-block {
+    background: #8e44ad;
+    color: white;
+    border-radius: 8px;
+    padding: 8px 14px;
+    margin-bottom: 12px;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .fortigate-block {
+    background: white;
+    border-radius: 10px;
+    border: 2px solid #e74c3c;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .fortigate-block > details > summary {
+    background: linear-gradient(135deg, #c0392b, #e74c3c);
+    color: white;
+    padding: 10px 14px;
+    font-weight: 700;
+    font-size: 14px;
+    border-radius: 0;
+  }
+  .fortigate-block > details > summary .ip { color: #fca5a5; }
+  .fortigate-block > details > summary::before { color: #fca5a5; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 6px 8px 2px 8px;
+    display: block;
+  }
+
+  .count-badge {
+    margin-left: auto;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    padding: 1px 8px;
+    font-size: 11px;
+  }
+  .note-box {
+    background: #fffbeb;
+    border: 1px solid #fbbf24;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin: 8px 0;
+    font-size: 11px;
+    color: #92400e;
+  }
+  hr.sep { border: none; border-top: 1px solid #eee; margin: 4px 0; }
+</style>
+</head>
+<body>
+
+<h1>ネットワーク構成図（上下関係）</h1>
+<div class="meta">
+  スキャン実施日: 2026-02-26 15:50 ／ AD調査: 2026-02-28 ／ 作成: 丹治（2026-03-01）<br>
+  出典: 実機スキャン結果（全拠点シート）・台帳（東京本社ほか各拠点シート）・traceroute確認（ネットワーク構成シート）<br>
+  ※ 物理トポロジー（スイッチポート単位）は未確認。論理接続（VPN/サブネット単位）で記載。<br>
+  ✅ = スキャン応答あり　❌ = 応答なし（台帳あり）　⚠️ = 台帳未登録（実機あり）
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="leg"><div class="dot dot-ok"></div>応答あり</div>
+  <div class="leg"><div class="dot dot-ng"></div>応答なし（台帳あり）</div>
+  <div class="leg"><div class="dot dot-warn"></div>台帳未登録（実機あり）</div>
+  <div class="leg"><span class="badge b-server">サーバ</span></div>
+  <div class="leg"><span class="badge b-switch">スイッチ</span></div>
+  <div class="leg"><span class="badge b-ap">無線AP</span></div>
+  <div class="leg"><span class="badge b-mfp">MFP</span></div>
+  <div class="leg"><span class="badge b-vpn">VPN GW</span></div>
+  <div class="leg"><span class="badge b-secom">SECOM</span></div>
+  <div class="leg"><span class="badge b-disposal">廃棄済み/予定</span></div>
+  <div class="leg"><span class="badge b-unknown">不明</span></div>
+</div>
+
+<!-- INTERNET -->
+<div class="internet-block">
+  🌐 インターネット（WAN）
+</div>
+
+<!-- FortiGate = VPNハブ -->
+<div class="fortigate-block">
+<details open>
+<summary>
+  <div class="info">
+    <div><span class="ip">192.168.1.9</span> <span class="hostname">FortiGate</span> <span class="badge b-vpn">VPNハブ・境界FW</span></div>
+    <div class="desc">台帳名: VSR601j（VarioSecure）— 実機スキャンでFortinet MAC (00:0d:48) 検出。台帳との不一致。要ログイン確認継続中。</div>
+    <div class="desc">役割: 全拠点VPN接続のハブ / インターネット境界FW（東京本社設置）</div>
+  </div>
+</summary>
+
+<ul class="tree">
+
+  <!-- ===== 東京本社 ===== -->
+  <li>
+    <div class="site-block site-hq">
+    <details open>
+    <summary>
+      <div class="info">
+        <div>🏢 東京本社 LAN <span style="font-size:11px;color:#94a3b8;">192.168.1.x</span> <span class="count-badge">台帳56件 / スキャン応答10件</span></div>
+        <div class="desc">物理スイッチ: DGS-1210-28（192.168.1.8）— ただし各端末とスイッチ間の物理接続は未確認</div>
+      </div>
+    </summary>
+    <ul class="tree">
+
+      <span class="section-label">── インフラ基盤 ──</span>
+
+      <li><div class="node">
+        <span class="status">✅</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.8</span> <span class="hostname">DGS-1210-28</span> <span class="badge b-switch">スイッチ</span></div>
+          <div class="desc">D-Link 28ポート管理スイッチ。基幹HUB。管理PW: ad-admin。MAC OUI: D-Link確認。HTTP/Telnet管理。</div>
+        </div>
+      </div></li>
+
+      <span class="section-label">── Active Directory ──</span>
+
+      <li>
+      <details>
+      <summary>
+        <div class="info">
+          <div><span class="ip">192.168.1.6</span> <span class="hostname">PDCSVR</span> <span class="badge b-server">サーバ</span></div>
+          <div class="desc">AD Primary DC（2020年9月～）。OS推定: Linux/NW機器(TTL64)。<br>AD調査完了(2026-02-28): コンピューター245件・有効ユーザー128名・無効43名・GPO14件</div>
+        </div>
+      </summary>
+      <ul class="tree">
+        <li><div class="node">
+          <span class="status">❌</span>
+          <div class="info">
+            <div><span class="ip">192.168.1.46</span> <span class="hostname">iRMC(PDCSVR)</span> <span class="badge b-idc">リモート管理</span></div>
+            <div class="desc">Fujitsu iRMC（リモート通報サービス、2020年9月～）</div>
+          </div>
+        </div></li>
+      </ul>
+      </details>
+      </li>
+
+      <li>
+      <details>
+      <summary>
+        <div class="info">
+          <div><span class="ip">192.168.1.7</span> <span class="hostname">BDCSVR</span> <span class="badge b-server">サーバ</span></div>
+          <div class="desc">AD Backup DC（2020年9月～）。OS推定: Linux/NW機器(TTL64)。</div>
+        </div>
+      </summary>
+      <ul class="tree">
+        <li><div class="node">
+          <span class="status">❌</span>
+          <div class="info">
+            <div><span class="ip">192.168.1.47</span> <span class="hostname">iRMC(BDCSVR)</span> <span class="badge b-idc">リモート管理</span></div>
+            <div class="desc">Fujitsu iRMC（リモート通報サービス、2020年9月～）</div>
+          </div>
+        </div></li>
+      </ul>
+      </details>
+      </li>
+
+      <span class="section-label">── ファイル・業務サーバ ──</span>
+
+      <li><div class="node">
+        <span class="status">✅</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.15</span> <span class="hostname">ADSHARESVR</span> <span class="badge b-server">サーバ</span></div>
+          <div class="desc">ファイルサーバ。OS推定: Linux/NW機器(TTL64)。</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">✅</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.11</span> <span class="hostname">ADKANRI4</span> <span class="badge b-server">サーバ</span></div>
+          <div class="desc">2025/9/19 adkanri4に移行済み。コールドスタンバイ・データ保管。OS推定: Windows PC(TTL128)。</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.54</span> <span class="hostname">ADKANRI4</span> <span class="badge b-server">サーバ</span></div>
+          <div class="desc">リネーム・固定IPアドレス変更予定。現状不明。</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.77</span> <span class="hostname">TASKSVR</span> <span class="badge b-server">サーバ</span></div>
+          <div class="desc">タスクサーバ。（情シス確認済み: 使用中）</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.78</span> <span class="hostname">SHARESERVER-SUB（変更予定）</span> <span class="badge b-server">サーバ</span></div>
+          <div class="desc">ファイルサーバ予備機（コールドスタンバイ）。（情シス確認済み: スタンバイ機・保持）</div>
+        </div>
+      </div></li>
+
+      <span class="section-label">── TENSUITE（勤怠/業務） ──</span>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.12</span> <span class="hostname">TENAPSVR</span> <span class="badge b-server">サーバ</span></div>
+          <div class="desc">TENSUITEアプリケーションサーバ。（基幹引き継ぎ待ち・保留中）</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.14</span> <span class="hostname">TENDBSVR</span> <span class="badge b-server">サーバ</span></div>
+          <div class="desc">TENSUITEデータベースサーバ。（基幹引き継ぎ待ち・保留中）</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.16</span> <span class="hostname">TENAPSVR（iLO）</span> <span class="badge b-server">サーバ</span></div>
+          <div class="desc">TENSUITEアプリケーション iLO管理IP。管理PW: 7BVW7ZS7。（基幹引き継ぎ待ち・保留中）</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.17</span> <span class="hostname">TENDBSVR（iLO）</span> <span class="badge b-server">サーバ</span></div>
+          <div class="desc">TENSUITEデータベース iLO管理IP。管理PW: LPB9WB7W。（基幹引き継ぎ待ち・保留中）</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.19</span> <span class="hostname">TENAPSVR-OLD</span> <span class="badge b-disposal">廃棄予定</span></div>
+          <div class="desc">旧TENSUITEアプリケーション（電源OFF）→ 未使用。（基幹引き継ぎ待ち・保留中）</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.20</span> <span class="hostname">TENDBSVR-OLD</span> <span class="badge b-disposal">廃棄予定</span></div>
+          <div class="desc">旧TENSUITEデータベース（電源OFF）→ 未使用。（基幹引き継ぎ待ち・保留中）</div>
+        </div>
+      </div></li>
+
+      <span class="section-label">── 経理・管理端末 ──</span>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.18</span> <span class="hostname">ADKANRI3</span> <span class="badge b-server">PC</span></div>
+          <div class="desc">経理用ソフト導入PC（償却奉行8i、PCA会計）。（情シス確認済み: 対応完了・台帳削除済み）</div>
+        </div>
+      </div></li>
+
+      <span class="section-label">── 入退室管理（SESAMO-TRII） ──</span>
+
+      <li>
+      <details>
+      <summary>
+        <div class="info">
+          <div><span class="ip">192.168.1.30</span> <span class="hostname">TRIISVR</span> <span class="badge b-secom">SECOM</span></div>
+          <div class="desc">SESAMO-TRIIサーバ（セコム入退室システム）。OS推定: Linux/NW機器(TTL64)。※AD残存廃棄候補。</div>
+        </div>
+      </summary>
+      <ul class="tree">
+        <li><div class="node">
+          <span class="status">❌</span>
+          <div class="info">
+            <div><span class="ip">192.168.1.31</span> <span class="hostname">TRIIインターフェース</span> <span class="badge b-secom">SECOM</span></div>
+            <div class="desc">SESAMO-TRIIインターフェース（セコム入退室管理・6Fサーバールーム）。（情シス確認済み: 使用中）</div>
+          </div>
+        </div></li>
+      </ul>
+      </details>
+      </li>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.1</span> <span class="hostname">使用禁止IPアドレス</span> <span class="badge b-disposal">使用禁止</span></div>
+          <div class="desc">無線LANアクセスポイントの初期値と重なる可能性があるため。（情シス確認済み: 使用禁止継続）</div>
+        </div>
+      </div></li>
+
+      <span class="section-label">── 無線LANAP ──</span>
+
+      <li><div class="node">
+        <span class="status">✅</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.40</span> <span class="hostname">無線LAN AP</span> <span class="badge b-ap">無線AP</span></div>
+          <div class="desc">9F執務室。管理コンソール: administrator / PW（台帳参照）。</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.41</span> <span class="hostname">無線LAN AP</span> <span class="badge b-ap">無線AP</span></div>
+          <div class="desc">8F会議室。（情シス確認済み: 対応完了・台帳削除済み）</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.42</span> <span class="hostname">無線LAN AP</span> <span class="badge b-ap">無線AP</span></div>
+          <div class="desc">7F執務室。SSID(5GHz): Yoko7F-office。（情シス確認済み: 使用中）</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.43</span> <span class="hostname">無線LAN AP</span> <span class="badge b-ap">無線AP</span></div>
+          <div class="desc">7F会議室。SSID(5GHz): Yoko7F-meeting。（情シス確認済み: 使用中）</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.44</span> <span class="hostname">無線LAN AP</span> <span class="badge b-ap">無線AP</span></div>
+          <div class="desc">6F執務室。SSID(5GHz): Yoko6F-office。（情シス確認済み: 使用中）</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.45</span> <span class="hostname">無線LAN AP</span> <span class="badge b-ap">無線AP</span></div>
+          <div class="desc">6F会議室。SSID(2.4GHz): Yoko6F-entrance。（情シス確認済み: 使用中）</div>
+        </div>
+      </div></li>
+
+      <span class="section-label">── 複合機 ──</span>
+
+      <li><div class="node">
+        <span class="status">✅</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.55</span> <span class="hostname">RICOH IM C4500 JPN RPCS</span> <span class="badge b-mfp">MFP</span></div>
+          <div class="desc">6F カラー複合機。2019年9月導入。管理: ブラウザID admin / PW なし。</div>
+        </div>
+      </div></li>
+
+      <li>
+      <details>
+      <summary>
+        <div class="info">
+          <div><span class="ip">192.168.1.56</span> <span class="hostname">RICOH MP C4504 SPF</span> <span class="badge b-mfp">MFP</span></div>
+          <div class="desc">7F カラー複合機。2017年7月導入。製造元: RICOH。</div>
+        </div>
+      </summary>
+      <ul class="tree">
+        <li><div class="node">
+          <span class="status">❌</span>
+          <div class="info">
+            <div><span class="ip">192.168.1.57</span> <span class="hostname">OpenBlocks AX3</span> <span class="badge b-unknown">不明</span></div>
+            <div class="desc">外付け増設インターフェースボックス（複合機用）。2019年9月導入。（情シス確認: 要確認・用途不明・要廃棄検討）</div>
+          </div>
+        </div></li>
+      </ul>
+      </details>
+      </li>
+
+      <span class="section-label">── 廃棄済み機器（台帳残存） ──</span>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.21</span> <span class="hostname">BUFFALO WZR-HP-G450H</span> <span class="badge b-disposal">廃棄済み</span></div>
+          <div class="desc">無線LAN親機。root / ggs18zye。廃棄済み（丹治 2/26 判断）。</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.22</span> <span class="hostname">ASUSTek RT-AC88U</span> <span class="badge b-disposal">廃棄済み</span></div>
+          <div class="desc">無線LAN親機。ad-admin / k7ju6egp5gnb。廃棄済み（丹治 2/26 判断）。</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.24</span> <span class="hostname">YAMAHA WLX202_Z4R08274YL</span> <span class="badge b-disposal">廃棄済み</span></div>
+          <div class="desc">無線LAN親機。admin / yQ8sLpjX。廃棄済み（丹治 2/26 判断）。</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.25</span> <span class="hostname">NEC AtermWG600HP</span> <span class="badge b-disposal">廃棄済み</span></div>
+          <div class="desc">無線LAN親機。adnmin / Adtec18。ATERM-82A55D。廃棄済み（丹治 2/26 判断）。</div>
+        </div>
+      </div></li>
+
+      <span class="section-label">── データ復旧・保留 ──</span>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.26</span> <span class="hostname">DATARESTORE</span> <span class="badge b-unknown">保留</span></div>
+          <div class="desc">データ復旧用（資産管理番号: 17-1026）7F設置。（情シス確認: 要確認・情シス保留）</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.1.79</span> <span class="hostname">DATARESTORE2</span> <span class="badge b-unknown">保留</span></div>
+          <div class="desc">データ復旧用（資産管理番号: 25-0021）7F設置。（情シス確認: 要確認・情シス保留）</div>
+        </div>
+      </div></li>
+
+      <div class="note-box">
+        📌 DHCP割り当て範囲: 192.168.1.80〜249（クライアントPC等）<br>
+        📌 VSR割り当てIPアドレス: 192.168.1.58〜76（台帳記載）<br>
+        📌 AD残存廃棄候補（情シス確認推奨）: ESETSVR / ESETSVR2 / TRIISVR / old-adsharesvr / ADKANRI2
+      </div>
+
+    </ul><!-- 東京本社 tree end -->
+    </details>
+    </div><!-- site-block end -->
+  </li>
+
+  <!-- ===== 大阪営業所 ===== -->
+  <li>
+    <div class="site-block">
+    <details>
+    <summary>
+      <div class="info">
+        <div><span class="vpn-label">VPN</span>🏢 大阪営業所 <span style="font-size:11px;color:#94a3b8;">192.168.20.x</span></div>
+        <div class="desc"><span class="ip">192.168.20.1</span> YAMAHA VSR401j — VPN GW（VPN経路: traceroute確認済み・Hop1=192.168.1.9）</div>
+      </div>
+    </summary>
+    <ul class="tree">
+
+      <li><div class="node">
+        <span class="status">✅</span>
+        <div class="info">
+          <div><span class="ip">192.168.20.1</span> <span class="hostname">VSR401j</span> <span class="badge b-vpn">VPN GW</span></div>
+          <div class="desc">VPNルータ（インターネット通信・拠点間通信）。YAMAHA製。</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">✅</span>
+        <div class="info">
+          <div><span class="ip">192.168.20.21</span> <span class="hostname">WAB-I1750PS</span> <span class="badge b-ap">無線AP</span></div>
+          <div class="desc">無線LAN親機（執務室）。管理画面: admin / ggs18zye。</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">✅</span>
+        <div class="info">
+          <div><span class="ip">192.168.20.22</span> <span class="hostname">WAB-I1750PS</span> <span class="badge b-ap">無線AP</span></div>
+          <div class="desc">無線LAN親機（会議室）。管理画面: admin / ggs18zye。</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">✅</span>
+        <div class="info">
+          <div><span class="ip">192.168.20.31</span> <span class="hostname">TRIIインターフェース</span> <span class="badge b-secom">SECOM</span></div>
+          <div class="desc">SESAMO-TRIIインターフェース（セコム入退室システム）。</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">✅</span>
+        <div class="info">
+          <div><span class="ip">192.168.20.50</span> <span class="hostname">RICOH IM C3010</span> <span class="badge b-mfp">MFP</span></div>
+          <div class="desc">複合機。ブラウザID: admin / PW: なし。</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">⚠️</span>
+        <div class="info">
+          <div><span class="ip">192.168.20.70</span> <span class="hostname">（台帳未登録）</span> <span class="badge b-unknown">不明</span></div>
+          <div class="desc">OS推定: Linux/NW機器(TTL64)。情シス回答: DHCP・田中氏PCと判明。</div>
+        </div>
+      </div></li>
+
+    </ul>
+    </details>
+    </div>
+  </li>
+
+  <!-- ===== 橋本R&D ===== -->
+  <li>
+    <div class="site-block">
+    <details>
+    <summary>
+      <div class="info">
+        <div><span class="vpn-label">VPN</span>🔬 橋本R&D <span style="font-size:11px;color:#94a3b8;">192.168.30.x</span> <span class="count-badge">台帳あり10件 / 台帳未登録8件</span></div>
+        <div class="desc"><span class="ip">192.168.30.1</span> YAMAHA VSR400 — VPN GW</div>
+      </div>
+    </summary>
+    <ul class="tree">
+
+      <li><div class="node">
+        <span class="status">✅</span>
+        <div class="info">
+          <div><span class="ip">192.168.30.1</span> <span class="hostname">VSR400</span> <span class="badge b-vpn">VPN GW</span></div>
+          <div class="desc">VPNルータ（インターネット通信・拠点間通信）。YAMAHA製。</div>
+        </div>
+      </div></li>
+
+      <span class="section-label">── サーバ・ストレージ ──</span>
+
+      <li><div class="node">
+        <span class="status">✅</span>
+        <div class="info">
+          <div><span class="ip">192.168.30.10</span> <span class="hostname">QNAP TS-431U</span> <span class="badge b-server">NAS</span></div>
+          <div class="desc">IoT ENG用データ保管共有用サーバ。ユーザー: admin（PW台帳参照）。</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.30.12</span> <span class="hostname">Relex2017</span> <span class="badge b-server">サーバ</span></div>
+          <div class="desc">OrCADサーバ。設置場所: 7Fチャンバールームのサーバラック。（情シス確認済み: 使用中）</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.30.13</span> <span class="hostname">Relex2017（新）</span> <span class="badge b-disposal">廃棄済み</span></div>
+          <div class="desc">OrCADサーバ（新）。（情シス確認済み: 対応完了・台帳削除済み）</div>
+        </div>
+      </div></li>
+
+      <li>
+      <details>
+      <summary>
+        <div class="info">
+          <div><span class="ip">192.168.30.15</span> <span class="hostname">IOTSVR</span> <span class="badge b-server">サーバ</span></div>
+          <div class="desc">IoT事業部専用ファイルサーバ（2020年10月～）。OS推定: Windows PC(TTL128)。</div>
+        </div>
+      </summary>
+      <ul class="tree">
+        <li><div class="node">
+          <span class="status">✅</span>
+          <div class="info">
+            <div><span class="ip">192.168.30.16</span> <span class="hostname">IOTSVR BMC</span> <span class="badge b-idc">リモート管理</span></div>
+            <div class="desc">IoT専用ファイルサーバ BMC（リモート管理用）。OS推定: Linux/NW機器(TTL64)。</div>
+          </div>
+        </div></li>
+      </ul>
+      </details>
+      </li>
+
+      <span class="section-label">── 無線LAN・周辺機器 ──</span>
+
+      <li><div class="node">
+        <span class="status">✅</span>
+        <div class="info">
+          <div><span class="ip">192.168.30.20</span> <span class="hostname">WAB-M1775-PS</span> <span class="badge b-ap">無線AP</span></div>
+          <div class="desc">無線AP。管理コンソール: admin / PW（台帳参照）。</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">✅</span>
+        <div class="info">
+          <div><span class="ip">192.168.30.31</span> <span class="hostname">TRIIインターフェース</span> <span class="badge b-secom">SECOM</span></div>
+          <div class="desc">SESAMO-TRIIインターフェース（セコム入退室システム）。</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">✅</span>
+        <div class="info">
+          <div><span class="ip">192.168.30.55</span> <span class="hostname">Canon C5540Ⅱ</span> <span class="badge b-mfp">MFP</span></div>
+          <div class="desc">旧R&D 8F技術・品証・IoTの複合機（ジョブカンID: 47xxxx）。</div>
+        </div>
+      </div></li>
+
+      <li><div class="node">
+        <span class="status">❌</span>
+        <div class="info">
+          <div><span class="ip">192.168.30.61</span> <span class="hostname">M3200A005</span> <span class="badge b-unknown">不明</span></div>
+          <div class="desc">CFカード・CFastカード検証用機器。（情シス確認: 要確認・現状不明・IoT機器）</div>
+        </div>
+      </div></li>
+
+      <span class="section-label">── 台帳未登録（実機あり・要調査） ──</span>
+
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.30.82</span> <span class="badge b-unknown">不明</span> OS推定: Windows (TTL128)</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.30.87</span> <span class="badge b-unknown">不明</span> OS推定: Windows (TTL128)</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.30.89</span> <span class="badge b-unknown">不明</span> OS推定: Linux/FortiGate (TTL64)</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.30.91</span> <span class="badge b-unknown">不明</span> OS推定: Linux/FortiGate (TTL64)</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.30.92</span> <span class="badge b-unknown">不明</span> OS推定: Linux/FortiGate (TTL64)</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.30.162</span> <span class="badge b-unknown">不明</span> OS推定: Linux/FortiGate (TTL64)</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.30.173</span> <span class="badge b-unknown">不明</span> OS推定: Windows (TTL128)</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.30.204</span> <span class="badge b-unknown">不明</span> OS推定: Linux/FortiGate (TTL64)</div>
+      </div></div></li>
+
+    </ul>
+    </details>
+    </div>
+  </li>
+
+  <!-- ===== 福岡営業所 ===== -->
+  <li>
+    <div class="site-block">
+    <details>
+    <summary>
+      <div class="info">
+        <div><span class="vpn-label">VPN</span>🏢 福岡営業所 <span style="font-size:11px;color:#94a3b8;">192.168.40.x</span></div>
+        <div class="desc"><span class="ip">192.168.40.1</span> YAMAHA VSR401j — VPN GW</div>
+      </div>
+    </summary>
+    <ul class="tree">
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.40.1</span> <span class="hostname">VSR401j</span> <span class="badge b-vpn">VPN GW</span></div>
+        <div class="desc">VPNルータ（インターネット通信・拠点間通信）。YAMAHA製。</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.40.31</span> <span class="hostname">TRIIインターフェース</span> <span class="badge b-secom">SECOM</span></div>
+        <div class="desc">SESAMO-TRIIインターフェース（セコム入退室システム）。</div>
+      </div></div></li>
+    </ul>
+    </details>
+    </div>
+  </li>
+
+  <!-- ===== 和歌山 ===== -->
+  <li>
+    <div class="site-block">
+    <details>
+    <summary>
+      <div class="info">
+        <div><span class="vpn-label">VPN</span>🏢 和歌山 <span style="font-size:11px;color:#94a3b8;">192.168.50.x</span></div>
+        <div class="desc"><span class="ip">192.168.50.1</span> YAMAHA VSR401j — VPN GW / 台帳未登録2台（情シス未回答）</div>
+      </div>
+    </summary>
+    <ul class="tree">
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.50.1</span> <span class="hostname">VSR401j</span> <span class="badge b-vpn">VPN GW</span></div>
+        <div class="desc">VPNルータ（インターネット通信・拠点間通信）。YAMAHA製。</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.50.31</span> <span class="hostname">TRIIインターフェース</span> <span class="badge b-secom">SECOM</span></div>
+        <div class="desc">SESAMO-TRIIインターフェース（セコム入退室システム）。</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.50.32</span> <span class="hostname">セサモIdf（静脈機器）</span> <span class="badge b-secom">SECOM</span></div>
+        <div class="desc">セコム入退室システム内側。</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.50.33</span> <span class="hostname">セサモIdf（静脈機器）</span> <span class="badge b-secom">SECOM</span></div>
+        <div class="desc">セコム入退室システム外側。</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.50.34</span> <span class="hostname">TRIIインターフェース</span> <span class="badge b-secom">SECOM</span></div>
+        <div class="desc">SESAMO-TRIIインターフェース（セコム入退室システム）。</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.50.35</span> <span class="badge b-unknown">不明</span> OS推定: Network機器(TTL255)</div>
+        <div class="desc">台帳未登録。情シス未回答（❌ 未回答）。</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.50.36</span> <span class="badge b-unknown">不明</span> OS推定: Network機器(TTL255)</div>
+        <div class="desc">台帳未登録。情シス未回答（❌ 未回答）。</div>
+      </div></div></li>
+    </ul>
+    </details>
+    </div>
+  </li>
+
+  <!-- ===== プライム築地 ===== -->
+  <li>
+    <div class="site-block">
+    <details>
+    <summary>
+      <div class="info">
+        <div><span class="vpn-label">VPN</span>🏭 プライム築地（多摩） <span style="font-size:11px;color:#94a3b8;">192.168.60.x</span> <span class="count-badge">台帳あり12件 / 台帳未登録多数</span></div>
+        <div class="desc"><span class="ip">192.168.60.1</span> YAMAHA VSR400 — VPN GW / 台帳未登録13台（TTL64機器多数・要調査）</div>
+      </div>
+    </summary>
+    <ul class="tree">
+
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.60.1</span> <span class="hostname">VSR400</span> <span class="badge b-vpn">VPN GW</span></div>
+        <div class="desc">VPNルータ（インターネット通信・拠点間通信）。YAMAHA製。</div>
+      </div></div></li>
+
+      <li><div class="node"><span class="status">❌</span><div class="info">
+        <div><span class="ip">192.168.60.7</span> <span class="hostname">サーバ</span> <span class="badge b-disposal">廃棄済み</span></div>
+        <div class="desc">CRB八王子のファイルサーバ。（情シス確認済み: 機器回収・台帳削除済み）</div>
+      </div></div></li>
+
+      <span class="section-label">── 無線LANAP（全6台） ──</span>
+
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.60.20</span> <span class="hostname">WAB-M1775-PS</span> <span class="badge b-ap">無線AP</span></div>
+        <div class="desc">1F会議室。SSID: Tama1F-meeting / PW: Jm8pzLtQ。ゲスト用あり。</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.60.21</span> <span class="hostname">WAB-M1775-PS</span> <span class="badge b-ap">無線AP</span></div>
+        <div class="desc">1F物流。SSID: Tama1F-logistics / PW: Jm8pzLtQ。ゲスト用あり。</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.60.22</span> <span class="hostname">WAB-M1775-PS</span> <span class="badge b-ap">無線AP</span></div>
+        <div class="desc">2F検査室付近。SSID: Tama2F-laboratory / PW: Jm8pzLtQ。</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.60.23</span> <span class="hostname">WAB-M1775-PS</span> <span class="badge b-ap">無線AP</span></div>
+        <div class="desc">2F執務室。SSID: Tama2F-office / PW: Jm8pzLtQ。</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.60.24</span> <span class="hostname">WAB-M1775-PS</span> <span class="badge b-ap">無線AP</span></div>
+        <div class="desc">3F物流。SSID: Tama3F / PW: Jm8pzLtQ。ゲスト用: Tama3F-guest。</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.60.25</span> <span class="hostname">WAB-M1775-PS</span> <span class="badge b-ap">無線AP</span></div>
+        <div class="desc">2F検査室階段付近。SSID: Tama2F-CRBwarehouse(5GHz)。</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.60.26</span> <span class="hostname">WAB-M1775-PS</span> <span class="badge b-ap">無線AP</span></div>
+        <div class="desc">2F会議室。SSID: Tama2F-meeting(5GHz)。</div>
+      </div></div></li>
+
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.60.31</span> <span class="hostname">TRIIインターフェース</span> <span class="badge b-secom">SECOM</span></div>
+        <div class="desc">SESAMO-TRIIインターフェース（セコム入退室）。</div>
+      </div></div></li>
+
+      <span class="section-label">── 複合機 ──</span>
+
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.60.54</span> <span class="hostname">SHARP BP-50C55 SPDL2-c</span> <span class="badge b-mfp">MFP</span></div>
+        <div class="desc">多摩1F複合機。2025年10月導入。ユーザーID: admin / 管理PW（台帳参照）。</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.60.55</span> <span class="hostname">IR-ADVC3730F</span> <span class="badge b-mfp">MFP</span></div>
+        <div class="desc">多摩2F複合機（元CRB八王子の複合機）。</div>
+      </div></div></li>
+
+      <span class="section-label">── 台帳未登録（実機あり・要調査） ──</span>
+
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.60.71</span> <span class="badge b-unknown">不明</span> OS: Linux(TTL64) — 情シス確認: DHCP・クライアントPC</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.60.85</span> <span class="badge b-unknown">不明</span> OS: Linux(TTL64) — 情シス確認: DHCP・クライアントPC</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.60.91</span> <span class="badge b-unknown">不明</span> OS推定: Linux/FortiGate (TTL64)</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.60.92</span> <span class="badge b-unknown">不明</span> OS推定: Linux/FortiGate (TTL64)</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.60.95</span> <span class="badge b-unknown">不明</span> OS推定: Linux/FortiGate (TTL64) — 情シス確認: DHCP・クライアントPC</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.60.96</span> <span class="badge b-unknown">不明</span> OS推定: Windows (TTL128)</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.60.97</span> <span class="badge b-unknown">不明</span> OS推定: Linux/Network (TTL255) — 情シス確認: DHCP・クライアントPC</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.60.161</span> <span class="badge b-unknown">不明</span> OS推定: Linux/FortiGate (TTL64)</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.60.163</span> <span class="badge b-unknown">不明</span> OS推定: Linux/FortiGate (TTL64)</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.60.164</span> <span class="badge b-unknown">不明</span> OS推定: Windows (TTL128)</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.60.171</span> <span class="badge b-unknown">不明</span> OS推定: Linux/FortiGate (TTL64)</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.60.172</span> <span class="badge b-unknown">不明</span> OS推定: Linux/FortiGate (TTL64)</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.60.181</span> <span class="badge b-unknown">不明</span> OS推定: Linux/FortiGate (TTL64)</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.60.200</span> <span class="badge b-unknown">不明</span> OS推定: Linux/Network (TTL255)</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">⚠️</span><div class="info">
+        <div><span class="ip">192.168.60.201</span> <span class="badge b-unknown">不明</span> OS推定: Linux/FortiGate (TTL64)</div>
+      </div></div></li>
+
+    </ul>
+    </details>
+    </div>
+  </li>
+
+  <!-- ===== 京橋ビル ===== -->
+  <li>
+    <div class="site-block">
+    <details>
+    <summary>
+      <div class="info">
+        <div><span class="vpn-label">VPN</span>🏢 京橋ビル <span style="font-size:11px;color:#94a3b8;">192.168.70.x</span></div>
+        <div class="desc"><span class="ip">192.168.70.1</span> YAMAHA VSR401j — VPN GW</div>
+      </div>
+    </summary>
+    <ul class="tree">
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.70.1</span> <span class="hostname">VSR401j</span> <span class="badge b-vpn">VPN GW</span></div>
+        <div class="desc">VPNルータ（インターネット通信・拠点間通信）。YAMAHA製。</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.70.31</span> <span class="hostname">TRIIインターフェース</span> <span class="badge b-secom">SECOM</span></div>
+        <div class="desc">SESAMO-TRIIインターフェース（セコム入退室システム）。</div>
+      </div></div></li>
+    </ul>
+    </details>
+    </div>
+  </li>
+
+  <!-- ===== 名古屋 ===== -->
+  <li>
+    <div class="site-block">
+    <details>
+    <summary>
+      <div class="info">
+        <div><span class="vpn-label">VPN</span>🏢 名古屋 <span style="font-size:11px;color:#94a3b8;">192.168.80.x</span></div>
+        <div class="desc"><span class="ip">192.168.80.1</span> YAMAHA VSR401j — VPN GW</div>
+      </div>
+    </summary>
+    <ul class="tree">
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.80.1</span> <span class="hostname">VSR401j</span> <span class="badge b-vpn">VPN GW</span></div>
+        <div class="desc">VPNルータ（インターネット通信・拠点間通信）。YAMAHA製。</div>
+      </div></div></li>
+      <li><div class="node"><span class="status">✅</span><div class="info">
+        <div><span class="ip">192.168.80.31</span> <span class="hostname">TRIIインターフェース</span> <span class="badge b-secom">SECOM</span></div>
+        <div class="desc">SESAMO-TRIIインターフェース（セコム入退室システム）。</div>
+      </div></div></li>
+    </ul>
+    </details>
+    </div>
+  </li>
+
+</ul><!-- 全拠点 ul end -->
+</details>
+</div><!-- fortigate-block end -->
+
+<div style="margin-top:24px; background:white; border-radius:8px; border:1px solid #ddd; padding:14px 18px; font-size:11px; color:#555; line-height:1.8;">
+  <strong>データ出典・制約事項</strong><br>
+  • スキャン: 2026-02-26 15:50 実施 / AD調査: 2026-02-28 実施<br>
+  • VPN経路（FortiGate → 各拠点GW）: ネットワーク構成シートに traceroute 確認記録あり（全拠点 Hop1=192.168.1.9）<br>
+  • 物理配線（スイッチポート単位のトポロジー）: <strong>今回スキャンでは未確認</strong>。DGS-1210-28（.1.8）を物理集線点と推定するが確証なし。<br>
+  • 東京本社 .1.x の各機器は論理的に同一サブネット内。物理的にはDGS-1210-28配下と推定。<br>
+  • プライム築地のTTL64群（.91/.92/.95/.161等）: FortiGateと同TTL値だが、実機確認なしに断定不可。「不明」として記載。<br>
+  • 各拠点の「台帳未登録」機器（⚠️）はDHCPクライアントPCの可能性あり（情シス確認結果を各行に記載）。
+</div>
+
+</body>
+</html>
