@@ -598,11 +598,11 @@
                             <td>¥1,117,091 <sup class="evidence-ref"><a href="#ev14">[14]</a></sup></td>
                             <td>¥722,150 <sup class="evidence-ref"><a href="#ev15">[15]</a><a href="#ev16">[16]</a></sup></td>
                             <td style="color: #7c3aed;">約¥750,000 ※推定 <sup class="evidence-ref"><a href="#ev17">[17]</a></sup></td>
-                            <td style="color: #16a34a;">約¥512,000 ※推定 <sup class="evidence-ref"><a href="#ev13">[13]</a><a href="#ev17">[17]</a></sup></td>
+                            <td style="color: #16a34a;">¥664,068 <sup class="evidence-ref"><a href="#ev13">[13]</a><a href="#ev17">[17]</a></sup></td>
                             <td style="font-size: 0.8rem; color: #64748b;">
                                 ①: 現行価格（税込¥142,000÷1.1。2025/4に20%値上げ実施済み）<br>
-                                ④推定: 全Socket＋50名（SCSK確認中）<br>
-                                ⑤推定: ①¥129K＋Catoライセンス¥383K
+                                ④推定: 全Socket＋50名（SCSK 3/4打合せで確認予定）<br>
+                                ⑤: VarioSecure¥122,400＋Cato¥541,668（出典: VarioSecure費用分解_整理ノート）
                             </td>
                         </tr>
                         <tr class="summary-row-highlight">
@@ -611,7 +611,7 @@
                             <td style="font-weight: 700;">¥13,405,092</td>
                             <td style="font-weight: 700;">¥8,665,800</td>
                             <td style="font-weight: 700; color: #7c3aed;">約¥9,000,000 ※推定</td>
-                            <td style="font-weight: 700; color: #16a34a;">約¥6,144,000 ※推定</td>
+                            <td style="font-weight: 700; color: #16a34a;">¥7,968,816</td>
                             <td style="font-size: 0.8rem; color: #64748b;">年額最安: ①現状維持（¥1,549,092）<br>セキュリティ対応込みの実質比較は③④⑤</td>
                         </tr>
                     </tbody>
@@ -650,14 +650,20 @@
             </div>
 
             <div class="fact-box" style="border-left-color: #16a34a;">
-                <dt>⑤ Mix案 月額内訳（VarioSecure WAN ＋ Cato セキュリティ）推定値</dt>
+                <dt>⑤ Mix案 月額内訳（VarioSecure WAN ＋ Cato SASE）</dt>
                 <dd style="margin-top: 0.5rem; font-size: 0.9rem;">
                     <table style="font-size: 0.85rem; border-collapse: collapse; width: 100%;">
-                        <tr><td style="padding: 4px 0;">VarioSecure（WAN回線のみ）</td><td style="text-align: right; padding: 4px 0;">¥129,091/月</td></tr>
-                        <tr><td style="padding: 4px 0;">Catoライセンス（100名）＋マネージド</td><td style="text-align: right; padding: 4px 0;">約¥383,333/月</td></tr>
-                        <tr style="border-top: 1px solid #cbd5e1; font-weight: 700;"><td style="padding: 4px 0;">月額合計（推定）</td><td style="text-align: right; padding: 4px 0;">約¥512,000/月</td></tr>
+                        <tr><td style="padding: 4px 0;">VarioSecure（全8拠点継続）</td><td style="text-align: right; padding: 4px 0;">¥122,400/月</td></tr>
+                        <tr><td style="padding: 4px 0; color: #64748b; font-size: 0.8rem; padding-left: 12px;">└ 本社Socket</td><td style="text-align: right; padding: 4px 0; color: #64748b; font-size: 0.8rem;">¥66,667</td></tr>
+                        <tr><td style="padding: 4px 0; color: #64748b; font-size: 0.8rem; padding-left: 12px;">└ Azure vSocket ※3/4確認予定</td><td style="text-align: right; padding: 4px 0; color: #64748b; font-size: 0.8rem;">¥183,333</td></tr>
+                        <tr><td style="padding: 4px 0; color: #64748b; font-size: 0.8rem; padding-left: 12px;">└ 大阪・多摩・橋本 Socket × 3</td><td style="text-align: right; padding: 4px 0; color: #64748b; font-size: 0.8rem;">¥200,001</td></tr>
+                        <tr><td style="padding: 4px 0; color: #64748b; font-size: 0.8rem; padding-left: 12px;">└ モバイルアクセス 50名</td><td style="text-align: right; padding: 4px 0; color: #64748b; font-size: 0.8rem;">¥41,667</td></tr>
+                        <tr><td style="padding: 4px 0; color: #64748b; font-size: 0.8rem; padding-left: 12px;">└ SCSKマネージド</td><td style="text-align: right; padding: 4px 0; color: #64748b; font-size: 0.8rem;">¥50,000</td></tr>
+                        <tr><td style="padding: 4px 0;">Cato SASE 合計</td><td style="text-align: right; padding: 4px 0;">¥541,668/月</td></tr>
+                        <tr style="border-top: 1px solid #cbd5e1; font-weight: 700;"><td style="padding: 4px 0;">月額合計</td><td style="text-align: right; padding: 4px 0;">¥664,068/月</td></tr>
                     </table>
-                    <p style="margin: 8px 0 0; font-size: 0.75rem; color: #d97706;">※ SECOMの制御信号がVarioSecure・Cato両経路になるため、本社での集約が可能かどうか技術確認が必要。</p>
+                    <p style="margin: 8px 0 0; font-size: 0.75rem; color: #64748b;">出典: VarioSecure費用分解_整理ノート（SCSK 角田様メール 2026/2/13・2/18・2/25）</p>
+                    <p style="margin: 4px 0 0; font-size: 0.75rem; color: #d97706;">※ SECOMの制御信号がVarioSecure・Cato両経路になるため、本社での集約が可能かどうか技術確認が必要。</p>
                 </dd>
             </div>
 
@@ -681,8 +687,8 @@
                 </div>
 
                 <div class="fact-box" style="border-left-color: #16a34a; background: #f0fdf4; margin-bottom: 10px;">
-                    <dt style="font-size: 0.7rem; font-weight: 700; color: #16a34a; letter-spacing: 0.05em; margin-bottom: 4px;">02 — Mix案だと約29%安くなる</dt>
-                    <dd style="font-size: 0.95rem; font-weight: 600; color: #1e293b; margin-bottom: 4px;">VarioSecure WANを残しつつCatoをセキュリティ層として追加すると、約¥512,000/月。IIJより¥210,000/月安い（年間¥2,520,000の差）。</dd>
+                    <dt style="font-size: 0.7rem; font-weight: 700; color: #16a34a; letter-spacing: 0.05em; margin-bottom: 4px;">02 — Mix案だと約8%安くなる</dt>
+                    <dd style="font-size: 0.95rem; font-weight: 600; color: #1e293b; margin-bottom: 4px;">VarioSecure WANを残しつつCatoをセキュリティ層として追加すると、¥664,068/月。IIJより¥58,082/月安い（年間¥697,000の差）。</dd>
                     <dd style="font-size: 0.85rem; color: #64748b; margin: 0;">SECOMの制御信号がVarioSecure・Cato両経路になる技術課題あり。本社での集約が可能かどうか確認が必要。</dd>
                 </div>
 
@@ -882,7 +888,7 @@
                 <dd><strong>確定値（100名ライセンス）</strong>: ライセンス¥4,000,000/年 + マネージド¥600,000/年 = ¥4,600,000/年（月額換算: 約¥383,333）</dd>
                 <dd><strong>確定値（初期費用）</strong>: ¥500,000（初期導入費、SCSK経由）</dd>
                 <dd><strong>推定値（④全拠点Socket＋50名）</strong>: Socket8台×¥800,000/年÷12 ≒ ¥533,333/月 + 50名ライセンス約¥166,667/月 + マネージド¥50,000/月 = 約¥750,000/月。Socket単価（¥800,000/年が1台あたりか）・50名ライセンス価格はSCSK確認中</dd>
-                <dd><strong>推定値（⑤Mix案）</strong>: VarioSecure¥129,091/月 + Catoライセンス100名¥383,333/月 = 約¥512,000/月</dd>
+                <dd><strong>確定値（⑤Mix案）</strong>: VarioSecure全8拠点¥122,400/月 + Cato（本社Socket¥66,667 + Azure vSocket¥183,333 + 大阪・多摩・橋本Socket×3¥200,001 + モバイル50名¥41,667 + マネージド¥50,000）¥541,668/月 = ¥664,068/月。出典: VarioSecure費用分解_整理ノート（SCSK角田様メール 2/13・2/18・2/25）</dd>
                 <dd><strong>補足</strong>: 正式見積は与信手続き完了後に提示予定。先行概算（2/13メール）はライセンス約500万/年だったが、100名構成で再算定</dd>
 
                 <!-- 入退室 -->
