@@ -71,8 +71,9 @@
 </div>
 
 <div id="legend">
-  <div class="leg"><div class="ldot" style="background:#ef4444"></div>境界FW/VPNハブ</div>
+  <div class="leg"><img class="leg-icon" data-type="fortigate" alt="">境界FW / VPNハブ</div>
   <div class="leg"><div class="ldot" style="background:#1d4ed8"></div>拠点サイト</div>
+  <div class="leg"><img class="leg-icon" data-type="rvpn" alt="">RVPNクライアント (L2TP)</div>
   <div class="leg"><img class="leg-icon" data-type="gw" alt="">VPN GW (VarioSecure VSR)</div>
   <div class="leg"><img class="leg-icon" data-type="server" alt="">サーバ / NAS</div>
   <div class="leg"><img class="leg-icon" data-type="switch" alt="">スイッチ</div>
@@ -109,6 +110,7 @@ const C = {
   mfp:       { bg:'#831843', border:'#ec4899', font:'#fbcfe8' },
   secom:     { bg:'#78350f', border:'#f59e0b', font:'#fde68a' },
   unknown:   { bg:'#1e293b', border:'#475569', font:'#94a3b8' },
+  rvpn:      { bg:'#083344', border:'#22d3ee', font:'#a5f3fc' },
 };
 
 // ─────────────────────────────────────────
@@ -205,6 +207,33 @@ const ICONS = {
     <rect x="6" y="6" width="52" height="52" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2.5"/>
     <text x="32" y="46" text-anchor="middle" font-size="38" font-weight="bold" fill="#64748b" font-family="Arial,sans-serif">?</text>
   </svg>`),
+
+  // FortiGate: ラックマウント型ファイアウォール（シールド＋炎）
+  fortigate: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <rect x="3" y="14" width="58" height="36" rx="4" fill="#7f1d1d" stroke="#ef4444" stroke-width="2.5"/>
+    <rect x="7" y="20" width="13" height="2.5" rx="1" fill="#450a0a"/>
+    <rect x="7" y="25" width="13" height="2.5" rx="1" fill="#450a0a"/>
+    <rect x="7" y="30" width="13" height="2.5" rx="1" fill="#450a0a"/>
+    <rect x="7" y="35" width="13" height="2.5" rx="1" fill="#450a0a"/>
+    <rect x="7" y="40" width="13" height="2.5" rx="1" fill="#450a0a"/>
+    <path d="M32 17 L42 22 L42 33 Q42 41 32 45 Q22 41 22 33 L22 22 Z" fill="#450a0a" stroke="#ef4444" stroke-width="1.8"/>
+    <path d="M32 42 Q27 36 28 30 Q30.5 33 31 29 Q33.5 32 33 28 Q37 31 36 36 Q35 40 32 42 Z" fill="#fb923c"/>
+    <circle cx="54" cy="23" r="3" fill="#4ade80"/>
+    <circle cx="54" cy="32" r="3" fill="#4ade80"/>
+    <circle cx="54" cy="41" r="3" fill="#fbbf24"/>
+  </svg>`),
+
+  // RVPNクライアント: ノートPC＋VPNロック
+  rvpn: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <rect x="8" y="5" width="48" height="34" rx="3" fill="#083344" stroke="#22d3ee" stroke-width="2"/>
+    <path d="M32 10 L41 14 L41 24 Q41 31 32 34 Q23 31 23 24 L23 14 Z" fill="#0c4a6e" stroke="#22d3ee" stroke-width="1.5"/>
+    <rect x="27" y="23" width="10" height="7" rx="2" fill="#22d3ee" opacity="0.9"/>
+    <path d="M29 23 L29 20 Q29 16 35 16 L35 23" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round"/>
+    <rect x="28" y="39" width="8" height="5" rx="1" fill="#083344" stroke="#22d3ee" stroke-width="1.5"/>
+    <rect x="20" y="43" width="24" height="4" rx="2" fill="#083344" stroke="#22d3ee" stroke-width="1.5"/>
+    <path d="M3 22 L8 17 M3 22 L8 27" stroke="#22d3ee" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M61 22 L56 17 M61 22 L56 27" stroke="#22d3ee" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`),
 };
 
 // 凡例のアイコンを設定
@@ -212,7 +241,7 @@ document.querySelectorAll('.leg-icon').forEach(img => {
   img.src = ICONS[img.dataset.type] || '';
 });
 
-const IMG_TYPES = new Set(['gw','server','switch','ap','gap','mfp','secom','unknown']);
+const IMG_TYPES = new Set(['gw','server','switch','ap','gap','mfp','secom','unknown','fortigate','rvpn']);
 
 function n(id, label, type, meta, extra={}) {
   const c = C[type] || C.unknown;
@@ -246,6 +275,10 @@ const BASE_NODES = [
   n('internet', 'インターネット\n(WAN)', 'internet',
     { desc:'外部インターネット回線' },
     { shape:'ellipse', size:45, level:0 }),
+
+  n('rvpn-client', 'RVPNクライアント\n192.168.19.x\nL2TP / リモートアクセス', 'rvpn',
+    { desc:'VarioSecure L2TP RVPN クライアント\nIPプール: 192.168.19.0/24\nエンドポイント: 東京本社 FortiGate\nDNS: 社内AD（192.168.1.6/7）\n接続確認: ipconfig /allでPPPアダプター確認済み（2026-03-01）' },
+    { level:0, size:30 }),
 
   // ── 拠点サイト ──
   n('s-tokyo', '🏢 東京本社\n192.168.1.x\n台帳56件 / 応答10件', 'site',
@@ -294,6 +327,7 @@ const TOKYO_VPN_EDGES = [
 
 const BASE_EDGES = [
   edge('ei-tk', 'internet', 's-tokyo', { label:'WAN', width:3, color:{color:'#6d28d9'}, font:{color:'#8b5cf6', size:11} }),
+  edge('ei-rv', 'rvpn-client', 's-tokyo', { label:'RVPN\nL2TP', width:2, color:{color:'#22d3ee'}, dashes:[4,4], font:{color:'#22d3ee', size:10}, arrows:{to:{enabled:true,scaleFactor:0.8}} }),
   ...TOKYO_VPN_EDGES,
 ];
 
@@ -309,7 +343,7 @@ const SITE_DATA = {
       // ── 6F サーバー室（FortiGate） ──
       n('fortigate', 'FortiGate\n192.168.1.9\nVPNハブ / 境界FW', 'fortigate',
         { ip:'192.168.1.9', desc:'台帳名: VSR601j (VarioSecure)\n実機: Fortinet MAC 00:0d:48 検出\n台帳との不一致 → 要ログイン確認\n役割: 全拠点VPN接続ハブ / インターネット境界FW\n物理位置: 東京本社 6F サーバー室' },
-        { shape:'box', widthConstraint:{minimum:150}, margin:10, level:2 }),
+        { level:2, size:34 }),
 
       // ── 9F ──
       n('tk-ap-9f', '社内AP\n192.168.1.40\n9F フリースペース', 'ap',
@@ -461,6 +495,9 @@ const SITE_DATA = {
       n('os-unk', '台帳未登録\n192.168.20.70\n(DHCP・田中氏PC)', 'unknown',
         { ip:'192.168.20.70', desc:'OS推定: Linux(TTL64)\n情シス回答: DHCP・田中氏PCと判明' },
         { level:4 }),
+      n('os-lb', 'インターネット直接出口\n(大阪 ppp100)\n※実動作要確認', 'internet',
+        { desc:'大阪ローカルブレイクアウト（設定確認済み）\nMasquerade設定: 192.168.20.0/24 → ppp100\nただし本社にも同サブネットのMasquerade設定あり\n実際のインターネット出口は本社集約と大阪直接の\nどちらが有効か要確認' },
+        { shape:'ellipse', size:28, level:5 }),
     ],
     edges: [
       edge('eos-gw',   's-osaka', 'os-gw',   { width:2, color:{color:'#f97316'} }),
@@ -469,6 +506,7 @@ const SITE_DATA = {
       edge('eos-trii', 'os-gw',   'os-trii', { color:{color:'#f59e0b'} }),
       edge('eos-mfp',  'os-gw',   'os-mfp',  { color:{color:'#ec4899'} }),
       edge('eos-unk',  'os-gw',   'os-unk',  { color:{color:'#475569'} }),
+      edge('eos-lb',   'os-gw',   'os-lb',   { label:'ローカルBOUT\n(設定あり・要確認)', width:2, color:{color:'#f59e0b'}, dashes:[6,3], font:{color:'#f59e0b', size:10} }),
     ]
   },
 
