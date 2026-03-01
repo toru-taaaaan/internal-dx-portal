@@ -323,9 +323,17 @@ const SITE_DATA = {
         { ip:'192.168.1.30', desc:'SESAMO-TRIIサーバ（セコム入退室システム）\nOS推定: Linux/NW機器(TTL64)\n※AD残存廃棄候補（要確認）' },
         { level:4 }),
 
-      n('tk-ap', '無線AP × 6\n.1.40 /.41 /.42 /.43 /.44 /.45\n各フロア（9F/8F/7F/6F）', 'ap',
-        { ip:'192.168.1.40〜45', desc:'9F執務室 (.40) ✅\n8F会議室 (.41) ❌ 廃棄済み\n7F執務室 (.42) ❌\n7F会議室 (.43) ❌ SSID: Yoko7F-meeting\n6F執務室 (.44) ❌ SSID: Yoko6F-office\n6F会議室 (.45) ❌ SSID: Yoko6F-entrance' },
+      n('tk-ap', '社内Wi-Fi × 6\nSSID: Lollipop\n.1.40〜.1.45（各フロア）', 'ap',
+        { ip:'192.168.1.40〜45', desc:'SSID: Lollipop（5GHz）/ Lollipop-G（2.4GHz）\n9F フリースペース (.40)\n8F 会議室 (.41)\n7F 執務室 (.42)\n7F 会議室・床置き (.43)\n6F 執務室 (.44)\n6F 会議室 (.45)\n出典: 東通ネットワーク設定資料（AKIBA様）' },
         { level:4 }),
+
+      n('tk-rtx', 'RTX1210\n192.168.2.1\nゲストNWゲートウェイ', 'gw',
+        { ip:'192.168.2.1', desc:'ヤマハ RTX1210（ゲストネットワーク ゲートウェイ）\nゲスト帯域: 192.168.2.0/24\n社内ネットワーク（192.168.1.x）と分離\n出典: 東通ネットワーク設定資料（AKIBA様）' },
+        { level:4 }),
+
+      n('tk-guest-ap', 'ゲストWi-Fi × 5\nSSID: YokoTsukiji\n.2.10〜.2.14（各フロア）', 'ap',
+        { ip:'192.168.2.10〜14', desc:'SSID: YokoTsukiji-A（5GHz）/ YokoTsukiji-G（2.4GHz）\nゲスト帯域（192.168.2.x）、社内NWと分離\n9F フリースペース (.2.10)\n8F 会議室 (.2.11)\n7F 会議室・床置き (.2.12)\n6F 会議室 (.2.13)\n5F 応接室 (.2.14)\n出典: 東通ネットワーク設定資料（AKIBA様）' },
+        { level:5 }),
 
       n('tk-mfp', 'RICOH IM C4500 / MP C4504\n.1.55 / .1.56\n複合機（6F / 7F）', 'mfp',
         { ip:'192.168.1.55 / .56', desc:'6Fカラー複合機 (.55) ✅ RICOH IM C4500 JPN RPCS\n7Fカラー複合機 (.56) ✅ RICOH MP C4504 SPF\n付属: OpenBlocks AX3 (.57) 用途不明・要廃棄検討' },
@@ -339,7 +347,9 @@ const SITE_DATA = {
       edge('etk-kan',  'tk-sw',    'tk-kanri',  { color:{color:'#0ea5e9'} }),
       edge('etk-ten',  'tk-sw',    'tk-ten',    { color:{color:'#0ea5e9'} }),
       edge('etk-trii', 'tk-sw',    'tk-trii',   { color:{color:'#f59e0b'} }),
-      edge('etk-ap',   'tk-sw',    'tk-ap',     { color:{color:'#a855f7'} }),
+      edge('etk-ap',     'tk-sw',     'tk-ap',       { color:{color:'#a855f7'} }),
+      edge('etk-rtx',    'tk-sw',     'tk-rtx',      { color:{color:'#6b7280'} }),
+      edge('etk-guestap','tk-rtx',   'tk-guest-ap',  { color:{color:'#a855f7'} }),
       edge('etk-mfp',  'tk-sw',    'tk-mfp',    { color:{color:'#ec4899'} }),
     ]
   },
