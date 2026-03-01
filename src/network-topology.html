@@ -713,6 +713,7 @@ const FLOOR_GROUPS = [
     fill: 'rgba(99,102,241,0.08)',
     stroke: 'rgba(139,92,246,0.45)',
     labelColor: 'rgba(167,139,250,0.9)',
+    yShift: 0,
   },
   {
     label: '8F',
@@ -720,6 +721,7 @@ const FLOOR_GROUPS = [
     fill: 'rgba(99,102,241,0.08)',
     stroke: 'rgba(139,92,246,0.45)',
     labelColor: 'rgba(167,139,250,0.9)',
+    yShift: 50,
   },
   {
     label: '7F',
@@ -727,6 +729,7 @@ const FLOOR_GROUPS = [
     fill: 'rgba(99,102,241,0.08)',
     stroke: 'rgba(139,92,246,0.45)',
     labelColor: 'rgba(167,139,250,0.9)',
+    yShift: 0,
   },
   {
     label: '6F 執務',
@@ -734,6 +737,7 @@ const FLOOR_GROUPS = [
     fill: 'rgba(99,102,241,0.08)',
     stroke: 'rgba(139,92,246,0.45)',
     labelColor: 'rgba(167,139,250,0.9)',
+    yShift: 50,
   },
   {
     label: '5F',
@@ -741,6 +745,7 @@ const FLOOR_GROUPS = [
     fill: 'rgba(99,102,241,0.08)',
     stroke: 'rgba(139,92,246,0.45)',
     labelColor: 'rgba(167,139,250,0.9)',
+    yShift: 0,
   },
 ];
 
@@ -768,8 +773,9 @@ network.on('afterDrawing', function(ctx) {
 
     const xs = positions.map(p => p.x);
     const ys = positions.map(p => p.y);
+    const yShift = grp.yShift || 0;
     const x0 = Math.min(...xs) - pad;
-    const y0 = Math.min(...ys) - pad;
+    const y0 = Math.min(...ys) - pad + yShift;
     const w  = Math.max(...xs) - Math.min(...xs) + pad * 2;
     const h  = Math.max(...ys) - Math.min(...ys) + pad * 2;
     const r  = Math.min(32, w / 2, h / 2);
