@@ -26,8 +26,9 @@
     font-size: 11px;
     flex-shrink: 0;
   }
-  .leg { display: flex; align-items: center; gap: 5px; color: #94a3b8; }
-  .ldot { width: 11px; height: 11px; border-radius: 2px; }
+  .leg { display: flex; align-items: center; gap: 6px; color: #94a3b8; }
+  .ldot { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+  .leg-icon { width: 22px; height: 22px; object-fit: contain; flex-shrink: 0; }
 
   #network-wrap { flex: 1; position: relative; min-height: 0; }
   #mynetwork { width: 100%; height: 100%; }
@@ -72,13 +73,13 @@
 <div id="legend">
   <div class="leg"><div class="ldot" style="background:#ef4444"></div>境界FW/VPNハブ</div>
   <div class="leg"><div class="ldot" style="background:#1d4ed8"></div>拠点サイト</div>
-  <div class="leg"><div class="ldot" style="background:#f97316; border-radius:50%"></div>VPN GW (VarioSecure VSR)</div>
-  <div class="leg"><div class="ldot" style="background:#0369a1"></div>サーバ / NAS</div>
-  <div class="leg"><div class="ldot" style="background:#166534; transform:rotate(45deg)"></div>スイッチ</div>
-  <div class="leg"><div class="ldot" style="background:#7e22ce"></div>無線AP</div>
-  <div class="leg"><div class="ldot" style="background:#9d174d"></div>MFP</div>
-  <div class="leg"><div class="ldot" style="background:#92400e"></div>SECOM</div>
-  <div class="leg"><div class="ldot" style="background:#374151"></div>不明 / 要調査</div>
+  <div class="leg"><img class="leg-icon" data-type="gw" alt="">VPN GW (VarioSecure VSR)</div>
+  <div class="leg"><img class="leg-icon" data-type="server" alt="">サーバ / NAS</div>
+  <div class="leg"><img class="leg-icon" data-type="switch" alt="">スイッチ</div>
+  <div class="leg"><img class="leg-icon" data-type="ap" alt="">無線AP</div>
+  <div class="leg"><img class="leg-icon" data-type="mfp" alt="">MFP（複合機）</div>
+  <div class="leg"><img class="leg-icon" data-type="secom" alt="">SECOM 入退室ゲート</div>
+  <div class="leg"><img class="leg-icon" data-type="unknown" alt="">不明 / 要調査</div>
   <div class="leg" style="margin-left:auto; color:#475569">── 実線: LAN　- - 破線: VPN</div>
 </div>
 
@@ -109,16 +110,119 @@ const C = {
   unknown:   { bg:'#1e293b', border:'#475569', font:'#94a3b8' },
 };
 
+// ─────────────────────────────────────────
+// SVGアイコン（一目でわかる機器別デザイン）
+// ─────────────────────────────────────────
+function svgUri(s) {
+  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s);
+}
+
+const ICONS = {
+  // ルーター: ボックス本体＋2本アンテナ＋前面ポート
+  gw: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <rect x="8" y="28" width="48" height="24" rx="4" fill="#92400e" stroke="#f97316" stroke-width="2.5"/>
+    <line x1="20" y1="28" x2="20" y2="9" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="20" cy="7" r="4" fill="#fb923c"/>
+    <line x1="44" y1="28" x2="44" y2="9" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="44" cy="7" r="4" fill="#fb923c"/>
+    <circle cx="18" cy="40" r="3.5" fill="#4ade80"/>
+    <circle cx="29" cy="40" r="3.5" fill="#4ade80"/>
+    <circle cx="40" cy="40" r="3.5" fill="#fbbf24"/>
+    <rect x="48" y="35" width="5" height="7" rx="1" fill="#f97316" opacity="0.8"/>
+  </svg>`),
+
+  // ラックサーバー: 正面から見た3Uラックユニット（前面ベイ＋LEDランプ）
+  server: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <rect x="5" y="5" width="54" height="54" rx="3" fill="#082f49" stroke="#0ea5e9" stroke-width="2"/>
+    <rect x="9" y="10" width="46" height="13" rx="2" fill="#0369a1"/>
+    <rect x="12" y="13" width="22" height="7" rx="1" fill="#082f49" opacity="0.8"/>
+    <circle cx="50" cy="16.5" r="3" fill="#4ade80"/>
+    <rect x="9" y="26" width="46" height="13" rx="2" fill="#0369a1"/>
+    <rect x="12" y="29" width="22" height="7" rx="1" fill="#082f49" opacity="0.8"/>
+    <circle cx="50" cy="32.5" r="3" fill="#4ade80"/>
+    <rect x="9" y="42" width="46" height="13" rx="2" fill="#0369a1"/>
+    <rect x="12" y="45" width="22" height="7" rx="1" fill="#082f49" opacity="0.8"/>
+    <circle cx="50" cy="48.5" r="3" fill="#22d3ee"/>
+  </svg>`),
+
+  // L2スイッチ: 薄型ボックス＋前面ポート列＋双方向矢印
+  switch: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <rect x="4" y="18" width="56" height="28" rx="4" fill="#14532d" stroke="#22c55e" stroke-width="2.5"/>
+    <rect x="9" y="26" width="7" height="7" rx="1.5" fill="#22c55e"/>
+    <rect x="19" y="26" width="7" height="7" rx="1.5" fill="#22c55e"/>
+    <rect x="29" y="26" width="7" height="7" rx="1.5" fill="#4ade80"/>
+    <rect x="39" y="26" width="7" height="7" rx="1.5" fill="#f87171"/>
+    <circle cx="54" cy="29.5" r="4" fill="#4ade80"/>
+    <path d="M17 14 L9 9 M17 14 L9 19" stroke="#22c55e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M47 14 L55 9 M47 14 L55 19" stroke="#22c55e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  </svg>`),
+
+  // 無線AP: 標準WiFiシンボル（3段弧＋台座）誰でも一目でわかる
+  ap: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <path d="M7 37 Q32 4 57 37" fill="none" stroke="#a855f7" stroke-width="3.5" stroke-linecap="round" opacity="0.3"/>
+    <path d="M14 42 Q32 14 50 42" fill="none" stroke="#a855f7" stroke-width="3.5" stroke-linecap="round" opacity="0.6"/>
+    <path d="M21 47 Q32 26 43 47" fill="none" stroke="#a855f7" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="32" cy="53" r="5.5" fill="#a855f7"/>
+    <rect x="23" y="57" width="18" height="5" rx="2.5" fill="#3b0764" stroke="#a855f7" stroke-width="1.5"/>
+  </svg>`),
+
+  // 複合機（MFP）: プリンター本体＋給紙トレイ＋紙が上から出てくる形
+  mfp: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <rect x="16" y="4" width="32" height="22" rx="2" fill="#fdf4ff" stroke="#f9a8d4" stroke-width="1.2"/>
+    <line x1="22" y1="10" x2="42" y2="10" stroke="#d8b4fe" stroke-width="1.5"/>
+    <line x1="22" y1="14" x2="42" y2="14" stroke="#d8b4fe" stroke-width="1.5"/>
+    <line x1="22" y1="18" x2="36" y2="18" stroke="#d8b4fe" stroke-width="1.5"/>
+    <rect x="7" y="24" width="50" height="26" rx="4" fill="#831843" stroke="#ec4899" stroke-width="2"/>
+    <rect x="13" y="31" width="38" height="5" rx="1" fill="#ec4899" opacity="0.5"/>
+    <circle cx="51" cy="31" r="3.5" fill="#4ade80"/>
+    <rect x="16" y="49" width="32" height="12" rx="2" fill="#831843" stroke="#ec4899" stroke-width="1.5"/>
+  </svg>`),
+
+  // 入退室ゲート: フラップゲート（左右の柱＋横バー＋カードリーダー）
+  secom: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <rect x="3" y="10" width="12" height="52" rx="2.5" fill="#78350f" stroke="#f59e0b" stroke-width="2"/>
+    <rect x="49" y="10" width="12" height="52" rx="2.5" fill="#78350f" stroke="#f59e0b" stroke-width="2"/>
+    <rect x="6" y="14" width="6" height="12" rx="1.5" fill="#fbbf24" opacity="0.95"/>
+    <circle cx="9" cy="20" r="2.5" fill="#78350f"/>
+    <rect x="15" y="30" width="34" height="6" rx="3" fill="#f59e0b"/>
+    <circle cx="9" cy="55" r="3.5" fill="#4ade80"/>
+    <circle cx="55" cy="55" r="3.5" fill="#4ade80"/>
+    <path d="M24 46 L40 46 M35.5 41 L40 46 L35.5 51" stroke="#4ade80" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`),
+
+  // 不明機器: グレーのボックスに「?」
+  unknown: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <rect x="6" y="6" width="52" height="52" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2.5"/>
+    <text x="32" y="46" text-anchor="middle" font-size="38" font-weight="bold" fill="#64748b" font-family="Arial,sans-serif">?</text>
+  </svg>`),
+};
+
+// 凡例のアイコンを設定
+document.querySelectorAll('.leg-icon').forEach(img => {
+  img.src = ICONS[img.dataset.type] || '';
+});
+
+const IMG_TYPES = new Set(['gw','server','switch','ap','mfp','secom','unknown']);
+
 function n(id, label, type, meta, extra={}) {
   const c = C[type] || C.unknown;
-  return Object.assign({
+  const useImg = IMG_TYPES.has(type) && ICONS[type] && !extra.shape;
+  const base = {
     id, label,
-    color: { background:c.bg, border:c.border, highlight:{background:c.bg, border:'#f8fafc'} },
-    font: { color:c.font, size:12, face:'Segoe UI,sans-serif', multi:false },
+    color: useImg
+      ? { background:'rgba(0,0,0,0)', border:'rgba(0,0,0,0)', highlight:{background:'rgba(255,255,255,0.08)', border:c.border} }
+      : { background:c.bg, border:c.border, highlight:{background:c.bg, border:'#f8fafc'} },
+    font: { color:c.font, size:11, face:'Segoe UI,sans-serif', multi:false },
     borderWidth: 2,
-    shadow: { enabled:true, size:5, x:0, y:2, color:'rgba(0,0,0,0.5)' },
+    shadow: { enabled:true, size:6, x:0, y:3, color:'rgba(0,0,0,0.6)' },
     _meta: meta || {}
-  }, extra);
+  };
+  if (useImg) {
+    base.shape = 'image';
+    base.image = ICONS[type];
+    base.size = 26;
+  }
+  return Object.assign(base, extra);
 }
 
 function edge(id, from, to, opts={}) {
@@ -193,39 +297,39 @@ const SITE_DATA = {
     nodes: [
       n('tk-sw', 'DGS-1210-28\n192.168.1.8\nスイッチ（基幹HUB）', 'switch',
         { ip:'192.168.1.8', desc:'D-Link 28ポート管理スイッチ\n管理PW: ad-admin\nMAC OUI: D-Link確認（応答あり）\n物理配線はスキャン未確認' },
-        { shape:'diamond', size:28, level:3 }),
+        { level:3 }),
 
       n('tk-pdc', 'PDCSVR\n192.168.1.6\nAD Primary DC', 'server',
         { ip:'192.168.1.6', desc:'Active Directory Primary DC（2020年9月〜）\nコンピューター245件 / 有効ユーザー128名\n無効43名 / GPO14件（AD調査 2026-02-28）\nOS推定: Linux/NW機器(TTL64)' },
-        { shape:'box', widthConstraint:{minimum:140}, margin:7, level:4 }),
+        { level:4 }),
 
       n('tk-bdc', 'BDCSVR\n192.168.1.7\nAD Backup DC', 'server',
         { ip:'192.168.1.7', desc:'Active Directory Backup DC（2020年9月〜）\nOS推定: Linux/NW機器(TTL64)' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
 
       n('tk-share', 'ADSHARESVR\n192.168.1.15\nファイルサーバ', 'server',
         { ip:'192.168.1.15', desc:'ファイルサーバ（スキャン応答あり）\nOS推定: Linux/NW機器(TTL64)' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
 
       n('tk-kanri', 'ADKANRI4\n192.168.1.11\n業務サーバ', 'server',
         { ip:'192.168.1.11', desc:'2025/9/19 adkanri4に移行済み\nコールドスタンバイ・データ保管\nOS推定: Windows PC(TTL128)' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
 
       n('tk-ten', 'TENAPSVR / TENDBSVR\n.1.12 / .1.14\nTENSUITE（勤怠）', 'server',
         { ip:'192.168.1.12 / .14', desc:'TENSUITEアプリケーションサーバ (.12)\nTENSUITEデータベースサーバ (.14)\niLO管理IP: .16 / .17\n基幹引き継ぎ待ち・保留中（応答なし）' },
-        { shape:'box', widthConstraint:{minimum:140}, margin:7, level:4 }),
+        { level:4 }),
 
       n('tk-trii', 'TRIISVR\n192.168.1.30\nSECOM入退室', 'secom',
         { ip:'192.168.1.30', desc:'SESAMO-TRIIサーバ（セコム入退室システム）\nOS推定: Linux/NW機器(TTL64)\n※AD残存廃棄候補（要確認）' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
 
       n('tk-ap', '無線AP × 6\n.1.40 /.41 /.42 /.43 /.44 /.45\n各フロア（9F/8F/7F/6F）', 'ap',
         { ip:'192.168.1.40〜45', desc:'9F執務室 (.40) ✅\n8F会議室 (.41) ❌ 廃棄済み\n7F執務室 (.42) ❌\n7F会議室 (.43) ❌ SSID: Yoko7F-meeting\n6F執務室 (.44) ❌ SSID: Yoko6F-office\n6F会議室 (.45) ❌ SSID: Yoko6F-entrance' },
-        { shape:'box', widthConstraint:{minimum:140}, margin:7, level:4 }),
+        { level:4 }),
 
       n('tk-mfp', 'RICOH IM C4500 / MP C4504\n.1.55 / .1.56\n複合機（6F / 7F）', 'mfp',
         { ip:'192.168.1.55 / .56', desc:'6Fカラー複合機 (.55) ✅ RICOH IM C4500 JPN RPCS\n7Fカラー複合機 (.56) ✅ RICOH MP C4504 SPF\n付属: OpenBlocks AX3 (.57) 用途不明・要廃棄検討' },
-        { shape:'box', widthConstraint:{minimum:145}, margin:7, level:4 }),
+        { level:4 }),
     ],
     edges: [
       edge('etk-sw',   's-tokyo',  'tk-sw',    { width:2, color:{color:'#22c55e'} }),
@@ -245,22 +349,22 @@ const SITE_DATA = {
     nodes: [
       n('os-gw', 'VSR401j\n192.168.20.1\nVPN GW', 'gw',
         { ip:'192.168.20.1', desc:'VPNルータ（VarioSecure VSR）\nインターネット通信・拠点間通信\nVPN経路: Hop1=192.168.1.9（traceroute確認）' },
-        { shape:'ellipse', size:35, level:3 }),
+        { level:3 }),
       n('os-ap1', 'WAB-I1750PS\n192.168.20.21\n無線AP（執務室）', 'ap',
         { ip:'192.168.20.21', desc:'無線LAN親機（執務室）\n管理: admin / ggs18zye（応答あり）' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
       n('os-ap2', 'WAB-I1750PS\n192.168.20.22\n無線AP（会議室）', 'ap',
         { ip:'192.168.20.22', desc:'無線LAN親機（会議室）\n管理: admin / ggs18zye（応答あり）' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
       n('os-trii', 'TRIIインターフェース\n192.168.20.31\nSECOM入退室', 'secom',
         { ip:'192.168.20.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
       n('os-mfp', 'RICOH IM C3010\n192.168.20.50\n複合機', 'mfp',
         { ip:'192.168.20.50', desc:'RICOH IM C3010（応答あり）\n管理: admin / PW なし' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
       n('os-unk', '台帳未登録\n192.168.20.70\n(DHCP・田中氏PC)', 'unknown',
         { ip:'192.168.20.70', desc:'OS推定: Linux(TTL64)\n情シス回答: DHCP・田中氏PCと判明' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
     ],
     edges: [
       edge('eos-gw',   's-osaka', 'os-gw',   { width:2, color:{color:'#f97316'} }),
@@ -277,25 +381,25 @@ const SITE_DATA = {
     nodes: [
       n('hs-gw', 'VSR400\n192.168.30.1\nVPN GW', 'gw',
         { ip:'192.168.30.1', desc:'VPNルータ（VarioSecure VSR）' },
-        { shape:'ellipse', size:35, level:3 }),
+        { level:3 }),
       n('hs-qnap', 'QNAP TS-431U\n192.168.30.10\nNAS', 'server',
         { ip:'192.168.30.10', desc:'IoT ENG用データ保管共有用サーバ（応答あり）\nユーザー: admin' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
       n('hs-iot', 'IOTSVR\n192.168.30.15\nIoT専用FS', 'server',
         { ip:'192.168.30.15', desc:'IoT事業部専用ファイルサーバ（2020年10月〜）\nBMC (.16): 応答あり\nOS推定: Windows PC(TTL128)' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
       n('hs-ap', 'WAB-M1775-PS\n192.168.30.20\n無線AP', 'ap',
         { ip:'192.168.30.20', desc:'無線AP（応答あり）' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
       n('hs-trii', 'TRIIインターフェース\n192.168.30.31\nSECOM入退室', 'secom',
         { ip:'192.168.30.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
       n('hs-mfp', 'Canon C5540Ⅱ\n192.168.30.55\n複合機', 'mfp',
         { ip:'192.168.30.55', desc:'旧R&D 8F 技術・品証・IoTの複合機（応答あり）' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
       n('hs-unk', '台帳未登録 × 8\n.82/.87/.89/.91/.92/.162/.173/.204\n要調査', 'unknown',
         { ip:'192.168.30.82〜204（8台）', desc:'OS推定: Windows(TTL128) × 3台\nOS推定: Linux/FortiGate(TTL64) × 5台\n台帳未登録 → 情シス確認要' },
-        { shape:'box', widthConstraint:{minimum:145}, margin:7, level:4 }),
+        { level:4 }),
     ],
     edges: [
       edge('ehs-gw',   's-hashimoto', 'hs-gw',   { width:2, color:{color:'#f97316'} }),
@@ -313,10 +417,10 @@ const SITE_DATA = {
     nodes: [
       n('fk-gw', 'VSR401j\n192.168.40.1\nVPN GW', 'gw',
         { ip:'192.168.40.1', desc:'VPNルータ（VarioSecure VSR）' },
-        { shape:'ellipse', size:35, level:3 }),
+        { level:3 }),
       n('fk-trii', 'TRIIインターフェース\n192.168.40.31\nSECOM入退室', 'secom',
         { ip:'192.168.40.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
     ],
     edges: [
       edge('efk-gw',   's-fukuoka', 'fk-gw',   { width:2, color:{color:'#f97316'} }),
@@ -329,22 +433,22 @@ const SITE_DATA = {
     nodes: [
       n('wk-gw', 'VSR401j\n192.168.50.1\nVPN GW', 'gw',
         { ip:'192.168.50.1', desc:'VPNルータ（VarioSecure VSR）' },
-        { shape:'ellipse', size:35, level:3 }),
+        { level:3 }),
       n('wk-trii1', 'TRIIインターフェース\n192.168.50.31\nSECOM入退室', 'secom',
         { ip:'192.168.50.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
       n('wk-s2', 'セサモIdf（静脈）内側\n192.168.50.32', 'secom',
         { ip:'192.168.50.32', desc:'セコム入退室システム内側（応答あり）' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
       n('wk-s3', 'セサモIdf（静脈）外側\n192.168.50.33', 'secom',
         { ip:'192.168.50.33', desc:'セコム入退室システム外側（応答あり）' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
       n('wk-trii2', 'TRIIインターフェース\n192.168.50.34\nSECOM入退室', 'secom',
         { ip:'192.168.50.34', desc:'SESAMO-TRIIインターフェース（応答あり）' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
       n('wk-unk', '台帳未登録 × 2\n.35 / .36\n情シス未回答', 'unknown',
         { ip:'192.168.50.35 / .36', desc:'OS推定: Network機器(TTL255)\n台帳未登録 / 情シス未回答（要対応）' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
     ],
     edges: [
       edge('ewk-gw',    's-wakayama', 'wk-gw',    { width:2, color:{color:'#f97316'} }),
@@ -356,27 +460,27 @@ const SITE_DATA = {
     ]
   },
 
-  // ── プライム築地 ──
+  // ── 多摩センター ──
   's-tsukiji': {
     nodes: [
       n('tj-gw', 'VSR400\n192.168.60.1\nVPN GW', 'gw',
         { ip:'192.168.60.1', desc:'VPNルータ（VarioSecure VSR）' },
-        { shape:'ellipse', size:35, level:3 }),
+        { level:3 }),
       n('tj-ap', 'WAB-M1775-PS × 7\n.60.20〜.26\n無線AP（各フロア）', 'ap',
         { ip:'192.168.60.20〜26', desc:'1F会議室 (.20) SSID: Tama1F-meeting\n1F物流 (.21) SSID: Tama1F-logistics\n2F検査室付近 (.22) SSID: Tama2F-laboratory\n2F執務室 (.23) SSID: Tama2F-office\n3F物流 (.24) SSID: Tama3F\n2F検査室階段 (.25)\n2F会議室 (.26)\n全台応答あり' },
-        { shape:'box', widthConstraint:{minimum:145}, margin:7, level:4 }),
+        { level:4 }),
       n('tj-trii', 'TRIIインターフェース\n192.168.60.31\nSECOM入退室', 'secom',
         { ip:'192.168.60.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
       n('tj-mfp1', 'SHARP BP-50C55\n192.168.60.54\n1F 複合機', 'mfp',
         { ip:'192.168.60.54', desc:'多摩1F複合機（2025年10月導入）\nユーザーID: admin（応答あり）' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
       n('tj-mfp2', 'IR-ADVC3730F\n192.168.60.55\n2F 複合機', 'mfp',
         { ip:'192.168.60.55', desc:'多摩2F複合機（元CRB八王子の複合機）（応答あり）' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
       n('tj-unk', '台帳未登録 × 15\n(.71/.85/.91〜.97/.161〜.201)\n要調査', 'unknown',
         { ip:'192.168.60.71〜201（15台）', desc:'OS推定: Linux/FortiGate(TTL64) × 10台\nOS推定: Windows(TTL128) × 2台\nOS推定: Network機器(TTL255) × 3台\n一部は情シス確認: DHCP・クライアントPC\n残りは未確認（要調査）' },
-        { shape:'box', widthConstraint:{minimum:145}, margin:7, level:4 }),
+        { level:4 }),
     ],
     edges: [
       edge('etj-gw',   's-tsukiji', 'tj-gw',   { width:2, color:{color:'#f97316'} }),
@@ -393,10 +497,10 @@ const SITE_DATA = {
     nodes: [
       n('kb-gw', 'VSR401j\n192.168.70.1\nVPN GW', 'gw',
         { ip:'192.168.70.1', desc:'VPNルータ（VarioSecure VSR）' },
-        { shape:'ellipse', size:35, level:3 }),
+        { level:3 }),
       n('kb-trii', 'TRIIインターフェース\n192.168.70.31\nSECOM入退室', 'secom',
         { ip:'192.168.70.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
     ],
     edges: [
       edge('ekb-gw',   's-kyobashi', 'kb-gw',   { width:2, color:{color:'#f97316'} }),
@@ -409,10 +513,10 @@ const SITE_DATA = {
     nodes: [
       n('ng-gw', 'VSR401j\n192.168.80.1\nVPN GW', 'gw',
         { ip:'192.168.80.1', desc:'VPNルータ（VarioSecure VSR）' },
-        { shape:'ellipse', size:35, level:3 }),
+        { level:3 }),
       n('ng-trii', 'TRIIインターフェース\n192.168.80.31\nSECOM入退室', 'secom',
         { ip:'192.168.80.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
-        { shape:'box', widthConstraint:{minimum:130}, margin:7, level:4 }),
+        { level:4 }),
     ],
     edges: [
       edge('eng-gw',   's-nagoya', 'ng-gw',   { width:2, color:{color:'#f97316'} }),
