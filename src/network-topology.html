@@ -247,54 +247,49 @@ const BASE_NODES = [
     { desc:'外部インターネット回線' },
     { shape:'ellipse', size:45, level:0 }),
 
-  n('fortigate', 'FortiGate\n192.168.1.9\nVPNハブ / 境界FW', 'fortigate',
-    { ip:'192.168.1.9', desc:'台帳名: VSR601j (VarioSecure)\n実機: Fortinet MAC 00:0d:48 検出\n台帳との不一致 → 要ログイン確認\n役割: 全拠点VPN接続ハブ / インターネット境界FW' },
-    { shape:'box', widthConstraint:{minimum:150}, margin:10, level:1 }),
-
   // ── 拠点サイト ──
   n('s-tokyo', '🏢 東京本社\n192.168.1.x\n台帳56件 / 応答10件', 'site',
-    { desc:'クリックで機器を展開/収納\nスキャン応答率: 10/56件\nVPNハブと同一拠点（LAN直結）' },
-    { shape:'box', widthConstraint:{minimum:155}, margin:10, level:2 }),
+    { desc:'クリックで機器を展開/収納\nスキャン応答率: 10/56件\n6F サーバー室にFortiGate設置（VPNハブ）' },
+    { shape:'box', widthConstraint:{minimum:155}, margin:10, level:1 }),
 
   n('s-osaka', '🏢 大阪営業所\n192.168.20.x\n6機器', 'site',
     { desc:'クリックで機器を展開/収納\nVPN経路: Hop1=192.168.1.9（traceroute確認済み）' },
-    { shape:'box', widthConstraint:{minimum:140}, margin:10, level:2 }),
+    { shape:'box', widthConstraint:{minimum:140}, margin:10, level:1 }),
 
   n('s-hashimoto', '🔬 橋本R&D\n192.168.30.x\n台帳10件 / 不明8件', 'site',
     { desc:'クリックで機器を展開/収納\nVPN経路: Hop1=192.168.1.9 確認済み' },
-    { shape:'box', widthConstraint:{minimum:140}, margin:10, level:2 }),
+    { shape:'box', widthConstraint:{minimum:140}, margin:10, level:1 }),
 
   n('s-fukuoka', '🏢 福岡営業所\n192.168.40.x\n2機器', 'site',
     { desc:'クリックで機器を展開/収納\nVPN経路: Hop1=192.168.1.9 確認済み' },
-    { shape:'box', widthConstraint:{minimum:135}, margin:10, level:2 }),
+    { shape:'box', widthConstraint:{minimum:135}, margin:10, level:1 }),
 
   n('s-wakayama', '🏢 和歌山\n192.168.50.x\n7機器（不明2件）', 'site',
     { desc:'クリックで機器を展開/収納\nVPN経路: Hop1=192.168.1.9 確認済み' },
-    { shape:'box', widthConstraint:{minimum:135}, margin:10, level:2 }),
+    { shape:'box', widthConstraint:{minimum:135}, margin:10, level:1 }),
 
   n('s-tsukiji', '🏭 多摩センター\n192.168.60.x\n台帳12件 / 不明15件', 'site',
     { desc:'クリックで機器を展開/収納\nVPN経路: Hop1=192.168.1.9 確認済み\n不明機器多数（TTL64群 要調査）\nVSR名: adtec-tama（2026-03-01確定）' },
-    { shape:'box', widthConstraint:{minimum:145}, margin:10, level:2 }),
+    { shape:'box', widthConstraint:{minimum:145}, margin:10, level:1 }),
 
   n('s-kyobashi', '🏢 京橋ビル\n192.168.70.x\n2機器', 'site',
     { desc:'クリックで機器を展開/収納\nVPN経路: Hop1=192.168.1.9 確認済み' },
-    { shape:'box', widthConstraint:{minimum:130}, margin:10, level:2 }),
+    { shape:'box', widthConstraint:{minimum:130}, margin:10, level:1 }),
 
   n('s-nagoya', '🏢 名古屋\n192.168.80.x\n2機器', 'site',
     { desc:'クリックで機器を展開/収納\nVPN経路: Hop1=192.168.1.9 確認済み' },
-    { shape:'box', widthConstraint:{minimum:130}, margin:10, level:2 }),
+    { shape:'box', widthConstraint:{minimum:130}, margin:10, level:1 }),
 ];
 
 const BASE_EDGES = [
-  edge('ei-fg', 'internet', 'fortigate', { label:'WAN', width:3, color:{color:'#6d28d9'}, font:{color:'#8b5cf6', size:11} }),
-  edge('ef-tk', 'fortigate', 's-tokyo',    { label:'LAN\n192.168.1.x', width:2, color:{color:'#3b82f6'}, dashes:false, font:{color:'#60a5fa', size:11} }),
-  edge('ef-os', 'fortigate', 's-osaka',    { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
-  edge('ef-hs', 'fortigate', 's-hashimoto',{ label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
-  edge('ef-fk', 'fortigate', 's-fukuoka',  { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
-  edge('ef-wk', 'fortigate', 's-wakayama', { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
-  edge('ef-tj', 'fortigate', 's-tsukiji',  { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
-  edge('ef-kb', 'fortigate', 's-kyobashi', { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
-  edge('ef-ng', 'fortigate', 's-nagoya',   { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
+  edge('ei-tk', 'internet', 's-tokyo',      { label:'WAN', width:3, color:{color:'#6d28d9'}, font:{color:'#8b5cf6', size:11} }),
+  edge('ef-os', 's-tokyo',  's-osaka',      { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
+  edge('ef-hs', 's-tokyo',  's-hashimoto',  { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
+  edge('ef-fk', 's-tokyo',  's-fukuoka',    { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
+  edge('ef-wk', 's-tokyo',  's-wakayama',   { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
+  edge('ef-tj', 's-tokyo',  's-tsukiji',    { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
+  edge('ef-kb', 's-tokyo',  's-kyobashi',   { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
+  edge('ef-ng', 's-tokyo',  's-nagoya',     { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
 ];
 
 // ─────────────────────────────────────────
@@ -305,6 +300,11 @@ const SITE_DATA = {
   // ── 東京本社 ──
   's-tokyo': {
     nodes: [
+
+      // ── 6F サーバー室（FortiGate） ──
+      n('fortigate', 'FortiGate\n192.168.1.9\nVPNハブ / 境界FW', 'fortigate',
+        { ip:'192.168.1.9', desc:'台帳名: VSR601j (VarioSecure)\n実機: Fortinet MAC 00:0d:48 検出\n台帳との不一致 → 要ログイン確認\n役割: 全拠点VPN接続ハブ / インターネット境界FW\n物理位置: 東京本社 6F サーバー室' },
+        { shape:'box', widthConstraint:{minimum:150}, margin:10, level:2 }),
 
       // ── 9F ──
       n('tk-ap-9f', '社内AP\n192.168.1.40\n9F フリースペース', 'ap',
@@ -396,7 +396,8 @@ const SITE_DATA = {
         { level:13 }),
     ],
     edges: [
-      edge('etk-sw',    's-tokyo', 'tk-sw',      { width:2, color:{color:'#22c55e'} }),
+      edge('etk-fg',    's-tokyo',    'fortigate', { width:2, color:{color:'#22c55e'} }),
+      edge('etk-sw',    'fortigate', 'tk-sw',     { width:2, color:{color:'#22c55e'} }),
       // 6F サーバー室（サーバー群）
       edge('etk-pdc',   'tk-sw',   'tk-pdc',     { color:{color:'#0ea5e9'} }),
       edge('etk-bdc',   'tk-sw',   'tk-bdc',     { color:{color:'#0ea5e9'} }),
@@ -701,7 +702,7 @@ network.on('hoverNode', function(p) {
 // ─────────────────────────────────────────
 const FLOOR_GROUPS = [
   {
-    label: '東京本社 6F（FortiGate・サーバー室）',
+    label: '6F サーバー室',
     nodes: ['fortigate', 'tk-sw', 'tk-pdc', 'tk-bdc', 'tk-share', 'tk-kanri', 'tk-ten', 'tk-trii', 'tk-rtx'],
     fill: 'rgba(34,197,94,0.07)',
     stroke: 'rgba(34,197,94,0.45)',
