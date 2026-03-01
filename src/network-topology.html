@@ -639,6 +639,7 @@ const network = new vis.Network(container, { nodes, edges }, {
     dragView: true,
   },
   edges: {
+    arrows: { to: { enabled: false } },
     smooth: { type:'cubicBezier', forceDirection:'vertical', roundness:0.5 },
     font: { align:'middle', size:11, color:'#64748b', strokeWidth:2, strokeColor:'#0f172a' },
     arrowStrikethrough: false,
