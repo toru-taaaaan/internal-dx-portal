@@ -254,31 +254,31 @@ const BASE_NODES = [
 
   n('s-osaka', '🏢 大阪営業所\n192.168.20.x\n6機器', 'site',
     { desc:'クリックで機器を展開/収納\nVPN経路: Hop1=192.168.1.9（traceroute確認済み）' },
-    { shape:'box', widthConstraint:{minimum:140}, margin:10, level:1 }),
+    { shape:'box', widthConstraint:{minimum:140}, margin:10, level:2 }),
 
   n('s-hashimoto', '🔬 橋本R&D\n192.168.30.x\n台帳10件 / 不明8件', 'site',
     { desc:'クリックで機器を展開/収納\nVPN経路: Hop1=192.168.1.9 確認済み' },
-    { shape:'box', widthConstraint:{minimum:140}, margin:10, level:1 }),
+    { shape:'box', widthConstraint:{minimum:140}, margin:10, level:2 }),
 
   n('s-fukuoka', '🏢 福岡営業所\n192.168.40.x\n2機器', 'site',
     { desc:'クリックで機器を展開/収納\nVPN経路: Hop1=192.168.1.9 確認済み' },
-    { shape:'box', widthConstraint:{minimum:135}, margin:10, level:1 }),
+    { shape:'box', widthConstraint:{minimum:135}, margin:10, level:2 }),
 
   n('s-wakayama', '🏢 和歌山\n192.168.50.x\n7機器（不明2件）', 'site',
     { desc:'クリックで機器を展開/収納\nVPN経路: Hop1=192.168.1.9 確認済み' },
-    { shape:'box', widthConstraint:{minimum:135}, margin:10, level:1 }),
+    { shape:'box', widthConstraint:{minimum:135}, margin:10, level:2 }),
 
   n('s-tsukiji', '🏭 多摩センター\n192.168.60.x\n台帳12件 / 不明15件', 'site',
     { desc:'クリックで機器を展開/収納\nVPN経路: Hop1=192.168.1.9 確認済み\n不明機器多数（TTL64群 要調査）\nVSR名: adtec-tama（2026-03-01確定）' },
-    { shape:'box', widthConstraint:{minimum:145}, margin:10, level:1 }),
+    { shape:'box', widthConstraint:{minimum:145}, margin:10, level:2 }),
 
   n('s-kyobashi', '🏢 京橋ビル\n192.168.70.x\n2機器', 'site',
     { desc:'クリックで機器を展開/収納\nVPN経路: Hop1=192.168.1.9 確認済み' },
-    { shape:'box', widthConstraint:{minimum:130}, margin:10, level:1 }),
+    { shape:'box', widthConstraint:{minimum:130}, margin:10, level:2 }),
 
   n('s-nagoya', '🏢 名古屋\n192.168.80.x\n2機器', 'site',
     { desc:'クリックで機器を展開/収納\nVPN経路: Hop1=192.168.1.9 確認済み' },
-    { shape:'box', widthConstraint:{minimum:130}, margin:10, level:1 }),
+    { shape:'box', widthConstraint:{minimum:130}, margin:10, level:2 }),
 ];
 
 // 東京収納時のVPN辺（s-tokyo → 各拠点）、展開時はfortigate辺に付け替える
