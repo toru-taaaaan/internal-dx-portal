@@ -72,7 +72,7 @@
 <div id="legend">
   <div class="leg"><div class="ldot" style="background:#ef4444"></div>境界FW/VPNハブ</div>
   <div class="leg"><div class="ldot" style="background:#1d4ed8"></div>拠点サイト</div>
-  <div class="leg"><div class="ldot" style="background:#f97316; border-radius:50%"></div>VPN GW (YAMAHA)</div>
+  <div class="leg"><div class="ldot" style="background:#f97316; border-radius:50%"></div>VPN GW (ADTEC VSR)</div>
   <div class="leg"><div class="ldot" style="background:#0369a1"></div>サーバ / NAS</div>
   <div class="leg"><div class="ldot" style="background:#166534; transform:rotate(45deg)"></div>スイッチ</div>
   <div class="leg"><div class="ldot" style="background:#7e22ce"></div>無線AP</div>
@@ -158,8 +158,8 @@ const BASE_NODES = [
     { desc:'クリックで機器を展開/収納\nVPN経路: Hop1=192.168.1.9 確認済み' },
     { shape:'box', widthConstraint:{minimum:135}, margin:10, level:2 }),
 
-  n('s-tsukiji', '🏭 プライム築地\n192.168.60.x\n台帳12件 / 不明15件', 'site',
-    { desc:'クリックで機器を展開/収納\nVPN経路: Hop1=192.168.1.9 確認済み\n不明機器多数（TTL64群 要調査）' },
+  n('s-tsukiji', '🏭 多摩センター\n192.168.60.x\n台帳12件 / 不明15件', 'site',
+    { desc:'クリックで機器を展開/収納\nVPN経路: Hop1=192.168.1.9 確認済み\n不明機器多数（TTL64群 要調査）\nVSR名: adtec-tama（2026-03-01確定）' },
     { shape:'box', widthConstraint:{minimum:145}, margin:10, level:2 }),
 
   n('s-kyobashi', '🏢 京橋ビル\n192.168.70.x\n2機器', 'site',
@@ -244,7 +244,7 @@ const SITE_DATA = {
   's-osaka': {
     nodes: [
       n('os-gw', 'VSR401j\n192.168.20.1\nVPN GW', 'gw',
-        { ip:'192.168.20.1', desc:'VPNルータ（YAMAHA製）\nインターネット通信・拠点間通信\nVPN経路: Hop1=192.168.1.9（traceroute確認）' },
+        { ip:'192.168.20.1', desc:'VPNルータ（ADTEC製 / VarioSecure）\nインターネット通信・拠点間通信\nVPN経路: Hop1=192.168.1.9（traceroute確認）' },
         { shape:'ellipse', size:35, level:3 }),
       n('os-ap1', 'WAB-I1750PS\n192.168.20.21\n無線AP（執務室）', 'ap',
         { ip:'192.168.20.21', desc:'無線LAN親機（執務室）\n管理: admin / ggs18zye（応答あり）' },
@@ -276,7 +276,7 @@ const SITE_DATA = {
   's-hashimoto': {
     nodes: [
       n('hs-gw', 'VSR400\n192.168.30.1\nVPN GW', 'gw',
-        { ip:'192.168.30.1', desc:'VPNルータ（YAMAHA製）' },
+        { ip:'192.168.30.1', desc:'VPNルータ（ADTEC製 / VarioSecure）' },
         { shape:'ellipse', size:35, level:3 }),
       n('hs-qnap', 'QNAP TS-431U\n192.168.30.10\nNAS', 'server',
         { ip:'192.168.30.10', desc:'IoT ENG用データ保管共有用サーバ（応答あり）\nユーザー: admin' },
@@ -312,7 +312,7 @@ const SITE_DATA = {
   's-fukuoka': {
     nodes: [
       n('fk-gw', 'VSR401j\n192.168.40.1\nVPN GW', 'gw',
-        { ip:'192.168.40.1', desc:'VPNルータ（YAMAHA製）' },
+        { ip:'192.168.40.1', desc:'VPNルータ（ADTEC製 / VarioSecure）' },
         { shape:'ellipse', size:35, level:3 }),
       n('fk-trii', 'TRIIインターフェース\n192.168.40.31\nSECOM入退室', 'secom',
         { ip:'192.168.40.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
@@ -328,7 +328,7 @@ const SITE_DATA = {
   's-wakayama': {
     nodes: [
       n('wk-gw', 'VSR401j\n192.168.50.1\nVPN GW', 'gw',
-        { ip:'192.168.50.1', desc:'VPNルータ（YAMAHA製）' },
+        { ip:'192.168.50.1', desc:'VPNルータ（ADTEC製 / VarioSecure）' },
         { shape:'ellipse', size:35, level:3 }),
       n('wk-trii1', 'TRIIインターフェース\n192.168.50.31\nSECOM入退室', 'secom',
         { ip:'192.168.50.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
@@ -360,7 +360,7 @@ const SITE_DATA = {
   's-tsukiji': {
     nodes: [
       n('tj-gw', 'VSR400\n192.168.60.1\nVPN GW', 'gw',
-        { ip:'192.168.60.1', desc:'VPNルータ（YAMAHA製）' },
+        { ip:'192.168.60.1', desc:'VPNルータ（ADTEC製 / VarioSecure）' },
         { shape:'ellipse', size:35, level:3 }),
       n('tj-ap', 'WAB-M1775-PS × 7\n.60.20〜.26\n無線AP（各フロア）', 'ap',
         { ip:'192.168.60.20〜26', desc:'1F会議室 (.20) SSID: Tama1F-meeting\n1F物流 (.21) SSID: Tama1F-logistics\n2F検査室付近 (.22) SSID: Tama2F-laboratory\n2F執務室 (.23) SSID: Tama2F-office\n3F物流 (.24) SSID: Tama3F\n2F検査室階段 (.25)\n2F会議室 (.26)\n全台応答あり' },
@@ -392,7 +392,7 @@ const SITE_DATA = {
   's-kyobashi': {
     nodes: [
       n('kb-gw', 'VSR401j\n192.168.70.1\nVPN GW', 'gw',
-        { ip:'192.168.70.1', desc:'VPNルータ（YAMAHA製）' },
+        { ip:'192.168.70.1', desc:'VPNルータ（ADTEC製 / VarioSecure）' },
         { shape:'ellipse', size:35, level:3 }),
       n('kb-trii', 'TRIIインターフェース\n192.168.70.31\nSECOM入退室', 'secom',
         { ip:'192.168.70.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
@@ -408,7 +408,7 @@ const SITE_DATA = {
   's-nagoya': {
     nodes: [
       n('ng-gw', 'VSR401j\n192.168.80.1\nVPN GW', 'gw',
-        { ip:'192.168.80.1', desc:'VPNルータ（YAMAHA製）' },
+        { ip:'192.168.80.1', desc:'VPNルータ（ADTEC製 / VarioSecure）' },
         { shape:'ellipse', size:35, level:3 }),
       n('ng-trii', 'TRIIインターフェース\n192.168.80.31\nSECOM入退室', 'secom',
         { ip:'192.168.80.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
