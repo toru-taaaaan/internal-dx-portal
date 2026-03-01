@@ -281,8 +281,8 @@ const BASE_NODES = [
     { shape:'box', widthConstraint:{minimum:130}, margin:10, level:1 }),
 ];
 
-const BASE_EDGES = [
-  edge('ei-tk', 'internet', 's-tokyo',      { label:'WAN', width:3, color:{color:'#6d28d9'}, font:{color:'#8b5cf6', size:11} }),
+// 東京収納時のVPN辺（s-tokyo → 各拠点）、展開時はfortigate辺に付け替える
+const TOKYO_VPN_EDGES = [
   edge('ef-os', 's-tokyo',  's-osaka',      { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
   edge('ef-hs', 's-tokyo',  's-hashimoto',  { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
   edge('ef-fk', 's-tokyo',  's-fukuoka',    { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
@@ -290,6 +290,11 @@ const BASE_EDGES = [
   edge('ef-tj', 's-tokyo',  's-tsukiji',    { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
   edge('ef-kb', 's-tokyo',  's-kyobashi',   { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
   edge('ef-ng', 's-tokyo',  's-nagoya',     { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
+];
+
+const BASE_EDGES = [
+  edge('ei-tk', 'internet', 's-tokyo', { label:'WAN', width:3, color:{color:'#6d28d9'}, font:{color:'#8b5cf6', size:11} }),
+  ...TOKYO_VPN_EDGES,
 ];
 
 // ─────────────────────────────────────────
@@ -398,6 +403,14 @@ const SITE_DATA = {
     edges: [
       edge('etk-fg',    's-tokyo',    'fortigate', { width:2, color:{color:'#22c55e'} }),
       edge('etk-sw',    'fortigate', 'tk-sw',     { width:2, color:{color:'#22c55e'} }),
+      // FortiGate → 各拠点 VPN（展開時に付け替え）
+      edge('efg-os', 'fortigate', 's-osaka',     { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
+      edge('efg-hs', 'fortigate', 's-hashimoto', { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
+      edge('efg-fk', 'fortigate', 's-fukuoka',   { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
+      edge('efg-wk', 'fortigate', 's-wakayama',  { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
+      edge('efg-tj', 'fortigate', 's-tsukiji',   { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
+      edge('efg-kb', 'fortigate', 's-kyobashi',  { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
+      edge('efg-ng', 'fortigate', 's-nagoya',    { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
       // 6F サーバー室（サーバー群）
       edge('etk-pdc',   'tk-sw',   'tk-pdc',     { color:{color:'#0ea5e9'} }),
       edge('etk-bdc',   'tk-sw',   'tk-bdc',     { color:{color:'#0ea5e9'} }),
@@ -666,8 +679,10 @@ network.on('click', function(p) {
   if (expanded[id]) {
     nodes.remove(sd.nodes.map(n => n.id));
     edges.remove(sd.edges.map(e => e.id));
+    if (id === 's-tokyo') edges.add(TOKYO_VPN_EDGES);
     expanded[id] = false;
   } else {
+    if (id === 's-tokyo') edges.remove(TOKYO_VPN_EDGES.map(e => e.id));
     nodes.add(sd.nodes);
     edges.add(sd.edges);
     expanded[id] = true;
