@@ -318,28 +318,28 @@ const SITE_DATA = {
       // ── 8F ──
       n('tk-ap-8f', '社内AP\n192.168.1.41\n8F 会議室', 'ap',
         { ip:'192.168.1.41', desc:'SSID: Lollipop（5GHz）/ Lollipop-G（2.4GHz）\n8F 会議室\n出典: 東通ネットワーク設定資料（AKIBA様）' },
-        { level:5 }),
+        { level:7 }),
 
       n('tk-gap-8f', 'ゲストAP\n192.168.2.11\n8F 会議室', 'gap',
         { ip:'192.168.2.11', desc:'SSID: YokoTsukiji-A（5GHz）/ YokoTsukiji-G（2.4GHz）\n8F 会議室\nゲスト帯域（192.168.2.x）、社内NWと分離\n出典: 東通ネットワーク設定資料（AKIBA様）' },
-        { level:6 }),
+        { level:8 }),
 
       // ── 7F ──
       n('tk-ap-7fa', '社内AP\n192.168.1.42\n7F 執務室', 'ap',
         { ip:'192.168.1.42', desc:'SSID: Lollipop（5GHz）/ Lollipop-G（2.4GHz）\n7F 執務室\n出典: 東通ネットワーク設定資料（AKIBA様）' },
-        { level:5 }),
+        { level:9 }),
 
       n('tk-ap-7fb', '社内AP\n192.168.1.43\n7F 会議室', 'ap',
         { ip:'192.168.1.43', desc:'SSID: Lollipop（5GHz）/ Lollipop-G（2.4GHz）\n7F 会議室（床置き）\n出典: 東通ネットワーク設定資料（AKIBA様）' },
-        { level:5 }),
+        { level:9 }),
 
       n('tk-gap-7f', 'ゲストAP\n192.168.2.12\n7F 会議室', 'gap',
         { ip:'192.168.2.12', desc:'SSID: YokoTsukiji-A（5GHz）/ YokoTsukiji-G（2.4GHz）\n7F 会議室（床置き）\nゲスト帯域（192.168.2.x）、社内NWと分離\n出典: 東通ネットワーク設定資料（AKIBA様）' },
-        { level:6 }),
+        { level:10 }),
 
       n('tk-mfp-7f', 'RICOH MP C4504\n192.168.1.56\n7F 複合機', 'mfp',
         { ip:'192.168.1.56', desc:'7Fカラー複合機 ✅ RICOH MP C4504 SPF\n出典: ネットワークスキャン（応答あり）' },
-        { level:5 }),
+        { level:9 }),
 
       // ── 6F（サーバー室 + 6F執務）──
       n('tk-sw', 'DGS-1210-28\n192.168.1.8\nスイッチ（基幹HUB）', 'switch',
@@ -376,24 +376,24 @@ const SITE_DATA = {
 
       n('tk-ap-6fa', '社内AP\n192.168.1.44\n6F 執務室', 'ap',
         { ip:'192.168.1.44', desc:'SSID: Lollipop（5GHz）/ Lollipop-G（2.4GHz）\n6F 執務室\n出典: 東通ネットワーク設定資料（AKIBA様）' },
-        { level:5 }),
+        { level:11 }),
 
       n('tk-ap-6fb', '社内AP\n192.168.1.45\n6F 会議室', 'ap',
         { ip:'192.168.1.45', desc:'SSID: Lollipop（5GHz）/ Lollipop-G（2.4GHz）\n6F 会議室\n出典: 東通ネットワーク設定資料（AKIBA様）' },
-        { level:5 }),
+        { level:11 }),
 
       n('tk-gap-6f', 'ゲストAP\n192.168.2.13\n6F 会議室', 'gap',
         { ip:'192.168.2.13', desc:'SSID: YokoTsukiji-A（5GHz）/ YokoTsukiji-G（2.4GHz）\n6F 会議室\nゲスト帯域（192.168.2.x）、社内NWと分離\n出典: 東通ネットワーク設定資料（AKIBA様）' },
-        { level:6 }),
+        { level:12 }),
 
       n('tk-mfp-6f', 'RICOH IM C4500\n192.168.1.55\n6F 複合機', 'mfp',
         { ip:'192.168.1.55', desc:'6Fカラー複合機 ✅ RICOH IM C4500 JPN RPCS\n付属: OpenBlocks AX3 (.57) 用途不明・要廃棄検討\n出典: ネットワークスキャン（応答あり）' },
-        { level:5 }),
+        { level:11 }),
 
       // ── 5F ──
       n('tk-gap-5f', 'ゲストAP\n192.168.2.14\n5F 応接室', 'gap',
         { ip:'192.168.2.14', desc:'SSID: YokoTsukiji-A（5GHz）/ YokoTsukiji-G（2.4GHz）\n5F 応接室\nゲスト帯域（192.168.2.x）、社内NWと分離\n出典: 東通ネットワーク設定資料（AKIBA様）' },
-        { level:6 }),
+        { level:13 }),
     ],
     edges: [
       edge('etk-sw',    's-tokyo', 'tk-sw',      { width:2, color:{color:'#22c55e'} }),
@@ -713,7 +713,6 @@ const FLOOR_GROUPS = [
     fill: 'rgba(99,102,241,0.08)',
     stroke: 'rgba(139,92,246,0.45)',
     labelColor: 'rgba(167,139,250,0.9)',
-    yShift: 0,
   },
   {
     label: '8F',
@@ -721,7 +720,6 @@ const FLOOR_GROUPS = [
     fill: 'rgba(99,102,241,0.08)',
     stroke: 'rgba(139,92,246,0.45)',
     labelColor: 'rgba(167,139,250,0.9)',
-    yShift: 50,
   },
   {
     label: '7F',
@@ -729,7 +727,6 @@ const FLOOR_GROUPS = [
     fill: 'rgba(99,102,241,0.08)',
     stroke: 'rgba(139,92,246,0.45)',
     labelColor: 'rgba(167,139,250,0.9)',
-    yShift: 0,
   },
   {
     label: '6F 執務',
@@ -737,7 +734,6 @@ const FLOOR_GROUPS = [
     fill: 'rgba(99,102,241,0.08)',
     stroke: 'rgba(139,92,246,0.45)',
     labelColor: 'rgba(167,139,250,0.9)',
-    yShift: 50,
   },
   {
     label: '5F',
@@ -745,7 +741,6 @@ const FLOOR_GROUPS = [
     fill: 'rgba(99,102,241,0.08)',
     stroke: 'rgba(139,92,246,0.45)',
     labelColor: 'rgba(167,139,250,0.9)',
-    yShift: 0,
   },
 ];
 
@@ -773,9 +768,8 @@ network.on('afterDrawing', function(ctx) {
 
     const xs = positions.map(p => p.x);
     const ys = positions.map(p => p.y);
-    const yShift = grp.yShift || 0;
     const x0 = Math.min(...xs) - pad;
-    const y0 = Math.min(...ys) - pad + yShift;
+    const y0 = Math.min(...ys) - pad;
     const w  = Math.max(...xs) - Math.min(...xs) + pad * 2;
     const h  = Math.max(...ys) - Math.min(...ys) + pad * 2;
     const r  = Math.min(32, w / 2, h / 2);
