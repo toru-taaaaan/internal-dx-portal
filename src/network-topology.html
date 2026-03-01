@@ -497,7 +497,7 @@ const SITE_DATA = {
         { level:4 }),
       n('os-lb', 'インターネット直接出口\n(大阪 ppp100)\n※実動作要確認', 'internet',
         { desc:'大阪ローカルブレイクアウト（設定確認済み）\nMasquerade設定: 192.168.20.0/24 → ppp100\nただし本社にも同サブネットのMasquerade設定あり\n実際のインターネット出口は本社集約と大阪直接の\nどちらが有効か要確認' },
-        { shape:'ellipse', size:28, level:5 }),
+        { shape:'ellipse', size:28, level:0 }),
     ],
     edges: [
       edge('eos-gw',   's-osaka', 'os-gw',   { width:2, color:{color:'#f97316'} }),
