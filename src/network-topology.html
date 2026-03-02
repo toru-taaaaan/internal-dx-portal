@@ -67,7 +67,7 @@
 
 <div id="header">
   <h1>ネットワーク構成図 — AKIBAホールディングス（2026-03）</h1>
-  <p>出典: 実機スキャン 2026-02-26 ／ AD調査 2026-02-28 ／ ゲートウェイをクリックで機器を展開 ／ ホイールでズーム・ドラッグでパン</p>
+  <p>出典: 実機スキャン 2026-02-26 ／ AD調査 2026-02-28 ／ VSR管理コンソール 2026-02-27 ／ IIJメール 2025-12-08 ／ ゲートウェイをクリックで機器を展開 ／ ホイールでズーム・ドラッグでパン</p>
 </div>
 
 <div id="legend">
@@ -273,7 +273,7 @@ function edge(id, from, to, opts={}) {
 // ─────────────────────────────────────────
 const BASE_NODES = [
   n('internet', 'インターネット\n(WAN)', 'internet',
-    { desc:'外部インターネット回線' },
+    { desc:'外部インターネット回線\n\n【本社WAN（2回線）】\n① 広域イーサネット（帯域確保 200Mbps）\n② フレッツ光ネクスト ファミリータイプ（1GbE）\n出典: IIJメール 2025-12-08\n\n全拠点インターネット出口は本社WAN経由で一元化（ヘアピンルーティング）\nグローバルIP（固定）: 210.138.216.118\n出典: VSR管理コンソール 2026-02-27' },
     { shape:'ellipse', size:45, level:0 }),
 
   n('rvpn-client', 'RVPNクライアント\n192.168.19.x\nL2TP / リモートアクセス', 'rvpn',
@@ -282,36 +282,36 @@ const BASE_NODES = [
 
   // ── 東京本社 境界FW / VPNハブ（常時表示）──
   n('fortigate', 'FortiGate\n192.168.1.9\nVPNハブ / 境界FW\n【東京本社 6F】', 'fortigate',
-    { ip:'192.168.1.9', desc:'台帳名: VSR601j (VarioSecure)\n実機: Fortinet MAC 00:0d:48 検出\n台帳との不一致 → 要ログイン確認\n役割: 全拠点VPN接続ハブ / インターネット境界FW\n物理位置: 東京本社 6F サーバー室\nクリックで東京本社の機器を展開 / 収納' },
+    { ip:'192.168.1.9', desc:'台帳名: VSR601j (VarioSecure)\n実機: Fortinet MAC 00:0d:48 検出\n台帳との不一致 → 要ログイン確認\n役割: 全拠点VPN接続ハブ / インターネット境界FW\n物理位置: 東京本社 6F サーバー室\n\n【WAN回線（2本）】\n① 広域イーサネット（帯域確保 200Mbps）\n② フレッツ光ネクスト ファミリータイプ（1GbE）\n出典: IIJメール 2025-12-08\nグローバルIP（固定）: 210.138.216.118\n出典: VSR管理コンソール 2026-02-27\nクリックで東京本社の機器を展開 / 収納' },
     { level:1, size:34 }),
 
   // ── 各拠点 VPN GW（常時表示）──
   n('os-gw', 'VSR401j\n192.168.20.1\nVPN GW\n【大阪営業所】', 'gw',
-    { ip:'192.168.20.1', desc:'VPNルータ（VarioSecure VSR）\nインターネット通信・拠点間通信\nVPN経路: Hop1=192.168.1.9（traceroute確認）\nクリックで機器を展開 / 収納' },
+    { ip:'192.168.20.1', desc:'VPNルータ（VarioSecure VSR）\nインターネット通信・拠点間通信\nVPN経路: Hop1=192.168.1.9（traceroute確認）\n\n【回線情報】\nWAN: PPPoE（ppp100）\nVPN: IPsec/IKE（VarioSecure / USEN）\nMasquerade: 設定あり（本社にも同設定あり・実動作要確認）\n出典: VSR管理コンソール 2026-02-27\nクリックで機器を展開 / 収納' },
     { level:2 }),
 
   n('hs-gw', 'VSR400\n192.168.30.1\nVPN GW\n【橋本R&D】', 'gw',
-    { ip:'192.168.30.1', desc:'VPNルータ（VarioSecure VSR）\nVPN経路: Hop1=192.168.1.9 確認済み\nクリックで機器を展開 / 収納' },
+    { ip:'192.168.30.1', desc:'VPNルータ（VarioSecure VSR / USEN）\nVPN経路: Hop1=192.168.1.9 確認済み\n\n【回線情報】\nWAN: PPPoE（ppp100）\nVPN: IPsec/IKE（VarioSecure）\nMasquerade: なし（本社集約経由でインターネット接続）\n出典: VSR管理コンソール 2026-02-27\nクリックで機器を展開 / 収納' },
     { level:2 }),
 
   n('fk-gw', 'VSR401j\n192.168.40.1\nVPN GW\n【福岡営業所】', 'gw',
-    { ip:'192.168.40.1', desc:'VPNルータ（VarioSecure VSR）\nVPN経路: Hop1=192.168.1.9 確認済み\nクリックで機器を展開 / 収納' },
+    { ip:'192.168.40.1', desc:'VPNルータ（VarioSecure VSR / USEN）\nVPN経路: Hop1=192.168.1.9 確認済み\n\n【回線情報】\nWAN: PPPoE（ppp100）\nVPN: IPsec/IKE（VarioSecure）\nMasquerade: なし（本社集約経由でインターネット接続）\n出典: VSR管理コンソール 2026-02-27\nクリックで機器を展開 / 収納' },
     { level:2 }),
 
   n('wk-gw', 'VSR401j\n192.168.50.1\nVPN GW\n【和歌山】', 'gw',
-    { ip:'192.168.50.1', desc:'VPNルータ（VarioSecure VSR）\nVPN経路: Hop1=192.168.1.9 確認済み\nクリックで機器を展開 / 収納' },
+    { ip:'192.168.50.1', desc:'VPNルータ（VarioSecure VSR / USEN）\nVPN経路: Hop1=192.168.1.9 確認済み\n\n【回線情報】\nWAN: PPPoE（ppp100）\nVPN: IPsec/IKE（VarioSecure）\nMasquerade: なし（本社集約経由でインターネット接続）\n※ VSR管理コンソール未登録（本社Masqueradeには 192.168.50.0/24 登録あり）\n出典: VSR管理コンソール 2026-02-27\nクリックで機器を展開 / 収納' },
     { level:2 }),
 
   n('tj-gw', 'VSR400\n192.168.60.1\nVPN GW\n【多摩センター】', 'gw',
-    { ip:'192.168.60.1', desc:'VPNルータ（VarioSecure VSR）\nVSR名: adtec-tama（2026-03-01確定）\nVPN経路: Hop1=192.168.1.9 確認済み\nクリックで機器を展開 / 収納' },
+    { ip:'192.168.60.1', desc:'VPNルータ（VarioSecure VSR / USEN）\nVSR名: adtec-tama（2026-03-01確定）\nVPN経路: Hop1=192.168.1.9 確認済み\n\n【回線情報】\nWAN: PPPoE（ppp100）\nVPN: IPsec/IKE（VarioSecure）\nMasquerade: なし（本社集約経由でインターネット接続）\n出典: VSR管理コンソール 2026-02-27\nクリックで機器を展開 / 収納' },
     { level:2 }),
 
   n('kb-gw', 'VSR401j\n192.168.70.1\nVPN GW\n【京橋ビル】', 'gw',
-    { ip:'192.168.70.1', desc:'VPNルータ（VarioSecure VSR）\nVPN経路: Hop1=192.168.1.9 確認済み\nクリックで機器を展開 / 収納' },
+    { ip:'192.168.70.1', desc:'VPNルータ（VarioSecure VSR / USEN）\nVPN経路: Hop1=192.168.1.9 確認済み\n\n【回線情報】\nWAN: PPPoE（ppp100）\nVPN: IPsec/IKE（VarioSecure）\nMasquerade: なし（本社集約経由でインターネット接続）\n※ VSR管理コンソール未登録\n※ BuddyNet（別組織）の回線・本社Masqueradeには 192.168.70.0/24 登録あり\n出典: VSR管理コンソール 2026-02-27\nクリックで機器を展開 / 収納' },
     { level:2 }),
 
   n('ng-gw', 'VSR401j\n192.168.80.1\nVPN GW\n【名古屋】', 'gw',
-    { ip:'192.168.80.1', desc:'VPNルータ（VarioSecure VSR）\nVPN経路: Hop1=192.168.1.9 確認済み\nクリックで機器を展開 / 収納' },
+    { ip:'192.168.80.1', desc:'VPNルータ（VarioSecure VSR / USEN）\nVPN経路: Hop1=192.168.1.9 確認済み\n\n【回線情報】\nWAN: PPPoE（ppp100）\nVPN: IPsec/IKE（VarioSecure）\nMasquerade: なし（本社集約経由でインターネット接続）\n出典: VSR管理コンソール 2026-02-27\nクリックで機器を展開 / 収納' },
     { level:2 }),
 ];
 
@@ -319,15 +319,15 @@ const BASE_NODES = [
 // 常時表示エッジ（VPN接続は常に表示）
 // ─────────────────────────────────────────
 const BASE_EDGES = [
-  edge('ei-fg',  'internet',    'fortigate', { label:'WAN', width:3, color:{color:'#6d28d9'}, font:{color:'#8b5cf6', size:11} }),
-  edge('ei-rv',  'rvpn-client', 'fortigate', { label:'RVPN\nL2TP', width:2, color:{color:'#22d3ee'}, dashes:[4,4], font:{color:'#22d3ee', size:10}, arrows:{to:{enabled:true,scaleFactor:0.8}} }),
-  edge('efg-os', 'fortigate', 'os-gw', { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
-  edge('efg-hs', 'fortigate', 'hs-gw', { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
-  edge('efg-fk', 'fortigate', 'fk-gw', { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
-  edge('efg-wk', 'fortigate', 'wk-gw', { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
-  edge('efg-tj', 'fortigate', 'tj-gw', { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
-  edge('efg-kb', 'fortigate', 'kb-gw', { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
-  edge('efg-ng', 'fortigate', 'ng-gw', { label:'VPN', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:11} }),
+  edge('ei-fg',  'internet',    'fortigate', { label:'WAN × 2回線\n広域イーサ 200M\nフレッツ 1GbE', width:3, color:{color:'#6d28d9'}, font:{color:'#8b5cf6', size:10} }),
+  edge('ei-rv',  'rvpn-client', 'fortigate', { label:'RVPN / L2TP\nVarioSecure (USEN)', width:2, color:{color:'#22d3ee'}, dashes:[4,4], font:{color:'#22d3ee', size:10}, arrows:{to:{enabled:true,scaleFactor:0.8}} }),
+  edge('efg-os', 'fortigate', 'os-gw', { label:'VPN\nVSR/IPsec-IKE\nPPPoE', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:10} }),
+  edge('efg-hs', 'fortigate', 'hs-gw', { label:'VPN\nVSR/IPsec-IKE\nPPPoE', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:10} }),
+  edge('efg-fk', 'fortigate', 'fk-gw', { label:'VPN\nVSR/IPsec-IKE\nPPPoE', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:10} }),
+  edge('efg-wk', 'fortigate', 'wk-gw', { label:'VPN\nVSR/IPsec-IKE\nPPPoE', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:10} }),
+  edge('efg-tj', 'fortigate', 'tj-gw', { label:'VPN\nVSR/IPsec-IKE\nPPPoE', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:10} }),
+  edge('efg-kb', 'fortigate', 'kb-gw', { label:'VPN\nVSR/IPsec-IKE\nPPPoE', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:10} }),
+  edge('efg-ng', 'fortigate', 'ng-gw', { label:'VPN\nVSR/IPsec-IKE\nPPPoE', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:10} }),
 ];
 
 // ─────────────────────────────────────────
