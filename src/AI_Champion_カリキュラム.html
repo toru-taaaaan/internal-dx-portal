@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Champion カリキュラム｜AKIBAホールディングス</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;800;900&family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f172a;
+      --muted:   #94a3b8;
+      --border:  #e2e8f0;
+      /* Phase 1: Antigravity 基礎 */
+      --w1: #2563eb;
+      --w2: #7c3aed;
+      --w3: #059669;
+      --w4: #d97706;
+      /* Phase 2: GAS・Gemini・応用 */
+      --w5: #0891b2;
+      --w6: #dc2626;
+      --w7: #9333ea;
+      /* Phase 3: 上級・成果展開 */
+      --w8: #0f766e;
+      --w9: #b45309;
+      --w10: #1e40af;
+      /* Phase accent */
+      --ph1: #2563eb;
+      --ph2: #0891b2;
+      --ph3: #059669;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #f1f5f9;
+      color: var(--primary);
+      line-height: 1.7;
+    }
+
+    a { color: var(--w1); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .back-link {
+      display: block;
+      padding: 14px 40px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .back-link a { color: var(--muted); }
+    .back-link a:hover { color: var(--primary); }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #1e40af 100%);
+      border-radius: 24px;
+      margin: 0 20px 20px;
+      padding: 60px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .hero-eyebrow {
+      font-family: 'Space Grotesk';
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 16px;
+    }
+
+    .hero-title {
+      font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+      font-size: 46px;
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .hero-subtitle {
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 40px;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hero-meta-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .hero-meta-value {
+      font-size: 16px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.9);
+    }
+
+    /* ── Slide ── */
+    .slide {
+      background: white;
+      border-radius: 20px;
+      padding: 60px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-chapter {
+      font-family: 'Space Grotesk';
+      font-size: 100px;
+      font-weight: 900;
+      color: rgba(15,23,42,0.04);
+      line-height: 1;
+      margin-bottom: -30px;
+      user-select: none;
+    }
+
+    .slide-title {
+      font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 36px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .slide-title::before {
+      content: '';
+      display: block;
+      width: 5px;
+      height: 28px;
+      background: #2563eb;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    .slide-lead {
+      font-size: 15px;
+      color: #475569;
+      line-height: 1.9;
+      margin-bottom: 28px;
+    }
+
+    /* ── Feature Cards ── */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .feature-card {
+      border: 1px solid var(--border);
+      border-top: 4px solid;
+      border-radius: 12px;
+      padding: 28px 24px;
+    }
+
+    .feature-card-1 { border-top-color: var(--w1); }
+    .feature-card-2 { border-top-color: var(--w3); }
+    .feature-card-3 { border-top-color: var(--w4); }
+
+    .feature-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .feature-desc {
+      font-size: 14px;
+      color: #475569;
+      line-height: 1.85;
+    }
+
+    /* ── Phase Overview ── */
+    .phase-overview {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .phase-block {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .phase-header {
+      padding: 16px 24px;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .phase-header-1 { background: linear-gradient(90deg, #1e40af, #2563eb); }
+    .phase-header-2 { background: linear-gradient(90deg, #0e7490, #0891b2); }
+    .phase-header-3 { background: linear-gradient(90deg, #065f46, #059669); }
+
+    .phase-header-num {
+      font-family: 'Space Grotesk';
+      font-size: 28px;
+      font-weight: 900;
+      opacity: 0.6;
+    }
+
+    .phase-header-info {}
+
+    .phase-header-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+
+    .phase-header-title {
+      font-size: 18px;
+      font-weight: 800;
+      font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+    }
+
+    .phase-weeks-row {
+      display: grid;
+      padding: 16px;
+      gap: 12px;
+      background: white;
+    }
+
+    .phase-weeks-row-4 { grid-template-columns: repeat(4, 1fr); }
+    .phase-weeks-row-3 { grid-template-columns: repeat(3, 1fr); }
+
+    .overview-week {
+      border-radius: 12px;
+      padding: 20px 18px;
+      border-top: 4px solid;
+    }
+
+    .overview-week-1 { background: #eff6ff; border-top-color: var(--w1); }
+    .overview-week-2 { background: #f5f3ff; border-top-color: var(--w2); }
+    .overview-week-3 { background: #ecfdf5; border-top-color: var(--w3); }
+    .overview-week-4 { background: #fffbeb; border-top-color: var(--w4); }
+    .overview-week-5 { background: #ecfeff; border-top-color: var(--w5); }
+    .overview-week-6 { background: #fff1f2; border-top-color: var(--w6); }
+    .overview-week-7 { background: #fdf4ff; border-top-color: var(--w7); }
+    .overview-week-8 { background: #f0fdfa; border-top-color: var(--w8); }
+    .overview-week-9 { background: #fef3c7; border-top-color: var(--w9); }
+    .overview-week-10 { background: #eef2ff; border-top-color: var(--w10); }
+
+    .overview-week-num {
+      font-family: 'Space Grotesk';
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .overview-week-date {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .overview-week-theme {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.45;
+      margin-bottom: 6px;
+    }
+
+    .overview-steps {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* ── Member Cards ── */
+    .member-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .member-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .member-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 700;
+      color: #475569;
+      font-family: 'Space Grotesk';
+    }
+
+    .member-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .member-status {
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .status-active { background: #d1fae5; color: #065f46; }
+    .status-prep   { background: #fef3c7; color: #92400e; }
+
+    .member-note {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* ── Phase Divider Slide ── */
+    .slide-phase {
+      border-top: 6px solid;
+    }
+    .slide-phase-1 { border-top-color: var(--ph1); }
+    .slide-phase-2 { border-top-color: var(--ph2); }
+    .slide-phase-3 { border-top-color: var(--ph3); }
+
+    .phase-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 18px 6px 10px;
+      border-radius: 24px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: white;
+      margin-bottom: 20px;
+    }
+    .phase-badge-1 { background: var(--ph1); }
+    .phase-badge-2 { background: var(--ph2); }
+    .phase-badge-3 { background: var(--ph3); }
+
+    .phase-slide-title {
+      font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+      font-size: 34px;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+
+    .phase-slide-desc {
+      font-size: 15px;
+      color: #475569;
+      line-height: 1.9;
+      max-width: 700px;
+      margin-bottom: 28px;
+    }
+
+    .phase-tools-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .phase-tool-tag {
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      border: 2px solid;
+    }
+    .phase-tool-tag-1 { border-color: var(--ph1); color: var(--ph1); background: #eff6ff; }
+    .phase-tool-tag-2 { border-color: var(--ph2); color: var(--ph2); background: #ecfeff; }
+    .phase-tool-tag-3 { border-color: var(--ph3); color: var(--ph3); background: #ecfdf5; }
+
+    .phase-weeks-list {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .phase-week-chip {
+      padding: 4px 14px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+    }
+
+    /* ── Week Slides ── */
+    .slide-week { border-top: 6px solid; }
+    .slide-week-1  { border-top-color: var(--w1); }
+    .slide-week-2  { border-top-color: var(--w2); }
+    .slide-week-3  { border-top-color: var(--w3); }
+    .slide-week-4  { border-top-color: var(--w4); }
+    .slide-week-5  { border-top-color: var(--w5); }
+    .slide-week-6  { border-top-color: var(--w6); }
+    .slide-week-7  { border-top-color: var(--w7); }
+    .slide-week-8  { border-top-color: var(--w8); }
+    .slide-week-9  { border-top-color: var(--w9); }
+    .slide-week-10 { border-top-color: var(--w10); }
+
+    .week-eyebrow {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+
+    .week-label {
+      font-family: 'Space Grotesk';
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .week-date { font-size: 14px; color: var(--muted); }
+
+    .week-title {
+      font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 36px;
+      line-height: 1.3;
+    }
+
+    /* ── Step Cards ── */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .steps-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .steps-grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+    .step-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .step-card-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .step-num {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+      font-family: 'Space Grotesk';
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .step-num-w1  { background: var(--w1); }
+    .step-num-w2  { background: var(--w2); }
+    .step-num-w3  { background: var(--w3); }
+    .step-num-w4  { background: var(--w4); }
+    .step-num-w5  { background: var(--w5); }
+    .step-num-w6  { background: var(--w6); }
+    .step-num-w7  { background: var(--w7); }
+    .step-num-w8  { background: var(--w8); }
+    .step-num-w9  { background: var(--w9); }
+    .step-num-w10 { background: var(--w10); }
+
+    .step-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .step-card-desc {
+      font-size: 14px;
+      color: #475569;
+      line-height: 1.75;
+    }
+
+    /* ── Practice Box ── */
+    .practice-box {
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 20px;
+      border-left: 4px solid;
+    }
+
+    .practice-label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .practice-text { font-size: 15px; line-height: 1.75; }
+
+    .practice-box-w1  { background: #eff6ff; border-left-color: var(--w1); }
+    .practice-label-w1 { color: var(--w1); }
+    .practice-text-w1  { color: #1e40af; }
+
+    .practice-box-w2  { background: #f5f3ff; border-left-color: var(--w2); }
+    .practice-label-w2 { color: var(--w2); }
+    .practice-text-w2  { color: #5b21b6; }
+
+    .practice-box-w3  { background: #ecfdf5; border-left-color: var(--w3); }
+    .practice-label-w3 { color: var(--w3); }
+    .practice-text-w3  { color: #065f46; }
+
+    .practice-box-w4  { background: #fffbeb; border-left-color: var(--w4); }
+    .practice-label-w4 { color: var(--w4); }
+    .practice-text-w4  { color: #92400e; }
+
+    .practice-box-w5  { background: #ecfeff; border-left-color: var(--w5); }
+    .practice-label-w5 { color: var(--w5); }
+    .practice-text-w5  { color: #155e75; }
+
+    .practice-box-w6  { background: #fff1f2; border-left-color: var(--w6); }
+    .practice-label-w6 { color: var(--w6); }
+    .practice-text-w6  { color: #991b1b; }
+
+    .practice-box-w7  { background: #fdf4ff; border-left-color: var(--w7); }
+    .practice-label-w7 { color: var(--w7); }
+    .practice-text-w7  { color: #6b21a8; }
+
+    .practice-box-w8  { background: #f0fdfa; border-left-color: var(--w8); }
+    .practice-label-w8 { color: var(--w8); }
+    .practice-text-w8  { color: #134e4a; }
+
+    .practice-box-w9  { background: #fef3c7; border-left-color: var(--w9); }
+    .practice-label-w9 { color: var(--w9); }
+    .practice-text-w9  { color: #78350f; }
+
+    .practice-box-w10  { background: #eef2ff; border-left-color: var(--w10); }
+    .practice-label-w10 { color: var(--w10); }
+    .practice-text-w10  { color: #1e3a8a; }
+
+    /* ── Goal Tag ── */
+    .goal-tag {
+      display: inline-block;
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    /* ── Setup Steps ── */
+    .setup-steps { display: flex; flex-direction: column; gap: 0; }
+
+    .setup-step {
+      display: flex;
+      gap: 20px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .setup-step:last-child { border-bottom: none; }
+
+    .setup-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      font-family: 'Space Grotesk';
+      flex-shrink: 0;
+    }
+
+    .setup-body { flex: 1; }
+
+    .setup-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .setup-desc { font-size: 14px; color: #475569; line-height: 1.8; }
+    .setup-desc ul { padding-left: 20px; margin-top: 8px; }
+    .setup-desc li { margin-bottom: 4px; }
+    .setup-desc code {
+      background: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: monospace;
+    }
+
+    /* ── Warn Box ── */
+    .warn-box {
+      background: #fef3c7;
+      border: 1px solid #fde68a;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-top: 24px;
+      font-size: 14px;
+      color: #92400e;
+      line-height: 1.75;
+    }
+
+    /* ── Achievement Table ── */
+    .achievement-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .achievement-table th {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .achievement-table td {
+      border: 1px solid var(--border);
+      padding: 14px 16px;
+      vertical-align: top;
+      line-height: 1.7;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .status-done   { background: #d1fae5; color: #065f46; }
+    .status-prep-b { background: #fef3c7; color: #92400e; }
+    .status-plan   { background: #f1f5f9; color: #475569; }
+    .status-active-b { background: #dbeafe; color: #1e40af; }
+
+    /* ── Resource List ── */
+    .resource-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .resource-list li {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .resource-list li:last-child { border-bottom: none; }
+
+    .resource-list a {
+      font-size: 15px;
+      font-weight: 600;
+      flex: 1;
+    }
+
+    .resource-tag {
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* ── Main wrapper ── */
+    .main-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 36px 28px; }
+      .hero-title { font-size: 30px; }
+      .slide { padding: 36px 28px; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .member-grid { grid-template-columns: 1fr; }
+      .steps-grid, .steps-grid-3, .steps-grid-4 { grid-template-columns: 1fr; }
+      .phase-weeks-row-4, .phase-weeks-row-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="back-link">
+    <a href="/">&#8592; ポータルへ戻る</a>
+  </div>
+
+  <!-- ═══ HERO ═══ -->
+  <header class="hero">
+    <div class="hero-eyebrow">AI Champion カリキュラム ｜ AKIBAホールディングス 情報システム部 ｜ 2026年3月期</div>
+    <h1 class="hero-title">AI<br>Champion<br>カリキュラム</h1>
+    <p class="hero-subtitle">Google Antigravity Learning Program — 全10週間・3フェーズ</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">期間</span>
+        <span class="hero-meta-value">2026年3月〜5月（10週間）</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">参加者</span>
+        <span class="hero-meta-value">中野さん・石井さん・高橋さん</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">フェーズ</span>
+        <span class="hero-meta-value">基礎 → GAS/Gemini → 上級/成果展開</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-wrapper">
+
+    <!-- ═══ 01: Google Antigravity とは ═══ -->
+    <div class="slide" id="what-is-antigravity">
+      <div class="slide-chapter">01</div>
+      <h2 class="slide-title">Google Antigravity とは</h2>
+      <p class="slide-lead">
+        Google が提供するAIエージェント型の開発環境。従来のコード補完ツールとは異なり、AIが自律的にタスクを考えて実行する。VSCode をベースとしており、使い慣れたエディタ環境で動作する。プレビュー期間中は個人の Google アカウントで無料利用可能。
+      </p>
+
+      <div class="feature-grid">
+        <div class="feature-card feature-card-1">
+          <div class="feature-title">AIエージェントが<br>自律的に実行</div>
+          <div class="feature-desc">「○○を調べてまとめて」と指示するだけで、AIが自分で考えて作業を進める。Agent Manager でリアルタイムに進捗を確認できる。</div>
+        </div>
+        <div class="feature-card feature-card-2">
+          <div class="feature-title">全作業が<br>記録される</div>
+          <div class="feature-desc">Artifacts 機能でAIの作業履歴がすべて残る。「AIが何をしたか」を確認・承認してから反映する安心設計。</div>
+        </div>
+        <div class="feature-card feature-card-3">
+          <div class="feature-title">社内ルールを<br>覚えさせられる</div>
+          <div class="feature-desc">Rules・Skills で自社仕様のルールや知識を登録。一度設定すれば毎回指示しなくてよい。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ 02: Champion メンバー ═══ -->
+    <div class="slide" id="members">
+      <div class="slide-chapter">02</div>
+      <h2 class="slide-title">Champion メンバー</h2>
+
+      <div class="member-grid">
+        <div class="member-card">
+          <div class="member-avatar">N</div>
+          <div class="member-name">中野さん</div>
+          <span class="member-status status-active">活動中</span>
+          <div class="member-note">Antigravity 導入済み<br>業務での使用を開始</div>
+        </div>
+        <div class="member-card">
+          <div class="member-avatar">I</div>
+          <div class="member-name">石井さん</div>
+          <span class="member-status status-active">活動中</span>
+          <div class="member-note">Antigravity 導入済み<br>業務での使用を開始</div>
+        </div>
+        <div class="member-card">
+          <div class="member-avatar">T</div>
+          <div class="member-name">高橋さん</div>
+          <span class="member-status status-prep">準備中</span>
+          <div class="member-note">新規参加予定<br>遠隔でセットアップ予定</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ 03: 10週間の全体スケジュール ═══ -->
+    <div class="slide" id="schedule">
+      <div class="slide-chapter">03</div>
+      <h2 class="slide-title">10週間の全体スケジュール</h2>
+      <p class="slide-lead">
+        Google Codelabs の公式教材を3フェーズ10週間に分割。各週に社内業務での実践課題を設定する。
+        Phase 1 は Antigravity の基礎固め、Phase 2 で GAS・Gemini を加えて自動化力を高め、Phase 3 で成果をまとめ全社展開へ。
+      </p>
+
+      <div class="phase-overview">
+
+        <!-- Phase 1 -->
+        <div class="phase-block">
+          <div class="phase-header phase-header-1">
+            <div class="phase-header-num">1</div>
+            <div class="phase-header-info">
+              <div class="phase-header-label">Phase 1 ｜ 3月（Week 1〜4）</div>
+              <div class="phase-header-title">Antigravity 基礎 — AIエージェントを使いこなす</div>
+            </div>
+          </div>
+          <div class="phase-weeks-row phase-weeks-row-4">
+            <div class="overview-week overview-week-1">
+              <div class="overview-week-num">Week 1</div>
+              <div class="overview-week-date">3/3〜3/7</div>
+              <div class="overview-week-theme">インストールと基本操作</div>
+              <div class="overview-steps">Codelabs Step 1〜4</div>
+            </div>
+            <div class="overview-week overview-week-2">
+              <div class="overview-week-num">Week 2</div>
+              <div class="overview-week-date">3/10〜3/14</div>
+              <div class="overview-week-theme">成果物の確認とエディタ操作</div>
+              <div class="overview-steps">Codelabs Step 5〜8</div>
+            </div>
+            <div class="overview-week overview-week-3">
+              <div class="overview-week-num">Week 3</div>
+              <div class="overview-week-date">3/17〜3/21</div>
+              <div class="overview-week-theme">ルール設定と自律運用</div>
+              <div class="overview-steps">Codelabs Step 9〜11</div>
+            </div>
+            <div class="overview-week overview-week-4">
+              <div class="overview-week-num">Week 4</div>
+              <div class="overview-week-date">3/24〜3/28</div>
+              <div class="overview-week-theme">成果まとめと次フェーズ準備</div>
+              <div class="overview-steps">Codelabs Step 12</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="phase-block">
+          <div class="phase-header phase-header-2">
+            <div class="phase-header-num">2</div>
+            <div class="phase-header-info">
+              <div class="phase-header-label">Phase 2 ｜ 4月（Week 5〜7）</div>
+              <div class="phase-header-title">GAS・Gemini・応用 — 自動化の武器を増やす</div>
+            </div>
+          </div>
+          <div class="phase-weeks-row phase-weeks-row-3">
+            <div class="overview-week overview-week-5">
+              <div class="overview-week-num">Week 5</div>
+              <div class="overview-week-date">4/7〜4/11</div>
+              <div class="overview-week-theme">GAS 入門 — 繰り返し作業を自動化</div>
+              <div class="overview-steps">Google Apps Script Codelabs</div>
+            </div>
+            <div class="overview-week overview-week-6">
+              <div class="overview-week-num">Week 6</div>
+              <div class="overview-week-date">4/14〜4/18</div>
+              <div class="overview-week-theme">Gemini × Workspace 自動化</div>
+              <div class="overview-steps">Gemini API Codelabs</div>
+            </div>
+            <div class="overview-week overview-week-7">
+              <div class="overview-week-num">Week 7</div>
+              <div class="overview-week-date">4/21〜4/25</div>
+              <div class="overview-week-theme">Antigravity でアプリを作る</div>
+              <div class="overview-steps">Building with Antigravity</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="phase-block">
+          <div class="phase-header phase-header-3">
+            <div class="phase-header-num">3</div>
+            <div class="phase-header-info">
+              <div class="phase-header-label">Phase 3 ｜ 5月（Week 8〜10）</div>
+              <div class="phase-header-title">上級・成果展開 — 組織に根付かせる</div>
+            </div>
+          </div>
+          <div class="phase-weeks-row phase-weeks-row-3">
+            <div class="overview-week overview-week-8">
+              <div class="overview-week-num">Week 8</div>
+              <div class="overview-week-date">5/7〜5/9</div>
+              <div class="overview-week-theme">Antigravity Skills カスタム化</div>
+              <div class="overview-steps">Authoring Skills Codelabs</div>
+            </div>
+            <div class="overview-week overview-week-9">
+              <div class="overview-week-num">Week 9</div>
+              <div class="overview-week-date">5/12〜5/16</div>
+              <div class="overview-week-theme">AppSheet ノーコードアプリ</div>
+              <div class="overview-steps">AppSheet Codelabs</div>
+            </div>
+            <div class="overview-week overview-week-10">
+              <div class="overview-week-num">Week 10</div>
+              <div class="overview-week-date">5/19〜5/23</div>
+              <div class="overview-week-theme">成果まとめと全社展開</div>
+              <div class="overview-steps">Champion 活動報告</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══ PHASE 1 DIVIDER ═══ -->
+    <div class="slide slide-phase slide-phase-1" id="phase1">
+      <div class="phase-badge phase-badge-1">&#9654; Phase 1</div>
+      <div class="phase-slide-title">Antigravity 基礎<br>AIエージェントを使いこなす</div>
+      <div class="phase-slide-desc">
+        Google Codelabs「Getting Started with Google Antigravity」全12ステップを4週間で習得する。
+        インストールから始まり、エージェントへの指示・成果物確認・ルール設定・自律運用まで、
+        Antigravity の基礎をすべて体験する。
+      </div>
+      <div class="phase-tools-row">
+        <span class="phase-tool-tag phase-tool-tag-1">Google Antigravity</span>
+        <span class="phase-tool-tag phase-tool-tag-1">Agent Manager</span>
+        <span class="phase-tool-tag phase-tool-tag-1">Artifacts</span>
+        <span class="phase-tool-tag phase-tool-tag-1">Rules &amp; Skills</span>
+        <span class="phase-tool-tag phase-tool-tag-1">Browser Extension</span>
+      </div>
+      <div class="phase-weeks-list">
+        <span class="phase-week-chip" style="background:var(--w1);">Week 1: 3/3〜3/7</span>
+        <span class="phase-week-chip" style="background:var(--w2);">Week 2: 3/10〜3/14</span>
+        <span class="phase-week-chip" style="background:var(--w3);">Week 3: 3/17〜3/21</span>
+        <span class="phase-week-chip" style="background:var(--w4);">Week 4: 3/24〜3/28</span>
+      </div>
+    </div>
+
+    <!-- ═══ Week 1 ═══ -->
+    <div class="slide slide-week slide-week-1" id="week1">
+      <div class="week-eyebrow">
+        <span class="week-label">Week 1</span>
+        <span class="week-date">3月3日（月）〜 3月7日（金）｜ Step 1〜4</span>
+      </div>
+      <div class="week-title">インストールと基本操作</div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w1">1</div>
+            <div class="step-card-title">イントロダクション</div>
+          </div>
+          <div class="step-card-desc">Antigravity の全体像を把握する。従来のコード補完ツールとの違い、AIエージェントとして何ができるかを理解する</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w1">2</div>
+            <div class="step-card-title">インストール</div>
+          </div>
+          <div class="step-card-desc">ダウンロード・インストール・初期設定。セキュリティポリシーは「Review-driven development」推奨（AIの操作を確認してから実行）</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w1">3</div>
+            <div class="step-card-title">Agent Manager</div>
+          </div>
+          <div class="step-card-desc">エージェントの管理画面（ミッションコントロール）。Planning モード（複雑なタスク）と Fast モード（単純なタスク）の使い分け</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w1">4</div>
+            <div class="step-card-title">Browser 拡張</div>
+          </div>
+          <div class="step-card-desc">Chrome拡張を導入し、AIにWebブラウジング能力を付与。クリック・入力・スクリーンショット取得が自動で可能になる</div>
+        </div>
+      </div>
+
+      <div class="practice-box practice-box-w1">
+        <div class="practice-label practice-label-w1">実践課題</div>
+        <div class="practice-text practice-text-w1">Antigravity を使って「自分の業務に関する簡単な質問」を1つ投げてみる。結果をチャット等でチームに共有する<br>
+        <strong>高橋さん:</strong> この週にセットアップ手順（08章）に沿ってインストールを完了する</div>
+      </div>
+
+      <span class="goal-tag">Goal 4: Champion による部門内展開</span>
+    </div>
+
+    <!-- ═══ Week 2 ═══ -->
+    <div class="slide slide-week slide-week-2" id="week2">
+      <div class="week-eyebrow">
+        <span class="week-label">Week 2</span>
+        <span class="week-date">3月10日（月）〜 3月14日（金）｜ Step 5〜8</span>
+      </div>
+      <div class="week-title">成果物の確認とエディタ操作</div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w2">5</div>
+            <div class="step-card-title">Artifacts</div>
+          </div>
+          <div class="step-card-desc">エージェントの作業成果物（計画書、変更内容、スクリーンショット等）の確認方法。「AIが何をしたか」を証拠として記録・管理する仕組み</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w2">6</div>
+            <div class="step-card-title">Inbox</div>
+          </div>
+          <div class="step-card-desc">過去の会話履歴と進行中タスクの管理。中断した作業を後から再開できる</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w2">7</div>
+            <div class="step-card-title">Editor 操作</div>
+          </div>
+          <div class="step-card-desc">VSCode ベースのエディタ操作。Auto-complete（Tab確定）、インラインコマンド（Cmd+I）、エージェントパネル（Cmd+L）</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w2">8</div>
+            <div class="step-card-title">フィードバック</div>
+          </div>
+          <div class="step-card-desc">エージェントの計画・成果物にコメントで修正指示を出す。Undo で各ステップを取り消すことも可能</div>
+        </div>
+      </div>
+
+      <div class="practice-box practice-box-w2">
+        <div class="practice-label practice-label-w2">実践課題</div>
+        <div class="practice-text practice-text-w2">自分の業務で「困っていること」を1つ選び、Antigravity に解決させてみる。作業の前後を記録しておく</div>
+      </div>
+
+      <span class="goal-tag">Goal 4: 困りごとを持ち寄り AI で解決</span>
+    </div>
+
+    <!-- ═══ Week 3 ═══ -->
+    <div class="slide slide-week slide-week-3" id="week3">
+      <div class="week-eyebrow">
+        <span class="week-label">Week 3</span>
+        <span class="week-date">3月17日（月）〜 3月21日（金）｜ Step 9〜11</span>
+      </div>
+      <div class="week-title">ルール設定と自律運用</div>
+
+      <div class="steps-grid-3 steps-grid">
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w3">9</div>
+            <div class="step-card-title">Rules &amp; Workflows</div>
+          </div>
+          <div class="step-card-desc">繰り返し使うルールとワークフローを登録。グローバル設定とワークスペース設定の2種類がある</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w3">10</div>
+            <div class="step-card-title">Skills</div>
+          </div>
+          <div class="step-card-desc">特化した知識パッケージの作成。自社固有の AI 機能を定義できる（ルールチェック、書式確認等）</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w3">11</div>
+            <div class="step-card-title">セキュリティ</div>
+          </div>
+          <div class="step-card-desc">ターミナル実行ポリシー（Off / Auto / Turbo）、コマンドのホワイトリスト・ブラックリスト、URL アクセス制限</div>
+        </div>
+      </div>
+
+      <div class="practice-box practice-box-w3">
+        <div class="practice-label practice-label-w3">実践課題</div>
+        <div class="practice-text practice-text-w3">自部署の業務ルール（書式規定、チェックリスト等）を1つ Rules として設定する。情シスの支援なしで Champion 自身が完結できることを目標とする</div>
+      </div>
+
+      <span class="goal-tag">Goal 5: 情シスなしで完結する事例を増やす</span>
+    </div>
+
+    <!-- ═══ Week 4 ═══ -->
+    <div class="slide slide-week slide-week-4" id="week4">
+      <div class="week-eyebrow">
+        <span class="week-label">Week 4</span>
+        <span class="week-date">3月24日（月）〜 3月28日（金）｜ Step 12</span>
+      </div>
+      <div class="week-title">成果まとめと次フェーズ準備</div>
+
+      <div class="steps-grid-3 steps-grid">
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w4">12</div>
+            <div class="step-card-title">まとめ</div>
+          </div>
+          <div class="step-card-desc">全12ステップの振り返り。応用 Codelabs（アプリ構築、Gemini API連携）への導線を確認する</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w4" style="font-size:10px;">振返</div>
+            <div class="step-card-title">Phase 1 振り返り</div>
+          </div>
+          <div class="step-card-desc">4週間の活動を整理。「何ができるようになったか」「困ったこと」「Phase 2 でやりたいこと」を書き出す</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w4" style="font-size:10px;">準備</div>
+            <div class="step-card-title">Phase 2 準備</div>
+          </div>
+          <div class="step-card-desc">GAS（Google Apps Script）の概要を予習。スプレッドシート・Gmail で「自動化したい定型作業」を1つ選んでおく</div>
+        </div>
+      </div>
+
+      <div class="practice-box practice-box-w4">
+        <div class="practice-label practice-label-w4">成果物</div>
+        <div class="practice-text practice-text-w4">Phase 1 活動まとめ（できるようになったこと・解決した困りごと・次にやりたいこと）<br>→ Goal 4・5 の中間エビデンスとして提出</div>
+      </div>
+
+      <span class="goal-tag">Goal 4: 成果の整理と次期展開の判断 ／ Goal 5: 組織全体の問題解決力を評価</span>
+    </div>
+
+    <!-- ═══ PHASE 2 DIVIDER ═══ -->
+    <div class="slide slide-phase slide-phase-2" id="phase2">
+      <div class="phase-badge phase-badge-2">&#9654; Phase 2</div>
+      <div class="phase-slide-title">GAS・Gemini・応用<br>自動化の武器を増やす</div>
+      <div class="phase-slide-desc">
+        Google Apps Script（GAS）で繰り返し作業を自動化し、Workspace に組み込まれた Gemini を使いこなす。
+        さらに Antigravity の応用コース「Building with」で実際にWebアプリを作成する。
+        3つのツールを組み合わせることで、業務効率化の幅が飛躍的に広がる。
+      </div>
+      <div class="phase-tools-row">
+        <span class="phase-tool-tag phase-tool-tag-2">Google Apps Script</span>
+        <span class="phase-tool-tag phase-tool-tag-2">Gemini for Workspace</span>
+        <span class="phase-tool-tag phase-tool-tag-2">Gemini API</span>
+        <span class="phase-tool-tag phase-tool-tag-2">Antigravity Building with</span>
+      </div>
+      <div class="phase-weeks-list">
+        <span class="phase-week-chip" style="background:var(--w5);">Week 5: 4/7〜4/11</span>
+        <span class="phase-week-chip" style="background:var(--w6);">Week 6: 4/14〜4/18</span>
+        <span class="phase-week-chip" style="background:var(--w7);">Week 7: 4/21〜4/25</span>
+      </div>
+    </div>
+
+    <!-- ═══ Week 5 ═══ -->
+    <div class="slide slide-week slide-week-5" id="week5">
+      <div class="week-eyebrow">
+        <span class="week-label">Week 5</span>
+        <span class="week-date">4月7日（月）〜 4月11日（金）｜ GAS 入門</span>
+      </div>
+      <div class="week-title">GAS 入門<br>繰り返し作業をスクリプトで自動化</div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w5" style="font-size:10px;">GAS</div>
+            <div class="step-card-title">GAS とは</div>
+          </div>
+          <div class="step-card-desc">Google Workspace を自動化するスクリプト言語。Spreadsheet・Gmail・Calendar をコードで操作できる。「書けなくても使える」— Gemini に書かせればよい</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w5" style="font-size:9px;">Sheet</div>
+            <div class="step-card-title">スプレッドシート自動化</div>
+          </div>
+          <div class="step-card-desc">データ転記・集計・フォーマット整形を自動化する。毎月手作業でやっていた集計表作成を一発実行に変える</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w5" style="font-size:9px;">Mail</div>
+            <div class="step-card-title">Gmail / Calendar 自動化</div>
+          </div>
+          <div class="step-card-desc">メール送信・受信ボックス整理・テンプレート化・カレンダー登録を自動化する。定型メールの一括送信なども可能</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w5" style="font-size:9px;">AI</div>
+            <div class="step-card-title">Gemini CLI で GAS 生成</div>
+          </div>
+          <div class="step-card-desc">「やりたいことを日本語で伝える」だけでGASコードを生成・修正する。Codelabs「Vibe-code Workspace tasks with Gemini CLI」を実施</div>
+        </div>
+      </div>
+
+      <div class="practice-box practice-box-w5">
+        <div class="practice-label practice-label-w5">実践課題</div>
+        <div class="practice-text practice-text-w5">毎週やっている定型作業を1つ選び、GAS で自動化する。「作業が何分短縮できたか」を記録しておく</div>
+      </div>
+
+      <span class="goal-tag">Goal 5: 情シスなしで完結する事例を増やす</span>
+    </div>
+
+    <!-- ═══ Week 6 ═══ -->
+    <div class="slide slide-week slide-week-6" id="week6">
+      <div class="week-eyebrow">
+        <span class="week-label">Week 6</span>
+        <span class="week-date">4月14日（月）〜 4月18日（金）｜ Gemini × Workspace 自動化</span>
+      </div>
+      <div class="week-title">Gemini × Workspace<br>組み込みAIを使いこなす</div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w6" style="font-size:9px;">Docs</div>
+            <div class="step-card-title">Gemini in Docs</div>
+          </div>
+          <div class="step-card-desc">議事録・報告書・メールの下書きをAIに作らせる。アウトライン生成・要約・校正・翻訳もワンクリックで実行できる</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w6" style="font-size:9px;">Sheet</div>
+            <div class="step-card-title">Gemini in Sheets</div>
+          </div>
+          <div class="step-card-desc">@Gemini 関数でデータ分析・グラフ解釈・要約を自動生成。「このデータから気になる傾向を5つ教えて」と話しかけるだけでよい</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w6" style="font-size:9px;">Gmail</div>
+            <div class="step-card-title">Gemini in Gmail</div>
+          </div>
+          <div class="step-card-desc">重要メールの要約・分類・返信文案の自動作成。大量のメールを効率よく処理する。Codelabs「Automate Workspace tasks with Gemini API」を実施</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w6" style="font-size:9px;">API</div>
+            <div class="step-card-title">Gemini API × GAS</div>
+          </div>
+          <div class="step-card-desc">先週作った GAS スクリプトに Gemini API を組み込む。「データを集計してAIに分析させてメールで送る」まで一気通貫で自動化する</div>
+        </div>
+      </div>
+
+      <div class="practice-box practice-box-w6">
+        <div class="practice-label practice-label-w6">実践課題</div>
+        <div class="practice-text practice-text-w6">Docs または Gmail の Gemini 機能を使って、普段1時間かかる資料作成を15分以内に完了する。完成品とかかった時間を記録する</div>
+      </div>
+
+      <span class="goal-tag">Goal 4: Champion による部門内展開 ／ Goal 5: 情シスなしで完結する事例を増やす</span>
+    </div>
+
+    <!-- ═══ Week 7 ═══ -->
+    <div class="slide slide-week slide-week-7" id="week7">
+      <div class="week-eyebrow">
+        <span class="week-label">Week 7</span>
+        <span class="week-date">4月21日（月）〜 4月25日（金）｜ Building with Antigravity</span>
+      </div>
+      <div class="week-title">Antigravity でアプリを作る<br>エージェントに実装させる</div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w7" style="font-size:9px;">App</div>
+            <div class="step-card-title">Webアプリを作らせる</div>
+          </div>
+          <div class="step-card-desc">「フォームを作って」「ダッシュボードを作って」と指示するだけで、Antigravity が HTML/CSS/JS を生成する。プログラミング知識は不要</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w7" style="font-size:9px;">Data</div>
+            <div class="step-card-title">データダッシュボード</div>
+          </div>
+          <div class="step-card-desc">スプレッドシートのデータをグラフ・表・ヒートマップで可視化するWebページを自動生成する。毎月の報告資料作成を自動化できる</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w7" style="font-size:9px;">GAS</div>
+            <div class="step-card-title">GAS ブリッジ</div>
+          </div>
+          <div class="step-card-desc">Antigravity と GAS を組み合わせる。AntigravityでUI設計→GASでデータ処理という分業で、より高度な自動化を実現する</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w7" style="font-size:9px;">QC</div>
+            <div class="step-card-title">レビューと品質管理</div>
+          </div>
+          <div class="step-card-desc">Artifacts で成果物を確認し、フィードバックで修正指示を出す。Undoで各ステップを取り消す。「AIに任せる」と「人間が確認する」のバランスを体得する</div>
+        </div>
+      </div>
+
+      <div class="practice-box practice-box-w7">
+        <div class="practice-label practice-label-w7">実践課題</div>
+        <div class="practice-text practice-text-w7">自部署の「見える化したいデータ」を1つ選び、Antigravity でWebダッシュボードとして作成する。完成品をチームに共有してフィードバックをもらう</div>
+      </div>
+
+      <span class="goal-tag">Goal 4: Champion による部門内展開</span>
+    </div>
+
+    <!-- ═══ PHASE 3 DIVIDER ═══ -->
+    <div class="slide slide-phase slide-phase-3" id="phase3">
+      <div class="phase-badge phase-badge-3">&#9654; Phase 3</div>
+      <div class="phase-slide-title">上級・成果展開<br>組織に根付かせる</div>
+      <div class="phase-slide-desc">
+        Antigravity の Skills 機能で自社仕様にカスタマイズし、AppSheet でノーコードアプリを作成する。
+        最終週は10週間の成果をまとめ、Champion 活動報告書を作成して年度評価エビデンスとして提出する。
+        さらに他部署への Champion 制度拡大のロードマップを描く。
+      </div>
+      <div class="phase-tools-row">
+        <span class="phase-tool-tag phase-tool-tag-3">Antigravity Skills</span>
+        <span class="phase-tool-tag phase-tool-tag-3">AppSheet</span>
+        <span class="phase-tool-tag phase-tool-tag-3">Apps Script</span>
+        <span class="phase-tool-tag phase-tool-tag-3">Champion 報告書</span>
+      </div>
+      <div class="phase-weeks-list">
+        <span class="phase-week-chip" style="background:var(--w8);">Week 8: 5/7〜5/9</span>
+        <span class="phase-week-chip" style="background:var(--w9);">Week 9: 5/12〜5/16</span>
+        <span class="phase-week-chip" style="background:var(--w10);">Week 10: 5/19〜5/23</span>
+      </div>
+    </div>
+
+    <!-- ═══ Week 8 ═══ -->
+    <div class="slide slide-week slide-week-8" id="week8">
+      <div class="week-eyebrow">
+        <span class="week-label">Week 8</span>
+        <span class="week-date">5月7日（水）〜 5月9日（金）｜ Authoring Skills in Antigravity ※GW明け短縮週</span>
+      </div>
+      <div class="week-title">Antigravity Skills<br>自社仕様にカスタマイズする</div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w8" style="font-size:9px;">設計</div>
+            <div class="step-card-title">Skills 設計</div>
+          </div>
+          <div class="step-card-desc">どんな知識をパッケージ化するかを設計する。「社内書式チェック」「チェックリスト実行」「用語統一」など自部署固有の機能を洗い出す</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w8" style="font-size:9px;">作成</div>
+            <div class="step-card-title">Skills 作成実習</div>
+          </div>
+          <div class="step-card-desc">業務マニュアル・チェックリスト・書式規定を Skill として登録する。一度設定すれば「○○チェックして」と呼び出すだけで自動実行される</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w8" style="font-size:9px;">Rules</div>
+            <div class="step-card-title">ルール高度設定</div>
+          </div>
+          <div class="step-card-desc">グローバルルール（全作業共通）とワークスペースルール（プロジェクト固有）の使い分け。「AKIBAホールディングス固有の用語集」などをグローバルに設定する</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w8" style="font-size:9px;">共有</div>
+            <div class="step-card-title">チーム展開</div>
+          </div>
+          <div class="step-card-desc">作成した Skills を他の Champion メンバーに共有する。導入手順書を作成し、情シスのサポートなしで展開できる状態を作る</div>
+        </div>
+      </div>
+
+      <div class="practice-box practice-box-w8">
+        <div class="practice-label practice-label-w8">実践課題</div>
+        <div class="practice-text practice-text-w8">自部署の業務マニュアルをもとに Skill を1つ完成させ、他の Champion に共有する。「情シスの支援なしで他部署が使えるか」を検証する</div>
+      </div>
+
+      <span class="goal-tag">Goal 5: 情シスなしで完結する事例を増やす</span>
+    </div>
+
+    <!-- ═══ Week 9 ═══ -->
+    <div class="slide slide-week slide-week-9" id="week9">
+      <div class="week-eyebrow">
+        <span class="week-label">Week 9</span>
+        <span class="week-date">5月12日（月）〜 5月16日（金）｜ AppSheet ノーコードアプリ</span>
+      </div>
+      <div class="week-title">AppSheet<br>スプレッドシートをアプリに変える</div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w9" style="font-size:9px;">基礎</div>
+            <div class="step-card-title">AppSheet 基礎</div>
+          </div>
+          <div class="step-card-desc">既存のスプレッドシートを元に、モバイル対応アプリを数分で作成する。プログラミング不要。Codelabs「Build a no-code app in AppSheet」を実施</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w9" style="font-size:9px;">入力</div>
+            <div class="step-card-title">フォームと入力画面</div>
+          </div>
+          <div class="step-card-desc">データ入力フォーム・一覧表示・詳細画面を設定する。現場スタッフがスマホで入力→管理者がPCで確認という運用フローを作れる</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w9" style="font-size:10px;">自動</div>
+            <div class="step-card-title">Automations（承認・通知）</div>
+          </div>
+          <div class="step-card-desc">申請が来たら承認者にメール通知→承認したら申請者に結果通知という承認フローを自動化する。条件分岐も設定できる</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w9" style="font-size:9px;">GAS</div>
+            <div class="step-card-title">GAS との連携</div>
+          </div>
+          <div class="step-card-desc">AppSheet のデータを GAS で加工・集計・外部連携する。Codelabs「Connect AppSheet with Apps Script」を実施して自動化の幅をさらに広げる</div>
+        </div>
+      </div>
+
+      <div class="practice-box practice-box-w9">
+        <div class="practice-label practice-label-w9">実践課題</div>
+        <div class="practice-text practice-text-w9">部署内の申請・承認フローを AppSheet で作成する。「現場が入力→管理者が承認→記録がシートに自動保存」の一連の流れを完成させる</div>
+      </div>
+
+      <span class="goal-tag">Goal 4: Champion による部門内展開</span>
+    </div>
+
+    <!-- ═══ Week 10 ═══ -->
+    <div class="slide slide-week slide-week-10" id="week10">
+      <div class="week-eyebrow">
+        <span class="week-label">Week 10</span>
+        <span class="week-date">5月19日（月）〜 5月23日（金）｜ 成果まとめと全社展開</span>
+      </div>
+      <div class="week-title">成果まとめと全社展開<br>Champion 活動の集大成</div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w10" style="font-size:9px;">棚卸</div>
+            <div class="step-card-title">成果の棚卸し</div>
+          </div>
+          <div class="step-card-desc">10週間で「自動化できたこと」「解決した困りごと」「削減できた時間」を一覧化する。定量・定性の両面で成果をまとめる</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w10" style="font-size:9px;">報告</div>
+            <div class="step-card-title">活動報告書の作成</div>
+          </div>
+          <div class="step-card-desc">Champion 活動報告（成功事例・課題・次年度提言）を作成する。Antigravity に下書きを作らせ、人間が校正する。年度評価のエビデンスとして提出</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w10" style="font-size:9px;">展開</div>
+            <div class="step-card-title">全社展開計画</div>
+          </div>
+          <div class="step-card-desc">他部署への Champion 制度拡大計画を策定する。「どの部署に・誰を・どんな教材で育成するか」のロードマップを描く</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-top">
+            <div class="step-num step-num-w10" style="font-size:9px;">次へ</div>
+            <div class="step-card-title">継続学習ロードマップ</div>
+          </div>
+          <div class="step-card-desc">応用 Codelabs（Google Cloud デプロイ・NotebookLM・Gemini Advanced）への道筋を確認する。Champion として次のスキルアップ目標を設定する</div>
+        </div>
+      </div>
+
+      <div class="practice-box practice-box-w10">
+        <div class="practice-label practice-label-w10">最終成果物</div>
+        <div class="practice-text practice-text-w10">
+          ① Champion 活動報告書（成功事例・課題・次年度提言）<br>
+          ② 全社展開ロードマップ<br>
+          → Goal 4・5 年度評価のエビデンスとして提出
+        </div>
+      </div>
+
+      <span class="goal-tag">Goal 4: 成果の整理と次期展開の判断 ／ Goal 5: 組織全体の問題解決力を評価</span>
+    </div>
+
+    <!-- ═══ 08: セットアップ手順 ═══ -->
+    <div class="slide" id="setup">
+      <div class="slide-chapter">08</div>
+      <h2 class="slide-title">セットアップ手順</h2>
+      <p class="slide-lead">
+        遠隔からでも一人で完了できる手順。所要時間は約15分。<strong style="color:#0f172a;">高橋さん</strong> は Week 1 の期間中にこの手順でインストールする。
+      </p>
+
+      <div class="setup-steps">
+        <div class="setup-step">
+          <div class="setup-num">1</div>
+          <div class="setup-body">
+            <div class="setup-title">ダウンロード</div>
+            <div class="setup-desc">
+              <a href="https://antigravity.google/download" target="_blank">antigravity.google/download</a> にアクセスし、自分の OS（Windows / Mac）に合ったインストーラーを取得する
+            </div>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-num">2</div>
+          <div class="setup-body">
+            <div class="setup-title">インストール・初期設定</div>
+            <div class="setup-desc">
+              インストーラーを実行。初回起動時に以下を設定する：
+              <ul>
+                <li>セットアップ: 「Start fresh」を選択（VSCode 設定のインポートも可）</li>
+                <li>テーマ: ダーク or ライト（好みで選択）</li>
+                <li>実行ポリシー: <strong style="color:#0f172a;">「Review-driven development」を推奨</strong>（AIの操作を確認してから実行）</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-num">3</div>
+          <div class="setup-body">
+            <div class="setup-title">Google アカウントでサインイン</div>
+            <div class="setup-desc">
+              個人の Gmail アカウントでサインインする。プレビュー期間中は無料で利用可能
+            </div>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-num">4</div>
+          <div class="setup-body">
+            <div class="setup-title">コマンドラインツールの導入</div>
+            <div class="setup-desc">
+              コマンドパレット（<code>Ctrl+Shift+P</code> / <code>Cmd+Shift+P</code>）を開き、<code>Install 'agy' command</code> を実行する。ターミナルから <code>agy</code> コマンドで起動できるようになる
+            </div>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-num">5</div>
+          <div class="setup-body">
+            <div class="setup-title">動作確認</div>
+            <div class="setup-desc">
+              Agent Manager で新しい会話を開始し、「今日の日付を教えてください」と入力。応答が返れば完了
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="warn-box">
+        <strong>社内ネットワークで接続できない場合</strong><br>
+        プロキシやファイアウォールの制限で接続できない場合は情シス（丹治）まで連絡すること。接続先: antigravity.google 関連ドメイン
+      </div>
+    </div>
+
+    <!-- ═══ 09: 成果記録 ═══ -->
+    <div class="slide" id="achievements">
+      <div class="slide-chapter">09</div>
+      <h2 class="slide-title">成果記録</h2>
+      <p class="slide-lead">
+        各 Champion の活動実績と成果を記録する。年度評価（Goal 4・5）のエビデンスとして使用。
+      </p>
+
+      <table class="achievement-table">
+        <thead>
+          <tr>
+            <th style="width:130px;">時期</th>
+            <th style="width:110px;">Champion</th>
+            <th>活動内容・成果</th>
+            <th style="width:80px;">状況</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:#64748b;">2026年2月</td>
+            <td>中野さん<br>石井さん</td>
+            <td>Antigravity の使い方を説明。両名とも導入済み、業務での使用を開始</td>
+            <td><span class="status-badge status-done">完了</span></td>
+          </tr>
+          <tr>
+            <td style="color:#64748b;">2026年2月</td>
+            <td>高橋さん</td>
+            <td>参加が決定。遠隔のためセットアップ資料による導入を計画</td>
+            <td><span class="status-badge status-prep-b">準備中</span></td>
+          </tr>
+          <tr>
+            <td style="color:#94a3b8;">Week 1<br>3/3〜3/7</td>
+            <td style="color:#94a3b8;">―</td>
+            <td style="color:#94a3b8;">（記録予定）</td>
+            <td><span class="status-badge status-plan">予定</span></td>
+          </tr>
+          <tr>
+            <td style="color:#94a3b8;">Week 2<br>3/10〜3/14</td>
+            <td style="color:#94a3b8;">―</td>
+            <td style="color:#94a3b8;">（記録予定）</td>
+            <td><span class="status-badge status-plan">予定</span></td>
+          </tr>
+          <tr>
+            <td style="color:#94a3b8;">Week 3<br>3/17〜3/21</td>
+            <td style="color:#94a3b8;">―</td>
+            <td style="color:#94a3b8;">（記録予定）</td>
+            <td><span class="status-badge status-plan">予定</span></td>
+          </tr>
+          <tr>
+            <td style="color:#94a3b8;">Week 4<br>3/24〜3/28</td>
+            <td style="color:#94a3b8;">―</td>
+            <td style="color:#94a3b8;">（記録予定）</td>
+            <td><span class="status-badge status-plan">予定</span></td>
+          </tr>
+          <tr>
+            <td style="color:#94a3b8;">Week 5<br>4/7〜4/11</td>
+            <td style="color:#94a3b8;">―</td>
+            <td style="color:#94a3b8;">（記録予定）</td>
+            <td><span class="status-badge status-plan">予定</span></td>
+          </tr>
+          <tr>
+            <td style="color:#94a3b8;">Week 6<br>4/14〜4/18</td>
+            <td style="color:#94a3b8;">―</td>
+            <td style="color:#94a3b8;">（記録予定）</td>
+            <td><span class="status-badge status-plan">予定</span></td>
+          </tr>
+          <tr>
+            <td style="color:#94a3b8;">Week 7<br>4/21〜4/25</td>
+            <td style="color:#94a3b8;">―</td>
+            <td style="color:#94a3b8;">（記録予定）</td>
+            <td><span class="status-badge status-plan">予定</span></td>
+          </tr>
+          <tr>
+            <td style="color:#94a3b8;">Week 8<br>5/7〜5/9</td>
+            <td style="color:#94a3b8;">―</td>
+            <td style="color:#94a3b8;">（記録予定）</td>
+            <td><span class="status-badge status-plan">予定</span></td>
+          </tr>
+          <tr>
+            <td style="color:#94a3b8;">Week 9<br>5/12〜5/16</td>
+            <td style="color:#94a3b8;">―</td>
+            <td style="color:#94a3b8;">（記録予定）</td>
+            <td><span class="status-badge status-plan">予定</span></td>
+          </tr>
+          <tr>
+            <td style="color:#94a3b8;">Week 10<br>5/19〜5/23</td>
+            <td style="color:#94a3b8;">―</td>
+            <td style="color:#94a3b8;">（記録予定）</td>
+            <td><span class="status-badge status-plan">予定</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ═══ 10: 参考リソース ═══ -->
+    <div class="slide" id="resources">
+      <div class="slide-chapter">10</div>
+      <h2 class="slide-title">参考リソース</h2>
+
+      <ul class="resource-list">
+        <li>
+          <a href="https://codelabs.developers.google.com/getting-started-google-antigravity" target="_blank">Getting Started with Google Antigravity</a>
+          <span class="resource-tag">PHASE 1 / CODELABS</span>
+        </li>
+        <li>
+          <a href="https://codelabs.developers.google.com/building-with-google-antigravity" target="_blank">Building with Google Antigravity</a>
+          <span class="resource-tag">PHASE 2 / CODELABS</span>
+        </li>
+        <li>
+          <a href="https://codelabs.developers.google.com/authoring-skills-google-antigravity" target="_blank">Authoring Skills in Google Antigravity</a>
+          <span class="resource-tag">PHASE 3 / CODELABS</span>
+        </li>
+        <li>
+          <a href="https://codelabs.developers.google.com/codelabs/apps-script-intro" target="_blank">Hands-on introduction to Google Apps Script</a>
+          <span class="resource-tag">PHASE 2 / CODELABS</span>
+        </li>
+        <li>
+          <a href="https://codelabs.developers.google.com/vibe-code-workspace-gemini-cli" target="_blank">Vibe-code Google Workspace tasks with Gemini CLI</a>
+          <span class="resource-tag">PHASE 2 / CODELABS</span>
+        </li>
+        <li>
+          <a href="https://codelabs.developers.google.com/automate-workspace-gemini-api" target="_blank">Automate Google Workspace tasks with Gemini API</a>
+          <span class="resource-tag">PHASE 2 / CODELABS</span>
+        </li>
+        <li>
+          <a href="https://codelabs.developers.google.com/build-no-code-app-appsheet" target="_blank">Build a no-code app in AppSheet</a>
+          <span class="resource-tag">PHASE 3 / CODELABS</span>
+        </li>
+        <li>
+          <a href="https://codelabs.developers.google.com/connect-appsheet-apps-script" target="_blank">Connect AppSheet with Apps Script</a>
+          <span class="resource-tag">PHASE 3 / CODELABS</span>
+        </li>
+        <li>
+          <a href="https://antigravity.google/" target="_blank">Google Antigravity 公式サイト</a>
+          <span class="resource-tag">GOOGLE 公式</span>
+        </li>
+        <li>
+          <a href="https://antigravity.google/docs" target="_blank">Antigravity ドキュメント</a>
+          <span class="resource-tag">GOOGLE 公式</span>
+        </li>
+        <li>
+          <a href="https://antigravity.google/download" target="_blank">ダウンロードページ</a>
+          <span class="resource-tag">GOOGLE 公式</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Footer -->
+    <footer style="text-align:center; font-size:13px; color:#94a3b8; padding:16px 0 40px;">
+      AI Champion カリキュラム v3.0 ｜ AKIBAホールディングス 情報システム部 ｜ 更新: 2026-03-02
+    </footer>
+
+  </div>
+
+</body>
+</html>
