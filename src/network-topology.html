@@ -319,15 +319,15 @@ const BASE_NODES = [
 // 常時表示エッジ（VPN接続は常に表示）
 // ─────────────────────────────────────────
 const BASE_EDGES = [
-  edge('ei-fg',  'internet',    'fortigate', { label:'WAN × 2回線\n広域イーサ 200M\nフレッツ 1GbE', width:3, color:{color:'#6d28d9'}, font:{color:'#8b5cf6', size:10} }),
-  edge('ei-rv',  'rvpn-client', 'fortigate', { label:'RVPN / L2TP\nVarioSecure (USEN)', width:2, color:{color:'#22d3ee'}, dashes:[4,4], font:{color:'#22d3ee', size:10}, arrows:{to:{enabled:true,scaleFactor:0.8}} }),
-  edge('efg-os', 'fortigate', 'os-gw', { label:'VPN\nVSR/IPsec-IKE\nPPPoE', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:10} }),
-  edge('efg-hs', 'fortigate', 'hs-gw', { label:'VPN\nVSR/IPsec-IKE\nPPPoE', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:10} }),
-  edge('efg-fk', 'fortigate', 'fk-gw', { label:'VPN\nVSR/IPsec-IKE\nPPPoE', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:10} }),
-  edge('efg-wk', 'fortigate', 'wk-gw', { label:'VPN\nVSR/IPsec-IKE\nPPPoE', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:10} }),
-  edge('efg-tj', 'fortigate', 'tj-gw', { label:'VPN\nVSR/IPsec-IKE\nPPPoE', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:10} }),
-  edge('efg-kb', 'fortigate', 'kb-gw', { label:'VPN\nVSR/IPsec-IKE\nPPPoE', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:10} }),
-  edge('efg-ng', 'fortigate', 'ng-gw', { label:'VPN\nVSR/IPsec-IKE\nPPPoE', width:2, color:{color:'#475569'}, dashes:[8,4], font:{color:'#64748b',size:10} }),
+  edge('ei-fg',  'internet',    'fortigate', { label:'WAN（2回線）', width:3, color:{color:'#6d28d9'}, font:{color:'#8b5cf6', size:10} }),
+  edge('ei-rv',  'rvpn-client', 'fortigate', { label:'RVPN/L2TP', width:2, color:{color:'#22d3ee'}, dashes:[4,4], font:{color:'#22d3ee', size:10}, arrows:{to:{enabled:true,scaleFactor:0.8}} }),
+  edge('efg-os', 'fortigate', 'os-gw', { width:2, color:{color:'#475569'}, dashes:[8,4] }),
+  edge('efg-hs', 'fortigate', 'hs-gw', { width:2, color:{color:'#475569'}, dashes:[8,4] }),
+  edge('efg-fk', 'fortigate', 'fk-gw', { width:2, color:{color:'#475569'}, dashes:[8,4] }),
+  edge('efg-wk', 'fortigate', 'wk-gw', { width:2, color:{color:'#475569'}, dashes:[8,4] }),
+  edge('efg-tj', 'fortigate', 'tj-gw', { width:2, color:{color:'#475569'}, dashes:[8,4] }),
+  edge('efg-kb', 'fortigate', 'kb-gw', { width:2, color:{color:'#475569'}, dashes:[8,4] }),
+  edge('efg-ng', 'fortigate', 'ng-gw', { width:2, color:{color:'#475569'}, dashes:[8,4] }),
 ];
 
 // ─────────────────────────────────────────
