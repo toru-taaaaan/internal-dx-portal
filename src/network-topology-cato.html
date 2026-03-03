@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ネットワーク構成図（Cato SASE 導入後）— AKIBAホールディングス</title>
+<script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', 'Hiragino Sans', sans-serif; background: #0f172a; color: #e2e8f0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+
+  #header {
+    padding: 12px 20px;
+    background: #1e293b;
+    border-bottom: 1px solid #334155;
+    flex-shrink: 0;
+  }
+  #header h1 { font-size: 15px; font-weight: 700; color: #f1f5f9; }
+  #header p  { font-size: 11px; color: #64748b; margin-top: 3px; }
+
+  #legend {
+    display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+    padding: 8px 20px;
+    background: #1e293b;
+    border-bottom: 1px solid #334155;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+  .leg { display: flex; align-items: center; gap: 6px; color: #94a3b8; }
+  .ldot { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+  .leg-icon { width: 22px; height: 22px; object-fit: contain; flex-shrink: 0; }
+
+  #network-wrap { flex: 1; position: relative; min-height: 0; }
+  #mynetwork { width: 100%; height: 100%; }
+
+  /* Info panel */
+  #info {
+    position: absolute; bottom: 16px; right: 16px;
+    width: 400px; max-height: 400px; overflow-y: auto;
+    background: rgba(15,23,42,0.95);
+    border: 1px solid #475569;
+    border-radius: 8px;
+    padding: 16px 18px;
+    font-size: 13px;
+    display: none;
+    z-index: 10;
+    backdrop-filter: blur(4px);
+  }
+  #info h3 { font-size: 15px; font-weight: 700; color: #f1f5f9; margin-bottom: 8px; border-bottom: 1px solid #334155; padding-bottom: 6px; }
+  #info .row { display: flex; gap: 8px; margin: 5px 0; color: #94a3b8; }
+  #info .row b { color: #cbd5e1; min-width: 64px; }
+  #info-close { float: right; cursor: pointer; color: #64748b; font-size: 14px; line-height: 1; margin-left: 8px; }
+  #info-close:hover { color: #e2e8f0; }
+
+  #hint {
+    position: absolute; bottom: 16px; left: 16px;
+    background: rgba(30,41,59,0.9);
+    border: 1px solid #334155;
+    border-radius: 6px;
+    padding: 7px 12px;
+    font-size: 11px;
+    color: #64748b;
+  }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <h1>ネットワーク構成図（Cato SASE 導入後）— AKIBAホールディングス（2026-03）</h1>
+  <p>※ 将来構成イメージ（導入決定ではありません）／ VarioSecure VSR → Cato Socket 置き換え後の想定構成 ／ SocketをクリックでLAN機器を展開 ／ ホイールでズーム・ドラッグでパン</p>
+</div>
+
+<div id="legend">
+  <div class="leg"><div class="ldot" style="background:#0c2340; border:1.5px solid #06b6d4; border-radius:50%;"></div>Cato Cloud（SASE / グローバルPoP）</div>
+  <div class="leg"><img class="leg-icon" data-type="socket" alt="">Cato Socket（SD-WAN CPE）</div>
+  <div class="leg"><img class="leg-icon" data-type="catoclient" alt="">Cato Client（ZTNA / リモートアクセス）</div>
+  <div class="leg"><div class="ldot" style="background:transparent; border:1.5px dashed rgba(59,130,246,0.6); border-radius:3px;"></div>拠点エリア（枠）</div>
+  <div class="leg"><img class="leg-icon" data-type="gw" alt="">RTX1210（ゲストNWルータ）</div>
+  <div class="leg"><img class="leg-icon" data-type="server" alt="">サーバ / NAS</div>
+  <div class="leg"><img class="leg-icon" data-type="switch" alt="">スイッチ</div>
+  <div class="leg"><img class="leg-icon" data-type="ap" alt="">無線AP（社内）</div>
+  <div class="leg"><img class="leg-icon" data-type="gap" alt="">無線AP（ゲスト）</div>
+  <div class="leg"><img class="leg-icon" data-type="mfp" alt="">MFP（複合機）</div>
+  <div class="leg"><img class="leg-icon" data-type="secom" alt="">SECOM 入退室ゲート</div>
+  <div class="leg"><img class="leg-icon" data-type="unknown" alt="">不明 / 要調査</div>
+  <div class="leg" style="margin-left:auto; color:#475569">── 実線: LAN　- - 破線: ZTNA / SD-WAN</div>
+</div>
+
+<div id="network-wrap">
+  <div id="mynetwork"></div>
+  <div id="info">
+    <span id="info-close" onclick="this.parentElement.style.display='none'">✕</span>
+    <h3 id="info-title"></h3>
+    <div id="info-body"></div>
+  </div>
+  <div id="hint">💡 Socketをクリックで機器を展開 / 収納</div>
+</div>
+
+<script>
+// ─────────────────────────────────────────
+// カラーパレット
+// ─────────────────────────────────────────
+const C = {
+  internet:   { bg:'#4c1d95', border:'#6d28d9', font:'#ddd6fe' },
+  catocloud:  { bg:'#0c2340', border:'#06b6d4', font:'#67e8f9' },
+  socket:     { bg:'#052e16', border:'#10b981', font:'#6ee7b7' },
+  catoclient: { bg:'#1e1b4b', border:'#818cf8', font:'#c7d2fe' },
+  site:       { bg:'#1e3a8a', border:'#3b82f6', font:'#bfdbfe' },
+  gw:         { bg:'#7c2d12', border:'#f97316', font:'#fed7aa' },
+  server:     { bg:'#0c4a6e', border:'#0ea5e9', font:'#bae6fd' },
+  switch:     { bg:'#14532d', border:'#22c55e', font:'#bbf7d0' },
+  ap:         { bg:'#581c87', border:'#a855f7', font:'#e9d5ff' },
+  mfp:        { bg:'#831843', border:'#ec4899', font:'#fbcfe8' },
+  secom:      { bg:'#78350f', border:'#f59e0b', font:'#fde68a' },
+  unknown:    { bg:'#1e293b', border:'#475569', font:'#94a3b8' },
+};
+
+// ─────────────────────────────────────────
+// SVGアイコン
+// ─────────────────────────────────────────
+function svgUri(s) {
+  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s);
+}
+
+const ICONS = {
+  // ルーター（RTX1210用）
+  gw: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <rect x="8" y="28" width="48" height="24" rx="4" fill="#92400e" stroke="#f97316" stroke-width="2.5"/>
+    <line x1="20" y1="28" x2="20" y2="9" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="20" cy="7" r="4" fill="#fb923c"/>
+    <line x1="44" y1="28" x2="44" y2="9" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="44" cy="7" r="4" fill="#fb923c"/>
+    <circle cx="18" cy="40" r="3.5" fill="#4ade80"/>
+    <circle cx="29" cy="40" r="3.5" fill="#4ade80"/>
+    <circle cx="40" cy="40" r="3.5" fill="#fbbf24"/>
+    <rect x="48" y="35" width="5" height="7" rx="1" fill="#f97316" opacity="0.8"/>
+  </svg>`),
+
+  // ラックサーバー
+  server: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <rect x="5" y="5" width="54" height="54" rx="3" fill="#082f49" stroke="#0ea5e9" stroke-width="2"/>
+    <rect x="9" y="10" width="46" height="13" rx="2" fill="#0369a1"/>
+    <rect x="12" y="13" width="22" height="7" rx="1" fill="#082f49" opacity="0.8"/>
+    <circle cx="50" cy="16.5" r="3" fill="#4ade80"/>
+    <rect x="9" y="26" width="46" height="13" rx="2" fill="#0369a1"/>
+    <rect x="12" y="29" width="22" height="7" rx="1" fill="#082f49" opacity="0.8"/>
+    <circle cx="50" cy="32.5" r="3" fill="#4ade80"/>
+    <rect x="9" y="42" width="46" height="13" rx="2" fill="#0369a1"/>
+    <rect x="12" y="45" width="22" height="7" rx="1" fill="#082f49" opacity="0.8"/>
+    <circle cx="50" cy="48.5" r="3" fill="#22d3ee"/>
+  </svg>`),
+
+  // L2スイッチ
+  switch: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <rect x="4" y="18" width="56" height="28" rx="4" fill="#14532d" stroke="#22c55e" stroke-width="2.5"/>
+    <rect x="9" y="26" width="7" height="7" rx="1.5" fill="#22c55e"/>
+    <rect x="19" y="26" width="7" height="7" rx="1.5" fill="#22c55e"/>
+    <rect x="29" y="26" width="7" height="7" rx="1.5" fill="#4ade80"/>
+    <rect x="39" y="26" width="7" height="7" rx="1.5" fill="#f87171"/>
+    <circle cx="54" cy="29.5" r="4" fill="#4ade80"/>
+    <path d="M17 14 L9 9 M17 14 L9 19" stroke="#22c55e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M47 14 L55 9 M47 14 L55 19" stroke="#22c55e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  </svg>`),
+
+  // 社内WiFi AP
+  ap: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <path d="M7 37 Q32 4 57 37" fill="none" stroke="#a855f7" stroke-width="3.5" stroke-linecap="round" opacity="0.3"/>
+    <path d="M14 42 Q32 14 50 42" fill="none" stroke="#a855f7" stroke-width="3.5" stroke-linecap="round" opacity="0.6"/>
+    <path d="M21 47 Q32 26 43 47" fill="none" stroke="#a855f7" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="32" cy="53" r="5.5" fill="#a855f7"/>
+    <rect x="23" y="57" width="18" height="5" rx="2.5" fill="#3b0764" stroke="#a855f7" stroke-width="1.5"/>
+  </svg>`),
+
+  // ゲストWiFi AP
+  gap: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <path d="M7 37 Q32 4 57 37" fill="none" stroke="#f97316" stroke-width="3.5" stroke-linecap="round" opacity="0.3"/>
+    <path d="M14 42 Q32 14 50 42" fill="none" stroke="#f97316" stroke-width="3.5" stroke-linecap="round" opacity="0.6"/>
+    <path d="M21 47 Q32 26 43 47" fill="none" stroke="#f97316" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="32" cy="53" r="5.5" fill="#f97316"/>
+    <rect x="23" y="57" width="18" height="5" rx="2.5" fill="#431407" stroke="#f97316" stroke-width="1.5"/>
+  </svg>`),
+
+  // 複合機（MFP）
+  mfp: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <rect x="16" y="4" width="32" height="22" rx="2" fill="#fdf4ff" stroke="#f9a8d4" stroke-width="1.2"/>
+    <line x1="22" y1="10" x2="42" y2="10" stroke="#d8b4fe" stroke-width="1.5"/>
+    <line x1="22" y1="14" x2="42" y2="14" stroke="#d8b4fe" stroke-width="1.5"/>
+    <line x1="22" y1="18" x2="36" y2="18" stroke="#d8b4fe" stroke-width="1.5"/>
+    <rect x="7" y="24" width="50" height="26" rx="4" fill="#831843" stroke="#ec4899" stroke-width="2"/>
+    <rect x="13" y="31" width="38" height="5" rx="1" fill="#ec4899" opacity="0.5"/>
+    <circle cx="51" cy="31" r="3.5" fill="#4ade80"/>
+    <rect x="16" y="49" width="32" height="12" rx="2" fill="#831843" stroke="#ec4899" stroke-width="1.5"/>
+  </svg>`),
+
+  // 入退室ゲート
+  secom: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <rect x="3" y="10" width="12" height="52" rx="2.5" fill="#78350f" stroke="#f59e0b" stroke-width="2"/>
+    <rect x="49" y="10" width="12" height="52" rx="2.5" fill="#78350f" stroke="#f59e0b" stroke-width="2"/>
+    <rect x="6" y="14" width="6" height="12" rx="1.5" fill="#fbbf24" opacity="0.95"/>
+    <circle cx="9" cy="20" r="2.5" fill="#78350f"/>
+    <rect x="15" y="30" width="34" height="6" rx="3" fill="#f59e0b"/>
+    <circle cx="9" cy="55" r="3.5" fill="#4ade80"/>
+    <circle cx="55" cy="55" r="3.5" fill="#4ade80"/>
+    <path d="M24 46 L40 46 M35.5 41 L40 46 L35.5 51" stroke="#4ade80" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`),
+
+  // 不明機器
+  unknown: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <rect x="6" y="6" width="52" height="52" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2.5"/>
+    <text x="32" y="46" text-anchor="middle" font-size="38" font-weight="bold" fill="#64748b" font-family="Arial,sans-serif">?</text>
+  </svg>`),
+
+  // Cato Cloud（凡例用・ノードはellipse）
+  catocloud: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <path d="M52 34 Q55 25 46 23 Q44 12 32 15 Q24 8 19 20 Q11 19 11 30 Q9 39 18 41 L50 41 Q57 41 52 34Z" fill="#0c2340" stroke="#06b6d4" stroke-width="2.5"/>
+    <ellipse cx="32" cy="29" rx="11" ry="7" fill="none" stroke="#22d3ee" stroke-width="1.5" opacity="0.85"/>
+    <path d="M21 29 Q27 22 32 29 Q37 36 43 29" fill="none" stroke="#22d3ee" stroke-width="1.3" opacity="0.85"/>
+    <line x1="32" y1="22" x2="32" y2="36" stroke="#22d3ee" stroke-width="1.3" opacity="0.85"/>
+  </svg>`),
+
+  // Cato Socket（フラットアプライアンス＋上向き矢印）
+  socket: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <rect x="4" y="30" width="56" height="26" rx="4" fill="#052e16" stroke="#10b981" stroke-width="2.5"/>
+    <rect x="9" y="37" width="6" height="5" rx="1" fill="#10b981" opacity="0.8"/>
+    <rect x="17" y="37" width="6" height="5" rx="1" fill="#10b981" opacity="0.8"/>
+    <rect x="25" y="37" width="6" height="5" rx="1" fill="#4ade80"/>
+    <rect x="33" y="37" width="6" height="5" rx="1" fill="#4ade80"/>
+    <circle cx="54" cy="38" r="3" fill="#4ade80"/>
+    <circle cx="54" cy="47" r="3" fill="#06b6d4"/>
+    <path d="M32 24 L32 8 M27 13 L32 8 L37 13" stroke="#10b981" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="9" y="46" width="30" height="5" rx="1" fill="#0d3321" stroke="#10b981" stroke-width="0.8" opacity="0.7"/>
+  </svg>`),
+
+  // Cato Client（ノートPC＋ZTNAシールド）
+  catoclient: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <rect x="8" y="5" width="48" height="34" rx="3" fill="#1e1b4b" stroke="#818cf8" stroke-width="2"/>
+    <path d="M32 10 L41 14 L41 24 Q41 31 32 34 Q23 31 23 24 L23 14 Z" fill="#312e81" stroke="#818cf8" stroke-width="1.5"/>
+    <path d="M27 23 L31 27 L38 19" stroke="#a5b4fc" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="28" y="39" width="8" height="5" rx="1" fill="#1e1b4b" stroke="#818cf8" stroke-width="1.5"/>
+    <rect x="18" y="43" width="28" height="5" rx="2.5" fill="#1e1b4b" stroke="#818cf8" stroke-width="1.5"/>
+    <path d="M4 22 L8 18 M4 22 L8 26" stroke="#818cf8" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M60 22 L56 18 M60 22 L56 26" stroke="#818cf8" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`),
+};
+
+// 凡例のアイコンを設定
+document.querySelectorAll('.leg-icon').forEach(img => {
+  img.src = ICONS[img.dataset.type] || '';
+});
+
+const IMG_TYPES = new Set(['socket','catoclient','gw','server','switch','ap','gap','mfp','secom','unknown']);
+
+function n(id, label, type, meta, extra={}) {
+  const c = C[type] || C.unknown;
+  const useImg = IMG_TYPES.has(type) && ICONS[type] && !extra.shape;
+  const base = {
+    id, label,
+    color: useImg
+      ? { background:'rgba(0,0,0,0)', border:'rgba(0,0,0,0)', highlight:{background:'rgba(255,255,255,0.08)', border:c.border} }
+      : { background:c.bg, border:c.border, highlight:{background:c.bg, border:'#f8fafc'} },
+    font: { color:c.font, size:11, face:'Segoe UI,sans-serif', multi:false },
+    borderWidth: 2,
+    shadow: { enabled:true, size:6, x:0, y:3, color:'rgba(0,0,0,0.6)' },
+    _meta: meta || {}
+  };
+  if (useImg) {
+    base.shape = 'image';
+    base.image = ICONS[type];
+    base.size = 26;
+  }
+  return Object.assign(base, extra);
+}
+
+function edge(id, from, to, opts={}) {
+  return Object.assign({ id, from, to, arrows:'to' }, opts);
+}
+
+// ─────────────────────────────────────────
+// 常時表示ノード
+// ─────────────────────────────────────────
+const BASE_NODES = [
+  n('internet', 'インターネット\n(WAN)', 'internet',
+    { desc:'外部インターネット回線\n各拠点はCato Socket経由で最寄りPoP(東京/大阪等)に接続\nローカルブレイクアウトにより全拠点から直接インターネット利用可能\n（現行の本社ヘアピンルーティングを解消）' },
+    { shape:'ellipse', size:45, level:0 }),
+
+  n('cato-client', 'Cato Client\nSDP / ZTNA\nリモートアクセス', 'catoclient',
+    { desc:'Cato Client エージェント（将来構成）\n現行L2TP RVPN（VarioSecure）を置き換え\nZTNA: ID・デバイス検証後に最小権限でリソースアクセス\nIPプール: 導入時確定\n接続先: Cato Cloud（最寄りPoP）' },
+    { level:0, size:30 }),
+
+  // ── Cato Cloud（SASE Hub）──
+  n('cato-cloud', 'Cato Cloud\nSASE / グローバル PoP\nSD-WAN + SSE', 'catocloud',
+    { desc:'Cato Networks グローバルバックボーン\n国内PoP: 東京・大阪（他アジア各都市）\n機能: SD-WAN / FWaaS / SWG / ZTNA / CASB / IPS / DLP\n全拠点間通信・インターネット通信をCato Cloud経由で一元可視化\n出典: SCSK Cato提案（将来構成）' },
+    { level:1, size:55, shape:'ellipse' }),
+
+  // ── 各拠点 Cato Socket（常時表示）──
+  n('tk-socket', 'Cato Socket\n192.168.1.x\nSD-WAN CPE\n【東京本社 6F】', 'socket',
+    { ip:'192.168.1.x（導入時確定）', desc:'Cato Socket（将来構成 / 現VSR601j 置き換え）\nCato Cloud PoP（東京・大阪）へ自動接続\nFWaaS・IPS・NG-AM・CASB内蔵\nクリックで東京本社の機器を展開 / 収納' },
+    { level:2, size:30 }),
+
+  n('os-socket', 'Cato Socket\n192.168.20.x\nSD-WAN CPE\n【大阪営業所】', 'socket',
+    { ip:'192.168.20.x（導入時確定）', desc:'Cato Socket（将来構成 / 現VSR401j 置き換え）\nCato Cloud PoP（大阪）へ自動接続\nローカルブレイクアウト: 最寄りPoP経由\nクリックで機器を展開 / 収納' },
+    { level:2 }),
+
+  n('hs-socket', 'Cato Socket\n192.168.30.x\nSD-WAN CPE\n【橋本R&D】', 'socket',
+    { ip:'192.168.30.x（導入時確定）', desc:'Cato Socket（将来構成 / 現VSR400 置き換え）\nCato Cloud PoP（東京・大阪）へ自動接続\nクリックで機器を展開 / 収納' },
+    { level:2 }),
+
+  n('fk-socket', 'Cato Socket\n192.168.40.x\nSD-WAN CPE\n【福岡営業所】', 'socket',
+    { ip:'192.168.40.x（導入時確定）', desc:'Cato Socket（将来構成 / 現VSR401j 置き換え）\nCato Cloud PoP（大阪・東京）へ自動接続\nクリックで機器を展開 / 収納' },
+    { level:2 }),
+
+  n('wk-socket', 'Cato Socket\n192.168.50.x\nSD-WAN CPE\n【和歌山】', 'socket',
+    { ip:'192.168.50.x（導入時確定）', desc:'Cato Socket（将来構成 / 現VSR401j 置き換え）\nCato Cloud PoP（大阪）へ自動接続\nクリックで機器を展開 / 収納' },
+    { level:2 }),
+
+  n('tj-socket', 'Cato Socket\n192.168.60.x\nSD-WAN CPE\n【多摩センター】', 'socket',
+    { ip:'192.168.60.x（導入時確定）', desc:'Cato Socket（将来構成 / 現VSR400 置き換え）\nCato Cloud PoP（東京）へ自動接続\nクリックで機器を展開 / 収納' },
+    { level:2 }),
+
+  n('kb-socket', 'Cato Socket\n192.168.70.x\nSD-WAN CPE\n【京橋ビル】', 'socket',
+    { ip:'192.168.70.x（導入時確定）', desc:'Cato Socket（将来構成 / 現VSR401j 置き換え）\nCato Cloud PoP（大阪・東京）へ自動接続\nクリックで機器を展開 / 収納' },
+    { level:2 }),
+
+  n('ng-socket', 'Cato Socket\n192.168.80.x\nSD-WAN CPE\n【名古屋】', 'socket',
+    { ip:'192.168.80.x（導入時確定）', desc:'Cato Socket（将来構成 / 現VSR401j 置き換え）\nCato Cloud PoP（大阪・東京）へ自動接続\nクリックで機器を展開 / 収納' },
+    { level:2 }),
+];
+
+// ─────────────────────────────────────────
+// 常時表示エッジ
+// ─────────────────────────────────────────
+const BASE_EDGES = [
+  edge('ei-cc',   'internet',    'cato-cloud',  { label:'WAN / インターネット接続', width:3, color:{color:'#06b6d4'}, font:{color:'#22d3ee', size:10} }),
+  edge('ec-rv',   'cato-client', 'cato-cloud',  { label:'Cato Client (ZTNA)', width:2, color:{color:'#818cf8'}, dashes:[4,4], font:{color:'#818cf8', size:10}, arrows:{to:{enabled:true,scaleFactor:0.8}} }),
+  edge('ecc-tk',  'cato-cloud',  'tk-socket',   { width:2.5, color:{color:'#10b981'} }),
+  edge('ecc-os',  'cato-cloud',  'os-socket',   { width:2,   color:{color:'#10b981'} }),
+  edge('ecc-hs',  'cato-cloud',  'hs-socket',   { width:2,   color:{color:'#10b981'} }),
+  edge('ecc-fk',  'cato-cloud',  'fk-socket',   { width:2,   color:{color:'#10b981'} }),
+  edge('ecc-wk',  'cato-cloud',  'wk-socket',   { width:2,   color:{color:'#10b981'} }),
+  edge('ecc-tj',  'cato-cloud',  'tj-socket',   { width:2,   color:{color:'#10b981'} }),
+  edge('ecc-kb',  'cato-cloud',  'kb-socket',   { width:2,   color:{color:'#10b981'} }),
+  edge('ecc-ng',  'cato-cloud',  'ng-socket',   { width:2,   color:{color:'#10b981'} }),
+];
+
+// ─────────────────────────────────────────
+// 展開時ノード（Socketクリックで追加）
+// ─────────────────────────────────────────
+const SITE_DATA = {
+
+  // ── 東京本社（tk-socket 配下）──
+  'tk-socket': {
+    nodes: [
+      // ── 6F サーバー室 ──
+      n('tk-sw', 'DGS-1210-28\n192.168.1.8\nスイッチ（基幹HUB）', 'switch',
+        { ip:'192.168.1.8', desc:'D-Link 28ポート管理スイッチ\n管理PW: ad-admin\nMAC OUI: D-Link確認（応答あり）\n物理配線はスキャン未確認\n【6F サーバー室】' },
+        { level:2 }),
+
+      n('tk-pdc', 'PDCSVR\n192.168.1.6\nActive Directory\nPrimary Domain Controller', 'server',
+        { ip:'192.168.1.6', desc:'Active Directory Primary DC（2020年9月〜）\nコンピューター245件 / 有効ユーザー128名\n無効43名 / GPO14件（AD調査 2026-02-28）\nOS推定: Linux/NW機器(TTL64)\n【6F サーバー室】' },
+        { level:3 }),
+
+      n('tk-bdc', 'BDCSVR\n192.168.1.7\nActive Directory\nBackup Domain Controller', 'server',
+        { ip:'192.168.1.7', desc:'Active Directory Backup DC（2020年9月〜）\nOS推定: Linux/NW機器(TTL64)\n【6F サーバー室】' },
+        { level:3 }),
+
+      n('tk-share', 'ADSHARESVR\n192.168.1.15\nファイルサーバ', 'server',
+        { ip:'192.168.1.15', desc:'ファイルサーバ（スキャン応答あり）\nOS推定: Linux/NW機器(TTL64)\n【6F サーバー室】' },
+        { level:3 }),
+
+      n('tk-kanri', 'ADKANRI4\n192.168.1.11\n固定資産奉行i11', 'server',
+        { ip:'192.168.1.11', desc:'固定資産奉行i11（AKIBAホールディングス 財務・経理部）\n2025/9/19 adkanri4に移行済み\nOS推定: Windows PC(TTL128)\n【6F サーバー室】' },
+        { level:3 }),
+
+      n('tk-ten', 'TENAPSVR / TENDBSVR\n.1.12 / .1.14\nTENSUITE（勤怠）', 'server',
+        { ip:'192.168.1.12 / .14', desc:'TENSUITEアプリケーションサーバ (.12)\nTENSUITEデータベースサーバ (.14)\niLO管理IP: .16 / .17\n基幹引き継ぎ待ち・保留中（応答なし）\n【6F サーバー室】' },
+        { level:3 }),
+
+      n('tk-trii', 'TRIISVR\n192.168.1.30\nSECOM入退室', 'secom',
+        { ip:'192.168.1.30', desc:'SESAMO-TRIIサーバ（セコム入退室システム）\nOS推定: Linux/NW機器(TTL64)\n※AD残存廃棄候補（要確認）\n【6F サーバー室】' },
+        { level:3 }),
+
+      n('tk-rtx', 'RTX1210\n192.168.2.1\nゲストNWゲートウェイ', 'gw',
+        { ip:'192.168.2.1', desc:'ヤマハ RTX1210（ゲストネットワーク ゲートウェイ）\nゲスト帯域: 192.168.2.0/24\n社内ネットワーク（192.168.1.x）と分離\n出典: 東通ネットワーク設定資料（AKIBA様）\n【6F サーバー室】' },
+        { level:3 }),
+
+      // ── 9F ──
+      n('tk-ap-9f', '社内AP\n192.168.1.40\n9F フリースペース', 'ap',
+        { ip:'192.168.1.40', desc:'SSID: Lollipop（5GHz）/ Lollipop-G（2.4GHz）\n9F フリースペース\n出典: 東通ネットワーク設定資料（AKIBA様）' },
+        { level:4 }),
+
+      n('tk-gap-9f', 'ゲストAP\n192.168.2.10\n9F フリースペース', 'gap',
+        { ip:'192.168.2.10', desc:'SSID: YokoTsukiji-A（5GHz）/ YokoTsukiji-G（2.4GHz）\n9F フリースペース\nゲスト帯域（192.168.2.x）、社内NWと分離\n出典: 東通ネットワーク設定資料（AKIBA様）' },
+        { level:5 }),
+
+      // ── 8F ──
+      n('tk-ap-8f', '社内AP\n192.168.1.41\n8F 会議室', 'ap',
+        { ip:'192.168.1.41', desc:'SSID: Lollipop（5GHz）/ Lollipop-G（2.4GHz）\n8F 会議室\n出典: 東通ネットワーク設定資料（AKIBA様）' },
+        { level:6 }),
+
+      n('tk-gap-8f', 'ゲストAP\n192.168.2.11\n8F 会議室', 'gap',
+        { ip:'192.168.2.11', desc:'SSID: YokoTsukiji-A（5GHz）/ YokoTsukiji-G（2.4GHz）\n8F 会議室\nゲスト帯域（192.168.2.x）、社内NWと分離\n出典: 東通ネットワーク設定資料（AKIBA様）' },
+        { level:7 }),
+
+      // ── 7F ──
+      n('tk-ap-7fa', '社内AP\n192.168.1.42\n7F 執務室', 'ap',
+        { ip:'192.168.1.42', desc:'SSID: Lollipop（5GHz）/ Lollipop-G（2.4GHz）\n7F 執務室\n出典: 東通ネットワーク設定資料（AKIBA様）' },
+        { level:8 }),
+
+      n('tk-ap-7fb', '社内AP\n192.168.1.43\n7F 会議室', 'ap',
+        { ip:'192.168.1.43', desc:'SSID: Lollipop（5GHz）/ Lollipop-G（2.4GHz）\n7F 会議室（床置き）\n出典: 東通ネットワーク設定資料（AKIBA様）' },
+        { level:8 }),
+
+      n('tk-gap-7f', 'ゲストAP\n192.168.2.12\n7F 会議室', 'gap',
+        { ip:'192.168.2.12', desc:'SSID: YokoTsukiji-A（5GHz）/ YokoTsukiji-G（2.4GHz）\n7F 会議室（床置き）\nゲスト帯域（192.168.2.x）、社内NWと分離\n出典: 東通ネットワーク設定資料（AKIBA様）' },
+        { level:9 }),
+
+      n('tk-mfp-7f', 'RICOH MP C4504\n192.168.1.56\n7F 複合機', 'mfp',
+        { ip:'192.168.1.56', desc:'7Fカラー複合機 ✅ RICOH MP C4504 SPF\n出典: ネットワークスキャン（応答あり）' },
+        { level:8 }),
+
+      // ── 6F 執務 ──
+      n('tk-ap-6fa', '社内AP\n192.168.1.44\n6F 執務室', 'ap',
+        { ip:'192.168.1.44', desc:'SSID: Lollipop（5GHz）/ Lollipop-G（2.4GHz）\n6F 執務室\n出典: 東通ネットワーク設定資料（AKIBA様）' },
+        { level:10 }),
+
+      n('tk-ap-6fb', '社内AP\n192.168.1.45\n6F 会議室', 'ap',
+        { ip:'192.168.1.45', desc:'SSID: Lollipop（5GHz）/ Lollipop-G（2.4GHz）\n6F 会議室\n出典: 東通ネットワーク設定資料（AKIBA様）' },
+        { level:10 }),
+
+      n('tk-gap-6f', 'ゲストAP\n192.168.2.13\n6F 会議室', 'gap',
+        { ip:'192.168.2.13', desc:'SSID: YokoTsukiji-A（5GHz）/ YokoTsukiji-G（2.4GHz）\n6F 会議室\nゲスト帯域（192.168.2.x）、社内NWと分離\n出典: 東通ネットワーク設定資料（AKIBA様）' },
+        { level:11 }),
+
+      n('tk-mfp-6f', 'RICOH IM C4500\n192.168.1.55\n6F 複合機', 'mfp',
+        { ip:'192.168.1.55', desc:'6Fカラー複合機 ✅ RICOH IM C4500 JPN RPCS\n付属: OpenBlocks AX3 (.57) 用途不明・要廃棄検討\n出典: ネットワークスキャン（応答あり）' },
+        { level:10 }),
+
+      // ── 5F ──
+      n('tk-gap-5f', 'ゲストAP\n192.168.2.14\n5F 応接室', 'gap',
+        { ip:'192.168.2.14', desc:'SSID: YokoTsukiji-A（5GHz）/ YokoTsukiji-G（2.4GHz）\n5F 応接室\nゲスト帯域（192.168.2.x）、社内NWと分離\n出典: 東通ネットワーク設定資料（AKIBA様）' },
+        { level:12 }),
+    ],
+    edges: [
+      edge('etk-sw',    'tk-socket', 'tk-sw',     { width:2, color:{color:'#22c55e'} }),
+      // 6F サーバー室
+      edge('etk-pdc',   'tk-sw', 'tk-pdc',   { color:{color:'#0ea5e9'} }),
+      edge('etk-bdc',   'tk-sw', 'tk-bdc',   { color:{color:'#0ea5e9'} }),
+      edge('etk-shr',   'tk-sw', 'tk-share', { color:{color:'#0ea5e9'} }),
+      edge('etk-kan',   'tk-sw', 'tk-kanri', { color:{color:'#0ea5e9'} }),
+      edge('etk-ten',   'tk-sw', 'tk-ten',   { color:{color:'#0ea5e9'} }),
+      edge('etk-trii',  'tk-sw', 'tk-trii',  { color:{color:'#f59e0b'} }),
+      edge('etk-rtx',   'tk-sw', 'tk-rtx',   { color:{color:'#6b7280'} }),
+      // 6F 執務（AP・複合機）
+      edge('etk-ap6fa', 'tk-sw', 'tk-ap-6fa', { color:{color:'#a855f7'} }),
+      edge('etk-ap6fb', 'tk-sw', 'tk-ap-6fb', { color:{color:'#a855f7'} }),
+      edge('etk-mfp6f', 'tk-sw', 'tk-mfp-6f', { color:{color:'#ec4899'} }),
+      // 7F
+      edge('etk-ap7fa', 'tk-sw', 'tk-ap-7fa', { color:{color:'#a855f7'} }),
+      edge('etk-ap7fb', 'tk-sw', 'tk-ap-7fb', { color:{color:'#a855f7'} }),
+      edge('etk-mfp7f', 'tk-sw', 'tk-mfp-7f', { color:{color:'#ec4899'} }),
+      // 8F
+      edge('etk-ap8f',  'tk-sw', 'tk-ap-8f',  { color:{color:'#a855f7'} }),
+      // 9F
+      edge('etk-ap9f',  'tk-sw', 'tk-ap-9f',  { color:{color:'#a855f7'} }),
+      // ゲストAP（RTX1210配下・各フロア）
+      edge('etk-gap6f', 'tk-rtx', 'tk-gap-6f', { color:{color:'#f97316'} }),
+      edge('etk-gap7f', 'tk-rtx', 'tk-gap-7f', { color:{color:'#f97316'} }),
+      edge('etk-gap8f', 'tk-rtx', 'tk-gap-8f', { color:{color:'#f97316'} }),
+      edge('etk-gap9f', 'tk-rtx', 'tk-gap-9f', { color:{color:'#f97316'} }),
+      edge('etk-gap5f', 'tk-rtx', 'tk-gap-5f', { color:{color:'#f97316'} }),
+    ]
+  },
+
+  // ── 大阪営業所（os-socket 配下）──
+  'os-socket': {
+    nodes: [
+      n('os-ap1', 'WAB-I1750PS\n192.168.20.21\n無線AP（執務室）', 'ap',
+        { ip:'192.168.20.21', desc:'無線LAN親機（執務室）\n管理: admin / ggs18zye（応答あり）' },
+        { level:3 }),
+      n('os-ap2', 'WAB-I1750PS\n192.168.20.22\n無線AP（会議室）', 'ap',
+        { ip:'192.168.20.22', desc:'無線LAN親機（会議室）\n管理: admin / ggs18zye（応答あり）' },
+        { level:3 }),
+      n('os-trii', 'TRIIインターフェース\n192.168.20.31\nSECOM入退室', 'secom',
+        { ip:'192.168.20.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
+        { level:3 }),
+      n('os-mfp', 'RICOH IM C3010\n192.168.20.50\n複合機', 'mfp',
+        { ip:'192.168.20.50', desc:'RICOH IM C3010（応答あり）\n管理: admin / PW なし' },
+        { level:3 }),
+      n('os-unk', '台帳未登録\n192.168.20.70\n(DHCP・田中氏PC)', 'unknown',
+        { ip:'192.168.20.70', desc:'OS推定: Linux(TTL64)\n情シス回答: DHCP・田中氏PCと判明' },
+        { level:3 }),
+    ],
+    edges: [
+      edge('eos-ap1',  'os-socket', 'os-ap1',  { color:{color:'#a855f7'} }),
+      edge('eos-ap2',  'os-socket', 'os-ap2',  { color:{color:'#a855f7'} }),
+      edge('eos-trii', 'os-socket', 'os-trii', { color:{color:'#f59e0b'} }),
+      edge('eos-mfp',  'os-socket', 'os-mfp',  { color:{color:'#ec4899'} }),
+      edge('eos-unk',  'os-socket', 'os-unk',  { color:{color:'#475569'} }),
+    ]
+  },
+
+  // ── 橋本R&D（hs-socket 配下）──
+  'hs-socket': {
+    nodes: [
+      n('hs-qnap', 'QNAP TS-431U\n192.168.30.10\nNAS', 'server',
+        { ip:'192.168.30.10', desc:'IoT ENG用データ保管共有用サーバ（応答あり）\nユーザー: admin' },
+        { level:3 }),
+      n('hs-iot', 'IOTSVR\n192.168.30.15\nIoT専用FS', 'server',
+        { ip:'192.168.30.15', desc:'IoT事業部専用ファイルサーバ（2020年10月〜）\nBMC (.16): 応答あり\nOS推定: Windows PC(TTL128)' },
+        { level:3 }),
+      n('hs-ap', 'WAB-M1775-PS\n192.168.30.20\n無線AP', 'ap',
+        { ip:'192.168.30.20', desc:'無線AP（応答あり）' },
+        { level:3 }),
+      n('hs-trii', 'TRIIインターフェース\n192.168.30.31\nSECOM入退室', 'secom',
+        { ip:'192.168.30.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
+        { level:3 }),
+      n('hs-mfp', 'Canon C5540Ⅱ\n192.168.30.55\n複合機', 'mfp',
+        { ip:'192.168.30.55', desc:'旧R&D 8F 技術・品証・IoTの複合機（応答あり）' },
+        { level:3 }),
+      n('hs-unk', '台帳未登録 × 8\n.82/.87/.89/.91/.92/.162/.173/.204\n要調査', 'unknown',
+        { ip:'192.168.30.82〜204（8台）', desc:'OS推定: Windows(TTL128) × 3台\nOS推定: Linux/FortiGate(TTL64) × 5台\n台帳未登録 → 情シス確認要' },
+        { level:3 }),
+    ],
+    edges: [
+      edge('ehs-qnap', 'hs-socket', 'hs-qnap', { color:{color:'#0ea5e9'} }),
+      edge('ehs-iot',  'hs-socket', 'hs-iot',  { color:{color:'#0ea5e9'} }),
+      edge('ehs-ap',   'hs-socket', 'hs-ap',   { color:{color:'#a855f7'} }),
+      edge('ehs-trii', 'hs-socket', 'hs-trii', { color:{color:'#f59e0b'} }),
+      edge('ehs-mfp',  'hs-socket', 'hs-mfp',  { color:{color:'#ec4899'} }),
+      edge('ehs-unk',  'hs-socket', 'hs-unk',  { color:{color:'#475569'} }),
+    ]
+  },
+
+  // ── 福岡営業所（fk-socket 配下）──
+  'fk-socket': {
+    nodes: [
+      n('fk-trii', 'TRIIインターフェース\n192.168.40.31\nSECOM入退室', 'secom',
+        { ip:'192.168.40.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
+        { level:3 }),
+    ],
+    edges: [
+      edge('efk-trii', 'fk-socket', 'fk-trii', { color:{color:'#f59e0b'} }),
+    ]
+  },
+
+  // ── 和歌山（wk-socket 配下）──
+  'wk-socket': {
+    nodes: [
+      n('wk-trii1', 'TRIIインターフェース\n192.168.50.31\nSECOM入退室', 'secom',
+        { ip:'192.168.50.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
+        { level:3 }),
+      n('wk-s2', 'セサモIdf（静脈）内側\n192.168.50.32', 'secom',
+        { ip:'192.168.50.32', desc:'セコム入退室システム内側（応答あり）' },
+        { level:3 }),
+      n('wk-s3', 'セサモIdf（静脈）外側\n192.168.50.33', 'secom',
+        { ip:'192.168.50.33', desc:'セコム入退室システム外側（応答あり）' },
+        { level:3 }),
+      n('wk-trii2', 'TRIIインターフェース\n192.168.50.34\nSECOM入退室', 'secom',
+        { ip:'192.168.50.34', desc:'SESAMO-TRIIインターフェース（応答あり）' },
+        { level:3 }),
+      n('wk-unk', '台帳未登録 × 2\n.35 / .36\n情シス未回答', 'unknown',
+        { ip:'192.168.50.35 / .36', desc:'OS推定: Network機器(TTL255)\n台帳未登録 / 情シス未回答（要対応）' },
+        { level:3 }),
+    ],
+    edges: [
+      edge('ewk-trii1', 'wk-socket', 'wk-trii1', { color:{color:'#f59e0b'} }),
+      edge('ewk-s2',    'wk-socket', 'wk-s2',    { color:{color:'#f59e0b'} }),
+      edge('ewk-s3',    'wk-socket', 'wk-s3',    { color:{color:'#f59e0b'} }),
+      edge('ewk-trii2', 'wk-socket', 'wk-trii2', { color:{color:'#f59e0b'} }),
+      edge('ewk-unk',   'wk-socket', 'wk-unk',   { color:{color:'#475569'} }),
+    ]
+  },
+
+  // ── 多摩センター（tj-socket 配下）──
+  'tj-socket': {
+    nodes: [
+      n('tj-ap', 'WAB-M1775-PS × 7\n.60.20〜.26\n無線AP（各フロア）', 'ap',
+        { ip:'192.168.60.20〜26', desc:'1F会議室 (.20) SSID: Tama1F-meeting\n1F物流 (.21) SSID: Tama1F-logistics\n2F検査室付近 (.22) SSID: Tama2F-laboratory\n2F執務室 (.23) SSID: Tama2F-office\n3F物流 (.24) SSID: Tama3F\n2F検査室階段 (.25)\n2F会議室 (.26)\n全台応答あり' },
+        { level:3 }),
+      n('tj-trii', 'TRIIインターフェース\n192.168.60.31\nSECOM入退室', 'secom',
+        { ip:'192.168.60.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
+        { level:3 }),
+      n('tj-mfp1', 'SHARP BP-50C55\n192.168.60.54\n1F 複合機', 'mfp',
+        { ip:'192.168.60.54', desc:'多摩1F複合機（2025年10月導入）\nユーザーID: admin（応答あり）' },
+        { level:3 }),
+      n('tj-mfp2', 'IR-ADVC3730F\n192.168.60.55\n2F 複合機', 'mfp',
+        { ip:'192.168.60.55', desc:'多摩2F複合機（元CRB八王子の複合機）（応答あり）' },
+        { level:3 }),
+      n('tj-unk', '台帳未登録 × 15\n(.71/.85/.91〜.97/.161〜.201)\n要調査', 'unknown',
+        { ip:'192.168.60.71〜201（15台）', desc:'OS推定: Linux/FortiGate(TTL64) × 10台\nOS推定: Windows(TTL128) × 2台\nOS推定: Network機器(TTL255) × 3台\n一部は情シス確認: DHCP・クライアントPC\n残りは未確認（要調査）' },
+        { level:3 }),
+    ],
+    edges: [
+      edge('etj-ap',   'tj-socket', 'tj-ap',   { color:{color:'#a855f7'} }),
+      edge('etj-trii', 'tj-socket', 'tj-trii', { color:{color:'#f59e0b'} }),
+      edge('etj-mfp1', 'tj-socket', 'tj-mfp1', { color:{color:'#ec4899'} }),
+      edge('etj-mfp2', 'tj-socket', 'tj-mfp2', { color:{color:'#ec4899'} }),
+      edge('etj-unk',  'tj-socket', 'tj-unk',  { color:{color:'#475569'} }),
+    ]
+  },
+
+  // ── 京橋ビル（kb-socket 配下）──
+  'kb-socket': {
+    nodes: [
+      n('kb-trii', 'TRIIインターフェース\n192.168.70.31\nSECOM入退室', 'secom',
+        { ip:'192.168.70.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
+        { level:3 }),
+    ],
+    edges: [
+      edge('ekb-trii', 'kb-socket', 'kb-trii', { color:{color:'#f59e0b'} }),
+    ]
+  },
+
+  // ── 名古屋（ng-socket 配下）──
+  'ng-socket': {
+    nodes: [
+      n('ng-trii', 'TRIIインターフェース\n192.168.80.31\nSECOM入退室', 'secom',
+        { ip:'192.168.80.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
+        { level:3 }),
+    ],
+    edges: [
+      edge('eng-trii', 'ng-socket', 'ng-trii', { color:{color:'#f59e0b'} }),
+    ]
+  },
+};
+
+// ─────────────────────────────────────────
+// 拠点エリア（canvas枠として描画）
+// ─────────────────────────────────────────
+const SITE_GROUPS = [
+  {
+    label: '東京本社（192.168.1.x）',
+    nodes: ['tk-socket','tk-sw','tk-pdc','tk-bdc','tk-share','tk-kanri','tk-ten','tk-trii','tk-rtx',
+            'tk-ap-9f','tk-gap-9f','tk-ap-8f','tk-gap-8f','tk-ap-7fa','tk-ap-7fb','tk-gap-7f',
+            'tk-mfp-7f','tk-ap-6fa','tk-ap-6fb','tk-gap-6f','tk-mfp-6f','tk-gap-5f'],
+    fill: 'rgba(30,58,138,0.08)', stroke: 'rgba(59,130,246,0.5)', labelColor: 'rgba(147,197,253,0.9)',
+  },
+  {
+    label: '大阪営業所（192.168.20.x）',
+    nodes: ['os-socket','os-ap1','os-ap2','os-trii','os-mfp','os-unk'],
+    fill: 'rgba(30,58,138,0.06)', stroke: 'rgba(59,130,246,0.35)', labelColor: 'rgba(147,197,253,0.8)',
+  },
+  {
+    label: '橋本R&D（192.168.30.x）',
+    nodes: ['hs-socket','hs-qnap','hs-iot','hs-ap','hs-trii','hs-mfp','hs-unk'],
+    fill: 'rgba(30,58,138,0.06)', stroke: 'rgba(59,130,246,0.35)', labelColor: 'rgba(147,197,253,0.8)',
+  },
+  {
+    label: '福岡営業所（192.168.40.x）',
+    nodes: ['fk-socket','fk-trii'],
+    fill: 'rgba(30,58,138,0.06)', stroke: 'rgba(59,130,246,0.35)', labelColor: 'rgba(147,197,253,0.8)',
+  },
+  {
+    label: '和歌山（192.168.50.x）',
+    nodes: ['wk-socket','wk-trii1','wk-s2','wk-s3','wk-trii2','wk-unk'],
+    fill: 'rgba(30,58,138,0.06)', stroke: 'rgba(59,130,246,0.35)', labelColor: 'rgba(147,197,253,0.8)',
+  },
+  {
+    label: '多摩センター（192.168.60.x）',
+    nodes: ['tj-socket','tj-ap','tj-trii','tj-mfp1','tj-mfp2','tj-unk'],
+    fill: 'rgba(30,58,138,0.06)', stroke: 'rgba(59,130,246,0.35)', labelColor: 'rgba(147,197,253,0.8)',
+  },
+  {
+    label: '京橋ビル（192.168.70.x）',
+    nodes: ['kb-socket','kb-trii'],
+    fill: 'rgba(30,58,138,0.06)', stroke: 'rgba(59,130,246,0.35)', labelColor: 'rgba(147,197,253,0.8)',
+  },
+  {
+    label: '名古屋（192.168.80.x）',
+    nodes: ['ng-socket','ng-trii'],
+    fill: 'rgba(30,58,138,0.06)', stroke: 'rgba(59,130,246,0.35)', labelColor: 'rgba(147,197,253,0.8)',
+  },
+];
+
+// ─────────────────────────────────────────
+// vis-network 初期化
+// ─────────────────────────────────────────
+const nodes = new vis.DataSet(BASE_NODES);
+const edges = new vis.DataSet(BASE_EDGES);
+const expanded = {};
+
+const container = document.getElementById('mynetwork');
+const network = new vis.Network(container, { nodes, edges }, {
+  layout: {
+    hierarchical: {
+      enabled: true,
+      direction: 'UD',
+      sortMethod: 'directed',
+      levelSeparation: 160,
+      nodeSpacing: 210,
+      treeSpacing: 270,
+      blockShifting: true,
+      edgeMinimization: true,
+      parentCentralization: true,
+    }
+  },
+  physics: { enabled: false },
+  interaction: {
+    hover: true,
+    tooltipDelay: 0,
+    navigationButtons: false,
+    keyboard: false,
+    zoomView: true,
+    dragView: true,
+  },
+  edges: {
+    arrows: { to: { enabled: false } },
+    smooth: { type:'cubicBezier', forceDirection:'vertical', roundness:0.5 },
+    font: { align:'middle', size:11, color:'#64748b', strokeWidth:2, strokeColor:'#0f172a' },
+    arrowStrikethrough: false,
+  },
+  nodes: {
+    borderWidth: 2,
+    borderWidthSelected: 3,
+    chosen: {
+      node: function(values) { values.borderWidth = 3; }
+    }
+  }
+});
+
+// ─────────────────────────────────────────
+// クリック: 展開 / 収納
+// ─────────────────────────────────────────
+network.on('click', function(p) {
+  if (p.nodes.length === 0) return;
+  const id = p.nodes[0];
+  const sd = SITE_DATA[id];
+  if (!sd) return;
+
+  if (expanded[id]) {
+    nodes.remove(sd.nodes.map(n => n.id));
+    edges.remove(sd.edges.map(e => e.id));
+    expanded[id] = false;
+  } else {
+    nodes.add(sd.nodes);
+    edges.add(sd.edges);
+    expanded[id] = true;
+  }
+  setTimeout(() => network.fit({ animation:{ duration:600, easingFunction:'easeInOutQuad' } }), 80);
+});
+
+// ─────────────────────────────────────────
+// ホバー: 情報パネル
+// ─────────────────────────────────────────
+network.on('hoverNode', function(p) {
+  const nd = nodes.get(p.node);
+  if (!nd || !nd._meta) return;
+  const m = nd._meta;
+
+  document.getElementById('info-title').textContent = nd.label.split('\n')[0];
+
+  let html = '';
+  if (m.ip)   html += `<div class="row"><b>IP:</b><span>${m.ip}</span></div>`;
+  if (m.desc) html += `<div class="row"><b>詳細:</b><span style="white-space:pre-line">${m.desc}</span></div>`;
+  if (SITE_DATA[p.node]) {
+    const state = expanded[p.node] ? '展開中（クリックで収納）' : '収納中（クリックで展開）';
+    html += `<div class="row"><b>状態:</b><span>${state}</span></div>`;
+  }
+
+  document.getElementById('info-body').innerHTML = html;
+  document.getElementById('info').style.display = 'block';
+});
+
+// ─────────────────────────────────────────
+// フロアグループ枠（東京本社展開時）
+// ─────────────────────────────────────────
+const FLOOR_GROUPS = [
+  {
+    label: '6F サーバー室',
+    nodes: ['tk-socket', 'tk-sw', 'tk-pdc', 'tk-bdc', 'tk-share', 'tk-kanri', 'tk-ten', 'tk-trii', 'tk-rtx'],
+    fill: 'rgba(16,185,129,0.07)',
+    stroke: 'rgba(16,185,129,0.45)',
+    labelColor: 'rgba(110,231,183,0.9)',
+  },
+  {
+    label: '9F',
+    nodes: ['tk-ap-9f', 'tk-gap-9f'],
+    fill: 'rgba(99,102,241,0.08)',
+    stroke: 'rgba(139,92,246,0.45)',
+    labelColor: 'rgba(167,139,250,0.9)',
+  },
+  {
+    label: '8F',
+    nodes: ['tk-ap-8f', 'tk-gap-8f'],
+    fill: 'rgba(99,102,241,0.08)',
+    stroke: 'rgba(139,92,246,0.45)',
+    labelColor: 'rgba(167,139,250,0.9)',
+  },
+  {
+    label: '7F',
+    nodes: ['tk-ap-7fa', 'tk-ap-7fb', 'tk-mfp-7f', 'tk-gap-7f'],
+    fill: 'rgba(99,102,241,0.08)',
+    stroke: 'rgba(139,92,246,0.45)',
+    labelColor: 'rgba(167,139,250,0.9)',
+  },
+  {
+    label: '6F 執務',
+    nodes: ['tk-ap-6fa', 'tk-ap-6fb', 'tk-mfp-6f', 'tk-gap-6f'],
+    fill: 'rgba(99,102,241,0.08)',
+    stroke: 'rgba(139,92,246,0.45)',
+    labelColor: 'rgba(167,139,250,0.9)',
+  },
+  {
+    label: '5F',
+    nodes: ['tk-gap-5f'],
+    fill: 'rgba(99,102,241,0.08)',
+    stroke: 'rgba(139,92,246,0.45)',
+    labelColor: 'rgba(167,139,250,0.9)',
+  },
+];
+
+function drawRoundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+network.on('afterDrawing', function(ctx) {
+  const sitePad = 65;
+
+  // 1. 拠点エリア枠（常時描画）
+  for (const site of SITE_GROUPS) {
+    const visibleNodes = site.nodes.filter(id => nodes.get(id) !== null);
+    if (visibleNodes.length === 0) continue;
+    const posMap = network.getPositions(visibleNodes);
+    const positions = visibleNodes.map(id => posMap[id]).filter(Boolean);
+    if (positions.length === 0) continue;
+
+    const xs = positions.map(p => p.x);
+    const ys = positions.map(p => p.y);
+    const x0 = Math.min(...xs) - sitePad;
+    const y0 = Math.min(...ys) - sitePad;
+    const w  = Math.max(...xs) - Math.min(...xs) + sitePad * 2;
+    const h  = Math.max(...ys) - Math.min(...ys) + sitePad * 2;
+    const r  = Math.min(24, w / 2, h / 2);
+
+    ctx.save();
+    drawRoundRect(ctx, x0, y0, w, h, r);
+    ctx.fillStyle = site.fill;
+    ctx.fill();
+    ctx.strokeStyle = site.stroke;
+    ctx.lineWidth = 2;
+    ctx.setLineDash([8, 4]);
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.save();
+    ctx.font = 'bold 12px "Segoe UI", sans-serif';
+    ctx.fillStyle = site.labelColor;
+    ctx.textAlign = 'left';
+    ctx.fillText(site.label, x0 + 12, y0 + 20);
+    ctx.restore();
+  }
+
+  // 2. フロア枠（東京展開時のみ）
+  if (!expanded['tk-socket']) return;
+  const pad = 55;
+  for (const grp of FLOOR_GROUPS) {
+    const posMap = network.getPositions(grp.nodes);
+    const positions = grp.nodes.map(id => posMap[id]).filter(Boolean);
+    if (positions.length === 0) continue;
+
+    const xs = positions.map(p => p.x);
+    const ys = positions.map(p => p.y);
+    const x0 = Math.min(...xs) - pad;
+    const y0 = Math.min(...ys) - pad;
+    const w  = Math.max(...xs) - Math.min(...xs) + pad * 2;
+    const h  = Math.max(...ys) - Math.min(...ys) + pad * 2;
+    const r  = Math.min(32, w / 2, h / 2);
+
+    ctx.save();
+    drawRoundRect(ctx, x0, y0, w, h, r);
+    ctx.fillStyle = grp.fill;
+    ctx.fill();
+    ctx.strokeStyle = grp.stroke;
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([6, 3]);
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.save();
+    ctx.font = 'bold 13px "Segoe UI", sans-serif';
+    ctx.fillStyle = grp.labelColor;
+    ctx.textAlign = 'left';
+    ctx.fillText(grp.label, x0 + 10, y0 + 18);
+    ctx.restore();
+  }
+});
+
+// 初期表示
+network.fit();
+</script>
+</body>
+</html>
