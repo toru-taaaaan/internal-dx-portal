@@ -92,7 +92,6 @@
   <div class="leg"><img class="leg-icon" data-type="ap" alt="">無線AP（社内）</div>
   <div class="leg"><img class="leg-icon" data-type="gap" alt="">無線AP（ゲスト）</div>
   <div class="leg"><img class="leg-icon" data-type="mfp" alt="">MFP（複合機）</div>
-  <div class="leg"><img class="leg-icon" data-type="secom" alt="">SECOM 入退室ゲート</div>
   <div class="leg"><img class="leg-icon" data-type="unknown" alt="">不明 / 要調査</div>
   <div class="leg" style="margin-left:auto; color:#475569">── 実線: LAN　- - 破線: ZTNA / SD-WAN</div>
 </div>
@@ -411,10 +410,6 @@ const SITE_DATA_1 = {
         { ip:'192.168.1.12 / .14', desc:'TENSUITEアプリケーションサーバ (.12)\nTENSUITEデータベースサーバ (.14)\niLO管理IP: .16 / .17\n基幹引き継ぎ待ち・保留中（応答なし）\n【6F サーバー室】' },
         { level:3 }),
 
-      n('tk-trii', 'TRIISVR\n192.168.1.30\nSECOM入退室', 'secom',
-        { ip:'192.168.1.30', desc:'SESAMO-TRIIサーバ（セコム入退室システム）\nOS推定: Linux/NW機器(TTL64)\n※AD残存廃棄候補（要確認）\n【6F サーバー室】' },
-        { level:3 }),
-
       n('tk-rtx', 'RTX1210\n192.168.2.1\nゲストNWゲートウェイ', 'gw',
         { ip:'192.168.2.1', desc:'ヤマハ RTX1210（ゲストネットワーク ゲートウェイ）\nゲスト帯域: 192.168.2.0/24\n社内ネットワーク（192.168.1.x）と分離\n出典: 東通ネットワーク設定資料（AKIBA様）\n【6F サーバー室】' },
         { level:3 }),
@@ -483,7 +478,6 @@ const SITE_DATA_1 = {
       edge('etk-shr',   'tk-sw', 'tk-share', { color:{color:'#0ea5e9'} }),
       edge('etk-kan',   'tk-sw', 'tk-kanri', { color:{color:'#0ea5e9'} }),
       edge('etk-ten',   'tk-sw', 'tk-ten',   { color:{color:'#0ea5e9'} }),
-      edge('etk-trii',  'tk-sw', 'tk-trii',  { color:{color:'#f59e0b'} }),
       edge('etk-rtx',   'tk-sw', 'tk-rtx',   { color:{color:'#6b7280'} }),
       edge('etk-ap6fa', 'tk-sw', 'tk-ap-6fa', { color:{color:'#a855f7'} }),
       edge('etk-ap6fb', 'tk-sw', 'tk-ap-6fb', { color:{color:'#a855f7'} }),
@@ -510,9 +504,6 @@ const SITE_DATA_1 = {
       n('os-ap2', 'WAB-I1750PS\n192.168.20.22\n無線AP（会議室）', 'ap',
         { ip:'192.168.20.22', desc:'無線LAN親機（会議室）\n管理: admin / ggs18zye（応答あり）' },
         { level:3 }),
-      n('os-trii', 'TRIIインターフェース\n192.168.20.31\nSECOM入退室', 'secom',
-        { ip:'192.168.20.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
-        { level:3 }),
       n('os-mfp', 'RICOH IM C3010\n192.168.20.50\n複合機', 'mfp',
         { ip:'192.168.20.50', desc:'RICOH IM C3010（応答あり）\n管理: admin / PW なし' },
         { level:3 }),
@@ -523,7 +514,6 @@ const SITE_DATA_1 = {
     edges: [
       edge('eos-ap1',  'os-socket', 'os-ap1',  { color:{color:'#a855f7'} }),
       edge('eos-ap2',  'os-socket', 'os-ap2',  { color:{color:'#a855f7'} }),
-      edge('eos-trii', 'os-socket', 'os-trii', { color:{color:'#f59e0b'} }),
       edge('eos-mfp',  'os-socket', 'os-mfp',  { color:{color:'#ec4899'} }),
       edge('eos-unk',  'os-socket', 'os-unk',  { color:{color:'#475569'} }),
     ]
@@ -541,9 +531,6 @@ const SITE_DATA_1 = {
       n('hs-ap', 'WAB-M1775-PS\n192.168.30.20\n無線AP', 'ap',
         { ip:'192.168.30.20', desc:'無線AP（応答あり）' },
         { level:3 }),
-      n('hs-trii', 'TRIIインターフェース\n192.168.30.31\nSECOM入退室', 'secom',
-        { ip:'192.168.30.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
-        { level:3 }),
       n('hs-mfp', 'Canon C5540Ⅱ\n192.168.30.55\n複合機', 'mfp',
         { ip:'192.168.30.55', desc:'旧R&D 8F 技術・品証・IoTの複合機（応答あり）' },
         { level:3 }),
@@ -555,48 +542,19 @@ const SITE_DATA_1 = {
       edge('ehs-qnap', 'hs-socket', 'hs-qnap', { color:{color:'#0ea5e9'} }),
       edge('ehs-iot',  'hs-socket', 'hs-iot',  { color:{color:'#0ea5e9'} }),
       edge('ehs-ap',   'hs-socket', 'hs-ap',   { color:{color:'#a855f7'} }),
-      edge('ehs-trii', 'hs-socket', 'hs-trii', { color:{color:'#f59e0b'} }),
       edge('ehs-mfp',  'hs-socket', 'hs-mfp',  { color:{color:'#ec4899'} }),
       edge('ehs-unk',  'hs-socket', 'hs-unk',  { color:{color:'#475569'} }),
-    ]
-  },
-
-  // ── 福岡営業所（fk-socket 配下）──
-  'fk-socket': {
-    nodes: [
-      n('fk-trii', 'TRIIインターフェース\n192.168.40.31\nSECOM入退室', 'secom',
-        { ip:'192.168.40.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
-        { level:3 }),
-    ],
-    edges: [
-      edge('efk-trii', 'fk-socket', 'fk-trii', { color:{color:'#f59e0b'} }),
     ]
   },
 
   // ── 和歌山（wk-socket 配下）──
   'wk-socket': {
     nodes: [
-      n('wk-trii1', 'TRIIインターフェース\n192.168.50.31\nSECOM入退室', 'secom',
-        { ip:'192.168.50.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
-        { level:3 }),
-      n('wk-s2', 'セサモIdf（静脈）内側\n192.168.50.32', 'secom',
-        { ip:'192.168.50.32', desc:'セコム入退室システム内側（応答あり）' },
-        { level:3 }),
-      n('wk-s3', 'セサモIdf（静脈）外側\n192.168.50.33', 'secom',
-        { ip:'192.168.50.33', desc:'セコム入退室システム外側（応答あり）' },
-        { level:3 }),
-      n('wk-trii2', 'TRIIインターフェース\n192.168.50.34\nSECOM入退室', 'secom',
-        { ip:'192.168.50.34', desc:'SESAMO-TRIIインターフェース（応答あり）' },
-        { level:3 }),
       n('wk-unk', '台帳未登録 × 2\n.35 / .36\n情シス未回答', 'unknown',
         { ip:'192.168.50.35 / .36', desc:'OS推定: Network機器(TTL255)\n台帳未登録 / 情シス未回答（要対応）' },
         { level:3 }),
     ],
     edges: [
-      edge('ewk-trii1', 'wk-socket', 'wk-trii1', { color:{color:'#f59e0b'} }),
-      edge('ewk-s2',    'wk-socket', 'wk-s2',    { color:{color:'#f59e0b'} }),
-      edge('ewk-s3',    'wk-socket', 'wk-s3',    { color:{color:'#f59e0b'} }),
-      edge('ewk-trii2', 'wk-socket', 'wk-trii2', { color:{color:'#f59e0b'} }),
       edge('ewk-unk',   'wk-socket', 'wk-unk',   { color:{color:'#475569'} }),
     ]
   },
@@ -606,9 +564,6 @@ const SITE_DATA_1 = {
     nodes: [
       n('tj-ap', 'WAB-M1775-PS × 7\n.60.20〜.26\n無線AP（各フロア）', 'ap',
         { ip:'192.168.60.20〜26', desc:'1F会議室 (.20) SSID: Tama1F-meeting\n1F物流 (.21) SSID: Tama1F-logistics\n2F検査室付近 (.22) SSID: Tama2F-laboratory\n2F執務室 (.23) SSID: Tama2F-office\n3F物流 (.24) SSID: Tama3F\n2F検査室階段 (.25)\n2F会議室 (.26)\n全台応答あり' },
-        { level:3 }),
-      n('tj-trii', 'TRIIインターフェース\n192.168.60.31\nSECOM入退室', 'secom',
-        { ip:'192.168.60.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
         { level:3 }),
       n('tj-mfp1', 'SHARP BP-50C55\n192.168.60.54\n1F 複合機', 'mfp',
         { ip:'192.168.60.54', desc:'多摩1F複合機（2025年10月導入）\nユーザーID: admin（応答あり）' },
@@ -622,36 +577,12 @@ const SITE_DATA_1 = {
     ],
     edges: [
       edge('etj-ap',   'tj-socket', 'tj-ap',   { color:{color:'#a855f7'} }),
-      edge('etj-trii', 'tj-socket', 'tj-trii', { color:{color:'#f59e0b'} }),
       edge('etj-mfp1', 'tj-socket', 'tj-mfp1', { color:{color:'#ec4899'} }),
       edge('etj-mfp2', 'tj-socket', 'tj-mfp2', { color:{color:'#ec4899'} }),
       edge('etj-unk',  'tj-socket', 'tj-unk',  { color:{color:'#475569'} }),
     ]
   },
 
-  // ── 京橋ビル（kb-socket 配下）──
-  'kb-socket': {
-    nodes: [
-      n('kb-trii', 'TRIIインターフェース\n192.168.70.31\nSECOM入退室', 'secom',
-        { ip:'192.168.70.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
-        { level:3 }),
-    ],
-    edges: [
-      edge('ekb-trii', 'kb-socket', 'kb-trii', { color:{color:'#f59e0b'} }),
-    ]
-  },
-
-  // ── 名古屋（ng-socket 配下）──
-  'ng-socket': {
-    nodes: [
-      n('ng-trii', 'TRIIインターフェース\n192.168.80.31\nSECOM入退室', 'secom',
-        { ip:'192.168.80.31', desc:'SESAMO-TRIIインターフェース（応答あり）' },
-        { level:3 }),
-    ],
-    edges: [
-      edge('eng-trii', 'ng-socket', 'ng-trii', { color:{color:'#f59e0b'} }),
-    ]
-  },
 };
 
 // ─────────────────────────────────────────
@@ -660,44 +591,44 @@ const SITE_DATA_1 = {
 const SITE_GROUPS_1 = [
   {
     label: '東京本社（192.168.1.x）',
-    nodes: ['tk-socket','tk-sw','tk-pdc','tk-bdc','tk-share','tk-kanri','tk-ten','tk-trii','tk-rtx',
+    nodes: ['tk-socket','tk-sw','tk-pdc','tk-bdc','tk-share','tk-kanri','tk-ten','tk-rtx',
             'tk-ap-9f','tk-gap-9f','tk-ap-8f','tk-gap-8f','tk-ap-7fa','tk-ap-7fb','tk-gap-7f',
             'tk-mfp-7f','tk-ap-6fa','tk-ap-6fb','tk-gap-6f','tk-mfp-6f','tk-gap-5f'],
     fill: 'rgba(30,58,138,0.08)', stroke: 'rgba(59,130,246,0.5)', labelColor: 'rgba(147,197,253,0.9)',
   },
   {
     label: '大阪営業所（192.168.20.x）',
-    nodes: ['os-socket','os-ap1','os-ap2','os-trii','os-mfp','os-unk'],
+    nodes: ['os-socket','os-ap1','os-ap2','os-mfp','os-unk'],
     fill: 'rgba(30,58,138,0.06)', stroke: 'rgba(59,130,246,0.35)', labelColor: 'rgba(147,197,253,0.8)',
   },
   {
     label: '橋本R&D（192.168.30.x）',
-    nodes: ['hs-socket','hs-qnap','hs-iot','hs-ap','hs-trii','hs-mfp','hs-unk'],
+    nodes: ['hs-socket','hs-qnap','hs-iot','hs-ap','hs-mfp','hs-unk'],
     fill: 'rgba(30,58,138,0.06)', stroke: 'rgba(59,130,246,0.35)', labelColor: 'rgba(147,197,253,0.8)',
   },
   {
     label: '福岡営業所（192.168.40.x）',
-    nodes: ['fk-socket','fk-trii'],
+    nodes: ['fk-socket'],
     fill: 'rgba(30,58,138,0.06)', stroke: 'rgba(59,130,246,0.35)', labelColor: 'rgba(147,197,253,0.8)',
   },
   {
     label: '和歌山（192.168.50.x）',
-    nodes: ['wk-socket','wk-trii1','wk-s2','wk-s3','wk-trii2','wk-unk'],
+    nodes: ['wk-socket','wk-unk'],
     fill: 'rgba(30,58,138,0.06)', stroke: 'rgba(59,130,246,0.35)', labelColor: 'rgba(147,197,253,0.8)',
   },
   {
     label: '多摩センター（192.168.60.x）',
-    nodes: ['tj-socket','tj-ap','tj-trii','tj-mfp1','tj-mfp2','tj-unk'],
+    nodes: ['tj-socket','tj-ap','tj-mfp1','tj-mfp2','tj-unk'],
     fill: 'rgba(30,58,138,0.06)', stroke: 'rgba(59,130,246,0.35)', labelColor: 'rgba(147,197,253,0.8)',
   },
   {
     label: '京橋ビル（192.168.70.x）',
-    nodes: ['kb-socket','kb-trii'],
+    nodes: ['kb-socket'],
     fill: 'rgba(30,58,138,0.06)', stroke: 'rgba(59,130,246,0.35)', labelColor: 'rgba(147,197,253,0.8)',
   },
   {
     label: '名古屋（192.168.80.x）',
-    nodes: ['ng-socket','ng-trii'],
+    nodes: ['ng-socket'],
     fill: 'rgba(30,58,138,0.06)', stroke: 'rgba(59,130,246,0.35)', labelColor: 'rgba(147,197,253,0.8)',
   },
 ];
@@ -785,7 +716,7 @@ network1.on('hoverNode', function(p) {
 const FLOOR_GROUPS_1 = [
   {
     label: '6F サーバー室',
-    nodes: ['tk-socket', 'tk-sw', 'tk-pdc', 'tk-bdc', 'tk-share', 'tk-kanri', 'tk-ten', 'tk-trii', 'tk-rtx'],
+    nodes: ['tk-socket', 'tk-sw', 'tk-pdc', 'tk-bdc', 'tk-share', 'tk-kanri', 'tk-ten', 'tk-rtx'],
     fill: 'rgba(16,185,129,0.07)',
     stroke: 'rgba(16,185,129,0.45)',
     labelColor: 'rgba(110,231,183,0.9)',
