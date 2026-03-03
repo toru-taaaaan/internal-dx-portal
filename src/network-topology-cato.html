@@ -625,6 +625,24 @@ const network1 = new vis.Network(container1, { nodes: nodes1, edges: edges1 }, {
   }
 });
 
+function fitLeft1(animate) {
+  const pts = Object.values(network1.getPositions());
+  if (!pts.length) return;
+  const minX = Math.min(...pts.map(p => p.x));
+  const maxX = Math.max(...pts.map(p => p.x));
+  const minY = Math.min(...pts.map(p => p.y));
+  const maxY = Math.max(...pts.map(p => p.y));
+  const W = container1.clientWidth, H = container1.clientHeight;
+  const pad = 44;
+  const scale = Math.min((W - pad*2) / (maxX - minX || 1),
+                         (H - pad*2) / (maxY - minY || 1), 1.5);
+  network1.moveTo({
+    position: { x: minX - pad/scale + W/(2*scale), y: (minY + maxY)/2 },
+    scale,
+    animation: animate ? { duration:600, easingFunction:'easeInOutQuad' } : false
+  });
+}
+
 network1.on('click', function(p) {
   if (p.nodes.length === 0) return;
   const id = p.nodes[0];
@@ -635,11 +653,16 @@ network1.on('click', function(p) {
     edges1.remove(sd.edges.map(e => e.id));
     expanded1[id] = false;
   } else {
+    const existingIds = nodes1.getIds();
+    const savedPos = network1.getPositions(existingIds);
     nodes1.add(sd.nodes);
     edges1.add(sd.edges);
     expanded1[id] = true;
+    existingIds.forEach(nid => {
+      if (savedPos[nid]) nodes1.update([{ id: nid, x: savedPos[nid].x, y: savedPos[nid].y }]);
+    });
   }
-  setTimeout(() => network1.fit({ animation:{ duration:600, easingFunction:'easeInOutQuad' } }), 80);
+  setTimeout(() => fitLeft1(true), 80);
 });
 
 network1.on('hoverNode', function(p) {
@@ -983,8 +1006,8 @@ function addCtrlZoom(net, el) {
 addCtrlZoom(network1, container1);
 addCtrlZoom(network2, container2);
 
-// 初期表示
-network1.fit();
+// 初期表示（左寄せ）
+setTimeout(() => fitLeft1(false), 80);
 
 // net2 はビューポート外で初期化されるため、表示領域に入ったタイミングで再描画する
 const _obs2 = new IntersectionObserver(function(entries) {
