@@ -103,7 +103,7 @@
     <h3 id="info1-title"></h3>
     <div id="info1-body"></div>
   </div>
-  <div class="hint">💡 Socketをクリックで機器を展開 / 収納</div>
+  <div class="hint">💡 Socketをクリックで展開 / 収納　Ctrl+ホイールでズーム　ドラッグでパン</div>
 </div>
 
 <!-- ② VarioSecure VPN (SECOM専用) -->
@@ -123,7 +123,7 @@
     <h3 id="info2-title"></h3>
     <div id="info2-body"></div>
   </div>
-  <div class="hint">💡 VSR CPEをクリックでSECOM機器を展開 / 収納</div>
+  <div class="hint">💡 VSR CPEをクリックで展開 / 収納　Ctrl+ホイールでズーム　ドラッグでパン</div>
 </div>
 
 <script>
@@ -730,7 +730,7 @@ const network1 = new vis.Network(container1, { nodes: nodes1, edges: edges1 }, {
     tooltipDelay: 0,
     navigationButtons: false,
     keyboard: false,
-    zoomView: true,
+    zoomView: false,
     dragView: true,
   },
   edges: {
@@ -1043,7 +1043,7 @@ const network2 = new vis.Network(container2, { nodes: nodes2, edges: edges2 }, {
     tooltipDelay: 0,
     navigationButtons: false,
     keyboard: false,
-    zoomView: true,
+    zoomView: false,
     dragView: true,
   },
   edges: {
@@ -1092,9 +1092,36 @@ network2.on('hoverNode', function(p) {
   document.getElementById('info2').style.display = 'block';
 });
 
+// Ctrl+ホイールでズーム（通常ホイールはページスクロールに委譲）
+function addCtrlZoom(net, el) {
+  el.addEventListener('wheel', function(e) {
+    if (!e.ctrlKey) return;
+    e.preventDefault();
+    const factor = e.deltaY > 0 ? 0.85 : 1.18;
+    net.moveTo({ scale: net.getScale() * factor });
+  }, { passive: false });
+}
+addCtrlZoom(network1, container1);
+addCtrlZoom(network2, container2);
+
 // 初期表示
 network1.fit();
-network2.fit();
+
+// net2 はビューポート外で初期化されるため、表示領域に入ったタイミングで再描画する
+const _obs2 = new IntersectionObserver(function(entries) {
+  if (entries[0].isIntersecting) {
+    network2.redraw();
+    network2.fit({ animation: false });
+    _obs2.disconnect();
+  }
+}, { threshold: 0.1 });
+_obs2.observe(document.getElementById('net2'));
+
+// フォールバック: 500ms 後にも fit
+setTimeout(function() {
+  network2.redraw();
+  network2.fit({ animation: false });
+}, 500);
 </script>
 </body>
 </html>
