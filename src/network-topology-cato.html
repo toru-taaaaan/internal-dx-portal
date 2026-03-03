@@ -341,24 +341,8 @@ const BASE_NODES_1 = [
     { ip:'192.168.30.x（導入時確定）', desc:'Cato Socket（将来構成 / 現VSR400 置き換え）\nCato Cloud PoP（東京・大阪）へ自動接続\nクリックで機器を展開 / 収納' },
     { level:2 }),
 
-  n('fk-socket', 'Cato Socket\n192.168.40.x\nSD-WAN CPE\n【福岡営業所】', 'socket',
-    { ip:'192.168.40.x（導入時確定）', desc:'Cato Socket（将来構成 / 現VSR401j 置き換え）\nCato Cloud PoP（大阪・東京）へ自動接続\nクリックで機器を展開 / 収納' },
-    { level:2 }),
-
-  n('wk-socket', 'Cato Socket\n192.168.50.x\nSD-WAN CPE\n【和歌山】', 'socket',
-    { ip:'192.168.50.x（導入時確定）', desc:'Cato Socket（将来構成 / 現VSR401j 置き換え）\nCato Cloud PoP（大阪）へ自動接続\nクリックで機器を展開 / 収納' },
-    { level:2 }),
-
   n('tj-socket', 'Cato Socket\n192.168.60.x\nSD-WAN CPE\n【多摩センター】', 'socket',
     { ip:'192.168.60.x（導入時確定）', desc:'Cato Socket（将来構成 / 現VSR400 置き換え）\nCato Cloud PoP（東京）へ自動接続\nクリックで機器を展開 / 収納' },
-    { level:2 }),
-
-  n('kb-socket', 'Cato Socket\n192.168.70.x\nSD-WAN CPE\n【京橋ビル】', 'socket',
-    { ip:'192.168.70.x（導入時確定）', desc:'Cato Socket（将来構成 / 現VSR401j 置き換え）\nCato Cloud PoP（大阪・東京）へ自動接続\nクリックで機器を展開 / 収納' },
-    { level:2 }),
-
-  n('ng-socket', 'Cato Socket\n192.168.80.x\nSD-WAN CPE\n【名古屋】', 'socket',
-    { ip:'192.168.80.x（導入時確定）', desc:'Cato Socket（将来構成 / 現VSR401j 置き換え）\nCato Cloud PoP（大阪・東京）へ自動接続\nクリックで機器を展開 / 収納' },
     { level:2 }),
 ];
 
@@ -371,11 +355,7 @@ const BASE_EDGES_1 = [
   edge('ecc-tk',  'cato-cloud',  'tk-socket',   { width:2.5, color:{color:'#10b981'} }),
   edge('ecc-os',  'cato-cloud',  'os-socket',   { width:2,   color:{color:'#10b981'} }),
   edge('ecc-hs',  'cato-cloud',  'hs-socket',   { width:2,   color:{color:'#10b981'} }),
-  edge('ecc-fk',  'cato-cloud',  'fk-socket',   { width:2,   color:{color:'#10b981'} }),
-  edge('ecc-wk',  'cato-cloud',  'wk-socket',   { width:2,   color:{color:'#10b981'} }),
   edge('ecc-tj',  'cato-cloud',  'tj-socket',   { width:2,   color:{color:'#10b981'} }),
-  edge('ecc-kb',  'cato-cloud',  'kb-socket',   { width:2,   color:{color:'#10b981'} }),
-  edge('ecc-ng',  'cato-cloud',  'ng-socket',   { width:2,   color:{color:'#10b981'} }),
 ];
 
 // ─────────────────────────────────────────
@@ -547,18 +527,6 @@ const SITE_DATA_1 = {
     ]
   },
 
-  // ── 和歌山（wk-socket 配下）──
-  'wk-socket': {
-    nodes: [
-      n('wk-unk', '台帳未登録 × 2\n.35 / .36\n情シス未回答', 'unknown',
-        { ip:'192.168.50.35 / .36', desc:'OS推定: Network機器(TTL255)\n台帳未登録 / 情シス未回答（要対応）' },
-        { level:3 }),
-    ],
-    edges: [
-      edge('ewk-unk',   'wk-socket', 'wk-unk',   { color:{color:'#475569'} }),
-    ]
-  },
-
   // ── 多摩センター（tj-socket 配下）──
   'tj-socket': {
     nodes: [
@@ -607,28 +575,8 @@ const SITE_GROUPS_1 = [
     fill: 'rgba(30,58,138,0.06)', stroke: 'rgba(59,130,246,0.35)', labelColor: 'rgba(147,197,253,0.8)',
   },
   {
-    label: '福岡営業所（192.168.40.x）',
-    nodes: ['fk-socket'],
-    fill: 'rgba(30,58,138,0.06)', stroke: 'rgba(59,130,246,0.35)', labelColor: 'rgba(147,197,253,0.8)',
-  },
-  {
-    label: '和歌山（192.168.50.x）',
-    nodes: ['wk-socket','wk-unk'],
-    fill: 'rgba(30,58,138,0.06)', stroke: 'rgba(59,130,246,0.35)', labelColor: 'rgba(147,197,253,0.8)',
-  },
-  {
     label: '多摩センター（192.168.60.x）',
     nodes: ['tj-socket','tj-ap','tj-mfp1','tj-mfp2','tj-unk'],
-    fill: 'rgba(30,58,138,0.06)', stroke: 'rgba(59,130,246,0.35)', labelColor: 'rgba(147,197,253,0.8)',
-  },
-  {
-    label: '京橋ビル（192.168.70.x）',
-    nodes: ['kb-socket'],
-    fill: 'rgba(30,58,138,0.06)', stroke: 'rgba(59,130,246,0.35)', labelColor: 'rgba(147,197,253,0.8)',
-  },
-  {
-    label: '名古屋（192.168.80.x）',
-    nodes: ['ng-socket'],
     fill: 'rgba(30,58,138,0.06)', stroke: 'rgba(59,130,246,0.35)', labelColor: 'rgba(147,197,253,0.8)',
   },
 ];
