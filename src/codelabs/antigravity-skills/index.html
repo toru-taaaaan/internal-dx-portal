@@ -1,0 +1,715 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Antigravity スキル入門</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="antigravity-skills"
+                  title="Antigravity スキル入門"
+                  environment="web"
+                  feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/">
+
+      <google-codelab-step label="はじめに" duration="3">
+        <p>このCodelabでは <strong>Google Antigravity</strong> の <strong>エージェントスキル</strong> を構築する方法を学びます。</p>
+<p>スキルとは、専門知識とワークフローを使って AI エージェントの機能を拡張する <strong>軽量のオープンフォーマット</strong> です。</p>
+<h2 is-upgraded>このCodelabで学ぶこと</h2>
+<ul>
+<li>スキルがなぜ重要か（コンテキスト飽和の問題）を理解する</li>
+<li>スキルのディレクトリ構造と <code>SKILL.md</code> の書き方を習得する</li>
+<li>5段階のスキル実装パターン（基本〜複合）を体験する</li>
+<li>スクリプト・リファレンス・例を組み合わせた高度なスキルを作る</li>
+</ul>
+<h2 is-upgraded>このCodelabで作るもの</h2>
+<p>5つのスキルを段階的に構築します：</p>
+<ol type="1">
+<li><strong>git-commit-formatter</strong> — コミットメッセージを Conventional Commits 形式に自動整形</li>
+<li><strong>license-header-adder</strong> — 新規ファイルにライセンスヘッダーを自動付与</li>
+<li><strong>json-to-pydantic</strong> — JSON を Pydantic モデルに変換</li>
+<li><strong>database-schema-validator</strong> — SQL スキーマをルールに従って検証</li>
+<li><strong>adk-tool-scaffold</strong> — ADK ツールクラスのひな形を自動生成</li>
+</ol>
+<h2 is-upgraded>前提条件</h2>
+<ul>
+<li><strong>Antigravity インストール済み</strong>（未インストールの場合は「Antigravity 使い方入門」を先に完了してください）</li>
+<li><strong>Google Workspace アカウント</strong>（会社の Gmail アドレス）</li>
+<li>所要時間：約 45 分</li>
+</ul>
+<aside class="special"><p> プログラミングの経験が浅くても大丈夫です。スキルの仕組みを理解することで、エージェントをより効果的に活用できるようになります。 </p>
+</aside>
+
+
+      </google-codelab-step>
+
+      <google-codelab-step label="スキルが重視される理由" duration="5">
+        <h2 is-upgraded>問題：コンテキストの飽和</h2>
+<p>現代の AI エージェントは複雑な推論エンジンに進化しています。しかし、コードベース全体と数百のツールを <strong>無差別に読み込む</strong> と、<strong>コンテキストの飽和</strong> が発生します。</p>
+<p>未使用のツール情報だけで <strong>4〜5 万トークン</strong> を消費し、次の課題が生じます：</p>
+<ul>
+<li>レイテンシの増加（応答が遅くなる）</li>
+<li>コストの無駄</li>
+<li><strong>コンテキスト劣化</strong>（関連性のないデータで推論が混乱する）</li>
+</ul>
+<h2 is-upgraded>解決策：プログレッシブ開示</h2>
+<p>スキルは「<strong>プログレッシブ開示</strong>」アーキテクチャを実現します。</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p>タイミング</p></td><td colspan="1" rowspan="1"><p>読み込むもの</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>セッション開始時</p></td><td colspan="1" rowspan="1"><p>スキル名と説明だけの軽量メニュー</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>ユーザーの意図が一致したとき</p></td><td colspan="1" rowspan="1"><p>重い手続き型知識（SKILL.md 本文）を動的に読み込む</p></td></tr>
+</table>
+<p>これにより、数十のツールを使う大規模プロジェクトでも <strong>パフォーマンスが維持</strong> されます。</p>
+<h2 is-upgraded>スキルの主な特徴</h2>
+<h3 is-upgraded>オンデマンド機能拡張</h3>
+<p>システムプロンプト（常に読み込まれる）と異なり、スキルはエージェントが <strong>ユーザーのリクエストに関連する</strong> と判断した場合にのみ読み込まれます。</p>
+<h3 is-upgraded>実行能力</h3>
+<p>スキルは Python や Bash スクリプトをバンドルでき、エージェントにローカルマシンや外部ネットワークで <strong>複雑な複数ステップアクションを実行</strong> させることができます。</p>
+<h3 is-upgraded>ルール・ワークフローとの違い</h3>
+<table>
+<tr><td colspan="1" rowspan="1"><p>種類</p></td><td colspan="1" rowspan="1"><p>特徴</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>ルール</p></td><td colspan="1" rowspan="1"><p>受動的・常に有効なガードレール</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>ワークフロー</p></td><td colspan="1" rowspan="1"><p>能動的・ユーザーがトリガーするマクロ</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>スキル</strong></p></td><td colspan="1" rowspan="1"><p><strong>エージェントトリガー</strong>：意図を自動検出し専門知識を動的提供</p></td></tr>
+</table>
+<aside class="special"><p> スキルと MCP の関係：MCP はエージェントの「手」（外部システムへの接続）、スキルはそれを指示する「脳」（方法論のパッケージ）です。 </p>
+</aside>
+
+
+      </google-codelab-step>
+
+      <google-codelab-step label="エージェントのスキルと Antigravity" duration="5">
+        <h2 is-upgraded>スキルの構造</h2>
+<p>Antigravity でのスキルは、<strong>定義ファイル（SKILL.md）</strong> とオプションのサポート資産を含む <strong>ディレクトリベースのパッケージ</strong> です。</p>
+<h3 is-upgraded>2つのスコープ</h3>
+<ol type="1">
+<li><strong>ワークスペーススコープ</strong>：<code>&lt;workspace-root&gt;/.agent/skills/</code><br>プロジェクト固有のスクリプト（デプロイ、データベース管理など）に適切</li>
+<li><strong>グローバルスコープ</strong>：<code>~/.gemini/antigravity/skills/</code><br>すべてのプロジェクトで使用可能。汎用ユーティリティに適切</li>
+</ol>
+<h3 is-upgraded>一般的なディレクトリ構造</h3>
+<pre><code>my-skill/
+    ├── SKILL.md              # 定義ファイル（必須）
+    ├── scripts/              # [オプション] Python・Bash・Node スクリプト
+    │   ├── run.py
+    │   └── util.sh
+    ├── references/           # [オプション] ドキュメント・テンプレート
+    │   └── api-docs.md
+    └── assets/               # [オプション] 静的資産
+</code></pre>
+<h2 is-upgraded>SKILL.md 定義ファイル</h2>
+<p>スキルの「脳」となるファイルで、<strong>2部構成</strong> です。</p>
+<h3 is-upgraded>① YAML フロントマター（メタデータ）</h3>
+<p>エージェントのルーターによってインデックスされる軽量なメタデータです。</p>
+<pre><code>---
+name: database-inspector
+description: Use this skill when the user asks to query the database, check table
+schemas, or inspect user data in the local PostgreSQL instance.
+---
+</code></pre>
+<p>主要フィールド：</p>
+<ul>
+<li><strong>name</strong>：スコープ内で一意（小文字・ハイフン使用可。例：<code>postgres-query</code>）</li>
+<li><strong>description</strong>：最も重要な必須フィールド。LLM がセマンティック関連性を認識できるほど説明的であるべき。「読み取り専用 SQL 実行」のような曖昧な記述では不十分です</li>
+</ul>
+<h3 is-upgraded>② マークダウン本文（手続き型指示）</h3>
+<p>スキルが有効になるとエージェントのコンテキストウィンドウに挿入されます。含めるべき内容：</p>
+<ol type="1">
+<li><strong>目標</strong>：スキルで達成できる内容</li>
+<li><strong>手順</strong>：ステップごとのロジック</li>
+<li><strong>例</strong>：少数ショットの入出力例</li>
+<li><strong>制約</strong>：「してはいけない」ルール</li>
+</ol>
+<h3 is-upgraded>スクリプト統合</h3>
+<p>スキルの最強機能の1つは <strong>スクリプト実行への委任</strong> です。LLM が直接行えない操作（バイナリ実行・複雑な計算・レガシーシステム連携）を可能にします。スクリプトは <code>scripts/</code> サブディレクトリに配置し、相対パスで参照します。</p>
+<aside class="special"><p> description フィールドは最も重要です。「データベースツール」のような曖昧な説明ではなく、「ユーザーがデータベースへのクエリ、テーブルスキーマの確認、ユーザーデータの検査を求めるときに使用する」のように具体的に書きましょう。 </p>
+</aside>
+
+
+      </google-codelab-step>
+
+      <google-codelab-step label="スキルを作成する" duration="10">
+        <h2 is-upgraded>レベル 1：基本ルーター（git-commit-formatter）</h2>
+<p>「Hello World」スキルです。開発者のあいまいなコミットメッセージ（「wip」「fix bug」など）を <strong>Conventional Commits 仕様</strong> に従わせます。</p>
+<p>まず、ワークスペースの <code>.agent/skills/git-commit-formatter/</code> ディレクトリを作成し、<code>SKILL.md</code> を以下の内容で作成します：</p>
+<pre><code>---
+name: git-commit-formatter
+description: Formats git commit messages according to Conventional Commits
+specification. Use this when the user asks to commit changes or write a commit message.
+---
+
+# Git Commit Formatter Skill
+
+When writing a git commit message, you MUST follow the Conventional Commits
+specification.
+
+## Format
+`&lt;type&gt;[optional scope]: &lt;description&gt;`
+
+## Allowed Types
+- **feat**: A new feature
+- **fix**: A bug fix
+- **docs**: Documentation only changes
+- **style**: Changes that do not affect the meaning of the code
+- **refactor**: A code change that neither fixes a bug nor adds a feature
+- **perf**: A code change that improves performance
+- **test**: Adding missing tests or correcting existing tests
+- **chore**: Changes to the build process or auxiliary tools
+
+## Instructions
+1. Analyze the changes to determine the primary `type`.
+2. Identify the `scope` if applicable.
+3. Write a concise `description` in an imperative mood.
+4. If there are breaking changes, add a footer starting with `BREAKING CHANGE:`.
+
+## Example
+`feat(auth): implement login with google`
+</code></pre>
+<p><strong>動作確認</strong>：チャットで「Commit these changes」と入力すると、エージェントが Conventional Commits 形式のコミットメッセージを提案します。</p>
+<h2 is-upgraded>レベル 2：アセット利用（license-header-adder）</h2>
+<p>「参照」パターンです。重い静的テキストをプロンプトに直接入れるのは無駄です。<code>resources/</code> フォルダにオフロードします。</p>
+<pre><code>license-header-adder/
+├── SKILL.md
+└── resources/
+    └── HEADER_TEMPLATE.txt
+</code></pre>
+<p><code>SKILL.md</code> は必要な場合にのみテンプレートファイルを読み取るようエージェントに指示します：</p>
+<pre><code>---
+name: license-header-adder
+description: Adds the standard open-source license header to new source files.
+Use involves creating new code files that require copyright attribution.
+---
+
+# License Header Adder Skill
+
+## Instructions
+1. **Read the Template**:
+   First, read the content at `resources/HEADER_TEMPLATE.txt`.
+
+2. **Prepend to File**:
+   When creating a new file (.py, .java, .js, .ts, .go),
+   prepend the target_file content with the template content.
+
+3. **Modify Comment Syntax**:
+   - C-style languages (Java, JS, TS, C++): Keep `/* ... */` block as is.
+   - Python, Shell, YAML: Convert to use `#` comments.
+   - HTML/XML: Use `&lt;!-- ... --&gt;`.
+</code></pre>
+<aside class="special"><p> 静的テキストをプロンプトに直接入れると毎回トークンが消費され、モデルが法的テキストをハルシネーションする可能性があります。references/ フォルダへのオフロードが最善策です。 </p>
+</aside>
+
+
+      </google-codelab-step>
+
+      <google-codelab-step label="作成スキル" duration="15">
+        <h2 is-upgraded>レベル 3：例による学習（json-to-pydantic）</h2>
+<p>「少数ショット」パターンです。LLM はパターンマッチングエンジンなので、詳細な指示より <strong>優れた例（Input → Output）</strong> を示す方が効果的です。</p>
+<pre><code>json-to-pydantic/
+├── SKILL.md
+└── examples/
+    ├── input_data.json      # Before State
+    └── output_model.py      # After State
+</code></pre>
+<p><strong>input_data.json</strong>：</p>
+<pre><code>{
+    "user_id": 12345,
+    "username": "jdoe_88",
+    "is_active": true,
+    "preferences": {
+        "theme": "dark",
+        "notifications": ["email", "push"]
+    },
+    "last_login": "2024-03-15T10:30:00Z",
+    "meta_tags": null
+}
+</code></pre>
+<p><strong>output_model.py</strong>：</p>
+<pre><code>from pydantic import BaseModel, Field
+from typing import List, Optional
+
+class Preferences(BaseModel):
+    theme: str
+    notifications: List[str]
+
+class User(BaseModel):
+    user_id: int
+    username: str
+    is_active: bool
+    preferences: Preferences
+    last_login: Optional[str] = None
+    meta_tags: Optional[List[str]] = None
+</code></pre>
+<p><strong>動作確認</strong>：JSON スニペットを貼り付けて「Convert this JSON to a Pydantic model」と入力すると、エージェントが <code>examples/</code> ペアを確認して同じスタイルで Pydantic クラスを生成します。</p>
+<h2 is-upgraded>レベル 4：手続き型ロジック（database-schema-validator）</h2>
+<p>「ツール使用」パターンです。LLM の推測ではなく、<strong>決定論的なスクリプト</strong> に検証を委任します。</p>
+<pre><code>database-schema-validator/
+├── SKILL.md
+└── scripts/
+    └── validate_schema.py
+</code></pre>
+<p>スキルの SKILL.md はスクリプト実行を指示します：</p>
+<pre><code>python scripts/validate_schema.py &lt;path_to_user_file&gt;
+</code></pre>
+<p>スクリプトが exit code 0 を返せば「検証OK」、exit code 1 を返せばエラーメッセージを報告します。検証ポリシー：</p>
+<ol type="1">
+<li><strong>安全性</strong>：<code>DROP TABLE</code> 禁止</li>
+<li><strong>命名規則</strong>：テーブル名は <code>snake_case</code></li>
+<li><strong>構造</strong>：すべてのテーブルに <code>id</code> 主キーが必要</li>
+</ol>
+<h2 is-upgraded>レベル 5：アーキテクト（adk-tool-scaffold）</h2>
+<p>これまでのすべての機能を統合した最も複雑なパターンです。</p>
+<pre><code>adk-tool-scaffold/
+├── SKILL.md
+├── resources/
+│   └── ToolTemplate.py.hbs    # Jinja2 テンプレート
+├── scripts/
+│   └── scaffold_tool.py       # ジェネレータースクリプト
+└── examples/
+    └── WeatherTool.py         # 参考実装
+</code></pre>
+<p>ADK（Agent Development Kit）用の新しいツールクラスを <strong>自動生成</strong> します。スキルが実行する手順：</p>
+<ol type="1">
+<li>ツール名を抽出（例：「StockPrice」「EmailSender」）</li>
+<li><code>examples/WeatherTool.py</code> で ADK ツールの構造を確認</li>
+<li><code>python scripts/scaffold_tool.py &lt;ToolName&gt;</code> を実行してひな形ファイルを生成</li>
+<li>生成されたファイルを編集して実装を完成させる</li>
+</ol>
+<p><strong>動作確認</strong>：「Create a new ADK tool called StockPrice to fetch data from an API」と入力すると、エージェントがスクリプトを実行し <code>StockPriceTool.py</code> を作成して <code>examples/</code> を参照しながらガイダンスを提供します。</p>
+<aside class="special"><p> レベル5はスクリプト・テンプレート・例の3つを組み合わせています。複雑なタスクほどこの組み合わせが効果的です。 </p>
+</aside>
+
+
+      </google-codelab-step>
+
+      <google-codelab-step label="完了" duration="2">
+        <p>おつかれさまでした！このCodelabでは Antigravity エージェントスキルの全レベルを体験しました。</p>
+<h2 is-upgraded>作成したスキル</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p>レベル</p></td><td colspan="1" rowspan="1"><p>スキル名</p></td><td colspan="1" rowspan="1"><p>パターン</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>1</p></td><td colspan="1" rowspan="1"><p>git-commit-formatter</p></td><td colspan="1" rowspan="1"><p>基本ルーター（指示のみ）</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>2</p></td><td colspan="1" rowspan="1"><p>license-header-adder</p></td><td colspan="1" rowspan="1"><p>アセット利用（テンプレートオフロード）</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>3</p></td><td colspan="1" rowspan="1"><p>json-to-pydantic</p></td><td colspan="1" rowspan="1"><p>例による学習（少数ショット）</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>4</p></td><td colspan="1" rowspan="1"><p>database-schema-validator</p></td><td colspan="1" rowspan="1"><p>手続き型ロジック（スクリプト委任）</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>5</p></td><td colspan="1" rowspan="1"><p>adk-tool-scaffold</p></td><td colspan="1" rowspan="1"><p>アーキテクト（複合パターン）</p></td></tr>
+</table>
+<h2 is-upgraded>重要なポイント</h2>
+<ul>
+<li><strong>description が最重要</strong>：LLM がセマンティックマッチングに使う。曖昧な説明はスキルが発動しない</li>
+<li><strong>重いテキストはオフロード</strong>：静的テキストは <code>references/</code> に、スクリプトは <code>scripts/</code> に</li>
+<li><strong>例は指示より強い</strong>：<code>examples/</code> の入出力ペアを活用するとモデルの精度が上がる</li>
+<li><strong>スコープを使い分ける</strong>：プロジェクト固有はワークスペース、汎用はグローバル</li>
+</ul>
+<h2 is-upgraded>スキルとMCPの関係</h2>
+<p>MCP はエージェントの「手」（GitHub や PostgreSQL などの外部システムへの接続）、スキルはそれを指示する「脳」（ツールの使い方をパッケージ化した軽量な知識）です。両者を組み合わせることで、組織のベストプラクティスと安全基準を厳守するスペシャリストエージェントが実現します。</p>
+<h2 is-upgraded>次のステップ</h2>
+<ul>
+<li>自分の業務に合わせた独自スキルを作成してみる</li>
+<li>チームでスキルを共有してグローバルスコープに配置する</li>
+<li>スキルと仕様駆動開発を組み合わせてより高精度な開発を実践する</li>
+</ul>
+<h2 is-upgraded>参考リンク</h2>
+<ul>
+<li><a href="https://antigravity.google/" target="_blank">Antigravity 公式サイト</a></li>
+<li><a href="https://antigravity.google/docs/skills" target="_blank">スキルドキュメント</a></li>
+</ul>
+<h2 is-upgraded>サポート</h2>
+<p>操作で困ったことがあれば情報システム部にお気軽に連絡ください。</p>
+<aside class="special"><p> エージェントスキルは、Antigravity があなたのコード記述ルールとツールに沿って動作するための最適な方法です。汎用的なプログラマーを、組織のベストプラクティスを厳守するスペシャリストへと変革します。 </p>
+</aside>
+
+
+      </google-codelab-step>
+
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+  <!-- ========================================= -->
+  <!-- 音声読み上げ機能 -->
+  <!-- ========================================= -->
+  <div id="speech-panel" style="position: fixed; bottom: 80px; right: 24px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+    <!-- 進捗表示 -->
+    <div id="speech-progress" style="display: none; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 320px; font-family: 'Roboto', sans-serif;">
+      <div style="font-size: 0.7rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">読み上げ中</div>
+      <div id="speech-current-section" style="font-size: 0.85rem; font-weight: 600; color: #0f172a; margin-top: 2px;"></div>
+      <div style="background: #f1f5f9; border-radius: 4px; height: 4px; margin-top: 8px; overflow: hidden;">
+        <div id="speech-bar" style="background: #1a73e8; height: 100%; width: 0%; transition: width 0.3s;"></div>
+      </div>
+      <div style="display: flex; gap: 8px; margin-top: 8px;">
+        <button onclick="speechSkipPrev()" style="background: none; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-size: 0.75rem; color: #64748b;">◀ 前</button>
+        <button onclick="speechSkipNext()" style="background: none; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-size: 0.75rem; color: #64748b;">次 ▶</button>
+        <select id="speech-rate" onchange="updateSpeechRate()" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 8px; font-size: 0.7rem; color: #64748b; cursor: pointer;">
+          <option value="0.8">0.8x</option>
+          <option value="1" selected>1.0x</option>
+          <option value="1.2">1.2x</option>
+          <option value="1.5">1.5x</option>
+          <option value="2">2.0x</option>
+          <option value="2.5">2.5x</option>
+          <option value="3">3.0x</option>
+          <option value="4">4.0x</option>
+        </select>
+        <button id="ai-toggle" onclick="toggleAI()" style="background: #10b981; border: 1px solid #059669; border-radius: 6px; padding: 4px 8px; font-size: 0.65rem; color: white; cursor: pointer; font-weight: 600;" title="AI読みがな補正のON/OFF">AI補正</button>
+      </div>
+    </div>
+    <!-- 再生ボタン -->
+    <button id="speech-btn" onclick="toggleSpeech()" style="
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1a73e8, #1557b0);
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(26, 115, 232, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    " title="ガイドを音声で読み上げる">
+      ▶
+    </button>
+  </div>
+
+  <script>
+  // ========================================
+  // 読み上げスクリプト（各ステップの内容）
+  // ========================================
+  const speechSections = [
+    {
+      title: 'はじめに',
+      text: 'はじめに。このコードラボではGoogleアンチグラビティのエージェントスキルを構築する方法を学びます。スキルとは、専門知識とワークフローを使ってエーアイエージェントの機能を拡張する軽量のオープンフォーマットです。このコードラボで学ぶことは、スキルがなぜ重要か（コンテキスト飽和の問題）を理解すること、スキルのディレクトリ構造とSKILL.mdの書き方を習得すること、5段階のスキル実装パターン（基本〜複合）を体験すること、スクリプト・リファレンス・例を組み合わせた高度なスキルを作ることです。このコードラボで作るものは5つのスキルです。1つ目がgitコミットフォーマッター（コミットメッセージをコンベンショナルコミット形式に自動整形）、2つ目がライセンスヘッダーアダー（新規ファイルにライセンスヘッダーを自動付与）、3つ目がジェーソントゥパイダンティック（JSONをパイダンティックモデルに変換）、4つ目がデータベーススキーマバリデーター（SQLスキーマをルールに従って検証）、5つ目がADKツールスキャフォールド（ADKツールクラスのひな形を自動生成）です。前提条件はアンチグラビティインストール済み、グーグルワークスペースアカウントで、所要時間は約45分です。プログラミングの経験が浅くても大丈夫です。スキルの仕組みを理解することで、エージェントをより効果的に活用できるようになります。'
+    },
+    {
+      title: 'スキルが重視される理由',
+      text: 'スキルが重視される理由。まず問題として「コンテキストの飽和」があります。現代のエーアイエージェントは複雑な推論エンジンに進化しています。しかし、コードベース全体と数百のツールを無差別に読み込むと、コンテキストの飽和が発生します。未使用のツール情報だけで4〜5万トークンを消費し、レイテンシの増加、コストの無駄、コンテキスト劣化（関連性のないデータで推論が混乱する）という課題が生じます。解決策は「プログレッシブ開示」です。スキルはプログレッシブ開示アーキテクチャを実現します。セッション開始時はスキル名と説明だけの軽量メニューのみ読み込み、ユーザーの意図が一致したときだけ、重い手続き型知識（SKILL.mdの本文）を動的に読み込みます。これにより、数十のツールを使う大規模プロジェクトでもパフォーマンスが維持されます。スキルの主な特徴として、オンデマンド機能拡張（エージェントがユーザーのリクエストに関連すると判断した場合にのみ読み込み）、実行能力（Pythonや Bashスクリプトをバンドルして複数ステップアクションを実行可能）があります。ルール・ワークフロー・スキルの違いとして、ルールは受動的で常に有効なガードレール、ワークフローは能動的でユーザーがトリガーするマクロ、スキルはエージェントトリガーとして意図を自動検出し専門知識を動的に提供します。スキルとMCPの関係：MCPはエージェントの「手」（外部システムへの接続）、スキルはそれを指示する「脳」（方法論のパッケージ）です。'
+    },
+    {
+      title: 'エージェントのスキルと Antigravity',
+      text: 'エージェントのスキルとアンチグラビティ。スキルの構造について説明します。アンチグラビティでのスキルは、定義ファイル（SKILL.md）とオプションのサポート資産を含むディレクトリベースのパッケージです。2つのスコープがあります。1つ目はワークスペーススコープ（ワークスペースルート直下の.agent/skills/）で、プロジェクト固有のスクリプトに適切です。2つ目はグローバルスコープ（ホームディレクトリの.gemini/antigravity/skills/）で、すべてのプロジェクトで使用可能な汎用ユーティリティに適切です。一般的なディレクトリ構造は、my-skill/の下にSKILL.md（定義ファイル・必須）、scripts/（オプション：Python・Bash・Nodeスクリプト）、references/（オプション：ドキュメント・テンプレート）、assets/（オプション：静的資産）が置かれます。SKILL.md定義ファイルはスキルの「脳」となるファイルで、2部構成です。1つ目がYAMLフロントマター（メタデータ）で、エージェントのルーターによってインデックスされる軽量なメタデータです。主要フィールドはname（スコープ内で一意、小文字・ハイフン使用可）とdescription（最も重要な必須フィールド）です。2つ目がマークダウン本文（手続き型指示）で、スキルが有効になるとエージェントのコンテキストウィンドウに挿入されます。含めるべき内容は、目標・手順・例・制約の4つです。スクリプト統合はスキルの最強機能の1つで、LLMが直接行えない操作をスクリプトに委任できます。descriptionフィールドは最も重要です。「データベースツール」のような曖昧な説明ではなく、具体的なユースケースを説明する文を書きましょう。'
+    },
+    {
+      title: 'スキルを作成する',
+      text: 'スキルを作成する。レベル1として基本ルーター（gitコミットフォーマッター）を作ります。「ハローワールド」スキルです。開発者のあいまいなコミットメッセージ（wipやfixバグなど）をコンベンショナルコミット仕様に従わせます。ワークスペースの.agent/skills/git-commit-formatterディレクトリを作成し、SKILL.mdを作成します。descriptionには「コミットメッセージをコンベンショナルコミット仕様に従ってフォーマットする。ユーザーが変更のコミットやコミットメッセージの記述を求めるときに使用する」と書きます。SKILL.mdの本文には、フォーマット（タイプ＋スコープ＋説明）、許可されるタイプ（feat・fix・docs・style・refactor・perf・test・chore）、手順、例を含めます。動作確認はチャットで「Commit these changes」と入力すると、エージェントがコンベンショナルコミット形式のメッセージを提案します。レベル2はアセット利用（ライセンスヘッダーアダー）です。「参照」パターンです。重い静的テキストをプロンプトに直接入れるのは無駄なので、resources/フォルダにオフロードします。ディレクトリ構造はlicense-header-adder/の下にSKILL.mdとresources/HEADER_TEMPLATE.txtを置きます。SKILL.mdはまず「resources/HEADER_TEMPLATE.txtを読み取る」ようエージェントに指示し、新規ファイル作成時にテンプレート内容を先頭に付与させます。言語によってコメント記法を変換します（Cスタイルはスラッシュアスタリスク、PythonはハッシュマークなどのHashコメント、HTMLはHTMLコメント）。静的テキストをプロンプトに直接入れると毎回トークンが消費され、モデルが法的テキストをハルシネーションする可能性があります。references/フォルダへのオフロードが最善策です。'
+    },
+    {
+      title: '作成スキル',
+      text: '作成スキル。レベル3として例による学習（ジェーソントゥパイダンティック）を作ります。「少数ショット」パターンです。LLMはパターンマッチングエンジンなので、詳細な指示より優れた例（インプットからアウトプット）を示す方が効果的です。ディレクトリ構造はjson-to-pydanticの下にSKILL.mdとexamples/フォルダを置き、examples/の中にinput_data.jsonとoutput_model.pyを配置します。input_data.jsonはユーザーIDやユーザーネームなどのフィールドを持つJSONオブジェクトです。output_model.pyはPydanticのBaseModelを継承したUserクラスとPreferencesクラスを定義したPythonファイルです。動作確認はJSONスニペットを貼り付けて「Convert this JSON to a Pydantic model」と入力すると、エージェントがexamplesペアを確認して同じスタイルでパイダンティッククラスを生成します。レベル4は手続き型ロジック（データベーススキーマバリデーター）です。「ツール使用」パターンです。LLMの推測ではなく、決定論的なスクリプトに検証を委任します。SKILL.mdはスクリプト実行を指示します（python scripts/validate_schema.py ファイルパス）。スクリプトが終了コード0を返せば「検証OK」、終了コード1を返せばエラーメッセージを報告します。検証ポリシーは3つ：DROP TABLE禁止・テーブル名はスネークケース・すべてのテーブルにid主キーが必要です。レベル5はアーキテクト（ADKツールスキャフォールド）です。これまでのすべての機能を統合した最も複雑なパターンです。スクリプト・テンプレート・例の3つを組み合わせます。ADK（エージェントデベロップメントキット）用の新しいツールクラスを自動生成します。「Create a new ADK tool called StockPrice」と入力すると、エージェントがスクリプトを実行してStockPriceTool.pyを作成し、examplesを参照しながらガイダンスを提供します。レベル5はスクリプト・テンプレート・例の3つを組み合わせています。複雑なタスクほどこの組み合わせが効果的です。'
+    },
+    {
+      title: '完了',
+      text: '完了。おつかれさまでした！このコードラボではアンチグラビティエージェントスキルの全レベルを体験しました。作成したスキルは5つです。レベル1のgitコミットフォーマッター（基本ルーター・指示のみ）、レベル2のライセンスヘッダーアダー（アセット利用・テンプレートオフロード）、レベル3のジェーソントゥパイダンティック（例による学習・少数ショット）、レベル4のデータベーススキーマバリデーター（手続き型ロジック・スクリプト委任）、レベル5のADKツールスキャフォールド（アーキテクト・複合パターン）です。重要なポイントとして、descriptionが最重要（LLMがセマンティックマッチングに使う・曖昧な説明はスキルが発動しない）、重いテキストはオフロード（静的テキストはreferences/に、スクリプトはscripts/に）、例は指示より強い（examples/の入出力ペアを活用するとモデルの精度が上がる）、スコープを使い分ける（プロジェクト固有はワークスペース・汎用はグローバル）の4点です。スキルとMCPの関係として、MCPはエージェントの「手」（GitHubやPostgreSQLなどの外部システムへの接続）、スキルはそれを指示する「脳」（ツールの使い方をパッケージ化した軽量な知識）です。両者を組み合わせることで、組織のベストプラクティスと安全基準を厳守するスペシャリストエージェントが実現します。次のステップとして、自分の業務に合わせた独自スキルを作成してみること、チームでスキルを共有してグローバルスコープに配置すること、スキルと仕様駆動開発を組み合わせてより高精度な開発を実践することをお勧めします。操作で困ったことがあれば情報システム部にお気軽に連絡ください。'
+    }
+  ];
+
+  let speechState = 'stopped';
+  let currentSectionIndex = 0;
+  let currentUtterance = null;
+  let speechRate = 1.0;
+  let useAI = true;
+  let correctionCache = {};
+  let isCancelling = false;
+
+  // Gemini APIで読みがな補正
+  const GEMINI_API_KEY = 'AIzaSyBZWgnsUAD5UjU-hRWsQM9r8Z7DQy7gb_Y';
+  const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+
+  async function correctPronunciation(text) {
+    if (!useAI) return text;
+    if (correctionCache[text]) return correctionCache[text];
+
+    try {
+      const sectionLabel = document.getElementById('speech-current-section');
+      if (sectionLabel) sectionLabel.textContent += '  [AI補正中...]';
+
+      const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: `以下の日本語テキストを、音声合成（TTS）で正しく読み上げられるように変換してください。
+
+ルール:
+- 英字略語・製品名はカタカナ読みに変換: Antigravity→アンチグラビティ、AI→エーアイ、PC→ピーシー、OS→オーエス、URL→ユーアールエル、UI→ユーアイ、Codelabs→コードラボ、MCP→エムシーピー、ADK→エーディーケー、JSON→ジェーソン、SQL→エスキューエル、YAML→ヤムル、Pydantic→パイダンティック、Python→パイソン、Bash→バッシュ、Git→ギット
+- 英語フレーズ: SKILL.md→スキルエムディー、skills/→スキルズフォルダ、scripts/→スクリプツフォルダ、references/→リファレンスフォルダ、examples/→エグザンプルズフォルダ、snake_case→スネークケース、Conventional Commits→コンベンショナルコミット、Agent Manager→エージェントマネージャー
+- 文の意味や構造は一切変えない
+- 補足や説明を追加しない
+- 変換後のテキストだけを返す
+
+テキスト:
+${text}`
+            }]
+          }],
+          generationConfig: {
+            temperature: 0.1,
+            maxOutputTokens: 4096
+          }
+        })
+      });
+
+      if (!response.ok) {
+        console.warn('Gemini API error:', response.status);
+        if (response.status === 429 || response.status === 403) {
+          useAI = false;
+          const btn = document.getElementById('ai-toggle');
+          if (btn) { btn.style.background = '#94a3b8'; btn.style.borderColor = '#64748b'; btn.textContent = 'AI OFF'; }
+        }
+        return text;
+      }
+
+      const data = await response.json();
+      const corrected = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+      if (corrected && corrected.length > 0) {
+        correctionCache[text] = corrected;
+        return corrected;
+      }
+      return text;
+    } catch (e) {
+      console.warn('Gemini API call failed:', e);
+      return text;
+    }
+  }
+
+  function toggleSpeech() {
+    if (speechState === 'stopped') {
+      startSpeech(0);
+    } else if (speechState === 'playing') {
+      pauseSpeech();
+    } else if (speechState === 'paused') {
+      resumeSpeech();
+    }
+  }
+
+  function safeCancel() {
+    isCancelling = true;
+    window.speechSynthesis.cancel();
+    setTimeout(() => { isCancelling = false; }, 100);
+  }
+
+  function startSpeech(fromIndex) {
+    safeCancel();
+    currentSectionIndex = fromIndex;
+    speechState = 'playing';
+    updateSpeechUI();
+    prepareSectionAndSpeak();
+  }
+
+  async function prepareSectionAndSpeak() {
+    if (currentSectionIndex >= speechSections.length) {
+      stopSpeech();
+      return;
+    }
+
+    const section = speechSections[currentSectionIndex];
+
+    // Codelab のスライドを対応するステップに進める
+    const targetHash = '#' + currentSectionIndex;
+    if (window.location.hash !== targetHash) {
+      window.location.hash = targetHash;
+    }
+
+    // 進捗テキスト更新
+    const sectionLabel = document.getElementById('speech-current-section');
+    if (sectionLabel) {
+      sectionLabel.textContent = section.title + '  (' + (currentSectionIndex + 1) + '/' + speechSections.length + ')';
+    }
+
+    updateSpeechUI();
+
+    // AI補正
+    let textToSpeak = section.text;
+    try {
+      textToSpeak = await correctPronunciation(section.text);
+    } catch (e) {
+      console.warn('Section correction failed:', e);
+    }
+
+    if (speechState !== 'playing') return;
+
+    // 読み上げ
+    const utterance = new SpeechSynthesisUtterance(textToSpeak);
+    utterance.lang = 'ja-JP';
+    utterance.rate = speechRate;
+    utterance.pitch = 0.95;
+
+    const voices = window.speechSynthesis.getVoices();
+    const jaVoice = selectBestJapaneseVoice(voices);
+    if (jaVoice) utterance.voice = jaVoice;
+
+    utterance.onend = function() {
+      if (isCancelling) return;
+      if (speechState === 'playing') {
+        currentSectionIndex++;
+        updateSpeechUI();
+        setTimeout(() => prepareSectionAndSpeak(), 500);
+      }
+    };
+
+    utterance.onerror = function(e) {
+      if (isCancelling) return;
+      console.warn('Speech error:', e);
+      if (speechState === 'playing') {
+        currentSectionIndex++;
+        prepareSectionAndSpeak();
+      }
+    };
+
+    currentUtterance = utterance;
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function pauseSpeech() {
+    window.speechSynthesis.pause();
+    speechState = 'paused';
+    updateSpeechUI();
+  }
+
+  function resumeSpeech() {
+    window.speechSynthesis.resume();
+    speechState = 'playing';
+    updateSpeechUI();
+  }
+
+  function stopSpeech() {
+    safeCancel();
+    speechState = 'stopped';
+    currentSectionIndex = 0;
+    updateSpeechUI();
+  }
+
+  function speechSkipNext() {
+    if (currentSectionIndex < speechSections.length - 1) {
+      safeCancel();
+      currentSectionIndex++;
+      updateSpeechUI();
+      setTimeout(() => prepareSectionAndSpeak(), 150);
+    }
+  }
+
+  function speechSkipPrev() {
+    if (currentSectionIndex > 0) {
+      safeCancel();
+      currentSectionIndex--;
+      updateSpeechUI();
+      setTimeout(() => prepareSectionAndSpeak(), 150);
+    }
+  }
+
+  function updateSpeechRate() {
+    speechRate = parseFloat(document.getElementById('speech-rate').value);
+    if (speechState === 'playing') {
+      safeCancel();
+      setTimeout(() => prepareSectionAndSpeak(), 150);
+    }
+  }
+
+  function toggleAI() {
+    useAI = !useAI;
+    const btn = document.getElementById('ai-toggle');
+    if (useAI) {
+      btn.style.background = '#10b981';
+      btn.style.borderColor = '#059669';
+      btn.textContent = 'AI補正';
+    } else {
+      btn.style.background = '#94a3b8';
+      btn.style.borderColor = '#64748b';
+      btn.textContent = 'AI OFF';
+    }
+  }
+
+  function updateSpeechUI() {
+    const btn = document.getElementById('speech-btn');
+    const progress = document.getElementById('speech-progress');
+    const sectionLabel = document.getElementById('speech-current-section');
+    const speechBar = document.getElementById('speech-bar');
+
+    if (speechState === 'stopped') {
+      btn.textContent = '▶';
+      btn.style.background = 'linear-gradient(135deg, #1a73e8, #1557b0)';
+      btn.title = 'ガイドを音声で読み上げる';
+      progress.style.display = 'none';
+    } else if (speechState === 'playing') {
+      btn.textContent = '⏸';
+      btn.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
+      btn.title = '一時停止';
+      progress.style.display = 'block';
+      if (currentSectionIndex < speechSections.length) {
+        const section = speechSections[currentSectionIndex];
+        sectionLabel.textContent = section.title + '  (' + (currentSectionIndex + 1) + '/' + speechSections.length + ')';
+        speechBar.style.width = ((currentSectionIndex + 1) / speechSections.length * 100) + '%';
+      }
+    } else if (speechState === 'paused') {
+      btn.textContent = '▶';
+      btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+      btn.title = '再開';
+      progress.style.display = 'block';
+    }
+  }
+
+  // 高品質日本語音声を選択
+  let cachedBestVoice = null;
+
+  function selectBestJapaneseVoice(voices) {
+    if (cachedBestVoice) return cachedBestVoice;
+    const jaVoices = voices.filter(v => v.lang === 'ja-JP' || v.lang === 'ja');
+    if (jaVoices.length === 0) return voices[0] || null;
+
+    const priorities = [
+      v => v.name.includes('Google') && v.name.includes('日本語'),
+      v => v.name.includes('Google') && v.lang.startsWith('ja'),
+      v => v.name.includes('Nanami') && v.name.includes('Online'),
+      v => v.name.includes('Microsoft') && v.name.includes('Online'),
+      v => v.name.includes('Online') || v.name.includes('Natural'),
+      v => !v.localService,
+    ];
+    for (const check of priorities) {
+      const found = jaVoices.find(check);
+      if (found) { cachedBestVoice = found; return found; }
+    }
+    cachedBestVoice = jaVoices[0];
+    return jaVoices[0];
+  }
+
+  // ページロード時に前回の音声を停止
+  if (window.speechSynthesis) {
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = function() {
+      cachedBestVoice = null;
+      const voices = window.speechSynthesis.getVoices();
+      const best = selectBestJapaneseVoice(voices);
+      if (best) console.log('選択された音声:', best.name, best.lang, best.localService ? '(ローカル)' : '(オンライン)');
+    };
+  }
+
+  // ページ離脱時にも停止
+  window.addEventListener('beforeunload', function() {
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+  });
+
+  // 進捗パネルをダブルクリックで停止
+  document.getElementById('speech-progress').addEventListener('dblclick', function() {
+    stopSpeech();
+  });
+  </script>
+
+</body>
+</html>
