@@ -3,38 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ネットワーク構成図（Cato SASE 導入後）— AKIBAホールディングス</title>
+<title>ネットワーク構成図（Cato SASE / VarioSecure VPN）— AKIBAホールディングス</title>
 <script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', 'Hiragino Sans', sans-serif; background: #0f172a; color: #e2e8f0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+  body { font-family: 'Segoe UI', 'Hiragino Sans', sans-serif; background: #0f172a; color: #e2e8f0; }
 
   #header {
     padding: 12px 20px;
     background: #1e293b;
     border-bottom: 1px solid #334155;
-    flex-shrink: 0;
   }
   #header h1 { font-size: 15px; font-weight: 700; color: #f1f5f9; }
   #header p  { font-size: 11px; color: #64748b; margin-top: 3px; }
 
-  #legend {
+  .sec-label {
+    padding: 7px 20px;
+    background: #0f172a;
+    border-top: 2px solid #1e293b;
+  }
+  .sec-label h2 { font-size: 13px; font-weight: 700; }
+  .sec-label.cato h2  { color: #06b6d4; }
+  .sec-label.secom h2 { color: #f59e0b; }
+
+  .legend {
     display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
     padding: 8px 20px;
     background: #1e293b;
     border-bottom: 1px solid #334155;
     font-size: 11px;
-    flex-shrink: 0;
   }
   .leg { display: flex; align-items: center; gap: 6px; color: #94a3b8; }
   .ldot { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
   .leg-icon { width: 22px; height: 22px; object-fit: contain; flex-shrink: 0; }
 
-  #network-wrap { flex: 1; position: relative; min-height: 0; }
-  #mynetwork { width: 100%; height: 100%; }
+  .net-wrap { height: 72vh; position: relative; }
+  .net-wrap.sm { height: 56vh; }
+  .netdiv { width: 100%; height: 100%; }
 
-  /* Info panel */
-  #info {
+  .info-panel {
     position: absolute; bottom: 16px; right: 16px;
     width: 400px; max-height: 400px; overflow-y: auto;
     background: rgba(15,23,42,0.95);
@@ -46,13 +53,13 @@
     z-index: 10;
     backdrop-filter: blur(4px);
   }
-  #info h3 { font-size: 15px; font-weight: 700; color: #f1f5f9; margin-bottom: 8px; border-bottom: 1px solid #334155; padding-bottom: 6px; }
-  #info .row { display: flex; gap: 8px; margin: 5px 0; color: #94a3b8; }
-  #info .row b { color: #cbd5e1; min-width: 64px; }
-  #info-close { float: right; cursor: pointer; color: #64748b; font-size: 14px; line-height: 1; margin-left: 8px; }
-  #info-close:hover { color: #e2e8f0; }
+  .info-panel h3 { font-size: 15px; font-weight: 700; color: #f1f5f9; margin-bottom: 8px; border-bottom: 1px solid #334155; padding-bottom: 6px; }
+  .info-panel .row { display: flex; gap: 8px; margin: 5px 0; color: #94a3b8; }
+  .info-panel .row b { color: #cbd5e1; min-width: 64px; }
+  .info-close { float: right; cursor: pointer; color: #64748b; font-size: 14px; line-height: 1; margin-left: 8px; }
+  .info-close:hover { color: #e2e8f0; }
 
-  #hint {
+  .hint {
     position: absolute; bottom: 16px; left: 16px;
     background: rgba(30,41,59,0.9);
     border: 1px solid #334155;
@@ -66,11 +73,15 @@
 <body>
 
 <div id="header">
-  <h1>ネットワーク構成図（Cato SASE 導入後）— AKIBAホールディングス（2026-03）</h1>
-  <p>※ 将来構成イメージ（導入決定ではありません）／ VarioSecure VSR → Cato Socket 置き換え後の想定構成 ／ SocketをクリックでLAN機器を展開 ／ ホイールでズーム・ドラッグでパン</p>
+  <h1>ネットワーク構成図（Cato SASE 導入後 / VarioSecure VPN 現行）— AKIBAホールディングス（2026-03）</h1>
+  <p>※ Catoは将来構成イメージ（導入決定ではありません）／ VarioSecure VPN は SECOM 入退室専用として現行構成を維持 ／ SocketをクリックでLAN機器を展開 ／ ホイールでズーム・ドラッグでパン</p>
 </div>
 
-<div id="legend">
+<!-- ① Cato SASE -->
+<div class="sec-label cato">
+  <h2>① Cato SASE — IT 系ネットワーク（Cato Socket 導入後の将来構成）</h2>
+</div>
+<div class="legend" id="legend1">
   <div class="leg"><div class="ldot" style="background:#0c2340; border:1.5px solid #06b6d4; border-radius:50%;"></div>Cato Cloud（SASE / グローバルPoP）</div>
   <div class="leg"><img class="leg-icon" data-type="socket" alt="">Cato Socket（SD-WAN CPE）</div>
   <div class="leg"><img class="leg-icon" data-type="catoclient" alt="">Cato Client（ZTNA / リモートアクセス）</div>
@@ -85,15 +96,34 @@
   <div class="leg"><img class="leg-icon" data-type="unknown" alt="">不明 / 要調査</div>
   <div class="leg" style="margin-left:auto; color:#475569">── 実線: LAN　- - 破線: ZTNA / SD-WAN</div>
 </div>
-
-<div id="network-wrap">
-  <div id="mynetwork"></div>
-  <div id="info">
-    <span id="info-close" onclick="this.parentElement.style.display='none'">✕</span>
-    <h3 id="info-title"></h3>
-    <div id="info-body"></div>
+<div class="net-wrap">
+  <div id="net1" class="netdiv"></div>
+  <div class="info-panel" id="info1">
+    <span class="info-close" onclick="this.parentElement.style.display='none'">✕</span>
+    <h3 id="info1-title"></h3>
+    <div id="info1-body"></div>
   </div>
-  <div id="hint">💡 Socketをクリックで機器を展開 / 収納</div>
+  <div class="hint">💡 Socketをクリックで機器を展開 / 収納</div>
+</div>
+
+<!-- ② VarioSecure VPN (SECOM専用) -->
+<div class="sec-label secom">
+  <h2>② VarioSecure VPN — SECOM 入退室 専用（現行VPN構成を維持）</h2>
+</div>
+<div class="legend" id="legend2">
+  <div class="leg"><div class="ldot" style="background:#7f1d1d; border:1.5px solid #ef4444; border-radius:50%;"></div>VarioSecure VSR601j（VPN Hub / 東京本社）</div>
+  <div class="leg"><img class="leg-icon" data-type="vsr" alt="">VarioSecure VSR CPE（拠点 VPN 終端）</div>
+  <div class="leg"><img class="leg-icon" data-type="secom" alt="">SECOM 入退室（SESAMO-TRII）</div>
+  <div class="leg" style="margin-left:auto; color:#475569">── 橙: VPN トンネル　── 黄: SECOM 通信</div>
+</div>
+<div class="net-wrap sm">
+  <div id="net2" class="netdiv"></div>
+  <div class="info-panel" id="info2">
+    <span class="info-close" onclick="this.parentElement.style.display='none'">✕</span>
+    <h3 id="info2-title"></h3>
+    <div id="info2-body"></div>
+  </div>
+  <div class="hint">💡 VSR CPEをクリックでSECOM機器を展開 / 収納</div>
 </div>
 
 <script>
@@ -113,6 +143,8 @@ const C = {
   mfp:        { bg:'#831843', border:'#ec4899', font:'#fbcfe8' },
   secom:      { bg:'#78350f', border:'#f59e0b', font:'#fde68a' },
   unknown:    { bg:'#1e293b', border:'#475569', font:'#94a3b8' },
+  fortigate:  { bg:'#7f1d1d', border:'#ef4444', font:'#fca5a5' },
+  vsr:        { bg:'#431407', border:'#ea580c', font:'#fdba74' },
 };
 
 // ─────────────────────────────────────────
@@ -243,12 +275,15 @@ const ICONS = {
   </svg>`),
 };
 
+// VSR CPEはルーターアイコンを流用
+ICONS.vsr = ICONS.gw;
+
 // 凡例のアイコンを設定
 document.querySelectorAll('.leg-icon').forEach(img => {
   img.src = ICONS[img.dataset.type] || '';
 });
 
-const IMG_TYPES = new Set(['socket','catoclient','gw','server','switch','ap','gap','mfp','secom','unknown']);
+const IMG_TYPES = new Set(['socket','catoclient','gw','server','switch','ap','gap','mfp','secom','unknown','vsr']);
 
 function n(id, label, type, meta, extra={}) {
   const c = C[type] || C.unknown;
@@ -275,10 +310,14 @@ function edge(id, from, to, opts={}) {
   return Object.assign({ id, from, to, arrows:'to' }, opts);
 }
 
+// ═════════════════════════════════════════
+// NETWORK 1: Cato SASE
+// ═════════════════════════════════════════
+
 // ─────────────────────────────────────────
 // 常時表示ノード
 // ─────────────────────────────────────────
-const BASE_NODES = [
+const BASE_NODES_1 = [
   n('internet', 'インターネット\n(WAN)', 'internet',
     { desc:'外部インターネット回線\n各拠点はCato Socket経由で最寄りPoP(東京/大阪等)に接続\nローカルブレイクアウトにより全拠点から直接インターネット利用可能\n（現行の本社ヘアピンルーティングを解消）' },
     { shape:'ellipse', size:45, level:0 }),
@@ -287,12 +326,10 @@ const BASE_NODES = [
     { desc:'Cato Client エージェント（将来構成）\n現行L2TP RVPN（VarioSecure）を置き換え\nZTNA: ID・デバイス検証後に最小権限でリソースアクセス\nIPプール: 導入時確定\n接続先: Cato Cloud（最寄りPoP）' },
     { level:0, size:30 }),
 
-  // ── Cato Cloud（SASE Hub）──
   n('cato-cloud', 'Cato Cloud\nSASE / グローバル PoP\nSD-WAN + SSE', 'catocloud',
     { desc:'Cato Networks グローバルバックボーン\n国内PoP: 東京・大阪（他アジア各都市）\n機能: SD-WAN / FWaaS / SWG / ZTNA / CASB / IPS / DLP\n全拠点間通信・インターネット通信をCato Cloud経由で一元可視化\n出典: SCSK Cato提案（将来構成）' },
     { level:1, size:55, shape:'ellipse' }),
 
-  // ── 各拠点 Cato Socket（常時表示）──
   n('tk-socket', 'Cato Socket\n192.168.1.x\nSD-WAN CPE\n【東京本社 6F】', 'socket',
     { ip:'192.168.1.x（導入時確定）', desc:'Cato Socket（将来構成 / 現VSR601j 置き換え）\nCato Cloud PoP（東京・大阪）へ自動接続\nFWaaS・IPS・NG-AM・CASB内蔵\nクリックで東京本社の機器を展開 / 収納' },
     { level:2, size:30 }),
@@ -329,7 +366,7 @@ const BASE_NODES = [
 // ─────────────────────────────────────────
 // 常時表示エッジ
 // ─────────────────────────────────────────
-const BASE_EDGES = [
+const BASE_EDGES_1 = [
   edge('ei-cc',   'internet',    'cato-cloud',  { label:'WAN / インターネット接続', width:3, color:{color:'#06b6d4'}, font:{color:'#22d3ee', size:10} }),
   edge('ec-rv',   'cato-client', 'cato-cloud',  { label:'Cato Client (ZTNA)', width:2, color:{color:'#818cf8'}, dashes:[4,4], font:{color:'#818cf8', size:10}, arrows:{to:{enabled:true,scaleFactor:0.8}} }),
   edge('ecc-tk',  'cato-cloud',  'tk-socket',   { width:2.5, color:{color:'#10b981'} }),
@@ -345,12 +382,11 @@ const BASE_EDGES = [
 // ─────────────────────────────────────────
 // 展開時ノード（Socketクリックで追加）
 // ─────────────────────────────────────────
-const SITE_DATA = {
+const SITE_DATA_1 = {
 
   // ── 東京本社（tk-socket 配下）──
   'tk-socket': {
     nodes: [
-      // ── 6F サーバー室 ──
       n('tk-sw', 'DGS-1210-28\n192.168.1.8\nスイッチ（基幹HUB）', 'switch',
         { ip:'192.168.1.8', desc:'D-Link 28ポート管理スイッチ\n管理PW: ad-admin\nMAC OUI: D-Link確認（応答あり）\n物理配線はスキャン未確認\n【6F サーバー室】' },
         { level:2 }),
@@ -442,7 +478,6 @@ const SITE_DATA = {
     ],
     edges: [
       edge('etk-sw',    'tk-socket', 'tk-sw',     { width:2, color:{color:'#22c55e'} }),
-      // 6F サーバー室
       edge('etk-pdc',   'tk-sw', 'tk-pdc',   { color:{color:'#0ea5e9'} }),
       edge('etk-bdc',   'tk-sw', 'tk-bdc',   { color:{color:'#0ea5e9'} }),
       edge('etk-shr',   'tk-sw', 'tk-share', { color:{color:'#0ea5e9'} }),
@@ -450,19 +485,14 @@ const SITE_DATA = {
       edge('etk-ten',   'tk-sw', 'tk-ten',   { color:{color:'#0ea5e9'} }),
       edge('etk-trii',  'tk-sw', 'tk-trii',  { color:{color:'#f59e0b'} }),
       edge('etk-rtx',   'tk-sw', 'tk-rtx',   { color:{color:'#6b7280'} }),
-      // 6F 執務（AP・複合機）
       edge('etk-ap6fa', 'tk-sw', 'tk-ap-6fa', { color:{color:'#a855f7'} }),
       edge('etk-ap6fb', 'tk-sw', 'tk-ap-6fb', { color:{color:'#a855f7'} }),
       edge('etk-mfp6f', 'tk-sw', 'tk-mfp-6f', { color:{color:'#ec4899'} }),
-      // 7F
       edge('etk-ap7fa', 'tk-sw', 'tk-ap-7fa', { color:{color:'#a855f7'} }),
       edge('etk-ap7fb', 'tk-sw', 'tk-ap-7fb', { color:{color:'#a855f7'} }),
       edge('etk-mfp7f', 'tk-sw', 'tk-mfp-7f', { color:{color:'#ec4899'} }),
-      // 8F
       edge('etk-ap8f',  'tk-sw', 'tk-ap-8f',  { color:{color:'#a855f7'} }),
-      // 9F
       edge('etk-ap9f',  'tk-sw', 'tk-ap-9f',  { color:{color:'#a855f7'} }),
-      // ゲストAP（RTX1210配下・各フロア）
       edge('etk-gap6f', 'tk-rtx', 'tk-gap-6f', { color:{color:'#f97316'} }),
       edge('etk-gap7f', 'tk-rtx', 'tk-gap-7f', { color:{color:'#f97316'} }),
       edge('etk-gap8f', 'tk-rtx', 'tk-gap-8f', { color:{color:'#f97316'} }),
@@ -627,7 +657,7 @@ const SITE_DATA = {
 // ─────────────────────────────────────────
 // 拠点エリア（canvas枠として描画）
 // ─────────────────────────────────────────
-const SITE_GROUPS = [
+const SITE_GROUPS_1 = [
   {
     label: '東京本社（192.168.1.x）',
     nodes: ['tk-socket','tk-sw','tk-pdc','tk-bdc','tk-share','tk-kanri','tk-ten','tk-trii','tk-rtx',
@@ -673,14 +703,14 @@ const SITE_GROUPS = [
 ];
 
 // ─────────────────────────────────────────
-// vis-network 初期化
+// vis-network 1 初期化
 // ─────────────────────────────────────────
-const nodes = new vis.DataSet(BASE_NODES);
-const edges = new vis.DataSet(BASE_EDGES);
-const expanded = {};
+const nodes1 = new vis.DataSet(BASE_NODES_1);
+const edges1 = new vis.DataSet(BASE_EDGES_1);
+const expanded1 = {};
 
-const container = document.getElementById('mynetwork');
-const network = new vis.Network(container, { nodes, edges }, {
+const container1 = document.getElementById('net1');
+const network1 = new vis.Network(container1, { nodes: nodes1, edges: edges1 }, {
   layout: {
     hierarchical: {
       enabled: true,
@@ -712,59 +742,47 @@ const network = new vis.Network(container, { nodes, edges }, {
   nodes: {
     borderWidth: 2,
     borderWidthSelected: 3,
-    chosen: {
-      node: function(values) { values.borderWidth = 3; }
-    }
+    chosen: { node: function(v) { v.borderWidth = 3; } }
   }
 });
 
-// ─────────────────────────────────────────
-// クリック: 展開 / 収納
-// ─────────────────────────────────────────
-network.on('click', function(p) {
+network1.on('click', function(p) {
   if (p.nodes.length === 0) return;
   const id = p.nodes[0];
-  const sd = SITE_DATA[id];
+  const sd = SITE_DATA_1[id];
   if (!sd) return;
-
-  if (expanded[id]) {
-    nodes.remove(sd.nodes.map(n => n.id));
-    edges.remove(sd.edges.map(e => e.id));
-    expanded[id] = false;
+  if (expanded1[id]) {
+    nodes1.remove(sd.nodes.map(n => n.id));
+    edges1.remove(sd.edges.map(e => e.id));
+    expanded1[id] = false;
   } else {
-    nodes.add(sd.nodes);
-    edges.add(sd.edges);
-    expanded[id] = true;
+    nodes1.add(sd.nodes);
+    edges1.add(sd.edges);
+    expanded1[id] = true;
   }
-  setTimeout(() => network.fit({ animation:{ duration:600, easingFunction:'easeInOutQuad' } }), 80);
+  setTimeout(() => network1.fit({ animation:{ duration:600, easingFunction:'easeInOutQuad' } }), 80);
 });
 
-// ─────────────────────────────────────────
-// ホバー: 情報パネル
-// ─────────────────────────────────────────
-network.on('hoverNode', function(p) {
-  const nd = nodes.get(p.node);
+network1.on('hoverNode', function(p) {
+  const nd = nodes1.get(p.node);
   if (!nd || !nd._meta) return;
   const m = nd._meta;
-
-  document.getElementById('info-title').textContent = nd.label.split('\n')[0];
-
+  document.getElementById('info1-title').textContent = nd.label.split('\n')[0];
   let html = '';
   if (m.ip)   html += `<div class="row"><b>IP:</b><span>${m.ip}</span></div>`;
   if (m.desc) html += `<div class="row"><b>詳細:</b><span style="white-space:pre-line">${m.desc}</span></div>`;
-  if (SITE_DATA[p.node]) {
-    const state = expanded[p.node] ? '展開中（クリックで収納）' : '収納中（クリックで展開）';
+  if (SITE_DATA_1[p.node]) {
+    const state = expanded1[p.node] ? '展開中（クリックで収納）' : '収納中（クリックで展開）';
     html += `<div class="row"><b>状態:</b><span>${state}</span></div>`;
   }
-
-  document.getElementById('info-body').innerHTML = html;
-  document.getElementById('info').style.display = 'block';
+  document.getElementById('info1-body').innerHTML = html;
+  document.getElementById('info1').style.display = 'block';
 });
 
 // ─────────────────────────────────────────
 // フロアグループ枠（東京本社展開時）
 // ─────────────────────────────────────────
-const FLOOR_GROUPS = [
+const FLOOR_GROUPS_1 = [
   {
     label: '6F サーバー室',
     nodes: ['tk-socket', 'tk-sw', 'tk-pdc', 'tk-bdc', 'tk-share', 'tk-kanri', 'tk-ten', 'tk-trii', 'tk-rtx'],
@@ -823,14 +841,13 @@ function drawRoundRect(ctx, x, y, w, h, r) {
   ctx.closePath();
 }
 
-network.on('afterDrawing', function(ctx) {
+network1.on('afterDrawing', function(ctx) {
   const sitePad = 65;
 
-  // 1. 拠点エリア枠（常時描画）
-  for (const site of SITE_GROUPS) {
-    const visibleNodes = site.nodes.filter(id => nodes.get(id) !== null);
+  for (const site of SITE_GROUPS_1) {
+    const visibleNodes = site.nodes.filter(id => nodes1.get(id) !== null);
     if (visibleNodes.length === 0) continue;
-    const posMap = network.getPositions(visibleNodes);
+    const posMap = network1.getPositions(visibleNodes);
     const positions = visibleNodes.map(id => posMap[id]).filter(Boolean);
     if (positions.length === 0) continue;
 
@@ -860,11 +877,10 @@ network.on('afterDrawing', function(ctx) {
     ctx.restore();
   }
 
-  // 2. フロア枠（東京展開時のみ）
-  if (!expanded['tk-socket']) return;
+  if (!expanded1['tk-socket']) return;
   const pad = 55;
-  for (const grp of FLOOR_GROUPS) {
-    const posMap = network.getPositions(grp.nodes);
+  for (const grp of FLOOR_GROUPS_1) {
+    const posMap = network1.getPositions(grp.nodes);
     const positions = grp.nodes.map(id => posMap[id]).filter(Boolean);
     if (positions.length === 0) continue;
 
@@ -895,8 +911,190 @@ network.on('afterDrawing', function(ctx) {
   }
 });
 
+// ═════════════════════════════════════════
+// NETWORK 2: VarioSecure VPN (SECOM専用)
+// ═════════════════════════════════════════
+
+const BASE_NODES_2 = [
+  n('v-fg', 'VarioSecure\nVSR601j\nVPN Hub\n東京本社', 'fortigate',
+    { desc:'VarioSecure VSR601j（東京本社 VPN ハブ）\nSECOM入退室システムの通信を収容\n出典: 現行ネットワーク構成（VarioSecure RVPN）' },
+    { level:0, size:45, shape:'ellipse' }),
+
+  n('v-tk-trii', 'SESAMO-TRII\n192.168.1.30\nSECOM入退室\n東京本社', 'secom',
+    { ip:'192.168.1.30', desc:'SESAMO-TRIIサーバ（東京本社）\n出典: ネットワークスキャン（応答あり）' },
+    { level:1 }),
+
+  n('v-os-gw', 'VarioSecure\nVSR401j\n大阪営業所', 'vsr',
+    { desc:'VarioSecure VSR401j（大阪営業所）\nVPN Hub（東京本社）へトンネル接続\nクリックで展開 / 収納' },
+    { level:1, size:26 }),
+
+  n('v-hs-gw', 'VarioSecure\nVSR400\n橋本R&D', 'vsr',
+    { desc:'VarioSecure VSR400（橋本R&D）\nVPN Hub（東京本社）へトンネル接続\nクリックで展開 / 収納' },
+    { level:1, size:26 }),
+
+  n('v-fk-gw', 'VarioSecure\nVSR401j\n福岡営業所', 'vsr',
+    { desc:'VarioSecure VSR401j（福岡営業所）\nVPN Hub（東京本社）へトンネル接続\nクリックで展開 / 収納' },
+    { level:1, size:26 }),
+
+  n('v-wk-gw', 'VarioSecure\nVSR401j\n和歌山', 'vsr',
+    { desc:'VarioSecure VSR401j（和歌山）\nVPN Hub（東京本社）へトンネル接続\nクリックで展開 / 収納' },
+    { level:1, size:26 }),
+
+  n('v-tj-gw', 'VarioSecure\nVSR400\n多摩センター', 'vsr',
+    { desc:'VarioSecure VSR400（多摩センター）\nVPN Hub（東京本社）へトンネル接続\nクリックで展開 / 収納' },
+    { level:1, size:26 }),
+
+  n('v-kb-gw', 'VarioSecure\nVSR401j\n京橋ビル', 'vsr',
+    { desc:'VarioSecure VSR401j（京橋ビル）\nVPN Hub（東京本社）へトンネル接続\nクリックで展開 / 収納' },
+    { level:1, size:26 }),
+
+  n('v-ng-gw', 'VarioSecure\nVSR401j\n名古屋', 'vsr',
+    { desc:'VarioSecure VSR401j（名古屋）\nVPN Hub（東京本社）へトンネル接続\nクリックで展開 / 収納' },
+    { level:1, size:26 }),
+];
+
+const BASE_EDGES_2 = [
+  edge('ev-tk', 'v-fg', 'v-tk-trii', { width:2, color:{color:'#f59e0b'} }),
+  edge('ev-os', 'v-fg', 'v-os-gw',   { width:2, color:{color:'#ea580c'} }),
+  edge('ev-hs', 'v-fg', 'v-hs-gw',   { width:2, color:{color:'#ea580c'} }),
+  edge('ev-fk', 'v-fg', 'v-fk-gw',   { width:2, color:{color:'#ea580c'} }),
+  edge('ev-wk', 'v-fg', 'v-wk-gw',   { width:2, color:{color:'#ea580c'} }),
+  edge('ev-tj', 'v-fg', 'v-tj-gw',   { width:2, color:{color:'#ea580c'} }),
+  edge('ev-kb', 'v-fg', 'v-kb-gw',   { width:2, color:{color:'#ea580c'} }),
+  edge('ev-ng', 'v-fg', 'v-ng-gw',   { width:2, color:{color:'#ea580c'} }),
+];
+
+const SITE_DATA_2 = {
+  'v-os-gw': {
+    nodes: [ n('v-os-trii', 'TRIIインターフェース\n192.168.20.31\nSECOM入退室\n大阪営業所', 'secom',
+               { ip:'192.168.20.31', desc:'SESAMO-TRIIインターフェース（大阪営業所）\n出典: ネットワークスキャン' }, { level:2 }) ],
+    edges: [ edge('ev-os-trii', 'v-os-gw', 'v-os-trii', { color:{color:'#f59e0b'} }) ]
+  },
+  'v-hs-gw': {
+    nodes: [ n('v-hs-trii', 'TRIIインターフェース\n192.168.30.31\nSECOM入退室\n橋本R&D', 'secom',
+               { ip:'192.168.30.31', desc:'SESAMO-TRIIインターフェース（橋本R&D）\n出典: ネットワークスキャン' }, { level:2 }) ],
+    edges: [ edge('ev-hs-trii', 'v-hs-gw', 'v-hs-trii', { color:{color:'#f59e0b'} }) ]
+  },
+  'v-fk-gw': {
+    nodes: [ n('v-fk-trii', 'TRIIインターフェース\n192.168.40.31\nSECOM入退室\n福岡営業所', 'secom',
+               { ip:'192.168.40.31', desc:'SESAMO-TRIIインターフェース（福岡営業所）\n出典: ネットワークスキャン' }, { level:2 }) ],
+    edges: [ edge('ev-fk-trii', 'v-fk-gw', 'v-fk-trii', { color:{color:'#f59e0b'} }) ]
+  },
+  'v-wk-gw': {
+    nodes: [
+      n('v-wk-trii1', 'TRIIインターフェース\n192.168.50.31\nSECOM入退室\n和歌山', 'secom',
+        { ip:'192.168.50.31', desc:'SESAMO-TRIIインターフェース（和歌山）\n出典: ネットワークスキャン' }, { level:2 }),
+      n('v-wk-s2', 'セサモIdf（静脈）内側\n192.168.50.32\n和歌山', 'secom',
+        { ip:'192.168.50.32', desc:'セコム入退室システム内側（和歌山）' }, { level:2 }),
+      n('v-wk-s3', 'セサモIdf（静脈）外側\n192.168.50.33\n和歌山', 'secom',
+        { ip:'192.168.50.33', desc:'セコム入退室システム外側（和歌山）' }, { level:2 }),
+      n('v-wk-trii2', 'TRIIインターフェース\n192.168.50.34\nSECOM入退室\n和歌山', 'secom',
+        { ip:'192.168.50.34', desc:'SESAMO-TRIIインターフェース 2（和歌山）' }, { level:2 }),
+    ],
+    edges: [
+      edge('ev-wk-trii1', 'v-wk-gw', 'v-wk-trii1', { color:{color:'#f59e0b'} }),
+      edge('ev-wk-s2',    'v-wk-gw', 'v-wk-s2',    { color:{color:'#f59e0b'} }),
+      edge('ev-wk-s3',    'v-wk-gw', 'v-wk-s3',    { color:{color:'#f59e0b'} }),
+      edge('ev-wk-trii2', 'v-wk-gw', 'v-wk-trii2', { color:{color:'#f59e0b'} }),
+    ]
+  },
+  'v-tj-gw': {
+    nodes: [ n('v-tj-trii', 'TRIIインターフェース\n192.168.60.31\nSECOM入退室\n多摩センター', 'secom',
+               { ip:'192.168.60.31', desc:'SESAMO-TRIIインターフェース（多摩センター）\n出典: ネットワークスキャン' }, { level:2 }) ],
+    edges: [ edge('ev-tj-trii', 'v-tj-gw', 'v-tj-trii', { color:{color:'#f59e0b'} }) ]
+  },
+  'v-kb-gw': {
+    nodes: [ n('v-kb-trii', 'TRIIインターフェース\n192.168.70.31\nSECOM入退室\n京橋ビル', 'secom',
+               { ip:'192.168.70.31', desc:'SESAMO-TRIIインターフェース（京橋ビル）\n出典: ネットワークスキャン' }, { level:2 }) ],
+    edges: [ edge('ev-kb-trii', 'v-kb-gw', 'v-kb-trii', { color:{color:'#f59e0b'} }) ]
+  },
+  'v-ng-gw': {
+    nodes: [ n('v-ng-trii', 'TRIIインターフェース\n192.168.80.31\nSECOM入退室\n名古屋', 'secom',
+               { ip:'192.168.80.31', desc:'SESAMO-TRIIインターフェース（名古屋）\n出典: ネットワークスキャン' }, { level:2 }) ],
+    edges: [ edge('ev-ng-trii', 'v-ng-gw', 'v-ng-trii', { color:{color:'#f59e0b'} }) ]
+  },
+};
+
+// ─────────────────────────────────────────
+// vis-network 2 初期化
+// ─────────────────────────────────────────
+const nodes2 = new vis.DataSet(BASE_NODES_2);
+const edges2 = new vis.DataSet(BASE_EDGES_2);
+const expanded2 = {};
+
+const container2 = document.getElementById('net2');
+const network2 = new vis.Network(container2, { nodes: nodes2, edges: edges2 }, {
+  layout: {
+    hierarchical: {
+      enabled: true,
+      direction: 'UD',
+      sortMethod: 'directed',
+      levelSeparation: 140,
+      nodeSpacing: 160,
+      treeSpacing: 220,
+      blockShifting: true,
+      edgeMinimization: true,
+      parentCentralization: true,
+    }
+  },
+  physics: { enabled: false },
+  interaction: {
+    hover: true,
+    tooltipDelay: 0,
+    navigationButtons: false,
+    keyboard: false,
+    zoomView: true,
+    dragView: true,
+  },
+  edges: {
+    arrows: { to: { enabled: false } },
+    smooth: { type:'cubicBezier', forceDirection:'vertical', roundness:0.5 },
+    font: { align:'middle', size:11, color:'#64748b', strokeWidth:2, strokeColor:'#0f172a' },
+    arrowStrikethrough: false,
+  },
+  nodes: {
+    borderWidth: 2,
+    borderWidthSelected: 3,
+    chosen: { node: function(v) { v.borderWidth = 3; } }
+  }
+});
+
+network2.on('click', function(p) {
+  if (p.nodes.length === 0) return;
+  const id = p.nodes[0];
+  const sd = SITE_DATA_2[id];
+  if (!sd) return;
+  if (expanded2[id]) {
+    nodes2.remove(sd.nodes.map(n => n.id));
+    edges2.remove(sd.edges.map(e => e.id));
+    expanded2[id] = false;
+  } else {
+    nodes2.add(sd.nodes);
+    edges2.add(sd.edges);
+    expanded2[id] = true;
+  }
+  setTimeout(() => network2.fit({ animation:{ duration:600, easingFunction:'easeInOutQuad' } }), 80);
+});
+
+network2.on('hoverNode', function(p) {
+  const nd = nodes2.get(p.node);
+  if (!nd || !nd._meta) return;
+  const m = nd._meta;
+  document.getElementById('info2-title').textContent = nd.label.split('\n')[0];
+  let html = '';
+  if (m.ip)   html += `<div class="row"><b>IP:</b><span>${m.ip}</span></div>`;
+  if (m.desc) html += `<div class="row"><b>詳細:</b><span style="white-space:pre-line">${m.desc}</span></div>`;
+  if (SITE_DATA_2[p.node]) {
+    const state = expanded2[p.node] ? '展開中（クリックで収納）' : '収納中（クリックで展開）';
+    html += `<div class="row"><b>状態:</b><span>${state}</span></div>`;
+  }
+  document.getElementById('info2-body').innerHTML = html;
+  document.getElementById('info2').style.display = 'block';
+});
+
 // 初期表示
-network.fit();
+network1.fit();
+network2.fit();
 </script>
 </body>
 </html>
