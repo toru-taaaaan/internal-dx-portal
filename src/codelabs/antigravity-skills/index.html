@@ -534,17 +534,32 @@ ${text}`
 
     updateSpeechUI();
 
-    // AI補正
-    let textToSpeak = section.text;
+    // 段落単位に分割して順番に読み上げる（長文でのブラウザ制限を回避）
+    const paragraphs = section.text.split(/\n\n+/).filter(p => p.trim().length > 0);
+    await speakParagraphs(paragraphs, 0);
+  }
+
+  async function speakParagraphs(paragraphs, index) {
+    if (speechState !== 'playing') return;
+
+    if (index >= paragraphs.length) {
+      // このセクションの全段落を読み終えたら次のセクションへ
+      currentSectionIndex++;
+      updateSpeechUI();
+      setTimeout(() => prepareSectionAndSpeak(), 500);
+      return;
+    }
+
+    // AI補正（段落単位で処理するので truncation を防げる）
+    let textToSpeak = paragraphs[index];
     try {
-      textToSpeak = await correctPronunciation(section.text);
+      textToSpeak = await correctPronunciation(paragraphs[index]);
     } catch (e) {
-      console.warn('Section correction failed:', e);
+      console.warn('Paragraph correction failed:', e);
     }
 
     if (speechState !== 'playing') return;
 
-    // 読み上げ
     const utterance = new SpeechSynthesisUtterance(textToSpeak);
     utterance.lang = 'ja-JP';
     utterance.rate = speechRate;
@@ -557,9 +572,7 @@ ${text}`
     utterance.onend = function() {
       if (isCancelling) return;
       if (speechState === 'playing') {
-        currentSectionIndex++;
-        updateSpeechUI();
-        setTimeout(() => prepareSectionAndSpeak(), 500);
+        setTimeout(() => speakParagraphs(paragraphs, index + 1), 100);
       }
     };
 
@@ -567,8 +580,7 @@ ${text}`
       if (isCancelling) return;
       console.warn('Speech error:', e);
       if (speechState === 'playing') {
-        currentSectionIndex++;
-        prepareSectionAndSpeak();
+        speakParagraphs(paragraphs, index + 1);
       }
     };
 
