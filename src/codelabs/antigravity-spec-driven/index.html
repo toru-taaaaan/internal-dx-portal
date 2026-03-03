@@ -30,7 +30,7 @@
       <google-codelab-step label="このラボの目的" duration="2">
         <p>このCodelabでは <strong>Google Antigravity</strong> を使った <strong>仕様駆動開発（Spec-Driven Development）</strong> を実践します。</p>
 <p>仕様駆動開発とは、AI エージェントに作業を依頼する前に <strong>詳細な仕様書を書く</strong> アプローチです。あいまいな指示で動かすのではなく、要件・制約・完成イメージを文書化してからエージェントに渡します。</p>
-<p class="image-container"><img alt="Antigravity 概要" src="img\\b06b582bcd847f6d.png"></p>
+<p class="image-container"><img alt="Antigravity 概要" src="img/b06b582bcd847f6d.png"></p>
 <h2 is-upgraded>このCodelabで学ぶこと</h2>
 <ul>
 <li>「プロンプトとパッチ」との違いを理解する</li>
@@ -103,7 +103,7 @@
 <p>「何ができなければならないか」を箇条書きで具体的に書く</p>
 <p><strong>3. 制約</strong></p>
 <p>「使ってよい技術・使ってはいけないこと・デザインの決まり事」を明示する</p>
-<p class="image-container"><img alt="Antigravity 概要" src="img\\281ac826fb44d427.png"></p>
+<p class="image-container"><img alt="Antigravity 概要" src="img/281ac826fb44d427.png"></p>
 <aside class="special"><p> 仕様書は完璧である必要はありません。「これを作りたい」という意図が伝われば十分です。エージェントが不明点を質問してきます。 </p>
 </aside>
 
@@ -113,19 +113,19 @@
       <google-codelab-step label="ワークスペースを準備する" duration="5">
         <p>Antigravity を起動して、Agent Manager を開きます。</p>
 <h2 is-upgraded>Agent Manager を起動する</h2>
-<p class="image-container"><img alt="Agent Manager インターフェース" src="img\\d5ae91fc746e1bba.png"></p>
+<p class="image-container"><img alt="Agent Manager インターフェース" src="img/d5ae91fc746e1bba.png"></p>
 <h2 is-upgraded>Playground ワークスペースを選択する</h2>
 <p>左のサイドバーから <strong>Workspaces</strong> を選択し、<strong>Playground</strong> をクリックします。</p>
-<p class="image-container"><img alt="ワークスペース選択" src="img\\ec72712ea24bf6d5.png"></p>
+<p class="image-container"><img alt="ワークスペース選択" src="img/ec72712ea24bf6d5.png"></p>
 <aside class="special"><p> Playground は本番ファイルに影響しない安全な作業場所です。最初の練習はここで行いましょう。 </p>
 </aside>
 <h2 is-upgraded>Planning モードを確認する</h2>
 <p>Agent Manager 上部のモード選択で <strong>Planning</strong> が選ばれていることを確認します。</p>
-<p class="image-container"><img alt="プランニングモード" src="img\\f403e40ad480efc9.png"></p>
+<p class="image-container"><img alt="プランニングモード" src="img/f403e40ad480efc9.png"></p>
 <p>Planning モードでは、エージェントが実行前に計画を提示します。承認してから実行するため、方向のズレを事前に修正できます。</p>
 <h2 is-upgraded>モデルの確認</h2>
 <p>モデル選択欄で利用可能なモデルが表示されます。Gemini 3 を選択してください。</p>
-<p class="image-container"><img alt="モデル選択" src="img\\fb0744dc43911365.png"></p>
+<p class="image-container"><img alt="モデル選択" src="img/fb0744dc43911365.png"></p>
 <h2 is-upgraded>Browser 機能はオフにする</h2>
 <p>このCodelabではブラウザ機能は使いません。Browser トグルが <strong>オフ</strong> であることを確認してください。</p>
 <aside class="warning"><p> Browser をオンにしていると、エージェントがWeb上のリソースを参照しようとすることがあります。このCodelabではオフにしておきます。 </p>
@@ -214,7 +214,7 @@ AKIBAホールディングス 全社員（ITリテラシーは様々）
       <google-codelab-step label="エージェントに仕様を渡す" duration="10">
         <h2 is-upgraded>Agent Manager の会話パネルを開く</h2>
 <p>Agent Manager の会話パネルに移動します。新しい会話を開始します。</p>
-<p class="image-container"><img alt="Agent Manager ウィンドウ" src="img\\156224e223eeda36.png"></p>
+<p class="image-container"><img alt="Agent Manager ウィンドウ" src="img/156224e223eeda36.png"></p>
 <h2 is-upgraded>プロンプトを入力する</h2>
 <p>先ほど作成した仕様書の内容を <strong>そのまま</strong> 会話パネルに貼り付けます。冒頭に一文添えると効果的です。</p>
 <pre><code>以下の仕様書に従って、社内 FAQ ページを作成してください。
@@ -222,7 +222,7 @@ AKIBAホールディングス 全社員（ITリテラシーは様々）
 # 社内 FAQ ページ 仕様書
 （仕様書の内容を貼り付け）
 </code></pre>
-<p class="image-container"><img alt="各部位の説明" src="img\\22f6dcf7b3edc583.png"></p>
+<p class="image-container"><img alt="各部位の説明" src="img/22f6dcf7b3edc583.png"></p>
 <h2 is-upgraded>Planning モードで送信する</h2>
 <p><strong>Planning モード</strong> であることを最終確認してから、送信ボタンを押します。</p>
 <p>エージェントはまず <strong>計画（Plan）</strong> を作成します。すぐにコードは書きません。これが Planning モードの動作です。</p>
@@ -292,15 +292,15 @@ AKIBAホールディングス 全社員（ITリテラシーは様々）
       <google-codelab-step label="Artifacts を確認して承認する" duration="5">
         <h2 is-upgraded>Artifacts とは</h2>
 <p>エージェントが行ったすべての作業は <strong>Artifacts（成果物）</strong> として記録されます。「AI が本当にこの作業をしたか」を後から確認できます。</p>
-<p class="image-container"><img alt="Artifacts 一覧" src="img\\5deff47fe0a93aa1.png"></p>
+<p class="image-container"><img alt="Artifacts 一覧" src="img/5deff47fe0a93aa1.png"></p>
 <h2 is-upgraded>Agent Manager の Artifacts を開く</h2>
 <p>Agent Manager 右上の <strong>「Review changes」</strong> をクリックします。</p>
-<p class="image-container"><img alt="Agent Manager の Artifacts" src="img\\5320f447471c43eb.png"></p>
+<p class="image-container"><img alt="Agent Manager の Artifacts" src="img/5320f447471c43eb.png"></p>
 <p>成果物一覧が表示されます。</p>
-<p class="image-container"><img alt="Artifacts ビュー" src="img\\19d9738bb3c7c0c9.png"></p>
+<p class="image-container"><img alt="Artifacts ビュー" src="img/19d9738bb3c7c0c9.png"></p>
 <h2 is-upgraded>コード Diff を確認する</h2>
 <p>「コード Diff」を開くと、作成されたファイルの内容を行単位で確認できます。</p>
-<p class="image-container"><img alt="Review Changes" src="img\\e1d8fd6e7df4daf3.png"></p>
+<p class="image-container"><img alt="Review Changes" src="img/e1d8fd6e7df4daf3.png"></p>
 <h2 is-upgraded>承認または修正指示を出す</h2>
 <p>内容を確認して：</p>
 <p><strong>問題なければ</strong>：「すべて承認」で変更を適用</p>
