@@ -53,6 +53,7 @@
     
       <google-codelab-step label="Antigravity とは" duration="5">
         <p>Google が提供する AI エージェント型の開発・業務支援環境です。コードを1行ずつ提案する従来ツールとは違い、<strong>タスク全体を AI が自律的に計画・実行</strong>します。</p>
+<p class="image-container"><img alt="Antigravity 概要" src="img\\b06b582bcd847f6d.png"></p>
 <h2 is-upgraded>従来のAIツールとの違い</h2>
 <table>
 <tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"><p>従来のAIツール</p>
@@ -75,10 +76,12 @@
 </td><td colspan="1" rowspan="1"><p>複数エージェント同時実行</p>
 </td></tr>
 </table>
-<h2 is-upgraded>主な構成要素</h2>
-<p><strong>Agent Manager</strong> — AI エージェントの管制室。複数のエージェントを並列で管理する</p>
-<p><strong>Editor</strong> — VS Code ベースのコードエディタ。AI が並走してコードを補助する</p>
-<p><strong>Browser</strong> — Chrome 拡張で AI に Web ブラウジング能力を付与する</p>
+<h2 is-upgraded>Agent Manager</h2>
+<p>AI エージェントの管制室。複数のエージェントを並列で管理する。</p>
+<p class="image-container"><img alt="Agent Manager" src="img\\281ac826fb44d427.png"></p>
+<h2 is-upgraded>Editor</h2>
+<p>VS Code ベースのコードエディタ。AI が並走してコードを補助する。</p>
+<p class="image-container"><img alt="Editor" src="img\\e8afd782a8f92129.png"></p>
 <h2 is-upgraded>AIとあなたの役割分担</h2>
 <p><strong>AIが担当</strong></p>
 <ul>
@@ -102,6 +105,7 @@
     
       <google-codelab-step label="インストール" duration="15">
         <p>ダウンロードからサインインまで約15分。<strong>Google Workspace アカウント</strong>でログインします。</p>
+<p class="image-container"><img alt="インストール画面" src="img\\29fada39721093c.png"></p>
 <h2 is-upgraded>インストール手順</h2>
 <p><strong>1. ダウンロード</strong></p>
 <p><code>antigravity.google/download</code> から OS に合ったインストーラーを取得する</p>
@@ -109,6 +113,7 @@
 <p>セットアップで「Start fresh」を選択。テーマはダーク or ライト（好みで選択）</p>
 <p><strong>3. セキュリティポリシー設定</strong></p>
 <p>セットアップウィザード内で選択する。<strong>「Review-driven development」を推奨</strong>。後から変更する場合は <strong>Settings → Agent</strong> で設定</p>
+<p class="image-container"><img alt="セキュリティポリシー設定" src="img\\7ca55560ec377130.png"></p>
 <p><strong>4. サインイン</strong></p>
 <p>Google Workspace アカウントでログインする（プレビュー期間中は無料）</p>
 <h2 is-upgraded>セキュリティポリシーの選択肢</h2>
@@ -161,10 +166,17 @@
     
       <google-codelab-step label="Agent Manager" duration="10">
         <p>AI エージェントの「管制室」。新しい会話を始めるとエージェントが1つ起動し、指示に従ってタスクを実行します。</p>
-<h2 is-upgraded>Agent Manager の主な構成</h2>
-<p><strong>Inbox</strong> — すべての会話を一覧表示。タスク状況・承認待ちリクエストを確認する</p>
-<p><strong>Workspaces</strong> — プロジェクトフォルダを追加・管理する。Playground で試してから本番に移行も可能</p>
-<p><strong>承認待ちリクエスト</strong> — 各エージェントの進捗状況・成果物・承認待ちの操作を一覧で確認する</p>
+<p class="image-container"><img alt="Agent Manager インターフェース" src="img\\d5ae91fc746e1bba.png"></p>
+<h2 is-upgraded>ワークスペース選択</h2>
+<p class="image-container"><img alt="ワークスペース選択" src="img\\ec72712ea24bf6d5.png"></p>
+<h2 is-upgraded>Agent Manager ウィンドウ</h2>
+<p class="image-container"><img alt="Agent Manager ウィンドウ" src="img\\156224e223eeda36.png"></p>
+<h2 is-upgraded>モデル選択</h2>
+<p class="image-container"><img alt="モデル選択" src="img\\fb0744dc43911365.png"></p>
+<h2 is-upgraded>プランニングモード</h2>
+<p class="image-container"><img alt="プランニングモード" src="img\\f403e40ad480efc9.png"></p>
+<h2 is-upgraded>各部位の説明</h2>
+<p class="image-container"><img alt="各部位の説明" src="img\\22f6dcf7b3edc583.png"></p>
 <h2 is-upgraded>実行モードの選択</h2>
 <p><strong>Planning モード（推奨）</strong></p>
 <p>AI がまず計画を立ててから実行する。計画の段階でレビューできるので安心。</p>
@@ -172,6 +184,12 @@
 <p><strong>Fast モード</strong></p>
 <p>計画なしで即座に実行。単純な作業を素早く処理する。</p>
 <p>用途: リネーム・フォーマット修正・簡単な質問</p>
+<h2 is-upgraded>Agent Manager の主な機能</h2>
+<ul>
+<li><strong>Inbox</strong> — すべての会話を一覧表示。タスク状況・承認待ちリクエストを確認する</li>
+<li><strong>Workspaces</strong> — プロジェクトフォルダを追加・管理する。Playground で試してから本番に移行も可能</li>
+<li><strong>承認待ちリクエスト</strong> — 各エージェントの進捗状況・成果物・承認待ちの操作を一覧で確認する</li>
+</ul>
 <h2 is-upgraded>複数エージェントの同時実行</h2>
 <p>従来のチャット型ツールは1つずつ順番に処理するが、Agent Manager では複数のエージェントを同時に起動できます。</p>
 <p>例: 5件の資料作成を5つのエージェントに同時に割り当て、並行して処理する</p>
@@ -183,6 +201,11 @@
     
       <google-codelab-step label="ブラウザ機能（Browser）" duration="10">
         <p>Chrome 拡張をインストールすると、AI に Web ブラウジング能力を付与できます。調査やデータ収集を自動化します。</p>
+<p class="image-container"><img alt="Browser エージェント" src="img\\51a373d3da23db56.png"></p>
+<h2 is-upgraded>セットアップ開始</h2>
+<p class="image-container"><img alt="セットアップ開始" src="img\\e7119f40e093afd2.png"></p>
+<h2 is-upgraded>Chrome 拡張のインストール</h2>
+<p class="image-container"><img alt="Chrome 拡張のインストール" src="img\\82fb87d7d75b4a6c.png"></p>
 <h2 is-upgraded>セットアップ手順</h2>
 <p><strong>1. 拡張機能のインストール</strong></p>
 <p>Agent Manager の設定から Chrome ウェブストアに移動し、「Antigravity Browser」拡張機能をインストールする</p>
@@ -203,34 +226,88 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="Artifacts・Inbox・Editor" duration="8">
-        <h2 is-upgraded>Artifacts — 作業記録と変更管理</h2>
-<p>AI が行ったすべての作業は Artifacts として記録されます。ファイルを変更する前に必ず差分を確認できます。</p>
-<p><strong>主な Artifact の種類</strong></p>
+      <google-codelab-step label="Artifacts" duration="5">
+        <p>AI の作業成果物がすべて記録される仕組み。「AI が本当にこの作業をしたか」を確認できます。</p>
+<p class="image-container"><img alt="Artifacts 一覧" src="img\\5deff47fe0a93aa1.png"></p>
+<h2 is-upgraded>Agent Manager の Artifacts</h2>
+<p class="image-container"><img alt="Agent Manager の Artifacts" src="img\\5320f447471c43eb.png"></p>
+<h2 is-upgraded>Artifacts ビュー</h2>
+<p class="image-container"><img alt="Artifacts ビュー" src="img\\19d9738bb3c7c0c9.png"></p>
+<h2 is-upgraded>Review Changes</h2>
+<p class="image-container"><img alt="Review Changes" src="img\\e1d8fd6e7df4daf3.png"></p>
+<h2 is-upgraded>Artifact の種類</h2>
 <ul>
-<li>計画書（Planning Artifact）</li>
-<li>コード差分（Diff）</li>
-<li>作成ドキュメント</li>
-<li>実行ログ</li>
+<li><strong>タスクリスト</strong> — コーディング前の計画。AI が何をするか一覧で確認できる</li>
+<li><strong>実装計画</strong> — どのファイルをどう変更するかの技術的な設計書</li>
+<li><strong>ウォークスルー</strong> — 実装完了後の変更内容とテスト手順のまとめ</li>
+<li><strong>コード Diff</strong> — 変更前後の差分を行単位で表示する</li>
+<li><strong>スクリーンショット</strong> — UI の変更前後の状態をキャプチャする</li>
+<li><strong>ブラウザ記録</strong> — 操作の動画記録</li>
+</ul>
+<h2 is-upgraded>Artifacts の確認方法</h2>
+<ul>
+<li><strong>Editor 画面</strong>: 右下の「Artifacts」ボタンから確認</li>
+<li><strong>Agent Manager 画面</strong>: 右上の「Review changes」横のトグルボタンで成果物一覧を表示</li>
 </ul>
 <aside class="special"><p> 「Review Changes」ボタンで変更を適用前に確認できます。承認しない限りファイルは変更されません。 </p>
 </aside>
-<h2 is-upgraded>Inbox — 会話・タスク管理</h2>
-<p>すべての会話履歴を一覧で管理します。複数のエージェントが並行して動いている場合も、Inbox から一元的に状況を把握できます。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Inbox" duration="3">
+        <p>過去の会話がすべて保存される中央ハブ。複数のエージェントが同時に進行する作業を一覧で管理します。</p>
+<p class="image-container"><img alt="Inbox 会話一覧" src="img\\1a2a1bbdd4464ecf.png"></p>
+<h2 is-upgraded>Inbox 詳細</h2>
+<p class="image-container"><img alt="Inbox 詳細" src="img\\b7e493765cfb1b1a.png"></p>
+<h2 is-upgraded>Inbox でできること</h2>
 <ul>
-<li>実行中のタスク確認</li>
-<li>承認待ちリクエストへの応答</li>
-<li>過去の会話の再開</li>
+<li>会話の履歴（やり取りの全文）を確認</li>
+<li>各エージェントが生成した成果物（Artifacts）を参照</li>
+<li>タスクの進捗状況・承認待ちリクエストを管理</li>
+<li>同時に走っている複数タスクを一覧で把握</li>
 </ul>
-<h2 is-upgraded>Editor — AIと並走するコードエディタ</h2>
-<p>VS Code をベースにしたエディタです。コードを書きながら AI に相談できます。</p>
-<p><strong>主な機能</strong></p>
-<ul>
-<li><code>Auto-complete</code> — AI によるコード補完</li>
-<li><code>Tab to Import</code> — 必要なライブラリを自動インポート</li>
-<li><code>Inline Command</code> — 選択範囲に対してその場で AI に指示</li>
-<li><code>Explain and Fix</code> — エラーの原因説明と修正案提示</li>
-</ul>
+<aside class="special"><p> 「先週やった○○の続き」と言えば、AI が過去の文脈を引き継いで作業を再開します。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Editor" duration="8">
+        <p>VS Code ベースのエディタ。従来の操作感はそのままに、AI エージェント機能が統合されています。</p>
+<p class="image-container"><img alt="Editor インターフェース" src="img\\7996408528de93e1.png"></p>
+<h2 is-upgraded>セットアップ</h2>
+<p>エディタ・ターミナル・エージェントパネルを同時に表示できます。ショートカット: <code>Ctrl + `` でターミナル、</code>Ctrl + L` でエージェントパネル。</p>
+<p class="image-container"><img alt="Editor セットアップ" src="img\\bd33a79837b5a12a.png"></p>
+<h2 is-upgraded>Auto-complete</h2>
+<p>入力中に AI が続きを提案します。<code>Tab</code> で確定。</p>
+<p class="image-container"><img alt="Auto-complete" src="img\\e90825ed7a009350.png"></p>
+<h2 is-upgraded>Tab to Import</h2>
+<p>不足しているライブラリの読み込み文を自動提案します。</p>
+<p class="image-container"><img alt="Tab to Import" src="img\\bcab60794caa0aec.png"></p>
+<h2 is-upgraded>Tab to Jump</h2>
+<p>カーソルを論理的な次の編集箇所に自動移動します。</p>
+<p class="image-container"><img alt="Tab to Jump" src="img\\8610ae5217be7fe5.png"></p>
+<h2 is-upgraded>インラインコマンド（Ctrl + I）</h2>
+<p>エディタまたはターミナルで <code>Ctrl + I</code> を押すと、その場で AI に指示を出せます。</p>
+<p class="image-container"><img alt="インラインコマンド" src="img\\13a615e515cea100.png"></p>
+<p class="image-container"><img alt="インラインコマンド（ターミナル）" src="img\\5a75e560f998cedc.png"></p>
+<h2 is-upgraded>Agent サイドパネル（Ctrl + L）</h2>
+<p><code>Ctrl + L</code> で開きます。<code>@</code> でファイル・コードをコンテキストに追加、<code>/</code> でワークフローを呼び出せます。</p>
+<p class="image-container"><img alt="Agent サイドパネル" src="img\\95c5a6d31d771748.png"></p>
+<p class="image-container"><img alt="Agent サイドパネル詳細" src="img\\d3d1449f12510e3e.png"></p>
+<p class="image-container"><img alt="Agent モード選択" src="img\\af709bcc03c1e21e.png"></p>
+<h2 is-upgraded>Explain and Fix</h2>
+<p>コードをハイライト → 右クリック → AI に説明・修正を依頼します。</p>
+<p class="image-container"><img alt="Explain and Fix" src="img\\e45cbe02ed76b9c1.png"></p>
+<h2 is-upgraded>Send problems to agent</h2>
+<p>エラーパネルの問題をワンクリックでエージェントに送信し、自動修正を依頼します。</p>
+<p class="image-container"><img alt="Send problems to agent" src="img\\e4992d14708005d0.png"></p>
+<h2 is-upgraded>Send terminal output to agent</h2>
+<p>ターミナルの出力（エラーログ等）をそのままエージェントに送り、原因分析・修正を依頼します。</p>
+<p class="image-container"><img alt="Send terminal output to agent" src="img\\c40293bab474c9b1.png"></p>
+<aside class="special"><p> プログラミングに限らず、文書ファイル（Markdown, HTML, テキスト等）の編集にも使えます。 </p>
+</aside>
 
 
       </google-codelab-step>
@@ -266,6 +343,384 @@
   <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
   <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
   <script src="//support.google.com/inapp/api.js"></script>
+
+  <!-- ========================================= -->
+  <!-- 音声読み上げ機能 -->
+  <!-- ========================================= -->
+  <div id="speech-panel" style="position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+    <!-- 進捗表示 -->
+    <div id="speech-progress" style="display: none; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 320px; font-family: 'Roboto', sans-serif;">
+      <div style="font-size: 0.7rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">読み上げ中</div>
+      <div id="speech-current-section" style="font-size: 0.85rem; font-weight: 600; color: #0f172a; margin-top: 2px;"></div>
+      <div style="background: #f1f5f9; border-radius: 4px; height: 4px; margin-top: 8px; overflow: hidden;">
+        <div id="speech-bar" style="background: #1a73e8; height: 100%; width: 0%; transition: width 0.3s;"></div>
+      </div>
+      <div style="display: flex; gap: 8px; margin-top: 8px;">
+        <button onclick="speechSkipPrev()" style="background: none; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-size: 0.75rem; color: #64748b;">◀ 前</button>
+        <button onclick="speechSkipNext()" style="background: none; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-size: 0.75rem; color: #64748b;">次 ▶</button>
+        <select id="speech-rate" onchange="updateSpeechRate()" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 8px; font-size: 0.7rem; color: #64748b; cursor: pointer;">
+          <option value="0.8">0.8x</option>
+          <option value="1" selected>1.0x</option>
+          <option value="1.2">1.2x</option>
+          <option value="1.5">1.5x</option>
+          <option value="2">2.0x</option>
+          <option value="2.5">2.5x</option>
+          <option value="3">3.0x</option>
+          <option value="4">4.0x</option>
+        </select>
+        <button id="ai-toggle" onclick="toggleAI()" style="background: #10b981; border: 1px solid #059669; border-radius: 6px; padding: 4px 8px; font-size: 0.65rem; color: white; cursor: pointer; font-weight: 600;" title="AI読みがな補正のON/OFF">AI補正</button>
+      </div>
+    </div>
+    <!-- 再生ボタン -->
+    <button id="speech-btn" onclick="toggleSpeech()" style="
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1a73e8, #1557b0);
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(26, 115, 232, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    " title="ガイドを音声で読み上げる">
+      ▶
+    </button>
+  </div>
+
+  <script>
+  // ========================================
+  // 読み上げスクリプト（各ステップの内容）
+  // ========================================
+  const speechSections = [
+    {
+      title: 'はじめに',
+      text: 'はじめに。このコードラボではGoogle Antigravityの基本操作をステップごとに学びます。Antigravityはエーアイ エージェント型の開発・業務支援プラットフォームです。従来の「1行ずつ提案するエーアイツール」とは異なり、タスク全体をエーアイが自律的に計画・実行します。このコードラボで学ぶことは、Antigravityの基本概念と従来ツールとの違い、インストールと初期セキュリティポリシーの設定、エージェントマネージャーの使い方、Antigravityブラウザ機能の設定と活用、アーティファクツ・インボックス・エディターの概要です。必要な環境は、Google Workspaceアカウント、WindowsまたはmacOSのパソコン、クロームブラウザ、所要時間は約60分です。プログラミングの知識は不要です。日本語の自然な指示で操作できます。'
+    },
+    {
+      title: 'Antigravity とは',
+      text: 'Antigravityとは。Googleが提供するエーアイ エージェント型の開発・業務支援環境です。コードを1行ずつ提案する従来ツールとは違い、タスク全体をエーアイが自律的に計画・実行します。従来のエーアイツールとの違いとして、動き方は従来が1行ずつ提案なのに対し、Antigravityはタスクを丸ごと依頼できます。人間の役割は従来がコードを組み立てるのに対し、Antigravityはレビューと方向修正です。作業記録は従来はなし、Antigravityはアーティファクツに完全記録されます。並行処理は従来が1件ずつなのに対し、Antigravityは複数エージェント同時実行できます。エージェントマネージャーはエーアイ エージェントの管制室で、複数のエージェントを並列で管理します。エディターはブイエスコードベースのコードエディタで、エーアイが並走してコードを補助します。エーアイが担当するのは、タスクの計画を立てること、必要なファイルを調べること、コードや文書を作成・修正すること、結果を報告することです。あなたが担当するのは、やりたいことを伝えること、エーアイの計画をレビューすること、方向が違えば修正指示を出すこと、最終確認して承認することです。「調べてまとめて」「この書類を直して」のような自然な日本語で指示できます。'
+    },
+    {
+      title: 'インストール',
+      text: 'インストール。ダウンロードからサインインまで約15分。Google Workspaceアカウントでログインします。インストール手順は4つです。1、antigravity.google/downloadからオーエスに合ったインストーラーを取得します。2、セットアップで「スタートフレッシュ」を選択し、テーマはダークまたはライトを好みで選びます。3、セキュリティポリシー設定として、セットアップウィザード内で「レビュードリブン ディベロップメント」を選択します。後から変更する場合はSettings→Agentで設定できます。4、Google Workspaceアカウントでサインインします。プレビュー期間中は無料です。セキュリティポリシーの選択肢として、ターミナル実行ポリシーは、Always proceedでコマンドを自動実行、Request reviewで実行前に毎回確認を求めます。レビューポリシーは、Always Proceed、Agent Decides、Request Reviewの3種類です。JavaScriptは実行ポリシーも3種類あります。推奨セキュリティプリセットは4種類で、セキュアモード、レビュードリブン（初めての方に推奨）、エージェントドリブン、カスタムから選べます。社内ネットワークで接続できない場合は情報システム部に連絡してください。'
+    },
+    {
+      title: 'Agent Manager',
+      text: 'エージェントマネージャー。エーアイ エージェントの「管制室」です。新しい会話を始めるとエージェントが1つ起動し、指示に従ってタスクを実行します。2つの実行モードがあります。プランニングモードは、エーアイがまず計画を立ててから実行します。計画の段階でレビューできるので安心です。用途は調査・分析・複数ファイルの変更です。ファストモードは、計画なしで即座に実行します。単純な作業を素早く処理します。用途はリネーム・フォーマット修正・簡単な質問です。エージェントマネージャーの主な機能として、インボックスはすべての会話を一覧表示し、タスク状況・承認待ちリクエストを確認できます。ワークスペースはプロジェクトフォルダを追加・管理します。複数エージェントの同時実行も可能で、例えば5件の資料作成を5つのエージェントに同時に割り当て、並行して処理できます。迷ったらプランニングモードを使いましょう。'
+    },
+    {
+      title: 'ブラウザ機能',
+      text: 'ブラウザ機能。クローム拡張をインストールすると、エーアイにWebブラウジング能力を付与できます。調査やデータ収集を自動化します。セットアップ手順は3ステップです。1、エージェントマネージャーの設定からクロームウェブストアに移動し、「Antigravity Browser」拡張機能をインストールします。2、拡張機能のインストール後、サイトへのアクセス許可を設定します（読み取り専用を推奨）。3、エージェントマネージャーに戻り、ブラウザアイコンが有効になっていることを確認します。ブラウザでできることは、指定したWebサイトの情報収集・要約、複数ページにまたがる情報の横断検索、フォームへの自動入力（JavaScript許可が必要）、定期的なページ監視と変更検知です。JavaScriptの実行ポリシーを「Always Proceed」にするとリスクが高まります。社内利用では「Request review」を推奨します。'
+    },
+    {
+      title: 'Artifacts',
+      text: 'アーティファクツ。エーアイの作業成果物がすべて記録される仕組みです。「エーアイが本当にこの作業をしたか」を確認できます。アーティファクトの種類は6つです。タスクリストはコーディング前の計画で、エーアイが何をするか一覧で確認できます。実装計画はどのファイルをどう変更するかの技術的な設計書です。ウォークスルーは実装完了後の変更内容とテスト手順のまとめです。コードディフは変更前後の差分を行単位で表示します。スクリーンショットはユーアイの変更前後の状態をキャプチャします。ブラウザ記録は操作の動画記録です。アーティファクツの確認方法として、エディター画面では右下の「Artifacts」ボタンから確認できます。エージェントマネージャー画面では右上の「Review changes」横のトグルボタンで成果物一覧を表示できます。「Review Changes」ボタンで変更を適用前に確認できます。承認しない限りファイルは変更されません。'
+    },
+    {
+      title: 'Inbox',
+      text: 'インボックス。過去の会話がすべて保存される中央ハブです。複数のエージェントが同時に進行する作業を一覧で管理します。インボックスでできることは、会話の履歴（やり取りの全文）を確認すること、各エージェントが生成した成果物（アーティファクツ）を参照すること、タスクの進捗状況・承認待ちリクエストを管理すること、同時に走っている複数タスクを一覧で把握することです。「先週やった○○の続き」と言えば、エーアイが過去の文脈を引き継いで作業を再開します。'
+    },
+    {
+      title: 'Editor',
+      text: 'エディター。ブイエスコードベースのエディタです。従来の操作感はそのままに、エーアイ エージェント機能が統合されています。オートコンプリートは入力中にエーアイが続きを提案し、タブキーで確定します。Tab to Importは不足しているライブラリの読み込み文を自動提案します。Tab to Jumpはカーソルを論理的な次の編集箇所に自動移動します。インラインコマンドはコントロール+Iを押すと、その場でエーアイに指示を出せます。エージェント サイドパネルはコントロール+Lで開き、アットマークでファイルやコードをコンテキストに追加、スラッシュでワークフローを呼び出せます。Explain and Fixはコードをハイライトして右クリックし、エーアイに説明・修正を依頼します。Send problems to agentはエラーパネルの問題をワンクリックでエージェントに送信し、自動修正を依頼します。ターミナルの出力もそのままエージェントに送って、原因分析・修正を依頼できます。プログラミングに限らず、文書ファイルの編集にも使えます。'
+    },
+    {
+      title: 'まとめ',
+      text: 'まとめ。お疲れ様でした。このコードラボで学んだことを振り返りましょう。学習のポイントとして、Antigravityは「エーアイ エージェント」であり、タスクを自律的に計画・実行します。インストール時はレビュードリブンポリシーを選択します。エージェントマネージャーで複数エージェントを並行管理できます。プランニングモードで計画を確認してから実行する習慣をつけましょう。アーティファクツで変更内容を必ず確認してから承認します。次のステップとして、詳細版操作ガイドを読む、セキュリティガイドラインを確認する、まずPlaygroundワークスペースで気軽に試してみることをお勧めします。操作で困ったことがあれば情報システム部にお気軽に連絡ください。まずはPlaygroundで試してみましょう。本番ファイルへの影響なく、自由にAntigravityの機能を体験できます。'
+    }
+  ];
+
+  let speechState = 'stopped';
+  let currentSectionIndex = 0;
+  let currentUtterance = null;
+  let speechRate = 1.0;
+  let useAI = true;
+  let correctionCache = {};
+  let isCancelling = false;
+
+  // Gemini APIで読みがな補正
+  const GEMINI_API_KEY = 'AIzaSyBZWgnsUAD5UjU-hRWsQM9r8Z7DQy7gb_Y';
+  const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+
+  async function correctPronunciation(text) {
+    if (!useAI) return text;
+    if (correctionCache[text]) return correctionCache[text];
+
+    try {
+      const sectionLabel = document.getElementById('speech-current-section');
+      if (sectionLabel) sectionLabel.textContent += '  [AI補正中...]';
+
+      const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: `以下の日本語テキストを、音声合成（TTS）で正しく読み上げられるように変換してください。
+
+ルール:
+- 英字略語・製品名はカタカナ読みに変換: Antigravity→アンチグラビティ、VSCode→ブイエスコード、Chrome→クローム、AI→エーアイ、PC→ピーシー、OS→オーエス、URL→ユーアールエル、UI→ユーアイ、Codelabs→コードラボ、Diff→ディフ、Tab→タブ
+- 英語フレーズ: Start fresh→スタートフレッシュ、Review-driven→レビュードリブン、Agent-driven→エージェントドリブン、Auto-complete→オートコンプリート、Inline Command→インラインコマンド、Agent Manager→エージェントマネージャー、Explain and fix→エクスプレインアンドフィックス、Agent Panel→エージェントパネル
+- モード名: Planning→プランニング、Fast→ファスト、Secure→セキュア、Custom→カスタム
+- 用語: Artifacts→アーティファクツ、Inbox→インボックス、Workspaces→ワークスペース、Workflow→ワークフロー、Rules→ルールズ、Skills→スキルズ、Undo→アンドゥ
+- キー名: Ctrl→コントロール、Shift→シフト
+- 文の意味や構造は一切変えない
+- 補足や説明を追加しない
+- 変換後のテキストだけを返す
+
+テキスト:
+${text}`
+            }]
+          }],
+          generationConfig: {
+            temperature: 0.1,
+            maxOutputTokens: 4096
+          }
+        })
+      });
+
+      if (!response.ok) {
+        console.warn('Gemini API error:', response.status);
+        if (response.status === 429 || response.status === 403) {
+          useAI = false;
+          const btn = document.getElementById('ai-toggle');
+          if (btn) { btn.style.background = '#94a3b8'; btn.style.borderColor = '#64748b'; btn.textContent = 'AI OFF'; }
+        }
+        return text;
+      }
+
+      const data = await response.json();
+      const corrected = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+      if (corrected && corrected.length > 0) {
+        correctionCache[text] = corrected;
+        return corrected;
+      }
+      return text;
+    } catch (e) {
+      console.warn('Gemini API call failed:', e);
+      return text;
+    }
+  }
+
+  function toggleSpeech() {
+    if (speechState === 'stopped') {
+      startSpeech(0);
+    } else if (speechState === 'playing') {
+      pauseSpeech();
+    } else if (speechState === 'paused') {
+      resumeSpeech();
+    }
+  }
+
+  function safeCancel() {
+    isCancelling = true;
+    window.speechSynthesis.cancel();
+    setTimeout(() => { isCancelling = false; }, 100);
+  }
+
+  function startSpeech(fromIndex) {
+    safeCancel();
+    currentSectionIndex = fromIndex;
+    speechState = 'playing';
+    updateSpeechUI();
+    prepareSectionAndSpeak();
+  }
+
+  async function prepareSectionAndSpeak() {
+    if (currentSectionIndex >= speechSections.length) {
+      stopSpeech();
+      return;
+    }
+
+    const section = speechSections[currentSectionIndex];
+
+    // 進捗テキスト更新
+    const sectionLabel = document.getElementById('speech-current-section');
+    if (sectionLabel) {
+      sectionLabel.textContent = section.title + '  (' + (currentSectionIndex + 1) + '/' + speechSections.length + ')';
+    }
+
+    updateSpeechUI();
+
+    // AI補正
+    let textToSpeak = section.text;
+    try {
+      textToSpeak = await correctPronunciation(section.text);
+    } catch (e) {
+      console.warn('Section correction failed:', e);
+    }
+
+    if (speechState !== 'playing') return;
+
+    // 読み上げ
+    const utterance = new SpeechSynthesisUtterance(textToSpeak);
+    utterance.lang = 'ja-JP';
+    utterance.rate = speechRate;
+    utterance.pitch = 0.95;
+
+    const voices = window.speechSynthesis.getVoices();
+    const jaVoice = selectBestJapaneseVoice(voices);
+    if (jaVoice) utterance.voice = jaVoice;
+
+    utterance.onend = function() {
+      if (isCancelling) return;
+      if (speechState === 'playing') {
+        currentSectionIndex++;
+        updateSpeechUI();
+        setTimeout(() => prepareSectionAndSpeak(), 500);
+      }
+    };
+
+    utterance.onerror = function(e) {
+      if (isCancelling) return;
+      console.warn('Speech error:', e);
+      if (speechState === 'playing') {
+        currentSectionIndex++;
+        prepareSectionAndSpeak();
+      }
+    };
+
+    currentUtterance = utterance;
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function pauseSpeech() {
+    window.speechSynthesis.pause();
+    speechState = 'paused';
+    updateSpeechUI();
+  }
+
+  function resumeSpeech() {
+    window.speechSynthesis.resume();
+    speechState = 'playing';
+    updateSpeechUI();
+  }
+
+  function stopSpeech() {
+    safeCancel();
+    speechState = 'stopped';
+    currentSectionIndex = 0;
+    updateSpeechUI();
+  }
+
+  function speechSkipNext() {
+    if (currentSectionIndex < speechSections.length - 1) {
+      safeCancel();
+      currentSectionIndex++;
+      updateSpeechUI();
+      setTimeout(() => prepareSectionAndSpeak(), 150);
+    }
+  }
+
+  function speechSkipPrev() {
+    if (currentSectionIndex > 0) {
+      safeCancel();
+      currentSectionIndex--;
+      updateSpeechUI();
+      setTimeout(() => prepareSectionAndSpeak(), 150);
+    }
+  }
+
+  function updateSpeechRate() {
+    speechRate = parseFloat(document.getElementById('speech-rate').value);
+    if (speechState === 'playing') {
+      safeCancel();
+      setTimeout(() => prepareSectionAndSpeak(), 150);
+    }
+  }
+
+  function toggleAI() {
+    useAI = !useAI;
+    const btn = document.getElementById('ai-toggle');
+    if (useAI) {
+      btn.style.background = '#10b981';
+      btn.style.borderColor = '#059669';
+      btn.textContent = 'AI補正';
+    } else {
+      btn.style.background = '#94a3b8';
+      btn.style.borderColor = '#64748b';
+      btn.textContent = 'AI OFF';
+    }
+  }
+
+  function updateSpeechUI() {
+    const btn = document.getElementById('speech-btn');
+    const progress = document.getElementById('speech-progress');
+    const sectionLabel = document.getElementById('speech-current-section');
+    const speechBar = document.getElementById('speech-bar');
+
+    if (speechState === 'stopped') {
+      btn.textContent = '▶';
+      btn.style.background = 'linear-gradient(135deg, #1a73e8, #1557b0)';
+      btn.title = 'ガイドを音声で読み上げる';
+      progress.style.display = 'none';
+    } else if (speechState === 'playing') {
+      btn.textContent = '⏸';
+      btn.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
+      btn.title = '一時停止';
+      progress.style.display = 'block';
+      if (currentSectionIndex < speechSections.length) {
+        const section = speechSections[currentSectionIndex];
+        sectionLabel.textContent = section.title + '  (' + (currentSectionIndex + 1) + '/' + speechSections.length + ')';
+        speechBar.style.width = ((currentSectionIndex + 1) / speechSections.length * 100) + '%';
+      }
+    } else if (speechState === 'paused') {
+      btn.textContent = '▶';
+      btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+      btn.title = '再開';
+      progress.style.display = 'block';
+    }
+  }
+
+  // 高品質日本語音声を選択
+  let cachedBestVoice = null;
+
+  function selectBestJapaneseVoice(voices) {
+    if (cachedBestVoice) return cachedBestVoice;
+    const jaVoices = voices.filter(v => v.lang === 'ja-JP' || v.lang === 'ja');
+    if (jaVoices.length === 0) return voices[0] || null;
+
+    const priorities = [
+      v => v.name.includes('Google') && v.name.includes('日本語'),
+      v => v.name.includes('Google') && v.lang.startsWith('ja'),
+      v => v.name.includes('Nanami') && v.name.includes('Online'),
+      v => v.name.includes('Microsoft') && v.name.includes('Online'),
+      v => v.name.includes('Online') || v.name.includes('Natural'),
+      v => !v.localService,
+    ];
+    for (const check of priorities) {
+      const found = jaVoices.find(check);
+      if (found) { cachedBestVoice = found; return found; }
+    }
+    cachedBestVoice = jaVoices[0];
+    return jaVoices[0];
+  }
+
+  // ページロード時に前回の音声を停止
+  if (window.speechSynthesis) {
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = function() {
+      cachedBestVoice = null;
+      const voices = window.speechSynthesis.getVoices();
+      const best = selectBestJapaneseVoice(voices);
+      if (best) console.log('選択された音声:', best.name, best.lang, best.localService ? '(ローカル)' : '(オンライン)');
+    };
+  }
+
+  // ページ離脱時にも停止
+  window.addEventListener('beforeunload', function() {
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+  });
+
+  // 進捗パネルをダブルクリックで停止
+  document.getElementById('speech-progress').addEventListener('dblclick', function() {
+    stopSpeech();
+  });
+  </script>
 
 </body>
 </html>
