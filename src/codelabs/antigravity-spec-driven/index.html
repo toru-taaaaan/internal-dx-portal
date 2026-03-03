@@ -1,0 +1,749 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Antigravity 仕様駆動開発 入門</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="antigravity-spec-driven"
+                  title="Antigravity 仕様駆動開発 入門"
+                  environment="web"
+                  feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/">
+    
+      <google-codelab-step label="このラボの目的" duration="2">
+        <p>このCodelabでは <strong>Google Antigravity</strong> を使った <strong>仕様駆動開発（Spec-Driven Development）</strong> を実践します。</p>
+<p>仕様駆動開発とは、AI エージェントに作業を依頼する前に <strong>詳細な仕様書を書く</strong> アプローチです。あいまいな指示で動かすのではなく、要件・制約・完成イメージを文書化してからエージェントに渡します。</p>
+<p class="image-container"><img alt="Antigravity 概要" src="img\\b06b582bcd847f6d.png"></p>
+<h2 is-upgraded>このCodelabで学ぶこと</h2>
+<ul>
+<li>「プロンプトとパッチ」との違いを理解する</li>
+<li>効果的な仕様書（スペック）の書き方を習得する</li>
+<li>Antigravity に仕様を渡してエージェントに自動実装させる</li>
+<li>Artifacts で成果物を確認・承認するワークフローを身につける</li>
+</ul>
+<h2 is-upgraded>このCodelabで作るもの</h2>
+<p><strong>社内向け FAQ ページ</strong> を仕様書から自動生成します。完成品は：</p>
+<ul>
+<li>部署ごとにまとめられた Q&amp;A（カテゴリ分類）</li>
+<li>キーワード検索機能</li>
+<li>クリックで開閉するアコーディオン形式</li>
+<li>スマートフォン対応のレスポンシブデザイン</li>
+</ul>
+<h2 is-upgraded>必要な環境</h2>
+<ul>
+<li><strong>Antigravity インストール済み</strong>（未インストールの場合は「Antigravity 使い方入門」を先に完了してください）</li>
+<li><strong>Google Workspace アカウント</strong>（会社の Gmail アドレス）</li>
+<li>所要時間：約 55 分</li>
+</ul>
+<aside class="special"><p> プログラミングの知識は不要です。仕様書の書き方さえ覚えれば、あとはエージェントが実装します。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="仕様駆動開発とは" duration="5">
+        <h2 is-upgraded>「プロンプトとパッチ」との違い</h2>
+<p>多くの人が最初にやりがちなのが <strong>「プロンプトとパッチ」</strong> です。</p>
+<ol type="1">
+<li>AI に「〇〇を作って」と送る</li>
+<li>出てきた結果を見て「ここが違う」とパッチを当てる</li>
+<li>また送る → また直す → ループ</li>
+</ol>
+<p>これは時間がかかり、最終的な品質もブレます。</p>
+<p><strong>仕様駆動開発</strong> では順序が変わります。</p>
+<ol type="1">
+<li><strong>先に仕様書を書く</strong>（何を・どんな制約で・どう動くか）</li>
+<li>エージェントに仕様書ごと渡す</li>
+<li>エージェントが計画を立てる → レビューする</li>
+<li>承認 → 自動実装</li>
+</ol>
+<h2 is-upgraded>なぜ仕様書が重要か</h2>
+<table>
+<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"><p>プロンプトとパッチ</p>
+</td><td colspan="1" rowspan="1"><p>仕様駆動開発</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>最初にすること</p>
+</td><td colspan="1" rowspan="1"><p>すぐ実行</p>
+</td><td colspan="1" rowspan="1"><p>仕様書を書く</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>手戻り</p>
+</td><td colspan="1" rowspan="1"><p>多い</p>
+</td><td colspan="1" rowspan="1"><p>少ない</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>完成物の品質</p>
+</td><td colspan="1" rowspan="1"><p>ブレがある</p>
+</td><td colspan="1" rowspan="1"><p>仕様通り</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>資産性</p>
+</td><td colspan="1" rowspan="1"><p>毎回ゼロから</p>
+</td><td colspan="1" rowspan="1"><p>仕様書が再利用できる</p>
+</td></tr>
+</table>
+<h2 is-upgraded>良い仕様書の 3 要素</h2>
+<p><strong>1. 目的</strong></p>
+<p>「何のために作るか」「誰が使うか」を明記する</p>
+<p><strong>2. 機能要件</strong></p>
+<p>「何ができなければならないか」を箇条書きで具体的に書く</p>
+<p><strong>3. 制約</strong></p>
+<p>「使ってよい技術・使ってはいけないこと・デザインの決まり事」を明示する</p>
+<p class="image-container"><img alt="Antigravity 概要" src="img\\281ac826fb44d427.png"></p>
+<aside class="special"><p> 仕様書は完璧である必要はありません。「これを作りたい」という意図が伝われば十分です。エージェントが不明点を質問してきます。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="ワークスペースを準備する" duration="5">
+        <p>Antigravity を起動して、Agent Manager を開きます。</p>
+<h2 is-upgraded>Agent Manager を起動する</h2>
+<p class="image-container"><img alt="Agent Manager インターフェース" src="img\\d5ae91fc746e1bba.png"></p>
+<h2 is-upgraded>Playground ワークスペースを選択する</h2>
+<p>左のサイドバーから <strong>Workspaces</strong> を選択し、<strong>Playground</strong> をクリックします。</p>
+<p class="image-container"><img alt="ワークスペース選択" src="img\\ec72712ea24bf6d5.png"></p>
+<aside class="special"><p> Playground は本番ファイルに影響しない安全な作業場所です。最初の練習はここで行いましょう。 </p>
+</aside>
+<h2 is-upgraded>Planning モードを確認する</h2>
+<p>Agent Manager 上部のモード選択で <strong>Planning</strong> が選ばれていることを確認します。</p>
+<p class="image-container"><img alt="プランニングモード" src="img\\f403e40ad480efc9.png"></p>
+<p>Planning モードでは、エージェントが実行前に計画を提示します。承認してから実行するため、方向のズレを事前に修正できます。</p>
+<h2 is-upgraded>モデルの確認</h2>
+<p>モデル選択欄で利用可能なモデルが表示されます。Gemini 3 を選択してください。</p>
+<p class="image-container"><img alt="モデル選択" src="img\\fb0744dc43911365.png"></p>
+<h2 is-upgraded>Browser 機能はオフにする</h2>
+<p>このCodelabではブラウザ機能は使いません。Browser トグルが <strong>オフ</strong> であることを確認してください。</p>
+<aside class="warning"><p> Browser をオンにしていると、エージェントがWeb上のリソースを参照しようとすることがあります。このCodelabではオフにしておきます。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="仕様書を書く" duration="10">
+        <p>これがこのCodelabの核心です。良い仕様書を書くことで、エージェントの精度が劇的に上がります。</p>
+<h2 is-upgraded>テンプレートをコピーする</h2>
+<p>お好みのテキストエディタ（メモ帳でも可）を開き、以下の仕様書をそのまま貼り付けてください。</p>
+<pre><code># 社内 FAQ ページ 仕様書
+
+## 目的
+情報システム部への問い合わせを減らすため、よくある質問をまとめた
+Web ページを作る。社員が自分で調べて解決できるようにする。
+
+## 対象ユーザー
+AKIBAホールディングス 全社員（ITリテラシーは様々）
+
+## 機能要件
+1. FAQ をカテゴリ別に表示する（パソコン・メール・ネットワーク・Antigravity の 4 カテゴリ）
+2. キーワードで検索できる（リアルタイムフィルタリング）
+3. 質問をクリックすると回答が展開・折りたたみできる（アコーディオン形式）
+4. 各カテゴリは色分けされたバッジで区別できる
+5. 上部に「問い合わせ先」として情報システム部の内線番号を表示する
+
+## FAQ 内容（各カテゴリ 3〜4 件）
+
+カテゴリ「パソコン」:
+- Q: パスワードを忘れました
+  A: 社内ポータルのトップページから「パスワードリセット」を申請してください
+- Q: パソコンが起動しない
+  A: 電源ケーブルを確認後、情報システム部（内線：XXX）に連絡してください
+- Q: 画面が固まって動かない
+  A: Ctrl + Alt + Delete を押してタスクマネージャーを起動し、応答なしのアプリを終了してください
+
+カテゴリ「メール」:
+- Q: メールの容量が不足しています
+  A: 不要なメールを削除するか、情報システム部に容量増設を申請してください
+- Q: 迷惑メールが多い
+  A: Gmail の「迷惑メールを報告」ボタンを使い、不審なメールは開かないでください
+- Q: 外部へのメール送信が制限されている
+  A: セキュリティポリシーにより一部ドメインへの送信が制限されています。詳細は情報システム部に確認してください
+
+カテゴリ「ネットワーク」:
+- Q: 社内 Wi-Fi に繋がらない
+  A: SSID が「AKIBA-Corp」であることを確認し、パスワードは社内ポータルで確認できます
+- Q: VPN が繋がらない
+  A: VPN クライアントを再起動し、ID/パスワードを再入力してください。それでも繋がらない場合は情報システム部に連絡してください
+- Q: インターネットが遅い
+  A: 大容量ファイルのダウンロード中は速度が低下します。業務時間内は大容量ダウンロードを避けてください
+
+カテゴリ「Antigravity」:
+- Q: Antigravity にログインできない
+  A: Google Workspace アカウント（会社の Gmail）でサインインしてください
+- Q: エージェントが止まってしまった
+  A: ページを再読み込みして再試行してください
+- Q: 生成した内容が社外に送信されますか
+  A: 社内セキュリティガイドラインを参照してください。個人情報や機密情報の入力は禁止しています
+- Q: 使い方がわからない
+  A: 社内ポータルの「Antigravity 使い方入門 Codelab」を参照してください
+
+## デザイン制約
+- 外部ライブラリ・CSS フレームワーク不使用（純粋な HTML/CSS/JavaScript のみ）
+- フォント: Google Fonts（Noto Sans JP）は可
+- 会社のブランドカラー: ネイビー（#1e3a8a）を基調とする
+- モバイル対応（スマートフォンでも読みやすい）
+- 1 ファイル（index.html）にまとめる
+- 検索バーはページ最上部に固定表示する
+</code></pre>
+<h2 is-upgraded>仕様書のポイント解説</h2>
+<p>この仕様書のどこが良いか確認しましょう。</p>
+<p><strong>目的が明確</strong>：「問い合わせを減らす」「自分で解決できる」という具体的なゴールがある</p>
+<p><strong>ユーザーが具体的</strong>：「全社員（ITリテラシーは様々）」でターゲットが明確</p>
+<p><strong>機能が箇条書きで具体的</strong>：「リアルタイムフィルタリング」「アコーディオン形式」など実装イメージが湧く</p>
+<p><strong>サンプルデータがある</strong>：FAQ の内容を仕様書に含めているため、AI が何を作ればいいか迷わない</p>
+<p><strong>制約が明示</strong>：「外部ライブラリ不使用」「1 ファイル」など、エンジニアが迷わない指示になっている</p>
+<aside class="warning"><p> 「いい感じの FAQ ページを作って」はNG仕様書です。「いい感じ」はエージェントには伝わりません。具体的な言葉で書きましょう。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="エージェントに仕様を渡す" duration="10">
+        <h2 is-upgraded>Agent Manager の会話パネルを開く</h2>
+<p>Agent Manager の会話パネルに移動します。新しい会話を開始します。</p>
+<p class="image-container"><img alt="Agent Manager ウィンドウ" src="img\\156224e223eeda36.png"></p>
+<h2 is-upgraded>プロンプトを入力する</h2>
+<p>先ほど作成した仕様書の内容を <strong>そのまま</strong> 会話パネルに貼り付けます。冒頭に一文添えると効果的です。</p>
+<pre><code>以下の仕様書に従って、社内 FAQ ページを作成してください。
+
+# 社内 FAQ ページ 仕様書
+（仕様書の内容を貼り付け）
+</code></pre>
+<p class="image-container"><img alt="各部位の説明" src="img\\22f6dcf7b3edc583.png"></p>
+<h2 is-upgraded>Planning モードで送信する</h2>
+<p><strong>Planning モード</strong> であることを最終確認してから、送信ボタンを押します。</p>
+<p>エージェントはまず <strong>計画（Plan）</strong> を作成します。すぐにコードは書きません。これが Planning モードの動作です。</p>
+<aside class="special"><p> 仕様書の内容が詳しければ詳しいほど、エージェントの計画の精度が上がります。サンプルデータが入っているとさらに良い結果になります。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="計画をレビューする" duration="5">
+        <h2 is-upgraded>計画の内容を確認する</h2>
+<p>エージェントが計画を提示します。内容を読んで意図と合っているか確認しましょう。</p>
+<p>良い計画には以下が含まれます：</p>
+<ul>
+<li>作成するファイル一覧（今回は <code>index.html</code> 1 ファイル）</li>
+<li>各機能の実装方針（アコーディオン、検索フィルタの実装方法）</li>
+<li>デザインの方針（カラー、フォント、レイアウト）</li>
+</ul>
+<h2 is-upgraded>計画が意図と違う場合</h2>
+<p>計画を読んで「これは違う」と思ったら、<strong>実行前に修正指示を出します</strong>。</p>
+<p>例：</p>
+<pre><code>カテゴリのバッジ色を変えてください。
+「Antigravity」カテゴリは青（#1a73e8）にしてください。
+また、検索バーはページ最上部に固定してください。
+</code></pre>
+<p>実行前にすり合わせできることが Planning モードの価値です。</p>
+<h2 is-upgraded>承認する</h2>
+<p>計画が意図通りであれば、<strong>「承認」ボタン</strong>（または「Continue」）をクリックします。</p>
+<p>エージェントがコードの生成を開始します。</p>
+<aside class="special"><p> 計画段階で「方向が違う」と気づいて修正できれば、後から全部やり直す手間が省けます。Planning モードは必ず使いましょう。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="実行と確認" duration="10">
+        <h2 is-upgraded>実行中の様子</h2>
+<p>承認後、エージェントが自動でコードを書き始めます。実行ログがリアルタイムで表示されます。</p>
+<p>エージェントは以下を順番に行います：</p>
+<ol type="1">
+<li>HTML の骨格（構造）を作成</li>
+<li>CSS スタイルを適用（ブランドカラー・レイアウト）</li>
+<li>JavaScript で検索・アコーディオン機能を実装</li>
+<li>FAQ データを組み込む</li>
+<li>モバイル対応の確認</li>
+</ol>
+<h2 is-upgraded>セキュリティポリシーの確認画面</h2>
+<p>セキュリティポリシーが「Request review」の場合、コマンド実行前に確認画面が出ます。</p>
+<p>内容を読んで問題なければ「承認」してください。</p>
+<aside class="warning"><p> 確認画面の内容を読まずに承認しないでください。エージェントが何をしようとしているかを確認する習慣をつけましょう。 </p>
+</aside>
+<h2 is-upgraded>完成ファイルをブラウザで確認する</h2>
+<p>完成後、エージェントが生成した <code>index.html</code> を見つけます。</p>
+<p>ファイルを右クリック → 「ブラウザで開く」または「プレビュー」で動作を確認します。</p>
+<p>確認ポイント：</p>
+<ul>
+<li>[ ] カテゴリが 4 つ（パソコン・メール・ネットワーク・Antigravity）表示されている</li>
+<li>[ ] 質問をクリックすると回答が開く・閉じる（アコーディオン）</li>
+<li>[ ] キーワードを入力すると Q&amp;A が絞り込まれる</li>
+<li>[ ] スマートフォンサイズでも崩れていない</li>
+<li>[ ] 会社のブランドカラー（ネイビー）が使われている</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Artifacts を確認して承認する" duration="5">
+        <h2 is-upgraded>Artifacts とは</h2>
+<p>エージェントが行ったすべての作業は <strong>Artifacts（成果物）</strong> として記録されます。「AI が本当にこの作業をしたか」を後から確認できます。</p>
+<p class="image-container"><img alt="Artifacts 一覧" src="img\\5deff47fe0a93aa1.png"></p>
+<h2 is-upgraded>Agent Manager の Artifacts を開く</h2>
+<p>Agent Manager 右上の <strong>「Review changes」</strong> をクリックします。</p>
+<p class="image-container"><img alt="Agent Manager の Artifacts" src="img\\5320f447471c43eb.png"></p>
+<p>成果物一覧が表示されます。</p>
+<p class="image-container"><img alt="Artifacts ビュー" src="img\\19d9738bb3c7c0c9.png"></p>
+<h2 is-upgraded>コード Diff を確認する</h2>
+<p>「コード Diff」を開くと、作成されたファイルの内容を行単位で確認できます。</p>
+<p class="image-container"><img alt="Review Changes" src="img\\e1d8fd6e7df4daf3.png"></p>
+<h2 is-upgraded>承認または修正指示を出す</h2>
+<p>内容を確認して：</p>
+<p><strong>問題なければ</strong>：「すべて承認」で変更を適用</p>
+<p><strong>修正が必要なら</strong>：会話パネルで追加指示を出す</p>
+<pre><code># 追加指示の例
+
+検索バーのデザインをもう少し大きくしてください。
+また、各カテゴリのアコーディオンは最初から全件を
+折りたたんだ状態にしてください。
+</code></pre>
+<p>修正指示を出すと、エージェントが再度計画を立てて差分だけ修正します。</p>
+<aside class="special"><p> 承認しない限りファイルは変更されません。Artifacts で確認してから承認する習慣をつけましょう。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="まとめ" duration="3">
+        <p>おつかれさまでした。このCodelabでは以下を実践しました。</p>
+<h2 is-upgraded>学んだこと</h2>
+<ul>
+<li><strong>仕様駆動開発のワークフロー</strong>：仕様書 → 計画レビュー → 実行 → Artifacts 確認</li>
+<li><strong>良い仕様書の書き方</strong>：目的・機能要件・制約・サンプルデータを明記する</li>
+<li><strong>Planning モードの活用</strong>：実行前に計画を確認して方向を合わせる</li>
+<li><strong>Artifacts でのレビュー</strong>：承認前に変更内容を確認して品質を担保する</li>
+</ul>
+<h2 is-upgraded>仕様駆動開発の効果</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p>従来の方法</p>
+</td><td colspan="1" rowspan="1"><p>仕様駆動開発</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>何度もやり直す</p>
+</td><td colspan="1" rowspan="1"><p>最初に要件を固める</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>AI の出力に振り回される</p>
+</td><td colspan="1" rowspan="1"><p>AI をコントロールする</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>個人の経験に依存</p>
+</td><td colspan="1" rowspan="1"><p>仕様書が組織の資産になる</p>
+</td></tr>
+</table>
+<h2 is-upgraded>次のステップ</h2>
+<ul>
+<li>実際の業務課題に仕様書を書いて試してみる</li>
+<li>チームで仕様書のテンプレートを共有して標準化する</li>
+<li>セキュリティガイドラインを再確認して安全に活用する</li>
+</ul>
+<h2 is-upgraded>サポート</h2>
+<p>操作で困ったことがあれば情報システム部にお気軽に連絡ください。</p>
+<aside class="special"><p> まず小さな仕様書から始めましょう。5 行の仕様書でも、あいまいな指示より格段に良い結果が出ます。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+  <!-- ========================================= -->
+  <!-- 音声読み上げ機能 -->
+  <!-- ========================================= -->
+  <div id="speech-panel" style="position: fixed; bottom: 80px; right: 24px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+    <!-- 進捗表示 -->
+    <div id="speech-progress" style="display: none; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 320px; font-family: 'Roboto', sans-serif;">
+      <div style="font-size: 0.7rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">読み上げ中</div>
+      <div id="speech-current-section" style="font-size: 0.85rem; font-weight: 600; color: #0f172a; margin-top: 2px;"></div>
+      <div style="background: #f1f5f9; border-radius: 4px; height: 4px; margin-top: 8px; overflow: hidden;">
+        <div id="speech-bar" style="background: #1a73e8; height: 100%; width: 0%; transition: width 0.3s;"></div>
+      </div>
+      <div style="display: flex; gap: 8px; margin-top: 8px;">
+        <button onclick="speechSkipPrev()" style="background: none; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-size: 0.75rem; color: #64748b;">◀ 前</button>
+        <button onclick="speechSkipNext()" style="background: none; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-size: 0.75rem; color: #64748b;">次 ▶</button>
+        <select id="speech-rate" onchange="updateSpeechRate()" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 8px; font-size: 0.7rem; color: #64748b; cursor: pointer;">
+          <option value="0.8">0.8x</option>
+          <option value="1" selected>1.0x</option>
+          <option value="1.2">1.2x</option>
+          <option value="1.5">1.5x</option>
+          <option value="2">2.0x</option>
+          <option value="2.5">2.5x</option>
+          <option value="3">3.0x</option>
+          <option value="4">4.0x</option>
+        </select>
+        <button id="ai-toggle" onclick="toggleAI()" style="background: #10b981; border: 1px solid #059669; border-radius: 6px; padding: 4px 8px; font-size: 0.65rem; color: white; cursor: pointer; font-weight: 600;" title="AI読みがな補正のON/OFF">AI補正</button>
+      </div>
+    </div>
+    <!-- 再生ボタン -->
+    <button id="speech-btn" onclick="toggleSpeech()" style="
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1a73e8, #1557b0);
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(26, 115, 232, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    " title="ガイドを音声で読み上げる">
+      ▶
+    </button>
+  </div>
+
+  <script>
+  // ========================================
+  // 読み上げスクリプト（各ステップの内容）
+  // ========================================
+  const speechSections = [
+    {
+      title: 'このラボの目的',
+      text: 'このラボの目的。このコードラボではGoogleアンチグラビティを使った仕様駆動開発を実践します。仕様駆動開発とは、エーアイ エージェントに作業を依頼する前に詳細な仕様書を書くアプローチです。あいまいな指示で動かすのではなく、要件・制約・完成イメージを文書化してからエージェントに渡します。このコードラボで学ぶことは、「プロンプトとパッチ」との違いを理解すること、効果的な仕様書の書き方を習得すること、アンチグラビティに仕様を渡してエージェントに自動実装させること、アーティファクツで成果物を確認・承認するワークフローを身につけることです。このコードラボで作るものは、社内向けファックスページを仕様書から自動生成します。完成品は、部署ごとにまとめられたキューアンドエー、キーワード検索機能、クリックで開閉するアコーディオン形式、スマートフォン対応のレスポンシブデザインです。必要な環境は、アンチグラビティインストール済み、グーグルワークスペースアカウントで、所要時間は約55分です。プログラミングの知識は不要です。仕様書の書き方さえ覚えれば、あとはエージェントが実装します。'
+    },
+    {
+      title: '仕様駆動開発とは',
+      text: '仕様駆動開発とは。まず「プロンプトとパッチ」との違いについて説明します。多くの人が最初にやりがちなのが「プロンプトとパッチ」です。エーアイに「〇〇を作って」と送る、出てきた結果を見て「ここが違う」とパッチを当てる、また送る、また直す、のループです。これは時間がかかり、最終的な品質もブレます。仕様駆動開発では順序が変わります。先に仕様書を書く（何を・どんな制約で・どう動くか）、エージェントに仕様書ごと渡す、エージェントが計画を立てる、レビューする、承認、自動実装という流れです。なぜ仕様書が重要かを比較すると、プロンプトとパッチでは最初にすることはすぐ実行ですが、仕様駆動開発では仕様書を書くことが最初のステップです。手戻りはプロンプトとパッチでは多い、仕様駆動開発では少ない。完成物の品質はプロンプトとパッチではブレがある、仕様駆動開発では仕様通り。資産性はプロンプトとパッチでは毎回ゼロから、仕様駆動開発では仕様書が再利用できます。良い仕様書の3要素は、1つ目が目的：「何のために作るか」「誰が使うか」を明記する。2つ目が機能要件：「何ができなければならないか」を箇条書きで具体的に書く。3つ目が制約：「使ってよい技術・使ってはいけないこと・デザインの決まり事」を明示することです。仕様書は完璧である必要はありません。エージェントが不明点を質問してきます。'
+    },
+    {
+      title: 'ワークスペースを準備する',
+      text: 'ワークスペースを準備する。アンチグラビティを起動して、エージェントマネージャーを開きます。左のサイドバーからワークスペースを選択し、プレイグラウンドをクリックします。プレイグラウンドは本番ファイルに影響しない安全な作業場所です。最初の練習はここで行いましょう。次に、エージェントマネージャー上部のモード選択でプランニングが選ばれていることを確認します。プランニングモードでは、エージェントが実行前に計画を提示します。承認してから実行するため、方向のズレを事前に修正できます。モデル選択欄で利用可能なモデルが表示されます。ジェミニ3を選択してください。このコードラボではブラウザ機能は使いません。ブラウザトグルがオフであることを確認してください。ブラウザをオンにしていると、エージェントがウェブ上のリソースを参照しようとすることがあります。このコードラボではオフにしておきます。'
+    },
+    {
+      title: '仕様書を書く',
+      text: '仕様書を書く。これがこのコードラボの核心です。良い仕様書を書くことで、エージェントの精度が劇的に上がります。お好みのテキストエディタを開き、仕様書テンプレートを貼り付けてください。仕様書の内容は、目的として「情報システム部への問い合わせを減らすため、よくある質問をまとめたウェブページを作る。社員が自分で調べて解決できるようにする」。対象ユーザーはAKIBAホールディングス全社員。機能要件として、ファックスをカテゴリ別に表示する、キーワードで検索できる、質問をクリックすると回答が展開・折りたたみできる、各カテゴリは色分けされたバッジで区別できる、上部に問い合わせ先として内線番号を表示する、といった内容が含まれます。デザイン制約として、外部ライブラリ不使用、1ファイルにまとめる、モバイル対応なども明示します。この仕様書のポイントは、目的が明確、ユーザーが具体的、機能が箇条書きで具体的、サンプルデータがある、制約が明示されていることです。「いい感じのファックスページを作って」はNG仕様書です。「いい感じ」はエージェントには伝わりません。具体的な言葉で書きましょう。'
+    },
+    {
+      title: 'エージェントに仕様を渡す',
+      text: 'エージェントに仕様を渡す。エージェントマネージャーの会話パネルに移動します。新しい会話を開始します。先ほど作成した仕様書の内容をそのまま会話パネルに貼り付けます。冒頭に一文添えると効果的です。「以下の仕様書に従って、社内ファックスページを作成してください」と書いてから仕様書を貼り付けます。プランニングモードであることを最終確認してから、送信ボタンを押します。エージェントはまず計画（プラン）を作成します。すぐにコードは書きません。これがプランニングモードの動作です。仕様書の内容が詳しければ詳しいほど、エージェントの計画の精度が上がります。サンプルデータが入っているとさらに良い結果になります。'
+    },
+    {
+      title: '計画をレビューする',
+      text: '計画をレビューする。エージェントが計画を提示します。内容を読んで意図と合っているか確認しましょう。良い計画には以下が含まれます：作成するファイル一覧（今回はインデックスドットエイチティーエムエル1ファイル）、各機能の実装方針（アコーディオン、検索フィルタの実装方法）、デザインの方針（カラー、フォント、レイアウト）。計画を読んで「これは違う」と思ったら、実行前に修正指示を出します。例えば「カテゴリのバッジ色を変えてください。アンチグラビティカテゴリは青にしてください」のように具体的に伝えます。実行前にすり合わせできることがプランニングモードの価値です。計画が意図通りであれば、承認ボタン（またはコンティニュー）をクリックします。エージェントがコードの生成を開始します。計画段階で「方向が違う」と気づいて修正できれば、後から全部やり直す手間が省けます。プランニングモードは必ず使いましょう。'
+    },
+    {
+      title: '実行と確認',
+      text: '実行と確認。承認後、エージェントが自動でコードを書き始めます。実行ログがリアルタイムで表示されます。エージェントは以下を順番に行います：エイチティーエムエルの骨格（構造）を作成、シーエスエスのスタイルを適用（ブランドカラー・レイアウト）、ジャバスクリプトで検索・アコーディオン機能を実装、ファックスデータを組み込む、モバイル対応の確認。セキュリティポリシーが「リクエストレビュー」の場合、コマンド実行前に確認画面が出ます。内容を読んで問題なければ「承認」してください。確認画面の内容を読まずに承認しないでください。エージェントが何をしようとしているかを確認する習慣をつけましょう。完成後、エージェントが生成したファイルを右クリックして「ブラウザで開く」または「プレビュー」で動作を確認します。確認ポイントは、カテゴリが4つ表示されているか、質問をクリックすると回答が開く・閉じるか、キーワードを入力するとキューアンドエーが絞り込まれるか、スマートフォンサイズでも崩れていないか、会社のブランドカラー（ネイビー）が使われているかです。'
+    },
+    {
+      title: 'Artifacts を確認して承認する',
+      text: 'アーティファクツを確認して承認する。エージェントが行ったすべての作業はアーティファクツ（成果物）として記録されます。「エーアイが本当にこの作業をしたか」を後から確認できます。エージェントマネージャー右上の「レビューチェンジズ」をクリックします。成果物一覧が表示されます。「コードディフ」を開くと、作成されたファイルの内容を行単位で確認できます。内容を確認して、問題なければ「すべて承認」で変更を適用します。修正が必要なら会話パネルで追加指示を出します。例えば「検索バーのデザインをもう少し大きくしてください。また、各カテゴリのアコーディオンは最初から全件を折りたたんだ状態にしてください」のように指示します。修正指示を出すと、エージェントが再度計画を立てて差分だけ修正します。承認しない限りファイルは変更されません。アーティファクツで確認してから承認する習慣をつけましょう。'
+    },
+    {
+      title: 'まとめ',
+      text: 'まとめ。おつかれさまでした。このコードラボでは以下を実践しました。学んだこととして、仕様駆動開発のワークフロー：仕様書→計画レビュー→実行→アーティファクツ確認。良い仕様書の書き方：目的・機能要件・制約・サンプルデータを明記する。プランニングモードの活用：実行前に計画を確認して方向を合わせる。アーティファクツでのレビュー：承認前に変更内容を確認して品質を担保する。仕様駆動開発の効果として、従来の方法では何度もやり直すのに対し、仕様駆動開発では最初に要件を固めます。従来の方法ではエーアイの出力に振り回されますが、仕様駆動開発ではエーアイをコントロールできます。従来の方法は個人の経験に依存しますが、仕様駆動開発では仕様書が組織の資産になります。次のステップとして、実際の業務課題に仕様書を書いて試してみる、チームで仕様書のテンプレートを共有して標準化する、セキュリティガイドラインを再確認して安全に活用することをお勧めします。操作で困ったことがあれば情報システム部にお気軽に連絡ください。まず小さな仕様書から始めましょう。5行の仕様書でも、あいまいな指示より格段に良い結果が出ます。'
+    }
+  ];
+
+  let speechState = 'stopped';
+  let currentSectionIndex = 0;
+  let currentUtterance = null;
+  let speechRate = 1.0;
+  let useAI = true;
+  let correctionCache = {};
+  let isCancelling = false;
+
+  // Gemini APIで読みがな補正
+  const GEMINI_API_KEY = 'AIzaSyBZWgnsUAD5UjU-hRWsQM9r8Z7DQy7gb_Y';
+  const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+
+  async function correctPronunciation(text) {
+    if (!useAI) return text;
+    if (correctionCache[text]) return correctionCache[text];
+
+    try {
+      const sectionLabel = document.getElementById('speech-current-section');
+      if (sectionLabel) sectionLabel.textContent += '  [AI補正中...]';
+
+      const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: `以下の日本語テキストを、音声合成（TTS）で正しく読み上げられるように変換してください。
+
+ルール:
+- 英字略語・製品名はカタカナ読みに変換: Antigravity→アンチグラビティ、VSCode→ブイエスコード、Chrome→クローム、AI→エーアイ、PC→ピーシー、OS→オーエス、URL→ユーアールエル、UI→ユーアイ、Codelabs→コードラボ、Diff→ディフ、Tab→タブ、FAQ→ファックス、HTML→エイチティーエムエル、CSS→シーエスエス、JavaScript→ジャバスクリプト
+- 英語フレーズ: Planning→プランニング、Fast→ファスト、Agent Manager→エージェントマネージャー、Artifacts→アーティファクツ、Inbox→インボックス、Workspace→ワークスペース、Review Changes→レビューチェンジズ、Spec-Driven→スペックドリブン
+- 文の意味や構造は一切変えない
+- 補足や説明を追加しない
+- 変換後のテキストだけを返す
+
+テキスト:
+${text}`
+            }]
+          }],
+          generationConfig: {
+            temperature: 0.1,
+            maxOutputTokens: 4096
+          }
+        })
+      });
+
+      if (!response.ok) {
+        console.warn('Gemini API error:', response.status);
+        if (response.status === 429 || response.status === 403) {
+          useAI = false;
+          const btn = document.getElementById('ai-toggle');
+          if (btn) { btn.style.background = '#94a3b8'; btn.style.borderColor = '#64748b'; btn.textContent = 'AI OFF'; }
+        }
+        return text;
+      }
+
+      const data = await response.json();
+      const corrected = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+      if (corrected && corrected.length > 0) {
+        correctionCache[text] = corrected;
+        return corrected;
+      }
+      return text;
+    } catch (e) {
+      console.warn('Gemini API call failed:', e);
+      return text;
+    }
+  }
+
+  function toggleSpeech() {
+    if (speechState === 'stopped') {
+      startSpeech(0);
+    } else if (speechState === 'playing') {
+      pauseSpeech();
+    } else if (speechState === 'paused') {
+      resumeSpeech();
+    }
+  }
+
+  function safeCancel() {
+    isCancelling = true;
+    window.speechSynthesis.cancel();
+    setTimeout(() => { isCancelling = false; }, 100);
+  }
+
+  function startSpeech(fromIndex) {
+    safeCancel();
+    currentSectionIndex = fromIndex;
+    speechState = 'playing';
+    updateSpeechUI();
+    prepareSectionAndSpeak();
+  }
+
+  async function prepareSectionAndSpeak() {
+    if (currentSectionIndex >= speechSections.length) {
+      stopSpeech();
+      return;
+    }
+
+    const section = speechSections[currentSectionIndex];
+
+    // Codelab のスライドを対応するステップに進める
+    const targetHash = '#' + currentSectionIndex;
+    if (window.location.hash !== targetHash) {
+      window.location.hash = targetHash;
+    }
+
+    // 進捗テキスト更新
+    const sectionLabel = document.getElementById('speech-current-section');
+    if (sectionLabel) {
+      sectionLabel.textContent = section.title + '  (' + (currentSectionIndex + 1) + '/' + speechSections.length + ')';
+    }
+
+    updateSpeechUI();
+
+    // AI補正
+    let textToSpeak = section.text;
+    try {
+      textToSpeak = await correctPronunciation(section.text);
+    } catch (e) {
+      console.warn('Section correction failed:', e);
+    }
+
+    if (speechState !== 'playing') return;
+
+    // 読み上げ
+    const utterance = new SpeechSynthesisUtterance(textToSpeak);
+    utterance.lang = 'ja-JP';
+    utterance.rate = speechRate;
+    utterance.pitch = 0.95;
+
+    const voices = window.speechSynthesis.getVoices();
+    const jaVoice = selectBestJapaneseVoice(voices);
+    if (jaVoice) utterance.voice = jaVoice;
+
+    utterance.onend = function() {
+      if (isCancelling) return;
+      if (speechState === 'playing') {
+        currentSectionIndex++;
+        updateSpeechUI();
+        setTimeout(() => prepareSectionAndSpeak(), 500);
+      }
+    };
+
+    utterance.onerror = function(e) {
+      if (isCancelling) return;
+      console.warn('Speech error:', e);
+      if (speechState === 'playing') {
+        currentSectionIndex++;
+        prepareSectionAndSpeak();
+      }
+    };
+
+    currentUtterance = utterance;
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function pauseSpeech() {
+    window.speechSynthesis.pause();
+    speechState = 'paused';
+    updateSpeechUI();
+  }
+
+  function resumeSpeech() {
+    window.speechSynthesis.resume();
+    speechState = 'playing';
+    updateSpeechUI();
+  }
+
+  function stopSpeech() {
+    safeCancel();
+    speechState = 'stopped';
+    currentSectionIndex = 0;
+    updateSpeechUI();
+  }
+
+  function speechSkipNext() {
+    if (currentSectionIndex < speechSections.length - 1) {
+      safeCancel();
+      currentSectionIndex++;
+      updateSpeechUI();
+      setTimeout(() => prepareSectionAndSpeak(), 150);
+    }
+  }
+
+  function speechSkipPrev() {
+    if (currentSectionIndex > 0) {
+      safeCancel();
+      currentSectionIndex--;
+      updateSpeechUI();
+      setTimeout(() => prepareSectionAndSpeak(), 150);
+    }
+  }
+
+  function updateSpeechRate() {
+    speechRate = parseFloat(document.getElementById('speech-rate').value);
+    if (speechState === 'playing') {
+      safeCancel();
+      setTimeout(() => prepareSectionAndSpeak(), 150);
+    }
+  }
+
+  function toggleAI() {
+    useAI = !useAI;
+    const btn = document.getElementById('ai-toggle');
+    if (useAI) {
+      btn.style.background = '#10b981';
+      btn.style.borderColor = '#059669';
+      btn.textContent = 'AI補正';
+    } else {
+      btn.style.background = '#94a3b8';
+      btn.style.borderColor = '#64748b';
+      btn.textContent = 'AI OFF';
+    }
+  }
+
+  function updateSpeechUI() {
+    const btn = document.getElementById('speech-btn');
+    const progress = document.getElementById('speech-progress');
+    const sectionLabel = document.getElementById('speech-current-section');
+    const speechBar = document.getElementById('speech-bar');
+
+    if (speechState === 'stopped') {
+      btn.textContent = '▶';
+      btn.style.background = 'linear-gradient(135deg, #1a73e8, #1557b0)';
+      btn.title = 'ガイドを音声で読み上げる';
+      progress.style.display = 'none';
+    } else if (speechState === 'playing') {
+      btn.textContent = '⏸';
+      btn.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
+      btn.title = '一時停止';
+      progress.style.display = 'block';
+      if (currentSectionIndex < speechSections.length) {
+        const section = speechSections[currentSectionIndex];
+        sectionLabel.textContent = section.title + '  (' + (currentSectionIndex + 1) + '/' + speechSections.length + ')';
+        speechBar.style.width = ((currentSectionIndex + 1) / speechSections.length * 100) + '%';
+      }
+    } else if (speechState === 'paused') {
+      btn.textContent = '▶';
+      btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+      btn.title = '再開';
+      progress.style.display = 'block';
+    }
+  }
+
+  // 高品質日本語音声を選択
+  let cachedBestVoice = null;
+
+  function selectBestJapaneseVoice(voices) {
+    if (cachedBestVoice) return cachedBestVoice;
+    const jaVoices = voices.filter(v => v.lang === 'ja-JP' || v.lang === 'ja');
+    if (jaVoices.length === 0) return voices[0] || null;
+
+    const priorities = [
+      v => v.name.includes('Google') && v.name.includes('日本語'),
+      v => v.name.includes('Google') && v.lang.startsWith('ja'),
+      v => v.name.includes('Nanami') && v.name.includes('Online'),
+      v => v.name.includes('Microsoft') && v.name.includes('Online'),
+      v => v.name.includes('Online') || v.name.includes('Natural'),
+      v => !v.localService,
+    ];
+    for (const check of priorities) {
+      const found = jaVoices.find(check);
+      if (found) { cachedBestVoice = found; return found; }
+    }
+    cachedBestVoice = jaVoices[0];
+    return jaVoices[0];
+  }
+
+  // ページロード時に前回の音声を停止
+  if (window.speechSynthesis) {
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = function() {
+      cachedBestVoice = null;
+      const voices = window.speechSynthesis.getVoices();
+      const best = selectBestJapaneseVoice(voices);
+      if (best) console.log('選択された音声:', best.name, best.lang, best.localService ? '(ローカル)' : '(オンライン)');
+    };
+  }
+
+  // ページ離脱時にも停止
+  window.addEventListener('beforeunload', function() {
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+  });
+
+  // 進捗パネルをダブルクリックで停止
+  document.getElementById('speech-progress').addEventListener('dblclick', function() {
+    stopSpeech();
+  });
+  </script>
+
+</body>
+</html>
