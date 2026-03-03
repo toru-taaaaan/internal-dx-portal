@@ -368,88 +368,88 @@ const SITE_DATA_1 = {
     nodes: [
       n('tk-sw', 'DGS-1210-28\n192.168.1.8\nスイッチ（基幹HUB）', 'switch',
         { ip:'192.168.1.8', desc:'D-Link 28ポート管理スイッチ\n管理PW: ad-admin\nMAC OUI: D-Link確認（応答あり）\n物理配線はスキャン未確認\n【6F サーバー室】' },
-        { level:2 }),
+        { level:3 }),
 
       n('tk-pdc', 'PDCSVR\n192.168.1.6\nActive Directory\nPrimary Domain Controller', 'server',
         { ip:'192.168.1.6', desc:'Active Directory Primary DC（2020年9月〜）\nコンピューター245件 / 有効ユーザー128名\n無効43名 / GPO14件（AD調査 2026-02-28）\nOS推定: Linux/NW機器(TTL64)\n【6F サーバー室】' },
-        { level:3 }),
+        { level:4 }),
 
       n('tk-bdc', 'BDCSVR\n192.168.1.7\nActive Directory\nBackup Domain Controller', 'server',
         { ip:'192.168.1.7', desc:'Active Directory Backup DC（2020年9月〜）\nOS推定: Linux/NW機器(TTL64)\n【6F サーバー室】' },
-        { level:3 }),
+        { level:4 }),
 
       n('tk-share', 'ADSHARESVR\n192.168.1.15\nファイルサーバ', 'server',
         { ip:'192.168.1.15', desc:'ファイルサーバ（スキャン応答あり）\nOS推定: Linux/NW機器(TTL64)\n【6F サーバー室】' },
-        { level:3 }),
+        { level:4 }),
 
       n('tk-kanri', 'ADKANRI4\n192.168.1.11\n固定資産奉行i11', 'server',
         { ip:'192.168.1.11', desc:'固定資産奉行i11（AKIBAホールディングス 財務・経理部）\n2025/9/19 adkanri4に移行済み\nOS推定: Windows PC(TTL128)\n【6F サーバー室】' },
-        { level:3 }),
+        { level:4 }),
 
       n('tk-ten', 'TENAPSVR / TENDBSVR\n.1.12 / .1.14\nTENSUITE（勤怠）', 'server',
         { ip:'192.168.1.12 / .14', desc:'TENSUITEアプリケーションサーバ (.12)\nTENSUITEデータベースサーバ (.14)\niLO管理IP: .16 / .17\n基幹引き継ぎ待ち・保留中（応答なし）\n【6F サーバー室】' },
-        { level:3 }),
+        { level:4 }),
 
       n('tk-rtx', 'RTX1210\n192.168.2.1\nゲストNWゲートウェイ', 'gw',
         { ip:'192.168.2.1', desc:'ヤマハ RTX1210（ゲストネットワーク ゲートウェイ）\nゲスト帯域: 192.168.2.0/24\n社内ネットワーク（192.168.1.x）と分離\n出典: 東通ネットワーク設定資料（AKIBA様）\n【6F サーバー室】' },
-        { level:3 }),
+        { level:4 }),
 
       // ── 9F ──
       n('tk-ap-9f', '社内AP\n192.168.1.40\n9F フリースペース', 'ap',
         { ip:'192.168.1.40', desc:'SSID: Lollipop（5GHz）/ Lollipop-G（2.4GHz）\n9F フリースペース\n出典: 東通ネットワーク設定資料（AKIBA様）' },
-        { level:4 }),
+        { level:5 }),
 
       n('tk-gap-9f', 'ゲストAP\n192.168.2.10\n9F フリースペース', 'gap',
         { ip:'192.168.2.10', desc:'SSID: YokoTsukiji-A（5GHz）/ YokoTsukiji-G（2.4GHz）\n9F フリースペース\nゲスト帯域（192.168.2.x）、社内NWと分離\n出典: 東通ネットワーク設定資料（AKIBA様）' },
-        { level:5 }),
+        { level:6 }),
 
       // ── 8F ──
       n('tk-ap-8f', '社内AP\n192.168.1.41\n8F 会議室', 'ap',
         { ip:'192.168.1.41', desc:'SSID: Lollipop（5GHz）/ Lollipop-G（2.4GHz）\n8F 会議室\n出典: 東通ネットワーク設定資料（AKIBA様）' },
-        { level:6 }),
+        { level:7 }),
 
       n('tk-gap-8f', 'ゲストAP\n192.168.2.11\n8F 会議室', 'gap',
         { ip:'192.168.2.11', desc:'SSID: YokoTsukiji-A（5GHz）/ YokoTsukiji-G（2.4GHz）\n8F 会議室\nゲスト帯域（192.168.2.x）、社内NWと分離\n出典: 東通ネットワーク設定資料（AKIBA様）' },
-        { level:7 }),
+        { level:8 }),
 
       // ── 7F ──
       n('tk-ap-7fa', '社内AP\n192.168.1.42\n7F 執務室', 'ap',
         { ip:'192.168.1.42', desc:'SSID: Lollipop（5GHz）/ Lollipop-G（2.4GHz）\n7F 執務室\n出典: 東通ネットワーク設定資料（AKIBA様）' },
-        { level:8 }),
+        { level:9 }),
 
       n('tk-ap-7fb', '社内AP\n192.168.1.43\n7F 会議室', 'ap',
         { ip:'192.168.1.43', desc:'SSID: Lollipop（5GHz）/ Lollipop-G（2.4GHz）\n7F 会議室（床置き）\n出典: 東通ネットワーク設定資料（AKIBA様）' },
-        { level:8 }),
+        { level:9 }),
 
       n('tk-gap-7f', 'ゲストAP\n192.168.2.12\n7F 会議室', 'gap',
         { ip:'192.168.2.12', desc:'SSID: YokoTsukiji-A（5GHz）/ YokoTsukiji-G（2.4GHz）\n7F 会議室（床置き）\nゲスト帯域（192.168.2.x）、社内NWと分離\n出典: 東通ネットワーク設定資料（AKIBA様）' },
-        { level:9 }),
+        { level:10 }),
 
       n('tk-mfp-7f', 'RICOH MP C4504\n192.168.1.56\n7F 複合機', 'mfp',
         { ip:'192.168.1.56', desc:'7Fカラー複合機 ✅ RICOH MP C4504 SPF\n出典: ネットワークスキャン（応答あり）' },
-        { level:8 }),
+        { level:9 }),
 
       // ── 6F 執務 ──
       n('tk-ap-6fa', '社内AP\n192.168.1.44\n6F 執務室', 'ap',
         { ip:'192.168.1.44', desc:'SSID: Lollipop（5GHz）/ Lollipop-G（2.4GHz）\n6F 執務室\n出典: 東通ネットワーク設定資料（AKIBA様）' },
-        { level:10 }),
+        { level:11 }),
 
       n('tk-ap-6fb', '社内AP\n192.168.1.45\n6F 会議室', 'ap',
         { ip:'192.168.1.45', desc:'SSID: Lollipop（5GHz）/ Lollipop-G（2.4GHz）\n6F 会議室\n出典: 東通ネットワーク設定資料（AKIBA様）' },
-        { level:10 }),
+        { level:11 }),
 
       n('tk-gap-6f', 'ゲストAP\n192.168.2.13\n6F 会議室', 'gap',
         { ip:'192.168.2.13', desc:'SSID: YokoTsukiji-A（5GHz）/ YokoTsukiji-G（2.4GHz）\n6F 会議室\nゲスト帯域（192.168.2.x）、社内NWと分離\n出典: 東通ネットワーク設定資料（AKIBA様）' },
-        { level:11 }),
+        { level:12 }),
 
       n('tk-mfp-6f', 'RICOH IM C4500\n192.168.1.55\n6F 複合機', 'mfp',
         { ip:'192.168.1.55', desc:'6Fカラー複合機 ✅ RICOH IM C4500 JPN RPCS\n付属: OpenBlocks AX3 (.57) 用途不明・要廃棄検討\n出典: ネットワークスキャン（応答あり）' },
-        { level:10 }),
+        { level:11 }),
 
       // ── 5F ──
       n('tk-gap-5f', 'ゲストAP\n192.168.2.14\n5F 応接室', 'gap',
         { ip:'192.168.2.14', desc:'SSID: YokoTsukiji-A（5GHz）/ YokoTsukiji-G（2.4GHz）\n5F 応接室\nゲスト帯域（192.168.2.x）、社内NWと分離\n出典: 東通ネットワーク設定資料（AKIBA様）' },
-        { level:12 }),
+        { level:13 }),
     ],
     edges: [
       edge('etk-sw',    'tk-socket', 'tk-sw',     { width:2, color:{color:'#22c55e'} }),
@@ -625,24 +625,6 @@ const network1 = new vis.Network(container1, { nodes: nodes1, edges: edges1 }, {
   }
 });
 
-function fitLeft1(animate) {
-  const pts = Object.values(network1.getPositions());
-  if (!pts.length) return;
-  const minX = Math.min(...pts.map(p => p.x));
-  const maxX = Math.max(...pts.map(p => p.x));
-  const minY = Math.min(...pts.map(p => p.y));
-  const maxY = Math.max(...pts.map(p => p.y));
-  const W = container1.clientWidth, H = container1.clientHeight;
-  const pad = 44;
-  const scale = Math.min((W - pad*2) / (maxX - minX || 1),
-                         (H - pad*2) / (maxY - minY || 1), 1.5);
-  network1.moveTo({
-    position: { x: minX - pad/scale + W/(2*scale), y: (minY + maxY)/2 },
-    scale,
-    animation: animate ? { duration:600, easingFunction:'easeInOutQuad' } : false
-  });
-}
-
 network1.on('click', function(p) {
   if (p.nodes.length === 0) return;
   const id = p.nodes[0];
@@ -658,11 +640,18 @@ network1.on('click', function(p) {
     nodes1.add(sd.nodes);
     edges1.add(sd.edges);
     expanded1[id] = true;
+    const layoutPos = network1.getPositions(nodes1.getIds());
+    const dx = (savedPos[id] && layoutPos[id]) ? savedPos[id].x - layoutPos[id].x : 0;
+    const dy = (savedPos[id] && layoutPos[id]) ? savedPos[id].y - layoutPos[id].y : 0;
     existingIds.forEach(nid => {
       if (savedPos[nid]) nodes1.update([{ id: nid, x: savedPos[nid].x, y: savedPos[nid].y }]);
     });
+    sd.nodes.forEach(nd => {
+      const lp = layoutPos[nd.id];
+      if (lp) nodes1.update([{ id: nd.id, x: lp.x + dx, y: lp.y + dy }]);
+    });
   }
-  setTimeout(() => fitLeft1(true), 80);
+  setTimeout(() => network1.fit({ animation:{ duration:600, easingFunction:'easeInOutQuad' } }), 80);
 });
 
 network1.on('hoverNode', function(p) {
@@ -1006,8 +995,8 @@ function addCtrlZoom(net, el) {
 addCtrlZoom(network1, container1);
 addCtrlZoom(network2, container2);
 
-// 初期表示（左寄せ）
-setTimeout(() => fitLeft1(false), 80);
+// 初期表示
+network1.fit();
 
 // net2 はビューポート外で初期化されるため、表示領域に入ったタイミングで再描画する
 const _obs2 = new IntersectionObserver(function(entries) {
