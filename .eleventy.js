@@ -13,6 +13,9 @@ module.exports = function (eleventyConfig) {
   // src/images/ をコピー
   eleventyConfig.addPassthroughCopy({ "src/images": "images" });
 
+  // src/codelabs/ → _site/codelabs/ にコピー（Codelabsコンテンツ）
+  eleventyConfig.addPassthroughCopy({ "src/codelabs": "codelabs" });
+
   // Markdown設定: markdown-it-attrs でクラス付与を可能にする
   eleventyConfig.amendLibrary("md", (mdLib) => {
     mdLib.use(markdownItAttrs);
