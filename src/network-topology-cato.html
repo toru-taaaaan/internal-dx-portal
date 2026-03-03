@@ -134,6 +134,7 @@ const C = {
   catocloud:  { bg:'#0c2340', border:'#06b6d4', font:'#67e8f9' },
   socket:     { bg:'#052e16', border:'#10b981', font:'#6ee7b7' },
   catoclient: { bg:'#1e1b4b', border:'#818cf8', font:'#c7d2fe' },
+  mobileusers:{ bg:'#1e1b4b', border:'#818cf8', font:'#c7d2fe' },
   site:       { bg:'#1e3a8a', border:'#3b82f6', font:'#bfdbfe' },
   gw:         { bg:'#7c2d12', border:'#f97316', font:'#fed7aa' },
   server:     { bg:'#0c4a6e', border:'#0ea5e9', font:'#bae6fd' },
@@ -262,6 +263,16 @@ const ICONS = {
     <rect x="9" y="46" width="30" height="5" rx="1" fill="#0d3321" stroke="#10b981" stroke-width="0.8" opacity="0.7"/>
   </svg>`),
 
+  // モバイルユーザー（人グループ）
+  mobileusers: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <circle cx="11" cy="20" r="7" fill="#1e1b4b" stroke="#818cf8" stroke-width="1.5"/>
+    <path d="M1 50 Q1 33 11 33 Q18 33 20 42" fill="none" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="53" cy="20" r="7" fill="#1e1b4b" stroke="#818cf8" stroke-width="1.5"/>
+    <path d="M63 50 Q63 33 53 33 Q46 33 44 42" fill="none" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="32" cy="13" r="9" fill="#312e81" stroke="#818cf8" stroke-width="2"/>
+    <path d="M18 50 Q18 28 32 28 Q46 28 46 50Z" fill="#312e81" stroke="#818cf8" stroke-width="2"/>
+  </svg>`),
+
   // Cato Client（ノートPC＋ZTNAシールド）
   catoclient: svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
     <rect x="8" y="5" width="48" height="34" rx="3" fill="#1e1b4b" stroke="#818cf8" stroke-width="2"/>
@@ -282,7 +293,7 @@ document.querySelectorAll('.leg-icon').forEach(img => {
   img.src = ICONS[img.dataset.type] || '';
 });
 
-const IMG_TYPES = new Set(['socket','catoclient','gw','server','switch','ap','gap','mfp','secom','unknown','vsr']);
+const IMG_TYPES = new Set(['socket','catoclient','mobileusers','gw','server','switch','ap','gap','mfp','secom','unknown','vsr']);
 
 function n(id, label, type, meta, extra={}) {
   const c = C[type] || C.unknown;
@@ -317,6 +328,10 @@ function edge(id, from, to, opts={}) {
 // 常時表示ノード
 // ─────────────────────────────────────────
 const BASE_NODES_1 = [
+  n('mobile-users', 'モバイルユーザー\n50名', 'mobileusers',
+    { desc:'Cato Clientを使用するリモートワーカー・社外接続ユーザー\n対象50名（全社ユーザー数より算出）\nZTNA方式で最寄りCato PoPへ接続\n（現行VarioSecure L2TP-VPNを置き換え）\n出典: SCSK Cato提案（将来構成）' },
+    { level:-1, size:32 }),
+
   n('internet', 'インターネット\n(WAN)', 'internet',
     { desc:'外部インターネット回線\n各拠点はCato Socket経由で最寄りPoP(東京/大阪等)に接続\nローカルブレイクアウトにより全拠点から直接インターネット利用可能\n（現行の本社ヘアピンルーティングを解消）' },
     { shape:'ellipse', size:45, level:0 }),
@@ -351,6 +366,7 @@ const BASE_NODES_1 = [
 // ─────────────────────────────────────────
 const BASE_EDGES_1 = [
   edge('ei-cc',   'internet',    'cato-cloud',  { label:'WAN / インターネット接続', width:3, color:{color:'#06b6d4'}, font:{color:'#22d3ee', size:10} }),
+  edge('emu-cc',  'mobile-users','cato-client',  { width:1.5, color:{color:'#818cf8'}, dashes:[3,3], arrows:{to:{enabled:true,scaleFactor:0.7}} }),
   edge('ec-rv',   'cato-client', 'cato-cloud',  { label:'Cato Client (ZTNA)', width:2, color:{color:'#818cf8'}, dashes:[4,4], font:{color:'#818cf8', size:10}, arrows:{to:{enabled:true,scaleFactor:0.8}} }),
   edge('ecc-tk',  'cato-cloud',  'tk-socket',   { width:2.5, color:{color:'#10b981'} }),
   edge('ecc-os',  'cato-cloud',  'os-socket',   { width:2,   color:{color:'#10b981'} }),
