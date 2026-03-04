@@ -297,13 +297,12 @@ header {
       <h3>USEN 月額コスト</h3>
 
       <div class="cost-group-label">AKIBAホールディングス（5拠点）</div>
-      <div class="cost-row"><span class="site-name">東京・中央区</span><span class="amount">¥10,000</span></div>
+      <div class="cost-row"><span class="site-name">東京・築地（本社）</span><span class="amount">¥3,800</span></div>
       <div class="cost-row"><span class="site-name">福岡・博多</span><span class="amount">¥10,000</span></div>
-      <div class="cost-row"><span class="site-name">京橋（BN本社）⚠️</span><span class="amount">¥3,800</span></div>
+      <div class="cost-row"><span class="site-name">京橋（BN本社）</span><span class="amount">¥10,000</span></div>
       <div class="cost-row"><span class="site-name">和歌山</span><span class="amount">¥10,000</span></div>
       <div class="cost-row"><span class="site-name">名古屋・南区</span><span class="amount">¥10,000</span></div>
       <div class="cost-subtotal">小計 ¥43,800 / 月</div>
-      <div style="font-size:9px; color:#f59e0b; margin-top:4px; line-height:1.5;">⚠️ 京橋（BN本社）: USEN契約書表記は「京都・中央区」（誤記・確認中）</div>
 
       <div class="cost-divider"></div>
 
@@ -423,10 +422,10 @@ const NODE_INFO = {
       '  ・フレッツ光ネクスト（バックアップ）\n\n' +
       '【USEN 回線契約】\n' +
       '  契約者: AKIBAホールディングス\n' +
-      '  拠点: 東京・中央区\n' +
+      '  拠点: 東京・築地（本社）陽光築地ビル7F\n' +
       '  サービス: フレッツGライン + VPN V400\n' +
-      '  月額: ¥10,000\n' +
-      '  契約開始: 2021/05\n' +
+      '  月額: ¥3,800\n' +
+      '  契約開始: 2020/03\n' +
       '  出典: ' + SOURCE
   },
   'os-gw': {
@@ -503,10 +502,9 @@ const NODE_INFO = {
       'ビル: 住友不動産京橋ビル 3F\n\n' +
       '【USEN 回線契約】\n' +
       '  契約者: AKIBAホールディングス\n' +
-      '  ⚠️ 契約書表記: 「京都・中央区」（誤記・確認中）\n' +
       '  サービス: フレッツGライン + VPN V400\n' +
-      '  月額: ¥3,800\n' +
-      '  契約開始: 2020/03\n' +
+      '  月額: ¥10,000\n' +
+      '  契約開始: 2021/05\n' +
       '  出典: ' + SOURCE
   },
   'ng-gw': {
@@ -586,7 +584,7 @@ const nodes = new vis.DataSet([
 
   // ── バディネット ──
   n('bn-gw',
-    '京橋（BN本社）\nVSR401j\nフレッツGライン + V400\n¥3,800/月',
+    '京橋（BN本社）\nVSR401j\nフレッツGライン + V400\n¥10,000/月',
     gwIcon(C_AKIBA), 2, '#fdba74'),
 
 ]);
@@ -684,7 +682,7 @@ const edges = new vis.DataSet([
   }),
 
   e('efg-bn', 'fortigate', 'bn-gw', {
-    label: 'USEN V400\nフレッツGライン\n¥3,800/月',
+    label: 'USEN V400\nフレッツGライン\n¥10,000/月',
     width: 1.5,
     color: { color: '#475569' },
     dashes: [8, 4],
