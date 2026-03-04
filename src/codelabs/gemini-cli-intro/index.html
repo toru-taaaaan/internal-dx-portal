@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gemini CLI 入門</title>
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success { color: #1e8e3e; }
+    body { background: #fff; }
+    #speech-btn {
+      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+      background: #4F7DC9; color: white; border: none;
+      border-radius: 50px; padding: 12px 20px; font-size: 14px;
+      cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      transition: background 0.2s;
+    }
+    #speech-btn.speaking { background: #d32f2f; }
+    #speech-btn:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+
+<google-codelab id="gemini-cli-intro"
+                title="Gemini CLI 入門"
+                environment="web"
+                feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/">
+
+  <google-codelab-step label="はじめに" duration="3">
+    <h2>Gemini CLI とは</h2>
+    <p>Gemini CLI は、ターミナル（コマンドライン）から直接 Gemini AI と会話できるツールです。ブラウザを開かなくても、作業中のファイルを読ませながら質問したり、コードを生成したりできます。</p>
+
+    <p>「AIチャットツールをターミナルに持ち込んだもの」とイメージしてください。自分のパソコン上のファイルを直接参照できるのが最大の特徴です。</p>
+
+    <h2>このコースで学ぶこと</h2>
+    <ul>
+      <li>Gemini CLI のインストールと初期設定</li>
+      <li>基本的なコマンドと使い方</li>
+      <li>ファイルを読ませて質問する</li>
+      <li>コードの生成と修正</li>
+      <li>日常業務（要約・下書き・分析）への応用</li>
+    </ul>
+
+    <h2>前提条件</h2>
+    <ul>
+      <li>Google アカウントを持っていること</li>
+      <li>Node.js 18 以上がインストールされていること（次のステップで確認します）</li>
+      <li>ターミナル（コマンドプロンプト）を起動できること</li>
+    </ul>
+
+    <h2>所要時間</h2>
+    <p>約 <strong>50 分</strong></p>
+
+    <aside class="special">
+      <p><strong>個人アカウントなら無料で使えます</strong><br>
+      Google の個人アカウントでログインすると、Gemini 2.5 Pro を無料で利用できます（60 リクエスト/分、1,000 リクエスト/日）。</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="インストールと初期設定" duration="10">
+    <h2>Node.js のバージョンを確認する</h2>
+    <p>ターミナルを開いて以下を実行してください。</p>
+
+    <pre><code class="language-bash">node --version</code></pre>
+
+    <p><code>v18.x.x</code> 以上と表示されれば OK です。表示されない場合や v18 未満の場合は、<a href="https://nodejs.org/ja" target="_blank">nodejs.org</a> から最新版（LTS）をインストールしてください。</p>
+
+    <h2>Gemini CLI をインストールする</h2>
+    <pre><code class="language-bash">npm install -g @google/gemini-cli</code></pre>
+
+    <p>インストールが完了したら、バージョンを確認します。</p>
+
+    <pre><code class="language-bash">gemini --version</code></pre>
+
+    <aside class="special">
+      <p><strong>Windows の場合</strong><br>
+      コマンドプロンプトまたは PowerShell を「管理者として実行」して入力してください。</p>
+    </aside>
+
+    <h2>Gemini CLI を起動して認証する</h2>
+    <ol>
+      <li>ターミナルで <code>gemini</code> と入力して起動</li>
+      <li>テーマの選択画面が表示されたら好みのものを選ぶ</li>
+      <li>認証方法の選択画面が表示される</li>
+      <li><strong>「Login with Google」</strong> を選ぶ</li>
+      <li>ブラウザが開くので、Google アカウントでログイン</li>
+      <li>ターミナルに入力欄が表示されたらセットアップ完了</li>
+    </ol>
+
+    <h2>確認：最初の質問をしてみる</h2>
+    <p>入力欄に以下を入力して Enter を押してください。</p>
+
+    <pre><code>こんにちは。今日の日付と曜日を教えてください。</code></pre>
+
+    <p>Gemini が返答すれば、セットアップは成功です。</p>
+
+    <aside class="note">
+      <p><strong>終了するには</strong><br>
+      <code>/quit</code> と入力するか、Ctrl-C を 2 回押します。</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="基本コマンドを覚える" duration="8">
+    <h2>ヘルプを表示する</h2>
+    <p>Gemini CLI を起動した状態で <code>/help</code> と入力すると、使えるコマンドとキーボードショートカットの一覧が表示されます。</p>
+
+    <pre><code>/help</code></pre>
+
+    <h2>主なコマンド一覧</h2>
+    <table>
+      <tr>
+        <th>コマンド</th>
+        <th>説明</th>
+      </tr>
+      <tr>
+        <td><code>/help</code></td>
+        <td>コマンド一覧を表示</td>
+      </tr>
+      <tr>
+        <td><code>/clear</code></td>
+        <td>会話履歴をリセット</td>
+      </tr>
+      <tr>
+        <td><code>/tools</code></td>
+        <td>使えるツール一覧を表示</td>
+      </tr>
+      <tr>
+        <td><code>/model</code></td>
+        <td>使用するモデルを切り替え</td>
+      </tr>
+      <tr>
+        <td><code>/quit</code></td>
+        <td>終了</td>
+      </tr>
+    </table>
+
+    <h2>非インタラクティブモード（1 回きりの質問）</h2>
+    <p>毎回起動しなくても、コマンドラインで直接質問できます。</p>
+
+    <pre><code class="language-bash">gemini "Googleスプレッドシートのセル範囲を取得するGASのコードを書いてください"</code></pre>
+
+    <p>ただし、このモードでは会話の続きを行うことはできません。続けて深掘りしたい場合は通常モード（<code>gemini</code>）を使いましょう。</p>
+
+    <h2>モデルを指定して起動する</h2>
+    <pre><code class="language-bash">gemini -m "gemini-2.5-flash"</code></pre>
+
+    <p>Flash モデルは応答が速く、シンプルな質問に向いています。複雑な質問には Pro（デフォルト）が適しています。</p>
+
+    <aside class="special">
+      <p><strong>組み込みツール一覧を確認</strong><br>
+      <code>/tools</code> を実行すると、ファイルの読み書き・Web 検索・Shell 実行など、Gemini が自動的に使えるツールが確認できます。</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="ファイルを読ませて質問する" duration="10">
+    <h2>@ 記法でファイルを参照する</h2>
+    <p>Gemini CLI では <code>@ファイル名</code> と書くことで、ローカルのファイルを読ませながら質問できます。</p>
+
+    <h2>実習：テキストファイルを要約させる</h2>
+
+    <h3>ステップ 1：テスト用ファイルを作る</h3>
+    <p>まず作業用フォルダを作って移動します。</p>
+
+    <pre><code class="language-bash">mkdir gemini-practice
+cd gemini-practice</code></pre>
+
+    <p>次に、サンプルのテキストファイルを作成します。以下の内容を <code>meeting_note.txt</code> として保存してください。</p>
+
+    <pre><code>2026年3月の全体会議 議事録
+
+参加者：田中、鈴木、山田、佐藤
+
+議題1：Q4売上報告
+・売上は前年比105%。目標達成。
+・課題：西日本エリアが前年割れ（▲8%）
+・対策：来月中に西日本営業チームとミーティングを設定
+
+議題2：新システム導入について
+・4月から会計システムを刷新予定
+・各部署への説明会を3月末までに実施する
+・IT部（丹治）が窓口。質問は直接連絡のこと
+
+議題3：社員旅行
+・今年は10月を予定。行き先は投票で決定
+・アンケートを今週中に配布予定
+
+次回会議：4月5日（金）10:00〜</code></pre>
+
+    <h3>ステップ 2：Gemini CLI で要約させる</h3>
+    <p><code>gemini</code> を起動して以下を入力します。</p>
+
+    <pre><code>@meeting_note.txt の内容を3行で要約してください。</code></pre>
+
+    <h3>ステップ 3：深掘り質問をする</h3>
+    <pre><code>このファイルの中で、アクションアイテム（誰かが対応すべきこと）を箇条書きにしてください。</code></pre>
+
+    <pre><code>西日本エリアの課題に対する追加の対策案を3つ提案してください。</code></pre>
+
+    <h2>複数ファイルの参照</h2>
+    <p>複数のファイルを同時に読ませることもできます。</p>
+
+    <pre><code>@report_jan.txt と @report_feb.txt を比較して、変化した点をまとめてください。</code></pre>
+
+    <aside class="special">
+      <p><strong>対応しているファイル形式</strong><br>
+      テキスト（.txt, .md, .csv, .json）、コード（.js, .py, .html）、PDF などが読めます。Excel や Word は直接は読めませんが、テキストに変換してから使うと便利です。</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="コードを生成・修正させる" duration="10">
+    <h2>GAS コードを生成させる</h2>
+    <p>Gemini CLI はコード生成が得意です。「こういう処理をするコードが欲しい」と日本語で伝えるだけで、動くコードを生成してくれます。</p>
+
+    <h3>実習 1：スプレッドシートのコードを生成する</h3>
+    <pre><code>Google Apps Script で以下の処理をするコードを書いてください。
+
+・スプレッドシートのA列に名前、B列にメールアドレスが入っている
+・C列に「確認済み」か「未確認」をランダムに入れる処理（テスト用）
+・D列に今日の日付を入れる</code></pre>
+
+    <h3>実習 2：コードを改善させる</h3>
+    <p>先ほど生成したコードを貼り付けて、改善を頼みます。</p>
+
+    <pre><code>以下のGASコードをレビューして、問題点と改善点を教えてください。
+
+[先ほどのコードを貼り付け]</code></pre>
+
+    <h2>エラーを修正させる</h2>
+    <p>コードがエラーになったときは、エラーメッセージごと貼り付けて聞きます。</p>
+
+    <pre><code>以下のコードでエラーが出ます。原因と修正方法を教えてください。
+
+コード：
+function myFunction() {
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var data = sheet.getRange("A1:B").getValues();
+  Logger.log(data);
+}
+
+エラーメッセージ：
+Range not found (line 3)</code></pre>
+
+    <h2>既存コードを説明させる</h2>
+    <p>他の人が書いたコードや、自分で書いて忘れたコードの説明も得意です。</p>
+
+    <pre><code>以下のコードが何をしているか、非エンジニアにも分かるように説明してください。
+
+function sendWeeklyReport() {
+  var ss = SpreadsheetApp.openById("xxxxx");
+  var sheet = ss.getSheetByName("週次集計");
+  var lastRow = sheet.getLastRow();
+  var data = sheet.getRange(2, 1, lastRow - 1, 4).getValues();
+  var total = data.reduce(function(sum, row) { return sum + row[3]; }, 0);
+  GmailApp.sendEmail("manager@example.com", "週次レポート", "今週の売上合計: " + total + "円");
+}</code></pre>
+
+    <aside class="note">
+      <p><strong>コードを貼り付けるコツ</strong><br>
+      コードを貼り付ける前後に説明文を入れると、Gemini が文脈を理解しやすくなります。「以下のコードを〜してください」という形式が有効です。</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="日常業務への応用" duration="8">
+    <h2>メール下書きを生成させる</h2>
+    <p>Gemini CLI はビジネス文書の生成も得意です。</p>
+
+    <pre><code>以下の状況に合わせて、ビジネスメールの下書きを作成してください。
+
+送信者：情報システム部 丹治
+宛先：全社員
+件名：新しい会計システムへの移行について
+
+内容：
+・4月1日から会計システムが「〇〇クラウド会計」に変わる
+・3月中に各部署で説明会を実施する（日程は後日連絡）
+・移行前に現システムのデータエクスポートが必要（IT部がサポート）
+・質問は内線 2345 または it-support@company.co.jp まで
+
+丁寧なビジネス文体で、300文字程度にまとめてください。</code></pre>
+
+    <h2>議事録を整形させる</h2>
+    <p>音声文字起こしの生テキストを整形するのも効果的です。</p>
+
+    <pre><code>以下の音声文字起こしテキストを、読みやすい議事録形式に整形してください。
+箇条書きを使い、アクションアイテムを最後にまとめてください。
+
+[文字起こしテキストを貼り付け]</code></pre>
+
+    <h2>Excel・CSV データを分析させる</h2>
+    <p>CSV ファイルを <code>@</code> で読み込ませると、データ分析も可能です。</p>
+
+    <pre><code>@sales_data.csv のデータを分析して、
+1. 売上上位3商品
+2. 最も低迷している月
+3. 全体のトレンド
+を教えてください。</code></pre>
+
+    <h2>Web ページの内容を要約させる</h2>
+    <p>URL を貼り付けて要約を依頼できます（WebFetch ツールを使用）。</p>
+
+    <pre><code>https://developers.google.com/apps-script/overview の内容を日本語で要約してください。</code></pre>
+
+    <aside class="special">
+      <p><strong>活用のコツ</strong><br>
+      「誰に向けた文章か」「何文字程度か」「どんなトーンか」を指示に入れると、より実用的な出力が得られます。</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="まとめと次のステップ" duration="2">
+    <h2 class="checklist">学習内容の振り返り</h2>
+    <ul class="checklist">
+      <li>Gemini CLI をインストールして Google アカウントで認証できた</li>
+      <li><code>/help</code> や <code>/tools</code> などの基本コマンドを使えた</li>
+      <li><code>@ファイル名</code> でローカルファイルを参照できた</li>
+      <li>GAS コードの生成・修正・説明ができた</li>
+      <li>メール下書き・議事録整形などの業務タスクに活用できた</li>
+    </ul>
+
+    <h2>Gemini CLI の活用シーン</h2>
+    <table>
+      <tr>
+        <th>シーン</th>
+        <th>活用例</th>
+      </tr>
+      <tr>
+        <td>資料作成</td>
+        <td>議事録・報告書・メールの下書き生成</td>
+      </tr>
+      <tr>
+        <td>データ分析</td>
+        <td>CSV をそのまま読ませてトレンド分析</td>
+      </tr>
+      <tr>
+        <td>コーディング</td>
+        <td>GAS・Python コードの生成・デバッグ</td>
+      </tr>
+      <tr>
+        <td>情報収集</td>
+        <td>Web ページの要約・複数記事の比較</td>
+      </tr>
+      <tr>
+        <td>ファイル整理</td>
+        <td>大量ドキュメントの一括要約・分類</td>
+      </tr>
+    </table>
+
+    <h2>次のコース</h2>
+    <p>AI を活用したコーディングをさらに深めたい方は、次の Firebase Web 入門コースに進みましょう。</p>
+    <p><a href="/codelabs/firebase-web-intro/">CL-006: Firebase Web 入門</a>へ進む</p>
+
+    <p style="margin-top: 32px;"><a href="/">← DXポータルに戻る</a></p>
+  </google-codelab-step>
+
+</google-codelab>
+
+<button id="speech-btn" onclick="toggleSpeech()">▶ 読み上げ</button>
+
+<script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+<script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+<script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+<script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+<script>
+  var speaking = false;
+
+  function setSpeaking(val) {
+    speaking = val;
+    var btn = document.getElementById('speech-btn');
+    btn.textContent = val ? '⏹ 停止' : '▶ 読み上げ';
+    btn.className = val ? 'speaking' : '';
+  }
+
+  function getCurrentStepText() {
+    var hash = location.hash.replace('#', '');
+    var idx = parseInt(hash) || 0;
+    var steps = document.querySelectorAll('google-codelab-step');
+    if (steps[idx]) {
+      return steps[idx].innerText;
+    }
+    return document.body.innerText;
+  }
+
+  function toggleSpeech() {
+    if (speaking) {
+      window.speechSynthesis.cancel();
+      setSpeaking(false);
+      return;
+    }
+    var text = getCurrentStepText();
+    var utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'ja-JP';
+    utter.rate = 0.95;
+    utter.onend = function() { setSpeaking(false); };
+    window.speechSynthesis.speak(utter);
+    setSpeaking(true);
+  }
+
+  window.addEventListener('hashchange', function() {
+    if (speaking) {
+      window.speechSynthesis.cancel();
+      setSpeaking(false);
+    }
+  });
+</script>
+</body>
+</html>

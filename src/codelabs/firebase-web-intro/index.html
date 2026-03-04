@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Web 入門</title>
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success { color: #1e8e3e; }
+    body { background: #fff; }
+    #speech-btn {
+      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+      background: #4F7DC9; color: white; border: none;
+      border-radius: 50px; padding: 12px 20px; font-size: 14px;
+      cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      transition: background 0.2s;
+    }
+    #speech-btn.speaking { background: #d32f2f; }
+    #speech-btn:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+
+<google-codelab id="firebase-web-intro"
+                title="Firebase Web 入門"
+                environment="web"
+                feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/">
+
+  <google-codelab-step label="はじめに" duration="3">
+    <h2>Firebase とは</h2>
+    <p>Firebase は Google が提供するモバイル・Web アプリ開発プラットフォームです。データベース・認証・ホスティングなどの機能がセットになっており、バックエンドのサーバーを自分で用意しなくてもリアルタイムに動く Web アプリを作れます。</p>
+
+    <p>「サーバーなしでリアルタイムデータベースが使えるサービス」とイメージしてください。複数ユーザーが同時に書き込んでも、全員の画面に即座に反映されます。</p>
+
+    <h2>このコースで作るもの</h2>
+    <p>イベント参加者向けの <strong>ゲストブック（リアルタイムチャット）</strong> を作ります。</p>
+    <ul>
+      <li>Google アカウントまたはメールで参加登録（Firebase Authentication）</li>
+      <li>メッセージをリアルタイムで送受信（Cloud Firestore）</li>
+      <li>セキュリティルールで不正アクセスを防止</li>
+    </ul>
+
+    <h2>このコースで学ぶこと</h2>
+    <ul>
+      <li>Firebase プロジェクトの作成と設定</li>
+      <li>Firebase Authentication でユーザー認証を実装</li>
+      <li>Cloud Firestore へのデータ書き込み・読み込み</li>
+      <li>リアルタイムリスナーでの即時反映</li>
+      <li>Firebase Security Rules でのアクセス制御</li>
+    </ul>
+
+    <h2>前提条件</h2>
+    <ul>
+      <li>Google アカウントを持っていること</li>
+      <li>HTML と JavaScript の基本を知っていること（必須ではないが推奨）</li>
+      <li>ブラウザ（Chrome 推奨）があること</li>
+    </ul>
+
+    <h2>所要時間</h2>
+    <p>約 <strong>60 分</strong></p>
+
+    <aside class="special">
+      <p><strong>StackBlitz を使います</strong><br>
+      このハンズオンでは、ブラウザ上でコードを書ける <a href="https://stackblitz.com" target="_blank">StackBlitz</a> を使います。インストール作業は不要です。</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="スターターコードを取得する" duration="5">
+    <h2>StackBlitz でプロジェクトをフォークする</h2>
+    <ol>
+      <li>以下の URL にアクセスします<br>
+        <a href="https://stackblitz.com/edit/firebase-gtk-web-start" target="_blank">https://stackblitz.com/edit/firebase-gtk-web-start</a>
+      </li>
+      <li>右上の <strong>「Fork」</strong> ボタンをクリックして自分のコピーを作成</li>
+      <li>プロジェクトに固有の URL が割り当てられます（ブックマーク推奨）</li>
+      <li>変更は自動保存されます</li>
+    </ol>
+
+    <h2>スターターコードの構造</h2>
+    <p>フォークすると以下のファイルが見えます。</p>
+
+    <table>
+      <tr>
+        <th>ファイル</th>
+        <th>役割</th>
+      </tr>
+      <tr>
+        <td><code>index.html</code></td>
+        <td>ページの骨格（HTML）</td>
+      </tr>
+      <tr>
+        <td><code>index.js</code></td>
+        <td>メインのロジック（JavaScript）</td>
+      </tr>
+      <tr>
+        <td><code>style.css</code></td>
+        <td>スタイルシート</td>
+      </tr>
+    </table>
+
+    <h2>イベント情報を編集してみる</h2>
+    <p>まず StackBlitz の操作に慣れましょう。<code>index.html</code> を開いて、イベント名や日付を好きな内容に変更してみてください。</p>
+
+    <pre><code class="language-html">&lt;section id="event-details-container"&gt;
+  &lt;h1&gt;Firebase Meetup&lt;/h1&gt;
+  &lt;p&gt;&lt;i class="material-icons"&gt;calendar_today&lt;/i&gt; October 30&lt;/p&gt;
+  &lt;p&gt;&lt;i class="material-icons"&gt;location_city&lt;/i&gt; San Francisco&lt;/p&gt;
+&lt;/section&gt;</code></pre>
+
+    <p>変更すると右側のプレビューが自動で更新されます。</p>
+
+    <aside class="note">
+      <p><strong>チェックポイントを使う</strong><br>
+      途中でうまくいかなくなった場合は、各ステップの末尾にあるチェックポイント URL からやり直せます。</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="Firebaseプロジェクトを作成する" duration="8">
+    <h2>Firebase コンソールでプロジェクトを作成</h2>
+    <ol>
+      <li><a href="https://console.firebase.google.com/" target="_blank">console.firebase.google.com</a> にアクセス</li>
+      <li><strong>「プロジェクトを追加」</strong> をクリック</li>
+      <li>プロジェクト名を入力（例：<code>firebase-web-codelab</code>）</li>
+      <li>「続行」をクリック</li>
+      <li>Google Analytics は今回は無効にして「プロジェクトを作成」</li>
+      <li>プロジェクトの作成が完了したら「続行」</li>
+    </ol>
+
+    <h2>Authentication を有効化する</h2>
+    <ol>
+      <li>左メニューの「構築」→「Authentication」をクリック</li>
+      <li>「始める」をクリック</li>
+      <li>「ログイン方法」タブを選択</li>
+      <li><strong>「メール/パスワード」</strong> をクリック</li>
+      <li>「有効にする」トグルをオンにして「保存」</li>
+    </ol>
+
+    <h2>Cloud Firestore を作成する</h2>
+    <ol>
+      <li>左メニューの「構築」→「Firestore Database」をクリック</li>
+      <li>「データベースを作成」をクリック</li>
+      <li>データベース ID はデフォルト（<code>(default)</code>）のままで「次へ」</li>
+      <li>ロケーションを選択（<code>asia-northeast1</code> = 東京 推奨）</li>
+      <li>「次へ」をクリック</li>
+      <li><strong>「テストモードで開始する」</strong> を選択して「作成」</li>
+    </ol>
+
+    <aside class="warning">
+      <p><strong>テストモードについて</strong><br>
+      テストモードは 30 日間のみ有効で、誰でも読み書きができる状態です。後のステップでセキュリティルールを設定します。</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="Firebase SDKを設定する" duration="7">
+    <h2>Web アプリを Firebase に登録する</h2>
+    <ol>
+      <li>Firebase コンソールの「プロジェクトの概要」を開く</li>
+      <li>画面中央の <strong>&lt;/&gt;</strong>（Web）アイコンをクリック</li>
+      <li>アプリのニックネームを入力（例：<code>Web App</code>）</li>
+      <li>「Firebase Hosting の設定」は今回チェックしない</li>
+      <li>「アプリを登録」をクリック</li>
+      <li>表示される設定オブジェクトをコピーしておく</li>
+    </ol>
+
+    <h2>設定コードを index.js に追加する</h2>
+    <p>StackBlitz の <code>index.js</code> を開き、コメント <code>// Add Firebase project configuration object here</code> の下に、コピーした設定を貼り付けます。</p>
+
+    <pre><code class="language-javascript">import { initializeApp } from 'firebase/app';
+import {} from 'firebase/auth';
+import {} from 'firebase/firestore';
+import * as firebaseui from 'firebaseui';
+
+// ここにコピーした設定を貼り付ける
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "your-project.firebaseapp.com",
+  projectId: "your-project",
+  storageBucket: "your-project.firebasestorage.app",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+// Firebase を初期化
+initializeApp(firebaseConfig);</code></pre>
+
+    <h2>動作確認</h2>
+    <p>StackBlitz のプレビューにエラーが表示されなければ SDK の設定は完了です。</p>
+
+    <aside class="special">
+      <p><strong>設定を後から確認するには</strong><br>
+      Firebase コンソール → 歯車アイコン「プロジェクトの設定」→「全般」タブ → 「マイアプリ」セクション → 「構成」を選択</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="Authentication でサインインを実装する" duration="10">
+    <h2>認証の仕組みを追加する</h2>
+    <p>FirebaseUI という UI ライブラリを使って、サインインフォームを自動生成します。</p>
+
+    <h3>ステップ 1：auth のインポートを更新する</h3>
+    <pre><code class="language-javascript">import {
+  getAuth,
+  EmailAuthProvider,
+  signOut,
+  onAuthStateChanged
+} from 'firebase/auth';</code></pre>
+
+    <h3>ステップ 2：auth の参照を保存する</h3>
+    <p><code>initializeApp(firebaseConfig);</code> の後に追加します。</p>
+    <pre><code class="language-javascript">const auth = getAuth();</code></pre>
+
+    <h3>ステップ 3：FirebaseUI を初期化する</h3>
+    <p><code>main()</code> 関数の中に追加します。</p>
+    <pre><code class="language-javascript">const ui = new firebaseui.auth.AuthUI(auth);
+
+const uiConfig = {
+  credentialHelper: firebaseui.auth.CredentialHelper.NONE,
+  signInOptions: [
+    EmailAuthProvider.PROVIDER_ID,
+  ],
+  callbacks: {
+    signInSuccessWithAuthResult: function() {
+      return false;
+    },
+  },
+};</code></pre>
+
+    <h3>ステップ 4：RSVP ボタンを HTML に追加する</h3>
+    <p><code>index.html</code> の <code>event-details-container</code> 内に追加します。</p>
+    <pre><code class="language-html">&lt;button id="startRsvp"&gt;RSVP&lt;/button&gt;</code></pre>
+
+    <h3>ステップ 5：ボタンのリスナーを設定する</h3>
+    <pre><code class="language-javascript">// RSVP ボタンのクリックイベント
+startRsvpButton.addEventListener('click', () => {
+  if (auth.currentUser) {
+    signOut(auth);
+  } else {
+    ui.start('#firebaseui-auth-container', uiConfig);
+  }
+});
+
+// サインイン状態の変化を監視
+onAuthStateChanged(auth, user => {
+  if (user) {
+    startRsvpButton.textContent = 'LOGOUT';
+  } else {
+    startRsvpButton.textContent = 'RSVP';
+  }
+});</code></pre>
+
+    <h2>動作確認</h2>
+    <ol>
+      <li>「RSVP」ボタンをクリックするとサインインフォームが表示される</li>
+      <li>任意のメールアドレスでサインイン</li>
+      <li>ボタンが「LOGOUT」に変わることを確認</li>
+      <li>Firebase コンソールの「Authentication」→「ユーザー」タブにユーザーが追加される</li>
+    </ol>
+
+    <aside class="special">
+      <p><strong>チェックポイント 1</strong><br>
+      <a href="https://stackblitz.com/edit/firebase-gtk-web-checkpoint1" target="_blank">https://stackblitz.com/edit/firebase-gtk-web-checkpoint1</a>（フォークして自分の設定を追加してください）</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="Firestoreにメッセージを書き込む" duration="10">
+    <h2>Firestore の構造</h2>
+    <p>Firestore はドキュメント型のデータベースです。以下の構造でデータを管理します。</p>
+
+    <pre><code>guestbook（コレクション）
+  └── ランダムなID（ドキュメント）
+        ├── text: "こんにちは！"
+        ├── timestamp: 1709000000000
+        ├── name: "田中 太郎"
+        └── userId: "user123"</code></pre>
+
+    <h2>メッセージ送信フォームを追加する</h2>
+
+    <h3>ステップ 1：HTML にフォームを追加する</h3>
+    <pre><code class="language-html">&lt;section id="guestbook-container"&gt;
+  &lt;h2&gt;メッセージを残す&lt;/h2&gt;
+  &lt;form id="leave-message"&gt;
+    &lt;label&gt;メッセージ：&lt;/label&gt;
+    &lt;input type="text" id="message"&gt;
+    &lt;button type="submit"&gt;
+      &lt;i class="material-icons"&gt;send&lt;/i&gt;
+      &lt;span&gt;送信&lt;/span&gt;
+    &lt;/button&gt;
+  &lt;/form&gt;
+&lt;/section&gt;</code></pre>
+
+    <h3>ステップ 2：Firestore のインポートを追加する</h3>
+    <pre><code class="language-javascript">import {
+  getFirestore,
+  addDoc,
+  collection
+} from 'firebase/firestore';</code></pre>
+
+    <h3>ステップ 3：Firestore の参照を保存する</h3>
+    <pre><code class="language-javascript">const db = getFirestore();</code></pre>
+
+    <h3>ステップ 4：フォーム送信のリスナーを追加する</h3>
+    <pre><code class="language-javascript">form.addEventListener('submit', async e => {
+  e.preventDefault();
+  // Firestore の guestbook コレクションにドキュメントを追加
+  await addDoc(collection(db, 'guestbook'), {
+    text: input.value,
+    timestamp: Date.now(),
+    name: auth.currentUser.displayName,
+    userId: auth.currentUser.uid
+  });
+  input.value = ''; // フォームをリセット
+  return false;
+});</code></pre>
+
+    <h3>ステップ 5：未サインイン時はフォームを非表示にする</h3>
+    <pre><code class="language-javascript">onAuthStateChanged(auth, user => {
+  if (user) {
+    startRsvpButton.textContent = 'LOGOUT';
+    guestbookContainer.style.display = 'block';
+  } else {
+    startRsvpButton.textContent = 'RSVP';
+    guestbookContainer.style.display = 'none';
+  }
+});</code></pre>
+
+    <h2>動作確認</h2>
+    <ol>
+      <li>サインインした状態でメッセージを入力して「送信」</li>
+      <li>Firebase コンソールの「Firestore Database」を開く</li>
+      <li><code>guestbook</code> コレクションにドキュメントが追加されていることを確認</li>
+    </ol>
+
+    <aside class="special">
+      <p><strong>チェックポイント 2</strong><br>
+      <a href="https://stackblitz.com/edit/firebase-gtk-web-checkpoint2" target="_blank">https://stackblitz.com/edit/firebase-gtk-web-checkpoint2</a></p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="リアルタイムでメッセージを読む" duration="8">
+    <h2>リアルタイムリスナーとは</h2>
+    <p>Firestore の <code>onSnapshot</code> を使うと、データベースの変更が即座にアプリに反映されます。ページを再読み込みしなくても、他のユーザーが書き込んだメッセージがリアルタイムで表示されます。</p>
+
+    <h2>メッセージ一覧を表示する</h2>
+
+    <h3>ステップ 1：HTML に表示エリアを追加する</h3>
+    <pre><code class="language-html">&lt;section id="guestbook-container"&gt;
+  &lt;h2&gt;メッセージを残す&lt;/h2&gt;
+  &lt;form id="leave-message"&gt;...&lt;/form&gt;
+  &lt;!-- メッセージ一覧を表示するエリア --&gt;
+  &lt;section id="guestbook"&gt;&lt;/section&gt;
+&lt;/section&gt;</code></pre>
+
+    <h3>ステップ 2：インポートを更新する</h3>
+    <pre><code class="language-javascript">import {
+  getFirestore,
+  addDoc,
+  collection,
+  query,
+  orderBy,
+  onSnapshot
+} from 'firebase/firestore';</code></pre>
+
+    <h3>ステップ 3：リアルタイムリスナーを追加する</h3>
+    <pre><code class="language-javascript">// タイムスタンプの降順でクエリを作成
+const q = query(
+  collection(db, 'guestbook'),
+  orderBy('timestamp', 'desc')
+);
+
+// データが変更されるたびに自動的に呼ばれる
+onSnapshot(q, snaps => {
+  // 表示エリアをクリア
+  guestbook.innerHTML = '';
+  // 各ドキュメントを表示
+  snaps.forEach(doc => {
+    const entry = document.createElement('p');
+    entry.textContent = doc.data().name + ': ' + doc.data().text;
+    guestbook.appendChild(entry);
+  });
+});</code></pre>
+
+    <h2>動作確認</h2>
+    <ol>
+      <li>アプリをリロードすると、過去のメッセージが表示される</li>
+      <li>新しいメッセージを送信すると即座に一覧に追加される</li>
+      <li>ブラウザの別タブで同じ URL を開いて、両方に同時に反映されることを確認</li>
+    </ol>
+
+    <aside class="special">
+      <p><strong>チェックポイント 3</strong><br>
+      <a href="https://stackblitz.com/edit/firebase-gtk-web-checkpoint3" target="_blank">https://stackblitz.com/edit/firebase-gtk-web-checkpoint3</a></p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="セキュリティルールを設定する" duration="8">
+    <h2>なぜセキュリティルールが必要か</h2>
+    <p>テストモードで作成した Firestore は、誰でも読み書きができます。本番環境では、ログインしているユーザーだけが書き込めるよう制限する必要があります。</p>
+
+    <h2>ルールを設定する</h2>
+    <ol>
+      <li>Firebase コンソール →「Firestore Database」→「ルール」タブを開く</li>
+      <li>以下のルールに書き換えて「公開」をクリック</li>
+    </ol>
+
+    <pre><code>rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /guestbook/{entry} {
+      // 認証済みユーザーのみ読める
+      allow read: if request.auth.uid != null;
+
+      // 自分の userId でのみ書き込める（なりすまし防止）
+      // かつ必須フィールドがすべて揃っていること
+      allow create:
+        if request.auth.uid == request.resource.data.userId
+          && "name" in request.resource.data
+          && "text" in request.resource.data
+          && "timestamp" in request.resource.data;
+    }
+  }
+}</code></pre>
+
+    <h2>ルールの読み方</h2>
+    <table>
+      <tr>
+        <th>ルール</th>
+        <th>意味</th>
+      </tr>
+      <tr>
+        <td><code>allow read: if request.auth.uid != null</code></td>
+        <td>ログインしているユーザーのみ読める</td>
+      </tr>
+      <tr>
+        <td><code>request.auth.uid == request.resource.data.userId</code></td>
+        <td>自分の UID でしか書き込めない</td>
+      </tr>
+      <tr>
+        <td><code>"name" in request.resource.data</code></td>
+        <td>name フィールドが必ず含まれること</td>
+      </tr>
+    </table>
+
+    <h2>リスナーのサブスクリプション管理</h2>
+    <p>サインアウトしたらリスナーを停止し、サインインしたら再起動するよう <code>onAuthStateChanged</code> を更新します。</p>
+
+    <pre><code class="language-javascript">let guestbookListener = null;
+
+function subscribeGuestbook() {
+  const q = query(collection(db, 'guestbook'), orderBy('timestamp', 'desc'));
+  guestbookListener = onSnapshot(q, snaps => {
+    guestbook.innerHTML = '';
+    snaps.forEach(doc => {
+      const entry = document.createElement('p');
+      entry.textContent = doc.data().name + ': ' + doc.data().text;
+      guestbook.appendChild(entry);
+    });
+  });
+}
+
+function unsubscribeGuestbook() {
+  if (guestbookListener != null) {
+    guestbookListener();
+    guestbookListener = null;
+  }
+}
+
+onAuthStateChanged(auth, user => {
+  if (user) {
+    startRsvpButton.textContent = 'LOGOUT';
+    guestbookContainer.style.display = 'block';
+    subscribeGuestbook(); // リスナー開始
+  } else {
+    startRsvpButton.textContent = 'RSVP';
+    guestbookContainer.style.display = 'none';
+    unsubscribeGuestbook(); // リスナー停止
+  }
+});</code></pre>
+
+    <aside class="special">
+      <p><strong>チェックポイント 4</strong><br>
+      <a href="https://stackblitz.com/edit/firebase-gtk-web-checkpoint4" target="_blank">https://stackblitz.com/edit/firebase-gtk-web-checkpoint4</a></p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="まとめと次のステップ" duration="2">
+    <h2 class="checklist">学習内容の振り返り</h2>
+    <ul class="checklist">
+      <li>Firebase プロジェクトを作成して Web アプリを登録できた</li>
+      <li>Firebase Authentication でメール/パスワード認証を実装できた</li>
+      <li>Cloud Firestore にデータを書き込めた</li>
+      <li>onSnapshot でリアルタイムのデータ同期を実装できた</li>
+      <li>Security Rules で不正な書き込みを防止できた</li>
+    </ul>
+
+    <h2>Firebase の主な機能</h2>
+    <table>
+      <tr>
+        <th>機能</th>
+        <th>使いどころ</th>
+      </tr>
+      <tr>
+        <td>Authentication</td>
+        <td>ログイン・会員機能</td>
+      </tr>
+      <tr>
+        <td>Cloud Firestore</td>
+        <td>リアルタイムデータベース</td>
+      </tr>
+      <tr>
+        <td>Cloud Storage</td>
+        <td>ファイル・画像のアップロード</td>
+      </tr>
+      <tr>
+        <td>Firebase Hosting</td>
+        <td>静的サイトの無料ホスティング</td>
+      </tr>
+      <tr>
+        <td>Cloud Functions</td>
+        <td>サーバーレスなバックエンド処理</td>
+      </tr>
+    </table>
+
+    <h2>さらに学ぶには</h2>
+    <ul>
+      <li><a href="https://firebase.google.com/docs/web/setup" target="_blank">Firebase 公式ドキュメント（Web）</a></li>
+      <li><a href="https://codelabs.developers.google.com/" target="_blank">Google Codelabs - Firebase カテゴリ</a></li>
+    </ul>
+
+    <p style="margin-top: 32px;"><a href="/">← DXポータルに戻る</a></p>
+  </google-codelab-step>
+
+</google-codelab>
+
+<button id="speech-btn" onclick="toggleSpeech()">▶ 読み上げ</button>
+
+<script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+<script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+<script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+<script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+<script>
+  var speaking = false;
+
+  function setSpeaking(val) {
+    speaking = val;
+    var btn = document.getElementById('speech-btn');
+    btn.textContent = val ? '⏹ 停止' : '▶ 読み上げ';
+    btn.className = val ? 'speaking' : '';
+  }
+
+  function getCurrentStepText() {
+    var hash = location.hash.replace('#', '');
+    var idx = parseInt(hash) || 0;
+    var steps = document.querySelectorAll('google-codelab-step');
+    if (steps[idx]) {
+      return steps[idx].innerText;
+    }
+    return document.body.innerText;
+  }
+
+  function toggleSpeech() {
+    if (speaking) {
+      window.speechSynthesis.cancel();
+      setSpeaking(false);
+      return;
+    }
+    var text = getCurrentStepText();
+    var utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'ja-JP';
+    utter.rate = 0.95;
+    utter.onend = function() { setSpeaking(false); };
+    window.speechSynthesis.speak(utter);
+    setSpeaking(true);
+  }
+
+  window.addEventListener('hashchange', function() {
+    if (speaking) {
+      window.speechSynthesis.cancel();
+      setSpeaking(false);
+    }
+  });
+</script>
+</body>
+</html>

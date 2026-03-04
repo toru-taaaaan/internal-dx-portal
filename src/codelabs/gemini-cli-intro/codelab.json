@@ -1,0 +1,14 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "updated": "2026-03-04T00:00:00+09:00",
+  "id": "gemini-cli-intro",
+  "duration": 50,
+  "title": "Gemini CLI 入門",
+  "summary": "ターミナルから直接Gemini AIと対話するGemini CLIのインストールから、ファイル読み込み・コード生成・日常業務への応用までを体験するハンズオン。",
+  "category": ["dx", "ai活用", "gemini"],
+  "tags": ["web"],
+  "feedback": "https://internal-dx-portal-auth.tanjiadm.workers.dev/",
+  "url": "gemini-cli-intro"
+}

@@ -1,0 +1,14 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "updated": "2026-03-04T00:00:00+09:00",
+  "id": "firebase-web-intro",
+  "duration": 60,
+  "title": "Firebase Web 入門",
+  "summary": "Firebase Authentication・Cloud Firestore・Security Rulesを使ってリアルタイムチャットアプリを構築するWebアプリ開発ハンズオン。",
+  "category": ["dx", "ai活用", "firebase", "web"],
+  "tags": ["web"],
+  "feedback": "https://internal-dx-portal-auth.tanjiadm.workers.dev/",
+  "url": "firebase-web-intro"
+}
