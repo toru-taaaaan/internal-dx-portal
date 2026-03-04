@@ -1,0 +1,346 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>GAS 4行入門 — スプレッドシート・地図・メールをつなぐ</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success { color: #1e8e3e; }
+    .error { color: red; }
+
+    /* 読み上げボタン */
+    #speech-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      background: #4F7DC9;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-family: 'Roboto', sans-serif;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    #speech-btn:hover { background: #3a67b3; }
+    #speech-btn.speaking { background: #d32f2f; }
+    #speech-btn.speaking:hover { background: #b71c1c; }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="gas-intro"
+                  title="GAS 4行入門"
+                  environment="web"
+                  feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/">
+
+    <google-codelab-step label="はじめに" duration="2">
+      <p>このCodelabでは <strong>Google Apps Script（GAS）</strong> を使って、スプレッドシートに入力した住所から地図を生成し、Gmailで自動送信するプログラムをわずか <strong>4行のコード</strong> で作ります。</p>
+
+<h2 is-upgraded>このCodelabで学ぶこと</h2>
+<ul>
+<li>Google Apps Script とは何か</li>
+<li>Apps Script エディタの開き方と基本操作</li>
+<li>スプレッドシート・Google Maps・Gmail を連携させる方法</li>
+<li>プログラムを実行して結果を確認する方法</li>
+</ul>
+
+<h2 is-upgraded>必要なもの</h2>
+<ul>
+<li><strong>Google アカウント</strong>（会社の Gmail アドレスでOK）</li>
+<li><strong>Chrome ブラウザ</strong>（推奨）</li>
+<li>所要時間：約 35 分</li>
+</ul>
+
+<aside class="special"><p> プログラミングの経験はまったく不要です。コードは4行だけ。コピー&amp;ペーストで完成します。 </p>
+</aside>
+
+<aside class="special"><p> Google Apps Script は <strong>完全無料</strong> です。クレジットカード登録不要、Googleアカウントさえあれば今すぐ始められます。 </p>
+</aside>
+
+    </google-codelab-step>
+
+    <google-codelab-step label="Google Apps Script とは" duration="3">
+      <p>Google Apps Script（略称: GAS）は、Google が提供する <strong>無料のプログラミング環境</strong> です。スプレッドシート・Gmail・カレンダー・ドライブといった Google サービスを、コードで自動的に動かすことができます。</p>
+
+<h2 is-upgraded>GAS でできること（例）</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>やりたいこと</strong></p></td><td colspan="1" rowspan="1"><p><strong>GAS でできること</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>毎週月曜にメールを自動送信したい</p></td><td colspan="1" rowspan="1"><p>定期実行（トリガー）機能で自動化</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>スプレッドシートのデータを整形・集計したい</p></td><td colspan="1" rowspan="1"><p>シートを読み取り、加工して書き戻す</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>フォーム回答が来たら Slack に通知したい</p></td><td colspan="1" rowspan="1"><p>フォーム送信トリガー + Webhook 連携</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>大量の宛先に個別メールを送りたい</p></td><td colspan="1" rowspan="1"><p>シートの各行を読み取って Gmail 送信</p></td></tr>
+</table>
+
+<h2 is-upgraded>GAS の3つの特徴</h2>
+<ul>
+<li><strong>完全無料</strong>：Googleアカウントのみで使える。カード登録なし</li>
+<li><strong>ブラウザで完結</strong>：インストール不要。ブラウザ上でコードを書いて実行できる</li>
+<li><strong>Googleと直接つながる</strong>：スプレッドシート・Gmail・カレンダーを公式APIで操作できる</li>
+</ul>
+
+<aside class="special"><p> このCodelabで作るのは「住所を入力したら、地図をメールで送ってくれるプログラム」です。スプレッドシート・Google Maps・Gmail の3つを4行でつなぎます。 </p>
+</aside>
+
+    </google-codelab-step>
+
+    <google-codelab-step label="スプレッドシートを準備する" duration="5">
+      <p>まず、プログラムが読み取るデータを入力するスプレッドシートを作ります。</p>
+
+<h2 is-upgraded>手順 1：新しいスプレッドシートを作る</h2>
+<ol type="1">
+<li>ブラウザで <a href="https://sheets.new" target="_blank">sheets.new</a> を開く（または Google ドライブから「新規」→「スプレッドシート」）</li>
+<li>新しいスプレッドシートが開いたことを確認する</li>
+</ol>
+
+<h2 is-upgraded>手順 2：住所を入力する</h2>
+<ol type="1">
+<li>セル <strong>A1</strong>（左上の最初のマス）をクリックする</li>
+<li>住所を入力する</li>
+</ol>
+
+<p>入力例：</p>
+<pre><code>東京都千代田区丸の内1-1-1
+</code></pre>
+
+<aside class="special"><p> 住所は日本語でも英語でも構いません。実際に存在する住所を入力してください。架空の住所だと地図が正しく生成されません。 </p>
+</aside>
+
+<h2 is-upgraded>手順 3：スプレッドシートに名前をつける</h2>
+<ol type="1">
+<li>左上の「無題のスプレッドシート」をクリック</li>
+<li>「地図送信テスト」などわかりやすい名前に変更する</li>
+<li>Enter キーで確定</li>
+</ol>
+
+<p>ここまでできたら、次のステップへ進みます。</p>
+
+    </google-codelab-step>
+
+    <google-codelab-step label="Apps Script エディタを開く" duration="5">
+      <p>作成したスプレッドシートから Apps Script エディタを開きます。エディタはコードを書いて実行するための画面です。</p>
+
+<h2 is-upgraded>エディタの開き方</h2>
+<ol type="1">
+<li>スプレッドシートの上部メニューから <strong>「拡張機能」</strong> をクリック</li>
+<li>表示されたメニューから <strong>「Apps Script」</strong> をクリック</li>
+<li>新しいタブでエディタが開く</li>
+</ol>
+
+<aside class="special"><p> 「拡張機能」が見当たらない場合は、画面を広げるか、横にスクロールしてみてください。 </p>
+</aside>
+
+<h2 is-upgraded>エディタの画面構成</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>エリア</strong></p></td><td colspan="1" rowspan="1"><p><strong>役割</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>左側（ファイルパネル）</p></td><td colspan="1" rowspan="1"><p>スクリプトファイルの一覧。デフォルトは「コード.gs」</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>中央（コードエディタ）</p></td><td colspan="1" rowspan="1"><p>コードを書く場所</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>上部のツールバー</p></td><td colspan="1" rowspan="1"><p>保存・実行・デバッグボタン</p></td></tr>
+</table>
+
+<h2 is-upgraded>既存のコードを削除する</h2>
+<p>エディタには最初から以下のコードが書かれています：</p>
+<pre><code>function myFunction() {
+
+}
+</code></pre>
+<p>これを <strong>すべて選択して削除</strong> してください（Ctrl+A → Delete）。次のステップで新しいコードを書きます。</p>
+
+    </google-codelab-step>
+
+    <google-codelab-step label="4行のコードを書く" duration="10">
+      <p>エディタに以下のコードを入力します。これが今回のプログラムの全体です。</p>
+
+<h2 is-upgraded>コードを入力する</h2>
+<p>以下のコードをエディタに <strong>コピー&amp;ペースト</strong> してください：</p>
+
+<pre><code language="javascript">function sendMap() {
+  var address = SpreadsheetApp.getActiveSheet().getRange("A1").getValue();
+  var map = Maps.newStaticMap().addMarker(address);
+  GmailApp.sendEmail(Session.getActiveUser().getEmail(), "地図を送ります", "住所: " + address, {attachments: [map]});
+}
+</code></pre>
+
+<aside class="special"><p> 送信先メールアドレスは <code>Session.getActiveUser().getEmail()</code> で自分自身のアドレスを自動取得しています。別の宛先に送りたい場合は、ダブルクォートの中に直接メールアドレスを書いてください（例: <code>"tanaka@example.com"</code>）。 </p>
+</aside>
+
+<h2 is-upgraded>4行それぞれの意味</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>行</strong></p></td><td colspan="1" rowspan="1"><p><strong>コード</strong></p></td><td colspan="1" rowspan="1"><p><strong>意味</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>1行目</p></td><td colspan="1" rowspan="1"><p><code>SpreadsheetApp...getValue()</code></p></td><td colspan="1" rowspan="1"><p>スプレッドシートのA1セルの値（住所）を読み取る</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>2行目</p></td><td colspan="1" rowspan="1"><p><code>Maps.newStaticMap()...</code></p></td><td colspan="1" rowspan="1"><p>その住所にピンを立てた地図画像を生成する</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>3行目</p></td><td colspan="1" rowspan="1"><p><code>GmailApp.sendEmail(...)</code></p></td><td colspan="1" rowspan="1"><p>地図を添付してGmailで送信する</p></td></tr>
+</table>
+
+<h2 is-upgraded>コードを保存する</h2>
+<ol type="1">
+<li>キーボードで <strong>Ctrl + S</strong>（Mac は Cmd + S）を押す</li>
+<li>または上部の「💾 保存」アイコンをクリックする</li>
+<li>プロジェクト名を聞かれたら「地図送信」などと入力して OK</li>
+</ol>
+
+    </google-codelab-step>
+
+    <google-codelab-step label="実行してみる" duration="8">
+      <p>保存できたら、プログラムを実行します。</p>
+
+<h2 is-upgraded>手順 1：実行する関数を選ぶ</h2>
+<ol type="1">
+<li>エディタ上部の関数選択ドロップダウン（「関数を選択」と表示されている部分）をクリック</li>
+<li><strong>「sendMap」</strong> を選ぶ</li>
+</ol>
+
+<h2 is-upgraded>手順 2：実行ボタンを押す</h2>
+<ol type="1">
+<li>上部の <strong>「▶ 実行」</strong> ボタン（三角形のアイコン）をクリックする</li>
+</ol>
+
+<h2 is-upgraded>手順 3：権限を許可する</h2>
+<p>初回実行時は、プログラムがGoogleサービスにアクセスする許可を求めてきます。</p>
+<ol type="1">
+<li>「承認が必要です」というダイアログが表示される</li>
+<li><strong>「権限を確認」</strong> をクリック</li>
+<li>Googleアカウントの選択画面が出たら、使用中のアカウントを選ぶ</li>
+<li>「このアプリはGoogleで確認されていません」と表示されたら → <strong>「詳細」</strong> をクリック → <strong>「（プロジェクト名）（安全ではないページ）に移動」</strong> をクリック</li>
+<li>アクセス許可の一覧が表示されたら <strong>「許可」</strong> をクリック</li>
+</ol>
+
+<aside class="warning"><p> 「このアプリはGoogleで確認されていません」という警告は、<strong>自分で作ったスクリプト</strong> なので正常です。他人が作ったスクリプトを実行するときは内容をよく確認してください。 </p>
+</aside>
+
+<h2 is-upgraded>手順 4：メールを確認する</h2>
+<ol type="1">
+<li>実行が完了したら（エディタ下部に「実行完了」と表示される）</li>
+<li>Gmail を開く</li>
+<li>「地図を送ります」という件名のメールが届いていることを確認する</li>
+<li>添付画像を開くと、A1に入力した住所にピンが立った地図が表示される</li>
+</ol>
+
+<aside class="special"><p> メールが届くまで1〜2分かかる場合があります。届かない場合は「迷惑メール」フォルダも確認してください。 </p>
+</aside>
+
+    </google-codelab-step>
+
+    <google-codelab-step label="まとめと次のステップ" duration="2">
+      <p>おめでとうございます！ Google Apps Script を使って、スプレッドシート・Google Maps・Gmail を連携するプログラムを完成させました。</p>
+
+<h2 is-upgraded>今回学んだこと</h2>
+<ul>
+<li>Google Apps Script の基本概念（完全無料・ブラウザ完結）</li>
+<li>Apps Script エディタの開き方と操作</li>
+<li><code>SpreadsheetApp</code>・<code>Maps</code>・<code>GmailApp</code> の3つのサービスの使い方</li>
+<li>プログラムの実行と権限の許可</li>
+</ul>
+
+<h2 is-upgraded>応用アイデア</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>アイデア</strong></p></td><td colspan="1" rowspan="1"><p><strong>ヒント</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>複数の住所を一括送信したい</p></td><td colspan="1" rowspan="1"><p>A列を全行ループして1件ずつ送信</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>毎朝8時に自動実行したい</p></td><td colspan="1" rowspan="1"><p>「トリガー」機能で定期実行を設定</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>地図ではなくルートを送りたい</p></td><td colspan="1" rowspan="1"><p><code>Maps.newDirectionFinder()</code> を使う</p></td></tr>
+</table>
+
+<h2 is-upgraded>次のCodelabへ</h2>
+<ul>
+<li><a href="/codelabs/gas-fundamentals/">GAS 基礎 — 変数・繰り返し・条件分岐</a></li>
+<li><a href="/codelabs/workspace-gemini/">Workspace × Gemini 自動化</a></li>
+</ul>
+
+<aside class="special"><p> GAS のさらに詳しい使い方は <a href="https://developers.google.com/apps-script" target="_blank">公式ドキュメント（英語）</a> を参照してください。 </p>
+</aside>
+
+    </google-codelab-step>
+
+  </google-codelab>
+
+  <!-- 読み上げボタン -->
+  <button id="speech-btn" onclick="toggleSpeech()" title="現在のステップを読み上げます">
+    <span id="speech-icon">▶</span>
+    <span id="speech-label">読み上げ</span>
+  </button>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js" async></script>
+
+  <script>
+    var speaking = false;
+    var currentUtterance = null;
+
+    function getCurrentStepIndex() {
+      var hash = location.hash.replace('#', '');
+      var n = parseInt(hash);
+      return isNaN(n) ? 0 : n;
+    }
+
+    function getCurrentStepText() {
+      var steps = document.querySelectorAll('google-codelab-step');
+      var idx = getCurrentStepIndex();
+      var step = steps[idx];
+      if (!step) return '';
+      // label（ステップ名）も読む
+      var label = step.getAttribute('label') || '';
+      var body = step.innerText || step.textContent || '';
+      return label + '。' + body;
+    }
+
+    function toggleSpeech() {
+      if (speaking) {
+        window.speechSynthesis.cancel();
+        setSpeaking(false);
+        return;
+      }
+      var text = getCurrentStepText();
+      if (!text.trim()) return;
+
+      var utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'ja-JP';
+      utter.rate = 0.95;
+      utter.onend = function() { setSpeaking(false); };
+      utter.onerror = function() { setSpeaking(false); };
+      currentUtterance = utter;
+      window.speechSynthesis.speak(utter);
+      setSpeaking(true);
+    }
+
+    function setSpeaking(val) {
+      speaking = val;
+      var btn = document.getElementById('speech-btn');
+      var icon = document.getElementById('speech-icon');
+      var label = document.getElementById('speech-label');
+      if (val) {
+        btn.classList.add('speaking');
+        icon.textContent = '⏹';
+        label.textContent = '停止';
+      } else {
+        btn.classList.remove('speaking');
+        icon.textContent = '▶';
+        label.textContent = '読み上げ';
+      }
+    }
+
+    // ステップ移動時に読み上げを停止
+    window.addEventListener('hashchange', function() {
+      if (speaking) {
+        window.speechSynthesis.cancel();
+        setSpeaking(false);
+      }
+    });
+  </script>
+</body>
+</html>
