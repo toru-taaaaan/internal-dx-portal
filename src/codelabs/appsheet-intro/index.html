@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AppSheet 入門</title>
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Noto Sans JP', sans-serif; }
+    #read-aloud-btn {
+      position: fixed; bottom: 28px; right: 28px; z-index: 9999;
+      background: #1a73e8; color: white; border: none; border-radius: 50px;
+      padding: 12px 20px; font-size: 14px; font-weight: 700; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(26,115,232,0.35); transition: all 0.2s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    #read-aloud-btn:hover { background: #1557b0; transform: translateY(-2px); }
+    #read-aloud-btn.speaking { background: #d93025; }
+    .step-box {
+      background: #f8f9fa; border-left: 4px solid #1a73e8;
+      padding: 14px 18px; border-radius: 4px; margin: 12px 0;
+    }
+    .tip-box { background: #e8f0fe; border-left: 4px solid #1a73e8; padding: 14px 18px; border-radius: 4px; margin: 16px 0; }
+    .warning-box { background: #fef7e0; border-left: 4px solid #f9ab00; padding: 14px 18px; border-radius: 4px; margin: 16px 0; }
+    .info-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    .info-table th { background: #1a73e8; color: white; padding: 10px 14px; text-align: left; font-size: 13px; }
+    .info-table td { padding: 10px 14px; border-bottom: 1px solid #e8eaed; font-size: 13px; vertical-align: top; }
+    .info-table tr:nth-child(even) td { background: #f8f9fa; }
+    .action-item { background: #e6f4ea; border-left: 4px solid #188038; padding: 14px 18px; border-radius: 4px; margin: 12px 0; }
+    .usecase-box { background: #fce8e6; border-left: 4px solid #d93025; padding: 14px 18px; border-radius: 4px; margin: 12px 0; }
+  </style>
+</head>
+<body>
+
+<google-codelab
+  title="AppSheet 入門"
+  environment="web"
+  feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/">
+
+  <!-- ========== Step 1: はじめに ========== -->
+  <google-codelab-step label="はじめに" duration="3">
+    <p>このハンズオンでは、Googleの<strong>ノーコードアプリ開発ツール「AppSheet」</strong>を使って、Googleスプレッドシートから業務アプリを作成する方法を学びます。</p>
+    <p>コードを1行も書かずに、スマートフォンで使えるアプリが10分で完成します。</p>
+
+    <h2>このコースで学ぶこと</h2>
+    <ul>
+      <li>AppSheet の基本概念とできること</li>
+      <li>Googleスプレッドシートからアプリを作成する方法</li>
+      <li>アプリのプレビューと操作</li>
+      <li>データの追加・編集・検索</li>
+      <li>ビュー（画面）のカスタマイズ</li>
+      <li>アプリの共有方法</li>
+    </ul>
+
+    <h2>対象者</h2>
+    <ul>
+      <li>「スプレッドシートは使えるけどアプリ開発は未経験」という方</li>
+      <li>現場スタッフがスマホで入力できる業務ツールを作りたい方</li>
+      <li>プログラミング経験不要</li>
+    </ul>
+
+    <h2>所要時間</h2>
+    <p>約 <strong>45分</strong></p>
+
+    <h2>使用するもの</h2>
+    <ul>
+      <li>Google アカウント</li>
+      <li>Googleスプレッドシート（このコースで作成します）</li>
+      <li>AppSheet（<code>appsheet.com</code>）— Google Workspace に含まれる</li>
+    </ul>
+  </google-codelab-step>
+
+  <!-- ========== Step 2: AppSheet とは ========== -->
+  <google-codelab-step label="AppSheet とは" duration="5">
+    <p>AppSheet は Google が提供するノーコードアプリ開発プラットフォームです。スプレッドシートやデータベースをデータソースとして、iOS・Android・Webブラウザで動くアプリを作成できます。</p>
+
+    <h2>AppSheet でできること</h2>
+    <table class="info-table">
+      <tr>
+        <th>機能</th>
+        <th>説明</th>
+      </tr>
+      <tr>
+        <td>データ入力フォーム</td>
+        <td>現場スタッフがスマホから直接データを入力できる</td>
+      </tr>
+      <tr>
+        <td>一覧・詳細表示</td>
+        <td>スプレッドシートのデータをリスト・カード・マップ形式で表示</td>
+      </tr>
+      <tr>
+        <td>自動化</td>
+        <td>データ追加時にメール送信・Slack通知などを自動実行</td>
+      </tr>
+      <tr>
+        <td>オフライン対応</td>
+        <td>圏外でも使え、接続時に自動同期</td>
+      </tr>
+      <tr>
+        <td>権限管理</td>
+        <td>ユーザーごとに閲覧・編集・追加の権限を細かく設定</td>
+      </tr>
+    </table>
+
+    <h2>業務での活用例</h2>
+    <div class="usecase-box">
+      <ul>
+        <li><strong>点検・巡回アプリ：</strong>現場でスマホから点検結果を入力、写真も添付。Excelファイルへの手入力が不要に。</li>
+        <li><strong>備品管理アプリ：</strong>QRコードをスキャンして在庫確認・貸出管理。</li>
+        <li><strong>顧客訪問記録：</strong>外出先で訪問メモを入力、会社のスプレッドシートにリアルタイム反映。</li>
+        <li><strong>申請・承認フロー：</strong>スマホで申請→担当者に通知→承認のワークフローを自動化。</li>
+      </ul>
+    </div>
+
+    <div class="tip-box">
+      <strong>費用：</strong>Google Workspace Business Standard以上に含まれています。個人での試用はフリープランも利用可能（一部機能制限あり）。
+    </div>
+  </google-codelab-step>
+
+  <!-- ========== Step 3: スプレッドシートを準備する ========== -->
+  <google-codelab-step label="スプレッドシートを準備する" duration="5">
+    <p>AppSheet のデータソースとなるスプレッドシートを作成します。</p>
+    <p>今回は「社内備品管理アプリ」を作ります。</p>
+
+    <h2>スプレッドシートを作成する</h2>
+    <div class="action-item">
+      <ol>
+        <li><a href="https://sheets.google.com" target="_blank">sheets.google.com</a> を開く</li>
+        <li>「新しいスプレッドシート」をクリック</li>
+        <li>シート名を「備品管理」に変更</li>
+      </ol>
+    </div>
+
+    <h2>ヘッダーとデータを入力する</h2>
+    <p>A1セルから以下のデータを入力してください。</p>
+
+    <table class="info-table">
+      <tr>
+        <th>A: ID</th>
+        <th>B: 備品名</th>
+        <th>C: カテゴリ</th>
+        <th>D: 数量</th>
+        <th>E: 保管場所</th>
+        <th>F: 状態</th>
+      </tr>
+      <tr><td>001</td><td>ノートPC</td><td>IT機器</td><td>5</td><td>情シス倉庫</td><td>利用可</td></tr>
+      <tr><td>002</td><td>プロジェクター</td><td>会議室</td><td>2</td><td>3F会議室</td><td>利用可</td></tr>
+      <tr><td>003</td><td>電源タップ</td><td>電気</td><td>10</td><td>情シス倉庫</td><td>利用可</td></tr>
+      <tr><td>004</td><td>HDMIケーブル</td><td>IT機器</td><td>3</td><td>2F倉庫</td><td>利用可</td></tr>
+      <tr><td>005</td><td>ホワイトボード</td><td>会議室</td><td>4</td><td>各会議室</td><td>一部修理中</td></tr>
+    </table>
+
+    <div class="warning-box">
+      <strong>重要：</strong>A列（ID）は重複のない一意の値にしてください。AppSheet がこれをキー（レコードの識別子）として使います。
+    </div>
+
+    <h2>シートを確認してから次へ</h2>
+    <p>ヘッダー行（1行目）と5件のデータ（2〜6行目）が入力できたら次のステップへ進みます。</p>
+  </google-codelab-step>
+
+  <!-- ========== Step 4: AppSheet アプリを作成する ========== -->
+  <google-codelab-step label="AppSheet アプリを作成する" duration="8">
+    <p>スプレッドシートから直接 AppSheet アプリを作成します。</p>
+
+    <h2>方法1：スプレッドシートから直接作成（推奨）</h2>
+    <div class="action-item">
+      <ol>
+        <li>作成したスプレッドシートを開く</li>
+        <li>上部メニュー「拡張機能」→「AppSheet」→「アプリを作成」をクリック</li>
+        <li>AppSheet エディターが新しいタブで開く</li>
+      </ol>
+    </div>
+
+    <h2>方法2：AppSheet から作成</h2>
+    <div class="action-item">
+      <ol>
+        <li><a href="https://appsheet.com" target="_blank">appsheet.com</a> を開く</li>
+        <li>「作成」→「アプリ」→「既存のデータから始める」をクリック</li>
+        <li>「Google スプレッドシート」を選択し、「備品管理」シートを選択</li>
+      </ol>
+    </div>
+
+    <h2>AppSheet エディターの構成</h2>
+    <table class="info-table">
+      <tr>
+        <th>エリア</th>
+        <th>説明</th>
+      </tr>
+      <tr>
+        <td>左メニュー</td>
+        <td>Data（データ）・Views（画面）・Automation（自動化）・Security（権限）の設定</td>
+      </tr>
+      <tr>
+        <td>中央パネル</td>
+        <td>選択した設定の詳細を編集する</td>
+      </tr>
+      <tr>
+        <td>右プレビュー</td>
+        <td>スマホ画面のリアルタイムプレビュー。実際の動きを即確認できる</td>
+      </tr>
+    </table>
+
+    <p>AppSheet がスプレッドシートを自動解析し、列のデータ型（テキスト・数値・ドロップダウンなど）を自動設定します。</p>
+
+    <div class="tip-box">
+      <strong>自動生成の精度：</strong>ヘッダー名が日本語でも英語でも正しく認識されます。数値列は自動で「Number」型に、「状態」のような列は「Enum（選択肢）」型として設定されることがあります。
+    </div>
+  </google-codelab-step>
+
+  <!-- ========== Step 5: アプリをプレビューして操作する ========== -->
+  <google-codelab-step label="アプリをプレビューして操作する" duration="7">
+    <p>自動生成されたアプリの操作を確認します。</p>
+
+    <h2>リスト表示を確認する</h2>
+    <p>右のプレビューに備品一覧がリスト表示されています。各備品をタップすると詳細画面が開きます。</p>
+
+    <div class="action-item">
+      <ol>
+        <li>プレビュー画面で「ノートPC」をタップ</li>
+        <li>詳細画面（ID・カテゴリ・数量・保管場所・状態）が表示されることを確認</li>
+        <li>鉛筆アイコンをタップして編集画面を確認</li>
+        <li>戻る（←）ボタンで一覧に戻る</li>
+      </ol>
+    </div>
+
+    <h2>新しいレコードを追加する</h2>
+    <div class="action-item">
+      <ol>
+        <li>プレビューの右下の「＋」ボタンをタップ</li>
+        <li>入力フォームが開く</li>
+        <li>以下を入力：
+          <ul>
+            <li>ID: 006</li>
+            <li>備品名: マウス</li>
+            <li>カテゴリ: IT機器</li>
+            <li>数量: 8</li>
+            <li>保管場所: 情シス倉庫</li>
+            <li>状態: 利用可</li>
+          </ul>
+        </li>
+        <li>「保存」をタップ</li>
+      </ol>
+    </div>
+
+    <h2>スプレッドシートへの反映を確認する</h2>
+    <div class="action-item">
+      <ol>
+        <li>スプレッドシートのタブに切り替える</li>
+        <li>7行目に「マウス」のデータが追加されていることを確認</li>
+      </ol>
+    </div>
+
+    <p>アプリからの入力がリアルタイムでスプレッドシートに反映されることが確認できました。</p>
+
+    <div class="tip-box">
+      <strong>検索機能：</strong>プレビュー上部の検索バーに「IT機器」と入力すると、カテゴリが一致する備品だけに絞り込まれます。AppSheet が自動でテキスト検索を用意してくれています。
+    </div>
+  </google-codelab-step>
+
+  <!-- ========== Step 6: ビューをカスタマイズする ========== -->
+  <google-codelab-step label="ビューをカスタマイズする" duration="7">
+    <p>ビュー（アプリの画面）を追加・カスタマイズして使いやすくします。</p>
+
+    <h2>カードビューに変更する</h2>
+    <div class="action-item">
+      <ol>
+        <li>左メニューの「Views」をクリック</li>
+        <li>自動生成された「備品管理」ビューをクリック</li>
+        <li>「View Type」を「Table」から「Card」に変更</li>
+        <li>プレビューがカード形式に変わることを確認</li>
+      </ol>
+    </div>
+
+    <h2>カテゴリでグループ化する</h2>
+    <div class="action-item">
+      <ol>
+        <li>「Sort, Group」タブをクリック</li>
+        <li>「Group by」に「カテゴリ」を追加</li>
+        <li>プレビューで「IT機器」「会議室」「電気」のグループに分かれることを確認</li>
+      </ol>
+    </div>
+
+    <h2>「状態別」ビューを追加する</h2>
+    <div class="action-item">
+      <ol>
+        <li>「Views」ページで「新しいビューを追加」をクリック</li>
+        <li>以下を設定：
+          <ul>
+            <li>View Name: 状態別</li>
+            <li>For this data: 備品管理</li>
+            <li>View Type: Deck（カード積み重ね表示）</li>
+            <li>Group by: 状態</li>
+          </ul>
+        </li>
+        <li>「保存」をクリック</li>
+      </ol>
+    </div>
+    <p>「利用可」「一部修理中」のグループでビューが表示されます。修理中の備品をすぐ把握できるようになりました。</p>
+
+    <h2>ナビゲーションに追加する</h2>
+    <p>作成したビューはアプリ下部のナビゲーションバーに自動追加されます。プレビューで確認してみましょう。</p>
+
+    <div class="tip-box">
+      <strong>ビューの種類：</strong>Table（表）・Card（カード）・Deck（デッキ）・Gallery（ギャラリー）・Map（地図）・Form（フォーム専用）など多数あります。データの性質に合わせて選びましょう。
+    </div>
+  </google-codelab-step>
+
+  <!-- ========== Step 7: アプリを共有する ========== -->
+  <google-codelab-step label="アプリを共有する" duration="4">
+    <p>完成したアプリを他のメンバーと共有します。</p>
+
+    <h2>アプリを保存・デプロイする</h2>
+    <div class="action-item">
+      <ol>
+        <li>右上の「保存」ボタンをクリック</li>
+        <li>「アプリ名」を「備品管理アプリ」に変更</li>
+        <li>「保存」をクリック</li>
+      </ol>
+    </div>
+
+    <h2>ユーザーを招待する</h2>
+    <div class="action-item">
+      <ol>
+        <li>左メニューの「Users」をクリック</li>
+        <li>「Add Users」をクリック</li>
+        <li>共有したいメンバーのメールアドレスを入力</li>
+        <li>権限を選択：
+          <ul>
+            <li>Editor: 追加・編集・削除が可能</li>
+            <li>Viewer: 閲覧のみ</li>
+          </ul>
+        </li>
+        <li>「招待を送信」をクリック</li>
+      </ol>
+    </div>
+
+    <h2>スマホでアプリを使う</h2>
+    <div class="action-item">
+      <ol>
+        <li>招待したメンバーのスマホで受信したメールを開く</li>
+        <li>リンクをタップするとブラウザでアプリが開く</li>
+        <li>「ホーム画面に追加」でスマホのアプリアイコンとして保存できる</li>
+      </ol>
+    </div>
+
+    <div class="tip-box">
+      <strong>AppSheet アプリの共有URL：</strong>左上のメニュー「Share」→「Copy app link」で直接URLをコピーしてSlackやメールで共有できます。
+    </div>
+
+    <div class="warning-box">
+      <strong>注意：</strong>スプレッドシートの共有設定も確認してください。AppSheet ユーザーがスプレッドシートにアクセスできる権限がないと、アプリが正しく動作しません。スプレッドシートの「共有」設定で、同じメンバーに閲覧または編集権限を付与してください。
+    </div>
+  </google-codelab-step>
+
+  <!-- ========== Step 8: まとめと次のステップ ========== -->
+  <google-codelab-step label="まとめと次のステップ" duration="2">
+    <h2>このコースで学んだこと</h2>
+    <ul>
+      <li>AppSheet の基本概念（ビュー・データソース・権限）</li>
+      <li>Googleスプレッドシートからアプリを自動生成する方法</li>
+      <li>プレビューでデータの追加・編集・確認をする方法</li>
+      <li>ビュー（Card / Deck / グループ化）のカスタマイズ</li>
+      <li>メンバーへのアプリ共有と権限設定</li>
+    </ul>
+
+    <h2>応用アイデア</h2>
+    <ul>
+      <li><strong>点検アプリ：</strong>チェックリスト列を追加し、現場で点検結果をスマホ入力</li>
+      <li><strong>申請フォーム：</strong>フォームビューを作成し、申請データを自動でシートに記録</li>
+      <li><strong>顧客リスト：</strong>外出先で顧客情報を検索・更新。名刺写真を添付することも可能</li>
+    </ul>
+
+    <h2>次のステップ</h2>
+    <ul>
+      <li><a href="/codelabs/looker-studio-intro/">CL-008 Looker Studio 入門</a> — スプレッドシートのデータをダッシュボード化</li>
+      <li><a href="/codelabs/gas-basics/">CL-002 GAS 基礎</a> — スプレッドシートをさらに自動化する</li>
+      <li>AppSheet 公式ドキュメント（appsheet.com/about/resources）</li>
+    </ul>
+  </google-codelab-step>
+
+</google-codelab>
+
+<button id="read-aloud-btn" onclick="toggleReadAloud()">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+  読み上げ
+</button>
+
+<script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+<script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+<script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+<script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+<script>
+  let synth = window.speechSynthesis;
+  let isSpeaking = false;
+
+  function getStepText() {
+    const steps = document.querySelectorAll('google-codelab-step');
+    for (const step of steps) {
+      if (step.hasAttribute('selected') || step.getAttribute('aria-selected') === 'true') {
+        return step.innerText || step.textContent;
+      }
+    }
+    const selected = document.querySelector('.iron-selected, [selected]');
+    if (selected) return selected.innerText || selected.textContent;
+    return document.body.innerText;
+  }
+
+  function toggleReadAloud() {
+    const btn = document.getElementById('read-aloud-btn');
+    if (isSpeaking) {
+      synth.cancel();
+      isSpeaking = false;
+      btn.classList.remove('speaking');
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg> 読み上げ';
+    } else {
+      const text = getStepText();
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'ja-JP';
+      utter.rate = 1.0;
+      utter.onend = () => {
+        isSpeaking = false;
+        btn.classList.remove('speaking');
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg> 読み上げ';
+      };
+      synth.speak(utter);
+      isSpeaking = true;
+      btn.classList.add('speaking');
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h12v12H6z"/></svg> 停止';
+    }
+  }
+
+  window.addEventListener('hashchange', () => {
+    if (isSpeaking) {
+      synth.cancel();
+      isSpeaking = false;
+      const btn = document.getElementById('read-aloud-btn');
+      btn.classList.remove('speaking');
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg> 読み上げ';
+    }
+  });
+</script>
+</body>
+</html>

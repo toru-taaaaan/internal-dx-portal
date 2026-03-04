@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>プロンプトエンジニアリング入門</title>
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Noto Sans JP', sans-serif; }
+    #read-aloud-btn {
+      position: fixed; bottom: 28px; right: 28px; z-index: 9999;
+      background: #1a73e8; color: white; border: none; border-radius: 50px;
+      padding: 12px 20px; font-size: 14px; font-weight: 700; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(26,115,232,0.35); transition: all 0.2s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    #read-aloud-btn:hover { background: #1557b0; transform: translateY(-2px); }
+    #read-aloud-btn.speaking { background: #d93025; }
+    .prompt-box {
+      background: #f8f9fa; border-left: 4px solid #1a73e8;
+      padding: 16px 20px; border-radius: 4px; margin: 16px 0;
+      font-family: monospace; font-size: 14px; white-space: pre-wrap;
+    }
+    .before-after {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;
+    }
+    .before-box { background: #fce8e6; border-left: 4px solid #d93025; padding: 16px; border-radius: 4px; }
+    .after-box { background: #e6f4ea; border-left: 4px solid #188038; padding: 16px; border-radius: 4px; }
+    .box-label { font-size: 11px; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 8px; }
+    .component-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    .component-table th { background: #1a73e8; color: white; padding: 10px 14px; text-align: left; font-size: 13px; }
+    .component-table td { padding: 10px 14px; border-bottom: 1px solid #e8eaed; font-size: 13px; vertical-align: top; }
+    .component-table tr:nth-child(even) td { background: #f8f9fa; }
+    .required-badge { background: #d93025; color: white; font-size: 10px; padding: 2px 6px; border-radius: 3px; font-weight: 700; }
+    .optional-badge { background: #80868b; color: white; font-size: 10px; padding: 2px 6px; border-radius: 3px; font-weight: 700; }
+    .tip-box { background: #e8f0fe; border-left: 4px solid #1a73e8; padding: 14px 18px; border-radius: 4px; margin: 16px 0; }
+    .warning-box { background: #fef7e0; border-left: 4px solid #f9ab00; padding: 14px 18px; border-radius: 4px; margin: 16px 0; }
+  </style>
+</head>
+<body>
+
+<google-codelab
+  title="プロンプトエンジニアリング入門"
+  environment="web"
+  feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/">
+
+  <!-- ========== Step 1: はじめに ========== -->
+  <google-codelab-step label="はじめに" duration="3">
+    <p>このハンズオンでは、AIへの指示文（プロンプト）を上手に書くための技術「プロンプトエンジニアリング」を学びます。</p>
+    <p>難しい知識は不要です。いくつかのパターンを知るだけで、AIからの回答品質が大幅に向上します。</p>
+
+    <h2>このコースで学ぶこと</h2>
+    <ul>
+      <li>プロンプトを構成する4つの要素</li>
+      <li>ゼロショット vs フューショット（例示）の違い</li>
+      <li>思考の連鎖（Chain-of-Thought）で精度を上げる方法</li>
+      <li>ロールプロンプティングでトーンをコントロールする方法</li>
+      <li>よくある失敗パターンと改善法</li>
+      <li>反復改善のワークフロー</li>
+    </ul>
+
+    <h2>対象者</h2>
+    <ul>
+      <li>GeminiやChatGPTを使い始めたが、思い通りの回答が得られないと感じている方</li>
+      <li>AI Champion として社内でプロンプトのコツを伝えたい方</li>
+      <li>プログラミング経験は不要</li>
+    </ul>
+
+    <h2>所要時間</h2>
+    <p>約 <strong>45分</strong></p>
+
+    <h2>使用するツール</h2>
+    <ul>
+      <li>Gemini（<code>gemini.google.com</code>）またはお好みのAIチャット</li>
+      <li>ブラウザのみ。インストール不要</li>
+    </ul>
+  </google-codelab-step>
+
+  <!-- ========== Step 2: プロンプトの4つの要素 ========== -->
+  <google-codelab-step label="プロンプトの4つの要素" duration="8">
+    <p>Googleのプロンプト設計ガイドでは、すべてのプロンプトは次の4つの要素で構成されると定義しています。</p>
+
+    <table class="component-table">
+      <tr>
+        <th>要素</th>
+        <th>説明</th>
+        <th>必須？</th>
+      </tr>
+      <tr>
+        <td><strong>タスク</strong></td>
+        <td>AIに何をしてほしいか。指示の核心部分。</td>
+        <td><span class="required-badge">必須</span></td>
+      </tr>
+      <tr>
+        <td><strong>システム指示</strong></td>
+        <td>AIの役割・トーン・制約を最初に設定する。</td>
+        <td><span class="optional-badge">任意</span></td>
+      </tr>
+      <tr>
+        <td><strong>例示（フューショット）</strong></td>
+        <td>期待する入出力のサンプルを見せる。</td>
+        <td><span class="optional-badge">任意</span></td>
+      </tr>
+      <tr>
+        <td><strong>コンテキスト</strong></td>
+        <td>背景情報・参照データ・前提条件を与える。</td>
+        <td><span class="optional-badge">任意</span></td>
+      </tr>
+    </table>
+
+    <h2>4要素を使った例</h2>
+    <p>会議の議事録を要約させる場合：</p>
+
+    <div class="prompt-box">【システム指示】
+あなたは情報システム部のアシスタントです。
+簡潔で正確な日本語で回答してください。
+
+【タスク】
+以下の議事録を3つの箇条書きに要約してください。
+決定事項・次のアクション・期限を必ず含めること。
+
+【コンテキスト】
+（ここに議事録のテキストを貼り付ける）</div>
+
+    <div class="tip-box">
+      <strong>ポイント：</strong>4要素を全部使う必要はありません。まずタスクだけで試し、回答が期待と違ったら他の要素を加えていきましょう。
+    </div>
+
+    <h2>試してみよう</h2>
+    <p>Gemini を開き、タスクだけの指示と4要素を揃えた指示を比べてみましょう。</p>
+
+    <p>タスクのみ：</p>
+    <div class="prompt-box">先週の会議を要約して</div>
+
+    <p>4要素を使った版：</p>
+    <div class="prompt-box">あなたは50代の部長向けに資料を作る社内アシスタントです。
+
+以下の会議メモを3点の箇条書きに要約してください。
+・決定事項
+・次のアクションと担当者
+・期限
+
+【会議メモ】
+（メモをここに貼る）</div>
+
+    <p>回答の具体性が大きく変わることを確認してください。</p>
+  </google-codelab-step>
+
+  <!-- ========== Step 3: ゼロショット vs フューショット ========== -->
+  <google-codelab-step label="ゼロショット vs フューショット" duration="8">
+    <p>AIへの指示に「例」を含めるかどうかで回答品質が変わります。</p>
+
+    <h2>ゼロショット（例なし）</h2>
+    <p>例を一切示さず、タスクだけを伝える方法です。シンプルですが、フォーマットが不安定になりがちです。</p>
+
+    <div class="prompt-box">次のメールを丁寧な日本語に書き直してください。
+
+「明日の会議ですが、参加できなくなりました。すみません。」</div>
+
+    <h2>フューショット（例あり）</h2>
+    <p>「このような入力→この形式で出力」という例を2〜4件示す方法です。Googleのガイドでは<strong>常にフューショット例を含めることを推奨</strong>しています。</p>
+
+    <div class="prompt-box">メールを丁寧な敬語に書き直します。
+
+【例1】
+入力: 明日の会議、遅れます。
+出力: 明日の会議ですが、やむを得ない事情により到着が遅れる見込みです。大変申し訳ございません。
+
+【例2】
+入力: 資料送ってください。
+出力: お手数をおかけしますが、ご都合がよろしければ関連資料をご送付いただけますでしょうか。
+
+【タスク】
+入力: 明日の会議ですが、参加できなくなりました。すみません。
+出力:</div>
+
+    <div class="tip-box">
+      <strong>フューショットのコツ：</strong>
+      <ul>
+        <li>例は2〜4件が目安（多すぎると逆効果）</li>
+        <li>「やってはいけない例」より「正しい例」を見せる</li>
+        <li>例のフォーマットを統一する</li>
+        <li>実際の業務で使うパターンを例にすると効果大</li>
+      </ul>
+    </div>
+
+    <h2>試してみよう</h2>
+    <p>次の2つを同じAIに送り、回答の違いを比べてください。</p>
+
+    <p>ゼロショット版：</p>
+    <div class="prompt-box">このメールの件名を考えてください。
+「IIJとのSD-WAN契約について、来月末までに社内承認が必要です。今週中に担当部署へ確認をお願いします。」</div>
+
+    <p>フューショット版：</p>
+    <div class="prompt-box">メール本文から件名を生成します。件名は20文字以内で、要件番号・内容・期限の形式で。
+
+例1: 本文「NW機器の保守期限が来月末に迫っています」→ 件名「【要対応】NW機器保守期限確認（来月末）」
+例2: 本文「新入社員のアカウント作成依頼が届いています」→ 件名「【依頼】新入社員アカウント作成（今週中）」
+
+本文: 「IIJとのSD-WAN契約について、来月末までに社内承認が必要です。今週中に担当部署へ確認をお願いします。」
+件名:</div>
+  </google-codelab-step>
+
+  <!-- ========== Step 4: Chain-of-Thought ========== -->
+  <google-codelab-step label="思考の連鎖（Chain-of-Thought）" duration="7">
+    <p>複雑な問いや判断が必要なタスクでは、AIに「ステップを追って考えさせる」ことで精度が上がります。これを <strong>Chain-of-Thought（CoT）</strong> と呼びます。</p>
+
+    <h2>CoTが効くケース</h2>
+    <ul>
+      <li>費用計算・数値比較</li>
+      <li>複数の選択肢の優劣判断</li>
+      <li>論理的な意思決定フロー</li>
+      <li>リスクの洗い出し</li>
+    </ul>
+
+    <h2>CoTなし（直接回答を求める）</h2>
+    <div class="prompt-box">SD-WAN 3社のうちどれが最もコスト効率が良いですか？
+A社: 初期費用100万円、月額15万円
+B社: 初期費用0円、月額25万円
+C社: 初期費用50万円、月額18万円</div>
+
+    <h2>CoTあり（ステップを追って考えさせる）</h2>
+    <div class="prompt-box">SD-WAN 3社のコスト効率を比較します。ステップを追って計算してください。
+
+A社: 初期費用100万円、月額15万円
+B社: 初期費用0円、月額25万円
+C社: 初期費用50万円、月額18万円
+
+【手順】
+1. 各社の3年間（36ヶ月）のトータルコストを計算する
+2. 初期費用を月割りした実質月額を求める
+3. 3社を安い順にランキングする
+4. 最終的な推薦とその理由を1文で述べる</div>
+
+    <div class="tip-box">
+      <strong>CoTを引き出すフレーズ：</strong>
+      <ul>
+        <li>「ステップを追って考えてください」</li>
+        <li>「手順を番号で示してください」</li>
+        <li>「判断の根拠を明示してください」</li>
+        <li>「まず〇〇を確認し、次に…という順序で」</li>
+      </ul>
+    </div>
+
+    <h2>試してみよう</h2>
+    <p>業務上の判断が必要な質問を1つ考え、CoTなし・ありの両方で送ってみてください。回答の根拠の明確さがどう変わるか確認しましょう。</p>
+  </google-codelab-step>
+
+  <!-- ========== Step 5: ロールプロンプティング ========== -->
+  <google-codelab-step label="ロールプロンプティング" duration="7">
+    <p>AIに「あなたは〇〇です」と役割を与えることで、回答のトーン・専門性・語彙が変わります。</p>
+
+    <h2>ロールなし</h2>
+    <div class="prompt-box">ゼロトラストとは何ですか？</div>
+
+    <h2>ロールあり（技術者向け）</h2>
+    <div class="prompt-box">あなたはネットワークセキュリティの専門家です。
+CISOへの技術説明を想定して、ゼロトラストの概念とSASEとの違いを説明してください。</div>
+
+    <h2>ロールあり（非エンジニア向け）</h2>
+    <div class="prompt-box">あなたは社内IT研修の講師です。
+プログラミング経験のない50代の部長に向けて、ゼロトラストとは何かを身近な例え（会社の入館管理など）を使って説明してください。200文字以内で。</div>
+
+    <h2>ビジネスで使えるロール例</h2>
+    <table class="component-table">
+      <tr>
+        <th>役割</th>
+        <th>使いどころ</th>
+      </tr>
+      <tr>
+        <td>「プロの編集者」</td>
+        <td>文章の校正・読みやすさ改善</td>
+      </tr>
+      <tr>
+        <td>「弁護士」「法務担当」</td>
+        <td>契約書・規約のリスク確認（※最終確認は専門家に）</td>
+      </tr>
+      <tr>
+        <td>「50代の部長」</td>
+        <td>資料を受け取る側の視点でフィードバックを得る</td>
+      </tr>
+      <tr>
+        <td>「厳格なレビュアー」</td>
+        <td>提案書の弱点・反論を洗い出す</td>
+      </tr>
+      <tr>
+        <td>「IT未経験の社員」</td>
+        <td>マニュアルの分かりやすさを検証する</td>
+      </tr>
+    </table>
+
+    <div class="warning-box">
+      <strong>注意：</strong>ロールを与えると回答が変わりますが、事実確認は必ず別途行ってください。AIは役割に合わせて自信を持って回答しますが、誤情報が含まれることがあります。
+    </div>
+
+    <h2>試してみよう</h2>
+    <p>同じ質問を「専門家向け」と「非専門家向け」の2パターンのロールで送り、回答の違いを比べてください。</p>
+  </google-codelab-step>
+
+  <!-- ========== Step 6: よくある失敗と改善法 ========== -->
+  <google-codelab-step label="よくある失敗と改善法" duration="7">
+    <p>Googleのプロンプト設計ガイドに記載されているよくある失敗パターンと改善法を紹介します。</p>
+
+    <h2>失敗1：曖昧な要求</h2>
+    <div class="before-after">
+      <div class="before-box">
+        <div class="box-label">❌ 曖昧</div>
+        「この文章をもっと良くしてください」
+      </div>
+      <div class="after-box">
+        <div class="box-label">✅ 具体的</div>
+        「この文章を、50代の部長が3分で読めるように、体言止めで箇条書き3点にまとめてください」
+      </div>
+    </div>
+
+    <h2>失敗2：複数のタスクを一度に依頼</h2>
+    <div class="before-after">
+      <div class="before-box">
+        <div class="box-label">❌ 詰め込みすぎ</div>
+        「この資料を要約して、問題点を指摘して、改善案を書いて、メールの件名も考えてください」
+      </div>
+      <div class="after-box">
+        <div class="box-label">✅ 分割して依頼</div>
+        まず要約 → 次に問題点 → 次に改善案 → 最後に件名、と順番に送る
+      </div>
+    </div>
+
+    <h2>失敗3：感情的なプレッシャー</h2>
+    <div class="before-after">
+      <div class="before-box">
+        <div class="box-label">❌ 効果なし</div>
+        「これはとても重要です！絶対に正確に答えてください！！」
+      </div>
+      <div class="after-box">
+        <div class="box-label">✅ 有効な制約</div>
+        「回答は事実のみを含め、不確かな情報には『要確認』と明記してください」
+      </div>
+    </div>
+
+    <h2>失敗4：否定形の指示</h2>
+    <div class="before-after">
+      <div class="before-box">
+        <div class="box-label">❌ 否定形</div>
+        「専門用語を使わないでください」
+      </div>
+      <div class="after-box">
+        <div class="box-label">✅ 肯定形</div>
+        「中学生でも理解できる言葉で説明してください」
+      </div>
+    </div>
+
+    <h2>失敗5：矛盾した指示</h2>
+    <div class="before-after">
+      <div class="before-box">
+        <div class="box-label">❌ 矛盾</div>
+        「詳しく説明してください。ただし100文字以内で。」
+      </div>
+      <div class="after-box">
+        <div class="box-label">✅ 一貫性</div>
+        「要点を3点に絞り、各点を1文（50文字以内）で説明してください」
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>チェックリスト：</strong>プロンプトを送る前に確認しましょう。
+      <ol>
+        <li>期待する出力フォーマット（箇条書き・表・文章）を明記したか？</li>
+        <li>出力の長さや制約（文字数・件数）を書いたか？</li>
+        <li>対象読者・トーンを指定したか？</li>
+        <li>タスクは1つに絞ったか？</li>
+      </ol>
+    </div>
+  </google-codelab-step>
+
+  <!-- ========== Step 7: 反復改善のワークフロー ========== -->
+  <google-codelab-step label="反復改善のワークフロー" duration="5">
+    <p>プロンプトは1回で完成させようとしないことが大切です。Googleは以下の反復ワークフローを推奨しています。</p>
+
+    <h2>プロンプト改善の6ステップ</h2>
+    <ol>
+      <li><strong>目標を定める</strong> — 「どんな回答が来たら成功か」を先に決める</li>
+      <li><strong>最初のプロンプトを書く</strong> — タスクだけの簡単なものでOK</li>
+      <li><strong>回答を評価する</strong> — 目標と比べてどこがズレているか？</li>
+      <li><strong>失敗モードを特定する</strong> — 内容の間違い / フォーマットの問題 / トーンの違い / 不要な情報 / 回答拒否</li>
+      <li><strong>対策を施して再試行</strong> — 失敗モードに合った要素を追加する</li>
+      <li><strong>繰り返す</strong> — 目標を満たすまでステップ3〜5を繰り返す</li>
+    </ol>
+
+    <h2>失敗モード別の対策</h2>
+    <table class="component-table">
+      <tr>
+        <th>失敗モード</th>
+        <th>対策</th>
+      </tr>
+      <tr>
+        <td>内容が間違っている</td>
+        <td>コンテキスト（参照情報）を追加する</td>
+      </tr>
+      <tr>
+        <td>フォーマットが期待と違う</td>
+        <td>出力形式を明示する / フューショット例を追加する</td>
+      </tr>
+      <tr>
+        <td>トーンが合わない</td>
+        <td>ロールと読者を指定する</td>
+      </tr>
+      <tr>
+        <td>長すぎる / 短すぎる</td>
+        <td>文字数・件数の制約を明記する</td>
+      </tr>
+      <tr>
+        <td>的外れな回答</td>
+        <td>タスクを分割する / CoTで手順を指定する</td>
+      </tr>
+    </table>
+
+    <div class="tip-box">
+      <strong>現場のコツ：</strong>うまくいったプロンプトは「プロンプトテンプレート集」としてGoogleドキュメントやスプレッドシートに保存しておきましょう。チームで共有することで組織全体の生産性が上がります。
+    </div>
+  </google-codelab-step>
+
+  <!-- ========== Step 8: まとめと次のステップ ========== -->
+  <google-codelab-step label="まとめと次のステップ" duration="2">
+    <h2>このコースで学んだこと</h2>
+    <ul>
+      <li>プロンプトの<strong>4要素</strong>: タスク・システム指示・例示・コンテキスト</li>
+      <li><strong>フューショット</strong>で期待する出力フォーマットを例示する</li>
+      <li><strong>Chain-of-Thought</strong>で複雑な判断・計算の精度を上げる</li>
+      <li><strong>ロールプロンプティング</strong>でトーンと専門性をコントロールする</li>
+      <li>よくある<strong>5つの失敗パターン</strong>とその改善法</li>
+      <li><strong>反復改善</strong>のワークフロー</li>
+    </ul>
+
+    <h2>次のステップ</h2>
+    <ul>
+      <li><a href="/codelabs/gemini-cli-intro/">CL-005 Gemini CLI 入門</a> — ターミナルからGeminiを活用する</li>
+      <li><a href="/codelabs/workspace-gemini/">CL-003 Workspace × Gemini 自動化</a> — GASと組み合わせて業務自動化</li>
+      <li><a href="/codelabs/vibe-code-intro/">CL-004 Vibe-code 入門</a> — プロンプトでコードを生成する</li>
+    </ul>
+
+    <h2>参考資料</h2>
+    <ul>
+      <li>Google Gemini API プロンプト設計ガイド（ai.google.dev）</li>
+      <li>Gemini for Google Workspace プロンプティングガイド 101（PDF）</li>
+      <li>Vertex AI プロンプトデザイン公式ドキュメント</li>
+    </ul>
+  </google-codelab-step>
+
+</google-codelab>
+
+<button id="read-aloud-btn" onclick="toggleReadAloud()">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+  読み上げ
+</button>
+
+<script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+<script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+<script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+<script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+<script>
+  let synth = window.speechSynthesis;
+  let isSpeaking = false;
+
+  function getStepText() {
+    const steps = document.querySelectorAll('google-codelab-step');
+    for (const step of steps) {
+      if (step.hasAttribute('selected') || step.getAttribute('aria-selected') === 'true') {
+        return step.innerText || step.textContent;
+      }
+    }
+    const selected = document.querySelector('.iron-selected, [selected]');
+    if (selected) return selected.innerText || selected.textContent;
+    return document.body.innerText;
+  }
+
+  function toggleReadAloud() {
+    const btn = document.getElementById('read-aloud-btn');
+    if (isSpeaking) {
+      synth.cancel();
+      isSpeaking = false;
+      btn.classList.remove('speaking');
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg> 読み上げ';
+    } else {
+      const text = getStepText();
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'ja-JP';
+      utter.rate = 1.0;
+      utter.onend = () => {
+        isSpeaking = false;
+        btn.classList.remove('speaking');
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg> 読み上げ';
+      };
+      synth.speak(utter);
+      isSpeaking = true;
+      btn.classList.add('speaking');
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h12v12H6z"/></svg> 停止';
+    }
+  }
+
+  window.addEventListener('hashchange', () => {
+    if (isSpeaking) {
+      synth.cancel();
+      isSpeaking = false;
+      const btn = document.getElementById('read-aloud-btn');
+      btn.classList.remove('speaking');
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg> 読み上げ';
+    }
+  });
+</script>
+</body>
+</html>

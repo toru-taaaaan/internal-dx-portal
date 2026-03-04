@@ -1,0 +1,14 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "updated": "2026-03-04T00:00:00+09:00",
+  "id": "appsheet-intro",
+  "duration": 45,
+  "title": "AppSheet 入門",
+  "summary": "コードゼロでGoogleスプレッドシートからスマホ対応の業務アプリを作成するノーコード開発ハンズオン。備品管理アプリを例に基本操作から共有まで体験。",
+  "category": ["dx", "ai活用"],
+  "tags": ["web"],
+  "feedback": "https://internal-dx-portal-auth.tanjiadm.workers.dev/",
+  "url": "appsheet-intro"
+}

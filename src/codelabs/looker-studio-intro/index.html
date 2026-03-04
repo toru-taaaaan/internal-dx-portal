@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Looker Studio 入門</title>
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Noto Sans JP', sans-serif; }
+    #read-aloud-btn {
+      position: fixed; bottom: 28px; right: 28px; z-index: 9999;
+      background: #1a73e8; color: white; border: none; border-radius: 50px;
+      padding: 12px 20px; font-size: 14px; font-weight: 700; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(26,115,232,0.35); transition: all 0.2s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    #read-aloud-btn:hover { background: #1557b0; transform: translateY(-2px); }
+    #read-aloud-btn.speaking { background: #d93025; }
+    .step-box {
+      background: #f8f9fa; border-left: 4px solid #1a73e8;
+      padding: 14px 18px; border-radius: 4px; margin: 12px 0;
+      font-size: 14px;
+    }
+    .tip-box { background: #e8f0fe; border-left: 4px solid #1a73e8; padding: 14px 18px; border-radius: 4px; margin: 16px 0; }
+    .warning-box { background: #fef7e0; border-left: 4px solid #f9ab00; padding: 14px 18px; border-radius: 4px; margin: 16px 0; }
+    .info-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    .info-table th { background: #1a73e8; color: white; padding: 10px 14px; text-align: left; font-size: 13px; }
+    .info-table td { padding: 10px 14px; border-bottom: 1px solid #e8eaed; font-size: 13px; vertical-align: top; }
+    .info-table tr:nth-child(even) td { background: #f8f9fa; }
+    .action-item { background: #e6f4ea; border-left: 4px solid #188038; padding: 14px 18px; border-radius: 4px; margin: 12px 0; }
+    .screen-label { font-size: 11px; font-weight: 700; letter-spacing: 0.05em; color: #5f6368; margin-bottom: 6px; }
+  </style>
+</head>
+<body>
+
+<google-codelab
+  title="Looker Studio 入門"
+  environment="web"
+  feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/">
+
+  <!-- ========== Step 1: はじめに ========== -->
+  <google-codelab-step label="はじめに" duration="3">
+    <p>このハンズオンでは、Googleの無料BIツール「Looker Studio」を使って、Googleスプレッドシートのデータをインタラクティブなダッシュボードに変換する方法を学びます。</p>
+    <p>プログラミング不要。ドラッグ＆ドロップで本格的なデータ可視化が作れます。</p>
+
+    <h2>このコースで学ぶこと</h2>
+    <ul>
+      <li>Looker Studio の基本概念（データソース・グラフ・ページ）</li>
+      <li>Googleスプレッドシートをデータソースに接続する方法</li>
+      <li>棒グラフ・円グラフ・表を追加する方法</li>
+      <li>フィルターと日付範囲コントロールの設定方法</li>
+      <li>完成したダッシュボードを共有・公開する方法</li>
+    </ul>
+
+    <h2>対象者</h2>
+    <ul>
+      <li>Excelやスプレッドシートで集計しているが、グラフ化が面倒な方</li>
+      <li>上司や関係者に見やすい報告ダッシュボードを作りたい方</li>
+      <li>プログラミング経験不要</li>
+    </ul>
+
+    <h2>所要時間</h2>
+    <p>約 <strong>45分</strong></p>
+
+    <h2>使用するもの</h2>
+    <ul>
+      <li>Google アカウント</li>
+      <li>Google スプレッドシート（このコースで作成します）</li>
+      <li>Looker Studio（<code>lookerstudio.google.com</code>）— 無料</li>
+    </ul>
+  </google-codelab-step>
+
+  <!-- ========== Step 2: Looker Studio とは ========== -->
+  <google-codelab-step label="Looker Studio とは" duration="5">
+    <p>Looker Studio（旧Google Data Studio）は、Googleが無料で提供するデータ可視化・BIツールです。</p>
+
+    <h2>できること</h2>
+    <table class="info-table">
+      <tr>
+        <th>機能</th>
+        <th>説明</th>
+      </tr>
+      <tr>
+        <td>データ接続</td>
+        <td>Googleスプレッドシート・BigQuery・Google Analytics・CSVなど800以上のソースに接続</td>
+      </tr>
+      <tr>
+        <td>グラフ作成</td>
+        <td>棒グラフ・折れ線・円グラフ・表・地図・スコアカードなど多彩なビジュアル</td>
+      </tr>
+      <tr>
+        <td>フィルター・日付範囲</td>
+        <td>閲覧者がダッシュボード上でデータを絞り込める</td>
+      </tr>
+      <tr>
+        <td>自動更新</td>
+        <td>データソースが更新されると自動でグラフも更新される</td>
+      </tr>
+      <tr>
+        <td>共有</td>
+        <td>URLで共有・PDFダウンロード・Googleドライブ経由での権限管理</td>
+      </tr>
+    </table>
+
+    <h2>Excelグラフとの違い</h2>
+    <table class="info-table">
+      <tr>
+        <th>比較項目</th>
+        <th>Excelグラフ</th>
+        <th>Looker Studio</th>
+      </tr>
+      <tr>
+        <td>データ更新</td>
+        <td>手動で貼り直し</td>
+        <td>自動更新</td>
+      </tr>
+      <tr>
+        <td>共有</td>
+        <td>ファイル送付</td>
+        <td>URLで即共有</td>
+      </tr>
+      <tr>
+        <td>インタラクション</td>
+        <td>静的</td>
+        <td>クリックでフィルター</td>
+      </tr>
+      <tr>
+        <td>費用</td>
+        <td>Office ライセンス必要</td>
+        <td>完全無料</td>
+      </tr>
+    </table>
+
+    <div class="tip-box">
+      <strong>活用シーン：</strong>毎週上長に送るKPIレポート、月次の経費集計、プロジェクト進捗ダッシュボード。スプレッドシートをいじるだけでダッシュボードが自動更新されるので、報告資料の作り直しが不要になります。
+    </div>
+  </google-codelab-step>
+
+  <!-- ========== Step 3: サンプルデータを準備する ========== -->
+  <google-codelab-step label="サンプルデータを準備する" duration="8">
+    <p>まず、Looker Studio に接続するサンプルスプレッドシートを作成します。</p>
+
+    <h2>Googleスプレッドシートを開く</h2>
+    <div class="action-item">
+      <ol>
+        <li><a href="https://sheets.google.com" target="_blank">sheets.google.com</a> を開く</li>
+        <li>「新しいスプレッドシート」をクリック</li>
+        <li>シート名を「月次売上データ」に変更</li>
+      </ol>
+    </div>
+
+    <h2>サンプルデータを入力する</h2>
+    <p>以下のデータをA1セルから入力してください（ヘッダー行を含む）。</p>
+
+    <table class="info-table">
+      <tr>
+        <th>A: 年月</th>
+        <th>B: 部門</th>
+        <th>C: 売上（万円）</th>
+        <th>D: 費用（万円）</th>
+      </tr>
+      <tr><td>2026-01</td><td>情報システム</td><td>120</td><td>85</td></tr>
+      <tr><td>2026-01</td><td>総務</td><td>95</td><td>72</td></tr>
+      <tr><td>2026-01</td><td>営業</td><td>310</td><td>180</td></tr>
+      <tr><td>2026-02</td><td>情報システム</td><td>135</td><td>88</td></tr>
+      <tr><td>2026-02</td><td>総務</td><td>102</td><td>75</td></tr>
+      <tr><td>2026-02</td><td>営業</td><td>290</td><td>170</td></tr>
+      <tr><td>2026-03</td><td>情報システム</td><td>150</td><td>90</td></tr>
+      <tr><td>2026-03</td><td>総務</td><td>110</td><td>78</td></tr>
+      <tr><td>2026-03</td><td>営業</td><td>340</td><td>195</td></tr>
+    </table>
+
+    <div class="warning-box">
+      <strong>注意：</strong>A列（年月）は <code>YYYY-MM</code> 形式で入力してください。日付として認識されないと、後で時系列グラフが正しく表示されません。
+    </div>
+
+    <h2>スプレッドシートのURLをコピー</h2>
+    <div class="action-item">
+      <ol>
+        <li>ブラウザのアドレスバーからスプレッドシートの URL をコピーしておく</li>
+      </ol>
+    </div>
+    <p>次のステップで Looker Studio からこのシートに接続します。</p>
+  </google-codelab-step>
+
+  <!-- ========== Step 4: データソースに接続する ========== -->
+  <google-codelab-step label="データソースに接続する" duration="8">
+    <p>Looker Studio を開いて、作成したスプレッドシートを接続します。</p>
+
+    <h2>Looker Studio を開く</h2>
+    <div class="action-item">
+      <ol>
+        <li><a href="https://lookerstudio.google.com" target="_blank">lookerstudio.google.com</a> を開く</li>
+        <li>Googleアカウントでログイン</li>
+        <li>「空のレポート」をクリック</li>
+      </ol>
+    </div>
+
+    <h2>データソースを追加する</h2>
+    <div class="action-item">
+      <ol>
+        <li>「データのソース」パネルが開くので「Googleスプレッドシート」を選択</li>
+        <li>先ほど作成した「月次売上データ」シートを選択</li>
+        <li>「追加」をクリック</li>
+        <li>「レポートに追加」をクリック</li>
+      </ol>
+    </div>
+
+    <h2>フィールドを確認する</h2>
+    <p>Looker Studio がスプレッドシートのヘッダーを自動認識し、「フィールド」として取り込みます。</p>
+
+    <table class="info-table">
+      <tr>
+        <th>フィールド名</th>
+        <th>種別</th>
+        <th>説明</th>
+      </tr>
+      <tr>
+        <td>年月</td>
+        <td>ディメンション</td>
+        <td>データを分類・グループ化する軸（日付・文字列など）</td>
+      </tr>
+      <tr>
+        <td>部門</td>
+        <td>ディメンション</td>
+        <td>データを分類・グループ化する軸</td>
+      </tr>
+      <tr>
+        <td>売上（万円）</td>
+        <td>指標</td>
+        <td>集計・計算される数値</td>
+      </tr>
+      <tr>
+        <td>費用（万円）</td>
+        <td>指標</td>
+        <td>集計・計算される数値</td>
+      </tr>
+    </table>
+
+    <div class="tip-box">
+      <strong>ディメンション vs 指標：</strong>グラフのX軸や色分けに使うのがディメンション（年月・部門・カテゴリなど）、高さや大きさに使うのが指標（数値）です。
+    </div>
+  </google-codelab-step>
+
+  <!-- ========== Step 5: グラフを追加する ========== -->
+  <google-codelab-step label="グラフを追加する" duration="10">
+    <p>3種類のグラフを追加して、基本的な操作を体験します。</p>
+
+    <h2>① 棒グラフ：月別売上</h2>
+    <div class="action-item">
+      <ol>
+        <li>上部メニュー「グラフを追加」→「棒グラフ」をクリック</li>
+        <li>キャンバス上でドラッグしてサイズを決める</li>
+        <li>右の「グラフ設定」パネルで：
+          <ul>
+            <li><strong>ディメンション</strong>: 「年月」</li>
+            <li><strong>指標</strong>: 「売上（万円）」</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+    <p>月ごとの売上が棒グラフで表示されます。</p>
+
+    <h2>② 円グラフ：部門別売上構成</h2>
+    <div class="action-item">
+      <ol>
+        <li>「グラフを追加」→「円グラフ」をクリック</li>
+        <li>キャンバスの空きスペースに配置</li>
+        <li>設定パネルで：
+          <ul>
+            <li><strong>ディメンション</strong>: 「部門」</li>
+            <li><strong>指標</strong>: 「売上（万円）」</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+    <p>部門ごとの売上割合が円グラフで表示されます。</p>
+
+    <h2>③ 表：詳細データ</h2>
+    <div class="action-item">
+      <ol>
+        <li>「グラフを追加」→「表」をクリック</li>
+        <li>キャンバスに配置</li>
+        <li>設定パネルで：
+          <ul>
+            <li><strong>ディメンション</strong>: 「年月」「部門」</li>
+            <li><strong>指標</strong>: 「売上（万円）」「費用（万円）」</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+
+    <h2>グラフの見た目を整える</h2>
+    <p>右パネルの「スタイル」タブで色・フォント・境界線などを変更できます。会社のブランドカラーに合わせましょう。</p>
+
+    <div class="tip-box">
+      <strong>便利な機能：</strong>グラフをクリックすると他のグラフが連動してフィルタリングされます（クロスフィルタリング）。「グラフを設定」→「インタラクション」→「フィルタとして適用」を有効にすることで使えます。
+    </div>
+  </google-codelab-step>
+
+  <!-- ========== Step 6: フィルターと日付範囲を設定する ========== -->
+  <google-codelab-step label="フィルターと日付範囲を設定する" duration="5">
+    <p>閲覧者がダッシュボード上でデータを絞り込めるコントロールを追加します。</p>
+
+    <h2>日付範囲コントロールの追加</h2>
+    <div class="action-item">
+      <ol>
+        <li>「コントロールを追加」→「日付範囲コントロール」をクリック</li>
+        <li>ダッシュボードの上部に配置</li>
+        <li>右パネルの「コントロールのフィールド」で「年月」を選択</li>
+      </ol>
+    </div>
+    <p>閲覧時に期間を絞り込めるようになります。</p>
+
+    <h2>ドロップダウンフィルターの追加</h2>
+    <div class="action-item">
+      <ol>
+        <li>「コントロールを追加」→「ドロップダウン」をクリック</li>
+        <li>日付範囲コントロールの隣に配置</li>
+        <li>設定パネルで「コントロールのフィールド」→「部門」を選択</li>
+      </ol>
+    </div>
+    <p>閲覧者が部門を選んでデータを絞り込めます。</p>
+
+    <h2>フィルターの動作確認</h2>
+    <div class="action-item">
+      <ol>
+        <li>右上の「表示」ボタンをクリックして閲覧モードへ切り替え</li>
+        <li>日付範囲を変更してグラフが更新されることを確認</li>
+        <li>部門ドロップダウンで「営業」を選択してグラフが絞り込まれることを確認</li>
+        <li>「編集」ボタンで編集モードに戻る</li>
+      </ol>
+    </div>
+
+    <div class="tip-box">
+      <strong>複数グラフへの一括適用：</strong>コントロールはページ内の全グラフに適用されます。特定のグラフだけに適用したい場合は、グラフ設定の「フィルター」から個別に設定できます。
+    </div>
+  </google-codelab-step>
+
+  <!-- ========== Step 7: ダッシュボードを共有する ========== -->
+  <google-codelab-step label="ダッシュボードを共有する" duration="4">
+    <p>完成したダッシュボードを関係者と共有します。</p>
+
+    <h2>共有方法1：URLで共有</h2>
+    <div class="action-item">
+      <ol>
+        <li>右上の「共有」ボタンをクリック</li>
+        <li>「他のユーザーと共有」を選択</li>
+        <li>メールアドレスを入力、または「リンクを知っているユーザー全員」に変更</li>
+        <li>権限を「閲覧者」に設定して「送信」</li>
+      </ol>
+    </div>
+
+    <h2>共有方法2：PDF ダウンロード</h2>
+    <div class="action-item">
+      <ol>
+        <li>「ファイル」→「PDFとしてダウンロード」をクリック</li>
+        <li>ページサイズ・向きを選択して「ダウンロード」</li>
+      </ol>
+    </div>
+    <p>定例報告メールへの添付に使えます。</p>
+
+    <h2>共有方法3：スケジュール送信</h2>
+    <div class="action-item">
+      <ol>
+        <li>「ファイル」→「メールのスケジュール設定」をクリック</li>
+        <li>宛先・送信頻度（毎日/毎週/毎月）を設定</li>
+        <li>「保存」</li>
+      </ol>
+    </div>
+    <p>毎週月曜朝に自動でPDFが送られるように設定できます。定例報告の自動化に活用しましょう。</p>
+
+    <div class="tip-box">
+      <strong>データの自動更新：</strong>スプレッドシートのデータを更新すると、Looker Studio のダッシュボードも自動で反映されます。データ入力担当者がシートを更新するだけで、全員のダッシュボードが最新状態になります。
+    </div>
+  </google-codelab-step>
+
+  <!-- ========== Step 8: まとめと次のステップ ========== -->
+  <google-codelab-step label="まとめと次のステップ" duration="2">
+    <h2>このコースで学んだこと</h2>
+    <ul>
+      <li>Looker Studio の基本概念（ディメンション・指標・データソース）</li>
+      <li>Googleスプレッドシートをデータソースに接続する方法</li>
+      <li>棒グラフ・円グラフ・表を追加・設定する方法</li>
+      <li>日付範囲コントロール・ドロップダウンフィルターの追加</li>
+      <li>URLでの共有・PDFダウンロード・スケジュール送信</li>
+    </ul>
+
+    <h2>応用アイデア</h2>
+    <ul>
+      <li>タスク管理スプレッドシートをデータソースにして進捗ダッシュボードを作る</li>
+      <li>月次コスト集計をLooker Studioで可視化して経営報告を自動化する</li>
+      <li>Google Analyticsと接続してWebアクセス状況を可視化する</li>
+    </ul>
+
+    <h2>次のステップ</h2>
+    <ul>
+      <li><a href="/codelabs/appsheet-intro/">CL-009 AppSheet 入門</a> — ノーコードでスマホアプリを作成する</li>
+      <li><a href="/codelabs/gas-basics/">CL-002 GAS 基礎</a> — スプレッドシートの自動化と組み合わせる</li>
+    </ul>
+  </google-codelab-step>
+
+</google-codelab>
+
+<button id="read-aloud-btn" onclick="toggleReadAloud()">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+  読み上げ
+</button>
+
+<script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+<script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+<script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+<script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+<script>
+  let synth = window.speechSynthesis;
+  let isSpeaking = false;
+
+  function getStepText() {
+    const steps = document.querySelectorAll('google-codelab-step');
+    for (const step of steps) {
+      if (step.hasAttribute('selected') || step.getAttribute('aria-selected') === 'true') {
+        return step.innerText || step.textContent;
+      }
+    }
+    const selected = document.querySelector('.iron-selected, [selected]');
+    if (selected) return selected.innerText || selected.textContent;
+    return document.body.innerText;
+  }
+
+  function toggleReadAloud() {
+    const btn = document.getElementById('read-aloud-btn');
+    if (isSpeaking) {
+      synth.cancel();
+      isSpeaking = false;
+      btn.classList.remove('speaking');
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg> 読み上げ';
+    } else {
+      const text = getStepText();
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'ja-JP';
+      utter.rate = 1.0;
+      utter.onend = () => {
+        isSpeaking = false;
+        btn.classList.remove('speaking');
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg> 読み上げ';
+      };
+      synth.speak(utter);
+      isSpeaking = true;
+      btn.classList.add('speaking');
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h12v12H6z"/></svg> 停止';
+    }
+  }
+
+  window.addEventListener('hashchange', () => {
+    if (isSpeaking) {
+      synth.cancel();
+      isSpeaking = false;
+      const btn = document.getElementById('read-aloud-btn');
+      btn.classList.remove('speaking');
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg> 読み上げ';
+    }
+  });
+</script>
+</body>
+</html>
