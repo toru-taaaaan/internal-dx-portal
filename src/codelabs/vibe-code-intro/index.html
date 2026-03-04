@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vibe-code 入門</title>
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success { color: #1e8e3e; }
+    body { background: #fff; }
+    #speech-btn {
+      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+      background: #4F7DC9; color: white; border: none;
+      border-radius: 50px; padding: 12px 20px; font-size: 14px;
+      cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      transition: background 0.2s;
+    }
+    #speech-btn.speaking { background: #d32f2f; }
+    #speech-btn:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+
+<google-codelab id="vibe-code-intro"
+                title="Vibe-code 入門"
+                environment="web"
+                feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/">
+
+  <google-codelab-step label="はじめに" duration="3">
+    <h2>Vibe-coding とは</h2>
+    <p>「Vibe-coding（バイブコーディング）」とは、AIに日本語で指示するだけでコードを書かせる開発スタイルです。</p>
+
+    <p>自分でコードを一行一行書く代わりに、「こういうものを作りたい」と伝えると、AIが動くコードを生成してくれます。エラーが出ても「これを修正して」と言えばAIが直してくれます。</p>
+
+    <h2>このコースで体験すること</h2>
+    <ul>
+      <li>AIへの「指示の出し方」を学ぶ（プロンプトエンジニアリング）</li>
+      <li>Gemini CLI をインストールして対話的にコードを生成する</li>
+      <li>エラーをAIに自律修正させる</li>
+      <li>GASのコードを日本語指示だけで完成させる</li>
+    </ul>
+
+    <h2>前提条件</h2>
+    <ul>
+      <li>Googleアカウントを持っていること</li>
+      <li>Windowsのコマンドプロンプト（またはMacのターミナル）を開けること</li>
+      <li>「GAS 4行入門」「GAS 基礎」を完了していること（推奨）</li>
+    </ul>
+
+    <h2>所要時間</h2>
+    <p>約 <strong>50 分</strong></p>
+
+    <aside class="special">
+      <p><strong>コードが書けなくてもOK</strong><br>
+      このコースのゴールは「AIにどう伝えるか」を学ぶことです。プログラミング経験がなくても完走できます。</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="Vibe-coding の考え方" duration="7">
+    <h2>従来の開発 vs Vibe-coding</h2>
+
+    <table>
+      <tr>
+        <th></th>
+        <th>従来の開発</th>
+        <th>Vibe-coding</th>
+      </tr>
+      <tr>
+        <td><strong>作業者</strong></td>
+        <td>人間がコードを書く</td>
+        <td>AIがコードを書く</td>
+      </tr>
+      <tr>
+        <td><strong>必要スキル</strong></td>
+        <td>プログラミング言語の文法知識</td>
+        <td>何をしたいか言語化する力</td>
+      </tr>
+      <tr>
+        <td><strong>エラー対応</strong></td>
+        <td>自分で原因を調べて修正</td>
+        <td>AIにエラーを渡して修正させる</td>
+      </tr>
+      <tr>
+        <td><strong>完成速度</strong></td>
+        <td>数時間〜数日</td>
+        <td>数分〜数十分</td>
+      </tr>
+    </table>
+
+    <h2>Vibe-coding でうまくいく「指示の書き方」</h2>
+
+    <h3>悪い例 ❌</h3>
+    <pre><code>「コードを書いて」</code></pre>
+    <p>→ 何を作りたいかわからない。汎用的な内容しか返ってこない。</p>
+
+    <h3>良い例 ✅</h3>
+    <pre><code>「Google Apps Scriptで、スプレッドシートのA列にある住所の一覧を読み込み、
+各住所をGoogleマップのURLに変換して、B列に書き出すコードを書いてください。
+シート名は「住所リスト」です。」</code></pre>
+    <p>→ 具体的な入出力・使うサービス・シート名まで伝えている。すぐ動くコードが返ってくる。</p>
+
+    <h2>良い指示の5要素</h2>
+    <ol>
+      <li><strong>使うサービス</strong>：Google Apps Script / Python / Excelマクロ など</li>
+      <li><strong>何をするか</strong>：読み込む・変換する・送信する・生成する など</li>
+      <li><strong>入力データ</strong>：どこに・何が入っているか</li>
+      <li><strong>出力結果</strong>：どこに・どんな形式で書き出すか</li>
+      <li><strong>条件・制約</strong>：エラー処理・文字数・ファイル名 など</li>
+    </ol>
+
+    <aside class="special">
+      <p><strong>「AIはテレパシーが使えない」</strong><br>
+      頭の中にある「こういう感じ」をAIは読めません。言語化した量がそのまま完成度に直結します。最初は雑でも、対話を重ねながら精度を上げていきます。</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="Gemini CLI をインストールする" duration="8">
+    <h2>Gemini CLI とは</h2>
+    <p>Gemini CLIはGoogleが提供するコマンドラインAIツールです。ターミナルで日本語を打つだけでコード生成・ファイル操作・エラー修正ができます。</p>
+
+    <p>無料枠あり（Googleアカウントのみ。ただし無料枠ではデータが学習に使われる可能性があります）。</p>
+
+    <h2>インストール手順</h2>
+
+    <h3>事前準備：Node.js のインストール確認</h3>
+    <p>Gemini CLIの動作にはNode.jsが必要です。まずインストール済みか確認します。</p>
+
+    <p><strong>Windows の場合:</strong></p>
+    <ol>
+      <li>スタートメニューで「cmd」と検索してコマンドプロンプトを開く</li>
+      <li>以下を入力してEnter：</li>
+    </ol>
+    <pre><code>node --version</code></pre>
+    <p>バージョン番号（例: <code>v20.11.0</code>）が表示されればOK。</p>
+    <p>「コマンドが見つかりません」と出た場合は <a href="https://nodejs.org/ja/" target="_blank">nodejs.org</a> からLTS版をインストールしてください。</p>
+
+    <p><strong>Mac の場合:</strong></p>
+    <ol>
+      <li>Spotlight（Cmd+Space）で「ターミナル」を開く</li>
+      <li><code>node --version</code> を実行して確認</li>
+    </ol>
+
+    <h3>Gemini CLI のインストール</h3>
+    <pre><code>npm install -g @google/gemini-cli</code></pre>
+
+    <p>インストール完了後、バージョン確認：</p>
+    <pre><code>gemini --version</code></pre>
+
+    <h3>ログイン</h3>
+    <pre><code>gemini</code></pre>
+    <p>初回起動時にブラウザが開き、Googleアカウントでの認証を求められます。認証を完了するとターミナルに戻り、対話モードが始まります。</p>
+
+    <aside class="warning">
+      <p><strong>社内PCでの注意</strong><br>
+      社内PCにnpmのインストール権限がない場合は、IT部門に相談するか、個人PCで試してください。Google AI Studioの <a href="https://aistudio.google.com/" target="_blank">ウェブ版</a> でも同様の体験ができます。</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="最初の指示でコードを生成させる" duration="10">
+    <h2>Gemini CLI で GAS コードを生成する</h2>
+    <p>Gemini を起動してターミナルで日本語の指示を打ち込みましょう。</p>
+
+    <h3>実習 1：シンプルな指示</h3>
+    <p>ターミナルで <code>gemini</code> を起動後、以下を入力してください：</p>
+
+    <pre><code>Google Apps Scriptで、アクティブなスプレッドシートのA列に入力された
+メールアドレスの一覧を読み取り、各アドレスに「テスト送信です」という
+件名でメールを送信するコードを書いてください。
+ヘッダー行（1行目）はスキップしてください。</code></pre>
+
+    <p>生成されたコードをコピーして、Apps Scriptエディタに貼り付けて動かしてみましょう。</p>
+
+    <h3>実習 2：反復改善（イテレーション）</h3>
+    <p>コードを見て「ここを変えたい」と思ったら、追加で指示します：</p>
+
+    <pre><code>さらに修正してください：
+- 送信前に「X件のメールを送信します。続けますか？」と確認ダイアログを出す
+- 送信済みのアドレスはB列に「送信済み」と記録する
+- エラーが出たアドレスはB列に「エラー」と記録する</code></pre>
+
+    <aside class="special">
+      <p><strong>会話として積み重ねる</strong><br>
+      Gemini CLIは前の会話を覚えています。「さらに〇〇してください」と続けることで、コードを段階的に育てられます。一度に完璧なコードを求めず、少しずつ精度を上げる方が実用的です。</p>
+    </aside>
+
+    <h3>実習 3：業務に近い指示を書く</h3>
+    <p>以下のようなケースで自由に試してみましょう：</p>
+
+    <pre><code>Google Apps Scriptで、毎朝9時に自動実行される関数を作ってください。
+処理内容：
+- 「タスク管理」という名前のスプレッドシートを開く
+- B列「期限」が今日以前で、C列「状態」が「未完了」の行を検索する
+- 該当する行のA列「タスク名」を一覧にして、
+  自分のGmailアドレスに「期限切れタスク：〇件」という件名でメールを送る</code></pre>
+
+    <p>このように「業務の流れをそのまま言語化する」だけでコードができます。</p>
+  </google-codelab-step>
+
+  <google-codelab-step label="エラーをAIに修正させる" duration="10">
+    <h2>エラーは「AIへの追加情報」</h2>
+    <p>生成されたコードをそのまま動かすと、エラーが出ることがあります。これはよくあることです。エラーメッセージをそのままAIに渡すだけで、自律的に修正してくれます。</p>
+
+    <h2>エラー修正の手順</h2>
+
+    <h3>ステップ 1：エラーメッセージをコピーする</h3>
+    <p>Apps Scriptエディタでエラーが出た場合：</p>
+    <ol>
+      <li>「実行」ログに表示されるエラーメッセージ全体をコピー</li>
+      <li>例：<code>TypeError: Cannot read properties of undefined (reading 'getRange')</code></li>
+    </ol>
+
+    <h3>ステップ 2：AIに渡す</h3>
+    <p>Gemini CLIに以下の形式で投げます：</p>
+
+    <pre><code>以下のエラーが出ました。修正してください：
+
+エラー: TypeError: Cannot read properties of undefined (reading 'getRange')
+行番号: 5
+
+現在のコード:
+function sendEmails() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet();
+  var range = sheet.getRange("A2:A100");
+  ...
+}</code></pre>
+
+    <h3>ステップ 3：修正版を受け取って差し替える</h3>
+    <p>AIが修正版コードを返してくれます。元のコードと差し替えて再実行します。</p>
+
+    <aside class="special">
+      <p><strong>エラーとうまく付き合う</strong><br>
+      エラーが出ることは「失敗」ではありません。AIとの対話を通じてコードが完成に近づくプロセスです。1回で動かなくても、2〜3回のやり取りで大抵のエラーは解消されます。</p>
+    </aside>
+
+    <h2>よくあるGASのエラーと対処法</h2>
+
+    <table>
+      <tr>
+        <th>エラー</th>
+        <th>よくある原因</th>
+        <th>AIへの指示例</th>
+      </tr>
+      <tr>
+        <td><code>Authorization required</code></td>
+        <td>権限の承認が必要</td>
+        <td>「初回実行時の権限承認の手順を教えて」</td>
+      </tr>
+      <tr>
+        <td><code>Exception: Service invoked too many times</code></td>
+        <td>API呼び出しが制限を超えた</td>
+        <td>「レート制限を回避するよう修正して」</td>
+      </tr>
+      <tr>
+        <td><code>ReferenceError: xxx is not defined</code></td>
+        <td>変数名のタイポ</td>
+        <td>エラーメッセージをそのまま渡す</td>
+      </tr>
+      <tr>
+        <td><code>TypeError: Cannot read properties of undefined</code></td>
+        <td>存在しないセル・シートへのアクセス</td>
+        <td>エラーメッセージとコードをそのまま渡す</td>
+      </tr>
+    </table>
+  </google-codelab-step>
+
+  <google-codelab-step label="Gmail Add-on を作る（実践）" duration="10">
+    <h2>AIと対話してGmail Add-onを完成させる</h2>
+    <p>Gmail Add-onとは、Gmailの画面にサイドパネルとして表示できる小さなアプリです。メールを開いたときに自動で情報を表示したり、ボタンを押すと処理が走ったりします。</p>
+
+    <h2>実習：メール要約アドオンを作る</h2>
+    <p>「メールを開いたときにGeminiが自動で要約を表示するアドオン」を作ります。</p>
+
+    <h3>ステップ 1：Gemini CLIに指示する</h3>
+    <pre><code>Google Apps ScriptでGmail Add-onを作ってください。
+要件：
+- Gmailでメールを開くとサイドパネルに要約が表示される
+- 要約はGemini API（モデル: gemini-1.5-flash）で生成する
+- APIキーはスクリプトプロパティ「GOOGLE_API_KEY」から取得する
+- 要約は200文字以内の日本語で生成する
+- サイドパネルには「要約」と「元のメール件名」を表示する</code></pre>
+
+    <h3>ステップ 2：生成されたコードを確認する</h3>
+    <p>AIが生成するコードには通常以下の要素が含まれます：</p>
+
+    <ul>
+      <li><code>appsscript.json</code>（マニフェスト）：アドオンのスコープ・ホームページの設定</li>
+      <li><code>Code.gs</code>：メール取得・Gemini API呼び出し・カード表示のロジック</li>
+    </ul>
+
+    <p>典型的なコード例（AIが生成するものの参考）：</p>
+
+    <pre><code class="language-javascript">function buildAddOn(event) {
+  var accessToken = event.messageMetadata.accessToken;
+  var messageId = event.messageMetadata.messageId;
+
+  GmailApp.setCurrentMessageAccessToken(accessToken);
+  var message = GmailApp.getMessageById(messageId);
+  var subject = message.getSubject();
+  var body = message.getPlainBody().substring(0, 2000);
+
+  var summary = callGemini(
+    "以下のメールを200文字以内で日本語で要約してください：\n\n" + body
+  );
+
+  var card = CardService.newCardBuilder()
+    .setHeader(CardService.newCardHeader().setTitle("AI 要約"))
+    .addSection(
+      CardService.newCardSection()
+        .addWidget(CardService.newTextParagraph().setText("件名: " + subject))
+        .addWidget(CardService.newTextParagraph().setText(summary))
+    )
+    .build();
+
+  return [card];
+}</code></pre>
+
+    <h3>ステップ 3：テストデプロイ</h3>
+    <ol>
+      <li>Apps Scriptエディタで「デプロイ」→「テストデプロイ」をクリック</li>
+      <li>「インストール」を選択</li>
+      <li>Gmailを開き、任意のメールをクリック</li>
+      <li>右側のサイドパネルにアドオンのアイコンが表示されることを確認</li>
+    </ol>
+
+    <aside class="warning">
+      <p><strong>Gmailの内容について</strong><br>
+      このアドオンはメール本文をGemini APIに送信します。社内の機密メールには使用しないでください。テスト用の個人メールで動作確認してください。</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="まとめと次のステップ" duration="2">
+    <h2 class="checklist">学習内容の振り返り</h2>
+    <ul class="checklist">
+      <li>Vibe-codingの概念と従来開発との違いを理解した</li>
+      <li>良い指示（プロンプト）の5要素を学んだ</li>
+      <li>Gemini CLIをインストールして起動できた</li>
+      <li>日本語の指示からGASコードを生成できた</li>
+      <li>エラーメッセージをAIに渡して修正させる方法を学んだ</li>
+      <li>Gmail Add-onの骨組みをAIと対話しながら作れた</li>
+    </ul>
+
+    <h2>Vibe-coding を業務で使うときのコツ</h2>
+    <table>
+      <tr>
+        <th>コツ</th>
+        <th>詳細</th>
+      </tr>
+      <tr>
+        <td><strong>小さく始める</strong></td>
+        <td>最初は「1つの機能」だけ頼む。動いてから機能を追加していく</td>
+      </tr>
+      <tr>
+        <td><strong>動くか確認してから次へ</strong></td>
+        <td>1ステップごとに実行して確認。一気に複雑なものを作ろうとしない</td>
+      </tr>
+      <tr>
+        <td><strong>コードを理解しようとする</strong></td>
+        <td>「このコードの各行が何をしているか説明して」とAIに聞く。理解があると修正指示が的確になる</td>
+      </tr>
+      <tr>
+        <td><strong>機密情報は入れない</strong></td>
+        <td>個人名・メールアドレス・社内データはプロンプトに入れない</td>
+      </tr>
+    </table>
+
+    <h2>次のコース</h2>
+    <p>次は Gemini CLI をさらに深く学びます。</p>
+    <p><a href="/codelabs/gemini-cli-intro/">CL-005: Gemini CLI 入門</a>へ進む</p>
+
+    <p style="margin-top: 32px;"><a href="/">← DXポータルに戻る</a></p>
+  </google-codelab-step>
+
+</google-codelab>
+
+<button id="speech-btn" onclick="toggleSpeech()">▶ 読み上げ</button>
+
+<script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+<script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+<script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+<script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+<script>
+  var speaking = false;
+
+  function setSpeaking(val) {
+    speaking = val;
+    var btn = document.getElementById('speech-btn');
+    btn.textContent = val ? '⏹ 停止' : '▶ 読み上げ';
+    btn.className = val ? 'speaking' : '';
+  }
+
+  function getCurrentStepText() {
+    var hash = location.hash.replace('#', '');
+    var idx = parseInt(hash) || 0;
+    var steps = document.querySelectorAll('google-codelab-step');
+    if (steps[idx]) {
+      return steps[idx].innerText;
+    }
+    return document.body.innerText;
+  }
+
+  function toggleSpeech() {
+    if (speaking) {
+      window.speechSynthesis.cancel();
+      setSpeaking(false);
+      return;
+    }
+    var text = getCurrentStepText();
+    var utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'ja-JP';
+    utter.rate = 0.95;
+    utter.onend = function() { setSpeaking(false); };
+    window.speechSynthesis.speak(utter);
+    setSpeaking(true);
+  }
+
+  window.addEventListener('hashchange', function() {
+    if (speaking) {
+      window.speechSynthesis.cancel();
+      setSpeaking(false);
+    }
+  });
+</script>
+</body>
+</html>

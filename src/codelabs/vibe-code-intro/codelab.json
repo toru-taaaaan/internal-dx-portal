@@ -1,0 +1,14 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "updated": "2026-03-04T00:00:00+09:00",
+  "id": "vibe-code-intro",
+  "duration": 50,
+  "title": "Vibe-code 入門",
+  "summary": "AIに日本語で指示してコードを生成させるVibe-codingの体験ハンズオン。Gemini CLIのインストールからGmail Add-on作成まで。",
+  "category": ["dx", "ai活用", "gemini"],
+  "tags": ["web"],
+  "feedback": "https://internal-dx-portal-auth.tanjiadm.workers.dev/",
+  "url": "vibe-code-intro"
+}
