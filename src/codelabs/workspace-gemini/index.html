@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workspace × Gemini 自動化</title>
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success { color: #1e8e3e; }
+    body { background: #fff; }
+    #speech-btn {
+      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+      background: #4F7DC9; color: white; border: none;
+      border-radius: 50px; padding: 12px 20px; font-size: 14px;
+      cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      transition: background 0.2s;
+    }
+    #speech-btn.speaking { background: #d32f2f; }
+    #speech-btn:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+
+<google-codelab id="workspace-gemini"
+                title="Workspace × Gemini 自動化"
+                environment="web"
+                feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/">
+
+  <google-codelab-step label="はじめに" duration="3">
+    <h2>このコースで学ぶこと</h2>
+    <p>Google Apps ScriptからGemini APIを呼び出し、Gmail・カレンダー・スライドを自動化する方法を学びます。</p>
+
+    <p>「AIに日本語で指示するだけで、メール下書き・会議設定・プレゼン作成が自動で完了する」体験ができます。</p>
+
+    <h2>作るもの</h2>
+    <ul>
+      <li><strong>会議設定の自動化</strong>：ドキュメントを要約してカレンダーに登録</li>
+      <li><strong>メール下書きの自動生成</strong>：スプレッドシートのデータからGmail下書きを作成</li>
+      <li><strong>プレゼン骨組みの自動作成</strong>：テーマを渡すとGoogleスライドが完成</li>
+    </ul>
+
+    <h2>前提条件</h2>
+    <ul>
+      <li>Googleアカウントを持っていること</li>
+      <li>「GAS 基礎」（CL-002）を完了していること（推奨）</li>
+      <li>基本的なJavaScriptを読めること</li>
+    </ul>
+
+    <h2>所要時間</h2>
+    <p>約 <strong>60 分</strong></p>
+
+    <aside class="warning">
+      <p><strong>Gemini API の利用について</strong><br>
+      個人のGoogleアカウントで使う場合、無料枠内でもプロンプトデータがGoogleの学習に使われる可能性があります。社内の機密情報は入力しないでください。業務利用にはGoogle Workspace + Vertex AI構成が推奨されます。</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="Gemini API の設定" duration="7">
+    <h2>APIキーを取得する</h2>
+    <p>Google AI StudioでAPIキーを発行します。</p>
+
+    <ol>
+      <li><a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a> にアクセス</li>
+      <li>「APIキーを作成」をクリック</li>
+      <li>「新しいプロジェクトでAPIキーを作成」を選択</li>
+      <li>表示されたAPIキーをコピーして保存しておく</li>
+    </ol>
+
+    <aside class="special">
+      <p><strong>APIキーは秘密情報です</strong><br>
+      コードに直接書き込まず、Apps Scriptのプロパティに保存します（次のステップで設定します）。</p>
+    </aside>
+
+    <h2>Apps Script プロジェクトを作成する</h2>
+    <ol>
+      <li><a href="https://script.google.com" target="_blank">script.google.com</a> にアクセス</li>
+      <li>「新しいプロジェクト」をクリック</li>
+      <li>プロジェクト名を「Gemini Workspace 自動化」に変更</li>
+      <li>左側ファイル一覧で「コード.gs」を右クリック →「名前を変更」→ <code>utils</code> に変更</li>
+    </ol>
+
+    <h2>APIキーをスクリプトプロパティに保存する</h2>
+    <ol>
+      <li>左側の「プロジェクトの設定」（歯車アイコン）をクリック</li>
+      <li>「スクリプトのプロパティ」セクションで「プロパティを追加」をクリック</li>
+      <li>プロパティ名: <code>GOOGLE_API_KEY</code>、値: 先ほどコピーしたAPIキーを入力</li>
+      <li>「保存」をクリック</li>
+    </ol>
+
+    <aside class="special">
+      <p><strong>なぜプロパティに保存するか</strong><br>
+      スクリプトプロパティはコードと分離して管理されます。GitHubに公開してもAPIキーが漏れません。また、チームで共有するときに各自が自分のキーを設定できます。</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="Apps Script から Gemini API を呼び出す" duration="12">
+    <h2>基本的な呼び出し関数を作る</h2>
+    <p><code>utils.gs</code> に以下のコードを入力してください：</p>
+
+    <pre><code class="language-javascript">// Gemini API の基本呼び出し関数
+function callGemini(prompt, temperature = 0) {
+  var apiKey = PropertiesService.getScriptProperties().getProperty("GOOGLE_API_KEY");
+  var url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
+
+  var payload = {
+    "contents": [
+      {
+        "parts": [
+          { "text": prompt }
+        ]
+      }
+    ],
+    "generationConfig": {
+      "temperature": temperature
+    }
+  };
+
+  var options = {
+    "method": "POST",
+    "contentType": "application/json",
+    "payload": JSON.stringify(payload)
+  };
+
+  var response = UrlFetchApp.fetch(url, options);
+  var data = JSON.parse(response.getContentText());
+  return data.candidates[0].content.parts[0].text;
+}</code></pre>
+
+    <h2>動作確認</h2>
+    <p>テスト用の関数を <code>utils.gs</code> の末尾に追加します：</p>
+
+    <pre><code class="language-javascript">// テスト用
+function testGemini() {
+  var result = callGemini("Google Apps Script について3行で説明してください。");
+  Logger.log(result);
+}</code></pre>
+
+    <ol>
+      <li>保存（Ctrl+S）</li>
+      <li><code>testGemini</code> を選択して実行（▶）</li>
+      <li>「表示」→「ログ」でGeminiの回答を確認</li>
+    </ol>
+
+    <aside class="special">
+      <p><strong>temperature とは</strong><br>
+      0に近いほど決定論的（毎回同じ回答）、1に近いほど創造的（回答にバラつきが出る）。
+      事実の要約や構造化には0、アイデア出しや文章生成には0.5〜1を使います。</p>
+    </aside>
+
+    <h2>JSON形式で回答させる</h2>
+    <p>プログラムで結果を扱うには、JSON形式で返させると便利です：</p>
+
+    <pre><code class="language-javascript">function testGeminiJson() {
+  var prompt = `以下の情報から会議の件名と要約を作成してください。
+必ず次のJSON形式で返してください:
+{"subject": "件名", "summary": "要約（100文字以内）"}
+
+情報: 来週の月曜日、営業部と開発部が集まって新製品のロードマップを議論する。
+参加者は10名程度。オンライン開催。`;
+
+  var result = callGemini(prompt, 0);
+
+  // JSON部分を抽出してパース
+  var jsonMatch = result.match(/\{[\s\S]*\}/);
+  if (jsonMatch) {
+    var parsed = JSON.parse(jsonMatch[0]);
+    Logger.log("件名: " + parsed.subject);
+    Logger.log("要約: " + parsed.summary);
+  }
+}</code></pre>
+  </google-codelab-step>
+
+  <google-codelab-step label="会議のセットアップを自動化する" duration="12">
+    <h2>ドキュメントを要約してカレンダーに登録する</h2>
+    <p>Googleドライブにあるファイルの内容を読み取り、Geminiで要約し、カレンダーに会議を登録します。</p>
+
+    <h3>ステップ 1：テスト用テキストを用意する</h3>
+    <ol>
+      <li>Googleドライブで新しいドキュメントを作成</li>
+      <li>「来週の新製品企画会議について」という内容を数段落書いておく（日時・議題・参加者など）</li>
+      <li>ファイルのURLからIDをコピーしておく（<code>https://docs.google.com/document/d/<strong>【このID部分】</strong>/edit</code>）</li>
+    </ol>
+
+    <h3>ステップ 2：会議設定関数を書く</h3>
+    <p>新しいファイル <code>meeting.gs</code> を作成し、以下を入力：</p>
+
+    <pre><code class="language-javascript">function setupMeeting(fileId) {
+  // ドキュメントの内容を取得
+  var doc = DocumentApp.openById(fileId);
+  var text = doc.getBody().getText();
+
+  // Geminiで要約と日程を抽出
+  var prompt = `以下のドキュメントから会議情報を抽出してください。
+必ず次のJSON形式で返してください:
+{
+  "title": "会議のタイトル",
+  "summary": "会議の目的・内容（200文字以内）",
+  "date": "YYYY-MM-DD形式の日付（不明な場合は来週月曜日の日付）",
+  "duration": 60
+}
+
+ドキュメント:
+${text}`;
+
+  var result = callGemini(prompt, 0);
+  var jsonMatch = result.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) {
+    Logger.log("JSONの抽出に失敗しました");
+    return;
+  }
+
+  var meeting = JSON.parse(jsonMatch[0]);
+  Logger.log("会議情報: " + JSON.stringify(meeting));
+
+  // カレンダーに登録
+  var calendar = CalendarApp.getDefaultCalendar();
+  var startDate = new Date(meeting.date + "T10:00:00");
+  var endDate = new Date(startDate.getTime() + meeting.duration * 60000);
+
+  var event = calendar.createEvent(
+    meeting.title,
+    startDate,
+    endDate,
+    { description: meeting.summary }
+  );
+
+  Logger.log("カレンダーに登録しました: " + event.getTitle());
+  return event;
+}
+
+// テスト実行用（fileIdは実際のIDに変更してください）
+function testSetupMeeting() {
+  var fileId = "YOUR_DOCUMENT_ID_HERE"; // ← 変更してください
+  setupMeeting(fileId);
+}</code></pre>
+
+    <h3>ステップ 3：実行と確認</h3>
+    <ol>
+      <li><code>fileId</code> を実際のドキュメントIDに変更</li>
+      <li><code>testSetupMeeting</code> を実行</li>
+      <li>Googleカレンダーに会議が登録されているか確認</li>
+    </ol>
+
+    <aside class="special">
+      <p><strong>初回実行時の権限承認</strong><br>
+      CalendarApp と DocumentApp を使うと「承認が必要です」と表示されます。「続行」→自分のアカウントを選択→「許可」で進めてください。</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="メールの下書きを自動生成する" duration="12">
+    <h2>スプレッドシートのデータからメール下書きを作る</h2>
+    <p>顧客リストや報告データが入ったスプレッドシートを元に、Geminiが文面を生成してGmailの下書きを作成します。</p>
+
+    <h3>ステップ 1：サンプルスプレッドシートを用意する</h3>
+    <p>新しいスプレッドシートを作成し、以下のデータを入力してください：</p>
+
+    <table>
+      <tr><th>A列: 宛先氏名</th><th>B列: 会社名</th><th>C列: 件名</th><th>D列: 要点</th></tr>
+      <tr><td>山田 太郎</td><td>株式会社サンプル</td><td>先日のご提案について</td><td>見積もりを送付済み。来週中に返事をもらいたい。</td></tr>
+    </table>
+
+    <h3>ステップ 2：メール生成関数を書く</h3>
+    <p>新しいファイル <code>email.gs</code> を作成し、以下を入力：</p>
+
+    <pre><code class="language-javascript">function draftEmail() {
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var lastRow = sheet.getLastRow();
+
+  // ヘッダー行を除いてデータを読む
+  for (var i = 2; i <= lastRow; i++) {
+    var name    = sheet.getRange(i, 1).getValue();
+    var company = sheet.getRange(i, 2).getValue();
+    var subject = sheet.getRange(i, 3).getValue();
+    var points  = sheet.getRange(i, 4).getValue();
+
+    if (!name) continue;
+
+    // Geminiでメール本文を生成
+    var prompt = `以下の情報をもとに、ビジネスメールの本文を作成してください。
+件名: ${subject}
+宛先: ${company} ${name} 様
+要点: ${points}
+
+条件:
+- 丁寧なビジネス敬語を使う
+- 本文のみを出力する（件名・宛先は不要）
+- 200〜300文字程度`;
+
+    var body = callGemini(prompt, 0.3);
+
+    // Gmail の下書きを作成
+    GmailApp.createDraft(
+      "",  // 宛先メールアドレス（実際は入力してください）
+      subject,
+      body
+    );
+
+    Logger.log(name + " さんへの下書きを作成しました");
+  }
+
+  SpreadsheetApp.getUi().alert("下書きの作成が完了しました。Gmailで確認してください。");
+}</code></pre>
+
+    <h3>ステップ 3：カスタムメニューから実行できるようにする</h3>
+    <p><code>utils.gs</code> の先頭に <code>onOpen()</code> 関数を追加します：</p>
+
+    <pre><code class="language-javascript">function onOpen() {
+  SpreadsheetApp.getUi()
+    .createMenu("Gemini 自動化")
+    .addItem("メール下書きを作成", "draftEmail")
+    .addToUi();
+}</code></pre>
+
+    <ol>
+      <li>スプレッドシートを再読み込み</li>
+      <li>メニューに「Gemini 自動化」が表示されることを確認</li>
+      <li>「メール下書きを作成」をクリック</li>
+      <li>Gmailの「下書き」フォルダに生成されたメールを確認</li>
+    </ol>
+  </google-codelab-step>
+
+  <google-codelab-step label="プレゼンの骨組みを自動作成する" duration="10">
+    <h2>テーマを渡すとスライドが完成する</h2>
+    <p>Geminiにテーマを渡すとスライドの構成を考えてくれます。その結果をGoogleスライドに自動で流し込みます。</p>
+
+    <h3>スライド生成関数を書く</h3>
+    <p>新しいファイル <code>slides.gs</code> を作成し、以下を入力：</p>
+
+    <pre><code class="language-javascript">var NUM_SLIDES = 5; // 生成するスライド数
+
+function createDeck(topic) {
+  // Geminiでスライド構成を生成
+  var prompt = `「${topic}」について、${NUM_SLIDES}枚のプレゼンテーションスライドの構成を作成してください。
+必ず次のJSON形式で返してください:
+{
+  "title": "プレゼンのタイトル",
+  "slides": [
+    {"heading": "スライドタイトル", "bullets": ["箇条書き1", "箇条書き2", "箇条書き3"]},
+    ...
+  ]
+}`;
+
+  var result = callGemini(prompt, 0.5);
+  var jsonMatch = result.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) {
+    Logger.log("JSONの抽出に失敗しました");
+    return;
+  }
+
+  var deckData = JSON.parse(jsonMatch[0]);
+  Logger.log("スライド構成: " + JSON.stringify(deckData));
+
+  // Google スライドを作成
+  var presentation = SlidesApp.create(deckData.title);
+
+  deckData.slides.forEach(function(slideData, index) {
+    var slide;
+    if (index === 0) {
+      // 最初のスライドは既存のものを使う
+      slide = presentation.getSlides()[0];
+    } else {
+      slide = presentation.appendSlide(SlidesApp.PredefinedLayout.TITLE_AND_BODY);
+    }
+
+    // タイトルと本文を設定
+    var shapes = slide.getShapes();
+    shapes[0].getText().setText(slideData.heading);
+    if (shapes[1]) {
+      shapes[1].getText().setText(slideData.bullets.join("\n"));
+    }
+  });
+
+  Logger.log("スライドを作成しました: " + presentation.getUrl());
+  return presentation.getUrl();
+}
+
+// テスト実行用
+function testCreateDeck() {
+  var url = createDeck("社内DX推進の意義と具体的な取り組み");
+  Logger.log("完成URL: " + url);
+}</code></pre>
+
+    <h3>実行してみる</h3>
+    <ol>
+      <li>保存後、<code>testCreateDeck</code> を実行</li>
+      <li>ログに表示されたURLをクリック</li>
+      <li>Googleスライドが自動作成されていることを確認</li>
+      <li>スライドの内容を見て、手動で仕上げる</li>
+    </ol>
+
+    <aside class="special">
+      <p><strong>ポイント</strong><br>
+      GASはスライドの「骨組み」を作るのが得意です。デザインの調整や写真の挿入は手動で行い、「考える作業」だけをAIに任せるのが効率的な使い方です。</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="まとめと次のステップ" duration="4">
+    <h2 class="checklist">学習内容の振り返り</h2>
+    <ul class="checklist">
+      <li>Google AI StudioでAPIキーを取得できた</li>
+      <li>スクリプトプロパティにAPIキーを安全に保存できた</li>
+      <li><code>callGemini()</code> 関数でGemini APIを呼び出せた</li>
+      <li>JSONで回答させてプログラムで処理できた</li>
+      <li>ドキュメントを要約してカレンダーに登録できた</li>
+      <li>スプレッドシートのデータからGmailの下書きを作成できた</li>
+      <li>テーマからGoogleスライドの骨組みを自動生成できた</li>
+    </ul>
+
+    <h2>業務への応用例</h2>
+    <table>
+      <tr>
+        <th>機能</th>
+        <th>業務への応用例</th>
+      </tr>
+      <tr>
+        <td>文書要約 + カレンダー</td>
+        <td>稟議書・議事録から次のアクション・会議を自動登録</td>
+      </tr>
+      <tr>
+        <td>データ + メール生成</td>
+        <td>顧客リストから個別最適化した挨拶メールを一括作成</td>
+      </tr>
+      <tr>
+        <td>テーマ + スライド生成</td>
+        <td>報告会・提案資料の初稿を数秒で作成</td>
+      </tr>
+    </table>
+
+    <h2>注意事項（業務利用）</h2>
+    <ul>
+      <li>個人アカウントのGemini APIは無料枠内でもデータが学習に使われる可能性あり</li>
+      <li>社内の機密情報・個人情報は入力しない</li>
+      <li>本番利用はGoogle Workspace + Vertex AI構成を検討する</li>
+    </ul>
+
+    <h2>次のコース</h2>
+    <p>次は、AIに日本語で指示してコードを書かせる「Vibe-code入門」に進みましょう。</p>
+    <p><a href="/codelabs/vibe-code-intro/">CL-004: Vibe-code入門</a>へ進む</p>
+
+    <p style="margin-top: 32px;"><a href="/">← DXポータルに戻る</a></p>
+  </google-codelab-step>
+
+</google-codelab>
+
+<button id="speech-btn" onclick="toggleSpeech()">▶ 読み上げ</button>
+
+<script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+<script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+<script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+<script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+<script>
+  var speaking = false;
+
+  function setSpeaking(val) {
+    speaking = val;
+    var btn = document.getElementById('speech-btn');
+    btn.textContent = val ? '⏹ 停止' : '▶ 読み上げ';
+    btn.className = val ? 'speaking' : '';
+  }
+
+  function getCurrentStepText() {
+    var hash = location.hash.replace('#', '');
+    var idx = parseInt(hash) || 0;
+    var steps = document.querySelectorAll('google-codelab-step');
+    if (steps[idx]) {
+      return steps[idx].innerText;
+    }
+    return document.body.innerText;
+  }
+
+  function toggleSpeech() {
+    if (speaking) {
+      window.speechSynthesis.cancel();
+      setSpeaking(false);
+      return;
+    }
+    var text = getCurrentStepText();
+    var utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'ja-JP';
+    utter.rate = 0.95;
+    utter.onend = function() { setSpeaking(false); };
+    window.speechSynthesis.speak(utter);
+    setSpeaking(true);
+  }
+
+  window.addEventListener('hashchange', function() {
+    if (speaking) {
+      window.speechSynthesis.cancel();
+      setSpeaking(false);
+    }
+  });
+</script>
+</body>
+</html>

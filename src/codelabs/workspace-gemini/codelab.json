@@ -1,0 +1,14 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "updated": "2026-03-04T00:00:00+09:00",
+  "id": "workspace-gemini",
+  "duration": 60,
+  "title": "Workspace × Gemini 自動化",
+  "summary": "Gemini APIとApps Scriptを組み合わせて、会議設定・メール下書き・スライド骨組みをAIで自動化するハンズオン。",
+  "category": ["dx", "ai活用", "gas", "gemini"],
+  "tags": ["web"],
+  "feedback": "https://internal-dx-portal-auth.tanjiadm.workers.dev/",
+  "url": "workspace-gemini"
+}
