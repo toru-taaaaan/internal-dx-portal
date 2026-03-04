@@ -67,7 +67,7 @@
 
 <div id="header">
   <h1>ネットワーク構成図 — AKIBAホールディングス（2026-03）</h1>
-  <p>出典: 実機スキャン 2026-02-26 ／ AD調査 2026-02-28 ／ VSR管理コンソール 2026-02-27 ／ IIJメール 2025-12-08 ／ ゲートウェイをクリックで機器を展開 ／ ホイールでズーム・ドラッグでパン</p>
+  <p>出典: 実機スキャン 2026-02-26 ／ AD調査 2026-02-28 ／ VSR管理コンソール 2026-02-27 ／ IIJメール 2025-12-08 ／ USEN回線契約一覧 2026-03-03受領 ／ ゲートウェイをクリックで機器を展開 ／ ホイールでズーム・ドラッグでパン</p>
 </div>
 
 <div id="legend">
@@ -282,36 +282,36 @@ const BASE_NODES = [
 
   // ── 東京本社 境界FW / VPNハブ（常時表示）──
   n('fortigate', 'FortiGate\n192.168.1.9\nVPNハブ / 境界FW\n【東京本社 6F】', 'fortigate',
-    { ip:'192.168.1.9', desc:'台帳名: VSR601j (VarioSecure)\n実機: Fortinet MAC 00:0d:48 検出\n台帳との不一致 → 要ログイン確認\n役割: 全拠点VPN接続ハブ / インターネット境界FW\n物理位置: 東京本社 6F サーバー室\n\n【WAN回線（2本）】\n① 広域イーサネット（帯域確保 200Mbps）\n② フレッツ光ネクスト ファミリータイプ（1GbE）\n出典: IIJメール 2025-12-08\nグローバルIP（固定）: 210.138.216.118\n出典: VSR管理コンソール 2026-02-27\nクリックで東京本社の機器を展開 / 収納' },
+    { ip:'192.168.1.9', desc:'台帳名: VSR601j (VarioSecure)\n実機: Fortinet MAC 00:0d:48 検出\n台帳との不一致 → 要ログイン確認\n役割: 全拠点VPN接続ハブ / インターネット境界FW\n物理位置: 東京本社 6F サーバー室\n\n【WAN回線（2本）】\n① 広域イーサネット（帯域確保 200Mbps）\n② フレッツ光ネクスト ファミリータイプ（1GbE）\n出典: IIJメール 2025-12-08\nグローバルIP（固定）: 210.138.216.118\n出典: VSR管理コンソール 2026-02-27\n\n【USEN回線契約】\n契約者: AKIBAホールディングス\nサービス: フレッツGライン + VPN V400\n月額: ¥10,000\n契約開始: 2021/05\n出典: USEN ICT Solutions 回線契約一覧 2026-03-03受領\nクリックで東京本社の機器を展開 / 収納' },
     { level:1, size:34 }),
 
   // ── 各拠点 VPN GW（常時表示）──
   n('os-gw', 'VSR401j\n192.168.20.1\nVPN GW\n【大阪営業所】', 'gw',
-    { ip:'192.168.20.1', desc:'VPNルータ（VarioSecure VSR）\nインターネット通信・拠点間通信\nVPN経路: Hop1=192.168.1.9（traceroute確認）\n\n【回線情報】\nWAN: PPPoE（ppp100）\nVPN: IPsec/IKE（VarioSecure / USEN）\nMasquerade: 設定あり（本社にも同設定あり・実動作要確認）\n出典: VSR管理コンソール 2026-02-27\nクリックで機器を展開 / 収納' },
+    { ip:'192.168.20.1', desc:'VPNルータ（VarioSecure VSR）\nインターネット通信・拠点間通信\nVPN経路: Hop1=192.168.1.9（traceroute確認）\n\n【回線情報】\nWAN: PPPoE（ppp100）\nVPN: IPsec/IKE（VarioSecure / USEN）\nMasquerade: 設定あり（本社にも同設定あり・実動作要確認）\n出典: VSR管理コンソール 2026-02-27\n\n【USEN回線契約】\n契約者: アドテック\nサービス: フレッツHS + VPN V600\n月額: ¥18,400\n契約開始: 2016/07\n出典: USEN ICT Solutions 回線契約一覧 2026-03-03受領\nクリックで機器を展開 / 収納' },
     { level:2 }),
 
   n('hs-gw', 'VSR400\n192.168.30.1\nVPN GW\n【橋本R&D】', 'gw',
-    { ip:'192.168.30.1', desc:'VPNルータ（VarioSecure VSR / USEN）\nVPN経路: Hop1=192.168.1.9 確認済み\n\n【回線情報】\nWAN: PPPoE（ppp100）\nVPN: IPsec/IKE（VarioSecure）\nMasquerade: なし（本社集約経由でインターネット接続）\n出典: VSR管理コンソール 2026-02-27\nクリックで機器を展開 / 収納' },
+    { ip:'192.168.30.1', desc:'VPNルータ（VarioSecure VSR / USEN）\nVPN経路: Hop1=192.168.1.9 確認済み\n\n【回線情報】\nWAN: PPPoE（ppp100）\nVPN: IPsec/IKE（VarioSecure）\nMasquerade: なし（本社集約経由でインターネット接続）\n出典: VSR管理コンソール 2026-02-27\n\n【USEN回線契約】\n契約者: アドテック\nサービス: フレッツGライン + VPN V400\n月額: ¥11,200\n契約開始: 2024/07\n出典: USEN ICT Solutions 回線契約一覧 2026-03-03受領\nクリックで機器を展開 / 収納' },
     { level:2 }),
 
   n('fk-gw', 'VSR401j\n192.168.40.1\nVPN GW\n【福岡営業所】', 'gw',
-    { ip:'192.168.40.1', desc:'VPNルータ（VarioSecure VSR / USEN）\nVPN経路: Hop1=192.168.1.9 確認済み\n\n【回線情報】\nWAN: PPPoE（ppp100）\nVPN: IPsec/IKE（VarioSecure）\nMasquerade: なし（本社集約経由でインターネット接続）\n出典: VSR管理コンソール 2026-02-27\nクリックで機器を展開 / 収納' },
+    { ip:'192.168.40.1', desc:'VPNルータ（VarioSecure VSR / USEN）\nVPN経路: Hop1=192.168.1.9 確認済み\n\n【回線情報】\nWAN: PPPoE（ppp100）\nVPN: IPsec/IKE（VarioSecure）\nMasquerade: なし（本社集約経由でインターネット接続）\n出典: VSR管理コンソール 2026-02-27\n\n【USEN回線契約】\n契約者: AKIBAホールディングス\nサービス: フレッツHS + VPN V400\n月額: ¥10,000\n契約開始: 2019/10\n出典: USEN ICT Solutions 回線契約一覧 2026-03-03受領\nクリックで機器を展開 / 収納' },
     { level:2 }),
 
   n('wk-gw', 'VSR401j\n192.168.50.1\nVPN GW\n【和歌山】', 'gw',
-    { ip:'192.168.50.1', desc:'VPNルータ（VarioSecure VSR / USEN）\nVPN経路: Hop1=192.168.1.9 確認済み\n\n【回線情報】\nWAN: PPPoE（ppp100）\nVPN: IPsec/IKE（VarioSecure）\nMasquerade: なし（本社集約経由でインターネット接続）\n※ VSR管理コンソール未登録（本社Masqueradeには 192.168.50.0/24 登録あり）\n出典: VSR管理コンソール 2026-02-27\nクリックで機器を展開 / 収納' },
+    { ip:'192.168.50.1', desc:'VPNルータ（VarioSecure VSR / USEN）\nVPN経路: Hop1=192.168.1.9 確認済み\n\n【回線情報】\nWAN: PPPoE（ppp100）\nVPN: IPsec/IKE（VarioSecure）\nMasquerade: なし（本社集約経由でインターネット接続）\n※ VSR管理コンソール未登録（本社Masqueradeには 192.168.50.0/24 登録あり）\n出典: VSR管理コンソール 2026-02-27\n\n【USEN回線契約】\n契約者: AKIBAホールディングス\nサービス: フレッツHS + VPN V400\n月額: ¥10,000\n契約開始: 2020/04\n出典: USEN ICT Solutions 回線契約一覧 2026-03-03受領\nクリックで機器を展開 / 収納' },
     { level:2 }),
 
   n('tj-gw', 'VSR400\n192.168.60.1\nVPN GW\n【多摩センター】', 'gw',
-    { ip:'192.168.60.1', desc:'VPNルータ（VarioSecure VSR / USEN）\nVSR名: adtec-tama（2026-03-01確定）\nVPN経路: Hop1=192.168.1.9 確認済み\n\n【回線情報】\nWAN: PPPoE（ppp100）\nVPN: IPsec/IKE（VarioSecure）\nMasquerade: なし（本社集約経由でインターネット接続）\n出典: VSR管理コンソール 2026-02-27\nクリックで機器を展開 / 収納' },
+    { ip:'192.168.60.1', desc:'VPNルータ（VarioSecure VSR / USEN）\nVSR名: adtec-tama（2026-03-01確定）\nVPN経路: Hop1=192.168.1.9 確認済み\n\n【回線情報】\nWAN: PPPoE（ppp100）\nVPN: IPsec/IKE（VarioSecure）\nMasquerade: なし（本社集約経由でインターネット接続）\n出典: VSR管理コンソール 2026-02-27\n\n【USEN回線契約】\n契約者: アドテック\nサービス: フレッツGライン + VPN V400\n月額: ¥11,200\n契約開始: 2024/07\n出典: USEN ICT Solutions 回線契約一覧 2026-03-03受領\nクリックで機器を展開 / 収納' },
     { level:2 }),
 
   n('kb-gw', 'VSR401j\n192.168.70.1\nVPN GW\n【京橋ビル】', 'gw',
-    { ip:'192.168.70.1', desc:'VPNルータ（VarioSecure VSR / USEN）\nVPN経路: Hop1=192.168.1.9 確認済み\n\n【回線情報】\nWAN: PPPoE（ppp100）\nVPN: IPsec/IKE（VarioSecure）\nMasquerade: なし（本社集約経由でインターネット接続）\n※ VSR管理コンソール未登録\n※ BuddyNet（別組織）の回線・本社Masqueradeには 192.168.70.0/24 登録あり\n出典: VSR管理コンソール 2026-02-27\nクリックで機器を展開 / 収納' },
+    { ip:'192.168.70.1', desc:'VPNルータ（VarioSecure VSR / USEN）\nVPN経路: Hop1=192.168.1.9 確認済み\n\n【回線情報】\nWAN: PPPoE（ppp100）\nVPN: IPsec/IKE（VarioSecure）\nMasquerade: なし（本社集約経由でインターネット接続）\n※ VSR管理コンソール未登録\n※ BuddyNet（別組織）の回線・本社Masqueradeには 192.168.70.0/24 登録あり\n出典: VSR管理コンソール 2026-02-27\n\n【USEN回線契約】\n契約者: アドテック\nサービス: フレッツGライン + VPN V600 + リモートVPN 100U\n月額: ¥46,200\n契約開始: 2017/04\n出典: USEN ICT Solutions 回線契約一覧 2026-03-03受領\nクリックで機器を展開 / 収納' },
     { level:2 }),
 
   n('ng-gw', 'VSR401j\n192.168.80.1\nVPN GW\n【名古屋】', 'gw',
-    { ip:'192.168.80.1', desc:'VPNルータ（VarioSecure VSR / USEN）\nVPN経路: Hop1=192.168.1.9 確認済み\n\n【回線情報】\nWAN: PPPoE（ppp100）\nVPN: IPsec/IKE（VarioSecure）\nMasquerade: なし（本社集約経由でインターネット接続）\n出典: VSR管理コンソール 2026-02-27\nクリックで機器を展開 / 収納' },
+    { ip:'192.168.80.1', desc:'VPNルータ（VarioSecure VSR / USEN）\nVPN経路: Hop1=192.168.1.9 確認済み\n\n【回線情報】\nWAN: PPPoE（ppp100）\nVPN: IPsec/IKE（VarioSecure）\nMasquerade: なし（本社集約経由でインターネット接続）\n出典: VSR管理コンソール 2026-02-27\n\n【USEN回線契約】\n契約者: AKIBAホールディングス\nサービス: フレッツGライン + VPN V400\n月額: ¥10,000\n契約開始: 2024/07\n出典: USEN ICT Solutions 回線契約一覧 2026-03-03受領\nクリックで機器を展開 / 収納' },
     { level:2 }),
 ];
 

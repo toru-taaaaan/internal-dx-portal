@@ -74,7 +74,7 @@
 
 <div id="header">
   <h1>ネットワーク構成図（Cato SASE 導入後 / VarioSecure VPN 現行）— AKIBAホールディングス（2026-03）</h1>
-  <p>※ Catoは将来構成イメージ（導入決定ではありません）／ VarioSecure VPN は SECOM 入退室専用として現行構成を維持 ／ SocketをクリックでLAN機器を展開 ／ ホイールでズーム・ドラッグでパン</p>
+  <p>※ Catoは将来構成イメージ（導入決定ではありません）／ VarioSecure VPN は SECOM 入退室専用として現行構成を維持 ／ USEN回線契約一覧 2026-03-03受領 ／ SocketをクリックでLAN機器を展開 ／ ホイールでズーム・ドラッグでパン</p>
 </div>
 
 <!-- ① Cato SASE -->
@@ -824,7 +824,7 @@ network1.on('afterDrawing', function(ctx) {
 
 const BASE_NODES_2 = [
   n('v-fg', 'VarioSecure\nVSR601j\nVPN Hub\n東京本社', 'fortigate',
-    { desc:'VarioSecure VSR601j（東京本社 VPN ハブ）\nSECOM入退室システムの通信を収容\n出典: 現行ネットワーク構成（VarioSecure RVPN）' },
+    { desc:'VarioSecure VSR601j（東京本社 VPN ハブ）\nSECOM入退室システムの通信を収容\n出典: 現行ネットワーク構成（VarioSecure RVPN）\n\n【USEN回線契約】\n契約者: AKIBAホールディングス\nサービス: フレッツGライン + VPN V400\n月額: ¥10,000\n契約開始: 2021/05\n出典: USEN ICT Solutions 回線契約一覧 2026-03-03受領' },
     { level:0, size:45, shape:'ellipse' }),
 
   n('v-tk-trii', 'SESAMO-TRII\n192.168.1.30\nSECOM入退室\n東京本社', 'secom',
@@ -832,31 +832,31 @@ const BASE_NODES_2 = [
     { level:1 }),
 
   n('v-os-gw', 'VarioSecure\nVSR401j\n大阪営業所', 'vsr',
-    { desc:'VarioSecure VSR401j（大阪営業所）\nVPN Hub（東京本社）へトンネル接続\nクリックで展開 / 収納' },
+    { desc:'VarioSecure VSR401j（大阪営業所）\nVPN Hub（東京本社）へトンネル接続\n\n【USEN回線契約】\n契約者: アドテック\nサービス: フレッツHS + VPN V600\n月額: ¥18,400\n契約開始: 2016/07\n出典: USEN ICT Solutions 回線契約一覧 2026-03-03受領\nクリックで展開 / 収納' },
     { level:1, size:26 }),
 
   n('v-hs-gw', 'VarioSecure\nVSR400\n橋本R&D', 'vsr',
-    { desc:'VarioSecure VSR400（橋本R&D）\nVPN Hub（東京本社）へトンネル接続\nクリックで展開 / 収納' },
+    { desc:'VarioSecure VSR400（橋本R&D）\nVPN Hub（東京本社）へトンネル接続\n\n【USEN回線契約】\n契約者: アドテック\nサービス: フレッツGライン + VPN V400\n月額: ¥11,200\n契約開始: 2024/07\n出典: USEN ICT Solutions 回線契約一覧 2026-03-03受領\nクリックで展開 / 収納' },
     { level:1, size:26 }),
 
   n('v-fk-gw', 'VarioSecure\nVSR401j\n福岡営業所', 'vsr',
-    { desc:'VarioSecure VSR401j（福岡営業所）\nVPN Hub（東京本社）へトンネル接続\nクリックで展開 / 収納' },
+    { desc:'VarioSecure VSR401j（福岡営業所）\nVPN Hub（東京本社）へトンネル接続\n\n【USEN回線契約】\n契約者: AKIBAホールディングス\nサービス: フレッツHS + VPN V400\n月額: ¥10,000\n契約開始: 2019/10\n出典: USEN ICT Solutions 回線契約一覧 2026-03-03受領\nクリックで展開 / 収納' },
     { level:1, size:26 }),
 
   n('v-wk-gw', 'VarioSecure\nVSR401j\n和歌山', 'vsr',
-    { desc:'VarioSecure VSR401j（和歌山）\nVPN Hub（東京本社）へトンネル接続\nクリックで展開 / 収納' },
+    { desc:'VarioSecure VSR401j（和歌山）\nVPN Hub（東京本社）へトンネル接続\n\n【USEN回線契約】\n契約者: AKIBAホールディングス\nサービス: フレッツHS + VPN V400\n月額: ¥10,000\n契約開始: 2020/04\n出典: USEN ICT Solutions 回線契約一覧 2026-03-03受領\nクリックで展開 / 収納' },
     { level:1, size:26 }),
 
   n('v-tj-gw', 'VarioSecure\nVSR400\n多摩センター', 'vsr',
-    { desc:'VarioSecure VSR400（多摩センター）\nVPN Hub（東京本社）へトンネル接続\nクリックで展開 / 収納' },
+    { desc:'VarioSecure VSR400（多摩センター）\nVPN Hub（東京本社）へトンネル接続\n\n【USEN回線契約】\n契約者: アドテック\nサービス: フレッツGライン + VPN V400\n月額: ¥11,200\n契約開始: 2024/07\n出典: USEN ICT Solutions 回線契約一覧 2026-03-03受領\nクリックで展開 / 収納' },
     { level:1, size:26 }),
 
   n('v-kb-gw', 'VarioSecure\nVSR401j\n京橋ビル', 'vsr',
-    { desc:'VarioSecure VSR401j（京橋ビル）\nVPN Hub（東京本社）へトンネル接続\nクリックで展開 / 収納' },
+    { desc:'VarioSecure VSR401j（京橋ビル）\nVPN Hub（東京本社）へトンネル接続\n\n【USEN回線契約】\n契約者: アドテック\nサービス: フレッツGライン + VPN V600 + リモートVPN 100U\n月額: ¥46,200\n契約開始: 2017/04\n出典: USEN ICT Solutions 回線契約一覧 2026-03-03受領\nクリックで展開 / 収納' },
     { level:1, size:26 }),
 
   n('v-ng-gw', 'VarioSecure\nVSR401j\n名古屋', 'vsr',
-    { desc:'VarioSecure VSR401j（名古屋）\nVPN Hub（東京本社）へトンネル接続\nクリックで展開 / 収納' },
+    { desc:'VarioSecure VSR401j（名古屋）\nVPN Hub（東京本社）へトンネル接続\n\n【USEN回線契約】\n契約者: AKIBAホールディングス\nサービス: フレッツGライン + VPN V400\n月額: ¥10,000\n契約開始: 2024/07\n出典: USEN ICT Solutions 回線契約一覧 2026-03-03受領\nクリックで展開 / 収納' },
     { level:1, size:26 }),
 ];
 
