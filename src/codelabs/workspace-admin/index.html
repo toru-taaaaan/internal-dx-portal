@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Workspace 管理者 入門</title>
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .tip-box { background:#e8f5e9; border-left:4px solid #4caf50; padding:12px 16px; border-radius:4px; margin:16px 0; }
+    .warning-box { background:#fff3e0; border-left:4px solid #ff9800; padding:12px 16px; border-radius:4px; margin:16px 0; }
+    .danger-box { background:#fef2f2; border-left:4px solid #ef4444; padding:12px 16px; border-radius:4px; margin:16px 0; }
+    .code-box { background:#1e293b; color:#e2e8f0; border-radius:6px; padding:14px 16px; font-family:monospace; font-size:14px; margin:12px 0; }
+    table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14px; }
+    th { background:#1a73e8; color:white; padding:10px 12px; text-align:left; }
+    td { padding:9px 12px; border-bottom:1px solid #e5e7eb; }
+    tr:nth-child(even) td { background:#f9fafb; }
+    .badge { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:700; }
+    .badge-admin { background:#fee2e2; color:#dc2626; }
+    .badge-user { background:#dbeafe; color:#1d4ed8; }
+    #read-btn {
+      position:fixed; bottom:24px; right:24px; z-index:9999;
+      background:#1a73e8; color:#fff; border:none; border-radius:50%;
+      width:52px; height:52px; font-size:22px; cursor:pointer;
+      box-shadow:0 4px 12px rgba(0,0,0,0.2); display:flex; align-items:center; justify-content:center;
+      transition:background 0.2s;
+    }
+    #read-btn:hover { background:#1557b0; }
+    #read-btn.speaking { background:#ea4335; }
+  </style>
+</head>
+<body>
+
+<button id="read-btn" title="読み上げ">🔊</button>
+
+<google-codelab
+  title="Google Workspace 管理者 入門"
+  environment="web"
+  feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/">
+
+  <!-- Step 1 -->
+  <google-codelab-step label="はじめに" duration="3">
+    <h2>このコースについて</h2>
+    <p>Google Workspace の管理コンソールを使って、ユーザー管理・グループ管理・セキュリティ設定・レポート確認を行う情報システム担当者向けハンズオンです。</p>
+
+    <h3>学習目標</h3>
+    <ul>
+      <li>管理コンソールの基本操作を理解する</li>
+      <li>ユーザーアカウントの作成・編集・削除を行う</li>
+      <li>グループを作成してメール配信リストを設定する</li>
+      <li>2段階認証などセキュリティポリシーを設定する</li>
+      <li>監査ログとレポートで利用状況を把握する</li>
+    </ul>
+
+    <h3>必要なもの</h3>
+    <ul>
+      <li>Google Workspace 管理者権限のあるアカウント</li>
+      <li>ブラウザ（Google Chrome 推奨）</li>
+    </ul>
+
+    <div class="danger-box">
+      <strong>本番環境での注意</strong><br>
+      このコースの操作は実際の Workspace 環境に影響します。テスト用ユーザー・グループで練習してから本番作業を行ってください。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 2 -->
+  <google-codelab-step label="管理コンソールの基本操作" duration="5">
+    <h2>管理コンソールへのアクセス</h2>
+
+    <h3>アクセス方法</h3>
+    <ol>
+      <li>ブラウザで <strong>admin.google.com</strong> を開く</li>
+      <li>管理者アカウントでログイン</li>
+      <li>管理コンソールのダッシュボードが表示される</li>
+    </ol>
+
+    <h3>主要メニューの構成</h3>
+    <table>
+      <tr><th>メニュー</th><th>主な操作</th></tr>
+      <tr><td>ユーザー</td><td>アカウント作成・編集・削除・パスワードリセット</td></tr>
+      <tr><td>グループ</td><td>メーリングリスト・配信グループの作成・管理</td></tr>
+      <tr><td>組織部門</td><td>部署・チーム単位でのポリシー管理</td></tr>
+      <tr><td>アプリ</td><td>Google アプリの有効化・制限設定</td></tr>
+      <tr><td>デバイス</td><td>モバイル端末・Chrome デバイスの管理</td></tr>
+      <tr><td>セキュリティ</td><td>2段階認証・アクセス制御・アラート</td></tr>
+      <tr><td>レポート</td><td>使用状況・監査ログの確認</td></tr>
+    </table>
+
+    <h3>組織部門（OU）とは</h3>
+    <p>ユーザーをグループ化して、部署ごとに異なるポリシーを適用する仕組みです。</p>
+    <div class="tip-box">
+      例: 「営業部」OUでは YouTube をブロック、「情報システム部」OUでは全サービスを許可、というように設定できます。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 3 -->
+  <google-codelab-step label="ユーザーの追加・編集・削除" duration="12">
+    <h2>ユーザー管理の基本操作</h2>
+
+    <h3>新しいユーザーを追加する</h3>
+    <ol>
+      <li>管理コンソール → <strong>ユーザー</strong> → <strong>新しいユーザーを追加</strong></li>
+      <li>以下の情報を入力して「追加」をクリック</li>
+    </ol>
+
+    <table>
+      <tr><th>項目</th><th>入力例</th><th>備考</th></tr>
+      <tr><td>名前</td><td>田中 太郎</td><td>日本語OK</td></tr>
+      <tr><td>メールアドレス</td><td>tanaka@example.co.jp</td><td>一意である必要あり</td></tr>
+      <tr><td>パスワード</td><td>（自動生成を推奨）</td><td>初回ログイン時に変更を強制できる</td></tr>
+      <tr><td>組織部門</td><td>/営業部</td><td>後から変更可能</td></tr>
+    </table>
+
+    <div class="tip-box">
+      <strong>一括追加</strong><br>
+      多数のユーザーを追加する場合は CSV ファイルでの一括アップロードが便利です。管理コンソール → ユーザー → 「ユーザーを一括アップロード」から実行できます。
+    </div>
+
+    <h3>ユーザー情報を編集する</h3>
+    <ol>
+      <li>管理コンソール → <strong>ユーザー</strong> → 対象ユーザーをクリック</li>
+      <li>編集したい項目（名前・所属部署・役職など）の右にある鉛筆アイコンをクリック</li>
+      <li>変更して「保存」</li>
+    </ol>
+
+    <h3>パスワードをリセットする</h3>
+    <ol>
+      <li>ユーザーの詳細画面 → <strong>パスワードをリセット</strong></li>
+      <li>「次回ログイン時にパスワードを変更するよう求める」にチェック</li>
+      <li>「リセット」をクリックして仮パスワードを本人に伝達</li>
+    </ol>
+
+    <h3>ユーザーを一時停止・削除する</h3>
+    <div class="danger-box">
+      <strong>削除は慎重に</strong><br>
+      ユーザーを削除するとメール・ドライブのデータも失われます（20日間は復元可能）。退職者の処理は「一時停止」→「データ移管」→「削除」の順で行うことを推奨します。
+    </div>
+
+    <ol>
+      <li>ユーザーの詳細画面 → <strong>ユーザーを停止</strong> または <strong>ユーザーを削除</strong></li>
+      <li>削除する場合はデータ移管先ユーザーを指定することを推奨</li>
+    </ol>
+  </google-codelab-step>
+
+  <!-- Step 4 -->
+  <google-codelab-step label="グループの作成と管理" duration="10">
+    <h2>グループ（メーリングリスト）の管理</h2>
+    <p>グループはメール配信リストや、Google Drive・Chat などへのアクセス権限管理に使います。</p>
+
+    <h3>グループを作成する</h3>
+    <ol>
+      <li>管理コンソール → <strong>グループ</strong> → <strong>グループを作成</strong></li>
+      <li>以下を設定する</li>
+    </ol>
+
+    <table>
+      <tr><th>項目</th><th>設定例</th><th>説明</th></tr>
+      <tr><td>グループ名</td><td>全社連絡</td><td>表示名</td></tr>
+      <tr><td>グループのメール</td><td>all@example.co.jp</td><td>送信先アドレス</td></tr>
+      <tr><td>グループの説明</td><td>全社員への連絡用</td><td>任意</td></tr>
+      <tr><td>アクセスタイプ</td><td>チーム（メーリングリスト）</td><td>用途に応じて選択</td></tr>
+    </table>
+
+    <h3>メンバーを追加する</h3>
+    <ol>
+      <li>作成したグループをクリック → <strong>メンバー</strong> → <strong>メンバーを追加</strong></li>
+      <li>ユーザー名またはメールアドレスを入力して追加</li>
+      <li>役割を「メンバー」「オーナー」「マネージャー」から選択</li>
+    </ol>
+
+    <table>
+      <tr><th>役割</th><th>できること</th></tr>
+      <tr><td>オーナー</td><td>グループ設定変更・メンバー管理・メッセージ投稿</td></tr>
+      <tr><td>マネージャー</td><td>メンバー追加・削除・メッセージ投稿</td></tr>
+      <tr><td>メンバー</td><td>グループへのメール送受信のみ</td></tr>
+    </table>
+
+    <h3>グループを活用する場面</h3>
+    <ul>
+      <li>全社配信メール: <code>all@example.co.jp</code> に送るだけで全員に届く</li>
+      <li>部署グループ: <code>sales@example.co.jp</code> で営業部全員に共有</li>
+      <li>プロジェクトグループ: ドライブフォルダのアクセス権限をグループ単位で設定</li>
+      <li>Gemini / Workspace 機能のアクセス制御</li>
+    </ul>
+
+    <div class="tip-box">
+      グループのメールアドレスを Google Drive のフォルダ共有設定に追加すると、グループメンバー全員に一括でアクセス権を付与できます。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 5 -->
+  <google-codelab-step label="セキュリティ設定（2段階認証・アクセス制御）" duration="10">
+    <h2>セキュリティの強化</h2>
+
+    <h3>2段階認証を強制する</h3>
+    <ol>
+      <li>管理コンソール → <strong>セキュリティ</strong> → <strong>認証</strong> → <strong>2段階認証プロセス</strong></li>
+      <li>「2段階認証プロセスの使用を許可する」をオンにする</li>
+      <li>「強制」を選択して組織部門（全組織 or 特定部署）を選ぶ</li>
+      <li>猶予期間（例: 1週間）を設定して「保存」</li>
+    </ol>
+
+    <div class="warning-box">
+      <strong>猶予期間の設定を忘れずに</strong><br>
+      即日強制にすると、まだ設定していないユーザーがログインできなくなります。全ユーザーに事前周知してから猶予期間付きで実施してください。
+    </div>
+
+    <h3>パスワードポリシーを設定する</h3>
+    <ol>
+      <li>管理コンソール → <strong>セキュリティ</strong> → <strong>パスワードの管理</strong></li>
+      <li>推奨設定を確認する</li>
+    </ol>
+
+    <table>
+      <tr><th>設定項目</th><th>推奨値</th></tr>
+      <tr><td>最小文字数</td><td>12文字以上</td></tr>
+      <tr><td>パスワードの再利用</td><td>過去3回は禁止</td></tr>
+      <tr><td>強度の強制</td><td>強（大文字・数字・記号を含む）</td></tr>
+      <tr><td>有効期限</td><td>180日（組織ポリシーに準拠）</td></tr>
+    </table>
+
+    <h3>外部共有のポリシー</h3>
+    <ol>
+      <li>管理コンソール → <strong>アプリ</strong> → <strong>Google Workspace</strong> → <strong>ドライブとドキュメント</strong></li>
+      <li><strong>共有設定</strong> → 外部共有の範囲を設定</li>
+    </ol>
+
+    <table>
+      <tr><th>設定</th><th>内容</th></tr>
+      <tr><td>オフ</td><td>外部共有を完全禁止</td></tr>
+      <tr><td>許可（ドメイン制限）</td><td>指定ドメインとのみ共有可</td></tr>
+      <tr><td>許可（リンク共有禁止）</td><td>招待した外部ユーザーとのみ共有可</td></tr>
+      <tr><td>許可（全て）</td><td>リンク共有含め外部共有可</td></tr>
+    </table>
+  </google-codelab-step>
+
+  <!-- Step 6 -->
+  <google-codelab-step label="レポートと監査ログの確認" duration="8">
+    <h2>利用状況の把握と問題調査</h2>
+
+    <h3>利用状況レポート</h3>
+    <ol>
+      <li>管理コンソール → <strong>レポート</strong> → <strong>使用状況</strong></li>
+      <li>アプリ別（Gmail・Drive・Meet）のアクティブユーザー数を確認</li>
+    </ol>
+
+    <div class="tip-box">
+      ライセンスを付与しても使っていないユーザーをここで発見できます。未使用ライセンスのコスト最適化に役立てましょう。
+    </div>
+
+    <h3>監査ログの確認</h3>
+    <ol>
+      <li>管理コンソール → <strong>レポート</strong> → <strong>監査ログ</strong></li>
+      <li>調査したい操作の種類を選択</li>
+    </ol>
+
+    <table>
+      <tr><th>ログの種類</th><th>確認できること</th></tr>
+      <tr><td>管理ログ</td><td>管理者操作（ユーザー作成・削除・設定変更）</td></tr>
+      <tr><td>ログイン監査</td><td>ユーザーのログイン記録・不審なアクセス</td></tr>
+      <tr><td>Drive 監査</td><td>ファイルの閲覧・ダウンロード・共有操作</td></tr>
+      <tr><td>Gmail 監査</td><td>メール送受信の詳細ログ</td></tr>
+      <tr><td>Meet 監査</td><td>会議への参加・退室の記録</td></tr>
+    </table>
+
+    <h3>セキュリティアラートの設定</h3>
+    <ol>
+      <li>管理コンソール → <strong>セキュリティ</strong> → <strong>アラートセンター</strong></li>
+      <li>不審なログイン・マルウェア添付・フィッシングの検出アラートを設定</li>
+      <li>メールアドレス（情シス担当者）に通知されるよう設定する</li>
+    </ol>
+  </google-codelab-step>
+
+  <!-- Step 7 -->
+  <google-codelab-step label="アプリと Gemini の管理" duration="8">
+    <h2>アプリのアクセス制御と Gemini の有効化</h2>
+
+    <h3>Google アプリの有効化・無効化</h3>
+    <ol>
+      <li>管理コンソール → <strong>アプリ</strong> → <strong>Google Workspace</strong></li>
+      <li>各サービスの横にあるトグルで有効/無効を切り替え</li>
+      <li>組織部門ごとに設定を変えることも可能</li>
+    </ol>
+
+    <h3>Gemini の有効化</h3>
+    <ol>
+      <li>管理コンソール → <strong>アプリ</strong> → <strong>Google Workspace</strong> → <strong>Gemini</strong></li>
+      <li>「Gemini の使用を許可する」をオン</li>
+      <li>有効にする組織部門を選択して保存</li>
+    </ol>
+
+    <div class="tip-box">
+      <strong>段階的な展開のすすめ</strong><br>
+      最初は情シス部門や AI Champion メンバーに限定して有効化し、フィードバックを受けてから全社展開する方法が安全です。
+    </div>
+
+    <h3>サードパーティアプリの管理</h3>
+    <ol>
+      <li>管理コンソール → <strong>セキュリティ</strong> → <strong>API 制御</strong></li>
+      <li>承認していないサードパーティアプリが Google データにアクセスしていないか確認</li>
+      <li>不審なアプリはここでアクセスを取り消すことができる</li>
+    </ol>
+  </google-codelab-step>
+
+  <!-- Step 8 -->
+  <google-codelab-step label="まとめと次のステップ" duration="2">
+    <h2>学習のまとめ</h2>
+
+    <table>
+      <tr><th>操作</th><th>場所</th></tr>
+      <tr><td>ユーザー管理</td><td>管理コンソール → ユーザー</td></tr>
+      <tr><td>グループ管理</td><td>管理コンソール → グループ</td></tr>
+      <tr><td>2段階認証強制</td><td>セキュリティ → 認証</td></tr>
+      <tr><td>外部共有制限</td><td>アプリ → Drive とドキュメント</td></tr>
+      <tr><td>監査ログ</td><td>レポート → 監査ログ</td></tr>
+      <tr><td>Gemini 有効化</td><td>アプリ → Gemini</td></tr>
+    </table>
+
+    <h2>次のステップ</h2>
+    <ul>
+      <li>Google Workspace 管理者ヘルプ（support.google.com/a）で詳細を確認する</li>
+      <li><a href="/codelabs/gemini-workspace/">CL-010 Gemini in Workspace 実践</a>で管理した Workspace を活用する</li>
+      <li>定期的な監査ログ確認をルーティン業務に組み込む</li>
+    </ul>
+
+    <div class="tip-box">
+      <strong>お疲れ様でした！</strong><br>
+      管理コンソールの主要操作を習得しました。ユーザー追加・パスワードリセット・2段階認証の設定は特に頻繁に使う操作です。本番作業の前にテストユーザーで一度確認する習慣をつけましょう。
+    </div>
+  </google-codelab-step>
+
+</google-codelab>
+
+<script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+<script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+<script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+<script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+<script>
+(function() {
+  var btn = document.getElementById('read-btn');
+  var synth = window.speechSynthesis;
+  var utt = null;
+  function getStepText() {
+    var step = document.querySelector('google-codelab-step[selected]') ||
+               document.querySelector('google-codelab-step');
+    return step ? step.innerText.replace(/\s+/g,' ').trim() : '';
+  }
+  btn.addEventListener('click', function() {
+    if (synth.speaking) { synth.cancel(); btn.classList.remove('speaking'); btn.textContent='🔊'; return; }
+    var text = getStepText();
+    if (!text) return;
+    utt = new SpeechSynthesisUtterance(text);
+    utt.lang = 'ja-JP'; utt.rate = 1.0;
+    utt.onend = function() { btn.classList.remove('speaking'); btn.textContent='🔊'; };
+    synth.speak(utt);
+    btn.classList.add('speaking'); btn.textContent='⏹';
+  });
+  window.addEventListener('hashchange', function() { synth.cancel(); btn.classList.remove('speaking'); btn.textContent='🔊'; });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "updated": "2026-03-04T00:00:00+09:00",
+  "id": "workspace-admin",
+  "duration": 60,
+  "title": "Google Workspace 管理者 入門",
+  "summary": "管理コンソールでユーザー管理・グループ作成・2段階認証設定・監査ログ確認まで、情報システム担当者向けに基礎操作を学ぶハンズオン。",
+  "category": ["dx", "ai活用"],
+  "tags": ["web"],
+  "feedback": "https://internal-dx-portal-auth.tanjiadm.workers.dev/",
+  "url": "workspace-admin"
+}

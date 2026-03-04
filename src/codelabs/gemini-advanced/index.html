@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gemini Advanced 活用法</title>
+<link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<style>
+  google-codelab-step { font-family: 'Noto Sans JP', sans-serif; }
+  .info-box { background: #e8f4fd; border-left: 4px solid #1a73e8; padding: 12px 16px; border-radius: 4px; margin: 16px 0; }
+  .tip-box { background: #e6f4ea; border-left: 4px solid #34a853; padding: 12px 16px; border-radius: 4px; margin: 16px 0; }
+  .warn-box { background: #fef7e0; border-left: 4px solid #fbbc04; padding: 12px 16px; border-radius: 4px; margin: 16px 0; }
+  .step-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  .step-table th { background: #f1f3f4; text-align: left; padding: 10px 12px; border: 1px solid #dadce0; font-size: 0.9em; }
+  .step-table td { padding: 10px 12px; border: 1px solid #dadce0; font-size: 0.9em; vertical-align: top; }
+  .step-table tr:nth-child(even) td { background: #f8f9fa; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.8em; font-weight: 500; margin: 2px; }
+  .badge-new { background: #e8f4fd; color: #1a73e8; }
+  .badge-adv { background: #fce8e6; color: #d93025; }
+  .use-card { border: 1px solid #dadce0; border-radius: 8px; padding: 16px; margin: 12px 0; }
+  .use-card h4 { margin: 0 0 8px; color: #1a73e8; }
+  .prompt-ex { background: #f8f9fa; border: 1px solid #dadce0; border-radius: 4px; padding: 12px; font-family: 'Noto Sans JP', monospace; font-size: 0.9em; margin: 8px 0; white-space: pre-wrap; }
+  .gem-card { background: linear-gradient(135deg, #f0f4ff 0%, #e8f4fd 100%); border: 1px solid #c2d7f5; border-radius: 8px; padding: 16px; margin: 12px 0; }
+  .gem-card h4 { margin: 0 0 8px; color: #1557b0; }
+  #read-btn { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #1a73e8; color: #fff; border: none; border-radius: 50%; width: 52px; height: 52px; font-size: 22px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.3); display: flex; align-items: center; justify-content: center; }
+  #read-btn:hover { background: #1557b0; }
+</style>
+</head>
+<body>
+<google-codelab title="Gemini Advanced 活用法"
+  environment="web"
+  feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/"
+  id="gemini-advanced">
+
+  <!-- Step 1 -->
+  <google-codelab-step label="はじめに" duration="3">
+    <p>このハンズオンでは <strong>Gemini Advanced</strong> の応用機能を体系的に学びます。</p>
+    <div class="info-box">
+      <strong>Gemini Advanced とは</strong><br>
+      Google One AI プレミアムプランで利用できる上位モデル。より高度な推論・長文処理・ファイル分析・Deep Research が利用可能です。
+    </div>
+    <h3>学習目標</h3>
+    <ul>
+      <li>Deep Research で徹底的な調査を自動化する</li>
+      <li>PDF・画像・スプレッドシートなどのファイルを分析する</li>
+      <li>Gems でカスタム AI アシスタントを作成する</li>
+      <li>長文コンテキストを活かした高度な対話を行う</li>
+      <li>Google Workspace との連携機能を使う</li>
+    </ul>
+    <h3>前提条件</h3>
+    <ul>
+      <li>Google One AI プレミアムプランのアカウント</li>
+      <li><a href="https://gemini.google.com" target="_blank">gemini.google.com</a> へのアクセス</li>
+      <li>分析用のサンプルファイル（PDF・Excelなど）</li>
+    </ul>
+    <h3>所要時間</h3>
+    <p>約 <strong>45 分</strong></p>
+  </google-codelab-step>
+
+  <!-- Step 2 -->
+  <google-codelab-step label="Gemini Advanced の基本操作" duration="5">
+    <h2>インターフェースの確認</h2>
+    <p><a href="https://gemini.google.com" target="_blank">gemini.google.com</a> にアクセスし、左サイドバーを確認します。</p>
+    <table class="step-table">
+      <thead>
+        <tr><th>メニュー項目</th><th>機能</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>新しいチャット</td><td>会話をリセットして新規開始</td></tr>
+        <tr><td>最近の会話</td><td>過去のやり取りを参照・再開</td></tr>
+        <tr><td>Gems</td><td>カスタム AI アシスタントの管理</td></tr>
+        <tr><td>探索</td><td>Gem ストアや使い方例の閲覧</td></tr>
+        <tr><td>設定</td><td>言語・テーマ・拡張機能の設定</td></tr>
+      </tbody>
+    </table>
+    <h3>モデル選択</h3>
+    <p>チャット画面上部のモデル名をクリックすると切り替えができます。</p>
+    <table class="step-table">
+      <thead>
+        <tr><th>モデル</th><th>特徴</th><th>推奨用途</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Gemini 2.0 Flash</td><td>高速・軽量</td><td>日常的な質問・下書き</td></tr>
+        <tr><td>Gemini 2.0 Pro <span class="badge badge-adv">Advanced</span></td><td>高度な推論</td><td>複雑な分析・コーディング</td></tr>
+        <tr><td>Gemini 2.0 Flash Thinking <span class="badge badge-adv">Advanced</span></td><td>思考プロセス表示</td><td>論理問題・数学</td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box">
+      <strong>ヒント:</strong> 迷ったら <strong>Gemini 2.0 Pro</strong> を選択してください。高品質な回答が得られます。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 3 -->
+  <google-codelab-step label="Deep Research を使う" duration="10">
+    <h2>Deep Research とは</h2>
+    <p>複雑なテーマについて Gemini が自律的にWeb検索・情報収集・分析を行い、詳細なレポートを作成する機能です。</p>
+    <div class="info-box">
+      <strong>通常の検索との違い</strong><br>
+      通常: 1回の検索 → 即座に回答<br>
+      Deep Research: 複数回の検索 → 情報統合 → 構造化レポート（数分かかります）
+    </div>
+    <h3>使い方</h3>
+    <ol>
+      <li>チャット入力欄の下にある <strong>「Deep Research」</strong> ボタンをクリック</li>
+      <li>調査したいテーマを入力して送信</li>
+      <li>Gemini が調査計画を提示 → 「調査を開始」で実行</li>
+      <li>数分後に詳細レポートが生成される</li>
+      <li>レポートは Google ドキュメントにエクスポート可能</li>
+    </ol>
+    <h3>実践例：業務で使えるプロンプト</h3>
+    <div class="use-card">
+      <h4>市場調査・競合分析</h4>
+      <div class="prompt-ex">日本国内のノーコード・ローコード開発ツール市場について調査してください。
+主要サービス、価格帯、企業向けの導入事例、2025年以降のトレンドを含む
+詳細なレポートを作成してください。</div>
+    </div>
+    <div class="use-card">
+      <h4>技術調査・比較</h4>
+      <div class="prompt-ex">クラウドストレージサービス（Google Drive、OneDrive、Dropbox Business）の
+企業向け機能・セキュリティ・コンプライアンス対応について比較分析してください。
+日本企業が導入する際の観点を重視してください。</div>
+    </div>
+    <div class="use-card">
+      <h4>法規制・コンプライアンス調査</h4>
+      <div class="prompt-ex">日本の個人情報保護法（改正含む）がクラウドサービス利用に与える影響について、
+実務担当者向けにわかりやすくまとめてください。
+チェックリスト形式も含めてください。</div>
+    </div>
+    <div class="tip-box">
+      <strong>コツ:</strong> 具体的な調査観点（価格帯・対象業界・年度など）を含めると、より的確なレポートが生成されます。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 4 -->
+  <google-codelab-step label="ファイルをアップロードして分析する" duration="8">
+    <h2>対応ファイル形式</h2>
+    <p>Gemini Advanced はさまざまなファイルを直接アップロードして分析できます。</p>
+    <table class="step-table">
+      <thead>
+        <tr><th>ファイル種別</th><th>形式</th><th>できること</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>文書</td><td>PDF, DOCX, TXT</td><td>要約・翻訳・質問応答・比較</td></tr>
+        <tr><td>表計算</td><td>XLSX, CSV</td><td>データ分析・集計・グラフ提案</td></tr>
+        <tr><td>画像</td><td>PNG, JPG, GIF</td><td>内容説明・OCR・図解分析</td></tr>
+        <tr><td>コード</td><td>PY, JS, など</td><td>コードレビュー・バグ検出・説明</td></tr>
+      </tbody>
+    </table>
+    <h3>アップロード方法</h3>
+    <ol>
+      <li>チャット入力欄左側の <strong>📎（クリップ）アイコン</strong> をクリック</li>
+      <li>「ファイルをアップロード」または「Google ドライブから」を選択</li>
+      <li>ファイルを選択して添付</li>
+      <li>質問・指示を入力して送信</li>
+    </ol>
+    <h3>実践例：ファイル分析プロンプト</h3>
+    <div class="use-card">
+      <h4>PDF資料の要約</h4>
+      <div class="prompt-ex">【添付ファイル: 製品マニュアル.pdf】
+
+このマニュアルの内容を以下の形式でまとめてください。
+1. 製品の概要（3行以内）
+2. 主な機能一覧（箇条書き）
+3. 初期設定手順（ステップ番号付き）
+4. よくある問題と解決方法</div>
+    </div>
+    <div class="use-card">
+      <h4>スプレッドシートのデータ分析</h4>
+      <div class="prompt-ex">【添付ファイル: 売上データ.xlsx】
+
+このデータを分析して以下を教えてください。
+・月別売上の傾向（増加・減少・季節性）
+・売上上位5製品とその特徴
+・前年比で気になる異常値があれば指摘
+・次のアクションとして検討すべき施策の提案</div>
+    </div>
+    <div class="use-card">
+      <h4>複数ファイルの比較</h4>
+      <div class="prompt-ex">【添付: 契約書A.pdf と 契約書B.pdf】
+
+2つの契約書を比較して、以下の観点で違いを表形式でまとめてください。
+・契約期間・更新条件
+・料金・支払い条件
+・解約条件・違約金
+・責任範囲・免責事項</div>
+    </div>
+    <div class="warn-box">
+      <strong>注意:</strong> 機密情報が含まれるファイルを扱う際は、社内の情報セキュリティポリシーに従ってください。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 5 -->
+  <google-codelab-step label="Gems でカスタム AI を作る" duration="10">
+    <h2>Gems とは</h2>
+    <p>特定の役割・知識・口調を事前設定したカスタム AI アシスタントです。毎回同じ指示を入力する手間が省けます。</p>
+    <div class="info-box">
+      <strong>活用イメージ</strong><br>
+      「いつもの〇〇担当 AI」として使えます。例：「議事録作成専用 AI」「メール文案レビュー AI」「技術質問専用 AI」
+    </div>
+    <h3>Gem の作成手順</h3>
+    <ol>
+      <li>左サイドバーの <strong>「Gems」</strong> → <strong>「+ 新しい Gem を作成」</strong> をクリック</li>
+      <li><strong>名前</strong>を入力（例：「議事録アシスタント」）</li>
+      <li><strong>指示</strong>欄に役割・動作の詳細を記述</li>
+      <li>必要に応じてファイルを「知識」として添付</li>
+      <li><strong>「保存」</strong> して完成</li>
+    </ol>
+    <h3>実践：業務に役立つ Gem テンプレート</h3>
+    <div class="gem-card">
+      <h4>Gem 1: 議事録・会議メモ整理</h4>
+      <div class="prompt-ex">あなたは会議の議事録を整理する専門アシスタントです。
+
+受け取ったテキスト（メモや文字起こし）を以下の形式に整理してください：
+
+## 会議概要
+- 日時・参加者・目的
+
+## 決定事項
+- 箇条書きで明確に記載
+
+## アクションアイテム
+| 担当 | 内容 | 期限 |
+|------|------|------|
+
+## 次回確認事項
+- 持ち越し課題・宿題
+
+文体は「〜しました」「〜です」などの丁寧語で統一してください。</div>
+    </div>
+    <div class="gem-card">
+      <h4>Gem 2: メール文案チェッカー</h4>
+      <div class="prompt-ex">あなたはビジネスメールの品質を向上させる編集者です。
+
+送られてきたメール文案を以下の観点で確認し、改善提案を行ってください：
+
+1. 敬語・丁寧語が適切か
+2. 件名と本文の一致
+3. 結論が最初に述べられているか
+4. 曖昧な表現・主語の欠如
+5. 誤字脱字
+
+改善後の完成版も提示してください。
+対象読者：日本の大企業の部長・担当者クラス</div>
+    </div>
+    <div class="gem-card">
+      <h4>Gem 3: 技術用語解説</h4>
+      <div class="prompt-ex">あなたはIT・クラウド技術を非エンジニアに分かりやすく説明する専門家です。
+
+質問された技術用語や概念を以下のルールで説明してください：
+- 専門用語を使わず、日常的な言葉で説明する
+- 具体的な例え話を必ず1つ含める
+- 「なぜそれが必要か」という理由も添える
+- 最後に「まとめると〜」で1行でまとめる
+
+対象読者：IT知識のない50〜60代の管理職</div>
+    </div>
+    <div class="tip-box">
+      <strong>コツ:</strong> 指示の冒頭に「あなたは〜です」と役割を明確にし、出力フォーマットを具体的に指定するほど品質が向上します。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 6 -->
+  <google-codelab-step label="長文コンテキストの活用" duration="7">
+    <h2>Gemini Advanced の長文処理能力</h2>
+    <p>Gemini Advanced は非常に長い文脈を保持できます。これにより以下のような活用が可能です。</p>
+    <div class="info-box">
+      <strong>コンテキストウィンドウ</strong><br>
+      Gemini Advanced: 最大 1,000,000 トークン（約 75 万語）<br>
+      → 長編小説・大量のコード・複数の長文資料を一度に処理可能
+    </div>
+    <h3>活用パターン</h3>
+    <div class="use-card">
+      <h4>長文ドキュメントの横断検索</h4>
+      <p>複数の長い資料をまとめてアップロードし、横断的に質問できます。</p>
+      <div class="prompt-ex">【添付: 規程集A.pdf、規程集B.pdf、規程集C.pdf（計300ページ）】
+
+「テレワーク」に関する記述を全ての規程から抽出し、
+矛盾や重複がある箇所を指摘してください。</div>
+    </div>
+    <div class="use-card">
+      <h4>会話履歴を活かした継続分析</h4>
+      <p>一つの会話内で前の文脈を参照しながら作業を続けられます。</p>
+      <div class="prompt-ex">（会話の途中で）
+先ほどの分析結果をもとに、特に改善が急がれる3点について
+それぞれ具体的な対策案を100字以内で作成してください。</div>
+    </div>
+    <div class="use-card">
+      <h4>コードベース全体の分析</h4>
+      <div class="prompt-ex">【添付: main.py, utils.py, config.py, tests/test_main.py】
+
+このコードベース全体を読んで以下を教えてください。
+1. アーキテクチャの概要
+2. 潜在的なバグや改善点
+3. テストカバレッジの不足箇所
+4. ドキュメント化すべき関数</div>
+    </div>
+    <h3>会話を整理するコツ</h3>
+    <table class="step-table">
+      <thead>
+        <tr><th>状況</th><th>対処法</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>会話が長くなってきた</td><td>「ここまでの要点をまとめてください」で整理</td></tr>
+        <tr><td>前の話題に戻りたい</td><td>「最初にアップロードした資料の〇〇について」と明示</td></tr>
+        <tr><td>新しいテーマに切り替えたい</td><td>「新しいチャット」で会話をリセット</td></tr>
+        <tr><td>分析結果を保存したい</td><td>「Google ドキュメントにエクスポート」ボタンを使用</td></tr>
+      </tbody>
+    </table>
+  </google-codelab-step>
+
+  <!-- Step 7 -->
+  <google-codelab-step label="Google Workspace 連携" duration="5">
+    <h2>Gemini Advanced と Workspace の連携</h2>
+    <p>Gemini Advanced は Google Workspace のデータに直接アクセスできます（拡張機能設定が必要）。</p>
+    <h3>連携できるサービス</h3>
+    <table class="step-table">
+      <thead>
+        <tr><th>サービス</th><th>できること</th><th>プロンプト例</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Gmail</td>
+          <td>メール検索・要約・返信案作成</td>
+          <td>「先週届いた〇〇さんからのメールを要約して」</td>
+        </tr>
+        <tr>
+          <td>Google ドライブ</td>
+          <td>ファイル検索・内容確認</td>
+          <td>「Q4レポートというドキュメントの主要ポイントを教えて」</td>
+        </tr>
+        <tr>
+          <td>Google カレンダー</td>
+          <td>スケジュール確認・調整提案</td>
+          <td>「今週の空き時間に1時間のMTGを入れるならいつがいい？」</td>
+        </tr>
+        <tr>
+          <td>Google ドキュメント</td>
+          <td>内容の質問・改善提案</td>
+          <td>「〇〇というドキュメントの目次を作って」</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>拡張機能の有効化方法</h3>
+    <ol>
+      <li>チャット画面の「拡張機能」アイコン（プラグマーク）をクリック</li>
+      <li>「Google Workspace」を <strong>オン</strong> に切り替え</li>
+      <li>初回はアカウント連携の確認画面が表示される</li>
+      <li>有効化後、プロンプトで「@Gmail 〇〇を探して」のように指定</li>
+    </ol>
+    <div class="warn-box">
+      <strong>注意:</strong> 組織の Google Workspace の設定によって、拡張機能が使用できない場合があります。管理者にご確認ください。
+    </div>
+    <div class="tip-box">
+      <strong>活用シーン:</strong> 「先週のミーティングのメモを探してまとめて」「来月の予定を確認して資料の準備リストを作って」など、メール・カレンダー・ドキュメントを横断した作業指示が可能です。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 8 -->
+  <google-codelab-step label="まとめ" duration="2">
+    <h2>学習のふりかえり</h2>
+    <p>このハンズオンで習得した内容：</p>
+    <table class="step-table">
+      <thead>
+        <tr><th>機能</th><th>活用シーン</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Deep Research</td><td>市場調査・競合分析・法規制調査の自動化</td></tr>
+        <tr><td>ファイル分析</td><td>PDF要約・データ分析・複数文書比較</td></tr>
+        <tr><td>Gems</td><td>議事録整理・メールチェック・技術説明などのカスタム AI</td></tr>
+        <tr><td>長文コンテキスト</td><td>大量資料の横断検索・コードベース分析</td></tr>
+        <tr><td>Workspace 連携</td><td>Gmail・ドライブ・カレンダーをまたいだ作業</td></tr>
+      </tbody>
+    </table>
+    <h3>次のステップ</h3>
+    <ul>
+      <li>自分の業務に合った Gem を 1 つ作成してみる</li>
+      <li>Deep Research で実際の調査テーマを試してみる</li>
+      <li>よく使うドキュメントをアップロードして質問してみる</li>
+    </ul>
+    <div class="tip-box">
+      <strong>社内リソース</strong><br>
+      DX ポータルの「Codelabs」では関連するハンズオンも公開しています。<br>
+      CL-010: Gemini in Workspace 実践 も合わせてお試しください。
+    </div>
+    <h3>お疲れさまでした！</h3>
+    <p>Gemini Advanced の主要機能を一通り体験できました。日常業務の中で少しずつ取り入れていきましょう。</p>
+  </google-codelab-step>
+
+</google-codelab>
+
+<button id="read-btn" title="音声読み上げ">🔊</button>
+<script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+<script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+<script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+<script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+<script>
+(function() {
+  var btn = document.getElementById('read-btn');
+  var utterance = null;
+  btn.addEventListener('click', function() {
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+      btn.textContent = '🔊';
+      return;
+    }
+    var text = document.querySelector('google-codelab').innerText;
+    utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'ja-JP';
+    utterance.rate = 1.0;
+    utterance.onend = function() { btn.textContent = '🔊'; };
+    window.speechSynthesis.speak(utterance);
+    btn.textContent = '⏹';
+  });
+  window.addEventListener('hashchange', function() {
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+      btn.textContent = '🔊';
+    }
+  });
+})();
+</script>
+</body>
+</html>

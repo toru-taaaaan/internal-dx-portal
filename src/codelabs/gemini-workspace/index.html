@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gemini in Workspace 実践</title>
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .codelab-step-content { font-family: 'Noto Sans JP', sans-serif; }
+    .tip-box { background:#e8f5e9; border-left:4px solid #4caf50; padding:12px 16px; border-radius:4px; margin:16px 0; }
+    .warning-box { background:#fff3e0; border-left:4px solid #ff9800; padding:12px 16px; border-radius:4px; margin:16px 0; }
+    .prompt-box { background:#f3f4f6; border:1px solid #d1d5db; border-radius:6px; padding:14px 16px; font-family:monospace; font-size:14px; white-space:pre-wrap; margin:12px 0; }
+    .before-after { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0; }
+    .before-after > div { border-radius:6px; padding:12px; }
+    .before { background:#fef2f2; border:1px solid #fca5a5; }
+    .after { background:#f0fdf4; border:1px solid #86efac; }
+    .step-label { font-size:11px; font-weight:700; color:#6b7280; margin-bottom:6px; text-transform:uppercase; }
+    table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14px; }
+    th { background:#1a73e8; color:white; padding:10px 12px; text-align:left; }
+    td { padding:9px 12px; border-bottom:1px solid #e5e7eb; }
+    tr:nth-child(even) td { background:#f9fafb; }
+    /* 読み上げボタン */
+    #read-btn {
+      position:fixed; bottom:24px; right:24px; z-index:9999;
+      background:#1a73e8; color:#fff; border:none; border-radius:50%;
+      width:52px; height:52px; font-size:22px; cursor:pointer;
+      box-shadow:0 4px 12px rgba(0,0,0,0.2); display:flex; align-items:center; justify-content:center;
+      transition:background 0.2s;
+    }
+    #read-btn:hover { background:#1557b0; }
+    #read-btn.speaking { background:#ea4335; }
+  </style>
+</head>
+<body>
+
+<button id="read-btn" title="読み上げ">🔊</button>
+
+<google-codelab
+  title="Gemini in Workspace 実践"
+  environment="web"
+  feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/">
+
+  <!-- Step 1 -->
+  <google-codelab-step label="はじめに" duration="3">
+    <h2>このコースについて</h2>
+    <p>Google Workspace に組み込まれた AI アシスタント「Gemini」を使って、メール・ドキュメント・スプレッドシート・スライド・会議の5つの業務シーンで生産性を向上させる実践ハンズオンです。</p>
+
+    <h3>学習目標</h3>
+    <ul>
+      <li>Gmail で Gemini を使ってメールを下書き・要約する</li>
+      <li>Google Docs で文書の要約・改善提案を受ける</li>
+      <li>Google Sheets で数式の提案・データ分析を行う</li>
+      <li>Google Slides でスライドを自動生成する</li>
+      <li>Google Meet で会議の要点を自動でまとめる</li>
+    </ul>
+
+    <h3>必要なもの</h3>
+    <ul>
+      <li>Google Workspace アカウント（Gemini 有効化済み）</li>
+      <li>ブラウザ（Google Chrome 推奨）</li>
+    </ul>
+
+    <div class="tip-box">
+      <strong>Gemini が表示されない場合</strong><br>
+      管理コンソールで Gemini アドオンが有効化されているか確認してください。情報システム部（内線 XXX）へお問い合わせください。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 2 -->
+  <google-codelab-step label="Gmail で Gemini を使う" duration="10">
+    <h2>メールの下書きと要約</h2>
+    <p>Gmail では「Gemini で下書き」「要約」「返信の提案」の3機能が使えます。</p>
+
+    <h3>メールを下書きする</h3>
+    <ol>
+      <li>Gmail を開き、<strong>作成</strong> ボタンをクリック</li>
+      <li>作成ウィンドウ右下の <strong>✨ Gemini アイコン</strong> をクリック</li>
+      <li>「Gemini で下書き」を選択</li>
+      <li>以下のようなプロンプトを入力して「作成」をクリック</li>
+    </ol>
+
+    <div class="prompt-box">来週月曜日の定例会議について、参加者に出席確認と資料送付のお願いメールを書いてください。会議は 14:00〜15:00、会議室 B です。</div>
+
+    <h3>長いメールを要約する</h3>
+    <ol>
+      <li>長いメールを開く</li>
+      <li>本文上部に表示される <strong>「このメールを要約」</strong> をクリック</li>
+      <li>数秒で要点が箇条書きで表示される</li>
+    </ol>
+
+    <div class="before-after">
+      <div class="before">
+        <div class="step-label">変換前</div>
+        <p style="font-size:13px">長いメール本文（数百文字）を全部読む必要あり</p>
+      </div>
+      <div class="after">
+        <div class="step-label">変換後</div>
+        <p style="font-size:13px">・件名: ○○<br>・要点: △△<br>・アクション: □□<br>（3〜5行で把握）</p>
+      </div>
+    </div>
+
+    <h3>返信を提案させる</h3>
+    <ol>
+      <li>受信したメールを開く</li>
+      <li>「返信」ボタンの横にある <strong>✨ アイコン</strong> をクリック</li>
+      <li>「返信を提案」を選択 → Gemini が返信の候補を生成</li>
+      <li>内容を確認・編集してから送信</li>
+    </ol>
+
+    <div class="tip-box">
+      <strong>プロのコツ</strong><br>
+      生成された文章は必ず確認・編集してから送信しましょう。事実確認が必要な数字や日時は特に注意が必要です。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 3 -->
+  <google-codelab-step label="Google Docs で Gemini を使う" duration="10">
+    <h2>文書の要約・改善・作成</h2>
+    <p>Google Docs では文書の右側に表示される Gemini パネルを使って、要約・書き直し・追記ができます。</p>
+
+    <h3>文書を要約する</h3>
+    <ol>
+      <li>Google Docs で文書を開く</li>
+      <li>右上の <strong>✨ Gemini</strong> アイコンをクリックしてパネルを開く</li>
+      <li>「この文書を要約して」と入力して送信</li>
+    </ol>
+
+    <h3>文章を改善する</h3>
+    <ol>
+      <li>改善したい文章を選択（ドラッグで範囲指定）</li>
+      <li>表示されるメニューから <strong>「Gemini で改善」</strong> を選択</li>
+      <li>「もっとフォーマルに」「短くまとめて」などの指示を選ぶか、自由入力</li>
+    </ol>
+
+    <div class="prompt-box">この文章をビジネスメール向けに書き直してください。箇条書きを使って読みやすくしてください。</div>
+
+    <h3>白紙から文書を作成する</h3>
+    <ol>
+      <li>新規 Docs を開く</li>
+      <li>Gemini パネルで「〜の文書を書いて」と入力</li>
+    </ol>
+
+    <div class="prompt-box">新入社員向けの Google Workspace 利用ガイドのアウトラインを作成してください。主要な Workspace ツール（Gmail・Drive・Docs・Meet）の基本的な使い方を含めてください。</div>
+
+    <div class="warning-box">
+      <strong>注意</strong><br>
+      社外秘情報や個人情報を含む文書を Gemini に貼り付けないでください。情報セキュリティガイドラインに従って利用してください。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 4 -->
+  <google-codelab-step label="Google Sheets で Gemini を使う" duration="8">
+    <h2>数式提案とデータ分析</h2>
+    <p>Google Sheets の Gemini は「数式がわからない」「データから何かわかることを教えて」という場面で特に役立ちます。</p>
+
+    <h3>数式を自然言語で作る</h3>
+    <ol>
+      <li>スプレッドシートを開く</li>
+      <li>右上の <strong>✨ Gemini</strong> アイコンをクリック</li>
+      <li>以下のように日本語で数式を依頼する</li>
+    </ol>
+
+    <div class="prompt-box">B2からB100の中で、A列が「東京」のセルだけを合計する数式を作って</div>
+
+    <p>Gemini が <code>=SUMIF(A2:A100,"東京",B2:B100)</code> のような数式を提案します。クリックするとセルに挿入されます。</p>
+
+    <h3>データを分析してもらう</h3>
+    <ol>
+      <li>分析したいデータ範囲を選択</li>
+      <li>Gemini パネルで「このデータから読み取れることを教えて」と入力</li>
+      <li>傾向・異常値・改善点などをまとめてくれる</li>
+    </ol>
+
+    <table>
+      <tr><th>活用シーン</th><th>プロンプト例</th></tr>
+      <tr><td>月次集計</td><td>「先月と今月を比較して変化点を教えて」</td></tr>
+      <tr><td>グラフ種類選択</td><td>「このデータに最適なグラフの種類を提案して」</td></tr>
+      <tr><td>エラー修正</td><td>「この数式がエラーになる理由を教えて」</td></tr>
+      <tr><td>データ整形</td><td>「姓と名が別々の列を一つにまとめる数式を作って」</td></tr>
+    </table>
+
+    <div class="tip-box">
+      <strong>ポイント</strong><br>
+      列名（ヘッダー行）が日本語でも英語でも問題なく理解してくれます。「A列の合計」より「売上列の合計」のように具体的な名前で伝えると精度が上がります。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 5 -->
+  <google-codelab-step label="Google Slides で Gemini を使う" duration="8">
+    <h2>スライドの自動生成とデザイン提案</h2>
+    <p>Google Slides では、テーマ・アウトライン・個別スライドの内容を Gemini に生成させることができます。</p>
+
+    <h3>スライドを一から生成する</h3>
+    <ol>
+      <li>Google Slides を開いて新規プレゼンテーションを作成</li>
+      <li>右上の <strong>✨ Gemini</strong> アイコンをクリック</li>
+      <li>以下のようなプロンプトを入力</li>
+    </ol>
+
+    <div class="prompt-box">「社内DX推進の進捗報告」という8スライドのプレゼンを作成してください。
+内容：現状課題・取り組み内容・成果・今後の計画</div>
+
+    <h3>既存スライドを改善する</h3>
+    <ol>
+      <li>改善したいスライドを選択</li>
+      <li>Gemini パネルで指示を入力</li>
+    </ol>
+
+    <div class="prompt-box">このスライドの箇条書きをより分かりやすく書き直してください。
+経営層向けに要点を絞った3行以内にまとめてください。</div>
+
+    <h3>画像生成（対応環境のみ）</h3>
+    <p>Gemini Advanced が有効な場合、スライド内に挿入する画像の生成も依頼できます。</p>
+    <div class="prompt-box">デジタル変革をテーマにした、シンプルでビジネス向けのイラストを生成してください</div>
+
+    <div class="warning-box">
+      <strong>生成されたコンテンツの確認</strong><br>
+      自動生成されたスライドの数字・固有名詞・日付は必ず確認してください。Gemini は文脈から推測して書くため、実際のデータと異なる場合があります。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 6 -->
+  <google-codelab-step label="Google Meet で Gemini を使う" duration="5">
+    <h2>会議の自動メモ・要約</h2>
+    <p>Google Meet では会議中のメモ取りと、会議後の要約を Gemini が自動生成します。</p>
+
+    <h3>会議中の自動メモ</h3>
+    <ol>
+      <li>Meet の会議画面で右上の <strong>✨ アイコン</strong> をクリック</li>
+      <li>「メモを取る」をオンにする</li>
+      <li>会議中は Gemini がリアルタイムでメモを作成</li>
+      <li>会議終了後、Google Docs に自動保存される</li>
+    </ol>
+
+    <div class="tip-box">
+      <strong>参加者への案内</strong><br>
+      メモ機能を有効にすると参加者全員に通知されます。事前に「Gemini でメモを取ります」と伝えてから開始しましょう。
+    </div>
+
+    <h3>会議の要約を取得する</h3>
+    <ol>
+      <li>会議終了後、主催者のメールに要約が自動送信される</li>
+      <li>要約には「決定事項」「アクションアイテム」「次のステップ」が含まれる</li>
+    </ol>
+
+    <h3>会議後に質問する</h3>
+    <p>会議録が保存されている場合、Gemini パネルで後から質問できます。</p>
+    <div class="prompt-box">今日の会議で決まったアクションアイテムと担当者を一覧にしてください</div>
+  </google-codelab-step>
+
+  <!-- Step 7 -->
+  <google-codelab-step label="Gemini 活用のコツとプロンプト集" duration="5">
+    <h2>すぐに使えるプロンプト集</h2>
+    <p>業務シーンごとに実際に使えるプロンプト集です。コピーして使ってください。</p>
+
+    <table>
+      <tr><th>シーン</th><th>プロンプト</th></tr>
+      <tr><td>会議案内メール</td><td>「○○の定例会議の案内メールを丁寧な敬語で書いて。日時:△△、場所:□□」</td></tr>
+      <tr><td>断りメール</td><td>「○○の依頼を丁重にお断りするメールを書いて。代替案として△△を提案する内容で」</td></tr>
+      <tr><td>議事録整理</td><td>「この文章を議事録形式に整理して。決定事項・アクション・次回予定の3セクションで」</td></tr>
+      <tr><td>提案書アウトライン</td><td>「○○の導入提案書のアウトラインを作って。対象:部長クラス、5分で読める分量で」</td></tr>
+      <tr><td>データ解説</td><td>「この表のデータを非専門家向けに3行で解説して」</td></tr>
+      <tr><td>翻訳・改訳</td><td>「この英語メールを自然な日本語ビジネス文に翻訳して」</td></tr>
+    </table>
+
+    <h3>良いプロンプトの3原則</h3>
+    <ul>
+      <li><strong>目的を明確に</strong>：「要約して」より「会議で使う3行要約を作って」</li>
+      <li><strong>対象読者を指定</strong>：「部長向け」「非エンジニア向け」「社内向け」</li>
+      <li><strong>出力形式を指定</strong>：「箇条書きで」「表で」「300字以内で」</li>
+    </ul>
+
+    <div class="tip-box">
+      <strong>反復改善のすすめ</strong><br>
+      最初の出力が完璧でなくても OK です。「もっと簡潔に」「丁寧な言葉遣いに」と追加指示することで精度が上がります。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 8 -->
+  <google-codelab-step label="まとめと次のステップ" duration="2">
+    <h2>学習のまとめ</h2>
+
+    <table>
+      <tr><th>ツール</th><th>主な活用法</th></tr>
+      <tr><td>Gmail</td><td>メール下書き・要約・返信提案</td></tr>
+      <tr><td>Docs</td><td>文書要約・文章改善・白紙から作成</td></tr>
+      <tr><td>Sheets</td><td>数式提案・データ分析・傾向把握</td></tr>
+      <tr><td>Slides</td><td>スライド自動生成・内容改善</td></tr>
+      <tr><td>Meet</td><td>自動メモ・会議要約・議事録</td></tr>
+    </table>
+
+    <h2>次のステップ</h2>
+    <ul>
+      <li><a href="/codelabs/prompt-engineering/">CL-007 プロンプトエンジニアリング入門</a>でより精度の高い指示の作り方を学ぶ</li>
+      <li><a href="/codelabs/gemini-advanced/">CL-015 Gemini Advanced 活用法</a>で Deep Research・Gems を体験する</li>
+      <li>日常業務の中で毎日1つ Gemini を使ってみる</li>
+    </ul>
+
+    <div class="tip-box">
+      <strong>お疲れ様でした！</strong><br>
+      Gemini in Workspace の主要機能を一通り体験できました。慣れてくると、メール1本・資料1枚の作成時間が大幅に短縮されます。まずは「メール下書き」から今日の業務で試してみてください。
+    </div>
+  </google-codelab-step>
+
+</google-codelab>
+
+<script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+<script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+<script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+<script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+<script>
+(function() {
+  var btn = document.getElementById('read-btn');
+  var synth = window.speechSynthesis;
+  var utt = null;
+  function getStepText() {
+    var step = document.querySelector('google-codelab-step[selected]') ||
+               document.querySelector('google-codelab-step');
+    return step ? step.innerText.replace(/\s+/g,' ').trim() : '';
+  }
+  btn.addEventListener('click', function() {
+    if (synth.speaking) { synth.cancel(); btn.classList.remove('speaking'); btn.textContent='🔊'; return; }
+    var text = getStepText();
+    if (!text) return;
+    utt = new SpeechSynthesisUtterance(text);
+    utt.lang = 'ja-JP'; utt.rate = 1.0;
+    utt.onend = function() { btn.classList.remove('speaking'); btn.textContent='🔊'; };
+    synth.speak(utt);
+    btn.classList.add('speaking'); btn.textContent='⏹';
+  });
+  window.addEventListener('hashchange', function() { synth.cancel(); btn.classList.remove('speaking'); btn.textContent='🔊'; });
+})();
+</script>
+</body>
+</html>

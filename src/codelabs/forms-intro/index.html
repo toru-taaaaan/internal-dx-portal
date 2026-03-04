@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Forms 入門</title>
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .tip-box { background:#e8f5e9; border-left:4px solid #4caf50; padding:12px 16px; border-radius:4px; margin:16px 0; }
+    .warning-box { background:#fff3e0; border-left:4px solid #ff9800; padding:12px 16px; border-radius:4px; margin:16px 0; }
+    table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14px; }
+    th { background:#1a73e8; color:white; padding:10px 12px; text-align:left; }
+    td { padding:9px 12px; border-bottom:1px solid #e5e7eb; }
+    tr:nth-child(even) td { background:#f9fafb; }
+    .sample-form { background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:20px; margin:16px 0; }
+    .form-question { margin-bottom:16px; }
+    .form-label { font-size:14px; font-weight:600; color:#1e293b; display:block; margin-bottom:6px; }
+    .form-input { width:100%; padding:8px 12px; border:1px solid #d1d5db; border-radius:4px; font-size:14px; box-sizing:border-box; background:white; }
+    .form-radio { display:flex; flex-direction:column; gap:8px; }
+    .form-radio label { display:flex; align-items:center; gap:8px; font-size:14px; cursor:pointer; }
+    #read-btn {
+      position:fixed; bottom:24px; right:24px; z-index:9999;
+      background:#1a73e8; color:#fff; border:none; border-radius:50%;
+      width:52px; height:52px; font-size:22px; cursor:pointer;
+      box-shadow:0 4px 12px rgba(0,0,0,0.2); display:flex; align-items:center; justify-content:center;
+      transition:background 0.2s;
+    }
+    #read-btn:hover { background:#1557b0; }
+    #read-btn.speaking { background:#ea4335; }
+  </style>
+</head>
+<body>
+
+<button id="read-btn" title="読み上げ">🔊</button>
+
+<google-codelab
+  title="Google Forms 入門"
+  environment="web"
+  feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/">
+
+  <!-- Step 1 -->
+  <google-codelab-step label="はじめに" duration="2">
+    <h2>このコースについて</h2>
+    <p>Google Forms を使って、アンケート・申請フォーム・勉強会参加確認などを5分で作れるようになるハンズオンです。プログラミング不要、Google アカウントだけで始められます。</p>
+
+    <h3>学習目標</h3>
+    <ul>
+      <li>Google Forms でフォームを新規作成する</li>
+      <li>テキスト・選択肢・評価など7種類の質問を使い分ける</li>
+      <li>デザインとセクション分けをカスタマイズする</li>
+      <li>フォームを社内・社外に共有する</li>
+      <li>回答をスプレッドシートで集計・分析する</li>
+    </ul>
+
+    <h3>必要なもの</h3>
+    <ul>
+      <li>Google アカウント（Workspace または個人）</li>
+      <li>ブラウザ（Chrome 推奨）</li>
+    </ul>
+
+    <h3>作成するフォームのサンプル</h3>
+    <div class="sample-form">
+      <p style="font-weight:700;font-size:15px;margin:0 0 4px">AI 活用勉強会 参加申込フォーム</p>
+      <p style="font-size:12px;color:#64748b;margin:0 0 16px">所要時間: 2分</p>
+      <div class="form-question">
+        <span class="form-label">氏名 <span style="color:#dc2626">*</span></span>
+        <input class="form-input" type="text" placeholder="田中 太郎" disabled>
+      </div>
+      <div class="form-question">
+        <span class="form-label">所属部署 <span style="color:#dc2626">*</span></span>
+        <div class="form-radio">
+          <label><input type="radio" disabled> 営業部</label>
+          <label><input type="radio" disabled> 総務部</label>
+          <label><input type="radio" disabled> 情報システム部</label>
+          <label><input type="radio" disabled> その他</label>
+        </div>
+      </div>
+    </div>
+    <p>このようなフォームを、このコースで一から作ります。</p>
+  </google-codelab-step>
+
+  <!-- Step 2 -->
+  <google-codelab-step label="フォームを新規作成する" duration="5">
+    <h2>フォームの作成と基本設定</h2>
+
+    <h3>フォームを作成する</h3>
+    <ol>
+      <li>Google Drive（drive.google.com）を開く</li>
+      <li><strong>新規</strong> → <strong>Google フォーム</strong> を選択</li>
+      <li>または forms.google.com に直接アクセス</li>
+    </ol>
+
+    <h3>タイトルと説明を入力する</h3>
+    <ol>
+      <li>上部の「無題のフォーム」をクリックしてタイトルを変更<br>
+          例: <code>AI 活用勉強会 参加申込フォーム</code></li>
+      <li>「フォームの説明」欄に概要を入力<br>
+          例: <code>2026年3月開催のAI活用勉強会の参加申込フォームです。回答は2分ほどで完了します。</code></li>
+    </ol>
+
+    <h3>フォームの設定を確認する</h3>
+    <ol>
+      <li>右上の <strong>歯車アイコン（設定）</strong> をクリック</li>
+      <li>以下の設定を確認・変更する</li>
+    </ol>
+
+    <table>
+      <tr><th>設定項目</th><th>推奨設定</th><th>用途</th></tr>
+      <tr><td>回答を1回に制限する</td><td>オン（社内向け）</td><td>重複回答を防ぐ</td></tr>
+      <tr><td>回答を編集できる</td><td>状況による</td><td>回答後に変更を許可する場合はオン</td></tr>
+      <tr><td>回答の概要を表示する</td><td>状況による</td><td>全員の回答が見える場合はオン</td></tr>
+      <tr><td>Workspace アカウントに限定</td><td>社内フォームはオン</td><td>社外への漏洩を防ぐ</td></tr>
+    </table>
+
+    <div class="tip-box">
+      「Workspace アカウントに限定」をオンにすると、@会社ドメインのアカウントでしか回答できなくなります。社内申込フォームには必ず設定しましょう。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 3 -->
+  <google-codelab-step label="質問を追加する" duration="10">
+    <h2>7種類の質問タイプを使い分ける</h2>
+
+    <h3>質問タイプ一覧</h3>
+    <table>
+      <tr><th>タイプ</th><th>用途</th><th>例</th></tr>
+      <tr><td>短文回答</td><td>氏名・メール・数値など</td><td>「お名前を入力してください」</td></tr>
+      <tr><td>段落</td><td>コメント・意見・理由など</td><td>「ご要望・ご意見をご記入ください」</td></tr>
+      <tr><td>ラジオボタン</td><td>1つだけ選択</td><td>「参加形式を選んでください（対面/オンライン）」</td></tr>
+      <tr><td>チェックボックス</td><td>複数選択可</td><td>「興味のあるテーマを選んでください（複数可）」</td></tr>
+      <tr><td>プルダウン</td><td>選択肢が多い1択</td><td>「所属部署を選んでください」</td></tr>
+      <tr><td>均等目盛</td><td>1〜5の評価</td><td>「満足度を1〜5で評価してください」</td></tr>
+      <tr><td>日付</td><td>日時の入力</td><td>「希望日を入力してください」</td></tr>
+    </table>
+
+    <h3>質問を追加する手順</h3>
+    <ol>
+      <li>右側の <strong>＋ ボタン</strong> をクリックして質問を追加</li>
+      <li>質問文を入力する</li>
+      <li>右上のドロップダウンで質問タイプを選択</li>
+      <li>「必須」トグルをオンにする（任意）</li>
+    </ol>
+
+    <h3>サンプルフォームに以下の質問を追加する</h3>
+    <ol>
+      <li><strong>短文回答</strong>「お名前」（必須）</li>
+      <li><strong>ラジオボタン</strong>「所属部署」（必須）<br>選択肢: 営業部 / 総務部 / 情報システム部 / 経理部 / その他</li>
+      <li><strong>ラジオボタン</strong>「参加形式」（必須）<br>選択肢: 対面参加 / オンライン参加</li>
+      <li><strong>チェックボックス</strong>「興味のあるテーマ（複数可）」<br>選択肢: ChatAI活用 / ノーコードツール / データ分析 / 自動化・GAS</li>
+      <li><strong>段落</strong>「その他ご要望・ご質問」（任意）</li>
+    </ol>
+  </google-codelab-step>
+
+  <!-- Step 4 -->
+  <google-codelab-step label="フォームをカスタマイズする" duration="5">
+    <h2>デザインとセクション分けで見やすくする</h2>
+
+    <h3>テーマカラーを変更する</h3>
+    <ol>
+      <li>右上の <strong>パレットアイコン</strong> をクリック</li>
+      <li>「テーマの色」から好きな色を選択</li>
+      <li>ヘッダー画像を追加することも可能</li>
+    </ol>
+
+    <div class="tip-box">
+      会社のブランドカラーに合わせると、より統一感のあるフォームになります。
+    </div>
+
+    <h3>セクションを追加して質問をグループ化する</h3>
+    <p>質問が多い場合はセクション（ページ）で分けると回答者の負担が減ります。</p>
+    <ol>
+      <li>右側メニューの <strong>三本線アイコン（セクションを追加）</strong> をクリック</li>
+      <li>セクションのタイトルと説明を入力</li>
+    </ol>
+
+    <p>例: 基本情報 → 参加希望内容 → アンケート の3セクション構成</p>
+
+    <h3>条件分岐（回答に応じてページを切り替える）</h3>
+    <ol>
+      <li>分岐したいラジオボタン質問を開く</li>
+      <li>右下の <strong>縦3点メニュー → 回答に基づいてセクションに移動</strong> を選択</li>
+      <li>各選択肢に対して遷移先セクションを指定する</li>
+    </ol>
+
+    <p>例: 「参加形式: 対面参加」→ 会場情報セクション、「オンライン参加」→ URL送付案内セクション</p>
+  </google-codelab-step>
+
+  <!-- Step 5 -->
+  <google-codelab-step label="回答の設定とバリデーション" duration="5">
+    <h2>入力値の検証と確認メッセージ</h2>
+
+    <h3>入力バリデーションを設定する</h3>
+    <p>短文回答や段落の質問に対して、入力値のルールを設定できます。</p>
+    <ol>
+      <li>バリデーションを設定したい質問を開く</li>
+      <li>右下の <strong>縦3点メニュー → 回答の検証</strong> を選択</li>
+      <li>ルールを設定する</li>
+    </ol>
+
+    <table>
+      <tr><th>タイプ</th><th>ルール例</th><th>用途</th></tr>
+      <tr><td>テキスト</td><td>メールアドレス形式</td><td>メール入力フォーム</td></tr>
+      <tr><td>数値</td><td>1〜100の整数</td><td>年齢・個数・金額</td></tr>
+      <tr><td>文字数</td><td>10文字以上・200文字以内</td><td>コメント欄</td></tr>
+    </table>
+
+    <h3>送信後の確認メッセージを設定する</h3>
+    <ol>
+      <li><strong>設定</strong>（歯車）→ <strong>プレゼンテーション</strong> タブ</li>
+      <li>「確認メッセージ」欄にメッセージを入力</li>
+    </ol>
+
+    <p>例: <code>お申し込みありがとうございます。詳細は後日メールにてご連絡いたします。</code></p>
+
+    <h3>回答受付期間を設定する（締め切り）</h3>
+    <p>Google Forms には締め切り機能がありません。代わりに以下の方法を使います：</p>
+    <ul>
+      <li>GAS（Google Apps Script）でスクリプトを設定（中級者向け）</li>
+      <li>締め切り後にフォームの「回答を受け付けています」をオフにする（手動）</li>
+    </ul>
+
+    <div class="tip-box">
+      <a href="/codelabs/gas-basics/">CL-002 GAS 基礎</a>を学ぶと、締め切り自動設定や新回答メール通知なども自動化できます。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 6 -->
+  <google-codelab-step label="フォームを共有する" duration="5">
+    <h2>社内・社外への配布方法</h2>
+
+    <h3>リンクで共有する</h3>
+    <ol>
+      <li>右上の <strong>送信ボタン</strong> をクリック</li>
+      <li><strong>リンクアイコン</strong> をクリック</li>
+      <li>「URL を短縮」にチェックを入れてコピー</li>
+      <li>メール・チャット・社内ポータルに貼り付けて共有</li>
+    </ol>
+
+    <h3>メールで直接送信する</h3>
+    <ol>
+      <li>送信ボタン → <strong>封筒アイコン</strong></li>
+      <li>送信先メールアドレスを入力</li>
+      <li>件名・メッセージを入力して送信</li>
+    </ol>
+
+    <h3>QR コードを生成する</h3>
+    <ol>
+      <li>フォームの URL をコピー</li>
+      <li>QR コード生成サービス（例: qr.io）で QR を作成</li>
+      <li>勉強会の資料・ポスターに印刷して活用</li>
+    </ol>
+
+    <h3>共有設定の確認</h3>
+    <table>
+      <tr><th>設定</th><th>回答できるユーザー</th></tr>
+      <tr><td>組織内に限定（Workspace 設定）</td><td>会社ドメインのアカウントのみ</td></tr>
+      <tr><td>制限なし</td><td>リンクを知っている全員</td></tr>
+    </table>
+
+    <div class="warning-box">
+      個人情報を収集するフォームは必ず「組織内に限定」で設定してください。外部に漏れた場合の責任は管理者に帰属します。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 7 -->
+  <google-codelab-step label="回答をスプレッドシートで確認する" duration="5">
+    <h2>回答データの集計・分析</h2>
+
+    <h3>回答の概要を確認する</h3>
+    <ol>
+      <li>フォームの <strong>回答タブ</strong> をクリック</li>
+      <li>「概要」タブで各質問のグラフ・集計が表示される</li>
+      <li>「個別」タブで回答者1人ずつの内容を確認できる</li>
+    </ol>
+
+    <h3>スプレッドシートに回答を出力する</h3>
+    <ol>
+      <li>回答タブ右上の <strong>スプレッドシートアイコン</strong> をクリック</li>
+      <li>「新しいスプレッドシートを作成」を選択して作成</li>
+      <li>以降の新規回答はスプレッドシートに自動で追加される</li>
+    </ol>
+
+    <div class="tip-box">
+      スプレッドシートに出力すると、フィルター・並び替え・グラフ作成・他シートとの VLOOKUP 連携などが使えます。大量回答の集計に便利です。
+    </div>
+
+    <h3>新回答時にメール通知を受け取る</h3>
+    <ol>
+      <li>回答タブ → <strong>縦3点メニュー</strong> → <strong>新しい回答のメール通知を受け取る</strong></li>
+      <li>回答が届くたびにメールで通知される</li>
+    </ol>
+
+    <h3>スプレッドシートで集計する</h3>
+    <p>スプレッドシートを開いて <code>=COUNTIF(C:C,"対面参加")</code> のような数式で参加形式別の集計も簡単にできます。<a href="/codelabs/looker-studio-intro/">CL-008 Looker Studio 入門</a> と組み合わせるとダッシュボードで可視化できます。</p>
+  </google-codelab-step>
+
+  <!-- Step 8 -->
+  <google-codelab-step label="まとめと次のステップ" duration="2">
+    <h2>学習のまとめ</h2>
+
+    <table>
+      <tr><th>できるようになったこと</th></tr>
+      <tr><td>フォームの新規作成とタイトル・説明の設定</td></tr>
+      <tr><td>7種類の質問タイプの使い分け</td></tr>
+      <tr><td>デザインカスタマイズとセクション分け</td></tr>
+      <tr><td>条件分岐による動的フォームの作成</td></tr>
+      <tr><td>バリデーションと確認メッセージの設定</td></tr>
+      <tr><td>リンク・メール・QRコードでの共有</td></tr>
+      <tr><td>スプレッドシートへの自動出力と集計</td></tr>
+    </table>
+
+    <h2>活用シーン例</h2>
+    <ul>
+      <li>勉強会・イベントの参加申込</li>
+      <li>業務改善に関する社内アンケート</li>
+      <li>備品申請・経費申請フォーム</li>
+      <li>研修後の理解度テスト（正解を設定してクイズ形式に）</li>
+    </ul>
+
+    <h2>次のステップ</h2>
+    <ul>
+      <li><a href="/codelabs/gas-basics/">CL-002 GAS 基礎</a>で回答に応じた自動メール送信を実装する</li>
+      <li><a href="/codelabs/looker-studio-intro/">CL-008 Looker Studio 入門</a>で回答データをダッシュボード化する</li>
+    </ul>
+
+    <div class="tip-box">
+      <strong>お疲れ様でした！</strong><br>
+      Google Forms は「とりあえず作って共有できる」スピードが最大の武器です。まず身近な申込・アンケートで使ってみてください。
+    </div>
+  </google-codelab-step>
+
+</google-codelab>
+
+<script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+<script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+<script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+<script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+<script>
+(function() {
+  var btn = document.getElementById('read-btn');
+  var synth = window.speechSynthesis;
+  var utt = null;
+  function getStepText() {
+    var step = document.querySelector('google-codelab-step[selected]') ||
+               document.querySelector('google-codelab-step');
+    return step ? step.innerText.replace(/\s+/g,' ').trim() : '';
+  }
+  btn.addEventListener('click', function() {
+    if (synth.speaking) { synth.cancel(); btn.classList.remove('speaking'); btn.textContent='🔊'; return; }
+    var text = getStepText();
+    if (!text) return;
+    utt = new SpeechSynthesisUtterance(text);
+    utt.lang = 'ja-JP'; utt.rate = 1.0;
+    utt.onend = function() { btn.classList.remove('speaking'); btn.textContent='🔊'; };
+    synth.speak(utt);
+    btn.classList.add('speaking'); btn.textContent='⏹';
+  });
+  window.addEventListener('hashchange', function() { synth.cancel(); btn.classList.remove('speaking'); btn.textContent='🔊'; });
+})();
+</script>
+</body>
+</html>

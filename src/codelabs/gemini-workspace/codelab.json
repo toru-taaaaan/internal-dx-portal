@@ -1,0 +1,14 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "updated": "2026-03-04T00:00:00+09:00",
+  "id": "gemini-workspace",
+  "duration": 45,
+  "title": "Gemini in Workspace 実践",
+  "summary": "Gmail・Docs・Sheets・Slides・MeetでGeminiを実際に活用。メール下書き・文書要約・数式提案・スライド生成・会議メモ作成を体験するハンズオン。",
+  "category": ["dx", "ai活用", "gemini"],
+  "tags": ["web"],
+  "feedback": "https://internal-dx-portal-auth.tanjiadm.workers.dev/",
+  "url": "gemini-workspace"
+}

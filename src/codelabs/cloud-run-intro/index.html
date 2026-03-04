@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloud Run 入門</title>
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .tip-box { background:#e8f5e9; border-left:4px solid #4caf50; padding:12px 16px; border-radius:4px; margin:16px 0; }
+    .warning-box { background:#fff3e0; border-left:4px solid #ff9800; padding:12px 16px; border-radius:4px; margin:16px 0; }
+    .code-box { background:#1e293b; color:#e2e8f0; border-radius:6px; padding:14px 16px; font-family:monospace; font-size:13px; white-space:pre; overflow-x:auto; margin:12px 0; line-height:1.6; }
+    table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14px; }
+    th { background:#1a73e8; color:white; padding:10px 12px; text-align:left; }
+    td { padding:9px 12px; border-bottom:1px solid #e5e7eb; }
+    tr:nth-child(even) td { background:#f9fafb; }
+    #read-btn {
+      position:fixed; bottom:24px; right:24px; z-index:9999;
+      background:#1a73e8; color:#fff; border:none; border-radius:50%;
+      width:52px; height:52px; font-size:22px; cursor:pointer;
+      box-shadow:0 4px 12px rgba(0,0,0,0.2); display:flex; align-items:center; justify-content:center;
+      transition:background 0.2s;
+    }
+    #read-btn:hover { background:#1557b0; }
+    #read-btn.speaking { background:#ea4335; }
+  </style>
+</head>
+<body>
+
+<button id="read-btn" title="読み上げ">🔊</button>
+
+<google-codelab
+  title="Cloud Run 入門"
+  environment="web"
+  feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/">
+
+  <!-- Step 1 -->
+  <google-codelab-step label="はじめに" duration="3">
+    <h2>このコースについて</h2>
+    <p>Google Cloud の <strong>Cloud Run</strong> を使って、コンテナアプリをサーバーレスでデプロイする方法を学ぶハンズオンです。インフラ管理不要で、リクエストが来たときだけ課金される仕組みを体験します。</p>
+
+    <h3>学習目標</h3>
+    <ul>
+      <li>Cloud Run の仕組みと用途を理解する</li>
+      <li>Cloud Shell で Python アプリを作成する</li>
+      <li>Docker コンテナをビルドして Artifact Registry に登録する</li>
+      <li>Cloud Run にデプロイしてパブリック URL を取得する</li>
+      <li>トラフィック分割とリビジョン管理を体験する</li>
+    </ul>
+
+    <h3>必要なもの</h3>
+    <ul>
+      <li>Google Cloud プロジェクト（課金有効化済み）</li>
+      <li>ブラウザ（Cloud Shell を使用するためローカル環境不要）</li>
+    </ul>
+
+    <div class="tip-box">
+      <strong>費用について</strong><br>
+      このハンズオンは Cloud Shell（無料）と Cloud Run の無料枠（月200万リクエストまで無料）内で完結します。テスト完了後はサービスを削除することを推奨します。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 2 -->
+  <google-codelab-step label="Cloud Run とは" duration="5">
+    <h2>サーバーレスコンテナプラットフォーム</h2>
+    <p>Cloud Run は、コンテナ化されたアプリを <strong>インフラ管理なし</strong> でデプロイできる Google Cloud のサービスです。</p>
+
+    <h3>Cloud Run の特徴</h3>
+    <table>
+      <tr><th>特徴</th><th>内容</th></tr>
+      <tr><td>サーバーレス</td><td>サーバーの管理・スケーリングが不要</td></tr>
+      <tr><td>自動スケール</td><td>リクエスト数に応じて 0〜N インスタンスに自動調整</td></tr>
+      <tr><td>コールドスタート</td><td>リクエストがないときはインスタンス数 0（課金なし）</td></tr>
+      <tr><td>任意の言語</td><td>Python・Node.js・Go・Java など Docker で動くものなら何でも</td></tr>
+      <tr><td>HTTPS</td><td>デプロイするだけで HTTPS URL が自動付与</td></tr>
+    </table>
+
+    <h3>Cloud Run が適しているユースケース</h3>
+    <ul>
+      <li>Web API / REST API のホスティング</li>
+      <li>定期バッチ処理（Cloud Scheduler との組み合わせ）</li>
+      <li>Webhook 受信（GitHub・Slack などのイベント処理）</li>
+      <li>社内ツールの軽量 Web アプリ</li>
+    </ul>
+
+    <div class="tip-box">
+      <strong>App Engine との違い</strong><br>
+      App Engine は言語・フレームワークの制約がありますが、Cloud Run はコンテナが動けば何でも使えます。また Cloud Run の方がスケールダウンの応答が速く、コールドスタートも改善されています。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 3 -->
+  <google-codelab-step label="開発環境を準備する（Cloud Shell）" duration="5">
+    <h2>Cloud Shell を起動する</h2>
+    <ol>
+      <li>Google Cloud Console（console.cloud.google.com）を開く</li>
+      <li>右上の <strong>Cloud Shell アイコン（>_）</strong> をクリック</li>
+      <li>ブラウザ下部にターミナルが起動する</li>
+    </ol>
+
+    <h3>プロジェクトを設定する</h3>
+    <div class="code-box">gcloud config set project YOUR_PROJECT_ID</div>
+
+    <h3>必要な API を有効化する</h3>
+    <div class="code-box">gcloud services enable run.googleapis.com \
+  artifactregistry.googleapis.com \
+  cloudbuild.googleapis.com</div>
+
+    <h3>リージョンを設定する</h3>
+    <div class="code-box">gcloud config set run/region asia-northeast1</div>
+
+    <div class="tip-box">
+      <code>asia-northeast1</code> は東京リージョンです。レイテンシを最小化するために日本のサービスは東京リージョンを使いましょう。
+    </div>
+
+    <h3>作業ディレクトリを作成する</h3>
+    <div class="code-box">mkdir my-cloud-run-app && cd my-cloud-run-app</div>
+  </google-codelab-step>
+
+  <!-- Step 4 -->
+  <google-codelab-step label="コンテナイメージを作成する" duration="12">
+    <h2>Python アプリと Dockerfile を作成する</h2>
+
+    <h3>1. Python アプリを作成する</h3>
+    <div class="code-box">cat > main.py &lt;&lt;'EOF'
+import os
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    name = os.environ.get("NAME", "World")
+    return f"&lt;h1&gt;Hello, {name}!&lt;/h1&gt;&lt;p&gt;Cloud Run で動いています&lt;/p&gt;"
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8080))
+    app.run(debug=True, host="0.0.0.0", port=port)
+EOF</div>
+
+    <h3>2. requirements.txt を作成する</h3>
+    <div class="code-box">echo "flask==3.0.3" > requirements.txt</div>
+
+    <h3>3. Dockerfile を作成する</h3>
+    <div class="code-box">cat > Dockerfile &lt;&lt;'EOF'
+FROM python:3.12-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+ENV PORT=8080
+EXPOSE 8080
+
+CMD ["python", "main.py"]
+EOF</div>
+
+    <h3>4. Artifact Registry にリポジトリを作成する</h3>
+    <div class="code-box">gcloud artifacts repositories create my-repo \
+  --repository-format=docker \
+  --location=asia-northeast1</div>
+
+    <h3>5. コンテナをビルドして push する</h3>
+    <div class="code-box">PROJECT_ID=$(gcloud config get-value project)
+
+docker build -t asia-northeast1-docker.pkg.dev/$PROJECT_ID/my-repo/my-app:v1 .
+
+gcloud auth configure-docker asia-northeast1-docker.pkg.dev
+
+docker push asia-northeast1-docker.pkg.dev/$PROJECT_ID/my-repo/my-app:v1</div>
+  </google-codelab-step>
+
+  <!-- Step 5 -->
+  <google-codelab-step label="Cloud Run にデプロイする" duration="8">
+    <h2>デプロイしてサービスを公開する</h2>
+
+    <h3>Cloud Run へデプロイする</h3>
+    <div class="code-box">PROJECT_ID=$(gcloud config get-value project)
+
+gcloud run deploy my-app \
+  --image asia-northeast1-docker.pkg.dev/$PROJECT_ID/my-repo/my-app:v1 \
+  --platform managed \
+  --region asia-northeast1 \
+  --allow-unauthenticated \
+  --set-env-vars NAME=AKIBAホールディングス</div>
+
+    <p>コマンド実行後、デプロイが完了すると <strong>Service URL</strong> が表示されます。</p>
+
+    <div class="code-box">Service URL: https://my-app-xxxx-an.a.run.app</div>
+
+    <h3>ブラウザで確認する</h3>
+    <p>表示された URL をブラウザで開くと、<strong>Hello, AKIBAホールディングス!</strong> と表示されます。</p>
+
+    <h3>デプロイオプションの説明</h3>
+    <table>
+      <tr><th>オプション</th><th>説明</th></tr>
+      <tr><td><code>--allow-unauthenticated</code></td><td>認証なしでアクセス可（パブリック公開）</td></tr>
+      <tr><td><code>--no-allow-unauthenticated</code></td><td>Google アカウント認証を要求（社内向け）</td></tr>
+      <tr><td><code>--set-env-vars</code></td><td>環境変数を設定</td></tr>
+      <tr><td><code>--max-instances</code></td><td>最大インスタンス数（コスト上限の設定）</td></tr>
+      <tr><td><code>--concurrency</code></td><td>1インスタンスが同時処理するリクエスト数</td></tr>
+    </table>
+
+    <div class="tip-box">
+      社内向けツールは <code>--no-allow-unauthenticated</code> を使い、Google Workspace アカウントを持つ社員だけがアクセスできるよう設定しましょう。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 6 -->
+  <google-codelab-step label="トラフィック分割とリビジョン管理" duration="8">
+    <h2>Blue/Green デプロイを体験する</h2>
+
+    <h3>新しいバージョンをデプロイする（トラフィックなし）</h3>
+    <div class="code-box">PROJECT_ID=$(gcloud config get-value project)
+
+gcloud run deploy my-app \
+  --image asia-northeast1-docker.pkg.dev/$PROJECT_ID/my-repo/my-app:v1 \
+  --no-traffic \
+  --tag v2-preview \
+  --set-env-vars NAME=新バージョン</div>
+
+    <p><code>--no-traffic</code> を指定すると、新リビジョンはデプロイされますがトラフィックは流れません。<code>--tag</code> で専用の URL が発行されるので、テストが可能です。</p>
+
+    <h3>トラフィックを段階的に切り替える</h3>
+    <div class="code-box"># v2 に 10% のトラフィックを流す
+gcloud run services update-traffic my-app \
+  --to-tags v2-preview=10
+
+# 問題なければ 100% に切り替え
+gcloud run services update-traffic my-app \
+  --to-latest</div>
+
+    <h3>リビジョン一覧を確認する</h3>
+    <div class="code-box">gcloud run revisions list --service my-app</div>
+
+    <h3>前のバージョンにロールバックする</h3>
+    <div class="code-box">gcloud run services update-traffic my-app \
+  --to-revisions my-app-00001-xxx=100</div>
+
+    <div class="tip-box">
+      <strong>Blue/Green デプロイのメリット</strong><br>
+      本番環境への影響を最小化しながら新機能をリリースできます。問題が発生した場合もコマンド1行でロールバックできます。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 7 -->
+  <google-codelab-step label="ログとモニタリング" duration="5">
+    <h2>稼働状況の確認</h2>
+
+    <h3>Cloud Logging でログを確認する</h3>
+    <div class="code-box">gcloud logging read "resource.type=cloud_run_revision AND resource.labels.service_name=my-app" \
+  --limit 50 \
+  --format "table(timestamp,textPayload)"</div>
+
+    <h3>Cloud Console でメトリクスを確認する</h3>
+    <ol>
+      <li>Cloud Console → <strong>Cloud Run</strong> → <strong>my-app</strong></li>
+      <li><strong>指標</strong> タブをクリック</li>
+      <li>以下のメトリクスを確認できる</li>
+    </ol>
+
+    <table>
+      <tr><th>メトリクス</th><th>内容</th></tr>
+      <tr><td>リクエスト数</td><td>時間あたりのリクエスト数の推移</td></tr>
+      <tr><td>レイテンシ</td><td>p50/p95/p99 のレスポンス時間</td></tr>
+      <tr><td>インスタンス数</td><td>起動中のコンテナインスタンス数</td></tr>
+      <tr><td>コンテナ CPU</td><td>CPU 使用率の推移</td></tr>
+    </table>
+
+    <h3>クリーンアップ（費用を止める）</h3>
+    <div class="code-box"># Cloud Run サービスを削除
+gcloud run services delete my-app --region asia-northeast1
+
+# Artifact Registry のイメージを削除
+gcloud artifacts repositories delete my-repo --location=asia-northeast1</div>
+
+    <div class="warning-box">
+      ハンズオン完了後はサービスを削除するか、<code>--max-instances 0</code> でスケールダウンしておきましょう。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 8 -->
+  <google-codelab-step label="まとめと次のステップ" duration="2">
+    <h2>学習のまとめ</h2>
+
+    <table>
+      <tr><th>ステップ</th><th>実施内容</th></tr>
+      <tr><td>環境準備</td><td>Cloud Shell・API 有効化</td></tr>
+      <tr><td>アプリ作成</td><td>Python (Flask) + Dockerfile</td></tr>
+      <tr><td>ビルド・Push</td><td>Artifact Registry へのコンテナ登録</td></tr>
+      <tr><td>デプロイ</td><td>Cloud Run サービスの公開</td></tr>
+      <tr><td>トラフィック管理</td><td>Blue/Green デプロイ・ロールバック</td></tr>
+      <tr><td>モニタリング</td><td>ログ確認・メトリクス把握</td></tr>
+    </table>
+
+    <h2>次のステップ</h2>
+    <ul>
+      <li>Cloud Scheduler と組み合わせて定期バッチを実装する</li>
+      <li>Cloud Run で Gemini API を呼び出す社内ツールを作る</li>
+      <li><a href="/codelabs/firebase-web-intro/">CL-006 Firebase Web 入門</a>と組み合わせてフルスタック開発を体験する</li>
+    </ul>
+
+    <div class="tip-box">
+      <strong>お疲れ様でした！</strong><br>
+      Cloud Run の基本から Blue/Green デプロイまで体験できました。「サーバーなし・インフラ管理なし」でアプリを公開できる感覚をつかめたと思います。
+    </div>
+  </google-codelab-step>
+
+</google-codelab>
+
+<script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+<script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+<script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+<script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+<script>
+(function() {
+  var btn = document.getElementById('read-btn');
+  var synth = window.speechSynthesis;
+  var utt = null;
+  function getStepText() {
+    var step = document.querySelector('google-codelab-step[selected]') ||
+               document.querySelector('google-codelab-step');
+    return step ? step.innerText.replace(/\s+/g,' ').trim() : '';
+  }
+  btn.addEventListener('click', function() {
+    if (synth.speaking) { synth.cancel(); btn.classList.remove('speaking'); btn.textContent='🔊'; return; }
+    var text = getStepText();
+    if (!text) return;
+    utt = new SpeechSynthesisUtterance(text);
+    utt.lang = 'ja-JP'; utt.rate = 1.0;
+    utt.onend = function() { btn.classList.remove('speaking'); btn.textContent='🔊'; };
+    synth.speak(utt);
+    btn.classList.add('speaking'); btn.textContent='⏹';
+  });
+  window.addEventListener('hashchange', function() { synth.cancel(); btn.classList.remove('speaking'); btn.textContent='🔊'; });
+})();
+</script>
+</body>
+</html>

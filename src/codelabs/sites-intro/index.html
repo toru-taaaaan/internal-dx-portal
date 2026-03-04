@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Sites 入門</title>
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .tip-box { background:#e8f5e9; border-left:4px solid #4caf50; padding:12px 16px; border-radius:4px; margin:16px 0; }
+    .warning-box { background:#fff3e0; border-left:4px solid #ff9800; padding:12px 16px; border-radius:4px; margin:16px 0; }
+    table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14px; }
+    th { background:#1a73e8; color:white; padding:10px 12px; text-align:left; }
+    td { padding:9px 12px; border-bottom:1px solid #e5e7eb; }
+    tr:nth-child(even) td { background:#f9fafb; }
+    .usecase-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0; }
+    .usecase-card { background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; }
+    .usecase-card h4 { margin:0 0 6px; font-size:14px; color:#1e293b; }
+    .usecase-card p { margin:0; font-size:13px; color:#64748b; }
+    #read-btn {
+      position:fixed; bottom:24px; right:24px; z-index:9999;
+      background:#1a73e8; color:#fff; border:none; border-radius:50%;
+      width:52px; height:52px; font-size:22px; cursor:pointer;
+      box-shadow:0 4px 12px rgba(0,0,0,0.2); display:flex; align-items:center; justify-content:center;
+      transition:background 0.2s;
+    }
+    #read-btn:hover { background:#1557b0; }
+    #read-btn.speaking { background:#ea4335; }
+  </style>
+</head>
+<body>
+
+<button id="read-btn" title="読み上げ">🔊</button>
+
+<google-codelab
+  title="Google Sites 入門"
+  environment="web"
+  feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/">
+
+  <!-- Step 1 -->
+  <google-codelab-step label="はじめに" duration="2">
+    <h2>このコースについて</h2>
+    <p>Google Sites を使って、プログラミング不要で社内 Wiki・プロジェクトポータル・チームサイトを構築するハンズオンです。Docs・Sheets・カレンダーなど Workspace ツールを埋め込んで、情報の集約場所を30分で作れます。</p>
+
+    <h3>学習目標</h3>
+    <ul>
+      <li>Google Sites でサイトを新規作成する</li>
+      <li>ページを追加してコンテンツを編集する</li>
+      <li>Docs・Sheets・スライド・カレンダーを埋め込む</li>
+      <li>ナビゲーションを設定して使いやすくする</li>
+      <li>サイトを社内公開・社外公開する</li>
+    </ul>
+
+    <h3>Google Sites でできること</h3>
+    <div class="usecase-grid">
+      <div class="usecase-card">
+        <h4>社内 Wiki</h4>
+        <p>業務マニュアル・FAQ・社内ルールをまとめる</p>
+      </div>
+      <div class="usecase-card">
+        <h4>プロジェクトポータル</h4>
+        <p>進捗・資料・議事録を1か所に集約</p>
+      </div>
+      <div class="usecase-card">
+        <h4>部署・チームサイト</h4>
+        <p>メンバー紹介・連絡事項・リンク集</p>
+      </div>
+      <div class="usecase-card">
+        <h4>研修・勉強会サイト</h4>
+        <p>資料・動画・アンケートを1ページにまとめる</p>
+      </div>
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 2 -->
+  <google-codelab-step label="Google Sites とは" duration="3">
+    <h2>特徴と他ツールとの比較</h2>
+
+    <h3>Google Sites の特徴</h3>
+    <table>
+      <tr><th>特徴</th><th>内容</th></tr>
+      <tr><td>ノーコード</td><td>HTML/CSS 不要。ドラッグ&amp;ドロップで編集</td></tr>
+      <tr><td>Workspace 連携</td><td>Docs・Sheets・スライド・フォーム・カレンダーをそのまま埋め込み</td></tr>
+      <tr><td>権限管理</td><td>Workspace の組織内限定 / 全体公開 / 特定ユーザーに限定</td></tr>
+      <tr><td>共同編集</td><td>複数人でリアルタイムに編集可能</td></tr>
+      <tr><td>無料</td><td>Google Workspace のライセンスに含まれる</td></tr>
+    </table>
+
+    <h3>Google Sites が向いている場面</h3>
+    <ul>
+      <li>Workspace ドキュメントのポータルとして使う</li>
+      <li>外部公開が不要な社内情報ページ</li>
+      <li>プロジェクト単位の一時的な情報集約</li>
+    </ul>
+
+    <div class="tip-box">
+      本格的なデザインや複雑なインタラクションが必要な場合は、今回作った <strong>内部DXポータル</strong> のようにカスタム HTML での構築も検討してください。Google Sites は「すぐ作れる・すぐ共有できる」スピード重視のケースに最適です。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 3 -->
+  <google-codelab-step label="サイトを新規作成する" duration="8">
+    <h2>サイトの作成と基本設定</h2>
+
+    <h3>サイトを作成する</h3>
+    <ol>
+      <li>sites.google.com を開く</li>
+      <li><strong>＋ 新しい Google サイト</strong> をクリック</li>
+      <li>テンプレートが表示される。今回は「空白」を選択</li>
+    </ol>
+
+    <h3>テーマとレイアウトを選択する</h3>
+    <ol>
+      <li>右側のパネルで <strong>テーマ</strong> をクリック</li>
+      <li>「Aristotle」「Luxe」「Diplomat」などから選ぶ（後から変更可）</li>
+      <li>カラーや書体も選択できる</li>
+    </ol>
+
+    <h3>サイト名（タイトル）を設定する</h3>
+    <ol>
+      <li>左上の「無題のサイト」をクリックして変更<br>
+          例: <code>AI Champion プロジェクトポータル</code></li>
+      <li>ページ上部のバナー部分のタイトルも変更する<br>
+          例: <code>AI Champion プロジェクトポータル</code></li>
+      <li>サブタイトル欄に説明を追加<br>
+          例: <code>AI活用推進プロジェクトの情報・資料・進捗を集約しています</code></li>
+    </ol>
+
+    <h3>バナー画像を変更する</h3>
+    <ol>
+      <li>バナー部分にカーソルを合わせると <strong>「画像を変更」</strong> ボタンが表示される</li>
+      <li>Google 提供の画像を選ぶか、自分でアップロードする</li>
+    </ol>
+  </google-codelab-step>
+
+  <!-- Step 4 -->
+  <google-codelab-step label="ページを追加・編集する" duration="10">
+    <h2>コンテンツの追加方法</h2>
+
+    <h3>テキストブロックを追加する</h3>
+    <ol>
+      <li>右側パネルの <strong>挿入</strong> タブをクリック</li>
+      <li><strong>テキストボックス</strong> をドラッグしてページ上に配置</li>
+      <li>見出し・本文・箇条書きなどを入力</li>
+    </ol>
+
+    <h3>画像を追加する</h3>
+    <ol>
+      <li>挿入 → <strong>画像</strong> をクリック</li>
+      <li>「アップロード」「Google ドライブから選択」「URL で指定」から選ぶ</li>
+    </ol>
+
+    <h3>ページを追加する</h3>
+    <ol>
+      <li>右側パネルの <strong>ページ</strong> タブをクリック</li>
+      <li>下部の <strong>＋ 新しいページ</strong> をクリック</li>
+      <li>ページ名を入力（例: 資料一覧 / 議事録 / メンバー紹介）</li>
+    </ol>
+
+    <h3>おすすめのページ構成例</h3>
+    <table>
+      <tr><th>ページ名</th><th>コンテンツ</th></tr>
+      <tr><td>ホーム</td><td>プロジェクト概要・最新情報・リンク集</td></tr>
+      <tr><td>資料</td><td>提案書・報告書の Docs/スライド埋め込み</td></tr>
+      <tr><td>議事録</td><td>会議ごとの議事録 Docs 一覧</td></tr>
+      <tr><td>スケジュール</td><td>Google カレンダー埋め込み</td></tr>
+      <tr><td>メンバー</td><td>担当者・役割・連絡先一覧</td></tr>
+    </table>
+
+    <div class="tip-box">
+      ページ数が多くなると迷子になりやすくなります。最初は3〜5ページに絞って、必要に応じて追加するのがおすすめです。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 5 -->
+  <google-codelab-step label="コンテンツを埋め込む" duration="8">
+    <h2>Workspace ツールの埋め込み</h2>
+    <p>Google Sites の最大の強みは、Workspace ドキュメントをそのまま表示できることです。</p>
+
+    <h3>Google Docs を埋め込む</h3>
+    <ol>
+      <li>挿入 → <strong>ドライブ</strong> をクリック</li>
+      <li>埋め込みたい Docs ファイルを選択して「挿入」</li>
+      <li>Docs が更新されると Sites 上の表示も自動で更新される</li>
+    </ol>
+
+    <div class="tip-box">
+      <strong>ポイント</strong><br>
+      Docs の内容が変わると Sites の表示も自動で反映されます。「最新資料はここを見て」と案内できるので、バラバラなファイル共有が不要になります。
+    </div>
+
+    <h3>Google スライドを埋め込む</h3>
+    <ol>
+      <li>挿入 → ドライブ → スライドファイルを選択</li>
+      <li>サイズを調整して配置</li>
+    </ol>
+
+    <h3>Google カレンダーを埋め込む</h3>
+    <ol>
+      <li>挿入 → <strong>カレンダー</strong> をクリック</li>
+      <li>表示したいカレンダーを選択して挿入</li>
+      <li>サイト上でカレンダーの予定が確認できるようになる</li>
+    </ol>
+
+    <h3>Google Forms を埋め込む</h3>
+    <ol>
+      <li>挿入 → ドライブ → Forms ファイルを選択</li>
+      <li>サイト内でそのままフォームに回答できる</li>
+    </ol>
+
+    <h3>YouTube 動画を埋め込む</h3>
+    <ol>
+      <li>挿入 → <strong>YouTube</strong></li>
+      <li>動画の URL または検索キーワードで動画を選択</li>
+    </ol>
+
+    <table>
+      <tr><th>埋め込みコンテンツ</th><th>用途</th></tr>
+      <tr><td>Docs</td><td>マニュアル・議事録・報告書の表示</td></tr>
+      <tr><td>スライド</td><td>研修資料・プレゼンの閲覧</td></tr>
+      <tr><td>Sheets</td><td>進捗表・データの埋め込み表示</td></tr>
+      <tr><td>カレンダー</td><td>プロジェクトスケジュール・締め切り管理</td></tr>
+      <tr><td>Forms</td><td>アンケート・申込フォームの直接回答</td></tr>
+      <tr><td>YouTube</td><td>研修動画・操作説明動画</td></tr>
+    </table>
+  </google-codelab-step>
+
+  <!-- Step 6 -->
+  <google-codelab-step label="ナビゲーションを設定する" duration="5">
+    <h2>見やすいナビゲーション構造</h2>
+
+    <h3>ナビゲーションの種類</h3>
+    <p>Google Sites のナビゲーションは上部（ヘッダー）に表示されます。</p>
+
+    <h3>ページの並び順を変更する</h3>
+    <ol>
+      <li>右側パネルの <strong>ページ</strong> タブを開く</li>
+      <li>ページをドラッグ&amp;ドロップで並び替え</li>
+    </ol>
+
+    <h3>サブページを作成する</h3>
+    <ol>
+      <li>ページの右にある <strong>縦3点メニュー → サブページを追加</strong></li>
+      <li>親ページの下にネスト（階層化）される</li>
+    </ol>
+
+    <p>例:</p>
+    <ul>
+      <li>資料
+        <ul>
+          <li>2025年度</li>
+          <li>2026年度</li>
+        </ul>
+      </li>
+      <li>議事録
+        <ul>
+          <li>月次定例</li>
+          <li>臨時会議</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3>外部リンクをナビゲーションに追加する</h3>
+    <ol>
+      <li>ページパネル下部の <strong>リンクを追加</strong></li>
+      <li>タイトルと URL を入力</li>
+      <li>例: タスク管理表（Google スプレッドシートへのリンク）</li>
+    </ol>
+
+    <div class="tip-box">
+      ナビゲーションは5〜7項目以内に収めると見やすくなります。階層が深すぎると迷子になるので、2階層までを目安にしましょう。
+    </div>
+  </google-codelab-step>
+
+  <!-- Step 7 -->
+  <google-codelab-step label="サイトを公開・共有する" duration="5">
+    <h2>公開設定と権限管理</h2>
+
+    <h3>サイトを公開する</h3>
+    <ol>
+      <li>右上の <strong>公開</strong> ボタンをクリック</li>
+      <li>ウェブアドレス（URL）を設定する<br>
+          例: <code>sites.google.com/view/akiba-ai-champion</code></li>
+      <li>公開範囲を設定する</li>
+    </ol>
+
+    <h3>公開範囲の設定</h3>
+    <table>
+      <tr><th>設定</th><th>アクセスできるユーザー</th><th>用途</th></tr>
+      <tr><td>組織内のみ</td><td>@会社ドメインのアカウント</td><td>社内専用サイト（推奨）</td></tr>
+      <tr><td>リンクを知っている全員</td><td>URL を知っている人全員</td><td>取引先との共有など</td></tr>
+      <tr><td>全員（公開）</td><td>検索エンジンにも表示される</td><td>外部向けサイト</td></tr>
+    </table>
+
+    <div class="warning-box">
+      社内情報・プロジェクト資料は必ず「組織内のみ」で公開してください。誤って全体公開すると社外に情報が漏れる可能性があります。
+    </div>
+
+    <h3>編集権限を共有する</h3>
+    <ol>
+      <li>右上の <strong>共有アイコン</strong> をクリック</li>
+      <li>共同編集者のメールアドレスを追加</li>
+      <li>「編集者」または「閲覧者」を選択</li>
+    </ol>
+
+    <table>
+      <tr><th>役割</th><th>できること</th></tr>
+      <tr><td>オーナー</td><td>全操作・公開設定・削除</td></tr>
+      <tr><td>編集者</td><td>コンテンツ追加・編集（公開設定は変更不可）</td></tr>
+      <tr><td>閲覧者</td><td>閲覧のみ（公開前の確認に使用）</td></tr>
+    </table>
+  </google-codelab-step>
+
+  <!-- Step 8 -->
+  <google-codelab-step label="まとめと次のステップ" duration="2">
+    <h2>学習のまとめ</h2>
+
+    <table>
+      <tr><th>できるようになったこと</th></tr>
+      <tr><td>テーマを選んでサイトを新規作成する</td></tr>
+      <tr><td>複数ページを追加して情報を整理する</td></tr>
+      <tr><td>Docs・スライド・カレンダー・フォームを埋め込む</td></tr>
+      <tr><td>階層ナビゲーションを設定する</td></tr>
+      <tr><td>組織内限定で公開・共有する</td></tr>
+    </table>
+
+    <h2>次に作ってみよう</h2>
+    <ul>
+      <li>AI Champion プロジェクトポータル（進捗・資料・メンバー）</li>
+      <li>情報システム部 社内 Wiki（マニュアル・FAQ・申請フォーム集約）</li>
+      <li>部署の新人向けオンボーディングサイト</li>
+    </ul>
+
+    <h2>次のステップ</h2>
+    <ul>
+      <li><a href="/codelabs/forms-intro/">CL-013 Google Forms 入門</a>で作ったフォームを Sites に埋め込む</li>
+      <li><a href="/codelabs/looker-studio-intro/">CL-008 Looker Studio 入門</a>のダッシュボードを Sites に埋め込んでポータルを強化する</li>
+    </ul>
+
+    <div class="tip-box">
+      <strong>お疲れ様でした！</strong><br>
+      Google Sites は「情報をまとめる場所を作る」シンプルなツールです。まずは自分のチームや担当プロジェクトのポータルを1つ作ってみましょう。
+    </div>
+  </google-codelab-step>
+
+</google-codelab>
+
+<script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+<script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+<script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+<script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+<script>
+(function() {
+  var btn = document.getElementById('read-btn');
+  var synth = window.speechSynthesis;
+  var utt = null;
+  function getStepText() {
+    var step = document.querySelector('google-codelab-step[selected]') ||
+               document.querySelector('google-codelab-step');
+    return step ? step.innerText.replace(/\s+/g,' ').trim() : '';
+  }
+  btn.addEventListener('click', function() {
+    if (synth.speaking) { synth.cancel(); btn.classList.remove('speaking'); btn.textContent='🔊'; return; }
+    var text = getStepText();
+    if (!text) return;
+    utt = new SpeechSynthesisUtterance(text);
+    utt.lang = 'ja-JP'; utt.rate = 1.0;
+    utt.onend = function() { btn.classList.remove('speaking'); btn.textContent='🔊'; };
+    synth.speak(utt);
+    btn.classList.add('speaking'); btn.textContent='⏹';
+  });
+  window.addEventListener('hashchange', function() { synth.cancel(); btn.classList.remove('speaking'); btn.textContent='🔊'; });
+})();
+</script>
+</body>
+</html>

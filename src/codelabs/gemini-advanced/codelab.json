@@ -1,0 +1,14 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "updated": "2026-03-04T00:00:00+09:00",
+  "id": "gemini-advanced",
+  "duration": 45,
+  "title": "Gemini Advanced 活用法",
+  "summary": "Deep Research・ファイル分析・Gems（カスタムAI）・長文コンテキスト・Workspace連携などGemini Advancedの応用機能を体系的に体験するハンズオン。",
+  "category": ["dx", "ai活用", "gemini"],
+  "tags": ["web"],
+  "feedback": "https://internal-dx-portal-auth.tanjiadm.workers.dev/",
+  "url": "gemini-advanced"
+}
