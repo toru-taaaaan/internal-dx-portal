@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAS 基礎</title>
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success { color: #1e8e3e; }
+    body { background: #fff; }
+    #speech-btn {
+      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+      background: #4F7DC9; color: white; border: none;
+      border-radius: 50px; padding: 12px 20px; font-size: 14px;
+      cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      transition: background 0.2s;
+    }
+    #speech-btn.speaking { background: #d32f2f; }
+    #speech-btn:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+
+<google-codelab id="gas-basics"
+                title="GAS 基礎"
+                environment="web"
+                feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/">
+
+  <google-codelab-step label="はじめに" duration="3">
+    <h2>このコースで学ぶこと</h2>
+    <p>このハンズオンでは、Google Apps Script（GAS）の基礎スキルを体系的に習得します。</p>
+
+    <p>「GAS 4行入門」でプログラムを動かす体験ができた方が次のステップとして取り組む内容です。</p>
+
+    <h2>学習内容</h2>
+    <ul>
+      <li>マクロの記録と編集</li>
+      <li>カスタム関数の作成</li>
+      <li>スプレッドシート・シート・セルの操作</li>
+      <li>データ操作とカスタムメニュー</li>
+      <li>セルの書式設定（色・太字・罫線）</li>
+    </ul>
+
+    <h2>前提条件</h2>
+    <ul>
+      <li>Googleアカウントを持っていること</li>
+      <li>Google スプレッドシートの基本操作ができること</li>
+      <li>「GAS 4行入門」を完了していること（推奨）</li>
+    </ul>
+
+    <h2>所要時間</h2>
+    <p>約 <strong>60 分</strong></p>
+
+    <aside class="special">
+      <p><strong>無料で学べます</strong><br>
+      GASはGoogleアカウントのみで使えます。クレジットカード登録は不要です。</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="マクロを記録する" duration="10">
+    <h2>マクロとは</h2>
+    <p>マクロは「一連の操作を記録したもの」です。毎回同じ手順でやっている作業を自動化できます。</p>
+
+    <p>例えば「毎週月曜日にヘッダー行を太字にして背景色を付ける」作業をマクロにすると、ボタン1つで完了します。</p>
+
+    <h2>実習：ヘッダー行を整えるマクロを作る</h2>
+
+    <h3>ステップ 1：スプレッドシートを準備する</h3>
+    <ol>
+      <li><a href="https://sheets.new" target="_blank">sheets.new</a> にアクセスして新しいスプレッドシートを作成</li>
+      <li>A1セルに「名前」、B1セルに「部署」、C1セルに「入社年」と入力</li>
+      <li>A2〜C4に適当なデータを入力しておく</li>
+    </ol>
+
+    <h3>ステップ 2：マクロを記録する</h3>
+    <ol>
+      <li>1行目全体（行番号「1」）をクリックして選択</li>
+      <li>メニューから「拡張機能」→「マクロ」→「マクロを記録」をクリック</li>
+      <li>画面下部に「マクロを記録中...」と表示されることを確認</li>
+      <li>ツールバーの「塗りつぶしの色」で背景色を濃い青にする</li>
+      <li>「フォントの色」で文字色を白にする</li>
+      <li>「太字」ボタンで太字にする</li>
+      <li>「表示」→「固定」→「1行」をクリックして1行目を固定</li>
+      <li>画面下部の「保存」をクリック</li>
+      <li>マクロ名に「Header」と入力して「保存」</li>
+    </ol>
+
+    <aside class="special">
+      <p><strong>相対参照 vs 絶対参照</strong><br>
+      マクロ記録時に「相対参照を使用」をONにすると、現在選択しているセルからの相対位置に対して操作します。OFFの場合は常に同じセルに対して操作します。ヘッダー整形のような固定位置の操作はOFF（絶対参照）が適しています。</p>
+    </aside>
+
+    <h3>ステップ 3：マクロを実行してみる</h3>
+    <ol>
+      <li>ヘッダーの書式を一度手動で元に戻す（色を削除など）</li>
+      <li>「拡張機能」→「マクロ」→「Header」をクリック</li>
+      <li>「承認」を求められたら「続行」→自分のアカウントを選択→「許可」</li>
+      <li>書式が自動で適用されることを確認</li>
+    </ol>
+  </google-codelab-step>
+
+  <google-codelab-step label="スクリプトエディタでコードを編集する" duration="10">
+    <h2>記録したマクロを見てみる</h2>
+    <p>マクロを記録すると、裏側でJavaScriptコードが自動生成されています。これを編集することで、より細かい制御ができます。</p>
+
+    <h3>ステップ 1：スクリプトエディタを開く</h3>
+    <ol>
+      <li>「拡張機能」→「Apps Script」をクリック</li>
+      <li>スクリプトエディタが新しいタブで開く</li>
+      <li>左側の「macros.gs」または「コード.gs」をクリック</li>
+    </ol>
+
+    <p>先ほど記録したマクロのコードが表示されます。おおむね以下のような内容になっているはずです：</p>
+
+    <pre><code class="language-javascript">function Header() {
+  var spreadsheet = SpreadsheetApp.getActive();
+  spreadsheet.getActiveRangeList()
+    .setBackground('#1a237e')
+    .setFontColor('#ffffff')
+    .setFontWeight('bold');
+  spreadsheet.getActiveSheet().setFrozenRows(1);
+}</code></pre>
+
+    <h2>コードを手で書き直す</h2>
+    <p>自動生成されたコードは冗長なことがあります。整理して書き直してみましょう。</p>
+
+    <h3>ステップ 2：コードを書き直す</h3>
+    <p>既存のコードを以下に書き換えてください：</p>
+
+    <pre><code class="language-javascript">function Header() {
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var headerRange = sheet.getRange("1:1");
+
+  headerRange.setBackground("#4c1130");
+  headerRange.setFontColor("#ffffff");
+  headerRange.setFontWeight("bold");
+
+  sheet.setFrozenRows(1);
+}</code></pre>
+
+    <h3>ステップ 3：保存して実行</h3>
+    <ol>
+      <li>Ctrl+S（またはディスクアイコン）で保存</li>
+      <li>実行ボタン（▶）をクリック</li>
+      <li>スプレッドシートに戻って結果を確認</li>
+    </ol>
+
+    <aside class="special">
+      <p><strong>ポイント</strong><br>
+      <code>sheet.getRange("1:1")</code> は「1行目全体」を意味します。<code>getRange("A1:C1")</code> のようにA1形式でも指定できます。</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="カスタム関数を作る" duration="10">
+    <h2>カスタム関数とは</h2>
+    <p>GASで定義した関数を、Excelの <code>=SUM()</code> のようにセルの中で使えます。これを「カスタム関数」と呼びます。</p>
+
+    <p>通常のApps Scriptの関数と違い、カスタム関数はスプレッドシートのセルに直接入力して使います。</p>
+
+    <h2>実習：単位変換関数を作る</h2>
+
+    <h3>ステップ 1：関数を書く</h3>
+    <p>スクリプトエディタに以下のコードを追加してください（<code>Header()</code> 関数の下に追記）：</p>
+
+    <pre><code class="language-javascript">/**
+ * 円をドルに変換します。
+ * @param {number} yen 変換する円の金額
+ * @return {string} ドルに変換した金額
+ * @customfunction
+ */
+function YENTODOLLAR(yen) {
+  var rate = 150; // 為替レート（参考値）
+  var dollars = yen / rate;
+  return "$" + dollars.toFixed(2);
+}</code></pre>
+
+    <aside class="special">
+      <p><strong>@customfunction アノテーション</strong><br>
+      JSDocコメントに <code>@customfunction</code> を書くと、スプレッドシートでセル入力時に自動補完が表示されるようになります。</p>
+    </aside>
+
+    <h3>ステップ 2：スプレッドシートで使う</h3>
+    <ol>
+      <li>コードを保存（Ctrl+S）</li>
+      <li>スプレッドシートに戻る</li>
+      <li>空きセルに <code>=YENTODOLLAR(10000)</code> と入力</li>
+      <li><code>$66.67</code> のような結果が表示されれば成功</li>
+    </ol>
+
+    <h3>ステップ 3：応用 — 税込み計算関数</h3>
+    <p>同じ要領で、税込み価格を計算する関数も作ってみましょう：</p>
+
+    <pre><code class="language-javascript">/**
+ * 税抜き価格から税込み価格を計算します。
+ * @param {number} price 税抜き価格
+ * @param {number} rate 消費税率（省略時は0.1）
+ * @return {number} 税込み価格
+ * @customfunction
+ */
+function TAXIN(price, rate) {
+  if (!rate) rate = 0.1;
+  return Math.round(price * (1 + rate));
+}</code></pre>
+
+    <p>セルに <code>=TAXIN(1000)</code> と入力すると <code>1100</code> が返ります。</p>
+  </google-codelab-step>
+
+  <google-codelab-step label="スプレッドシート・シート・セルの操作" duration="12">
+    <h2>4つの主要クラス</h2>
+    <p>GASでスプレッドシートを操作するときは、4つのクラスの階層を理解することが重要です。</p>
+
+    <table>
+      <tr>
+        <th>クラス</th>
+        <th>何を表すか</th>
+        <th>取得方法（例）</th>
+      </tr>
+      <tr>
+        <td><strong>SpreadsheetApp</strong></td>
+        <td>サービス全体への入口</td>
+        <td>（常にここから始める）</td>
+      </tr>
+      <tr>
+        <td><strong>Spreadsheet</strong></td>
+        <td>ファイル1つ（.xlsxに相当）</td>
+        <td><code>SpreadsheetApp.getActiveSpreadsheet()</code></td>
+      </tr>
+      <tr>
+        <td><strong>Sheet</strong></td>
+        <td>シート1枚（タブ1つ）</td>
+        <td><code>spreadsheet.getActiveSheet()</code></td>
+      </tr>
+      <tr>
+        <td><strong>Range</strong></td>
+        <td>セルのまとまり</td>
+        <td><code>sheet.getRange("A1:C3")</code></td>
+      </tr>
+    </table>
+
+    <h2>実習：データを読み書きする</h2>
+
+    <h3>ステップ 1：スプレッドシートの名前を変更する</h3>
+    <pre><code class="language-javascript">function renameSpreadsheet() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  ss.rename("GAS 基礎 実習ファイル");
+}</code></pre>
+
+    <h3>ステップ 2：セルのデータを読み取る</h3>
+    <pre><code class="language-javascript">function readData() {
+  var sheet = SpreadsheetApp.getActiveSheet();
+
+  // 1つのセルを読む
+  var a1Value = sheet.getRange("A1").getValue();
+  Logger.log("A1の値: " + a1Value);
+
+  // 複数セルをまとめて読む（2次元配列で返ってくる）
+  var values = sheet.getRange("A1:C3").getValues();
+  Logger.log(values);
+}</code></pre>
+
+    <aside class="special">
+      <p><strong>getValues() は2次元配列</strong><br>
+      <code>getRange("A1:C3").getValues()</code> は行×列の2次元配列を返します。<code>values[0][0]</code> がA1、<code>values[0][1]</code> がB1、<code>values[1][0]</code> がA2です。</p>
+    </aside>
+
+    <h3>ステップ 3：セルにデータを書き込む</h3>
+    <pre><code class="language-javascript">function writeData() {
+  var sheet = SpreadsheetApp.getActiveSheet();
+
+  // 1つのセルに書き込む
+  sheet.getRange("E1").setValue("テスト");
+
+  // 複数セルにまとめて書き込む（個別より高速）
+  var data = [
+    ["山田 太郎", "営業部", 2020],
+    ["佐藤 花子", "総務部", 2021],
+    ["鈴木 一郎", "IT部",   2019]
+  ];
+  sheet.getRange(2, 1, 3, 3).setValues(data);
+}</code></pre>
+
+    <h3>ステップ 4：最終行を取得する</h3>
+    <pre><code class="language-javascript">function getLastRow() {
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var lastRow = sheet.getLastRow();
+  Logger.log("データが入っている最終行: " + lastRow);
+
+  // 最終行の次の行にデータを追加する
+  sheet.getRange(lastRow + 1, 1).setValue("新しいデータ");
+}</code></pre>
+
+    <p>実行後、「表示」→「ログ」で結果を確認してください。</p>
+  </google-codelab-step>
+
+  <google-codelab-step label="カスタムメニューを作る" duration="10">
+    <h2>カスタムメニューとは</h2>
+    <p>スプレッドシートのメニューバーに独自のメニューを追加できます。チームで使う共有スプレッドシートに「一括処理」ボタンを設置するのに便利です。</p>
+
+    <h2>実習：「データ整形」メニューを作る</h2>
+
+    <h3>ステップ 1：onOpen() 関数を書く</h3>
+    <p><code>onOpen()</code> はスプレッドシートを開くたびに自動実行される「シンプルトリガー」です。</p>
+
+    <pre><code class="language-javascript">function onOpen() {
+  var ui = SpreadsheetApp.getUi();
+  ui.createMenu("データ整形")
+    .addItem("ヘッダーを整形", "Header")
+    .addSeparator()
+    .addItem("データを書き込む", "writeData")
+    .addItem("最終行を確認", "getLastRow")
+    .addToUi();
+}</code></pre>
+
+    <h3>ステップ 2：スプレッドシートを再読み込みする</h3>
+    <ol>
+      <li>コードを保存</li>
+      <li>スプレッドシートのタブを再読み込み（F5）</li>
+      <li>メニューバーに「データ整形」が追加されていることを確認</li>
+      <li>各メニュー項目が正しく動作することを確認</li>
+    </ol>
+
+    <h3>ステップ 3：セパレーターとサブメニュー</h3>
+    <pre><code class="language-javascript">function onOpen() {
+  var ui = SpreadsheetApp.getUi();
+  ui.createMenu("データ整形")
+    .addItem("ヘッダーを整形", "Header")
+    .addSeparator()
+    .addSubMenu(
+      ui.createMenu("データ操作")
+        .addItem("データを書き込む", "writeData")
+        .addItem("最終行を確認", "getLastRow")
+    )
+    .addToUi();
+}</code></pre>
+
+    <aside class="warning">
+      <p><strong>注意</strong><br>
+      <code>onOpen()</code> は「シンプルトリガー」のため、実行できる操作に制限があります。ファイルの作成・削除や外部サービスへのアクセスなど、高い権限が必要な処理は「インストーラブルトリガー」を使う必要があります。</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="セルの書式設定" duration="10">
+    <h2>書式設定でスプレッドシートを見やすくする</h2>
+    <p>GASでは、色・太字・罫線・数値フォーマットなどをコードで設定できます。定期的に生成するレポートの見た目を統一するのに役立ちます。</p>
+
+    <h2>実習：レポートスタイルを適用する</h2>
+
+    <h3>ステップ 1：背景色とフォント設定</h3>
+    <pre><code class="language-javascript">function formatReport() {
+  var sheet = SpreadsheetApp.getActiveSheet();
+
+  // ヘッダー行を整形
+  var header = sheet.getRange("A1:C1");
+  header.setBackground("#007272");    // 深緑の背景
+  header.setFontColor("#ffffff");     // 白文字
+  header.setFontWeight("bold");       // 太字
+
+  // データ行の交互カラー（バンディング）
+  var dataRange = sheet.getRange("A2:C10");
+  var banding = dataRange.applyRowBanding();
+  banding.setHeaderRowColor("#007272");
+  banding.setFirstRowColor("#e8f5e9");
+  banding.setSecondRowColor("#ffffff");
+}</code></pre>
+
+    <h3>ステップ 2：罫線を引く</h3>
+    <pre><code class="language-javascript">function addBorder() {
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var range = sheet.getRange("A1:C10");
+
+  // 外枠と内側に罫線を引く
+  range.setBorder(
+    true,   // 上
+    true,   // 左
+    true,   // 下
+    true,   // 右
+    true,   // 縦の内側
+    true,   // 横の内側
+    "#cccccc",
+    SpreadsheetApp.BorderStyle.SOLID
+  );
+}</code></pre>
+
+    <h3>ステップ 3：数値フォーマットと列幅の自動調整</h3>
+    <pre><code class="language-javascript">function formatNumbers() {
+  var sheet = SpreadsheetApp.getActiveSheet();
+
+  // C列を「年」として整数表示
+  sheet.getRange("C2:C100").setNumberFormat("0");
+
+  // 日付フォーマット（D列が日付の場合）
+  // sheet.getRange("D2:D100").setNumberFormat("yyyy/MM/dd");
+
+  // 列幅を自動調整（A〜C列 = 1〜3列）
+  sheet.autoResizeColumns(1, 3);
+}</code></pre>
+
+    <h3>ステップ 4：まとめて実行するマスター関数</h3>
+    <pre><code class="language-javascript">function applyAllFormats() {
+  formatReport();
+  addBorder();
+  formatNumbers();
+  SpreadsheetApp.flush(); // 変更を即時反映
+  SpreadsheetApp.getUi().alert("書式設定が完了しました！");
+}</code></pre>
+
+    <aside class="special">
+      <p><strong>SpreadsheetApp.flush()</strong><br>
+      GASはパフォーマンスのため変更をまとめて送信します。<code>flush()</code> を呼ぶと変更が即時反映されます。ループの途中で画面を更新したいときに使います。</p>
+    </aside>
+  </google-codelab-step>
+
+  <google-codelab-step label="まとめと次のステップ" duration="5">
+    <h2 class="checklist">学習内容の振り返り</h2>
+    <ul class="checklist">
+      <li>マクロを記録し、スクリプトエディタで編集できた</li>
+      <li>カスタム関数を作り、セルの数式として使えた</li>
+      <li>SpreadsheetApp・Sheet・Range の階層を理解した</li>
+      <li>getValue() / setValue() / getValues() / setValues() でデータを読み書きできた</li>
+      <li>onOpen() でカスタムメニューを追加できた</li>
+      <li>背景色・太字・罫線・数値フォーマットを設定できた</li>
+    </ul>
+
+    <h2>身についたスキルの活用例</h2>
+    <table>
+      <tr>
+        <th>スキル</th>
+        <th>業務への応用例</th>
+      </tr>
+      <tr>
+        <td>マクロ記録</td>
+        <td>毎月の集計表フォーマットを1クリックで整える</td>
+      </tr>
+      <tr>
+        <td>カスタム関数</td>
+        <td>社内独自の計算式をセルに組み込む</td>
+      </tr>
+      <tr>
+        <td>データ読み書き</td>
+        <td>別シートのデータを集約して自動集計する</td>
+      </tr>
+      <tr>
+        <td>カスタムメニュー</td>
+        <td>チーム共有シートに「一括更新」ボタンを設置</td>
+      </tr>
+      <tr>
+        <td>書式設定</td>
+        <td>週次レポートを毎週同じ見た目で自動生成する</td>
+      </tr>
+    </table>
+
+    <h2>次のコース</h2>
+    <p>GASの基礎を習得したら、次はGemini APIと組み合わせて、AIを使った業務自動化に挑戦しましょう。</p>
+    <p><a href="/codelabs/workspace-gemini/">CL-003: Workspace × Gemini 自動化</a>へ進む</p>
+
+    <p style="margin-top: 32px;"><a href="/">← DXポータルに戻る</a></p>
+  </google-codelab-step>
+
+</google-codelab>
+
+<button id="speech-btn" onclick="toggleSpeech()">▶ 読み上げ</button>
+
+<script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+<script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+<script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+<script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+<script>
+  var speaking = false;
+
+  function setSpeaking(val) {
+    speaking = val;
+    var btn = document.getElementById('speech-btn');
+    btn.textContent = val ? '⏹ 停止' : '▶ 読み上げ';
+    btn.className = val ? 'speaking' : '';
+  }
+
+  function getCurrentStepText() {
+    var hash = location.hash.replace('#', '');
+    var idx = parseInt(hash) || 0;
+    var steps = document.querySelectorAll('google-codelab-step');
+    if (steps[idx]) {
+      return steps[idx].innerText;
+    }
+    return document.body.innerText;
+  }
+
+  function toggleSpeech() {
+    if (speaking) {
+      window.speechSynthesis.cancel();
+      setSpeaking(false);
+      return;
+    }
+    var text = getCurrentStepText();
+    var utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'ja-JP';
+    utter.rate = 0.95;
+    utter.onend = function() { setSpeaking(false); };
+    window.speechSynthesis.speak(utter);
+    setSpeaking(true);
+  }
+
+  window.addEventListener('hashchange', function() {
+    if (speaking) {
+      window.speechSynthesis.cancel();
+      setSpeaking(false);
+    }
+  });
+</script>
+</body>
+</html>
