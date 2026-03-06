@@ -1,0 +1,1660 @@
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>The Complete Guide to Building Skills for Claude — Anthropic 公式マニュアル完全版</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success { color: #1e8e3e; }
+    .error { color: red; }
+
+    /* 読み上げボタン */
+    #speech-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      background: #4F7DC9;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-family: 'Roboto', sans-serif;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    #speech-btn:hover { background: #3a67b3; }
+    #speech-btn.speaking { background: #d32f2f; }
+    #speech-btn.speaking:hover { background: #b71c1c; }
+
+    /* 比較ダイアグラム */
+    .diagram-box {
+      display: flex;
+      gap: 12px;
+      margin: 16px 0;
+      flex-wrap: wrap;
+    }
+    .diagram-card {
+      flex: 1;
+      min-width: 140px;
+      border: 2px solid #4F7DC9;
+      border-radius: 8px;
+      padding: 12px 16px;
+      background: #f0f4ff;
+    }
+    .diagram-card.orange {
+      border-color: #E8A000;
+      background: #fff8e1;
+    }
+    .diagram-card.green {
+      border-color: #1e8e3e;
+      background: #f0fff4;
+    }
+    .diagram-card h4 {
+      margin: 0 0 8px 0;
+      font-size: 14px;
+      color: #333;
+    }
+    .diagram-card p {
+      margin: 0;
+      font-size: 13px;
+      color: #555;
+    }
+    .diagram-arrow {
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+      color: #aaa;
+      padding-top: 8px;
+    }
+
+    /* アーキテクチャ図 */
+    .arch-layer {
+      border-left: 4px solid;
+      padding: 10px 16px;
+      margin: 8px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    .arch-layer.layer1 { border-color: #4F7DC9; background: #f0f4ff; }
+    .arch-layer.layer2 { border-color: #E8A000; background: #fff8e1; }
+    .arch-layer.layer3 { border-color: #1e8e3e; background: #f0fff4; }
+    .arch-layer h4 { margin: 0 0 4px; font-size: 14px; }
+    .arch-layer p  { margin: 0; font-size: 13px; color: #555; }
+
+    /* フローステップ */
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin: 12px 0;
+    }
+    .flow-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #4F7DC9;
+      color: white;
+      font-weight: bold;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .flow-body { flex: 1; }
+    .flow-body strong { display: block; font-size: 14px; margin-bottom: 2px; }
+    .flow-body span { font-size: 13px; color: #555; }
+
+    /* Before/After */
+    .ba-table th { background: #4F7DC9; color: white; text-align: center; }
+    .ba-table td { vertical-align: top; font-size: 13px; }
+    .ba-before { background: #fff3f3; }
+    .ba-after  { background: #f0fff4; }
+
+    /* チェックリスト */
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+    .checklist li {
+      padding: 6px 0 6px 28px;
+      position: relative;
+      font-size: 14px;
+      border-bottom: 1px solid #eee;
+    }
+    .checklist li:before {
+      content: '☐';
+      position: absolute;
+      left: 4px;
+      color: #4F7DC9;
+      font-size: 16px;
+    }
+
+    /* コードブロック内のコメント */
+    .good-example { color: #1e8e3e; font-style: italic; }
+    .bad-example  { color: #d32f2f; font-style: italic; }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="claude-skills-guide"
+                  title="The Complete Guide to Building Skills for Claude"
+                  environment="web"
+                  feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/">
+
+    <!-- ========== STEP 0: はじめに ========== -->
+    <google-codelab-step label="はじめに（Introduction）" duration="3">
+      <p>このCodelabはAnthropicが2026年1月に公開した公式マニュアル <strong>「The Complete Guide to Building Skills for Claude」</strong>（全33ページ）を、完全に日本語で再現したものです。</p>
+
+<h2 is-upgraded>スキルとは何か</h2>
+<p>スキル（Skill）とは、<strong>Claudeに特定のタスクやワークフローを教える指示のセット</strong>です。シンプルなフォルダとしてパッケージされています。スキルはClaudeをあなたのニーズに合わせてカスタマイズする最も強力な方法の一つです。</p>
+
+<p>毎回の会話で好みやプロセス、ドメイン知識を説明し直す代わりに、<strong>一度教えれば毎回の会話で活用できます</strong>。</p>
+
+<h2 is-upgraded>このガイドで学ぶこと</h2>
+<ul>
+<li>スキル構造の技術要件とベストプラクティス</li>
+<li>スタンドアロンスキルとMCP強化ワークフローのパターン</li>
+<li>様々なユースケースで効果的と確認されたパターン</li>
+<li>スキルのテスト・改善・配布方法</li>
+</ul>
+
+<h2 is-upgraded>このガイドの対象者</h2>
+<ul>
+<li>Claudeに特定ワークフローを一貫して実行させたい<strong>開発者</strong></li>
+<li>Claudeに特定ワークフローを実行させたい<strong>パワーユーザー</strong></li>
+<li>組織全体でClaudeの動作を標準化したい<strong>チーム</strong></li>
+</ul>
+
+<h2 is-upgraded>2つの読み方</h2>
+<div class="diagram-box">
+  <div class="diagram-card">
+    <h4>スタンドアロンスキルを作る場合</h4>
+    <p>「Fundamentals」「Planning and Design」「Testing and Iteration」を中心に読む。カテゴリ1〜2が該当。</p>
+  </div>
+  <div class="diagram-card green">
+    <h4>MCP統合を強化する場合</h4>
+    <p>「Skills + MCP」セクションとカテゴリ3が中心。両パスで技術要件は共通。</p>
+  </div>
+</div>
+
+<aside class="special"><p>このガイドを読み終えると、<strong>skill-creator</strong>を使って15〜30分で最初のスキルを作り上げられます。</p></aside>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 1: Fundamentals ========== -->
+    <google-codelab-step label="Chapter 1: Fundamentals（基礎）" duration="8">
+      <p>スキルはAnthropicが設計したオープンなファイルフォーマットです。仕組みを理解することで、効果的なスキルを作れるようになります。</p>
+
+<h2 is-upgraded>スキルフォルダの構成</h2>
+<p>スキルは以下の構造を持つフォルダです：</p>
+<pre><code>your-skill-name/
+├── SKILL.md              # 必須 — メインのスキルファイル
+├── scripts/              # オプション — 実行可能なコード
+│   ├── process_data.py   # 例
+│   └── validate.sh       # 例
+├── references/           # オプション — ドキュメント
+│   ├── api-guide.md      # 例
+│   └── examples/         # 例
+└── assets/               # オプション — テンプレートなど
+    └── report-template.md # 例
+</code></pre>
+
+<aside class="special"><p>SKILL.md さえあれば最小構成として動作します。<code>name</code> と <code>description</code> の2フィールドのみが必須です。</p></aside>
+
+<h2 is-upgraded>コア設計原則1：段階的開示（Progressive Disclosure）</h2>
+<p>スキルは3段階の読み込みシステムを採用しています。これが100個のスキルがあってもコンテキストウィンドウを圧迫しない理由です。</p>
+
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>レベル</strong></p></td><td colspan="1" rowspan="1"><p><strong>読み込む内容</strong></p></td><td colspan="1" rowspan="1"><p><strong>説明</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>Level 1</strong><br>YAML frontmatter</p></td><td colspan="1" rowspan="1"><p>nameとdescriptionのみ</p></td><td colspan="1" rowspan="1"><p>常にClaudeのシステムプロンプトに読み込まれる。どのスキルをいつ使うべきかを判断するのに必要な最小限の情報を提供する。</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>Level 2</strong><br>SKILL.md本文</p></td><td colspan="1" rowspan="1"><p>SKILL.mdの本文全体</p></td><td colspan="1" rowspan="1"><p>Claudeが現在のタスクに関連すると判断したときに読み込まれる。完全な指示とガイダンスを含む。</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>Level 3</strong><br>リンクされたファイル</p></td><td colspan="1" rowspan="1"><p>スクリプト・参照ドキュメント等</p></td><td colspan="1" rowspan="1"><p>スキルフォルダ内にバンドルされた追加ファイル。Claudeが必要と判断した場合のみ読み込まれる。</p></td></tr>
+</table>
+
+<p>この段階的開示により、<strong>トークン使用量を最小化しながら専門的な知識を保持</strong>できます。</p>
+
+<h2 is-upgraded>コア設計原則2：ポータビリティ（Portability）</h2>
+<p>スキルはClaude.ai、Claude Code、APIで同一に動作します。環境が必要な依存関係をサポートしていれば、修正なしにすべてのプラットフォームで動作します。</p>
+
+<h2 is-upgraded>コア設計原則3：コンポーザビリティ（Composability）</h2>
+<p>Claudeは複数のスキルを同時に読み込めます。あなたのスキルは他のスキルと一緒にうまく動作するよう設計してください。自分が唯一の機能であると仮定しないでください。</p>
+
+<h2 is-upgraded>MCP統合を行う場合：Skills + Connectors</h2>
+<p>すでに動作するMCPサーバーがあるなら、難しい部分は終わっています。スキルは<strong>知識レイヤー</strong>として機能します。すでに知っているワークフローとベストプラクティスを取り込み、Claudeが一貫して適用できるようにします。</p>
+
+<h3 is-upgraded>キッチンの比喩</h3>
+<div class="diagram-box">
+  <div class="diagram-card">
+    <h4>MCP（Connectivity）</h4>
+    <p>プロのキッチンを提供：ツール、食材、機器へのアクセス。Claudeをあなたのサービスに接続し、リアルタイムデータアクセスとツール呼び出しを可能にする。<br><br><em>Claudeが「できること」</em></p>
+  </div>
+  <div class="diagram-arrow">+</div>
+  <div class="diagram-card green">
+    <h4>Skills（Knowledge）</h4>
+    <p>レシピを提供：価値あるものを作るためのステップバイステップの指示。Claudeにあなたのサービスを効果的に使う方法を教え、ワークフローとベストプラクティスを取り込む。<br><br><em>Claudeが「どうやるか」</em></p>
+  </div>
+</div>
+
+<h3 is-upgraded>スキルなしの場合 vs. スキルありの場合</h3>
+
+<div class="diagram-box">
+  <div class="diagram-card orange">
+    <h4>スキルなし</h4>
+    <p>
+    • MCPに接続したが何をすればいいか分からない<br>
+    • 「Xをどうやるか」というサポート問い合わせが増える<br>
+    • 毎回の会話がゼロからスタート<br>
+    • ユーザーごとに異なるプロンプトで一貫性がない<br>
+    • ワークフロー指導の不足なのに、コネクターが非難される
+    </p>
+  </div>
+  <div class="diagram-card green">
+    <h4>スキルあり</h4>
+    <p>
+    • 必要なときにプリビルトワークフローが自動起動<br>
+    • 一貫性のある信頼できるツール使用<br>
+    • すべてのインタラクションにベストプラクティスが組み込み<br>
+    • 統合の学習曲線が低下
+    </p>
+  </div>
+</div>
+
+<aside class="special"><p>MCPはあなたのサービスにアクセスするための「配線」、スキルはその配線を活用するための「知恵」です。両者は補完し合う関係です。</p></aside>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 2: Planning and Design - Use Cases ========== -->
+    <google-codelab-step label="Chapter 2: Planning — ユースケース定義" duration="8">
+      <p>コードを書く前に、スキルが実現すべき<strong>具体的なユースケースを2〜3個特定</strong>してください。これがスキル設計の出発点です。</p>
+
+<h2 is-upgraded>良いユースケースの定義</h2>
+<div class="flow-step">
+  <div class="flow-num">1</div>
+  <div class="flow-body">
+    <strong>ユーザーが何を達成したいかを定義する</strong>
+    <span>具体的なアウトカム（成果）から逆算する</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">2</div>
+  <div class="flow-body">
+    <strong>必要なマルチステップワークフローを特定する</strong>
+    <span>「このインプットが来たとき、どんな手順で処理するか」を整理する</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">3</div>
+  <div class="flow-body">
+    <strong>必要なツールを確認する</strong>
+    <span>Claudeのビルトイン機能で済むか、MCPが必要かを判断する</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">4</div>
+  <div class="flow-body">
+    <strong>組み込むドメイン知識とベストプラクティスを洗い出す</strong>
+    <span>「エキスパートならどう判断するか」を文言化する</span>
+  </div>
+</div>
+
+<h2 is-upgraded>Anthropicが観察した3つのユースケースカテゴリ</h2>
+
+<h3 is-upgraded>カテゴリ1：ドキュメント・アセット作成</h3>
+<p>プレゼンテーション・アプリ・デザイン・コードなどの成果物を一貫した高品質で作成するために使用します。</p>
+<p><strong>実例：frontend-design スキル</strong></p>
+<blockquote>"Create distinctive, production-grade frontend interfaces with high design quality. Use when building web components, pages, artifacts, posters, or applications."</blockquote>
+<p><strong>主な手法：</strong></p>
+<ul>
+<li>スタイルガイドとブランド標準の組み込み</li>
+<li>一貫した出力のためのテンプレート構造</li>
+<li>最終化前の品質チェックリスト</li>
+<li>外部ツール不要（Claudeのビルトイン機能を使用）</li>
+</ul>
+
+<h3 is-upgraded>カテゴリ2：ワークフロー自動化</h3>
+<p>複数のMCPサーバーにまたがる調整を含む、一貫した手法から恩恵を受けるマルチステッププロセスに使用します。</p>
+<p><strong>実例：skill-creator スキル</strong></p>
+<blockquote>"Interactive guide for creating new skills. Walks the user through use case definition, frontmatter generation, instruction writing, and validation."</blockquote>
+<p><strong>主な手法：</strong></p>
+<ul>
+<li>バリデーションゲート付きのステップバイステップワークフロー</li>
+<li>一般的な構造のテンプレート</li>
+<li>ビルトインのレビューと改善提案</li>
+<li>反復的な改善ループ</li>
+</ul>
+
+<h3 is-upgraded>カテゴリ3：MCP強化</h3>
+<p>MCPサーバーが提供するツールアクセスを強化するワークフローガイダンスに使用します。</p>
+<p><strong>実例：sentry-code-review スキル（Sentryより）</strong></p>
+<blockquote>"Automatically analyzes and fixes detected bugs in GitHub Pull Requests using Sentry's error monitoring data via their MCP server."</blockquote>
+<p><strong>主な手法：</strong></p>
+<ul>
+<li>複数のMCP呼び出しを順番に調整</li>
+<li>ドメイン専門知識の組み込み</li>
+<li>ユーザーが指定しなければならないコンテキストを提供</li>
+<li>一般的なMCP問題のエラー処理</li>
+</ul>
+
+<h2 is-upgraded>成功基準を定義する</h2>
+<p>スキルが機能しているとどうやって知るか？成功基準を事前に定義してください。</p>
+
+<h3 is-upgraded>定量的メトリクス（目安として）</h3>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>メトリクス</strong></p></td><td colspan="1" rowspan="1"><p><strong>目標</strong></p></td><td colspan="1" rowspan="1"><p><strong>測定方法</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>トリガー率</p></td><td colspan="1" rowspan="1"><p>関連クエリの90%で起動</p></td><td colspan="1" rowspan="1"><p>10〜20のテストクエリを実行。自動読み込み vs 手動呼び出しの回数を記録</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>ツール呼び出し数</p></td><td colspan="1" rowspan="1"><p>X回以内で完了</p></td><td colspan="1" rowspan="1"><p>スキルありとなしで同一タスクを比較。ツール呼び出し数と総トークン消費を計測</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>APIエラー率</p></td><td colspan="1" rowspan="1"><p>ワークフローあたり0件</p></td><td colspan="1" rowspan="1"><p>テスト実行中のMCPサーバーログを監視。リトライ率とエラーコードを追跡</p></td></tr>
+</table>
+
+<aside class="warning"><p>これらは<strong>aspirational targets（目標値）</strong>であり、精密な閾値ではありません。厳密さを目指しつつも、感覚的な評価要素があることを受け入れてください。</p></aside>
+
+<h3 is-upgraded>定性的メトリクス</h3>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>メトリクス</strong></p></td><td colspan="1" rowspan="1"><p><strong>評価方法</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>ユーザーがClaudeに次のステップを尋ねなくてよい</p></td><td colspan="1" rowspan="1"><p>テスト中に何度リダイレクトや説明が必要かをメモする。ベータユーザーにフィードバックを求める</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>ユーザーの修正なしにワークフローが完了する</p></td><td colspan="1" rowspan="1"><p>同じリクエストを3〜5回実行。出力の構造的一貫性と品質を比較する</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>セッションをまたいで一貫した結果が得られる</p></td><td colspan="1" rowspan="1"><p>最小限のガイダンスで、初めてのユーザーが最初の試みでタスクを達成できるか確認</p></td></tr>
+</table>
+
+<h2 is-upgraded>アプローチの選択：問題起点 vs. ツール起点</h2>
+<p>ホームデポに例えると：「キッチンキャビネットを修理したい」という問題を持って行く場合と、新しいドリルを買ってそのドリルの使い方を聞く場合があります。スキルも同様です：</p>
+
+<div class="diagram-box">
+  <div class="diagram-card">
+    <h4>問題起点（Problem-first）</h4>
+    <p>「プロジェクトワークスペースを設定したい」<br>→ スキルが正しい順序で適切なMCP呼び出しを調整する。ユーザーはアウトカムを説明し、スキルがツールを処理する。</p>
+  </div>
+  <div class="diagram-card green">
+    <h4>ツール起点（Tool-first）</h4>
+    <p>「Notion MCPに接続している」<br>→ スキルがClaudeに最適なワークフローとベストプラクティスを教える。ユーザーはアクセス権を持ち、スキルが専門知識を提供する。</p>
+  </div>
+</div>
+
+<aside class="special"><p>ほとんどのスキルはどちらか一方に傾いています。自分のユースケースにどちらのフレーミングが合うかを知ることで、適切なパターンを選べます。</p></aside>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 3: Technical Requirements ========== -->
+    <google-codelab-step label="Chapter 2: Technical Requirements（技術要件）" duration="10">
+      <p>スキルを正しく機能させるための技術的な要件を詳しく解説します。</p>
+
+<h2 is-upgraded>ファイル構造の重要ルール</h2>
+
+<h3 is-upgraded>SKILL.mdの命名</h3>
+<ul>
+<li>必ず正確に <code>SKILL.md</code> と命名する（大文字小文字を区別）</li>
+<li>バリエーションは受け付けない（<code>SKILL.MD</code>、<code>skill.md</code> 等は不可）</li>
+</ul>
+
+<h3 is-upgraded>スキルフォルダの命名</h3>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>ルール</strong></p></td><td colspan="1" rowspan="1"><p><strong>OK例</strong></p></td><td colspan="1" rowspan="1"><p><strong>NG例</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>kebab-case を使う</p></td><td colspan="1" rowspan="1"><p>notion-project-setup ✅</p></td><td colspan="1" rowspan="1"><p>Notion Project Setup ❌</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>スペースを使わない</p></td><td colspan="1" rowspan="1"><p>my-skill ✅</p></td><td colspan="1" rowspan="1"><p>my skill ❌</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>アンダースコアを使わない</p></td><td colspan="1" rowspan="1"><p>my-skill ✅</p></td><td colspan="1" rowspan="1"><p>my_skill ❌</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>大文字を使わない</p></td><td colspan="1" rowspan="1"><p>my-skill ✅</p></td><td colspan="1" rowspan="1"><p>MySkill ❌</p></td></tr>
+</table>
+
+<h3 is-upgraded>README.mdを含めない</h3>
+<ul>
+<li>スキルフォルダ内に <code>README.md</code> を置かない</li>
+<li>すべてのドキュメントは <code>SKILL.md</code> または <code>references/</code> に記述する</li>
+<li>GitHubで配布する場合は、リポジトリレベルのREADMEは別途作成してよい</li>
+</ul>
+
+<h2 is-upgraded>YAMLフロントマター — スキルの最重要部分</h2>
+<p>フロントマターはClaudeがスキルを読み込むかどうかを決定する部分です。ここを正しく書くことが最重要です。</p>
+
+<h3 is-upgraded>最小限の必須フォーマット</h3>
+<pre><code language="yaml">---
+name: your-skill-name
+description: What it does. Use when user asks to [specific phrases].
+---
+</code></pre>
+<p>これだけで始められます。</p>
+
+<h3 is-upgraded>name フィールドのルール</h3>
+<ul>
+<li>kebab-case のみ使用可</li>
+<li>スペースや大文字は使用不可</li>
+<li>フォルダ名と一致させること</li>
+<li><code>claude</code> または <code>anthropic</code> を名前に含めることは禁止（予約済み）</li>
+</ul>
+
+<h3 is-upgraded>description フィールドのルール</h3>
+<ul>
+<li>「スキルが何をするか」と「いつ使うか（トリガー条件）」の<strong>両方を必ず含める</strong></li>
+<li>1024文字以内</li>
+<li>XMLタグ（<code>&lt;</code> または <code>&gt;</code>）は使用禁止</li>
+<li>ユーザーが実際に言いそうな具体的なタスクを含める</li>
+<li>関連するファイルタイプがあれば記載する</li>
+</ul>
+
+<h3 is-upgraded>descriptionの書き方：良い例・悪い例</h3>
+
+<pre><code># 良い例 — 具体的でアクションにつながる
+description: Analyzes Figma design files and generates developer
+handoff documentation. Use when user uploads .fig files, asks for
+"design specs", "component documentation", or
+"design-to-code handoff".
+
+# 良い例 — トリガーフレーズを含む
+description: Manages Linear project workflows including sprint
+planning, task creation, and status tracking. Use when user
+mentions "sprint", "Linear tasks", "project planning", or asks
+to "create tickets".
+
+# 良い例 — 明確な価値提案
+description: End-to-end customer onboarding workflow for PayFlow.
+Handles account creation, payment setup, and subscription
+management. Use when user says "onboard new customer",
+"set up subscription", or "create PayFlow account".
+
+# 悪い例 — 曖昧すぎる
+description: Helps with projects.
+
+# 悪い例 — トリガーがない
+description: Creates sophisticated multi-page documentation systems.
+
+# 悪い例 — 技術的すぎてユーザートリガーがない
+description: Implements the Project entity model with hierarchical
+relationships.
+</code></pre>
+
+<h3 is-upgraded>オプションフィールドの全一覧</h3>
+<pre><code language="yaml">name: skill-name
+description: [必須: 何をするか + いつ使うか]
+
+license: MIT                      # オプション: オープンソース用ライセンス
+
+allowed-tools: "Bash(python:*) Bash(npm:*) WebFetch"  # オプション: ツールアクセス制限
+
+metadata:                         # オプション: カスタムキーバリューペア
+  author: Company Name
+  version: 1.0.0
+  mcp-server: server-name
+  category: productivity
+  tags: [project-management, automation]
+  documentation: https://example.com/docs
+  support: support@example.com
+
+compatibility: |                  # オプション: 1〜500文字
+  環境要件の記載（使用するプラットフォーム・依存パッケージ等）
+</code></pre>
+
+<h3 is-upgraded>セキュリティ制限</h3>
+<aside class="warning"><p>フロントマターはClaudeのシステムプロンプトに組み込まれます。悪意あるコンテンツが指示を注入する可能性があるため、以下は<strong>絶対に禁止</strong>です：<br>
+• XMLの角括弧（<code>&lt; &gt;</code>）<br>
+• 名前に "claude" または "anthropic" を含めること（予約済み）
+</p></aside>
+
+<h2 is-upgraded>メインの指示を書く</h2>
+<p>フロントマターの後に、Markdown形式で実際の指示を記述します。</p>
+
+<h3 is-upgraded>推奨される構造テンプレート</h3>
+<pre><code language="markdown">---
+name: your-skill
+description: [スキルの説明]
+---
+
+# スキル名
+
+## Instructions（指示）
+
+### Step 1: [最初の主要ステップ]
+何が起きるかの明確な説明。
+
+### Step 2: [次のステップ]
+...
+
+## Examples（例）
+
+### Example 1: [一般的なシナリオ]
+User says: "Set up a new marketing campaign"
+Actions:
+1. MCPでキャンペーン一覧を取得
+2. 提供されたパラメータで新しいキャンペーンを作成
+Result: キャンペーン作成完了、確認リンクを提供
+
+## Troubleshooting（トラブルシューティング）
+
+### Error: [一般的なエラーメッセージ]
+Cause: [原因]
+Solution: [解決策]
+</code></pre>
+
+<h2 is-upgraded>指示を書く際のベストプラクティス</h2>
+
+<h3 is-upgraded>バンドルされたリソースを明確に参照する</h3>
+<pre><code language="markdown">クエリを書く前に `references/api-patterns.md` を参照してください：
+- レート制限のガイダンス
+- ページネーションパターン
+- エラーコードと処理方法
+</code></pre>
+
+<h3 is-upgraded>段階的開示を活用する</h3>
+<p>SKILL.mdはコアな指示に集中してください。詳細なドキュメントは <code>references/</code> に移動してリンクで参照します。</p>
+
+<h3 is-upgraded>具体的でアクションにつながる内容を書く</h3>
+<div class="diagram-box">
+  <div class="diagram-card green">
+    <h4>良い例</h4>
+    <p><code>python scripts/validate.py --input {filename}</code> を実行してデータフォーマットを確認する。<br><br>バリデーション失敗時の一般的な問題：<br>• 必須フィールドの欠落（CSVに追加する）<br>• 無効な日付フォーマット（YYYY-MM-DDを使用）</p>
+  </div>
+  <div class="diagram-card orange">
+    <h4>悪い例</h4>
+    <p>次に進む前にデータを確認する。</p>
+  </div>
+</div>
+
+<h3 is-upgraded>エラー処理を含める</h3>
+<pre><code language="markdown">## よくある問題
+
+### MCP接続失敗
+「Connection refused」が表示された場合：
+1. MCPサーバーが起動しているか確認: Settings > Extensions
+2. APIキーが有効かどうか確認
+3. 再接続を試みる: Settings > Extensions > [Your Service] > Reconnect
+</code></pre>
+
+<aside class="special"><p>SKILL.md は<strong>5,000語（約500行）以内</strong>を推奨します。それ以上の情報は <code>references/</code> ディレクトリに分割してリンクで参照してください。</p></aside>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 4: Testing and Iteration ========== -->
+    <google-codelab-step label="Chapter 3: Testing and Iteration（テストと改善）" duration="8">
+      <p>スキルはニーズに応じて様々なレベルのテストが可能です。</p>
+
+<h2 is-upgraded>推奨テストアプローチ</h2>
+
+<div class="diagram-box">
+  <div class="diagram-card">
+    <h4>手動テスト（Claude.ai）</h4>
+    <p>クエリを直接実行して動作を観察する。セットアップ不要で高速に反復できる。</p>
+  </div>
+  <div class="diagram-card">
+    <h4>スクリプトテスト（Claude Code）</h4>
+    <p>変更をまたいで繰り返し検証できるよう、テストケースを自動化する。</p>
+  </div>
+  <div class="diagram-card green">
+    <h4>プログラムテスト（Skills API）</h4>
+    <p>定義されたテストセットに対して体系的に実行する評価スイートを構築する。</p>
+  </div>
+</div>
+
+<p>小さなチームが内部で使うスキルと、数千人のエンタープライズユーザーに展開するスキルでは、テストのニーズが異なります。あなたの品質要件とスキルの公開範囲に合ったアプローチを選んでください。</p>
+
+<aside class="special"><p><strong>プロのヒント：1つのタスクを成功するまで反復してから拡張する</strong><br>効果的なスキル作成者は、1つの難しいタスクをClaudeが成功するまで反復し、その成功アプローチをスキルに抽出します。広範なテストより速いシグナルが得られます。</p></aside>
+
+<h2 is-upgraded>1. トリガーテスト</h2>
+<p><strong>目標：スキルが適切なタイミングで読み込まれることを確認する</strong></p>
+
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>テストケース</strong></p></td><td colspan="1" rowspan="1"><p><strong>例（ProjectHubスキルの場合）</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>✅ 明らかなタスクで起動する</p></td><td colspan="1" rowspan="1"><p>"Help me set up a new ProjectHub workspace"</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>✅ 言い換えられたリクエストで起動する</p></td><td colspan="1" rowspan="1"><p>"I need to create a project in ProjectHub"</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>✅ 関連するシナリオで起動する</p></td><td colspan="1" rowspan="1"><p>"Initialize a ProjectHub project for Q4 planning"</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>❌ 無関係なトピックでは起動しない</p></td><td colspan="1" rowspan="1"><p>"What's the weather in San Francisco?"</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>❌ 無関係なタスクでは起動しない</p></td><td colspan="1" rowspan="1"><p>"Help me write Python code"</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>❌ 範囲外のタスクでは起動しない</p></td><td colspan="1" rowspan="1"><p>"Create a spreadsheet"（ProjectHubスキルが対応しない場合）</p></td></tr>
+</table>
+
+<h2 is-upgraded>2. 機能テスト</h2>
+<p><strong>目標：スキルが正しい出力を生成することを確認する</strong></p>
+
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>テストケース</strong></p></td><td colspan="1" rowspan="1"><p><strong>確認内容</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>有効な出力が生成される</p></td><td colspan="1" rowspan="1"><p>期待するフォーマット・内容で出力されているか</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>API呼び出しが成功する</p></td><td colspan="1" rowspan="1"><p>MCPツールが正常に呼び出され、エラーが発生しないか</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>エラー処理が機能する</p></td><td colspan="1" rowspan="1"><p>エラー発生時に適切なメッセージが表示されるか</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>エッジケースが処理される</p></td><td colspan="1" rowspan="1"><p>入力が空・不正・境界値の場合に適切に処理されるか</p></td></tr>
+</table>
+
+<p><strong>機能テストの例：</strong></p>
+<pre><code>Test: 5つのタスクでプロジェクトを作成する
+Given: プロジェクト名「Q4 Planning」、5つのタスク説明
+When:  スキルがワークフローを実行する
+Then:
+  - ProjectHubにプロジェクトが作成される
+  - 5つのタスクが正しいプロパティで作成される
+  - すべてのタスクがプロジェクトにリンクされる
+  - APIエラーが発生しない
+</code></pre>
+
+<h2 is-upgraded>3. パフォーマンス比較テスト</h2>
+<p><strong>目標：スキルがベースラインより結果を改善することを証明する</strong></p>
+
+<table class="ba-table">
+<tr><th colspan="1" rowspan="1"><p>メトリクス</p></th><th colspan="1" rowspan="1"><p>スキルなし（Before）</p></th><th colspan="1" rowspan="1"><p>スキルあり（After）</p></th></tr>
+<tr><td colspan="1" rowspan="1"><p>インタラクション数</p></td><td class="ba-before"><p>15回の往復メッセージ</p></td><td class="ba-after"><p>2回の確認質問のみ</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>APIエラー</p></td><td class="ba-before"><p>リトライが必要な3回のエラー</p></td><td class="ba-after"><p>0回のAPIエラー</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>トークン消費</p></td><td class="ba-before"><p>12,000トークン</p></td><td class="ba-after"><p>6,000トークン</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>実行方法</p></td><td class="ba-before"><p>ユーザーが毎回指示を提供</p></td><td class="ba-after"><p>ワークフローが自動実行</p></td></tr>
+</table>
+
+<h2 is-upgraded>skill-creator スキルの活用</h2>
+<p>skill-creator スキルは Claude.ai のプラグインディレクトリから入手でき、Claude Code 用にもダウンロードできます。MCP サーバーがあり、トップ2〜3のワークフローが分かっていれば、<strong>1回のセッションで15〜30分以内に機能するスキルを作成・テストできます</strong>。</p>
+
+<h3 is-upgraded>skill-creator でできること</h3>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>機能</strong></p></td><td colspan="1" rowspan="1"><p><strong>詳細</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>スキル作成</p></td><td colspan="1" rowspan="1"><p>自然言語の説明からスキルを生成。適切にフォーマットされたSKILL.mdをトリガーフレーズと構造の提案付きで作成</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>スキルレビュー</p></td><td colspan="1" rowspan="1"><p>一般的な問題（曖昧な説明、トリガーの欠落、構造的な問題）を指摘。スキルの目的に基づいてテストケースを提案</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>反復改善</p></td><td colspan="1" rowspan="1"><p>エッジケースや失敗例に基づいてスキルを改善する。例：「このチャットで発見された問題を使ってスキルを改善して」</p></td></tr>
+</table>
+
+<pre><code>使い方：
+「Use the skill-creator skill to help me build a skill for [your use case]」
+</code></pre>
+
+<aside class="warning"><p>skill-creator は設計と改善を支援しますが、<strong>自動テストスイートの実行や定量的な評価結果の生成は行いません</strong>。</p></aside>
+
+<h2 is-upgraded>フィードバックに基づく改善（Iteration）</h2>
+<p>スキルはリビングドキュメントです。以下のシグナルに基づいて継続的に改善してください。</p>
+
+<h3 is-upgraded>アンダートリガーのシグナル</h3>
+<ul>
+<li>スキルが起動すべき場面で起動しない</li>
+<li>ユーザーが手動で有効化している</li>
+<li>いつ使うべきか分からないというサポート質問が来る</li>
+</ul>
+<p><strong>解決策：</strong>descriptionにより多くの詳細とニュアンスを追加する。技術用語などのキーワードを含める。</p>
+
+<h3 is-upgraded>オーバートリガーのシグナル</h3>
+<ul>
+<li>無関係なクエリでスキルが読み込まれる</li>
+<li>ユーザーが無効化している</li>
+<li>目的について混乱が生じている</li>
+</ul>
+<p><strong>解決策：</strong>ネガティブトリガーを追加する。より具体的にする。</p>
+
+<h3 is-upgraded>実行の問題</h3>
+<ul>
+<li>一貫性のない結果</li>
+<li>API呼び出しの失敗</li>
+<li>ユーザーの修正が必要な場面が多い</li>
+</ul>
+<p><strong>解決策：</strong>指示を改善し、エラー処理を追加する。</p>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 5: Distribution and Sharing ========== -->
+    <google-codelab-step label="Chapter 4: Distribution and Sharing（配布と共有）" duration="7">
+      <p>スキルはMCP統合をより完全なものにします。コネクターを比較するユーザーにとって、スキル付きのものはより速く価値を提供できます。</p>
+
+<h2 is-upgraded>現在の配布モデル（2026年1月時点）</h2>
+
+<h3 is-upgraded>個人ユーザーがスキルを入手する方法</h3>
+<div class="flow-step">
+  <div class="flow-num">1</div>
+  <div class="flow-body">
+    <strong>スキルフォルダをダウンロードする</strong>
+    <span>GitHubのリリースからZIPをダウンロード、またはgit cloneで取得</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">2</div>
+  <div class="flow-body">
+    <strong>フォルダを圧縮する（必要な場合）</strong>
+    <span>Claude.aiにアップロードする場合はZIP化が必要</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">3</div>
+  <div class="flow-body">
+    <strong>Claude.ai にアップロードする</strong>
+    <span>Settings &gt; Capabilities &gt; Skills からアップロード</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">4</div>
+  <div class="flow-body">
+    <strong>または Claude Code のスキルディレクトリに配置する</strong>
+    <span>ファイルシステム上の <code>.claude/skills/</code> フォルダに置くだけ</span>
+  </div>
+</div>
+
+<h3 is-upgraded>組織レベルのスキル（2025年12月18日出荷）</h3>
+<ul>
+<li>管理者がワークスペース全体にスキルを展開できる</li>
+<li>自動更新</li>
+<li>一元管理</li>
+</ul>
+
+<h2 is-upgraded>APIを使ったスキルの利用</h2>
+<p>スキルをプログラム的に活用するユースケース（アプリケーション、エージェント、自動化ワークフロー）向けに、APIが直接制御を提供します。</p>
+
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>ユースケース</strong></p></td><td colspan="1" rowspan="1"><p><strong>最適なサーフェス</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>エンドユーザーがスキルを直接操作する</p></td><td colspan="1" rowspan="1"><p>Claude.ai / Claude Code</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>開発中の手動テストと反復</p></td><td colspan="1" rowspan="1"><p>Claude.ai / Claude Code</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>個人的・アドホックなワークフロー</p></td><td colspan="1" rowspan="1"><p>Claude.ai / Claude Code</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>スキルをプログラム的に使うアプリケーション</p></td><td colspan="1" rowspan="1"><p>API</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>大規模な本番デプロイ</p></td><td colspan="1" rowspan="1"><p>API</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>自動化パイプラインとエージェントシステム</p></td><td colspan="1" rowspan="1"><p>API</p></td></tr>
+</table>
+
+<h3 is-upgraded>API主要機能</h3>
+<ul>
+<li><code>/v1/skills</code> エンドポイントでスキルの一覧表示と管理</li>
+<li>Messages APIリクエストに <code>container.skills</code> パラメータでスキルを追加</li>
+<li>Claude Console でのバージョン管理</li>
+<li>Claude Agent SDK との連携（カスタムエージェント構築）</li>
+</ul>
+
+<aside class="warning"><p>APIでのスキル使用には <strong>Code Execution Tool ベータ</strong> が必要です。これはスキルの実行に必要なセキュアな環境を提供します。詳細：Skills API Quickstart / Create Custom Skills / Skills in the Agent SDK</p></aside>
+
+<h2 is-upgraded>オープンスタンダード</h2>
+<p>AnthropicはAgent SkillsをMCPと同様にオープンスタンダードとして公開しています。Claudeを使っているかどうかに関係なく、同じスキルがすべてのAIプラットフォームで動作するべきという考えに基づいています。</p>
+
+<h2 is-upgraded>推奨アプローチ（今日から始める場合）</h2>
+
+<div class="flow-step">
+  <div class="flow-num">1</div>
+  <div class="flow-body">
+    <strong>GitHubでホスティングする</strong>
+    <span>オープンソーススキル用のパブリックリポジトリを作成。明確なREADME（スキルフォルダ外）、使用例、スクリーンショットを用意する。</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">2</div>
+  <div class="flow-body">
+    <strong>MCPリポジトリにドキュメントを追加する</strong>
+    <span>MCPドキュメントからスキルへのリンクを追加。両方を一緒に使う価値を説明し、クイックスタートガイドを提供する。</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">3</div>
+  <div class="flow-body">
+    <strong>インストールガイドを作成する</strong>
+    <span>ユーザーがスキルをClaude.aiまたはClaude Codeに追加するための手順を詳しく説明する。</span>
+  </div>
+</div>
+
+<h3 is-upgraded>インストールガイドのテンプレート</h3>
+<pre><code language="markdown">## [Your Service] スキルのインストール
+
+1. スキルをダウンロードする：
+   - リポジトリをclone: `git clone https://github.com/yourcompany/skills`
+   - またはReleasesからZIPをダウンロード
+
+2. Claudeにインストールする：
+   - Claude.ai > Settings > Skills を開く
+   - 「Upload skill」をクリック
+   - スキルフォルダ（ZIP）を選択する
+
+3. スキルを有効化する：
+   - [Your Service] スキルをONにする
+   - MCPサーバーが接続されていることを確認する
+
+4. テストする：
+   - Claudeに聞く：「Set up a new project in [Your Service]」
+</code></pre>
+
+<h2 is-upgraded>スキルのポジショニング（説明の仕方）</h2>
+<p>スキルをどう説明するかで、ユーザーが価値を理解して使い始めるかどうかが決まります。</p>
+
+<div class="diagram-box">
+  <div class="diagram-card green">
+    <h4>良い例 — アウトカムにフォーカス</h4>
+    <p>「ProjectHubスキルにより、チームは30分の手動セットアップの代わりに、数秒でページ・データベース・テンプレートを含む完全なプロジェクトワークスペースを設定できます。」</p>
+  </div>
+  <div class="diagram-card orange">
+    <h4>悪い例 — 技術的すぎる</h4>
+    <p>「ProjectHubスキルはYAMLフロントマターとMarkdown指示を含むフォルダで、MCPサーバーツールを呼び出します。」</p>
+  </div>
+</div>
+
+<h3 is-upgraded>MCPとスキルのストーリーをハイライトする</h3>
+<pre><code>「私たちのMCPサーバーはClaudeにLinearプロジェクトへのアクセスを与えます。
+スキルはClaudeにチームのスプリントプランニングワークフローを教えます。
+合わせることで、AI駆動のプロジェクト管理が実現します。」</code></pre>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 6: Patterns ========== -->
+    <google-codelab-step label="Chapter 5: Patterns（設計パターン）" duration="10">
+      <p>以下のパターンはアーリーアダプターと内部チームが作成したスキルから生まれました。規定のテンプレートではなく、<strong>効果的と分かった一般的なアプローチ</strong>です。</p>
+
+<h2 is-upgraded>パターン1：順次ワークフロー・オーケストレーション</h2>
+<p><strong>使い所：</strong>ユーザーが特定の順序でマルチステップのプロセスを必要とする場合。</p>
+
+<h3 is-upgraded>例：新規顧客オンボーディング</h3>
+<pre><code language="markdown">## Workflow: Onboard New Customer
+
+### Step 1: Create Account
+Call MCP tool: `create_customer`
+Parameters: name, email, company
+
+### Step 2: Setup Payment
+Call MCP tool: `setup_payment_method`
+Wait for: payment method verification
+
+### Step 3: Create Subscription
+Call MCP tool: `create_subscription`
+Parameters: plan_id, customer_id (from Step 1)
+
+### Step 4: Send Welcome Email
+Call MCP tool: `send_email`
+Template: welcome_email_template
+</code></pre>
+
+<p><strong>主な手法：</strong></p>
+<ul>
+<li>明示的なステップ順序</li>
+<li>ステップ間の依存関係の定義</li>
+<li>各段階でのバリデーション</li>
+<li>失敗時のロールバック指示</li>
+</ul>
+
+<h2 is-upgraded>パターン2：マルチMCP調整</h2>
+<p><strong>使い所：</strong>複数のサービスにまたがるワークフロー。</p>
+
+<h3 is-upgraded>例：デザインから開発へのハンドオフ</h3>
+<pre><code language="markdown">### Phase 1: デザインエクスポート（Figma MCP）
+1. Figmaからデザインアセットをエクスポート
+2. デザイン仕様を生成
+3. アセットマニフェストを作成
+
+### Phase 2: アセット保存（Drive MCP）
+1. Driveにプロジェクトフォルダを作成
+2. すべてのアセットをアップロード
+3. 共有リンクを生成
+
+### Phase 3: タスク作成（Linear MCP）
+1. 開発タスクを作成
+2. アセットリンクをタスクに添付
+3. エンジニアリングチームにアサイン
+
+### Phase 4: 通知（Slack MCP）
+1. #engineering にハンドオフサマリーを投稿
+2. アセットリンクとタスク参照を含める
+</code></pre>
+
+<p><strong>主な手法：</strong></p>
+<ul>
+<li>明確なフェーズ分離</li>
+<li>MCPをまたいだデータ受け渡し</li>
+<li>次のフェーズに進む前のバリデーション</li>
+<li>一元化されたエラーハンドリング</li>
+</ul>
+
+<h2 is-upgraded>パターン3：反復的改善</h2>
+<p><strong>使い所：</strong>反復することで出力品質が向上する場合。</p>
+
+<h3 is-upgraded>例：レポート生成</h3>
+<pre><code language="markdown">## Iterative Report Creation
+
+### Initial Draft（初稿）
+1. MCPでデータを取得
+2. 最初のドラフトレポートを生成
+3. 一時ファイルに保存
+
+### Quality Check（品質チェック）
+1. バリデーションスクリプト実行: `scripts/check_report.py`
+2. 問題を特定：
+   - 欠落セクション
+   - 不一致なフォーマット
+   - データバリデーションエラー
+
+### Refinement Loop（改善ループ）
+1. 各問題に対処
+2. 影響を受けたセクションを再生成
+3. 再バリデーション
+4. 品質閾値を満たすまで繰り返す
+
+### Finalization（最終化）
+1. 最終フォーマットを適用
+2. サマリーを生成
+3. 最終バージョンを保存
+</code></pre>
+
+<p><strong>主な手法：</strong></p>
+<ul>
+<li>明示的な品質基準</li>
+<li>バリデーションスクリプト</li>
+<li>繰り返し改善</li>
+<li>「いつ反復を止めるか」を明確にする</li>
+</ul>
+
+<h2 is-upgraded>パターン4：コンテキスト対応ツール選択</h2>
+<p><strong>使い所：</strong>同じアウトカムを、コンテキストによって異なるツールで達成する場合。</p>
+
+<h3 is-upgraded>例：スマートファイルストレージ</h3>
+<pre><code language="markdown">## Smart File Storage
+
+### Decision Tree（決定ツリー）
+1. ファイルタイプとサイズを確認
+2. 最適な保存場所を決定：
+   - 大きいファイル（10MB超）: クラウドストレージMCPを使用
+   - コラボドキュメント: Notion/Docs MCPを使用
+   - コードファイル: GitHub MCPを使用
+   - 一時ファイル: ローカルストレージを使用
+
+### Execute Storage（ストレージ実行）
+- 決定に基づいて適切なMCPツールを呼び出す
+- サービス固有のメタデータを適用
+- アクセスリンクを生成
+
+### Provide Context to User（ユーザーへの説明）
+- なぜそのストレージが選ばれたかを説明する
+</code></pre>
+
+<p><strong>主な手法：</strong>明確な決定基準 / フォールバックオプション / 選択の透明性</p>
+
+<h2 is-upgraded>パターン5：ドメイン固有インテリジェンス</h2>
+<p><strong>使い所：</strong>ツールアクセスを超えた専門知識をスキルが追加する場合。</p>
+
+<h3 is-upgraded>例：金融コンプライアンス付き決済処理</h3>
+<pre><code language="markdown">## Payment Processing with Compliance
+
+### Processing（処理）
+1. MCPでトランザクション詳細を取得
+2. コンプライアンスルールを適用：
+   - 制裁リストを確認
+   - 管轄区域の許可を検証
+   - リスクレベルを評価
+3. コンプライアンスの決定を文書化
+
+IF コンプライアンス通過：
+  - 決済処理MCPツールを呼び出す
+  - 適切な不正チェックを適用
+  - トランザクションを処理する
+
+ELSE：
+  - レビューのためにフラグを立てる
+  - コンプライアンスケースを作成する
+
+### Audit Trail（監査証跡）
+- すべてのコンプライアンスチェックをログに記録
+- 処理の決定を記録
+- 監査レポートを生成
+</code></pre>
+
+<p><strong>主な手法：</strong>ロジックに組み込まれたドメイン専門知識 / アクションの前にコンプライアンス / 包括的なドキュメント / 明確なガバナンス</p>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 7: Troubleshooting ========== -->
+    <google-codelab-step label="Chapter 5: Troubleshooting（トラブルシューティング）" duration="8">
+      <p>スキルの開発中に発生する典型的な問題とその解決策を解説します。</p>
+
+<h2 is-upgraded>スキルがアップロードできない</h2>
+
+<h3 is-upgraded>エラー：「Could not find SKILL.md in uploaded folder」</h3>
+<p><strong>原因：</strong>ファイル名が正確に SKILL.md ではない</p>
+<p><strong>解決策：</strong></p>
+<ul>
+<li>SKILL.md に正確にリネームする（大文字小文字を区別）</li>
+<li><code>ls -la</code> で確認すると SKILL.md と表示されるはず</li>
+</ul>
+
+<h3 is-upgraded>エラー：「Invalid frontmatter」</h3>
+<p><strong>原因：</strong>YAMLフォーマットの問題</p>
+<pre><code># 間違い — デリミタがない
+name: my-skill
+description: Does things
+
+# 間違い — クォートが閉じていない
+name: my-skill
+description: "Does things
+
+# 正しい
+---
+name: my-skill
+description: Does things
+---
+</code></pre>
+
+<h3 is-upgraded>エラー：「Invalid skill name」</h3>
+<p><strong>原因：</strong>名前にスペースまたは大文字が含まれている</p>
+<pre><code># 間違い
+name: My Cool Skill
+
+# 正しい
+name: my-cool-skill
+</code></pre>
+
+<h2 is-upgraded>スキルがトリガーしない</h2>
+<p><strong>症状：</strong>スキルが自動的に読み込まれない</p>
+
+<p><strong>修正方法：</strong>description フィールドを見直してください。</p>
+
+<p><strong>クイックチェックリスト：</strong></p>
+<ul>
+<li>説明が曖昧すぎないか？（「プロジェクトを手伝います」は機能しない）</li>
+<li>ユーザーが実際に言いそうなトリガーフレーズを含んでいるか？</li>
+<li>関連するファイルタイプがある場合、記載されているか？</li>
+</ul>
+
+<p><strong>デバッグ方法：</strong>Claudeに「When would you use the [skill name] skill?」と聞いてみてください。Claudeがdescriptionを引用します。何が足りないかに基づいて調整します。</p>
+
+<h2 is-upgraded>スキルがトリガーしすぎる</h2>
+<p><strong>症状：</strong>無関係なクエリでスキルが読み込まれる</p>
+
+<h3 is-upgraded>解決策1：ネガティブトリガーを追加する</h3>
+<pre><code>description: Advanced data analysis for CSV files. Use for
+statistical modeling, regression, clustering. Do NOT use for
+simple data exploration (use data-viz skill instead).
+</code></pre>
+
+<h3 is-upgraded>解決策2：より具体的にする</h3>
+<pre><code># 広すぎる
+description: Processes documents
+
+# より具体的
+description: Processes PDF legal documents for contract review
+</code></pre>
+
+<h3 is-upgraded>解決策3：スコープを明確にする</h3>
+<pre><code>description: PayFlow payment processing for e-commerce. Use
+specifically for online payment workflows, not for general
+financial queries.
+</code></pre>
+
+<h2 is-upgraded>MCP接続の問題</h2>
+<p><strong>症状：</strong>スキルは読み込まれるがMCP呼び出しが失敗する</p>
+
+<div class="flow-step">
+  <div class="flow-num">1</div>
+  <div class="flow-body">
+    <strong>MCPサーバーが接続されているか確認する</strong>
+    <span>Claude.ai: Settings &gt; Extensions &gt; [Your Service] → 「Connected」と表示されているか</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">2</div>
+  <div class="flow-body">
+    <strong>認証を確認する</strong>
+    <span>APIキーが有効かつ未期限か / 適切な権限・スコープが付与されているか / OAuthトークンが更新されているか</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">3</div>
+  <div class="flow-body">
+    <strong>MCPを単独でテストする</strong>
+    <span>スキルなしでClaudeにMCPを直接呼び出させる。「Use [Service] MCP to fetch my projects」と言ってみる。これが失敗する場合、問題はスキルではなくMCPにある。</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">4</div>
+  <div class="flow-body">
+    <strong>ツール名を確認する</strong>
+    <span>スキルが正しいMCPツール名を参照しているか確認。ツール名は大文字小文字を区別する。MCPサーバーのドキュメントを確認する。</span>
+  </div>
+</div>
+
+<h2 is-upgraded>指示が遵守されない</h2>
+<p><strong>症状：</strong>スキルは読み込まれるがClaudeが指示に従わない</p>
+
+<h3 is-upgraded>よくある原因と解決策</h3>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>原因</strong></p></td><td colspan="1" rowspan="1"><p><strong>解決策</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>指示が冗長すぎる</p></td><td colspan="1" rowspan="1"><p>指示を簡潔にする。箇条書きと番号付きリストを使う。詳細な参照は別ファイルに移動する。</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>重要な指示が埋もれている</p></td><td colspan="1" rowspan="1"><p>重要な指示を先頭に配置する。## Important や ## Critical ヘッダーを使う。必要なら重要ポイントを繰り返す。</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>言語が曖昧</p></td><td colspan="1" rowspan="1"><p>具体的なアクションを明記する（例：次を確認してからcreate_projectを呼び出す）</p></td></tr>
+</table>
+
+<pre><code># 悪い例 — 曖昧
+Make sure to validate things properly
+
+# 良い例 — 具体的
+CRITICAL: Before calling create_project, verify:
+- Project name is non-empty
+- At least one team member assigned
+- Start date is not in the past
+</code></pre>
+
+<aside class="special"><p><strong>上級テクニック：</strong>重要なバリデーションには、言語指示に頼る代わりに、チェックをプログラム的に実行するスクリプトをバンドルすることを検討してください。コードは決定論的ですが、言語の解釈はそうではありません。Officeスキルでこのパターンの例を参照してください。</p></aside>
+
+<h3 is-upgraded>モデルの「怠惰」への対処</h3>
+<pre><code language="markdown">## Performance Notes
+- Take your time to do this thoroughly（徹底的に時間をかけてください）
+- Quality is more important than speed（品質はスピードより重要です）
+- Do not skip validation steps（バリデーションステップをスキップしないでください）
+</code></pre>
+<p>注：これをSKILL.mdに追加するより、ユーザープロンプトに追加する方が効果的です。</p>
+
+<h2 is-upgraded>大きなコンテキストの問題</h2>
+<p><strong>症状：</strong>スキルが遅い、または応答が劣化する</p>
+
+<h3 is-upgraded>原因</h3>
+<ul>
+<li>スキルのコンテンツが大きすぎる</li>
+<li>同時に有効なスキルが多すぎる</li>
+<li>段階的開示でなくすべてが読み込まれている</li>
+</ul>
+
+<h3 is-upgraded>解決策</h3>
+<div class="flow-step">
+  <div class="flow-num">1</div>
+  <div class="flow-body">
+    <strong>SKILL.mdのサイズを最適化する</strong>
+    <span>詳細ドキュメントを references/ に移動する。インライン記述の代わりに参照リンクにする。SKILL.mdを5,000語以内に保つ。</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">2</div>
+  <div class="flow-body">
+    <strong>有効なスキル数を減らす</strong>
+    <span>20〜50以上のスキルが同時有効かどうか評価する。ロールベースで有効化するスキルを絞り込む。関連する機能をスキル「パック」にまとめることを検討する。</span>
+  </div>
+</div>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 8: Resources and References ========== -->
+    <google-codelab-step label="Chapter 6: Resources and References（リソース）" duration="5">
+      <p>最初のスキルを作る場合は、ベストプラクティスガイドから始め、必要に応じてAPIドキュメントを参照してください。</p>
+
+<h2 is-upgraded>公式ドキュメント（Anthropic）</h2>
+
+<h3 is-upgraded>ドキュメント</h3>
+<ul>
+<li><strong>Best Practices Guide</strong> — スキル設計のベストプラクティス集</li>
+<li><strong>Skills Documentation</strong> — 技術仕様の全詳細</li>
+<li><strong>API Reference</strong> — プログラム利用のAPIリファレンス</li>
+<li><strong>MCP Documentation</strong> — Model Context Protocolのドキュメント</li>
+</ul>
+
+<h3 is-upgraded>ブログ記事</h3>
+<ul>
+<li><strong>Introducing Agent Skills</strong> — Agent Skillsの発表記事</li>
+<li><strong>Engineering Blog: Equipping Agents for the Real World</strong> — エンジニアリングブログ</li>
+<li><strong>Skills Explained</strong> — スキルの説明記事</li>
+<li><strong>How to Create Skills for Claude</strong> — スキル作成ガイド</li>
+<li><strong>Building Skills for Claude Code</strong> — Claude Code向けスキル構築</li>
+<li><strong>Improving Frontend Design through Skills</strong> — スキルによるフロントエンドデザインの改善</li>
+</ul>
+
+<h2 is-upgraded>スキルの実例</h2>
+
+<h3 is-upgraded>公開スキルリポジトリ</h3>
+<ul>
+<li><strong>GitHub: anthropics/skills</strong> — Anthropicが作成したスキルを含む公式リポジトリ。カスタマイズして使える。</li>
+</ul>
+
+<h3 is-upgraded>skill-creator スキル</h3>
+<ul>
+<li>Claude.ai にビルトイン、Claude Code 向けにもダウンロード可能</li>
+<li>説明からスキルを生成できる</li>
+<li>スキルをレビューして推奨を提供する</li>
+<li>使い方：「Help me build a skill using skill-creator」</li>
+</ul>
+
+<h2 is-upgraded>ツールとユーティリティ</h2>
+
+<h3 is-upgraded>バリデーション</h3>
+<ul>
+<li>skill-creator がスキルを評価できる</li>
+<li>「Review this skill and suggest improvements」と聞く</li>
+</ul>
+
+<h2 is-upgraded>サポートを受ける</h2>
+
+<h3 is-upgraded>技術的な質問</h3>
+<ul>
+<li><strong>Claude Developers Discord</strong> — コミュニティフォーラムで一般的な質問を投稿</li>
+</ul>
+
+<h3 is-upgraded>バグ報告</h3>
+<ul>
+<li><strong>GitHub Issues: anthropics/skills/issues</strong></li>
+<li>含める情報：スキル名、エラーメッセージ、再現手順</li>
+</ul>
+
+<aside class="special"><p>最初のスキルを作るなら <strong>skill-creator スキル</strong> から始めてください。自然言語でユースケースを説明するだけで、適切にフォーマットされたSKILL.mdを生成してくれます。</p></aside>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 9: Reference A - Quick Checklist ========== -->
+    <google-codelab-step label="Reference A: Quick Checklist（クイックチェックリスト）" duration="3">
+      <p>スキルをアップロードする前後に使うチェックリストです。skill-creatorを使って最初のドラフトを生成してから、このリストで漏れがないか確認することを推奨します。</p>
+
+<h2 is-upgraded>開始前チェック</h2>
+<ul class="checklist">
+<li>2〜3つの具体的なユースケースを特定した</li>
+<li>必要なツール（ビルトインまたはMCP）を特定した</li>
+<li>このガイドとサンプルスキルを確認した</li>
+<li>フォルダ構造を計画した</li>
+</ul>
+
+<h2 is-upgraded>開発中チェック</h2>
+<ul class="checklist">
+<li>フォルダ名が kebab-case になっている</li>
+<li>SKILL.md ファイルが存在する（正確なスペル）</li>
+<li>YAML フロントマターに --- デリミタがある</li>
+<li>name フィールドが kebab-case で、スペース・大文字なし</li>
+<li>description に「何をするか」と「いつ使うか」が含まれている</li>
+<li>XMLタグ（< >）がどこにも含まれていない</li>
+<li>指示が明確でアクションにつながる内容になっている</li>
+<li>エラー処理が含まれている</li>
+<li>例（Examples）が提供されている</li>
+<li>references/ へのリンクが明確に書かれている</li>
+</ul>
+
+<h2 is-upgraded>アップロード前チェック</h2>
+<ul class="checklist">
+<li>明らかなタスクでのトリガーをテストした</li>
+<li>言い換えられたリクエストでのトリガーをテストした</li>
+<li>無関係なトピックでは起動しないことを確認した</li>
+<li>機能テストが通過した</li>
+<li>ツール統合が機能している（該当する場合）</li>
+<li>.zip ファイルとして圧縮した</li>
+</ul>
+
+<h2 is-upgraded>アップロード後チェック</h2>
+<ul class="checklist">
+<li>実際の会話でテストした</li>
+<li>アンダー・オーバートリガーを監視している</li>
+<li>ユーザーフィードバックを収集している</li>
+<li>description と指示を反復改善している</li>
+<li>メタデータのバージョンを更新した</li>
+</ul>
+
+<aside class="special"><p>このチェックリストをコピーして、各スキルの開発チェックシートとして使ってください。</p></aside>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 10: Reference B - YAML Frontmatter ========== -->
+    <google-codelab-step label="Reference B: YAML Frontmatter リファレンス" duration="5">
+      <p>YAML フロントマターの完全なリファレンスです。すべてのフィールドと仕様を網羅しています。</p>
+
+<h2 is-upgraded>必須フィールド</h2>
+<pre><code language="yaml">---
+name: skill-name-in-kebab-case
+description: What it does and when to use it. Include specific trigger phrases.
+---
+</code></pre>
+
+<h2 is-upgraded>全オプションフィールド</h2>
+<pre><code language="yaml">---
+name: skill-name                  # 必須: kebab-case、スペース・大文字禁止
+
+description: |                    # 必須: 1024文字以内、XMLタグ禁止
+  スキルが何をするか、いつ使うかを説明。
+  具体的なトリガーフレーズを含める。
+
+license: MIT                      # オプション: MIT, Apache-2.0 など
+
+allowed-tools: "Bash(python:*) Bash(npm:*) WebFetch"
+  # オプション: ツールアクセスを制限する
+  # スペース区切りでツール名またはパターンを指定
+
+metadata:                         # オプション: カスタムキーバリューペア
+  author: Company Name            # 推奨: 作成者
+  version: 1.0.0                  # 推奨: バージョン
+  mcp-server: server-name         # 推奨: MCPサーバー名（使用する場合）
+  category: productivity          # カテゴリ
+  tags:                           # タグ（配列形式）
+    - project-management
+    - automation
+  documentation: https://example.com/docs  # ドキュメントURL
+  support: support@example.com    # サポート連絡先
+
+compatibility: |                  # オプション: 1〜500文字
+  環境要件を記載（Claude.ai / Claude Code / Claude APIなど）
+  必要なシステムパッケージ、ネットワークアクセス要件など
+---
+</code></pre>
+
+<h2 is-upgraded>フィールド仕様まとめ</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>フィールド</strong></p></td><td colspan="1" rowspan="1"><p><strong>必須</strong></p></td><td colspan="1" rowspan="1"><p><strong>文字数制限</strong></p></td><td colspan="1" rowspan="1"><p><strong>制約</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>name</p></td><td colspan="1" rowspan="1"><p>✅ 必須</p></td><td colspan="1" rowspan="1"><p>—</p></td><td colspan="1" rowspan="1"><p>kebab-case。"claude"/"anthropic"プレフィックス禁止</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>description</p></td><td colspan="1" rowspan="1"><p>✅ 必須</p></td><td colspan="1" rowspan="1"><p>1024文字以内</p></td><td colspan="1" rowspan="1"><p>XMLタグ禁止。WHATとWHENの両方を含める</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>license</p></td><td colspan="1" rowspan="1"><p>オプション</p></td><td colspan="1" rowspan="1"><p>—</p></td><td colspan="1" rowspan="1"><p>標準的なSPDXライセンス識別子を推奨</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>allowed-tools</p></td><td colspan="1" rowspan="1"><p>オプション</p></td><td colspan="1" rowspan="1"><p>—</p></td><td colspan="1" rowspan="1"><p>スペース区切りのツール名リスト</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>metadata</p></td><td colspan="1" rowspan="1"><p>オプション</p></td><td colspan="1" rowspan="1"><p>—</p></td><td colspan="1" rowspan="1"><p>任意のカスタムキーバリュー。author/version/mcp-server推奨</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>compatibility</p></td><td colspan="1" rowspan="1"><p>オプション</p></td><td colspan="1" rowspan="1"><p>1〜500文字</p></td><td colspan="1" rowspan="1"><p>環境要件・依存関係を記載</p></td></tr>
+</table>
+
+<h2 is-upgraded>セキュリティノート</h2>
+
+<h3 is-upgraded>許可されているもの</h3>
+<ul>
+<li>標準的なYAML型（文字列、数値、真偽値、リスト、オブジェクト）</li>
+<li>カスタムメタデータフィールド</li>
+<li>最大1024文字の長い説明</li>
+</ul>
+
+<h3 is-upgraded>禁止されているもの</h3>
+<ul>
+<li>XMLの角括弧（<code>&lt; &gt;</code>）— セキュリティ制限</li>
+<li>YAMLでのコード実行（安全なYAMLパーサーを使用）</li>
+<li>"claude" または "anthropic" プレフィックスのスキル名（予約済み）</li>
+</ul>
+
+<aside class="warning"><p>フロントマターはClaudeのシステムプロンプトに組み込まれます。外部から取得したスキルの場合、悪意あるコンテンツがプロンプトインジェクション攻撃に使われる可能性があります。常に信頼できるソースのスキルのみを使用してください。</p></aside>
+
+<h2 is-upgraded>完全な例</h2>
+<pre><code language="yaml">---
+name: project-sprint-planner
+description: |
+  Manages sprint planning workflows for software projects using Linear.
+  Fetches current project status, analyzes velocity, and creates
+  prioritized tasks. Use when user says "help me plan this sprint",
+  "create sprint tasks", "organize the backlog", or asks to
+  "prepare for our sprint planning meeting".
+
+license: Apache-2.0
+
+allowed-tools: "WebFetch Bash(python:*)"
+
+metadata:
+  author: YourCompany Engineering
+  version: 2.1.0
+  mcp-server: linear
+  category: project-management
+  tags:
+    - sprint-planning
+    - linear
+    - agile
+  documentation: https://github.com/yourcompany/skills/blob/main/README.md
+  support: devtools@yourcompany.com
+
+compatibility: |
+  Requires Linear MCP server connected in Claude settings.
+  Works with Claude.ai and Claude Code.
+  Python 3.8+ required for validation scripts.
+---
+</code></pre>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 11: Reference C - Complete Skill Examples ========== -->
+    <google-codelab-step label="Reference C: Complete Skill Examples（完全なスキル例）" duration="7">
+      <p>本番対応の完全なスキル例を2つ示します。これらはガイドで説明したパターンを実際に使用しています。</p>
+
+<h2 is-upgraded>例1：最小構成スキル</h2>
+<p>まずこれで始めてください。nameとdescriptionの2行だけで動作します。</p>
+<pre><code language="yaml">---
+name: meeting-summarizer
+description: |
+  Generates meeting minutes from transcript text. Creates structured
+  summaries with action items, decisions, and next steps.
+  Use when user says "summarize this meeting", "create meeting minutes",
+  "what did we decide", or pastes meeting transcript text.
+---
+
+# Meeting Summarizer
+
+## Instructions
+
+When given meeting transcript or notes, create a structured summary:
+
+### Required Sections
+
+1. **Meeting Overview**
+   - Date and participants (if mentioned)
+   - Meeting purpose/topic
+
+2. **Key Decisions**
+   - List each decision made
+   - Format: "DECISION: [what was decided]"
+
+3. **Action Items**
+   - Each item with owner and deadline (if mentioned)
+   - Format: "ACTION: [task] — Owner: [name] — Due: [date/TBD]"
+
+4. **Next Steps**
+   - Upcoming meetings or milestones discussed
+
+### Format Rules
+- Use bullet points, not paragraphs
+- Keep each point to one sentence
+- If information is not in the transcript, omit the section
+- Do not invent names, dates, or decisions
+
+## Example Output
+
+**Meeting Overview**
+- Topic: Q3 budget review
+
+**Key Decisions**
+- DECISION: Increase marketing budget by 15%
+
+**Action Items**
+- ACTION: Prepare revised budget sheet — Owner: Finance team — Due: Friday
+
+**Next Steps**
+- Follow-up meeting scheduled for next Tuesday
+</code></pre>
+
+<h2 is-upgraded>例2：MCP統合スキル（中級）</h2>
+<p>MCPサーバーと連携する場合の例です。</p>
+<pre><code language="yaml">---
+name: linear-sprint-planner
+description: |
+  Sprint planning workflow for Linear projects. Fetches current issues,
+  analyzes team capacity, and creates organized sprint with priorities.
+  Use when user says "help me plan the sprint", "organize sprint tasks",
+  "create sprint in Linear", "what should we work on this sprint",
+  or asks about sprint planning or backlog grooming.
+
+metadata:
+  author: YourTeam
+  version: 1.0.0
+  mcp-server: linear
+---
+
+# Linear Sprint Planner
+
+## Prerequisites
+- Linear MCP server must be connected
+- User must specify: sprint duration (default: 2 weeks) and team
+
+## Instructions
+
+### Step 1: Gather Context
+Ask the user for:
+- Team name or project identifier
+- Sprint start date
+- Team capacity (story points or number of engineers)
+- Any constraints or priorities
+
+### Step 2: Fetch Current State
+Use Linear MCP to:
+1. Get all open issues for the project: `linear_get_issues(project_id, status="open")`
+2. Get recent sprint history: `linear_get_sprints(project_id, limit=3)`
+3. Check team member assignments: `linear_get_team_members(team_id)`
+
+### Step 3: Analyze and Prioritize
+Based on the data:
+1. Identify high-priority issues (P1, P2)
+2. Check estimates vs. capacity
+3. Flag any blocking dependencies
+4. Consider in-progress work that carries over
+
+### Step 4: Create Sprint Plan
+Present a proposed sprint with:
+- Selected issues (with reasoning)
+- Total estimated capacity used
+- Any issues deferred and why
+
+Wait for user approval before creating.
+
+### Step 5: Create Sprint in Linear
+After approval:
+1. Create sprint cycle: `linear_create_cycle(project_id, name, start_date, end_date)`
+2. Add issues to sprint: `linear_add_issues_to_cycle(cycle_id, issue_ids)`
+3. Confirm creation with summary
+
+## Error Handling
+
+### Linear MCP Not Connected
+If Linear MCP calls fail:
+1. Check: Settings > Extensions > Linear shows "Connected"
+2. Try refreshing the connection
+3. If still failing, ask user to reconnect Linear in settings
+
+### No Issues Found
+If no open issues exist:
+- Inform user and ask if they want to create new issues or import from another source
+
+### Capacity Overrun
+If selected issues exceed capacity:
+- Present options: reduce scope, extend sprint, or add capacity
+- Never automatically override user's stated capacity
+</code></pre>
+
+<h2 is-upgraded>公式リポジトリのスキル例</h2>
+<p>本番対応の完全なスキルは <strong>GitHub: anthropics/skills</strong> リポジトリで公開されています：</p>
+
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>スキル名</strong></p></td><td colspan="1" rowspan="1"><p><strong>説明</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Document Skills</p></td><td colspan="1" rowspan="1"><p>PDF, DOCX, PPTX, XLSX の作成・編集</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Example Skills</p></td><td colspan="1" rowspan="1"><p>様々なワークフローパターンのサンプル</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Partner Skills Directory</p></td><td colspan="1" rowspan="1"><p>Asana, Atlassian, Canva, Figma, Sentry, Zapier などパートナーのスキル</p></td></tr>
+</table>
+
+<aside class="special"><p>これらのリポジトリは最新の状態を維持しており、このガイドで説明したもの以外の追加例も含まれています。クローンして、ユースケースに合わせて改造してテンプレートとして使ってください。</p></aside>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 12: まとめ ========== -->
+    <google-codelab-step label="まとめ" duration="2">
+      <p>このCodelabで学んだAnthropicの公式スキルガイドの内容を振り返りましょう。</p>
+
+<h2 is-upgraded>学習のポイント</h2>
+<table class="ba-table">
+<tr><th colspan="1" rowspan="1"><p>章</p></th><th colspan="1" rowspan="1"><p>主要なポイント</p></th></tr>
+<tr><td colspan="1" rowspan="1"><p>Chapter 1: Fundamentals</p></td><td class="ba-after"><p>スキル＝フォルダ。必須はSKILL.mdのみ。3段階の段階的開示でトークンを効率化。ポータブルでコンポーザブルな設計。</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Chapter 2: Planning</p></td><td class="ba-after"><p>2〜3のユースケースから開始。3カテゴリ（文書作成/ワークフロー自動化/MCP強化）。成功基準を事前に定義する。</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Chapter 2: Technical</p></td><td class="ba-after"><p>SKILL.md命名は大文字小文字を区別。nameはkebab-case必須。descriptionにはWHATとWHENの両方を必ず含める。XMLタグ禁止。</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Chapter 3: Testing</p></td><td class="ba-after"><p>3種のテスト（トリガー/機能/パフォーマンス比較）。skill-creatorで素早く作成・レビュー。シグナルに基づいて継続改善。</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Chapter 4: Distribution</p></td><td class="ba-after"><p>GitHub→Claude.ai/Claude Code でスタート。APIは大規模本番向け。アウトカムベースで説明する。オープンスタンダードなのでポータブル。</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Chapter 5: Patterns</p></td><td class="ba-after"><p>5つのパターン（順次/マルチMCP/反復/コンテキスト対応/ドメイン知識）。トラブルシューティングはdescriptionから始める。</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Chapter 6: Resources</p></td><td class="ba-after"><p>anthropics/skills リポジトリが公式サンプル。skill-creator が一番の出発点。</p></td></tr>
+</table>
+
+<h2 is-upgraded>次のアクション</h2>
+<div class="flow-step">
+  <div class="flow-num">1</div>
+  <div class="flow-body">
+    <strong>繰り返しているタスクを1つ選ぶ</strong>
+    <span>週に3回以上やっていて、パターンがある業務を選ぶ</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">2</div>
+  <div class="flow-body">
+    <strong>skill-creator に頼む</strong>
+    <span>「Use the skill-creator skill to help me build a skill for [your use case]」</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">3</div>
+  <div class="flow-body">
+    <strong>チェックリストで確認する</strong>
+    <span>Reference A のクイックチェックリストで漏れがないか確認する</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">4</div>
+  <div class="flow-body">
+    <strong>テストして改善する</strong>
+    <span>3種のテストを実行し、シグナルに基づいて反復改善する</span>
+  </div>
+</div>
+
+<h2 is-upgraded>関連コードラボ</h2>
+<ul>
+<li><a href="/codelabs/claude-agent-skills/">Claude Agent Skills 完全入門</a> — Agent Skillsの実践的な解説</li>
+<li><a href="/codelabs/antigravity-getting-started/">Antigravity 使い方入門</a> — Google Antigravity の基本操作</li>
+</ul>
+
+<aside class="special"><p>まず <code>name</code> と <code>description</code> の2行だけで始めてください。完璧を目指す必要はありません。最初のスキルを実際に動かしてみることが、最大の学びになります。</p></aside>
+
+    </google-codelab-step>
+
+  </google-codelab>
+
+  <!-- 読み上げボタン -->
+  <button id="speech-btn" onclick="toggleSpeech()" title="現在のステップを読み上げます">
+    <span id="speech-icon">▶</span>
+    <span id="speech-label">読み上げ</span>
+  </button>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js" async></script>
+
+  <script>
+    var speaking = false;
+    var currentUtterance = null;
+
+    function getCurrentStepIndex() {
+      var hash = location.hash.replace('#', '');
+      var n = parseInt(hash);
+      return isNaN(n) ? 0 : n;
+    }
+
+    function getCurrentStepText() {
+      var steps = document.querySelectorAll('google-codelab-step');
+      var idx = getCurrentStepIndex();
+      var step = steps[idx];
+      if (!step) return '';
+      var label = step.getAttribute('label') || '';
+      var body = step.innerText || step.textContent || '';
+      return label + '。' + body;
+    }
+
+    function toggleSpeech() {
+      if (speaking) {
+        window.speechSynthesis.cancel();
+        setSpeaking(false);
+        return;
+      }
+      var text = getCurrentStepText();
+      if (!text.trim()) return;
+
+      var utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'ja-JP';
+      utter.rate = 0.95;
+      utter.onend = function() { setSpeaking(false); };
+      utter.onerror = function() { setSpeaking(false); };
+      currentUtterance = utter;
+      window.speechSynthesis.speak(utter);
+      setSpeaking(true);
+    }
+
+    function setSpeaking(val) {
+      speaking = val;
+      var btn = document.getElementById('speech-btn');
+      var icon = document.getElementById('speech-icon');
+      var label = document.getElementById('speech-label');
+      if (val) {
+        btn.classList.add('speaking');
+        icon.textContent = '⏹';
+        label.textContent = '停止';
+      } else {
+        btn.classList.remove('speaking');
+        icon.textContent = '▶';
+        label.textContent = '読み上げ';
+      }
+    }
+
+    window.addEventListener('hashchange', function() {
+      if (speaking) {
+        window.speechSynthesis.cancel();
+        setSpeaking(false);
+      }
+    });
+  </script>
+</body>
+</html>
