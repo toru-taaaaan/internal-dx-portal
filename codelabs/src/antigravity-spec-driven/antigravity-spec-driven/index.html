@@ -1,0 +1,368 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Antigravity 仕様駆動開発 入門</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="antigravity-spec-driven"
+                  title="Antigravity 仕様駆動開発 入門"
+                  environment="web"
+                  feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/">
+    
+      <google-codelab-step label="このラボの目的" duration="2">
+        <p>このCodelabでは <strong>Google Antigravity</strong> を使った <strong>仕様駆動開発（Spec-Driven Development）</strong> を実践します。</p>
+<p>仕様駆動開発とは、AI エージェントに作業を依頼する前に <strong>詳細な仕様書を書く</strong> アプローチです。あいまいな指示で動かすのではなく、要件・制約・完成イメージを文書化してからエージェントに渡します。</p>
+<p class="image-container"><img alt="Antigravity 概要" src="img\\b06b582bcd847f6d.png"></p>
+<h2 is-upgraded>このCodelabで学ぶこと</h2>
+<ul>
+<li>「プロンプトとパッチ」との違いを理解する</li>
+<li>効果的な仕様書（スペック）の書き方を習得する</li>
+<li>Antigravity に仕様を渡してエージェントに自動実装させる</li>
+<li>Artifacts で成果物を確認・承認するワークフローを身につける</li>
+</ul>
+<h2 is-upgraded>このCodelabで作るもの</h2>
+<p><strong>社内向け FAQ ページ</strong> を仕様書から自動生成します。完成品は：</p>
+<ul>
+<li>部署ごとにまとめられた Q&amp;A（カテゴリ分類）</li>
+<li>キーワード検索機能</li>
+<li>クリックで開閉するアコーディオン形式</li>
+<li>スマートフォン対応のレスポンシブデザイン</li>
+</ul>
+<h2 is-upgraded>必要な環境</h2>
+<ul>
+<li><strong>Antigravity インストール済み</strong>（未インストールの場合は「Antigravity 使い方入門」を先に完了してください）</li>
+<li><strong>Google Workspace アカウント</strong>（会社の Gmail アドレス）</li>
+<li>所要時間：約 55 分</li>
+</ul>
+<aside class="special"><p> プログラミングの知識は不要です。仕様書の書き方さえ覚えれば、あとはエージェントが実装します。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="仕様駆動開発とは" duration="5">
+        <h2 is-upgraded>「プロンプトとパッチ」との違い</h2>
+<p>多くの人が最初にやりがちなのが <strong>「プロンプトとパッチ」</strong> です。</p>
+<ol type="1">
+<li>AI に「〇〇を作って」と送る</li>
+<li>出てきた結果を見て「ここが違う」とパッチを当てる</li>
+<li>また送る → また直す → ループ</li>
+</ol>
+<p>これは時間がかかり、最終的な品質もブレます。</p>
+<p><strong>仕様駆動開発</strong> では順序が変わります。</p>
+<ol type="1">
+<li><strong>先に仕様書を書く</strong>（何を・どんな制約で・どう動くか）</li>
+<li>エージェントに仕様書ごと渡す</li>
+<li>エージェントが計画を立てる → レビューする</li>
+<li>承認 → 自動実装</li>
+</ol>
+<h2 is-upgraded>なぜ仕様書が重要か</h2>
+<table>
+<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"><p>プロンプトとパッチ</p>
+</td><td colspan="1" rowspan="1"><p>仕様駆動開発</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>最初にすること</p>
+</td><td colspan="1" rowspan="1"><p>すぐ実行</p>
+</td><td colspan="1" rowspan="1"><p>仕様書を書く</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>手戻り</p>
+</td><td colspan="1" rowspan="1"><p>多い</p>
+</td><td colspan="1" rowspan="1"><p>少ない</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>完成物の品質</p>
+</td><td colspan="1" rowspan="1"><p>ブレがある</p>
+</td><td colspan="1" rowspan="1"><p>仕様通り</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>資産性</p>
+</td><td colspan="1" rowspan="1"><p>毎回ゼロから</p>
+</td><td colspan="1" rowspan="1"><p>仕様書が再利用できる</p>
+</td></tr>
+</table>
+<h2 is-upgraded>良い仕様書の 3 要素</h2>
+<p><strong>1. 目的</strong></p>
+<p>「何のために作るか」「誰が使うか」を明記する</p>
+<p><strong>2. 機能要件</strong></p>
+<p>「何ができなければならないか」を箇条書きで具体的に書く</p>
+<p><strong>3. 制約</strong></p>
+<p>「使ってよい技術・使ってはいけないこと・デザインの決まり事」を明示する</p>
+<p class="image-container"><img alt="Antigravity 概要" src="img\\281ac826fb44d427.png"></p>
+<aside class="special"><p> 仕様書は完璧である必要はありません。「これを作りたい」という意図が伝われば十分です。エージェントが不明点を質問してきます。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="ワークスペースを準備する" duration="5">
+        <p>Antigravity を起動して、Agent Manager を開きます。</p>
+<h2 is-upgraded>Agent Manager を起動する</h2>
+<p class="image-container"><img alt="Agent Manager インターフェース" src="img\\d5ae91fc746e1bba.png"></p>
+<h2 is-upgraded>Playground ワークスペースを選択する</h2>
+<p>左のサイドバーから <strong>Workspaces</strong> を選択し、<strong>Playground</strong> をクリックします。</p>
+<p class="image-container"><img alt="ワークスペース選択" src="img\\ec72712ea24bf6d5.png"></p>
+<aside class="special"><p> Playground は本番ファイルに影響しない安全な作業場所です。最初の練習はここで行いましょう。 </p>
+</aside>
+<h2 is-upgraded>Planning モードを確認する</h2>
+<p>Agent Manager 上部のモード選択で <strong>Planning</strong> が選ばれていることを確認します。</p>
+<p class="image-container"><img alt="プランニングモード" src="img\\f403e40ad480efc9.png"></p>
+<p>Planning モードでは、エージェントが実行前に計画を提示します。承認してから実行するため、方向のズレを事前に修正できます。</p>
+<h2 is-upgraded>モデルの確認</h2>
+<p>モデル選択欄で利用可能なモデルが表示されます。Gemini 3 を選択してください。</p>
+<p class="image-container"><img alt="モデル選択" src="img\\fb0744dc43911365.png"></p>
+<h2 is-upgraded>Browser 機能はオフにする</h2>
+<p>このCodelabではブラウザ機能は使いません。Browser トグルが <strong>オフ</strong> であることを確認してください。</p>
+<aside class="warning"><p> Browser をオンにしていると、エージェントがWeb上のリソースを参照しようとすることがあります。このCodelabではオフにしておきます。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="仕様書を書く" duration="10">
+        <p>これがこのCodelabの核心です。良い仕様書を書くことで、エージェントの精度が劇的に上がります。</p>
+<h2 is-upgraded>テンプレートをコピーする</h2>
+<p>お好みのテキストエディタ（メモ帳でも可）を開き、以下の仕様書をそのまま貼り付けてください。</p>
+<pre><code># 社内 FAQ ページ 仕様書
+
+## 目的
+情報システム部への問い合わせを減らすため、よくある質問をまとめた
+Web ページを作る。社員が自分で調べて解決できるようにする。
+
+## 対象ユーザー
+AKIBAホールディングス 全社員（ITリテラシーは様々）
+
+## 機能要件
+1. FAQ をカテゴリ別に表示する（パソコン・メール・ネットワーク・Antigravity の 4 カテゴリ）
+2. キーワードで検索できる（リアルタイムフィルタリング）
+3. 質問をクリックすると回答が展開・折りたたみできる（アコーディオン形式）
+4. 各カテゴリは色分けされたバッジで区別できる
+5. 上部に「問い合わせ先」として情報システム部の内線番号を表示する
+
+## FAQ 内容（各カテゴリ 3〜4 件）
+
+カテゴリ「パソコン」:
+- Q: パスワードを忘れました
+  A: 社内ポータルのトップページから「パスワードリセット」を申請してください
+- Q: パソコンが起動しない
+  A: 電源ケーブルを確認後、情報システム部（内線：XXX）に連絡してください
+- Q: 画面が固まって動かない
+  A: Ctrl + Alt + Delete を押してタスクマネージャーを起動し、応答なしのアプリを終了してください
+
+カテゴリ「メール」:
+- Q: メールの容量が不足しています
+  A: 不要なメールを削除するか、情報システム部に容量増設を申請してください
+- Q: 迷惑メールが多い
+  A: Gmail の「迷惑メールを報告」ボタンを使い、不審なメールは開かないでください
+- Q: 外部へのメール送信が制限されている
+  A: セキュリティポリシーにより一部ドメインへの送信が制限されています。詳細は情報システム部に確認してください
+
+カテゴリ「ネットワーク」:
+- Q: 社内 Wi-Fi に繋がらない
+  A: SSID が「AKIBA-Corp」であることを確認し、パスワードは社内ポータルで確認できます
+- Q: VPN が繋がらない
+  A: VPN クライアントを再起動し、ID/パスワードを再入力してください。それでも繋がらない場合は情報システム部に連絡してください
+- Q: インターネットが遅い
+  A: 大容量ファイルのダウンロード中は速度が低下します。業務時間内は大容量ダウンロードを避けてください
+
+カテゴリ「Antigravity」:
+- Q: Antigravity にログインできない
+  A: Google Workspace アカウント（会社の Gmail）でサインインしてください
+- Q: エージェントが止まってしまった
+  A: ページを再読み込みして再試行してください
+- Q: 生成した内容が社外に送信されますか
+  A: 社内セキュリティガイドラインを参照してください。個人情報や機密情報の入力は禁止しています
+- Q: 使い方がわからない
+  A: 社内ポータルの「Antigravity 使い方入門 Codelab」を参照してください
+
+## デザイン制約
+- 外部ライブラリ・CSS フレームワーク不使用（純粋な HTML/CSS/JavaScript のみ）
+- フォント: Google Fonts（Noto Sans JP）は可
+- 会社のブランドカラー: ネイビー（#1e3a8a）を基調とする
+- モバイル対応（スマートフォンでも読みやすい）
+- 1 ファイル（index.html）にまとめる
+- 検索バーはページ最上部に固定表示する
+</code></pre>
+<h2 is-upgraded>仕様書のポイント解説</h2>
+<p>この仕様書のどこが良いか確認しましょう。</p>
+<p><strong>目的が明確</strong>：「問い合わせを減らす」「自分で解決できる」という具体的なゴールがある</p>
+<p><strong>ユーザーが具体的</strong>：「全社員（ITリテラシーは様々）」でターゲットが明確</p>
+<p><strong>機能が箇条書きで具体的</strong>：「リアルタイムフィルタリング」「アコーディオン形式」など実装イメージが湧く</p>
+<p><strong>サンプルデータがある</strong>：FAQ の内容を仕様書に含めているため、AI が何を作ればいいか迷わない</p>
+<p><strong>制約が明示</strong>：「外部ライブラリ不使用」「1 ファイル」など、エンジニアが迷わない指示になっている</p>
+<aside class="warning"><p> 「いい感じの FAQ ページを作って」はNG仕様書です。「いい感じ」はエージェントには伝わりません。具体的な言葉で書きましょう。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="エージェントに仕様を渡す" duration="10">
+        <h2 is-upgraded>Agent Manager の会話パネルを開く</h2>
+<p>Agent Manager の会話パネルに移動します。新しい会話を開始します。</p>
+<p class="image-container"><img alt="Agent Manager ウィンドウ" src="img\\156224e223eeda36.png"></p>
+<h2 is-upgraded>プロンプトを入力する</h2>
+<p>先ほど作成した仕様書の内容を <strong>そのまま</strong> 会話パネルに貼り付けます。冒頭に一文添えると効果的です。</p>
+<pre><code>以下の仕様書に従って、社内 FAQ ページを作成してください。
+
+# 社内 FAQ ページ 仕様書
+（仕様書の内容を貼り付け）
+</code></pre>
+<p class="image-container"><img alt="各部位の説明" src="img\\22f6dcf7b3edc583.png"></p>
+<h2 is-upgraded>Planning モードで送信する</h2>
+<p><strong>Planning モード</strong> であることを最終確認してから、送信ボタンを押します。</p>
+<p>エージェントはまず <strong>計画（Plan）</strong> を作成します。すぐにコードは書きません。これが Planning モードの動作です。</p>
+<aside class="special"><p> 仕様書の内容が詳しければ詳しいほど、エージェントの計画の精度が上がります。サンプルデータが入っているとさらに良い結果になります。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="計画をレビューする" duration="5">
+        <h2 is-upgraded>計画の内容を確認する</h2>
+<p>エージェントが計画を提示します。内容を読んで意図と合っているか確認しましょう。</p>
+<p>良い計画には以下が含まれます：</p>
+<ul>
+<li>作成するファイル一覧（今回は <code>index.html</code> 1 ファイル）</li>
+<li>各機能の実装方針（アコーディオン、検索フィルタの実装方法）</li>
+<li>デザインの方針（カラー、フォント、レイアウト）</li>
+</ul>
+<h2 is-upgraded>計画が意図と違う場合</h2>
+<p>計画を読んで「これは違う」と思ったら、<strong>実行前に修正指示を出します</strong>。</p>
+<p>例：</p>
+<pre><code>カテゴリのバッジ色を変えてください。
+「Antigravity」カテゴリは青（#1a73e8）にしてください。
+また、検索バーはページ最上部に固定してください。
+</code></pre>
+<p>実行前にすり合わせできることが Planning モードの価値です。</p>
+<h2 is-upgraded>承認する</h2>
+<p>計画が意図通りであれば、<strong>「承認」ボタン</strong>（または「Continue」）をクリックします。</p>
+<p>エージェントがコードの生成を開始します。</p>
+<aside class="special"><p> 計画段階で「方向が違う」と気づいて修正できれば、後から全部やり直す手間が省けます。Planning モードは必ず使いましょう。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="実行と確認" duration="10">
+        <h2 is-upgraded>実行中の様子</h2>
+<p>承認後、エージェントが自動でコードを書き始めます。実行ログがリアルタイムで表示されます。</p>
+<p>エージェントは以下を順番に行います：</p>
+<ol type="1">
+<li>HTML の骨格（構造）を作成</li>
+<li>CSS スタイルを適用（ブランドカラー・レイアウト）</li>
+<li>JavaScript で検索・アコーディオン機能を実装</li>
+<li>FAQ データを組み込む</li>
+<li>モバイル対応の確認</li>
+</ol>
+<h2 is-upgraded>セキュリティポリシーの確認画面</h2>
+<p>セキュリティポリシーが「Request review」の場合、コマンド実行前に確認画面が出ます。</p>
+<p>内容を読んで問題なければ「承認」してください。</p>
+<aside class="warning"><p> 確認画面の内容を読まずに承認しないでください。エージェントが何をしようとしているかを確認する習慣をつけましょう。 </p>
+</aside>
+<h2 is-upgraded>完成ファイルをブラウザで確認する</h2>
+<p>完成後、エージェントが生成した <code>index.html</code> を見つけます。</p>
+<p>ファイルを右クリック → 「ブラウザで開く」または「プレビュー」で動作を確認します。</p>
+<p>確認ポイント：</p>
+<ul>
+<li>[ ] カテゴリが 4 つ（パソコン・メール・ネットワーク・Antigravity）表示されている</li>
+<li>[ ] 質問をクリックすると回答が開く・閉じる（アコーディオン）</li>
+<li>[ ] キーワードを入力すると Q&amp;A が絞り込まれる</li>
+<li>[ ] スマートフォンサイズでも崩れていない</li>
+<li>[ ] 会社のブランドカラー（ネイビー）が使われている</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Artifacts を確認して承認する" duration="5">
+        <h2 is-upgraded>Artifacts とは</h2>
+<p>エージェントが行ったすべての作業は <strong>Artifacts（成果物）</strong> として記録されます。「AI が本当にこの作業をしたか」を後から確認できます。</p>
+<p class="image-container"><img alt="Artifacts 一覧" src="img\\5deff47fe0a93aa1.png"></p>
+<h2 is-upgraded>Agent Manager の Artifacts を開く</h2>
+<p>Agent Manager 右上の <strong>「Review changes」</strong> をクリックします。</p>
+<p class="image-container"><img alt="Agent Manager の Artifacts" src="img\\5320f447471c43eb.png"></p>
+<p>成果物一覧が表示されます。</p>
+<p class="image-container"><img alt="Artifacts ビュー" src="img\\19d9738bb3c7c0c9.png"></p>
+<h2 is-upgraded>コード Diff を確認する</h2>
+<p>「コード Diff」を開くと、作成されたファイルの内容を行単位で確認できます。</p>
+<p class="image-container"><img alt="Review Changes" src="img\\e1d8fd6e7df4daf3.png"></p>
+<h2 is-upgraded>承認または修正指示を出す</h2>
+<p>内容を確認して：</p>
+<p><strong>問題なければ</strong>：「すべて承認」で変更を適用</p>
+<p><strong>修正が必要なら</strong>：会話パネルで追加指示を出す</p>
+<pre><code># 追加指示の例
+
+検索バーのデザインをもう少し大きくしてください。
+また、各カテゴリのアコーディオンは最初から全件を
+折りたたんだ状態にしてください。
+</code></pre>
+<p>修正指示を出すと、エージェントが再度計画を立てて差分だけ修正します。</p>
+<aside class="special"><p> 承認しない限りファイルは変更されません。Artifacts で確認してから承認する習慣をつけましょう。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="まとめ" duration="3">
+        <p>おつかれさまでした。このCodelabでは以下を実践しました。</p>
+<h2 is-upgraded>学んだこと</h2>
+<ul>
+<li><strong>仕様駆動開発のワークフロー</strong>：仕様書 → 計画レビュー → 実行 → Artifacts 確認</li>
+<li><strong>良い仕様書の書き方</strong>：目的・機能要件・制約・サンプルデータを明記する</li>
+<li><strong>Planning モードの活用</strong>：実行前に計画を確認して方向を合わせる</li>
+<li><strong>Artifacts でのレビュー</strong>：承認前に変更内容を確認して品質を担保する</li>
+</ul>
+<h2 is-upgraded>仕様駆動開発の効果</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p>従来の方法</p>
+</td><td colspan="1" rowspan="1"><p>仕様駆動開発</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>何度もやり直す</p>
+</td><td colspan="1" rowspan="1"><p>最初に要件を固める</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>AI の出力に振り回される</p>
+</td><td colspan="1" rowspan="1"><p>AI をコントロールする</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>個人の経験に依存</p>
+</td><td colspan="1" rowspan="1"><p>仕様書が組織の資産になる</p>
+</td></tr>
+</table>
+<h2 is-upgraded>次のステップ</h2>
+<ul>
+<li>実際の業務課題に仕様書を書いて試してみる</li>
+<li>チームで仕様書のテンプレートを共有して標準化する</li>
+<li>セキュリティガイドラインを再確認して安全に活用する</li>
+</ul>
+<h2 is-upgraded>サポート</h2>
+<p>操作で困ったことがあれば情報システム部にお気軽に連絡ください。</p>
+<aside class="special"><p> まず小さな仕様書から始めましょう。5 行の仕様書でも、あいまいな指示より格段に良い結果が出ます。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

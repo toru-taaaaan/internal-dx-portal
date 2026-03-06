@@ -1,0 +1,271 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Antigravity 使い方入門</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="antigravity-getting-started"
+                  title="Antigravity 使い方入門"
+                  environment="web"
+                  feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/">
+    
+      <google-codelab-step label="はじめに" duration="2">
+        <p>このCodelabでは <strong>Google Antigravity</strong> の基本操作をステップごとに学びます。</p>
+<p>Antigravity は AI エージェント型の開発・業務支援プラットフォームです。従来の「1行ずつ提案するAIツール」とは異なり、<strong>タスク全体を AI が自律的に計画・実行</strong>します。</p>
+<h2 is-upgraded>このCodelabで学ぶこと</h2>
+<ul>
+<li>Antigravity の基本概念と従来ツールとの違い</li>
+<li>インストールと初期セキュリティポリシーの設定</li>
+<li>Agent Manager の使い方（Planning / Fast モード）</li>
+<li>Antigravity ブラウザ機能の設定と活用</li>
+<li>Artifacts・Inbox・Editor の概要</li>
+</ul>
+<h2 is-upgraded>必要な環境</h2>
+<ul>
+<li><strong>Google Workspace アカウント</strong>（会社の Gmail アドレス）</li>
+<li><strong>Windows または macOS</strong> のパソコン</li>
+<li><strong>Chrome ブラウザ</strong>（Browser 機能を使う場合）</li>
+<li>所要時間：約 60 分</li>
+</ul>
+<aside class="special"><p> プログラミングの知識は不要です。日本語の自然な指示で操作できます。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Antigravity とは" duration="5">
+        <p>Google が提供する AI エージェント型の開発・業務支援環境です。コードを1行ずつ提案する従来ツールとは違い、<strong>タスク全体を AI が自律的に計画・実行</strong>します。</p>
+<h2 is-upgraded>従来のAIツールとの違い</h2>
+<table>
+<tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"><p>従来のAIツール</p>
+</td><td colspan="1" rowspan="1"><p>Antigravity</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>動き方</p>
+</td><td colspan="1" rowspan="1"><p>1行ずつ提案</p>
+</td><td colspan="1" rowspan="1"><p>タスクを丸ごと依頼</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>人間の役割</p>
+</td><td colspan="1" rowspan="1"><p>コードを組み立てる</p>
+</td><td colspan="1" rowspan="1"><p>レビューと方向修正</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>作業記録</p>
+</td><td colspan="1" rowspan="1"><p>なし</p>
+</td><td colspan="1" rowspan="1"><p>Artifacts に完全記録</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>並行処理</p>
+</td><td colspan="1" rowspan="1"><p>1件ずつ</p>
+</td><td colspan="1" rowspan="1"><p>複数エージェント同時実行</p>
+</td></tr>
+</table>
+<h2 is-upgraded>主な構成要素</h2>
+<p><strong>Agent Manager</strong> — AI エージェントの管制室。複数のエージェントを並列で管理する</p>
+<p><strong>Editor</strong> — VS Code ベースのコードエディタ。AI が並走してコードを補助する</p>
+<p><strong>Browser</strong> — Chrome 拡張で AI に Web ブラウジング能力を付与する</p>
+<h2 is-upgraded>AIとあなたの役割分担</h2>
+<p><strong>AIが担当</strong></p>
+<ul>
+<li>タスクの計画を立てる</li>
+<li>必要なファイルを調べる</li>
+<li>コードや文書を作成・修正する</li>
+<li>結果を報告する</li>
+</ul>
+<p><strong>あなたが担当</strong></p>
+<ul>
+<li>やりたいことを伝える</li>
+<li>AI の計画をレビューする</li>
+<li>方向が違えば修正指示を出す</li>
+<li>最終確認して承認する</li>
+</ul>
+<aside class="special"><p> 「調べてまとめて」「この書類を直して」のような自然な日本語で指示できます。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="インストール" duration="15">
+        <p>ダウンロードからサインインまで約15分。<strong>Google Workspace アカウント</strong>でログインします。</p>
+<h2 is-upgraded>インストール手順</h2>
+<p><strong>1. ダウンロード</strong></p>
+<p><code>antigravity.google/download</code> から OS に合ったインストーラーを取得する</p>
+<p><strong>2. 初期設定</strong></p>
+<p>セットアップで「Start fresh」を選択。テーマはダーク or ライト（好みで選択）</p>
+<p><strong>3. セキュリティポリシー設定</strong></p>
+<p>セットアップウィザード内で選択する。<strong>「Review-driven development」を推奨</strong>。後から変更する場合は <strong>Settings → Agent</strong> で設定</p>
+<p><strong>4. サインイン</strong></p>
+<p>Google Workspace アカウントでログインする（プレビュー期間中は無料）</p>
+<h2 is-upgraded>セキュリティポリシーの選択肢</h2>
+<p>初期設定時に、AI の動作範囲を3つの観点で制御します。</p>
+<p><strong>ターミナル実行ポリシー</strong></p>
+<ul>
+<li><code>Always proceed</code> — コマンドを自動実行（拒否リスト以外）</li>
+<li><code>Request review</code> — 実行前に毎回確認を求める</li>
+</ul>
+<p><strong>レビューポリシー</strong></p>
+<ul>
+<li><code>Always Proceed</code> — レビューなしで作業を進める</li>
+<li><code>Agent Decides</code> — AI が必要と判断した場合のみレビュー依頼</li>
+<li><code>Request Review</code> — 毎回レビューを求める</li>
+</ul>
+<p><strong>JavaScript 実行ポリシー</strong></p>
+<ul>
+<li><code>Always Proceed</code> — ブラウザ上の JavaScript を自動実行</li>
+<li><code>Request review</code> — 実行前に確認を求める</li>
+<li><code>Disabled</code> — JavaScript の実行を完全に禁止</li>
+</ul>
+<h2 is-upgraded>推奨セキュリティプリセット</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p>プリセット</p>
+</td><td colspan="1" rowspan="1"><p>概要</p>
+</td><td colspan="1" rowspan="1"><p>対象</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>Secure Mode</p>
+</td><td colspan="1" rowspan="1"><p>外部リソース・機密操作を制限</p>
+</td><td colspan="1" rowspan="1"><p>慎重に使いたい方</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>Review-driven ✓</strong></p>
+</td><td colspan="1" rowspan="1"><p>AIが頻繁にレビューを求める</p>
+</td><td colspan="1" rowspan="1"><p><strong>初めての方（推奨）</strong></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>Agent-driven</p>
+</td><td colspan="1" rowspan="1"><p>AIがレビューなしで作業を進める</p>
+</td><td colspan="1" rowspan="1"><p>慣れた方向け</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>Custom</p>
+</td><td colspan="1" rowspan="1"><p>ポリシーを個別設定</p>
+</td><td colspan="1" rowspan="1"><p>上級者向け</p>
+</td></tr>
+</table>
+<aside class="warning"><p> 社内ネットワークで接続できない場合は情報システム部に連絡してください。接続先は `antigravity.google` 関連ドメインです。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Agent Manager" duration="10">
+        <p>AI エージェントの「管制室」。新しい会話を始めるとエージェントが1つ起動し、指示に従ってタスクを実行します。</p>
+<h2 is-upgraded>Agent Manager の主な構成</h2>
+<p><strong>Inbox</strong> — すべての会話を一覧表示。タスク状況・承認待ちリクエストを確認する</p>
+<p><strong>Workspaces</strong> — プロジェクトフォルダを追加・管理する。Playground で試してから本番に移行も可能</p>
+<p><strong>承認待ちリクエスト</strong> — 各エージェントの進捗状況・成果物・承認待ちの操作を一覧で確認する</p>
+<h2 is-upgraded>実行モードの選択</h2>
+<p><strong>Planning モード（推奨）</strong></p>
+<p>AI がまず計画を立ててから実行する。計画の段階でレビューできるので安心。</p>
+<p>用途: 調査・分析・複数ファイルの変更</p>
+<p><strong>Fast モード</strong></p>
+<p>計画なしで即座に実行。単純な作業を素早く処理する。</p>
+<p>用途: リネーム・フォーマット修正・簡単な質問</p>
+<h2 is-upgraded>複数エージェントの同時実行</h2>
+<p>従来のチャット型ツールは1つずつ順番に処理するが、Agent Manager では複数のエージェントを同時に起動できます。</p>
+<p>例: 5件の資料作成を5つのエージェントに同時に割り当て、並行して処理する</p>
+<aside class="special"><p> 迷ったら Planning モードを使いましょう。計画の段階で「方向が違う」と気づけば、実行前に修正できます。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="ブラウザ機能（Browser）" duration="10">
+        <p>Chrome 拡張をインストールすると、AI に Web ブラウジング能力を付与できます。調査やデータ収集を自動化します。</p>
+<h2 is-upgraded>セットアップ手順</h2>
+<p><strong>1. 拡張機能のインストール</strong></p>
+<p>Agent Manager の設定から Chrome ウェブストアに移動し、「Antigravity Browser」拡張機能をインストールする</p>
+<p><strong>2. アクセス許可の設定</strong></p>
+<p>拡張機能のインストール後、サイトへのアクセス許可を設定する（読み取り専用を推奨）</p>
+<p><strong>3. 動作確認</strong></p>
+<p>Agent Manager に戻り、ブラウザアイコンが有効になっていることを確認する</p>
+<h2 is-upgraded>Browser でできること</h2>
+<ul>
+<li>指定した Web サイトの情報収集・要約</li>
+<li>複数ページにまたがる情報の横断検索</li>
+<li>フォームへの自動入力（JavaScript 許可が必要）</li>
+<li>定期的なページ監視と変更検知</li>
+</ul>
+<aside class="warning"><p> JavaScript 実行ポリシーを「Always Proceed」にするとリスクが高まります。社内利用では「Request review」を推奨します。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Artifacts・Inbox・Editor" duration="8">
+        <h2 is-upgraded>Artifacts — 作業記録と変更管理</h2>
+<p>AI が行ったすべての作業は Artifacts として記録されます。ファイルを変更する前に必ず差分を確認できます。</p>
+<p><strong>主な Artifact の種類</strong></p>
+<ul>
+<li>計画書（Planning Artifact）</li>
+<li>コード差分（Diff）</li>
+<li>作成ドキュメント</li>
+<li>実行ログ</li>
+</ul>
+<aside class="special"><p> 「Review Changes」ボタンで変更を適用前に確認できます。承認しない限りファイルは変更されません。 </p>
+</aside>
+<h2 is-upgraded>Inbox — 会話・タスク管理</h2>
+<p>すべての会話履歴を一覧で管理します。複数のエージェントが並行して動いている場合も、Inbox から一元的に状況を把握できます。</p>
+<ul>
+<li>実行中のタスク確認</li>
+<li>承認待ちリクエストへの応答</li>
+<li>過去の会話の再開</li>
+</ul>
+<h2 is-upgraded>Editor — AIと並走するコードエディタ</h2>
+<p>VS Code をベースにしたエディタです。コードを書きながら AI に相談できます。</p>
+<p><strong>主な機能</strong></p>
+<ul>
+<li><code>Auto-complete</code> — AI によるコード補完</li>
+<li><code>Tab to Import</code> — 必要なライブラリを自動インポート</li>
+<li><code>Inline Command</code> — 選択範囲に対してその場で AI に指示</li>
+<li><code>Explain and Fix</code> — エラーの原因説明と修正案提示</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="まとめ" duration="3">
+        <p>お疲れ様でした。このCodelabで学んだことを振り返りましょう。</p>
+<h2 is-upgraded>学習のポイント</h2>
+<ul>
+<li>Antigravity は「AIエージェント」であり、タスクを自律的に計画・実行する</li>
+<li>インストール時は <strong>Review-driven</strong> ポリシーを選択する</li>
+<li>Agent Manager で複数エージェントを並行管理できる</li>
+<li>Planning モードで計画を確認してから実行する習慣をつける</li>
+<li>Artifacts で変更内容を必ず確認してから承認する</li>
+</ul>
+<h2 is-upgraded>次のステップ</h2>
+<ul>
+<li>詳細版操作ガイドを読む</li>
+<li>セキュリティガイドラインを確認する</li>
+<li>まず Playground ワークスペースで気軽に試してみる</li>
+</ul>
+<h2 is-upgraded>サポート</h2>
+<p>操作で困ったことがあれば情報システム部にお気軽に連絡ください。</p>
+<aside class="special"><p> まずは Playground で試してみましょう。本番ファイルへの影響なく、自由に Antigravity の機能を体験できます。 </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2026-03-03T15:09:44+09:00",
+  "id": "antigravity-getting-started",
+  "duration": 53,
+  "title": "Antigravity 使い方入門",
+  "summary": "Antigravity の基本操作を学ぶ社内スタートガイド。インストール・Agent Manager・ブラウザ操作まで、ステップごとに学べます。",
+  "source": "src/antigravity-getting-started/index.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "dx",
+    "ai活用"
+  ],
+  "tags": [
+    "web"
+  ],
+  "feedback": "https://internal-dx-portal-auth.tanjiadm.workers.dev/",
+  "url": "antigravity-getting-started"
+}

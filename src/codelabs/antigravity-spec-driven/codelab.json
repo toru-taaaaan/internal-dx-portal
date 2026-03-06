@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2026-03-03T15:50:21+09:00",
+  "id": "antigravity-spec-driven",
+  "duration": 55,
+  "title": "Antigravity 仕様駆動開発 入門",
+  "summary": "Antigravity の仕様駆動開発を実践で学ぶ社内研修教材。仕様書の書き方・エージェントへの指示・Artifacts確認まで、ステップごとに体験できます。",
+  "source": "index.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "dx",
+    "ai活用"
+  ],
+  "tags": [
+    "web"
+  ],
+  "feedback": "https://internal-dx-portal-auth.tanjiadm.workers.dev/",
+  "url": "antigravity-spec-driven"
+}
