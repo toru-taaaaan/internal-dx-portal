@@ -280,7 +280,7 @@ header {
       <div style="margin-top:8px; padding-top:8px; border-top:1px solid #334155;">
         <div class="legend-item">
           <div class="legend-line" style="background:#6d28d9;"></div>
-          IIJ 専用線（東京本社 WAN）
+          東京本社 WAN回線（要確認）
         </div>
         <div class="legend-item">
           <div class="legend-dashed"></div>
@@ -405,7 +405,7 @@ const SOURCE   = 'USEN ICT Solutions 回線契約一覧 2026-03-03受領';
 const NODE_INFO = {
   internet: {
     title: 'インターネット（WAN）',
-    body:  '東京本社 FortiGate のアップリンク\n\nIIJ 回線（2系統）経由でインターネットに接続\n各拠点の VPN トンネルはインターネット経由で確立'
+    body:  '東京本社 FortiGate のアップリンク\n\nWAN回線（詳細要確認）経由でインターネットに接続\n各拠点の VPN トンネルはインターネット経由で確立'
   },
   'rvpn-client': {
     title: 'リモートVPN クライアント',
@@ -417,9 +417,9 @@ const NODE_INFO = {
       '機器: Fortinet FortiGate 60E\n' +
       'IP: 192.168.1.1\n' +
       '役割: VPN ハブ（全拠点のハブ＆スポーク中心）\n\n' +
-      'WAN回線（IIJ）\n' +
-      '  ・広域イーサネット 200 Mbps（メイン）\n' +
-      '  ・フレッツ光ネクスト（バックアップ）\n\n' +
+      'WAN回線\n' +
+      '  ・種別・帯域: 要確認（出典なし）\n' +
+      '  ・バックアップ: フレッツ光ネクスト（要確認）\n\n' +
       '【USEN 回線契約】\n' +
       '  契約者: AKIBAホールディングス\n' +
       '  拠点: 東京・築地（本社）陽光築地ビル7F\n' +
@@ -549,7 +549,7 @@ const nodes = new vis.DataSet([
     ICON_RVPN, 0, '#67e8f9', 28),
 
   n('fortigate',
-    'FortiGate 60E\n東京本社 HUB\nIIJ 広域イーサ 200Mbps\n+フレッツ光ネクスト(BK)',
+    'FortiGate 60E\n東京本社 HUB\nWAN回線\n（要確認・出典なし）',
     ICON_FORTIGATE, 1, '#fca5a5', 36),
 
   // ── AKIBAホールディングス ──
@@ -608,7 +608,7 @@ const LABEL_FONT = (color) => ({
 const edges = new vis.DataSet([
 
   e('ei-fg', 'internet', 'fortigate', {
-    label: 'IIJ 広域イーサ 200Mbps\n+フレッツ光ネクスト(BK)',
+    label: 'WAN回線\n（要確認）',
     width: 3,
     color: { color: '#6d28d9' },
     dashes: false,
