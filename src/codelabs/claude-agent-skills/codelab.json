@@ -1,0 +1,14 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "updated": "2026-03-06T00:00:00+09:00",
+  "id": "claude-agent-skills",
+  "duration": 63,
+  "title": "Claude Agent Skills 完全入門",
+  "summary": "Agent Skillsの概念・SKILL.mdの書き方・評価駆動開発・MCPとの使い分け・企業導入ロードマップまで体系的に学ぶガイド。",
+  "category": ["dx", "ai活用", "claude"],
+  "tags": ["web"],
+  "feedback": "https://internal-dx-portal-auth.tanjiadm.workers.dev/",
+  "url": "claude-agent-skills"
+}

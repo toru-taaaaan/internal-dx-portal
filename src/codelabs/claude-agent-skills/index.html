@@ -1,0 +1,837 @@
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Claude Agent Skills 完全入門 — 指示・スクリプト・リソースをAIに持たせる</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success { color: #1e8e3e; }
+    .error { color: red; }
+
+    /* 読み上げボタン */
+    #speech-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      background: #4F7DC9;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-family: 'Roboto', sans-serif;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    #speech-btn:hover { background: #3a67b3; }
+    #speech-btn.speaking { background: #d32f2f; }
+    #speech-btn.speaking:hover { background: #b71c1c; }
+
+    /* 比較ダイアグラム */
+    .diagram-box {
+      display: flex;
+      gap: 12px;
+      margin: 16px 0;
+      flex-wrap: wrap;
+    }
+    .diagram-card {
+      flex: 1;
+      min-width: 140px;
+      border: 2px solid #4F7DC9;
+      border-radius: 8px;
+      padding: 12px 16px;
+      background: #f0f4ff;
+    }
+    .diagram-card.orange {
+      border-color: #E8A000;
+      background: #fff8e1;
+    }
+    .diagram-card.green {
+      border-color: #1e8e3e;
+      background: #f0fff4;
+    }
+    .diagram-card h4 {
+      margin: 0 0 8px 0;
+      font-size: 14px;
+      color: #333;
+    }
+    .diagram-card p {
+      margin: 0;
+      font-size: 13px;
+      color: #555;
+    }
+    .diagram-arrow {
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+      color: #aaa;
+      padding-top: 8px;
+    }
+
+    /* アーキテクチャ図 */
+    .arch-layer {
+      border-left: 4px solid;
+      padding: 10px 16px;
+      margin: 8px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    .arch-layer.layer1 { border-color: #4F7DC9; background: #f0f4ff; }
+    .arch-layer.layer2 { border-color: #E8A000; background: #fff8e1; }
+    .arch-layer.layer3 { border-color: #1e8e3e; background: #f0fff4; }
+    .arch-layer h4 { margin: 0 0 4px; font-size: 14px; }
+    .arch-layer p  { margin: 0; font-size: 13px; color: #555; }
+
+    /* フローステップ */
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin: 12px 0;
+    }
+    .flow-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #4F7DC9;
+      color: white;
+      font-weight: bold;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .flow-body { flex: 1; }
+    .flow-body strong { display: block; font-size: 14px; margin-bottom: 2px; }
+    .flow-body span { font-size: 13px; color: #555; }
+
+    /* Before/After */
+    .ba-table th { background: #4F7DC9; color: white; text-align: center; }
+    .ba-table td { vertical-align: top; font-size: 13px; }
+    .ba-before { background: #fff3f3; }
+    .ba-after  { background: #f0fff4; }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="claude-agent-skills"
+                  title="Claude Agent Skills 完全入門"
+                  environment="web"
+                  feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/">
+
+    <!-- ========== STEP 0: はじめに ========== -->
+    <google-codelab-step label="はじめに" duration="2">
+      <p>このCodelabでは <strong>Claude Agent Skills</strong>（エージェントスキル）を基礎から実践まで体系的に学びます。2025年にAnthropicが公開し、2026年には26以上のプラットフォームが対応したオープンプロトコルです。</p>
+
+<h2 is-upgraded>このCodelabで学ぶこと</h2>
+<ul>
+<li>AIエージェントが「できるのに正しく使えない」3つの構造的課題</li>
+<li>Agent Skillsの概念・SKILL.mdファイルの構造</li>
+<li>段階的開示（Progressive Disclosure）によるトークン効率化の仕組み</li>
+<li>SKILL.mdの4つの記述パターンとベストプラクティス</li>
+<li>評価駆動開発（EDD）でSkillの品質を高める5ステップ</li>
+<li>MCP・Projects・Hooks など他のClaude機能との使い分け</li>
+<li>エンタープライズ導入の12週間ロードマップ</li>
+</ul>
+
+<h2 is-upgraded>対象読者</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>対象</strong></p></td><td colspan="1" rowspan="1"><p><strong>この教本から得られるもの</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>AIエンジニア・開発者</p></td><td colspan="1" rowspan="1"><p>SKILL.mdの実装方法・評価方法・アンチパターン回避</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>技術責任者・アーキテクト</p></td><td colspan="1" rowspan="1"><p>エコシステム全体像・プラットフォーム選択・セキュリティ要件</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>AI活用推進担当・DXリーダー</p></td><td colspan="1" rowspan="1"><p>組織展開ロードマップ・業務知識の組織資産化の方法</p></td></tr>
+</table>
+
+<h2 is-upgraded>必要なもの</h2>
+<ul>
+<li>所要時間：約63分</li>
+<li>前提知識：Claudeの基本的な使用経験（なくても読めます）</li>
+</ul>
+
+<aside class="special"><p> 出典：本教本の内容は homula社の「Agent Skillsとは何か — MCP時代のAIエージェント知識管理オープンプロトコル」（2026年2月27日）および「Claude Agent Skills 完全入門ガイド」（全5回）に基づいています。 </p>
+</aside>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 1: 3つの構造的課題 ========== -->
+    <google-codelab-step label="AIエージェントが直面する3つの課題" duration="5">
+      <p>Gartnerの予測では2026年末までにエンタープライズアプリケーションの40%がタスク特化型AIエージェントを組み込みます。市場は2025年の約76億ドルから109億ドルへ拡大し、企業の79%がすでに採用済みです。</p>
+
+<p>しかし多くの企業が直面するのは、<strong>「AIエージェントが業務実行能力を持つのに、組織として正しく使えていない」</strong>という問題です。</p>
+
+<h2 is-upgraded>課題1：反復の非効率さ</h2>
+<div class="diagram-box">
+  <div class="diagram-card orange">
+    <h4>現状</h4>
+    <p>エージェントは前回の会話を記憶しない。毎回ゼロから詳細な指示を書き直す必要がある。</p>
+  </div>
+  <div class="diagram-arrow">→</div>
+  <div class="diagram-card green">
+    <h4>理想</h4>
+    <p>一度定義した指示をどの会話でも即座に呼び出せる。「前回と同じやり方で」が実現する。</p>
+  </div>
+</div>
+
+<h2 is-upgraded>課題2：コンテキストウィンドウの圧迫</h2>
+<div class="diagram-box">
+  <div class="diagram-card orange">
+    <h4>現状</h4>
+    <p>詳細な指示がトークンを大量消費し、業務データ（ファイル・メール・DB）に使える余地が減少する。</p>
+  </div>
+  <div class="diagram-arrow">→</div>
+  <div class="diagram-card green">
+    <h4>理想</h4>
+    <p>必要なときに必要な分だけ読み込む。未使用の指示はコンテキストを一切消費しない。</p>
+  </div>
+</div>
+
+<h2 is-upgraded>課題3：品質の属人化</h2>
+<div class="diagram-box">
+  <div class="diagram-card orange">
+    <h4>現状</h4>
+    <p>高品質なプロンプトは特定の担当者の頭の中にしか存在せず、チーム間で共有できない。</p>
+  </div>
+  <div class="diagram-arrow">→</div>
+  <div class="diagram-card green">
+    <h4>理想</h4>
+    <p>業務知識をファイルとして組織資産化し、Gitで管理・バージョン管理・チーム展開できる。</p>
+  </div>
+</div>
+
+<aside class="special"><p> この3つの課題を解決するために設計されたのが <strong>Agent Skills</strong> です。次のステップで仕組みを解説します。 </p>
+</aside>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 2: Agent Skillsとは ========== -->
+    <google-codelab-step label="Agent Skillsとは何か" duration="8">
+      <p>Agent Skillsとは、<strong>指示・スクリプト・リソースをフォルダにまとめ、AIエージェントが必要なときに必要な分だけ読み込む仕組み</strong>です。</p>
+
+<p>2025年10月にAnthropicがClaude向けに公開し、2025年12月にオープンプロトコル（agentskills.io）として仕様を公開。2026年2月時点で26以上のプラットフォームが対応しています。</p>
+
+<h2 is-upgraded>Skillフォルダの構造</h2>
+<pre><code>my-skill/               ← Skillフォルダ（任意の名前）
+├── SKILL.md            ← 必須：仕様・指示・ワークフロー定義
+├── scripts/            ← オプション：実行スクリプト
+│   └── process.py
+├── references/         ← オプション：参照ドキュメント
+│   └── guide.md
+└── assets/             ← オプション：画像・テンプレート等
+    └── template.xlsx
+</code></pre>
+
+<aside class="special"><p> SKILL.md さえあれば最小構成として動作します。<code>name</code> と <code>description</code> の2フィールドのみが必須です。 </p>
+</aside>
+
+<h2 is-upgraded>SKILL.mdの最小構成</h2>
+<pre><code language="yaml">---
+name: pdf-extractor
+description: |
+  PDFファイルからテキストと表を抽出するSkill。
+  「このPDFを読んで」「PDFを解析して」と言われたときに使う。
+---
+
+# PDF抽出の手順
+
+1. PDFファイルのパスを確認する
+2. PyMuPDFを使ってテキストを抽出する
+3. 表はpandasのDataFrameに変換して返す
+</code></pre>
+
+<h2 is-upgraded>段階的開示（Progressive Disclosure）— Skillsの核心設計</h2>
+<p>100個のSkillがあっても、コンテキストウィンドウを圧迫しない理由がこれです。</p>
+
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>レベル</strong></p></td><td colspan="1" rowspan="1"><p><strong>名称</strong></p></td><td colspan="1" rowspan="1"><p><strong>読み込む内容</strong></p></td><td colspan="1" rowspan="1"><p><strong>トークン消費</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Level 1</p></td><td colspan="1" rowspan="1"><p>Discovery（発見）</p></td><td colspan="1" rowspan="1"><p>name と description のみ</p></td><td colspan="1" rowspan="1"><p>約100トークン/Skill</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Level 2</p></td><td colspan="1" rowspan="1"><p>Activation（有効化）</p></td><td colspan="1" rowspan="1"><p>SKILL.md本文を読み込む</p></td><td colspan="1" rowspan="1"><p>Skill全体のトークン数</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Level 3</p></td><td colspan="1" rowspan="1"><p>Execution（実行）</p></td><td colspan="1" rowspan="1"><p>scripts/ references/ 等の補助ファイルも読み込む</p></td><td colspan="1" rowspan="1"><p>補助ファイル分を追加</p></td></tr>
+</table>
+
+<h2 is-upgraded>具体例：PDF処理Skillの読み込みフロー</h2>
+<div class="flow-step">
+  <div class="flow-num">1</div>
+  <div class="flow-body">
+    <strong>ユーザーが「このPDFを読んで」と入力</strong>
+    <span>エージェントはLevel 1の一覧（name/description）をスキャン</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">2</div>
+  <div class="flow-body">
+    <strong>pdf-extractorがマッチ</strong>
+    <span>descriptionの「PDFを読んで」というトリガーキーワードに合致</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">3</div>
+  <div class="flow-body">
+    <strong>Level 2: SKILL.md本文を読み込む</strong>
+    <span>手順・制約・使用ツールの詳細を取得</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">4</div>
+  <div class="flow-body">
+    <strong>Level 3: scripts/process.py を読み込む（必要な場合のみ）</strong>
+    <span>実行スクリプトの内容をコンテキストに追加</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">5</div>
+  <div class="flow-body">
+    <strong>タスクを実行</strong>
+    <span>未使用の99個のSkillはコンテキストを消費しない</span>
+  </div>
+</div>
+
+<aside class="special"><p> 100個のSkillでもLevel 1では約3,000〜5,000トークンのみ消費。全文常時読み込みと比べて <strong>50〜100倍のトークン効率化</strong> を実現します。 </p>
+</aside>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 3: SKILL.mdの書き方 ========== -->
+    <google-codelab-step label="SKILL.mdの書き方" duration="10">
+      <p>SKILL.mdはAgent Skillの仕様・指示・ワークフローを定義するMarkdownファイルです。YAMLフロントマター（メタデータ）とMarkdown本文（指示）を1ファイルに統合します。</p>
+
+<h2 is-upgraded>YAMLフロントマター — 必須フィールド</h2>
+<pre><code language="yaml">---
+name: skill-name          # 必須：小文字・ハイフン区切り・動名詞形推奨
+description: |            # 必須：三人称で「何をするか」＋「いつ使うか」を記述
+  このSkillは〇〇を行う。
+  「△△して」「××を確認して」と言われたときに使う。
+---
+</code></pre>
+
+<h2 is-upgraded>nameフィールドのルール</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>ルール</strong></p></td><td colspan="1" rowspan="1"><p><strong>良い例</strong></p></td><td colspan="1" rowspan="1"><p><strong>悪い例</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>小文字・ハイフン区切り</p></td><td colspan="1" rowspan="1"><p>pdf-extractor</p></td><td colspan="1" rowspan="1"><p>PDF_Extractor、pdfExtractor</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>動名詞形推奨</p></td><td colspan="1" rowspan="1"><p>meeting-summarizer</p></td><td colspan="1" rowspan="1"><p>summary、会議まとめ</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>具体的な機能名</p></td><td colspan="1" rowspan="1"><p>expense-report-writer</p></td><td colspan="1" rowspan="1"><p>helper、tool1</p></td></tr>
+</table>
+
+<h2 is-upgraded>descriptionの書き方 — なぜ三人称か</h2>
+<p>descriptionはClaudeがLevel 1スキャン時に読む唯一の情報です。<strong>「いつこのSkillを使うか」のトリガーキーワードを必ず含める</strong>ことが品質を大きく左右します。</p>
+
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>区分</strong></p></td><td colspan="1" rowspan="1"><p><strong>記述例</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>良い例</p></td><td colspan="1" rowspan="1"><p>「このSkillは会議の文字起こしテキストから議事録を生成する。「議事録作って」「ミーティングのまとめ」と言われたときに使う。」</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>悪い例</p></td><td colspan="1" rowspan="1"><p>「議事録作成。会議ノートを整理します。」（一人称・トリガーなし・曖昧）</p></td></tr>
+</table>
+
+<h2 is-upgraded>Markdown本文 — 4つの記述パターン</h2>
+
+<h3 is-upgraded>パターン1：テンプレート型（厳密な指示）</h3>
+<p>出力フォーマットを完全に固定したい場合に使う。</p>
+<pre><code language="markdown"># 週次レポートの出力形式
+
+以下のフォーマットで必ず出力すること：
+
+## {週}の業務サマリー
+**完了タスク**：{箇条書き}
+**進行中**：{箇条書き}
+**来週の予定**：{箇条書き}
+</code></pre>
+
+<h3 is-upgraded>パターン2：ガイドライン型（柔軟な指示）</h3>
+<p>Claudeの判断に委ねる部分が多い場合に使う。</p>
+<pre><code language="markdown"># コードレビューのガイドライン
+
+- セキュリティリスクを最優先でチェックする
+- パフォーマンスへの影響を評価する
+- 可読性の観点からコメントを追加する
+- 修正が必要な箇所は具体的な代替案も示す
+</code></pre>
+
+<h3 is-upgraded>パターン3：Examples型（入出力例）</h3>
+<p>期待する出力を例示することで品質を担保する。</p>
+<pre><code language="markdown"># 翻訳スタイルの例
+
+入力：「The deployment was successful.」
+出力：「デプロイが正常に完了しました。」
+
+入力：「Please review the attached document.」
+出力：「添付ファイルをご確認ください。」
+
+# ルール
+- 敬語を使う
+- 技術用語はカタカナを優先する
+</code></pre>
+
+<h3 is-upgraded>パターン4：Decision Tree型（条件分岐ワークフロー）</h3>
+<p>状況によって処理を変えたい場合に使う。</p>
+<pre><code language="markdown"># エラー対応フロー
+
+1. エラーメッセージを確認する
+   - 「404」→ URLを確認してステップ3へ
+   - 「401」→ 認証情報を確認してステップ4へ
+   - その他 → ログ全文を表示してステップ5へ
+
+2. ...
+</code></pre>
+
+<aside class="special"><p> 複数パターンの組み合わせが標準です。「ガイドライン型 ＋ Examples型」が最も多く使われる組み合わせです。 </p>
+</aside>
+
+<h2 is-upgraded>パターン選択ガイド</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>状況</strong></p></td><td colspan="1" rowspan="1"><p><strong>推奨パターン</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>フォーマットを完全に固定したい</p></td><td colspan="1" rowspan="1"><p>テンプレート型</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>方向性だけ示してあとは任せたい</p></td><td colspan="1" rowspan="1"><p>ガイドライン型</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>ニュアンスが難しく例で示したい</p></td><td colspan="1" rowspan="1"><p>Examples型</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>状況によって処理を変えたい</p></td><td colspan="1" rowspan="1"><p>Decision Tree型</p></td></tr>
+</table>
+
+<h2 is-upgraded>注意点：MCPツールの参照形式</h2>
+<pre><code language="markdown"># ツールの使い方
+
+# 正しい書き方（サーバー名:ツール名 の形式）
+mcp__gmail-server__gmail_read を使ってメールを読む
+mcp__sheets-server__sheets_read_range でシートを取得する
+
+# 誤った書き方
+GmailのAPIでメールを読む   ← 曖昧
+read_email を使う           ← サーバー名なし
+</code></pre>
+
+<aside class="warning"><p> SKILL.mdは<strong>500行以内</strong>を推奨上限とします。それ以上の情報は <code>references/</code> ディレクトリに分割して参照パスを記述してください。 </p>
+</aside>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 4: 評価駆動開発 ========== -->
+    <google-codelab-step label="評価駆動でSkillを磨く" duration="8">
+      <p><strong>評価駆動開発（Evaluation-Driven Development）</strong>とは、まず評価シナリオを作り、そこから逆算してSkillを構築・改善する手法です。「作ってからテスト」ではなく「テストを先に定義してから作る」考え方です。</p>
+
+<h2 is-upgraded>EDD 5ステップ</h2>
+
+<div class="flow-step">
+  <div class="flow-num">1</div>
+  <div class="flow-body">
+    <strong>ギャップの特定</strong>
+    <span>「Claudeに任せたいのにうまくいかない」業務を特定する。現状の出力と理想の出力の差を言語化する。</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">2</div>
+  <div class="flow-body">
+    <strong>評価シナリオの作成（3〜5個）</strong>
+    <span>「このインプットが来たとき、このアウトプットが出れば合格」というテストケースを事前に定義する。</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">3</div>
+  <div class="flow-body">
+    <strong>ベースライン測定</strong>
+    <span>Skill なしで同じシナリオを実行し、現状のスコアを記録する。</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">4</div>
+  <div class="flow-body">
+    <strong>最小限のSkillを作成</strong>
+    <span>最初から完璧を目指さない。nameとdescriptionとガイドライン数行だけで始める。</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num">5</div>
+  <div class="flow-body">
+    <strong>反復改善</strong>
+    <span>評価 → ギャップ特定 → Skill修正 → 再評価 のサイクルを繰り返す。</span>
+  </div>
+</div>
+
+<h2 is-upgraded>モデル別の指示粒度</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>モデル</strong></p></td><td colspan="1" rowspan="1"><p><strong>特性</strong></p></td><td colspan="1" rowspan="1"><p><strong>指示方針</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Claude Haiku</p></td><td colspan="1" rowspan="1"><p>高速・軽量</p></td><td colspan="1" rowspan="1"><p>より詳細な指示・Examples型を多用</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Claude Sonnet</p></td><td colspan="1" rowspan="1"><p>バランス型</p></td><td colspan="1" rowspan="1"><p>中程度の詳細。ガイドライン型が効果的</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Claude Opus</p></td><td colspan="1" rowspan="1"><p>最高推論能力</p></td><td colspan="1" rowspan="1"><p>簡潔な原則のみで高品質な出力が得られる</p></td></tr>
+</table>
+
+<h2 is-upgraded>避けるべき6つのアンチパターン</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>アンチパターン</strong></p></td><td colspan="1" rowspan="1"><p><strong>問題</strong></p></td><td colspan="1" rowspan="1"><p><strong>対策</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>全部入りSkill</p></td><td colspan="1" rowspan="1"><p>1つのSkillに複数の責務を詰め込む</p></td><td colspan="1" rowspan="1"><p>責務を単一に分割する</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>情報の二重管理</p></td><td colspan="1" rowspan="1"><p>同じ情報を複数のSkillに書く</p></td><td colspan="1" rowspan="1"><p>references/に集約して参照する</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>暗黙の依存</p></td><td colspan="1" rowspan="1"><p>パッケージ要件を書かない</p></td><td colspan="1" rowspan="1"><p>依存関係を明示的に宣言する</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>評価なしデプロイ</p></td><td colspan="1" rowspan="1"><p>テストせずに本番投入する</p></td><td colspan="1" rowspan="1"><p>最低3シナリオでテストしてから展開</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>マイクロマネジメント</p></td><td colspan="1" rowspan="1"><p>実装詳細まで全部指定する</p></td><td colspan="1" rowspan="1"><p>「何を」は指定し「どう」はClaudeに委ねる</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>巨大SKILL.md</p></td><td colspan="1" rowspan="1"><p>500行を超える巨大ファイル</p></td><td colspan="1" rowspan="1"><p>references/ディレクトリに分割する</p></td></tr>
+</table>
+
+<h2 is-upgraded>Skill開発チェックリスト</h2>
+<ul>
+<li>[ ] <strong>メタデータ</strong>：name（小文字・ハイフン）、description（三人称・トリガーあり）</li>
+<li>[ ] <strong>コンテンツ</strong>：500行以内、冗長な情報なし</li>
+<li>[ ] <strong>参照</strong>：Unixスタイルのパス、単一階層のreferences/構造</li>
+<li>[ ] <strong>依存関係</strong>：MCPツール名・パッケージを明示的に記述</li>
+<li>[ ] <strong>評価</strong>：全モデルで3以上のテストシナリオを実行済み</li>
+</ul>
+
+<aside class="special"><p> 「何を達成したいか（What）は指定し、どう達成するか（How）はClaudeの知能に委ねる」がSKILL.md設計の基本原則です。 </p>
+</aside>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 5: MCPとの役割分担 ========== -->
+    <google-codelab-step label="MCPとの役割分担を理解する" duration="5">
+      <p>Agent SkillsとMCP（Model Context Protocol）は混同されがちですが、役割がまったく異なります。両者を理解して適切に組み合わせることが重要です。</p>
+
+<h2 is-upgraded>MCPとAgent Skillsの違い</h2>
+<div class="diagram-box">
+  <div class="diagram-card">
+    <h4>MCP（Model Context Protocol）</h4>
+    <p><strong>エージェントの「手足」</strong><br><br>
+    外部サービス・ツールへの接続配線。Gmail・Slack・データベース・APIなど200以上のSaaSをエージェントが操作できるようにする。</p>
+  </div>
+  <div class="diagram-arrow">+</div>
+  <div class="diagram-card green">
+    <h4>Agent Skills</h4>
+    <p><strong>エージェントの「知恵」</strong><br><br>
+    業務知識・手順・ノウハウの装備。MCPが「何に接続できるか」を定義するのに対し、Skillsは「どう使うか」を定義する。</p>
+  </div>
+</div>
+
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>観点</strong></p></td><td colspan="1" rowspan="1"><p><strong>MCP</strong></p></td><td colspan="1" rowspan="1"><p><strong>Agent Skills</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>役割</p></td><td colspan="1" rowspan="1"><p>ツール接続の配線</p></td><td colspan="1" rowspan="1"><p>業務知識の装備</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>定義するもの</p></td><td colspan="1" rowspan="1"><p>「何が使えるか」</p></td><td colspan="1" rowspan="1"><p>「どう使うか」</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>管理方法</p></td><td colspan="1" rowspan="1"><p>サーバー設定・認証</p></td><td colspan="1" rowspan="1"><p>SKILL.mdファイル・Git</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>関係</p></td><td colspan="1" rowspan="1"><p colspan="2">補完関係（競合しない）</p></td></tr>
+</table>
+
+<h2 is-upgraded>Agensにおける3層アーキテクチャ</h2>
+<p>homulaが提供するAIエージェントプラットフォーム「Agens」では、3層で役割を分担しています。</p>
+
+<div class="arch-layer layer1">
+  <h4>Layer 1: MCP層</h4>
+  <p>ツール接続（200以上のSaaS接続）。Gmail・Slack・Salesforce・データベースなどへの接続配線。</p>
+</div>
+<div class="arch-layer layer2">
+  <h4>Layer 2: Agent Skills層</h4>
+  <p>SKILL.md準拠の業務スキルパック。「経費精算」「議事録作成」「週次レポート生成」などの業務ノウハウを装備。</p>
+</div>
+<div class="arch-layer layer3">
+  <h4>Layer 3: homula独自層</h4>
+  <p>ノーコード管理・配布・権限制御。IT部門がSkillを審査・承認し、部門・ロール別に配布できる管理機能。</p>
+</div>
+
+<h2 is-upgraded>実践例：経費精算エージェント</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>層</strong></p></td><td colspan="1" rowspan="1"><p><strong>担当</strong></p></td><td colspan="1" rowspan="1"><p><strong>具体的な役割</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>MCP</p></td><td colspan="1" rowspan="1"><p>ツール接続</p></td><td colspan="1" rowspan="1"><p>経費管理システム・会計ソフトへの接続</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Skills</p></td><td colspan="1" rowspan="1"><p>業務知識</p></td><td colspan="1" rowspan="1"><p>「交通費は上限1万円」「領収書必須」など社内ルール</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Claude</p></td><td colspan="1" rowspan="1"><p>判断・実行</p></td><td colspan="1" rowspan="1"><p>ルールに基づいて申請の妥当性を判定・入力</p></td></tr>
+</table>
+
+<aside class="special"><p> まとめ：<strong>MCP = つなぐもの、Skills = やり方、Projects = 知っておくこと</strong>。3つを組み合わせることで高品質なエージェントが実現します。 </p>
+</aside>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 6: 他のClaude機能との使い分け ========== -->
+    <google-codelab-step label="他のClaude機能との使い分け" duration="8">
+      <p>Claude エコシステムには Skills 以外にも複数の機能があります。それぞれの役割を理解して適切に使い分けることが重要です。</p>
+
+<h2 is-upgraded>7つの機能の全体像</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>機能</strong></p></td><td colspan="1" rowspan="1"><p><strong>一言で言うと</strong></p></td><td colspan="1" rowspan="1"><p><strong>使い所</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Skills</p></td><td colspan="1" rowspan="1"><p>やり方の装備</p></td><td colspan="1" rowspan="1"><p>繰り返す業務手順・ワークフロー</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Prompts</p></td><td colspan="1" rowspan="1"><p>1回限りの指示</p></td><td colspan="1" rowspan="1"><p>単発タスク・テンプレートからの生成</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Projects</p></td><td colspan="1" rowspan="1"><p>背景知識の付与</p></td><td colspan="1" rowspan="1"><p>プロジェクト情報・会社情報など文脈</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>MCP</p></td><td colspan="1" rowspan="1"><p>外部ツール接続</p></td><td colspan="1" rowspan="1"><p>Gmail・Slack・DBなどへのアクセス</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Subagents</p></td><td colspan="1" rowspan="1"><p>独立タスクの委任</p></td><td colspan="1" rowspan="1"><p>並行処理・専門タスクの分業</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>CLAUDE.md</p></td><td colspan="1" rowspan="1"><p>常時ルールの設定</p></td><td colspan="1" rowspan="1"><p>常に守るべきルール・制約</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Hooks</p></td><td colspan="1" rowspan="1"><p>イベントトリガー</p></td><td colspan="1" rowspan="1"><p>ファイル保存・コミット時など自動実行</p></td></tr>
+</table>
+
+<h2 is-upgraded>判断フローチャート</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>問いかけ</strong></p></td><td colspan="1" rowspan="1"><p><strong>答えがYesなら</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>繰り返し使う指示・手順か？</p></td><td colspan="1" rowspan="1"><p>→ <strong>Skills</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>一度だけ使う指示か？</p></td><td colspan="1" rowspan="1"><p>→ <strong>Prompts</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>背景知識・文脈情報か？</p></td><td colspan="1" rowspan="1"><p>→ <strong>Projects</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>外部ツールへの接続か？</p></td><td colspan="1" rowspan="1"><p>→ <strong>MCP</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>独立したタスクを並行処理したいか？</p></td><td colspan="1" rowspan="1"><p>→ <strong>Subagents</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>常時適用するルール・制約か？</p></td><td colspan="1" rowspan="1"><p>→ <strong>CLAUDE.md</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>特定のイベント（保存・コミット）で自動実行したいか？</p></td><td colspan="1" rowspan="1"><p>→ <strong>Hooks</strong></p></td></tr>
+</table>
+
+<h2 is-upgraded>Skills vs Projects — 最も混同しやすい比較</h2>
+<div class="diagram-box">
+  <div class="diagram-card">
+    <h4>Projects（知っておくこと）</h4>
+    <p>「私たちは金融系スタートアップで、対象読者は経営者です」のような文脈・背景情報。常に参照される。</p>
+  </div>
+  <div class="diagram-card green">
+    <h4>Skills（やり方）</h4>
+    <p>「週次レポートはこのフォーマットで、このデータソースから作る」という具体的な手順。必要時だけ呼び出される。</p>
+  </div>
+</div>
+
+<h2 is-upgraded>実践例：競合分析リサーチエージェント</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>機能</strong></p></td><td colspan="1" rowspan="1"><p><strong>使い方</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Projects</p></td><td colspan="1" rowspan="1"><p>自社の事業領域・競合定義・分析軸の基準情報</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Skills</p></td><td colspan="1" rowspan="1"><p>競合分析のフレームワーク（4P・Porter5F等）・レポートフォーマット</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>MCP</p></td><td colspan="1" rowspan="1"><p>ウェブ検索・業界DB・スプレッドシートへのアクセス</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Subagents</p></td><td colspan="1" rowspan="1"><p>複数競合を並行して調査・分析</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>CLAUDE.md</p></td><td colspan="1" rowspan="1"><p>「推測を事実として書かない」「出典を必ず明記」などの制約</p></td></tr>
+</table>
+
+<aside class="special"><p> 複数の機能を組み合わせることが実践での標準スタイルです。それぞれが得意な役割を担うことで、高品質なエージェントが実現します。 </p>
+</aside>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 7: プラットフォームと運用 ========== -->
+    <google-codelab-step label="プラットフォーム対応と運用" duration="8">
+      <p>2026年2月時点で26以上のプラットフォームがAgent Skillsに対応しています。ここでは主要4プラットフォームの詳細と、エンタープライズ運用の要点を解説します。</p>
+
+<h2 is-upgraded>主要4プラットフォームの比較</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>プラットフォーム</strong></p></td><td colspan="1" rowspan="1"><p><strong>ビルトインSkills</strong></p></td><td colspan="1" rowspan="1"><p><strong>カスタムSkills</strong></p></td><td colspan="1" rowspan="1"><p><strong>デプロイ方法</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Claude API</p></td><td colspan="1" rowspan="1"><p>あり（4種）</p></td><td colspan="1" rowspan="1"><p>あり</p></td><td colspan="1" rowspan="1"><p>Skills API（/v1/skills）</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Claude.ai</p></td><td colspan="1" rowspan="1"><p>あり（4種）</p></td><td colspan="1" rowspan="1"><p>あり</p></td><td colspan="1" rowspan="1"><p>Settings &gt; Features ZIPアップロード</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Claude Code</p></td><td colspan="1" rowspan="1"><p>なし</p></td><td colspan="1" rowspan="1"><p>あり</p></td><td colspan="1" rowspan="1"><p>ファイルシステム（.claude/skills/）</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Agent SDK</p></td><td colspan="1" rowspan="1"><p>なし</p></td><td colspan="1" rowspan="1"><p>あり</p></td><td colspan="1" rowspan="1"><p>ファイルシステム（.claude/skills/）</p></td></tr>
+</table>
+
+<h2 is-upgraded>プリビルトSkills（4種）</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>Skill名</strong></p></td><td colspan="1" rowspan="1"><p><strong>機能</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>PPTX Skill</p></td><td colspan="1" rowspan="1"><p>PowerPointファイルの読み取り・編集・生成</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>XLSX Skill</p></td><td colspan="1" rowspan="1"><p>Excelファイルの読み取り・データ抽出・集計</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>DOCX Skill</p></td><td colspan="1" rowspan="1"><p>Wordファイルの読み取り・編集・フォーマット</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>PDF Skill</p></td><td colspan="1" rowspan="1"><p>PDFからのテキスト・表・図の抽出</p></td></tr>
+</table>
+
+<h2 is-upgraded>エンタープライズ運用の4次元</h2>
+
+<h3 is-upgraded>1. セキュリティレビュー（必須）</h3>
+<p>外部から取得したSkillは、展開前に以下の観点で全ファイルを確認します。Snykの調査（2026年2月）では341の悪意あるSkillがマルウェアを配布していたと報告されています。</p>
+<ul>
+<li>コード実行（scripts/内のファイルが安全か）</li>
+<li>指示オーバーライド（既存のCLAUDE.mdルールを上書きしていないか）</li>
+<li>MCP参照（意図しないツールに接続していないか）</li>
+<li>ネットワークアクセス（外部通信が発生していないか）</li>
+<li>ハードコード認証情報（APIキー・パスワードが埋め込まれていないか）</li>
+</ul>
+
+<aside class="warning"><p> <strong>外部から取得したSkillは全ファイルを必ず確認してから展開してください。</strong>信頼できるソースからのSkillのみを使用することを推奨します。 </p>
+</aside>
+
+<h3 is-upgraded>2. 評価の義務化</h3>
+<p>本番展開前に、以下の5つの品質次元でテストします：</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>評価次元</strong></p></td><td colspan="1" rowspan="1"><p><strong>確認内容</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>トリガー精度</p></td><td colspan="1" rowspan="1"><p>意図した場面で正しく発動するか</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>単独動作</p></td><td colspan="1" rowspan="1"><p>他のSkillなしで期待通りに動くか</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>共存</p></td><td colspan="1" rowspan="1"><p>他のSkillと同時使用時に干渉しないか</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>指示遵守</p></td><td colspan="1" rowspan="1"><p>SKILL.mdの指示通りに動作しているか</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>出力品質</p></td><td colspan="1" rowspan="1"><p>期待するフォーマット・内容で出力されるか</p></td></tr>
+</table>
+
+<h3 is-upgraded>3. 運用規模の制約</h3>
+<ul>
+<li>1リクエストあたり最大 <strong>8 Skills</strong> まで（Claude API）</li>
+<li>Skillが多すぎると発動精度が低下するため、ロールベースで配布するSkillを絞り込む</li>
+</ul>
+
+<h3 is-upgraded>4. Gitを中心としたライフサイクル管理</h3>
+<pre><code>計画 → 開発 → レビュー → テスト → 展開 → 監視 → 廃止
+  ↑_____________________________________|（反復改善）
+</code></pre>
+
+<aside class="special"><p> <strong>「Write once, use everywhere」</strong> が設計思想です。1つのSkillフォルダをGitで管理し、Claude.ai・Claude Code・Agent SDK など複数のプラットフォームで再利用できます。 </p>
+</aside>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 8: 企業導入ロードマップ ========== -->
+    <google-codelab-step label="エンタープライズ導入ロードマップ" duration="7">
+      <p>Agent Skillsを組織全体で展開するための12週間のロードマップです。「作って終わり」ではなく、段階的に効果を測定しながら横展開する進め方を推奨します。</p>
+
+<h2 is-upgraded>12週間フェーズ計画</h2>
+
+<div class="flow-step">
+  <div class="flow-num" style="background:#E8A000">1</div>
+  <div class="flow-body">
+    <strong>Week 1〜2：業務棚卸し</strong>
+    <span>繰り返し発生する業務タスクを洗い出し、AIエージェントで自動化・標準化できる候補を特定する。担当者ごとに異なるプロンプトを「見える化」する。</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num" style="background:#E8A000">2</div>
+  <div class="flow-body">
+    <strong>Week 2〜4：プロトタイプ作成</strong>
+    <span>優先度の高い業務タスクを2〜3個選び、最小構成のSkillを作成。評価シナリオを定義してベースラインと比較する。</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num" style="background:#1e8e3e">3</div>
+  <div class="flow-body">
+    <strong>Week 5〜8：限定展開</strong>
+    <span>プロトタイプの評価スコアが基準を超えたものを、パイロットチームに展開する。実運用でのフィードバックを収集して改善する。</span>
+  </div>
+</div>
+<div class="flow-step">
+  <div class="flow-num" style="background:#1e8e3e">4</div>
+  <div class="flow-body">
+    <strong>Week 9〜12：効果測定・横展開</strong>
+    <span>時間削減・品質向上・コスト削減を定量的に測定し、経営層に報告。効果が実証されたSkillを他部門・他チームに展開する。</span>
+  </div>
+</div>
+
+<h2 is-upgraded>最初のSkill候補の選び方</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>優先度</strong></p></td><td colspan="1" rowspan="1"><p><strong>選定基準</strong></p></td><td colspan="1" rowspan="1"><p><strong>業務例</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>高</p></td><td colspan="1" rowspan="1"><p>週3回以上・定型フォーマットあり・時間がかかる</p></td><td colspan="1" rowspan="1"><p>週次レポート・議事録作成・経費申請</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>中</p></td><td colspan="1" rowspan="1"><p>月数回・ある程度パターンあり</p></td><td colspan="1" rowspan="1"><p>提案書作成・FAQ回答・データ集計</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>低</p></td><td colspan="1" rowspan="1"><p>不定期・高度な判断が必要</p></td><td colspan="1" rowspan="1"><p>戦略立案・個別案件対応・交渉</p></td></tr>
+</table>
+
+<h2 is-upgraded>対応プラットフォームの広がり（2026年2月時点）</h2>
+<p>26以上のプラットフォームが対応しています。主なものを分類で紹介します：</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>分類</strong></p></td><td colspan="1" rowspan="1"><p><strong>プラットフォーム</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Anthropic製品</p></td><td colspan="1" rowspan="1"><p>Claude.ai / Claude Code / Claude Agent SDK / Claude API</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>コードエディタ</p></td><td colspan="1" rowspan="1"><p>Cursor / VS Code / GitHub Copilot CLI / OpenAI Codex / Roo Code</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>AIエージェントフレームワーク</p></td><td colspan="1" rowspan="1"><p>Gemini CLI / Amp / Goose / Letta / OpenCode / Manus</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>エンタープライズ向け</p></td><td colspan="1" rowspan="1"><p>skills.sh（Vercel）/ Hugging Face Skills / Agens（homula）</p></td></tr>
+</table>
+
+<aside class="special"><p> GPTsとの比較：Agent Skillsはファイルベースのオープンプロトコルのため、<strong>Gitで管理できる・26以上のプラットフォームでポータブル・透明性が高い</strong>という優位性があります。一方GPTsはOpenAI内に閉じており、エクスポートやGit管理ができません。 </p>
+</aside>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 9: まとめ ========== -->
+    <google-codelab-step label="まとめ" duration="2">
+      <p>このCodelabで学んだ内容をまとめます。</p>
+
+<h2 is-upgraded>Before / After</h2>
+<table class="ba-table">
+<tr><th colspan="1" rowspan="1"><p>観点</p></th><th colspan="1" rowspan="1"><p>Before（Skills導入前）</p></th><th colspan="1" rowspan="1"><p>After（Skills導入後）</p></th></tr>
+<tr><td colspan="1" rowspan="1"><p>指示の再利用</p></td><td class="ba-before"><p>毎回ゼロからプロンプトを書く</p></td><td class="ba-after"><p>SKILL.mdを一度作れば再利用可能</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>業務知識の管理</p></td><td class="ba-before"><p>個人の頭の中・メモに散在</p></td><td class="ba-after"><p>Gitで管理・チームで共有</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>トークン効率</p></td><td class="ba-before"><p>詳細指示がコンテキストを圧迫</p></td><td class="ba-after"><p>段階的開示で50〜100倍効率化</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>プラットフォーム</p></td><td class="ba-before"><p>特定ツールに依存（ロックイン）</p></td><td class="ba-after"><p>26以上のプラットフォームでポータブル</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>出力品質</p></td><td class="ba-before"><p>担当者によってバラつく</p></td><td class="ba-after"><p>Skillが一貫した品質を保証</p></td></tr>
+</table>
+
+<h2 is-upgraded>今回学んだこと</h2>
+<ul>
+<li>AIエージェントの3つの構造的課題（反復・コンテキスト圧迫・属人化）</li>
+<li>Agent Skillsの定義・SKILL.mdファイルの構造・フォルダ構成</li>
+<li>段階的開示によるトークン効率化（50〜100倍）の仕組み</li>
+<li>SKILL.mdの4つの記述パターン（テンプレート/ガイドライン/Examples/Decision Tree）</li>
+<li>評価駆動開発（EDD）5ステップと6つのアンチパターン</li>
+<li>MCPとの役割分担（MCPは「手足」、Skillsは「知恵」）</li>
+<li>7つのClaude機能の使い分け判断フレームワーク</li>
+<li>エンタープライズ導入の12週間ロードマップとセキュリティ要件</li>
+</ul>
+
+<h2 is-upgraded>次のステップへ</h2>
+<ul>
+<li><a href="/codelabs/antigravity-skills/">Antigravity × Agent Skills 実践ガイド</a></li>
+<li><a href="/codelabs/antigravity-getting-started/">Antigravity 使い方入門</a></li>
+<li><a href="/codelabs/prompt-engineering/">プロンプトエンジニアリング入門</a></li>
+</ul>
+
+<aside class="special"><p> まず1つ、自分の業務で繰り返しているタスクを選び、SKILL.mdを書いてみましょう。name と description の2行だけでも始められます。 </p>
+</aside>
+
+    </google-codelab-step>
+
+  </google-codelab>
+
+  <!-- 読み上げボタン -->
+  <button id="speech-btn" onclick="toggleSpeech()" title="現在のステップを読み上げます">
+    <span id="speech-icon">▶</span>
+    <span id="speech-label">読み上げ</span>
+  </button>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js" async></script>
+
+  <script>
+    var speaking = false;
+    var currentUtterance = null;
+
+    function getCurrentStepIndex() {
+      var hash = location.hash.replace('#', '');
+      var n = parseInt(hash);
+      return isNaN(n) ? 0 : n;
+    }
+
+    function getCurrentStepText() {
+      var steps = document.querySelectorAll('google-codelab-step');
+      var idx = getCurrentStepIndex();
+      var step = steps[idx];
+      if (!step) return '';
+      var label = step.getAttribute('label') || '';
+      var body = step.innerText || step.textContent || '';
+      return label + '。' + body;
+    }
+
+    function toggleSpeech() {
+      if (speaking) {
+        window.speechSynthesis.cancel();
+        setSpeaking(false);
+        return;
+      }
+      var text = getCurrentStepText();
+      if (!text.trim()) return;
+
+      var utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'ja-JP';
+      utter.rate = 0.95;
+      utter.onend = function() { setSpeaking(false); };
+      utter.onerror = function() { setSpeaking(false); };
+      currentUtterance = utter;
+      window.speechSynthesis.speak(utter);
+      setSpeaking(true);
+    }
+
+    function setSpeaking(val) {
+      speaking = val;
+      var btn = document.getElementById('speech-btn');
+      var icon = document.getElementById('speech-icon');
+      var label = document.getElementById('speech-label');
+      if (val) {
+        btn.classList.add('speaking');
+        icon.textContent = '⏹';
+        label.textContent = '停止';
+      } else {
+        btn.classList.remove('speaking');
+        icon.textContent = '▶';
+        label.textContent = '読み上げ';
+      }
+    }
+
+    window.addEventListener('hashchange', function() {
+      if (speaking) {
+        window.speechSynthesis.cancel();
+        setSpeaking(false);
+      }
+    });
+  </script>
+</body>
+</html>
