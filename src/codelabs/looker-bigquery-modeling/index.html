@@ -1,0 +1,636 @@
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Looker × BigQuery 接続・LookML・可視化 入門</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success { color: #1e8e3e; }
+    .error { color: red; }
+
+    /* 読み上げボタン */
+    #speech-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      background: #4F7DC9;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-family: 'Roboto', sans-serif;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    #speech-btn:hover { background: #3a67b3; }
+    #speech-btn.speaking { background: #d32f2f; }
+    #speech-btn.speaking:hover { background: #b71c1c; }
+
+    /* スクリーンショット */
+    .screenshot {
+      max-width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin: 12px 0;
+      display: block;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    }
+    .screenshot-caption {
+      font-size: 12px;
+      color: #888;
+      margin: -8px 0 16px 0;
+      font-style: italic;
+    }
+
+    /* 概念図ボックス */
+    .concept-box {
+      border: 2px solid #4F7DC9;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      background: #f0f4ff;
+    }
+    .concept-box h4 { margin: 0 0 6px; color: #2a5298; font-size: 15px; }
+    .concept-box p  { margin: 0; font-size: 13px; color: #444; }
+
+    /* フローステップ */
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin: 10px 0;
+    }
+    .flow-num {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #4F7DC9;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .flow-body { flex: 1; padding-top: 4px; }
+    .flow-body strong { display: block; font-size: 14px; margin-bottom: 2px; }
+    .flow-body span { font-size: 13px; color: #555; }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="looker-bigquery-modeling"
+                  title="Looker × BigQuery 接続・LookML・可視化 入門"
+                  environment="web"
+                  feedback-link="https://internal-dx-portal-auth.tanjiadm.workers.dev/">
+
+    <!-- ========== STEP 0: はじめに ========== -->
+    <google-codelab-step label="はじめに" duration="2">
+      <p>このCodelabでは <strong>Looker</strong> でデータを可視化するための一連のフローを解説します。BigQueryとの接続・認証、LookMLモデルの作成、Exploreでの可視化まで、ゼロから順番に手を動かして学べます。</p>
+
+<aside class="special"><p> 出典：本教本は g-gen テックブログ「LookerでBigQueryに接続してLookML作成から可視化までを行う手順を解説」（著：菊池 健太、2026年2月18日公開）に基づいています。 </p>
+</aside>
+
+<h2 is-upgraded>このCodelabで学ぶこと</h2>
+<ul>
+<li>Lookerの基本構成要素（ビュー・Explore・モデル）</li>
+<li>BigQuery側のデータセット作成とサービスアカウント設定</li>
+<li>LookerからBigQueryへの接続（Connection）の作成</li>
+<li>LookMLプロジェクトの自動生成と調整方法</li>
+<li>ディメンションとメジャーの違い・修正方法</li>
+<li>日付データを時系列で扱うための dimension_group の設定</li>
+<li>Exploreでのフィールド選択・フィルター・ビジュアリゼーション操作</li>
+</ul>
+
+<h2 is-upgraded>必要なもの</h2>
+<ul>
+<li><strong>Google Cloud プロジェクト</strong>（BigQueryが使用可能なもの）</li>
+<li><strong>Looker インスタンス</strong>（Admin権限推奨）</li>
+<li>所要時間：約47分</li>
+</ul>
+
+<h2 is-upgraded>Lookerの3つの構成要素</h2>
+
+<div class="concept-box">
+  <h4>ビュー（View）</h4>
+  <p>データベースのテーブルと1対1で対応する定義ファイル。テーブルの各列を「ディメンション」または「メジャー」として定義する。</p>
+</div>
+<div class="concept-box">
+  <h4>Explore</h4>
+  <p>エンドユーザーに公開するビューの定義。どのビューを・どのJoinで・どのユーザーに公開するかを管理する。</p>
+</div>
+<div class="concept-box">
+  <h4>モデル（Model）</h4>
+  <p>接続先データベースと公開するExploreを管理するファイル。プロジェクト全体の「設定書」。</p>
+</div>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090253.png" alt="Lookerの全体概念図">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090251.png" alt="ビュー・Explore・モデルの関係図">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090149.png" alt="LookMLの構造">
+
+<h2 is-upgraded>全体フロー</h2>
+<div class="flow-step"><div class="flow-num">1</div><div class="flow-body"><strong>BigQuery側の準備</strong><span>データセット作成・サンプルデータ投入・サービスアカウント作成</span></div></div>
+<div class="flow-step"><div class="flow-num">2</div><div class="flow-body"><strong>Looker接続設定</strong><span>ConnectionをBigQueryに向けて設定・テスト</span></div></div>
+<div class="flow-step"><div class="flow-num">3</div><div class="flow-body"><strong>LookMLプロジェクト作成</strong><span>ウィザードでビュー・モデルファイルを自動生成</span></div></div>
+<div class="flow-step"><div class="flow-num">4</div><div class="flow-body"><strong>LookMLの調整</strong><span>メジャー変換・日付型変換・コミット・デプロイ</span></div></div>
+<div class="flow-step"><div class="flow-num">5</div><div class="flow-body"><strong>Exploreで可視化</strong><span>フィールド選択・フィルター・ビジュアリゼーション確認</span></div></div>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 1: BQ データセット・サンプルデータ ========== -->
+    <google-codelab-step label="BigQuery — データセット・サンプルデータ準備" duration="8">
+      <p>まずBigQuery側でデモ用のデータセットを作成し、サンプルデータを投入します。今回はGA4のオブフスケート済み公開サンプルデータを使用します。</p>
+
+<h2 is-upgraded>デモ用データセットの作成</h2>
+<ol type="1">
+<li>BigQueryコンソールを開き、プロジェクト名の横の「＋」をクリックしてデータセットを作成する</li>
+<li>データセット名に <code>looker_demo_source</code> と入力する</li>
+<li>「データセットを作成」をクリックする</li>
+</ol>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090005.png" alt="BigQueryコンソール — データセット作成">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090008.png" alt="データセット名を入力">
+
+<h2 is-upgraded>サンプルデータの投入</h2>
+<p>BigQueryのクエリエディタで以下のSQLを実行して、<code>ga4_daily_metrics_by_country</code> テーブルを作成します。</p>
+
+<pre><code language="sql">WITH UserData AS (
+  SELECT
+    event_date AS date,
+    user_pseudo_id,
+    (SELECT value.int_value FROM UNNEST(event_params)
+     WHERE key = 'ga_session_id') AS session_id,
+    geo.country AS country,
+    event_name,
+    (SELECT value.string_value FROM UNNEST(event_params)
+     WHERE key = 'session_engaged') AS session_engaged_flag,
+    (SELECT value.int_value FROM UNNEST(event_params)
+     WHERE key = 'engagement_time_msec') AS engagement_time_msec
+  FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
+  WHERE PARSE_DATE('%Y%m%d', _TABLE_SUFFIX)
+    BETWEEN DATE '2021-01-01' AND DATE '2021-01-31'
+)
+SELECT
+  date,
+  COUNT(DISTINCT CASE
+    WHEN session_engaged_flag = '1' THEN user_pseudo_id
+    WHEN event_name = 'first_visit' THEN user_pseudo_id
+    WHEN engagement_time_msec > 0 THEN user_pseudo_id
+  END) AS active_users,
+  COUNT(DISTINCT CASE
+    WHEN event_name = 'first_visit' THEN user_pseudo_id
+  END) AS new_users,
+  COUNT(DISTINCT CONCAT(user_pseudo_id, CAST(session_id AS STRING))) AS sessions,
+  country,
+FROM UserData
+GROUP BY date, country
+ORDER BY date
+</code></pre>
+
+<p>SQLを実行する際、保存先を <code>looker_demo_source</code> データセット、テーブル名を <code>ga4_daily_metrics_by_country</code> として指定します。</p>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090012.png" alt="クエリエディタでSQL実行">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090015.png" alt="テーブル作成結果の確認">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090017.png" alt="テーブルプレビュー">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090019.png" alt="スキーマ確認">
+
+<h2 is-upgraded>テーブルの列構成</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>列名</strong></p></td><td colspan="1" rowspan="1"><p><strong>型</strong></p></td><td colspan="1" rowspan="1"><p><strong>内容</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>date</p></td><td colspan="1" rowspan="1"><p>INTEGER（YYYYMMDD形式）</p></td><td colspan="1" rowspan="1"><p>日付</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>active_users</p></td><td colspan="1" rowspan="1"><p>INTEGER</p></td><td colspan="1" rowspan="1"><p>アクティブユーザー数</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>new_users</p></td><td colspan="1" rowspan="1"><p>INTEGER</p></td><td colspan="1" rowspan="1"><p>新規ユーザー数</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>sessions</p></td><td colspan="1" rowspan="1"><p>INTEGER</p></td><td colspan="1" rowspan="1"><p>セッション数</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>country</p></td><td colspan="1" rowspan="1"><p>STRING</p></td><td colspan="1" rowspan="1"><p>国名</p></td></tr>
+</table>
+
+<aside class="special"><p> GA4の公開サンプルデータ（Googleマーチャンダイズストア）は <code>bigquery-public-data.ga4_obfuscated_sample_ecommerce</code> で参照できます。本番プロジェクトのコストはかかりません。 </p>
+</aside>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 2: サービスアカウント ========== -->
+    <google-codelab-step label="BigQuery — サービスアカウント作成" duration="5">
+      <p>Lookerがエイジェント（サービスアカウント）としてBigQueryに接続するために、専用のサービスアカウントを作成します。</p>
+
+<h2 is-upgraded>サービスアカウントの作成</h2>
+<ol type="1">
+<li>Google Cloudコンソールで「IAMと管理」→「サービスアカウント」を開く</li>
+<li>「サービスアカウントを作成」をクリック</li>
+<li>サービスアカウント名に <code>looker-bq-connection-sa</code> と入力する</li>
+<li>「作成して続行」をクリック</li>
+</ol>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090023.png" alt="サービスアカウント一覧画面">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090025.png" alt="サービスアカウント名を入力">
+
+<h2 is-upgraded>権限の付与</h2>
+<p>サービスアカウントに以下の2つのロールを付与します：</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>ロール</strong></p></td><td colspan="1" rowspan="1"><p><strong>用途</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>BigQueryデータ編集者</p></td><td colspan="1" rowspan="1"><p>テーブルの読み取り・一時テーブルの書き込み</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>BigQueryジョブユーザー</p></td><td colspan="1" rowspan="1"><p>クエリジョブの実行</p></td></tr>
+</table>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090028.png" alt="ロールを選択">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090031.png" alt="BigQueryデータ編集者ロール追加">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090034.png" alt="BigQueryジョブユーザーロール追加">
+
+<h2 is-upgraded>JSONキーの発行</h2>
+<ol type="1">
+<li>作成したサービスアカウントをクリック</li>
+<li>「キー」タブを選択</li>
+<li>「鍵を追加」→「新しい鍵を作成」をクリック</li>
+<li>キーの種類：<strong>JSON</strong> を選択して「作成」をクリック</li>
+<li>JSONファイルが自動ダウンロードされる（次のステップで使用）</li>
+</ol>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090037.png" alt="キータブ — 鍵を追加">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090040.png" alt="JSONキーを作成してダウンロード">
+
+<aside class="warning"><p> ダウンロードしたJSONキーファイルは安全に保管してください。このファイルを持つ人はBigQueryにアクセスできます。紛失・漏洩した場合はすぐにキーを無効化してください。 </p>
+</aside>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 3: Looker接続設定 ========== -->
+    <google-codelab-step label="Looker — BigQuery接続設定" duration="5">
+      <p>LookerコンソールからBigQueryへの接続（Connection）を作成します。</p>
+
+<h2 is-upgraded>接続の作成</h2>
+<ol type="1">
+<li>Lookerの管理画面（Admin）を開く</li>
+<li>左メニューの「データベース」→「接続」をクリック</li>
+<li>右上の「接続を追加」をクリック</li>
+</ol>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090043.png" alt="Looker管理画面 — 接続一覧">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090047.png" alt="接続設定フォーム">
+
+<h2 is-upgraded>接続設定の入力値</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>項目</strong></p></td><td colspan="1" rowspan="1"><p><strong>入力値</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>接続名</p></td><td colspan="1" rowspan="1"><p>conn-ga4-daily-demo</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>SQL Dialect</p></td><td colspan="1" rowspan="1"><p>Google BigQuery Standard SQL</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>請求プロジェクト</p></td><td colspan="1" rowspan="1"><p>自分のGoogle Cloudプロジェクト名</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>Primary Dataset</p></td><td colspan="1" rowspan="1"><p>looker_demo_source</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>認証方法</p></td><td colspan="1" rowspan="1"><p>サービスアカウント（JSONキーをアップロード）</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>データベースタイムゾーン</p></td><td colspan="1" rowspan="1"><p>Asia - Tokyo</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>クエリタイムゾーン</p></td><td colspan="1" rowspan="1"><p>Asia - Tokyo</p></td></tr>
+</table>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090050.png" alt="サービスアカウントJSONをアップロード">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090052.png" alt="タイムゾーン設定">
+
+<h2 is-upgraded>接続テストと保存</h2>
+<ol type="1">
+<li>フォーム下部の「テスト」をクリック</li>
+<li><span class="success">「接続に成功しました」</span>と表示されることを確認する</li>
+<li>「保存」をクリック</li>
+</ol>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090054.png" alt="接続テスト成功">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090056.png" alt="接続が保存された状態">
+
+<aside class="special"><p> テストに失敗した場合は、サービスアカウントに付与したロールとJSONキーファイルの内容（プロジェクトIDなど）を確認してください。 </p>
+</aside>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 4: LookMLプロジェクト作成 ========== -->
+    <google-codelab-step label="LookMLプロジェクト作成" duration="8">
+      <p>Lookerのウィザードを使ってLookMLプロジェクトを新規作成します。テーブルを選ぶだけでビュー・モデルファイルが自動生成されます。</p>
+
+<h2 is-upgraded>Development Modeに切り替える</h2>
+<p>LookMLの編集はDevelopment Modeで行います。画面右上のトグルをクリックしてDevelopment Modeに切り替えます。</p>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090100.png" alt="Development Modeに切り替え">
+
+<h2 is-upgraded>プロジェクトページへ移動</h2>
+<ol type="1">
+<li>上部メニューの「開発」→「プロジェクトの管理」を開く</li>
+<li>「新しいLookMLプロジェクト」をクリック</li>
+</ol>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090103.png" alt="プロジェクト管理画面">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090105.png" alt="新しいLookMLプロジェクト作成">
+
+<h2 is-upgraded>プロジェクト設定の入力</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>項目</strong></p></td><td colspan="1" rowspan="1"><p><strong>入力値</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>プロジェクト名</p></td><td colspan="1" rowspan="1"><p>proj_ga4_analysis</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>開始点</p></td><td colspan="1" rowspan="1"><p>空のプロジェクト（Blank Project）</p></td></tr>
+</table>
+
+<aside class="special"><p> 「既存のテーブルからプロジェクトを生成」を選ぶと、テーブル選択ウィザードが使えます。今回はウィザードを使って進めます。 </p>
+</aside>
+
+<h2 is-upgraded>データベース接続を選択</h2>
+<p>接続先として先ほど作成した <code>conn-ga4-daily-demo</code> を選択します。</p>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090107.png" alt="接続を選択">
+
+<h2 is-upgraded>テーブルを選択する</h2>
+<ol type="1">
+<li><code>looker_demo_source</code> データセットを展開する</li>
+<li><code>ga4_daily_metrics_by_country</code> にチェックを入れる</li>
+<li>「次へ」をクリック</li>
+</ol>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090110.png" alt="テーブルを選択">
+
+<h2 is-upgraded>主キーの選択</h2>
+<p>主キーを設定することでLookerのSYMMETRIC AGGREGATES機能が有効になります。今回は主キーなしでスキップします。</p>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090112.png" alt="主キーの設定（スキップ）">
+
+<h2 is-upgraded>作成するExploreを選択する</h2>
+<p><code>ga4_daily_metrics_by_country</code> にチェックを入れてExploreを公開します。</p>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090114.png" alt="Exploreとして公開するビューを選択">
+
+<h2 is-upgraded>モデル名を入力</h2>
+<p>モデル名に <code>ga4_daily_demo</code> と入力して「プロジェクトを生成」をクリックします。</p>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090117.png" alt="モデル名を入力">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090120.png" alt="LookML IDE が開いた状態">
+
+<p>LookML IDE（編集画面）が開き、ビューファイルとモデルファイルが自動生成されます。</p>
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 5: LookMLの定義と調整 ========== -->
+    <google-codelab-step label="LookMLの定義と調整" duration="10">
+      <p>自動生成されたLookMLファイルを確認し、ビジネスロジックに合わせて修正します。主に「数値列をメジャーに変換」と「日付列を時系列型に変換」の2つを行います。</p>
+
+<h2 is-upgraded>自動生成されたファイルの確認</h2>
+<p>IDEの左ペインに以下の2ファイルが表示されます：</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>ファイル</strong></p></td><td colspan="1" rowspan="1"><p><strong>役割</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>views/ga4_daily_metrics_by_country.view</p></td><td colspan="1" rowspan="1"><p>テーブルと1対1のビュー定義。各列がdimensionとして定義されている。</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>models/ga4-daily-demo.model</p></td><td colspan="1" rowspan="1"><p>Explore定義と接続先DB。</p></td></tr>
+</table>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090122.png" alt="LookML IDE — 生成されたファイル一覧">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090125.png" alt="ビューファイルの中身（自動生成）">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090127.png" alt="モデルファイルの中身">
+
+<h2 is-upgraded>修正1：ディメンションからメジャーへの変換</h2>
+<p>自動生成では <code>active_users</code>・<code>new_users</code>・<code>sessions</code> がすべて <code>dimension</code>（軸）として定義されています。これらは「合計・集計する数値」なので <code>measure</code>（指標）に変更します。</p>
+
+<p><strong>変更前（自動生成）：</strong></p>
+<pre><code language="yaml">dimension: active_users {
+  type: number
+  sql: ${TABLE}.active_users ;;
+}
+</code></pre>
+
+<p><strong>変更後（修正）：</strong></p>
+<pre><code language="yaml">measure: active_users {
+  type: sum
+  sql: ${TABLE}.active_users ;;
+}
+</code></pre>
+
+<p><code>new_users</code> と <code>sessions</code> も同様に <code>dimension</code> → <code>measure</code>、<code>type: number</code> → <code>type: sum</code> に変更します。</p>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090129.png" alt="修正前のdimension定義">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090131.png" alt="measureに書き換え中">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090134.png" alt="3列をmeasureに変更完了">
+
+<aside class="special"><p> <strong>ディメンションとメジャーの違い：</strong><br>ディメンション（dimension）= 切り口・軸（国、日付、カテゴリなど）<br>メジャー（measure）= 集計する数値（合計・平均・カウントなど） </p>
+</aside>
+
+<h2 is-upgraded>修正2：日付データの修正</h2>
+<p><code>date</code> 列はBigQueryではINTEGER型（YYYYMMDD形式）で保存されています。Lookerで時系列として扱うために <code>dimension_group</code> に変換します。</p>
+
+<p><strong>変更前（自動生成）：</strong></p>
+<pre><code language="yaml">dimension: date {
+  type: number
+  sql: ${TABLE}.date ;;
+}
+</code></pre>
+
+<p><strong>変更後（修正）：</strong></p>
+<pre><code language="yaml">dimension_group: date {
+  type: time
+  timeframes: [date, week, month, year, raw]
+  datatype: yyyymmdd
+  sql: ${TABLE}.date ;;
+}
+</code></pre>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090138.png" alt="date列の修正前">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090140.png" alt="dimension_groupに書き換え">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090142.png" alt="timeframesとdatatypeを追加">
+
+<p><code>timeframes</code> を設定することで、Explore上で「日付」「週」「月」「年」単位での集計が選択できるようになります。</p>
+
+<h2 is-upgraded>変更のコミットと本番反映</h2>
+<div class="flow-step"><div class="flow-num">1</div><div class="flow-body"><strong>Save Changes（保存）</strong><span>IDEの「保存」をクリックして編集内容をローカル保存する</span></div></div>
+<div class="flow-step"><div class="flow-num">2</div><div class="flow-body"><strong>Validate LookML（バリデーション）</strong><span>「LookMLを検証」をクリックしてエラーがないか確認する</span></div></div>
+<div class="flow-step"><div class="flow-num">3</div><div class="flow-body"><strong>Commit Changes &amp; Push（コミット）</strong><span>変更をGitにコミットして記録する</span></div></div>
+<div class="flow-step"><div class="flow-num">4</div><div class="flow-body"><strong>Deploy to Production（本番反映）</strong><span>変更を本番環境に適用してエンドユーザーが利用できる状態にする</span></div></div>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090144.png" alt="LookMLバリデーション — エラーなし">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090147.png" alt="コミット画面">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090151.png" alt="Deploy to Production">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090155.png" alt="本番反映完了">
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 6: Exploreで可視化 ========== -->
+    <google-codelab-step label="Exploreでデータを可視化する" duration="7">
+      <p>LookMLのデプロイが完了したら、Explore画面でデータを可視化してみます。</p>
+
+<h2 is-upgraded>Explore画面の操作</h2>
+<ol type="1">
+<li>上部メニューの「探索」→ <code>GA4 Daily Demo</code>（または <code>Ga4 Daily Metrics By Country</code>）をクリック</li>
+<li>左側のフィールド一覧が表示される</li>
+</ol>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090158.png" alt="Explore画面 — フィールド一覧">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090201.png" alt="ディメンションとメジャーの一覧">
+
+<h2 is-upgraded>フィールドの選択と実行</h2>
+<ol type="1">
+<li>左ペインの「Date」グループを展開し、<strong>Date Date</strong>（日付）をクリック</li>
+<li>「Country」（国）をクリック</li>
+<li>「Sessions」「Active Users」「New Users」をクリック</li>
+<li>右上の「実行」をクリック</li>
+</ol>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090203.png" alt="フィールドを選択">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090206.png" alt="実行結果 — テーブルデータ">
+
+<aside class="special"><p> 行数制限のデフォルトは500行です。データが多い場合は「行数制限」を5,000などに変更して再実行してください。 </p>
+</aside>
+
+<h2 is-upgraded>ビジュアリゼーションの確認</h2>
+<p>「Country」列が含まれているため、Lookerが自動でGoogleマップビジュアリゼーションを選択します。テーブル形式に変更するには、ビジュアリゼーション選択バーの「テーブル」アイコンをクリックします。</p>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090209.png" alt="地図ビジュアリゼーション（自動選択）">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090212.png" alt="テーブル形式に変更">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090214.png" alt="テーブル表示の結果">
+
+<h2 is-upgraded>フィルターの使い方</h2>
+<p>特定の国や期間に絞り込むには、フィールド一覧のフィールドにカーソルを合わせて「フィルタ」アイコンをクリックします。</p>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090217.png" alt="フィルターを追加する操作">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090220.png" alt="フィルター条件を設定">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090223.png" alt="フィルター適用後の結果">
+
+<h2 is-upgraded>修正しなかった場合の挙動比較</h2>
+
+<h3 is-upgraded>ディメンションのまま（メジャー修正なし）</h3>
+<p><code>active_users</code> 等を <code>dimension</code> のままにしていると、Explore上でグルーピング軸として表示されてしまい、合計値を出せません。</p>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090225.png" alt="measureへの修正なし — Explore上の見え方">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090227.png" alt="ディメンションのまま集計しようとした結果（不正）">
+
+<h3 is-upgraded>文字列型のまま（日付型修正なし）</h3>
+<p><code>date</code> 列を <code>dimension_group</code> に変換せずにいると、YYYYMMDD形式の整数値として表示され、週・月単位での集計ができません。</p>
+
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090230.png" alt="日付型修正なし — Explore上の見え方">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090232.png" alt="YYYYMMDDの整数として表示される">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090235.png" alt="週・月単位の選択肢が表示されない">
+
+<aside class="warning"><p> 自動生成のLookMLをそのままデプロイすると、数値列がグルーピング軸として使われてしまい、正しい集計ができません。必ず <code>measure</code> への変換と <code>dimension_group</code> への変換を行ってからデプロイしてください。 </p>
+</aside>
+
+<p>残りのスクリーンショット（追加の可視化例）：</p>
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090237.png" alt="Explore — 月単位での集計例">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090240.png" alt="折れ線グラフによる時系列可視化">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090242.png" alt="国別セッション数の棒グラフ">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090244.png" alt="フィルターで日本のみ絞り込み">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090246.png" alt="Active UsersとNew Usersの比較">
+<img class="screenshot" src="https://cdn-ak.f.st-hatena.com/images/fotolife/g/ggen-sugimura/20260218/20260218090249.png" alt="Explore操作完成形">
+
+    </google-codelab-step>
+
+    <!-- ========== STEP 7: まとめ ========== -->
+    <google-codelab-step label="まとめと次のステップ" duration="2">
+      <p>おめでとうございます！ BigQueryへの接続からLookMLの作成・調整、Exploreでの可視化まで一通りのフローを完了しました。</p>
+
+<h2 is-upgraded>今回学んだこと</h2>
+<ul>
+<li>Lookerの基本構成：ビュー（View）・Explore・モデル（Model）の役割</li>
+<li>BigQueryのデータセット作成・サービスアカウント設定・JSONキー発行</li>
+<li>LookerからBigQueryへのConnection設定と接続テスト</li>
+<li>ウィザードによるLookMLプロジェクトの自動生成</li>
+<li><code>dimension</code> → <code>measure</code> への変換（<code>type: sum</code>の設定）</li>
+<li><code>dimension</code> → <code>dimension_group</code> への変換（<code>type: time</code>、<code>datatype: yyyymmdd</code>）</li>
+<li>Development Mode でのコミット → Deploy to Production のフロー</li>
+<li>Exploreでのフィールド選択・フィルター・ビジュアリゼーション操作</li>
+</ul>
+
+<h2 is-upgraded>重要なポイント（まとめ）</h2>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>修正内容</strong></p></td><td colspan="1" rowspan="1"><p><strong>しなかった場合の問題</strong></p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>数値列を measure（type: sum）に変換</p></td><td colspan="1" rowspan="1"><p>集計軸として扱われ、SUM集計ができない</p></td></tr>
+<tr><td colspan="1" rowspan="1"><p>日付列を dimension_group（type: time）に変換</p></td><td colspan="1" rowspan="1"><p>YYYYMMDD整数値のまま、週・月単位での集計ができない</p></td></tr>
+</table>
+
+<h2 is-upgraded>次のCodelabへ</h2>
+<ul>
+<li><a href="/codelabs/looker-studio-intro/">Looker Studio 入門</a></li>
+<li><a href="/codelabs/workspace-gemini/">Workspace × Gemini 自動化</a></li>
+<li><a href="/codelabs/claude-agent-skills/">Claude Agent Skills 完全入門</a></li>
+</ul>
+
+<aside class="special"><p> さらに詳しい情報は <a href="https://cloud.google.com/looker/docs" target="_blank">Looker公式ドキュメント</a> と <a href="https://blog.g-gen.co.jp/" target="_blank">g-genテックブログ</a> を参照してください。 </p>
+</aside>
+
+    </google-codelab-step>
+
+  </google-codelab>
+
+  <!-- 読み上げボタン -->
+  <button id="speech-btn" onclick="toggleSpeech()" title="現在のステップを読み上げます">
+    <span id="speech-icon">▶</span>
+    <span id="speech-label">読み上げ</span>
+  </button>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js" async></script>
+
+  <script>
+    var speaking = false;
+    var currentUtterance = null;
+
+    function getCurrentStepIndex() {
+      var hash = location.hash.replace('#', '');
+      var n = parseInt(hash);
+      return isNaN(n) ? 0 : n;
+    }
+
+    function getCurrentStepText() {
+      var steps = document.querySelectorAll('google-codelab-step');
+      var idx = getCurrentStepIndex();
+      var step = steps[idx];
+      if (!step) return '';
+      var label = step.getAttribute('label') || '';
+      var body = step.innerText || step.textContent || '';
+      return label + '。' + body;
+    }
+
+    function toggleSpeech() {
+      if (speaking) {
+        window.speechSynthesis.cancel();
+        setSpeaking(false);
+        return;
+      }
+      var text = getCurrentStepText();
+      if (!text.trim()) return;
+
+      var utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'ja-JP';
+      utter.rate = 0.95;
+      utter.onend = function() { setSpeaking(false); };
+      utter.onerror = function() { setSpeaking(false); };
+      currentUtterance = utter;
+      window.speechSynthesis.speak(utter);
+      setSpeaking(true);
+    }
+
+    function setSpeaking(val) {
+      speaking = val;
+      var btn = document.getElementById('speech-btn');
+      var icon = document.getElementById('speech-icon');
+      var label = document.getElementById('speech-label');
+      if (val) {
+        btn.classList.add('speaking');
+        icon.textContent = '⏹';
+        label.textContent = '停止';
+      } else {
+        btn.classList.remove('speaking');
+        icon.textContent = '▶';
+        label.textContent = '読み上げ';
+      }
+    }
+
+    window.addEventListener('hashchange', function() {
+      if (speaking) {
+        window.speechSynthesis.cancel();
+        setSpeaking(false);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "updated": "2026-03-06T00:00:00+09:00",
+  "id": "looker-bigquery-modeling",
+  "duration": 47,
+  "title": "Looker × BigQuery 接続・LookML・可視化 入門",
+  "summary": "BigQueryへの接続設定・LookMLモデル作成・Exploreでの可視化まで、Lookerの一連のフローをハンズオンで学ぶ。",
+  "category": ["dx", "data", "looker", "bigquery"],
+  "tags": ["web"],
+  "feedback": "https://internal-dx-portal-auth.tanjiadm.workers.dev/",
+  "url": "looker-bigquery-modeling"
+}
