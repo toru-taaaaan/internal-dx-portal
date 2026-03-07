@@ -1754,6 +1754,14 @@ If selected issues exceed capacity:
       var all = window.speechSynthesis.getVoices();
       var jaVoices = all.filter(function(v) { return v.lang.startsWith('ja'); });
       if (jaVoices.length === 0) jaVoices = all; // フォールバック
+
+      // Chrome高品質音声（"Google"付き）を先頭に
+      jaVoices.sort(function(a, b) {
+        var aGoogle = a.name.indexOf('Google') >= 0 ? 0 : 1;
+        var bGoogle = b.name.indexOf('Google') >= 0 ? 0 : 1;
+        return aGoogle - bGoogle;
+      });
+
       spVoices = jaVoices;
       var sel = document.getElementById('sp-voice');
       sel.innerHTML = '';
