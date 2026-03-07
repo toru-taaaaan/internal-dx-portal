@@ -144,6 +144,17 @@
       text-overflow: ellipsis;
     }
     .sp-progress.idle { color: #aaa; }
+    .sp-auto-row { margin-bottom: 10px; }
+    .sp-auto-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      color: #444;
+      cursor: pointer;
+      user-select: none;
+    }
+    .sp-auto-label input { cursor: pointer; accent-color: #4F7DC9; width: 15px; height: 15px; }
 
     /* 読み上げ中ハイライト */
     .sp-highlight {
@@ -1735,6 +1746,13 @@ If selected issues exceed capacity:
         <select class="sp-select" id="sp-voice"></select>
       </div>
 
+      <div class="sp-row sp-auto-row">
+        <label class="sp-auto-label">
+          <input type="checkbox" id="sp-auto" onchange="autoAdvance=this.checked">
+          自動ページ送り
+        </label>
+      </div>
+
       <div class="sp-progress idle" id="sp-progress">再生ボタンで読み上げ開始</div>
     </div>
 
@@ -1756,6 +1774,8 @@ If selected issues exceed capacity:
     var spRate = 1.0;
     var spVoices = [];
     var panelOpen = false;
+    var autoAdvance = false;   // 自動ページ送り
+    var autoAdvancing = false; // 自動遷移中フラグ（hashchange誤検知防止）
 
     // --- 音声リスト取得 ---
     function loadVoices() {
@@ -1918,6 +1938,19 @@ If selected issues exceed capacity:
       utter.onstart = function() { setState('playing'); };
       utter.onend   = function() {
         clearHighlight();
+        // 自動ページ送り
+        if (autoAdvance) {
+          var allSteps = document.querySelectorAll('google-codelab-step');
+          var curHash = location.hash.replace('#', '');
+          var curIdx = parseInt(curHash) || 0;
+          if (curIdx < allSteps.length - 1) {
+            setProgress('次のページへ移動中…');
+            autoAdvancing = true;
+            location.hash = '#' + (curIdx + 1);
+            setTimeout(function() { speechPlay(); }, 600);
+            return;
+          }
+        }
         setState('idle');
         setProgress('読み上げ完了');
       };
@@ -2006,6 +2039,10 @@ If selected issues exceed capacity:
 
     // ページ遷移で自動停止・ハイライト解除
     window.addEventListener('hashchange', function() {
+      if (autoAdvancing) {
+        autoAdvancing = false;
+        return; // 自動ページ送り中はスルー
+      }
       if (spState !== 'idle') {
         window.speechSynthesis.cancel();
         clearHighlight();
