@@ -13,29 +13,137 @@
     .success { color: #1e8e3e; }
     .error { color: red; }
 
-    /* 読み上げボタン */
-    #speech-btn {
+    /* 読み上げパネル */
+    #speech-widget {
       position: fixed;
       bottom: 24px;
       right: 24px;
       z-index: 9999;
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+    }
+    #speech-toggle-btn {
       background: #4F7DC9;
       color: white;
       border: none;
       border-radius: 50px;
       padding: 12px 20px;
       font-size: 14px;
-      font-family: 'Roboto', sans-serif;
+      font-family: inherit;
       cursor: pointer;
       box-shadow: 0 2px 8px rgba(0,0,0,0.3);
       display: flex;
       align-items: center;
       gap: 8px;
       transition: background 0.2s;
+      margin-left: auto;
     }
-    #speech-btn:hover { background: #3a67b3; }
-    #speech-btn.speaking { background: #d32f2f; }
-    #speech-btn.speaking:hover { background: #b71c1c; }
+    #speech-toggle-btn:hover { background: #3a67b3; }
+    #speech-toggle-btn.active { background: #1e6e2e; }
+    #speech-toggle-btn.active:hover { background: #155221; }
+    #speech-panel {
+      display: none;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      padding: 16px;
+      margin-bottom: 10px;
+      width: 300px;
+      animation: slideUp 0.15s ease-out;
+    }
+    #speech-panel.open { display: block; }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .sp-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .sp-title {
+      font-weight: 600;
+      color: #333;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .sp-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #888;
+      font-size: 18px;
+      padding: 0;
+      line-height: 1;
+    }
+    .sp-close:hover { color: #333; }
+    .sp-controls {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .sp-btn {
+      flex: 1;
+      padding: 8px 4px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-family: inherit;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      transition: background 0.15s;
+    }
+    .sp-btn .sp-btn-icon { font-size: 16px; }
+    .sp-btn-play  { background: #4F7DC9; color: white; }
+    .sp-btn-play:hover  { background: #3a67b3; }
+    .sp-btn-pause { background: #f0a500; color: white; }
+    .sp-btn-pause:hover { background: #c88700; }
+    .sp-btn-stop  { background: #e53935; color: white; }
+    .sp-btn-stop:hover  { background: #c62828; }
+    .sp-btn:disabled { opacity: 0.4; cursor: default; }
+    .sp-row {
+      margin-bottom: 10px;
+    }
+    .sp-label {
+      font-size: 11px;
+      color: #666;
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .sp-slider {
+      width: 100%;
+      accent-color: #4F7DC9;
+      cursor: pointer;
+    }
+    .sp-select {
+      width: 100%;
+      padding: 5px 6px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+      background: #fafafa;
+    }
+    .sp-progress {
+      background: #f5f5f5;
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 11px;
+      color: #555;
+      line-height: 1.5;
+      max-height: 54px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .sp-progress.idle { color: #aaa; }
 
     /* 比較ダイアグラム */
     .diagram-box {
@@ -1582,11 +1690,51 @@ If selected issues exceed capacity:
 
   </google-codelab>
 
-  <!-- 読み上げボタン -->
-  <button id="speech-btn" onclick="toggleSpeech()" title="現在のステップを読み上げます">
-    <span id="speech-icon">▶</span>
-    <span id="speech-label">読み上げ</span>
-  </button>
+  <!-- 読み上げパネル -->
+  <div id="speech-widget">
+    <div id="speech-panel">
+      <div class="sp-header">
+        <span class="sp-title">🔊 音声読み上げ</span>
+        <button class="sp-close" onclick="closeSpeechPanel()" title="閉じる">×</button>
+      </div>
+
+      <div class="sp-controls">
+        <button class="sp-btn sp-btn-play" id="sp-play" onclick="speechPlay()">
+          <span class="sp-btn-icon">▶</span>
+          <span>再生</span>
+        </button>
+        <button class="sp-btn sp-btn-pause" id="sp-pause" onclick="speechPause()" disabled>
+          <span class="sp-btn-icon">⏸</span>
+          <span>一時停止</span>
+        </button>
+        <button class="sp-btn sp-btn-stop" id="sp-stop" onclick="speechStop()" disabled>
+          <span class="sp-btn-icon">⏹</span>
+          <span>停止</span>
+        </button>
+      </div>
+
+      <div class="sp-row">
+        <div class="sp-label">
+          <span>読み上げ速さ</span>
+          <span id="sp-rate-label">1.0x</span>
+        </div>
+        <input type="range" class="sp-slider" id="sp-rate" min="0.5" max="2.0" step="0.25" value="1.0"
+               oninput="updateRate(this.value)">
+      </div>
+
+      <div class="sp-row">
+        <div class="sp-label"><span>声</span></div>
+        <select class="sp-select" id="sp-voice"></select>
+      </div>
+
+      <div class="sp-progress idle" id="sp-progress">再生ボタンで読み上げ開始</div>
+    </div>
+
+    <button id="speech-toggle-btn" onclick="toggleSpeechPanel()" title="音声読み上げ">
+      <span id="speech-icon">🔊</span>
+      <span id="speech-label">読み上げ</span>
+    </button>
+  </div>
 
   <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
   <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
@@ -1595,64 +1743,162 @@ If selected issues exceed capacity:
   <script src="//support.google.com/inapp/api.js" async></script>
 
   <script>
-    var speaking = false;
+    var spState = 'idle'; // idle | playing | paused
     var currentUtterance = null;
+    var spRate = 1.0;
+    var spVoices = [];
+    var panelOpen = false;
 
-    function getCurrentStepIndex() {
-      var hash = location.hash.replace('#', '');
-      var n = parseInt(hash);
-      return isNaN(n) ? 0 : n;
+    // --- 音声リスト取得 ---
+    function loadVoices() {
+      var all = window.speechSynthesis.getVoices();
+      var jaVoices = all.filter(function(v) { return v.lang.startsWith('ja'); });
+      if (jaVoices.length === 0) jaVoices = all; // フォールバック
+      spVoices = jaVoices;
+      var sel = document.getElementById('sp-voice');
+      sel.innerHTML = '';
+      jaVoices.forEach(function(v, i) {
+        var opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = v.name + ' (' + v.lang + ')';
+        sel.appendChild(opt);
+      });
     }
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+    window.addEventListener('DOMContentLoaded', loadVoices);
 
+    // --- テキスト取得 ---
     function getCurrentStepText() {
       var steps = document.querySelectorAll('google-codelab-step');
-      var idx = getCurrentStepIndex();
+      var hash = location.hash.replace('#', '');
+      var idx = parseInt(hash);
+      if (isNaN(idx)) idx = 0;
       var step = steps[idx];
       if (!step) return '';
       var label = step.getAttribute('label') || '';
-      var body = step.innerText || step.textContent || '';
+      var body = (step.innerText || step.textContent || '').replace(/\s+/g, ' ').trim();
       return label + '。' + body;
     }
 
-    function toggleSpeech() {
-      if (speaking) {
-        window.speechSynthesis.cancel();
-        setSpeaking(false);
+    // --- パネル開閉 ---
+    function toggleSpeechPanel() {
+      panelOpen = !panelOpen;
+      var panel = document.getElementById('speech-panel');
+      var btn = document.getElementById('speech-toggle-btn');
+      if (panelOpen) {
+        panel.classList.add('open');
+        btn.classList.add('active');
+        if (spVoices.length === 0) loadVoices();
+      } else {
+        panel.classList.remove('open');
+        btn.classList.remove('active');
+      }
+    }
+    function closeSpeechPanel() {
+      panelOpen = false;
+      document.getElementById('speech-panel').classList.remove('open');
+      document.getElementById('speech-toggle-btn').classList.remove('active');
+    }
+
+    // --- 速さ更新 ---
+    function updateRate(val) {
+      spRate = parseFloat(val);
+      document.getElementById('sp-rate-label').textContent = spRate.toFixed(2).replace(/\.?0+$/, '') + 'x';
+    }
+
+    // --- 再生 ---
+    function speechPlay() {
+      if (spState === 'paused') {
+        window.speechSynthesis.resume();
+        setState('playing');
         return;
       }
       var text = getCurrentStepText();
       if (!text.trim()) return;
 
+      window.speechSynthesis.cancel();
+
       var utter = new SpeechSynthesisUtterance(text);
       utter.lang = 'ja-JP';
-      utter.rate = 0.95;
-      utter.onend = function() { setSpeaking(false); };
-      utter.onerror = function() { setSpeaking(false); };
+      utter.rate = spRate;
+
+      var sel = document.getElementById('sp-voice');
+      var voiceIdx = parseInt(sel.value);
+      if (spVoices[voiceIdx]) utter.voice = spVoices[voiceIdx];
+
+      utter.onstart = function() { setState('playing'); };
+      utter.onend   = function() { setState('idle'); setProgress('読み上げ完了'); };
+      utter.onerror = function(e) { setState('idle'); setProgress('エラー: ' + e.error); };
+      utter.onboundary = function(e) {
+        if (e.name === 'word') {
+          var snippet = text.substr(e.charIndex, 40).replace(/\s+/g, ' ');
+          setProgress('…' + snippet + '…');
+        }
+      };
+
       currentUtterance = utter;
       window.speechSynthesis.speak(utter);
-      setSpeaking(true);
+      setState('playing');
     }
 
-    function setSpeaking(val) {
-      speaking = val;
-      var btn = document.getElementById('speech-btn');
-      var icon = document.getElementById('speech-icon');
+    // --- 一時停止 ---
+    function speechPause() {
+      if (spState !== 'playing') return;
+      window.speechSynthesis.pause();
+      setState('paused');
+    }
+
+    // --- 停止 ---
+    function speechStop() {
+      window.speechSynthesis.cancel();
+      setState('idle');
+      setProgress('再生ボタンで読み上げ開始');
+    }
+
+    // --- 状態管理 ---
+    function setState(s) {
+      spState = s;
+      var play  = document.getElementById('sp-play');
+      var pause = document.getElementById('sp-pause');
+      var stop  = document.getElementById('sp-stop');
+      var icon  = document.getElementById('speech-icon');
       var label = document.getElementById('speech-label');
-      if (val) {
-        btn.classList.add('speaking');
-        icon.textContent = '⏹';
-        label.textContent = '停止';
+      var prog  = document.getElementById('sp-progress');
+
+      play.disabled  = (s === 'playing');
+      pause.disabled = (s !== 'playing');
+      stop.disabled  = (s === 'idle');
+
+      if (s === 'playing') {
+        icon.textContent  = '🔊';
+        label.textContent = '読み上げ中';
+        prog.classList.remove('idle');
+        play.querySelector('span').textContent  = '▶';
+        play.querySelectorAll('span')[1].textContent = '再生';
+      } else if (s === 'paused') {
+        icon.textContent  = '⏸';
+        label.textContent = '一時停止中';
+        prog.classList.remove('idle');
+        play.querySelector('span').textContent  = '▶';
+        play.querySelectorAll('span')[1].textContent = '再開';
       } else {
-        btn.classList.remove('speaking');
-        icon.textContent = '▶';
+        icon.textContent  = '🔊';
         label.textContent = '読み上げ';
+        prog.classList.add('idle');
       }
     }
 
+    function setProgress(text) {
+      var el = document.getElementById('sp-progress');
+      el.textContent = text;
+    }
+
+    // ページ遷移で自動停止
     window.addEventListener('hashchange', function() {
-      if (speaking) {
+      if (spState !== 'idle') {
         window.speechSynthesis.cancel();
-        setSpeaking(false);
+        setState('idle');
+        setProgress('再生ボタンで読み上げ開始');
       }
     });
   </script>
