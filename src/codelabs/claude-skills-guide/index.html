@@ -1803,8 +1803,28 @@ If selected issues exceed capacity:
     window.speechSynthesis.onvoiceschanged = loadVoices;
     window.addEventListener('DOMContentLoaded', loadVoices);
 
-    // --- テキスト取得 + DOM要素マップ生成 ---
-    var spSegmentMap = []; // [{el, start, end}]
+    // --- ナレーター台本生成 + DOM要素マップ ---
+    var spSegmentMap = [];
+
+    // p/li 内のテキストを台本風に整形（strong を「」で強調）
+    function narrateInline(node) {
+      var result = '';
+      node.childNodes.forEach(function(child) {
+        if (child.nodeType === 3) {
+          result += child.textContent;
+        } else if (child.nodeType === 1) {
+          var ct = child.tagName.toLowerCase();
+          if (ct === 'strong' || ct === 'b') {
+            result += '「' + child.textContent + '」';
+          } else if (ct === 'code') {
+            result += child.textContent; // コードはそのまま
+          } else {
+            result += narrateInline(child);
+          }
+        }
+      });
+      return result.replace(/\s+/g, ' ').trim();
+    }
 
     function buildSpeechData() {
       var steps = document.querySelectorAll('google-codelab-step');
@@ -1814,51 +1834,78 @@ If selected issues exceed capacity:
       var step = steps[idx];
       if (!step) return {text: '', map: []};
 
-      var parts = []; // [{text, el}]
+      var parts = [];
       var label = step.getAttribute('label') || '';
-      if (label) parts.push({text: label + '。', el: null});
+      if (label) parts.push({text: label + 'について説明します。', el: null});
+
+      // ul/ol を接続詞付きでまとめて処理
+      function walkList(listNode) {
+        var items = Array.from(listNode.children).filter(function(c) {
+          return c.tagName.toLowerCase() === 'li';
+        });
+        var connectives = ['まず、', '次に、', 'また、', 'さらに、', 'そして、'];
+        items.forEach(function(li, i) {
+          var prefix = i === items.length - 1 && items.length > 1
+            ? '最後に、'
+            : (connectives[i] || 'また、');
+          var t = narrateInline(li);
+          if (t) {
+            if (!/[。？！、]$/.test(t)) t += '。';
+            parts.push({text: prefix + t, el: li});
+          }
+        });
+      }
 
       function walk(node) {
         if (!node || node.nodeType !== 1) return;
         var tag = node.tagName.toLowerCase();
-
         if (['script', 'style', 'button'].indexOf(tag) >= 0) return;
 
         if (tag === 'pre' || (tag === 'code' && node.parentElement &&
             node.parentElement.tagName.toLowerCase() === 'pre')) {
-          parts.push({text: '（コードブロック省略）。', el: null});
+          parts.push({text: 'サンプルコードがあります。', el: null});
           return;
         }
         if (tag === 'table') {
-          parts.push({text: '（表省略）。', el: null});
+          parts.push({text: '比較表があります。', el: null});
           return;
         }
-        if (tag === 'h1' || tag === 'h2' || tag === 'h3' || tag === 'h4') {
+        if (tag === 'h2') {
           var t = node.textContent.trim();
-          if (t) parts.push({text: '。' + t + '。', el: node});
+          if (t) parts.push({text: '次は「' + t + '」のセクションです。', el: node});
+          return;
+        }
+        if (tag === 'h3') {
+          var t = node.textContent.trim();
+          if (t) parts.push({text: '「' + t + '」について見ていきましょう。', el: node});
+          return;
+        }
+        if (tag === 'h4') {
+          var t = node.textContent.trim();
+          if (t) parts.push({text: t + '。', el: node});
           return;
         }
         if (tag === 'p') {
-          var t = node.textContent.replace(/\s+/g, ' ').trim();
+          var t = narrateInline(node);
           if (t) {
             if (!/[。？！]$/.test(t)) t += '。';
             parts.push({text: t, el: node});
           }
           return;
         }
-        if (tag === 'li') {
-          var t = node.textContent.replace(/\s+/g, ' ').trim();
-          if (t) {
-            if (!/[。？！、]$/.test(t)) t += '。';
-            parts.push({text: t, el: node});
-          }
+        if (tag === 'ul' || tag === 'ol') {
+          walkList(node);
           return;
         }
         if (tag === 'aside') {
+          var cls = node.className || '';
+          var prefix = cls.indexOf('negative') >= 0 ? '注意点があります。' :
+                       cls.indexOf('positive') >= 0 ? 'ポイントです。' :
+                       '覚えておいてください。';
           var t = node.textContent.replace(/\s+/g, ' ').trim();
           if (t) {
             if (!/[。？！]$/.test(t)) t += '。';
-            parts.push({text: '補足。' + t, el: node});
+            parts.push({text: prefix + t, el: node});
           }
           return;
         }
@@ -1866,8 +1913,8 @@ If selected issues exceed capacity:
       }
 
       walk(step);
+      parts.push({text: 'このステップは以上です。', el: null});
 
-      // 全文とchar offset マップを生成
       var fullText = '';
       var map = [];
       parts.forEach(function(p) {
