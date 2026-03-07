@@ -1775,7 +1775,7 @@ If selected issues exceed capacity:
     window.speechSynthesis.onvoiceschanged = loadVoices;
     window.addEventListener('DOMContentLoaded', loadVoices);
 
-    // --- テキスト取得 ---
+    // --- テキスト取得（要素ごとに句点を挿入して間を作る） ---
     function getCurrentStepText() {
       var steps = document.querySelectorAll('google-codelab-step');
       var hash = location.hash.replace('#', '');
@@ -1783,9 +1783,83 @@ If selected issues exceed capacity:
       if (isNaN(idx)) idx = 0;
       var step = steps[idx];
       if (!step) return '';
+
+      var segments = [];
       var label = step.getAttribute('label') || '';
-      var body = (step.innerText || step.textContent || '').replace(/\s+/g, ' ').trim();
-      return label + '。' + body;
+      if (label) segments.push(label + '。');
+
+      function walk(node) {
+        if (!node) return;
+        if (node.nodeType === 3) return; // テキストノードは親で処理
+        if (node.nodeType !== 1) return;
+        var tag = node.tagName.toLowerCase();
+
+        // 読み上げ不要なタグはスキップ
+        if (['script', 'style', 'button'].indexOf(tag) >= 0) return;
+
+        // コードブロックは省略
+        if (tag === 'pre' || (tag === 'code' && node.parentElement && node.parentElement.tagName.toLowerCase() === 'pre')) {
+          segments.push('（コードブロック省略）。');
+          return;
+        }
+
+        // テーブルは省略
+        if (tag === 'table') {
+          segments.push('（表省略）。');
+          return;
+        }
+
+        // 見出し：前後に間を置く
+        if (tag === 'h1' || tag === 'h2' || tag === 'h3' || tag === 'h4') {
+          var t = node.textContent.trim();
+          if (t) segments.push('。' + t + '。');
+          return;
+        }
+
+        // 段落
+        if (tag === 'p') {
+          var t = node.textContent.replace(/\s+/g, ' ').trim();
+          if (t) {
+            if (!/[。？！]$/.test(t)) t += '。';
+            segments.push(t);
+          }
+          return;
+        }
+
+        // リストアイテム：各項目に句点
+        if (tag === 'li') {
+          var t = node.textContent.replace(/\s+/g, ' ').trim();
+          if (t) {
+            if (!/[。？！、]$/.test(t)) t += '。';
+            segments.push(t);
+          }
+          return;
+        }
+
+        // aside（注意書き）
+        if (tag === 'aside') {
+          var t = node.textContent.replace(/\s+/g, ' ').trim();
+          if (t) {
+            if (!/[。？！]$/.test(t)) t += '。';
+            segments.push('補足。' + t);
+          }
+          return;
+        }
+
+        // その他はchildrenを再帰処理
+        for (var i = 0; i < node.childNodes.length; i++) {
+          walk(node.childNodes[i]);
+        }
+      }
+
+      walk(step);
+
+      // 空・重複の句点を整理して結合
+      return segments
+        .filter(function(s) { return s.trim(); })
+        .join(' ')
+        .replace(/。\s*。/g, '。')
+        .replace(/\s{2,}/g, ' ');
     }
 
     // --- パネル開閉 ---
